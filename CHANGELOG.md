@@ -2,11 +2,18 @@
 
 ## Current (in progress)
 
+- :warning: **breaking change**: Package renamming and new repository [#1](https://github.com/etalab/udata-front/pull/1):
+  - udata-gouvfr is now udata-front
+
+## 3.1.0 (2021-08-31)
+
 - Add About in header [#623](https://github.com/etalab/udata-gouvfr/pull/623)
 - Add link to profile in admin for sysadmin [#624](https://github.com/etalab/udata-gouvfr/pull/624)
-- Use pip-tools for dependency management [#626](https://github.com/etalab/udata-gouvfr/pull/626)
-- :warning: **breaking change**: Package renamming [#629](https://github.com/etalab/udata-gouvfr/pull/629):
-  - udata-gouvfr is now udata-front
+- Remove 'Sort by' button on organization pages [#632](https://github.com/etalab/udata-gouvfr/pull/632)
+- :warning: Use pip-tools for dependency management:
+  - [#626](https://github.com/etalab/udata-gouvfr/pull/626)
+  - [#631](https://github.com/etalab/udata-gouvfr/pull/631)
+  - Documentation for install [here](https://github.com/etalab/udata-gouvfr#development)
 
 ## 3.0.7 (2021-08-17)
 
