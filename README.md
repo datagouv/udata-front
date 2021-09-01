@@ -55,7 +55,7 @@ Clone the `udata-front` repository into your workspace
 and install it in development mode:
 
 ```shell
-git clone https://github.com/etalab/udata-gouvfr.git
+git clone https://github.com/etalab/udata-front.git
 cd udata-front
 pre-commit install
 pip install -e . -r requirements/test.pip -r requirements/develop.pip

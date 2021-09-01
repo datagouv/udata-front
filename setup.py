@@ -32,7 +32,7 @@ setup(
     description=__import__('udata_front').__description__,
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/etalab/udata-gouvfr',
+    url='https://github.com/etalab/udata-front',
     author='Etalab',
     author_email='pypi@data.gouv.fr',
     packages=find_packages(),
