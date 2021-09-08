@@ -22,8 +22,10 @@ jobs:
       - run:
           name: Create venv and install pip-tools
           command: |
-            virtualenv venv
+            virtualenv --no-setuptools venv
             source venv/bin/activate
+            # FIXME set setuptools version due to 53.0.2 release
+            pip install setuptools==53.0.0
             pip install pip-tools
       - run:
           name: Upgrade udata to latest pypi release if tagged release
