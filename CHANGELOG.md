@@ -4,6 +4,7 @@
 
 - :warning: **breaking change**: Package renamming and new repository [#1](https://github.com/etalab/udata-front/pull/1):
   - udata-gouvfr is now udata-front
+- pin setuptools==53.0.0 due to `use_2to3` support being dropped [#5](https://github.com/etalab/udata-front/pull/5)
 
 ## 3.1.0 (2021-08-31)
 
