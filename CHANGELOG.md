@@ -10,4 +10,4 @@
 
 ## Previous udata-gouvfr changelog
 
-If you're migrating from Udata-Gouvfr, see previsous changelogs [here](https://github.com/etalab/udata-gouvfr/blob/master/CHANGELOG.md)
+If you're migrating from udata-gouvfr, see previous changelog [here](https://github.com/etalab/udata-gouvfr/blob/master/CHANGELOG.md)
