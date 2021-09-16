@@ -205,5 +205,5 @@ export default {
   values,
   dataset_max_resources_uncollapsed,
   markdown,
-  read_only_enabled
+  read_only_enabled,
 };
