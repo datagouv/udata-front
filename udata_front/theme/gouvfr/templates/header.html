@@ -3,9 +3,7 @@
 {% set next_url = url_for(request.endpoint, **request.view_args) if not request.routing_exception else url_for('site.home') %}
 
 {% if read_only_mode %}
-{% block read_only_banner %}
-    {% include theme('banners/read-only.html') with context %}
-{% endblock %}
+{% include theme('banners/read-only.html') with context %}
 {% endif %}
 
 {% if banner_activated %}
