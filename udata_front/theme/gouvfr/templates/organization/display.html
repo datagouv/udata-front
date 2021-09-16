@@ -167,6 +167,24 @@
                             <a href="{{ url_for('organizations.datasets_csv', org=org) }}"
                                 class="nav-link">{{ _('Download list of datasets as csv file') }}</a>
                         </li>
+
+                        {% set member = org.member(current_user) %}
+                        {% if not member %}
+                            {% set pending_request = org.pending_request(current_user) %}
+                            {% if not pending_request %}
+                            <li class="my-md">
+                                <request-membership orga='{{org.id}}'>
+                                </request-membership>
+                            </li>
+                            {% else %}
+                            <li class="my-md">
+                                <span
+                                class="f-light f-italic">{{ _('Pending request to join this organization') }}</a>
+                            </li>
+                            {% endif %}
+                        {% endif %}
+
+
                     </ul>
                 </div>
             </div>
