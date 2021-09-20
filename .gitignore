@@ -58,6 +58,9 @@ nosetests.xml
 .pydevproject
 .noseids
 
+# Jetbrains
+.idea
+
 udata.cfg
 stylemark/
 .parcel-cache
