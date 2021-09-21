@@ -14,7 +14,7 @@ Vue. -->
       <Placeholder
         type="dataset"
         :src="owner.logo_thumbnail"
-        :alt="owner.name"
+        :alt="owner.fullname"
       />
       <div class="logo-badge">
         <span v-html="private" v-if="private" />
@@ -22,7 +22,7 @@ Vue. -->
       </div>
     </div>
     <div class="card-logo" v-else>
-      <Placeholder type="dataset" />
+      <Placeholder type="dataset" alt="" />
     </div>
     <div class="card-data">
       <h4 class="card-title">{{ title }}</h4>
