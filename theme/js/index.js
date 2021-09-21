@@ -21,7 +21,9 @@ import filters from "./plugins/filters";
 
 import InitSentry from "./sentry";
 
-const app = createApp({});
+const app = createApp({
+  delimiters: []
+});
 
 // Configure as early as possible in the app's lifecycle
 InitSentry(app);
