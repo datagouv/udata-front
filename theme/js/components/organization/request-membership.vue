@@ -36,12 +36,15 @@ data() {
 
       this.$api.post("organizations/" + this.orga + "/membership/", {comment: this.comment})
           .then(data => {
-              alert(this.$t('A request has been sent to the administrators'));
-          })
-          .catch(error => {
-              alert(this.$t('Error while requesting membership'));
-              log.error(error);
-          });
+            alert(this.$t('A request has been sent to the administrators'));
+        })
+        .catch(error => {
+            alert(this.$t('Error while requesting membership'));
+            log.error(error);
+        })
+        .finally(()=> {
+            window.location.reload();
+        });
       }
   }
 };
