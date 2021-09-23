@@ -21,9 +21,7 @@ import filters from "./plugins/filters";
 
 import InitSentry from "./sentry";
 
-const app = createApp({
-  delimiters: []
-});
+const app = createApp({});
 
 // Configure as early as possible in the app's lifecycle
 InitSentry(app);
@@ -41,6 +39,9 @@ app.component("discussion-threads", Threads);
 app.component("suggest", Suggest);
 app.component("search", Search);
 app.component("follow-button", FollowButton);
+
+// unset delimiters used in html templates to prevent injections using {{ }}
+app.config.compilerOptions.delimiters = []
 
 //We keep the div HTML from before trying to mount the VueJS App
 const previousHtml = document.querySelector("#app").innerHTML;
