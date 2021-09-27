@@ -5,6 +5,7 @@ import Suggest from "./components/search/suggest-box";
 import Search from "./components/search/search";
 import FollowButton from "./components/utils/follow-button";
 import RequestMembership from "./components/organization/request-membership";
+import * as dsfr from "@gouvfr/dsfr/dist/js/dsfr.module";
 
 import Tabs from "./components/vanilla/tabs";
 import Accordion from "./components/vanilla/accordion";
