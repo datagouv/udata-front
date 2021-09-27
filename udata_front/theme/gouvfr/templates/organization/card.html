@@ -5,8 +5,7 @@
 <a class="card organization-card dataset-card unstyled" title="{{organization.name}}"
     href="{{ url_for('organizations.show', org=organization, _external=True) }}">
     <div class="card-logo">
-        <img src="{{ organization.logo(100, external=True)|placeholder('organization', external=True) }}"
-            alt="{{ organization.name }}" />
+        <img src="{{ organization.logo(100, external=True)|placeholder('organization', external=True) }}" alt="" />
         <div class="logo-badge">
             {{ badge_if_certified(organization) }}
         </div>
