@@ -22,7 +22,7 @@ Vue. -->
       </div>
     </div>
     <div class="card-logo" v-else>
-      <Placeholder type="dataset" alt="" />
+      <Placeholder type="dataset" />
     </div>
     <div class="card-data">
       <h4 class="card-title">{{ title }}</h4>
