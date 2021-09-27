@@ -16,7 +16,6 @@ Sometimes you don't need an image but a `<div>` with a background-image property
   <div
     v-if="backgroundImage"
     v-bind="$attrs"
-    :alt="alt"
     :style="{ backgroundImage: `url('${path}')` }"
   />
   <img :src="path" :alt="alternativeTextForDefinedImageOnly" v-bind="$attrs" v-else />

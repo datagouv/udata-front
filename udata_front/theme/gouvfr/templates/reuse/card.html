@@ -3,7 +3,7 @@
 {# TODO : what was "preview" used for ? #}
 <a class="unstyled w-100" href="{{ url_for('reuses.show', reuse=reuse, _external=True) }}" title="{{ reuse.title }}">
     <article class="reuse-card text-align-center px-sm">
-        <div class="reuse-image mb-sm" alt="{{ reuse.title }}"
+        <div class="reuse-image mb-sm"
             style="background-image: url('{{ reuse.image|placeholder('reuse', external=True) }}')">
         </div>
         <div class="reuse-info">
