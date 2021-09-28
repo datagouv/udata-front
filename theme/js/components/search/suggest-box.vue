@@ -108,7 +108,7 @@ export default {
     },
   },
   mounted() {
-    this.$bus.on("suggest.start", () => this.startSearch(""));
+    this.$bus.on("suggest.startSearch", () => this.startSearch(""));
   },
   methods: {
     start() {
