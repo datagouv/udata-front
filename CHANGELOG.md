@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Add read only mode back on frontend [#10](https://github.com/etalab/udata-front/pull/10)
+- Fix RGAA criterion 1.2 Each decorative image is ignored by assistive technologies. [#13](https://github.com/etalab/udata-front/pull/13)
 
 ## 1.0.0 (2021-09-16)
 
