@@ -5,13 +5,15 @@ body {
 
 ul {
     list-style-type: none;
-
     padding: 0;
     margin: 0;
 }
 
 a:not([href]) {
     cursor: pointer;
+    &:focus, &:focus-visible {
+        outline-style: solid;
+    }
 }
 
 :root {
@@ -19,6 +21,7 @@ a:not([href]) {
     --ul-start: 0;
     --ol-start: 0;
     --xl-block: 0;
+    --li-bottom: 0;
 }
 
 p {
