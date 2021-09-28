@@ -1,6 +1,21 @@
-# udata-front
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/60264344/134811326-27109632-f653-4025-9786-482824635994.png">  
+</p>
+<p align="center">
+    <i>⚙️ Udata customizations for data.gouv.fr made by Etalab ⚙️</i>
+    <br>
+    <br>
+    <img src="https://img.shields.io/github/contributors/etalab/udata-front">
+    <img src="https://img.shields.io/github/license/etalab/udata-front">
+    <img src="https://img.shields.io/github/commit-activity/m/etalab/udata-front">
+</p>
 
-udata customizations for Etalab / Data.gouv.fr.
+- [Notes on this repo](#notes-on-this-repo)
+- [Compatibility](#compatibility)
+- [Installation](#installation)
+- [Development](#development)
+- [Theme](#theme)
+  - [TODO](#todo)
 
 ## Notes on this repo
 
