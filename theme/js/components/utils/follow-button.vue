@@ -13,27 +13,22 @@ The `url` prop is the API URL.
 -->
 
 <template>
-  <a
+  <button
     @click.prevent="toggleFollow"
-    title=""
-    class="unstyled row-inline align-items-center"
+    type="button"
+    class="btn-secondary btn-secondary-orange-100 follow-button"
     v-show="!readOnlyEnabled"
   >
     <span
-      class="btn-secondary btn-secondary-orange-100 p-sm"
-      style="line-height: 1"
-    >
-      <span
         v-html="icon"
-        class="magic"
+        class="magic row-inline"
         :class="{ active: animating }"
         :style="{ color: _following ? 'inherit' : 'white' }"
-      />
-    </span>
-    <strong class="text-orange-100 ml-sm"
-      >{{ _followers }} {{ $tc("favourites", _followers) }}</strong
-    >
-  </a>
+      ></span>
+      <strong class="text-orange-100 fr-ml-2v">
+        {{ _followers }} {{ $tc("favourites", _followers) }}
+      </strong>
+  </button>
 </template>
 
 <script>

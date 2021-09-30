@@ -1,12 +1,10 @@
 // core and colors from dsfr
 @import (less) "@gouvfr/dsfr/dist/css/core.css";
 @import (less) "@gouvfr/dsfr/dist/css/schemes.css";
+@import (less) "@gouvfr/dsfr/dist/css/utilities.css";
 
 // Reset powered by normalize + postCSS-normalize
 @import (optional, inline) "sanitize.css";
-
-//Override some annoying stuff not sanitized by the above
-@import "./override.less";
 
 // Aileron Font
 @import "./font.less";
@@ -36,6 +34,7 @@
 @import "./components/breadcrumbs.less";
 @import "./components/dataset.less";
 @import "./components/description-list.less";
+@import "./components/follow-button.less";
 @import "./components/tags.less";
 @import "./components/badge.less";
 @import "./components/well.less";
@@ -47,17 +46,22 @@
 @import "./components/embed.less";
 @import "./components/search-input.less";
 @import "./components/suggestor.less";
+@import "./components/summary.less";
 @import "./components/rangepicker.less";
 @import "./components/forms.less";
 @import "./components/logo.less";
 @import "./components/borders.less";
 
-//Specific style for non-UI-Kit stuff
+// Specific style for non-UI-Kit stuff
 @import "./specific/header.less";
 @import "./specific/footer.less";
 @import "./specific/hero.less";
 @import "./specific/metrics-bar.less";
+@import "./specific/producer-summary.less";
 @import "./specific/reuse.less";
 @import "./specific/resource-card.less";
 @import "./specific/suggest.less";
 @import "./specific/search.less";
+
+// Override some stuff not sanitized or coming from DSFR
+@import "./override.less";
