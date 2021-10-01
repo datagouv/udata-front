@@ -80,7 +80,15 @@
                 {{ dataset.title }}
                 {% if dataset.acronym %}<small>{{ dataset.acronym }}</small>{% endif %}
             </h1>
-            <p class="fr-mb-0">Mis à jour le 25 juin 2021 — LICENSE</p>
+            <p class="fr-mb-0">
+                {{ _('Updated on %(date)s', date=dataset.last_update|dateformat(format='long')) }}
+                {% if dataset.license %}
+                &mdash;
+                {% if dataset.license.url %}<a href="{{ dataset.license.url }}">{% endif %}
+                {{ dataset.license.title }}
+                {% if dataset.license.url %}</a>{% endif%}
+                {% endif %}
+            </p>
         </div>
     <div class="col-auto fr-mt-1v row-inline align-items-end flex-direction-column">
         {{ follow_btn(dataset) }}
