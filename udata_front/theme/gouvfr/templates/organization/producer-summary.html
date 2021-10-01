@@ -1,12 +1,5 @@
 {% set read_only_mode = config['READ_ONLY_MODE'] %}
 {% set description = organization.description or organization.about %}
-{% if producer_type == 'organization' %}
-    {% set datasets_url = url_for('datasets.list', organization=organization.id) %}
-    {% set reuses_url = url_for('reuses.list', organization=organization.id) %}
-{% else %}
-    {% set datasets_url = url_for('datasets.list', owner=organization.id) %}
-    {% set reuses_url = url_for('datasets.list', owner=organization.id) %}
-{% endif %}
 {% from theme('macros/certified.html') import badge_if_certified with context %}
 <div class="producer-summary row">
     <div class="col-2 col-md-12">
@@ -41,16 +34,14 @@
         <div class="row">
             {% if organization.metrics.datasets %}
             <div class="col-auto">
-                <a href='{{ datasets_url }}'>
-                    {{ organization.metrics.datasets }} {{ _('datasets') }}
-                </a>
+                <!-- TODO: add href to organization page when we redesign it -->
+                {{ organization.metrics.datasets }} {{ _('datasets') }}
             </div>
             {% endif %}
             {% if organization.metrics.reuses %}
             <div class="col-auto">
-                <a href='{{ reuses_url }}'>
+                    <!-- TODO: add href to organization page when we redesign it -->
                     {{ organization.metrics.reuses }} {{ _('reuses') }}
-                </a>
             </div>
             {% endif %}
         </div>
