@@ -128,9 +128,23 @@ Because developpers are lazy and less code is better code, there's a `.btn-tab` 
     <a href="#reference-datasets" class="btn-tab tab hidden-lg">@@Jeux de données de référence</a>
     <a href="/fr/datasets/" class="btn-tab tab">See more</a>
 </nav>
+
+## From DSFR
+
+You can use icons from DSFR. You can find the list on [DSFR documentation](https://gouvfr.atlassian.net/wiki/spaces/DB/pages/222331396/Ic+nes+-+Icons) with their classes.
+There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around the icon.
+
+```button-icons-dsfr.html
+<a
+    class="btn-secondary btn-secondary-grey-500 fr-btn--icon-left fr-fi-edit-line"
+    href="#"
+>
+    Modify information
+</a>
 ```
 */
 
+@import (less) "@gouvfr/dsfr/dist/css/buttons.css";
 .btn {
     display: inline-block;
     appearance: none;
