@@ -25,7 +25,7 @@
     - [🖼️ Style](#️-style)
   - [🛠️ Build tools](#️-build-tools)
   - [🏭 Javascript architecture](#-javascript-architecture)
-    - [🏔️ Vue mouting](#️-vue-mouting)
+    - [🏔️ Vue mounting](#️-vue-mounting)
     - [👩‍🔬 Tests](#-tests)
 - [📖 Read more](#-read-more)
 
@@ -121,7 +121,7 @@ inv -l
 
 The front-end theme for the public facing website, is split into two parts :
 - The [Jinja](https://jinja.palletsprojects.com/en/2.11.x/) templates are located inside `udata_front/theme/gouvfr/templates`.
-- The [Less](https://lesscss.org/), [Vue](https://vuejs.org) & other sourcefiles for the are located in `theme`.
+- The [Less](https://lesscss.org/), [Vue](https://vuejs.org) & other sourcefiles for the front-end are located in `theme`.
 
 ### 🚀 Getting started
 
@@ -210,7 +210,7 @@ Parcel does multiple custom things in this project :
 
 ### 🏭 Javascript architecture
 
-#### 🏔️ Vue mouting
+#### 🏔️ Vue mounting
 
 We are using the full build of VueJS that includes the compiler in order to compile templates directly in the browser.
 
