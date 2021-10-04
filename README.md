@@ -120,7 +120,7 @@ inv -l
 ## Theme (front-end)
 
 The front-end theme for the public facing website, is split into two parts :
-- The [Jinja](https://jinja.palletsprojects.com/en/2.11.x/) templates are located inside `udata_front/theme/templates`.
+- The [Jinja](https://jinja.palletsprojects.com/en/2.11.x/) templates are located inside `udata_front/theme/gouvfr/templates`.
 - The [Less](https://lesscss.org/), [Vue](https://vuejs.org) & other sourcefiles for the are located in `theme`.
 
 ### 🚀 Getting started
