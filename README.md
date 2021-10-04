@@ -162,7 +162,7 @@ Finally, we have a bunch of commands to make your life a tad easier, that you ca
 - `i18n:extract`: Same as above, but also automatically adds missing keys to translation files
 - `clean`: Cleans Parcel cache. Use this if you stumble upon weird bugs to start anew.
 - `start`: Get to coding with live reload and things. Same as `npm run dev`
-- `test`: Runs the Cypress tests. More on that in the Tests section of this README.
+- `test`: Runs the Cypress tests. More on that in the [Tests section](#-tests) of this README.
 
 ### 🏰 General architecture
 
