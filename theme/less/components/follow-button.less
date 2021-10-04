@@ -22,5 +22,14 @@ See Vue file for more informations about props and usage.
 */
 .follow-button {
     .row-inline;
-    .align-items-center;
+    .magic + strong {
+        display: block;
+        margin-left: @spacing-xs;
+    }
+    @media @query-sm {
+        padding: @spacing-xs;
+        .magic + strong {
+            display: none;
+        }
+    }
 }

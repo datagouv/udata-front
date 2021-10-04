@@ -1,0 +1,44 @@
+/*
+---
+name: Metadata
+category: Specific
+---
+
+Metadata are pairs of key-values providing additional informations about a dataset, a reuse or literally everything else.
+To ease the reading experience, a default style is provided here.
+
+```metadata.html
+<div class="producer-summary row">
+    <div class="col-2 col-md-12">
+        <div class="logo">
+            <img class="fr-responsive-img" src="https://static.data.gouv.fr/avatars/3c/2a35d973814c2681b6941e11810ff3-100.png" alt=""/>
+            <div class="logo-badge">
+            </div>
+        </div>
+    </div>
+    <div class="col-10 col-md-12 fr-mt-2w fr-mt-md-0">
+        <h2 class="h3 fr-mb-1v">
+            <a href="https://www.data.gouv.fr/fr/organizations/etalab/">Etalab</a>
+        </h2>
+        <p class="fr-mt-0 fr-mb-5v">Etalab est un département de la direction interministérielle du numérique (DINUM), dont les missions et l’organisation sont fixées par le décret du 30 Octobre 2019. Il coordonne notamment la conception et la mise en œuvre de la stratégie de l’État dans le domaine de la donnée.Ouverture (open data) et partage des donnéesEtalab coordonne la politique d’ouverture et de partage des données publiques (open data) : Il coordonne les actions des administrations de l’Etat et leur apporte son appui pour faciliter la diffusion et la réutilisation de leurs informations publiques.</p>
+        <div class="row">
+        </div>
+    </div>
+</div>
+```
+ */
+
+// TODO: Merge it with components/description-list.less when all lists have the same style
+.metadata {
+    .fr-my-1w;
+    dt {
+        .fr-text--sm;
+        .fr-mb-0;
+        color: var(--g600);
+    }
+    dd {
+        .fr-text--sm;
+        .fr-ml-0;
+        .fr-mb-2w;
+    }
+}

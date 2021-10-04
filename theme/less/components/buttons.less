@@ -198,6 +198,7 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
     border-color: @blue-400;
 
     background: none;
+    box-shadow: none;
 
     &:active,
     &:hover,
@@ -218,13 +219,13 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
             content: " ";
             position: relative;
             display: inline-block;
-            vertical-align: middle;
+            vertical-align: text-top;
 
             margin-left: 8px;
             left: 0;
 
             width: 6px;
-            height: 15px;
+            height: @line-height-sm;
 
             background-color: currentColor;
             mask-image: url(@icon-chevron);

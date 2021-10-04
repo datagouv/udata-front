@@ -93,7 +93,7 @@
     <div class="col-auto fr-mt-1v row-inline align-items-end flex-direction-column">
         {{ follow_btn(dataset) }}
         {% if can_edit %}
-        <a class="btn-secondary btn-secondary-grey-500 fr-mt-3v fr-fi-edit-line fr-btn--icon-left"
+        <a class="fr-btn fr-btn--secondary btn-secondary btn-secondary-grey-500 fr-mt-3v fr-fi-edit-line fr-btn--icon-left fr-displayed-sm"
                 href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}">{{ _('Modify information') }}</a>
         {% endif %}
     </div>
@@ -110,10 +110,10 @@
         </div>
         {% endif %}
     </div>
-    <div class="row fr-mt-4w">
-        <div class="col-8 col-md-12">
+    <div class="fr-grid-row fr-grid-row--gutters fr-mt-4w">
+        <div class="fr-col-12 fr-col-md-8">
             <div class="fr-tabs">
-                <ul class="fr-tabs__list" role="tablist" aria-label="[A modifier | nom du système d'onglet]">
+                <ul class="fr-tabs__list" role="tablist" aria-label="{{ _('Dataset informations') }}">
                     <li role="presentation">
                         <button id="tab-producer" class="fr-tabs__tab"
                                 tabindex="0" role="tab" aria-selected="true" aria-controls="tab-producer-panel">
@@ -128,12 +128,6 @@
                         <button id="tab-metadata" class="fr-tabs__tab"
                                 tabindex="-1" role="tab" aria-selected="false" aria-controls="tab-metadata-panel">
                             {{ _('Metadata') }}
-                        </button>
-                    </li>
-                    <li role="presentation">
-                        <button id="tab-activity" class="fr-tabs__tab"
-                                tabindex="-1" role="tab" aria-selected="false" aria-controls="tab-activity-panel">
-                            {{ _('Activity') }}
                         </button>
                     </li>
                     <li role="presentation">
@@ -157,19 +151,100 @@
                 </div>
                 <div id="tab-metadata-panel" class="fr-tabs__panel" role="tabpanel"
                      aria-labelledby="tab-metadata" tabindex="0">
-                    <p>Contenu 2</p>
-                </div>
-                <div id="tab-activity-panel" class="fr-tabs__panel" role="tabpanel"
-                     aria-labelledby="tab-activity" tabindex="0">
-                    <p>Contenu 3</p>
+                    <div class="fr-grid-row fr-grid-row--gutters">
+                        <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
+                            <h2 class="subtitle">{{ _('Informations') }}</h2>
+                            <dl class="metadata">
+                                {% if dataset.license %}
+                                <dt>{{ _('License') }}</dt>
+                                 <dd>
+                                     {% if dataset.license.url %}<a href="{{ dataset.license.url }}">{% endif %}
+                                     {{ dataset.license.title }}
+                                     {% if dataset.license.url %}</a>{% endif %}
+                                 </dd>
+                                {% endif %}
+                                <dt>{{ _('ID') }}</dt>
+                                 <dd>
+                                     {{dataset.id}}
+                                 </dd>
+                            </dl>
+                        </div>
+                        <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
+                            <h2 class="subtitle">{{ _('Temporality') }}</h2>
+                            <dl class="metadata">
+                                {% if dataset.frequency %}
+                                <dt>{{ _('Frequency') }}</dt>
+                                <dd>{{ dataset.frequency_label }}</dd>
+                                {% endif %}
+                                <dt class="f-bold text-grey-400">{{ _('Creation date') }}</dt>
+                                <dd>{{ dataset.created_at|dateformat(format='long') }}</dd>
+                                <dt class="f-bold text-grey-400">{{ _('Latest resource update') }}</dt>
+                                <dd>{{ dataset.last_update|dateformat(format='long') }}</dd>
+                            </dl>
+                        </div>
+                        <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
+                            <h2 class="subtitle">{{ _('Geographic dimensions') }}</h2>
+                            <dl>
+                                {% if dataset.spatial.granularity %}
+                                <dt>{{ _('Territorial coverage granularity') }}</dt>
+                                <dd>{{ dataset.spatial.granularity_label }}</dd>
+                                {% endif %}
+                                {% if dataset.spatial.zones %}
+                                <dt>{{ _('Territorial coverage') }}</dt>
+                                <dd>
+                                    {% for zone in dataset.spatial.zones %}
+                                    {{zone.name}}{% if not loop.last %},{% endif %}
+                                    {% endfor %}
+                                </dd>
+                                {% endif %}
+                            </dl>
+                        </div>
+                    </div>
+                    <h2 class="subtitle">{{ _('Extras') }}</h2>
+                    <read-more>
+                        <dl class="metadata fr-grid-row fr-grid-row--gutters">
+                            {% for extra in dataset.extras %}
+                            <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
+                                <dt>{{ extra.name }}</dt>
+                                <dd>{{ extra.value }}</dd>
+                            </div>
+                            {% endfor %}
+                        </dl>
+                    </read-more>
                 </div>
                 <div id="tab-actions-panel" class="fr-tabs__panel" role="tabpanel"
                      aria-labelledby="tab-actions" tabindex="0">
-                    <p>Contenu 4</p>
+                    <div class="fr-grid-row fr-grid-row--gutters">
+                        <div class="fr-col-12 fr-col-sm-6 vuejs">
+                            <h2 class="subtitle">{{ _('Participate') }}</h2>
+                            <a class="fr-btn fr-btn--secondary btn-secondary btn-secondary-grey-500 btn-with-arrow"
+                                href="{{ url_for('admin.index', path='reuse/new/', **{'dataset_id': dataset.id}) }}">
+                                {{ _('Add a reuse') }}
+                            </a>
+                            <a class="fr-btn fr-btn--secondary btn-secondary btn-secondary-grey-500 btn-with-arrow fr-mt-3v"
+                               href="#"
+                               @click.prevent="$bus.emit('discussions.startThread')">
+                                {{ _('Contact the producer') }}
+                            </a>
+                        </div>
+                        <div class="fr-col-12 fr-col-sm-6">
+                            <h2 class="subtitle">{{ _('Embed') }}</h2>
+                            {{integrate_btn(dataset)}}
+                            <h2 class="subtitle fr-mt-3w">{{ _('Permalink') }}</h2>
+                            <div class="embed-wrapper">
+                                <input readonly id="permalink" onClick="this.select();"
+                                       value="{{ dataset.external_url }}" />
+                                <label for="permalink" class="icon-copy" id="permalink-copy"
+                                       data-clipboard-target="#permalink" title="Copy this">
+                                    {% include theme('svg/copy.svg') %}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-4 col-md-12 fr-mt-5w">
+        <div class="fr-col-12 fr-col-md-4 fr-mt-5w">
             <nav class="fr-summary" role="navigation" aria-labelledby="fr-summary-title">
                 <div class="fr-summary__title" id="fr-summary-title">{{ _('Summary') }}</div>
                 <ol class="fr-summary__list">
@@ -204,8 +279,10 @@
 </section>
 <section class="bg-beige fr-py-5w">
     <div class="container">
-        <h2 id="description" class="text-transform-uppercase fr-text--xs fr-mb-0">{{ _('Description') }}</h2>
-        {{ dataset.description|markdown }}
+        <h2 id="description" class="subtitle fr-mb-0">{{ _('Description') }}</h2>
+        <read-more>
+            {{ dataset.description|markdown }}
+        </read-more>
     </div>
 </section>
 <section class="ressources fr-py-15w">
@@ -232,7 +309,7 @@
                 aria-controls="{{type}}-additional" href="#{{type}}-additional">
                 {{ _('See the %(nb)d resources of type %(type)s', nb=resources|length, type=type_label) }}
             </a>
-            <div id="{{type}}-additional" style="height: 0px" aria-labelledby="{{type}}-btn"
+            <div id="{{type}}-additional" style="height: 0" aria-labelledby="{{type}}-btn"
                 class="accordion-content fr-mt-2w">
                 {% for resource in resources[max_resources:] %}
                 {% include theme('dataset/resource/card.html') %}
