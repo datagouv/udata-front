@@ -129,7 +129,10 @@ Before you start your developper journey, you have to setup your front-end tools
 
 #### 🏗 Installing the dependencies
 
-First, you need to install [Node](https://nodejs.org/en/download/) (version 14+) on your platform. Then, in the project directory, run :
+First, you need to use [Node](https://nodejs.org/) (version 14+) on your platform. You should consider [installing NVM](https://github.com/creationix/nvm#installation) which uses the existing .nvmrc.
+```shell
+nvm install
+nvm use
 
 ```shell
 npm install
