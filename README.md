@@ -217,7 +217,7 @@ We are using the full build of VueJS that includes the compiler in order to comp
 There is a single VueJS app (in `index.js`) that contains every component and plugins.
 However, this app is mounted multiple times, on each DOM node containing a `vuejs` class.
 
-This allows us to mount the app only where its needed, because each subsequent mount is more DOM to compile and thus has an impact on performance. Moreover, mounting to the smallest possible HTML allows us to prevent accidental XSS vulnerability by forbidding users to compile their content with the Vue engine.
+This allows us to mount the app only where it's needed, because each subsequent mount is more DOM to compile and thus has an impact on performance. Moreover, mounting to the smallest possible HTML allows us to prevent accidental XSS vulnerability by forbidding users to compile their content with the Vue engine.
 
 In order to allow inter-component communication, a global event bus is available in the global app, under the `$bus` variable.
 You can emit events by using `$bus.emit('event')` and components can listen to events by using `$bus.on('event')`.
