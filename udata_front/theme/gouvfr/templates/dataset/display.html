@@ -182,6 +182,7 @@
                                 <dd>{{ dataset.last_update|dateformat(format='long') }}</dd>
                             </dl>
                         </div>
+                        {% if dataset.spatial %}
                         <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
                             <h2 class="subtitle">{{ _('Geographic dimensions') }}</h2>
                             <dl>
@@ -199,7 +200,9 @@
                                 {% endif %}
                             </dl>
                         </div>
+                    {% endif %}
                     </div>
+                    {% if dataset.extras %}
                     <h2 class="subtitle">{{ _('Extras') }}</h2>
                     <read-more>
                         <dl class="metadata fr-grid-row fr-grid-row--gutters">
@@ -211,6 +214,7 @@
                             {% endfor %}
                         </dl>
                     </read-more>
+                {% endif %}
                 </div>
                 <div id="tab-actions-panel" class="fr-tabs__panel" role="tabpanel"
                      aria-labelledby="tab-actions" tabindex="0">
