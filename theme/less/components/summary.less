@@ -34,12 +34,27 @@ Summaries allow users to have an overview of content and navigate between page s
 // summaries from dsfr
 @import (less) "@gouvfr/dsfr/dist/css/summary.css";
 
-.fr-summary a:hover {
-    text-decoration: none;
-}
+.fr-summary {
+    --ol-start: 1.5rem;
+    --xl-block: 0.5rem;
 
-.fr-summary sup {
-    position: absolute;
-    width: 100%;
-    top: 4px;
+    .fr-summary__link {
+        padding-left: 0.5rem;
+    }
+
+    .fr-summary__link::before {
+        position: relative;
+        left: 0;
+    }
+
+    .fr-summary__list {
+        padding-left: var(--ol-start);
+        li {
+            margin-left: -0.5rem;
+        }
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
 }
