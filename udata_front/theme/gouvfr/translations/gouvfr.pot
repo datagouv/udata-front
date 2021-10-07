@@ -637,9 +637,7 @@ msgstr ""
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:97
 #: udata_front/theme/gouvfr/templates/dataset/display.html:335
-#: udata_front/theme/gouvfr/templates/organization/display.html:163
-#: udata_front/theme/gouvfr/templates/reuse/display.html:162
-msgid "Modify information"
+msgid "Modify dataset"
 msgstr ""
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:104
@@ -1314,6 +1312,11 @@ msgstr ""
 
 #: udata_front/theme/gouvfr/templates/organization/display.html:152
 msgid "Modification date"
+msgstr ""
+
+#: udata_front/theme/gouvfr/templates/organization/display.html:163
+#: udata_front/theme/gouvfr/templates/reuse/display.html:162
+msgid "Modify information"
 msgstr ""
 
 #: udata_front/theme/gouvfr/templates/organization/display.html:168

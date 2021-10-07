@@ -94,7 +94,7 @@
         {{ follow_btn(dataset) }}
         {% if can_edit %}
         <a class="fr-btn fr-btn--secondary btn-secondary btn-secondary-grey-500 fr-mt-3v fr-fi-edit-line fr-btn--icon-left fr-displayed-sm"
-                href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}">{{ _('Modify information') }}</a>
+                href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}">{{ _('Modify dataset') }}</a>
         {% endif %}
     </div>
     </div>
@@ -332,7 +332,7 @@
                         {% if can_edit %}
                         <li class="fr-my-2w">
                             <a class="nav-link"
-                                href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}">{{ _('Modify information') }}</a>
+                                href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}">{{ _('Modify dataset') }}</a>
                         </li>
                         {% endif %}
                         {% if not read_only_mode %}
