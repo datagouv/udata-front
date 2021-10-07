@@ -44,7 +44,7 @@ export default {
   },
   computed: {
     label() {
-      let action = this._following ? this.$t('unfollow') : this.$t('follow');
+      let action = this._following ? this.$t('remove from favorites') : this.$t('add to favorites');
       return this._followers + ' ' + this.$tc('favourites', this._followers) + ', ' + action;
     }
   },
