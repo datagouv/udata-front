@@ -18,17 +18,13 @@ export default {
     }
   },
   mounted() {
-    const style = getComputedStyle(this.$refs.container)
-    this.readMoreRequired = parseFloat(style.height) > parseFloat(style.maxHeight)
+    const style = getComputedStyle(this.$refs.container);
+    this.readMoreRequired = parseFloat(style.height) > parseFloat(style.maxHeight);
   },
   methods: {
     toggle() {
-       this.expanded = !this.expanded
+      this.expanded = !this.expanded;
     }
   }
 }
 </script>
-
-<style scoped>
-
-</style>
