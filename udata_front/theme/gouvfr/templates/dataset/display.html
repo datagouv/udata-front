@@ -74,7 +74,7 @@
         )}}
     </div>
     {% endif %}
-    <div class="row fr-mb-3v">
+    <div class="row fr-mb-4w">
         <div class="col">
             <h1 class="fr-mb-0 fr-h1">
                 {{ dataset.title }}
@@ -90,17 +90,17 @@
                 {% endif %}
             </p>
         </div>
-    <div class="col-auto fr-mt-1v row-inline align-items-end flex-direction-column">
-        {{ follow_btn(dataset) }}
-        {% if can_edit %}
-        <a class="fr-btn fr-btn--secondary btn-secondary btn-secondary-grey-500 fr-mt-3v fr-fi-edit-line fr-btn--icon-left fr-displayed-sm"
-                href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}">{{ _('Modify dataset') }}</a>
-        {% endif %}
+        <div class="col-auto fr-mt-1v row-inline align-items-end flex-direction-column">
+            {{ follow_btn(dataset) }}
+            {% if can_edit %}
+            <a class="fr-btn fr-btn--secondary btn-secondary btn-secondary-grey-500 fr-mt-2w fr-fi-edit-line fr-btn--icon-left fr-displayed-sm"
+                    href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}">{{ _('Modify dataset') }}</a>
+            {% endif %}
+        </div>
     </div>
-    </div>
+    {% if dataset.owner %}
     <div class="row">
-        {% if dataset.owner %}
-        <div class="well well-grey-100 col fr-mb-3w fr-py-3v">
+        <div class="well well-grey-100 col fr-py-3v">
             {% trans
                     date=dataset.created_at|dateformat(format='long'),
                     update=dataset.last_update|dateformat(format='long'),
@@ -108,8 +108,8 @@
                 %}This dataset has been published on the initiative and under the responsibility of
             {{author}}<br />Published on {{date}} and updated on {{update}}{% endtrans %}
         </div>
-        {% endif %}
     </div>
+    {% endif %}
     <div class="fr-grid-row fr-grid-row--gutters fr-mt-4w">
         <div class="fr-col-12 fr-col-md-8">
             <div class="fr-tabs">
