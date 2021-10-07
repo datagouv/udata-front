@@ -18,7 +18,7 @@ The `url` prop is the API URL.
     type="button"
     class="fr-btn fr-btn--secondary btn-secondary btn-secondary-orange-100 follow-button"
     v-show="!readOnlyEnabled"
-    :aria-label="_followers + ' ' + $tc('favourites', _followers)"
+    :aria-label="label"
   >
     <span
         v-html="icon"
@@ -41,6 +41,12 @@ export default {
     followers: Number,
     url: String,
     following: Boolean,
+  },
+  computed: {
+    label() {
+      let action = this._following ? this.$t('unfollow') : this.$t('follow');
+      return this._followers + ' ' + this.$tc('favourites', this._followers) + ', ' + action;
+    }
   },
   created() {
     this.icon = icon;
@@ -71,7 +77,7 @@ export default {
           this._followers = data.followers;
           this._following = !this._following;
 
-          //Trigger sparkles animation
+          // Trigger sparkles animation
           if (this._following) {
             this.animating = true;
             setTimeout(() => (this.animating = false), 1300);

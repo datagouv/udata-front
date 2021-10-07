@@ -74,5 +74,7 @@
   "A request has been sent to the administrators": "A request has been sent to the administrators",
   "Error while requesting membership": "Error while requesting membership",
   "Read less": "",
-  "Read more": ""
+  "Read more": "",
+  "unfollow": "",
+  "follow": ""
 }

@@ -74,5 +74,7 @@
   "A request has been sent to the administrators": "Une demande a été envoyée aux administrateurs",
   "Error while requesting membership": "Erreur lors de la demande d'adhésion",
   "Read less": "",
-  "Read more": ""
+  "Read more": "",
+  "unfollow": "",
+  "follow": ""
 }
