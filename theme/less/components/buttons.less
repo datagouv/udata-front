@@ -150,7 +150,6 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
     display: inline-block;
     appearance: none;
     padding: @spacing-xs 1.25rem;
-    font-weight: bold;
     font-size: @font-size-sm;
     line-height: @line-height-sm;
     letter-spacing: 0.025em;
@@ -199,7 +198,6 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
     border-color: @blue-400;
 
     background: none;
-    box-shadow: none;
 
     &:active,
     &:hover,
@@ -214,6 +212,13 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
             color: @@value;
         }
     });
+
+    &.fr-btn--secondary {
+        :root:not([data-fr-theme="dark"])  & {
+            --color-hover: transparent;
+        }
+        box-shadow: none;
+    }
 
     &.btn-with-arrow {
         &:after {
