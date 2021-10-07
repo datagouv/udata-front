@@ -1,7 +1,7 @@
 {% set resource_format = resource.format|trim|lower %}
 {% set expanded = expanded or "false" %}
 <article
-    class="card resource-card {% if dark %}dark{% endif %} {% if resource.from_community %}resource-card-community{% endif %}">
+    class="card resource-card {% if resource.from_community %}resource-card-community{% endif %}">
     <div class="card-body">
         <header class="card-header" id="resource-{{resource.id}}-header">
             <div class="edit-button">

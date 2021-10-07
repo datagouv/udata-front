@@ -345,9 +345,7 @@
         {% if not read_only_mode %}
         <div class="resource-list">
             {% for resource in dataset.community_resources %}
-            {% with dark = True %}
             {% include theme('dataset/resource/card.html') %}
-            {% endwith %}
             {% endfor %}
             {% if not read_only_mode %}
             <a class="btn-action fr-my-3w"
