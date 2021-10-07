@@ -4,7 +4,7 @@
 
 - Update README to reflect front changes [#17](https://github.com/etalab/udata-front/pull/17)
 - Add Participate banner in the footer [#24](https://github.com/etalab/udata-front/pull/24)
-- Update dataset page with navigation quickfixes [#18](https://github.com/etalab/udata-front/pull/18)
+- Update dataset page with navigation quickfixes and add DSFR components [#18](https://github.com/etalab/udata-front/pull/18)
 
 ## 1.1.0 (2021-10-12)
 
