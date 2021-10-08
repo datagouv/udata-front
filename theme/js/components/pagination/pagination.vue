@@ -55,7 +55,6 @@ export default {
   <ul
     class="pagination-wrapper"
     :class="{ light }"
-    role="navigation"
     aria-label="pagination"
   >
     <li>
