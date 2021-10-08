@@ -333,7 +333,7 @@
 {% block community %}
 <section class="community_container fr-pb-7w" id="community">
     <div class="container">
-        <h2 id="community-resources" class="fs-hg">{{ _('Community resources') }}
+        <h2 id="community-resources" class="fr-h2">{{ _('Community resources') }}
             <sup>{{ dataset.community_resources|length }}</sup></h2>
         <div class="row fr-mb-3w">
             <div class="col-6 col-md-12 text-grey-300">
@@ -357,7 +357,7 @@
         {% endif %}
 
         {% block reuses_section %}
-        <h2 id="community-reuses" class="fs-hg">{{ _('Reuses') }} <sup>{{ reuses|length }}</sup></h2>
+        <h2 id="community-reuses" class="fr-h2">{{ _('Reuses') }} <sup>{{ reuses|length }}</sup></h2>
         <div class="row fr-mb-3w">
             <div class="col-6 col-md-12 text-grey-300">
                 {% trans %}You reused these data and published an article, a computer graphics, or an application?
@@ -385,7 +385,7 @@
         {% endif %}
         {% endblock %}
 
-        <h2 id="community-discussions" class="fs-hg">{{ _('Discussions') }} <sup class="discussions-count">0</sup></h2>
+        <h2 id="community-discussions" class="fr-h2">{{ _('Discussions') }} <sup class="discussions-count">0</sup></h2>
         <div class="row">
             <div class="col-4 col-md-12 text-grey-300">
                 <p>{{ _('Discussion between the organization and the community about this dataset.') }}</p>
