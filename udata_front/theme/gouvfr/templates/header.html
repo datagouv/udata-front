@@ -35,7 +35,7 @@
                             aria-label="{{ _('Mobile navigation menu') }}"
                     >
                         <a href="/datasets" title="{{ _('Search for data') }}" class="mr-md"
-                            @click.capture.prevent="$bus.emit('suggest.startSearch')">
+                            @click.capture.prevent="$bus.emit('suggest.startSearch')" role="search">
                             {% include theme('svg/search.svg') %}
                         </a>
                         <a href="#" @click.capture.prevent="addBodyClass('mobile-menu-open')"
