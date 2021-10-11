@@ -9,6 +9,11 @@
 </template>
 
 <script>
+
+function getHeight(elt) {
+  return parseFloat(getComputedStyle(elt).height)
+}
+
 export default {
   name: "read-more",
   data() {
@@ -18,8 +23,11 @@ export default {
     }
   },
   mounted() {
+    let contentHeight = Array.from(this.$refs.container.children)
+      .map(getHeight)
+      .reduce((total, height) => total += height, 0)
     const style = getComputedStyle(this.$refs.container);
-    this.readMoreRequired = parseFloat(style.height) > parseFloat(style.maxHeight);
+    this.readMoreRequired = contentHeight > parseFloat(style.maxHeight);
   },
   methods: {
     toggle() {
