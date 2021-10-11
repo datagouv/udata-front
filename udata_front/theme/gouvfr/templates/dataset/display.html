@@ -185,7 +185,7 @@
                         {% if dataset.spatial %}
                         <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
                             <h2 class="subtitle">{{ _('Geographic dimensions') }}</h2>
-                            <dl>
+                            <dl class="metadata">
                                 {% if dataset.spatial.granularity %}
                                 <dt>{{ _('Territorial coverage granularity') }}</dt>
                                 <dd>{{ dataset.spatial.granularity_label }}</dd>
