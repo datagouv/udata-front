@@ -12,7 +12,10 @@
 import { easing, tween, styler } from "popmotion";
 
 function getHeight(elt) {
-  return elt.clientHeight
+  const style = getComputedStyle(elt);
+  return parseFloat(style.getPropertyValue('height')) +
+    parseFloat(style.getPropertyValue('margin-top')) +
+    parseFloat(style.getPropertyValue('margin-bottom'));
 }
 
 const DEFAULT_HEIGHT = 284
@@ -31,6 +34,9 @@ export default {
       .map(getHeight)
       .reduce((total, height) => total + height, 0)
     this.readMoreRequired = contentHeight > getHeight(this.$refs.container);
+    if(!this.readMoreRequired) {
+      this.defaultHeight = contentHeight
+    }
   },
   methods: {
     toggle() {
