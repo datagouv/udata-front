@@ -1,23 +1,16 @@
 .read-more {
-  position: relative;
-  max-height: 284px;
-  overflow: hidden;
-  transition:max-height 0.15s ease-out;
-}
-
-.read-more.expand {
-  max-height: 5000px !important;
-  transition:max-height 0.35s ease-in-out;
+    position: relative;
+    overflow: hidden;
 }
 
 .read-more-link {
-  --gradient-color: var(--w);
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding-top: 80px;
-  background-image: linear-gradient(to bottom, transparent, var(--gradient-color) 70%, var(--gradient-color));
-  cursor: pointer;
+    --gradient-color: var(--w);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding-top: 80px;
+    background-image: linear-gradient(to bottom, transparent, var(--gradient-color) 70%, var(--gradient-color));
+    cursor: pointer;
 }
 
 .bg-beige .read-more-link {
@@ -26,8 +19,8 @@
 
 
 .expand .read-more-link {
-  position: relative;
-  background-image: none;
-  padding-top:10px;
-  height:inherit;
+    position: relative;
+    background-image: none;
+    padding-top:10px;
+    height:inherit;
 }

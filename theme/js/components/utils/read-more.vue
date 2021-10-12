@@ -1,5 +1,5 @@
 <template>
-  <div ref="container" class="read-more" :class="{expand: expanded}">
+  <div ref="container" class="read-more" :class="{expand: expanded}" :style="{height: defaultHeight + 'px'}">
     <slot></slot>
     <a @click="toggle" v-if="readMoreRequired" class="read-more-link">
       <template v-if="expanded"> {{ $t("Read less") }}</template>
@@ -9,15 +9,19 @@
 </template>
 
 <script>
+import { easing, tween, styler } from "popmotion";
 
 function getHeight(elt) {
-  return parseFloat(getComputedStyle(elt).height)
+  return elt.clientHeight
 }
+
+const DEFAULT_HEIGHT = 284
 
 export default {
   name: "read-more",
   data() {
     return {
+      defaultHeight: DEFAULT_HEIGHT,
       expanded: false,
       readMoreRequired: false,
     }
@@ -25,13 +29,31 @@ export default {
   mounted() {
     let contentHeight = Array.from(this.$refs.container.children)
       .map(getHeight)
-      .reduce((total, height) => total += height, 0)
-    const style = getComputedStyle(this.$refs.container);
-    this.readMoreRequired = contentHeight > parseFloat(style.maxHeight);
+      .reduce((total, height) => total + height, 0)
+    this.readMoreRequired = contentHeight > getHeight(this.$refs.container);
   },
   methods: {
     toggle() {
       this.expanded = !this.expanded;
+      const divStyler = styler(this.$refs.container);
+      if (this.expanded) {
+            tween({
+              from: { height: DEFAULT_HEIGHT },
+              to: { height: this.$refs.container.scrollHeight },
+              duration: 300,
+              ease: easing.anticipate,
+            }).start({
+              update: divStyler.set,
+              complete: () => divStyler.set({ height: "auto" }),
+            });
+          } else {
+            tween({
+              from: { height: this.$refs.container.scrollHeight },
+              to: { height: DEFAULT_HEIGHT },
+              duration: 300,
+              ease: easing.anticipate,
+            }).start(divStyler.set);
+          }
     }
   }
 }
