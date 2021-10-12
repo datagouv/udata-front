@@ -13,11 +13,11 @@
                 {% endif %}
             </div>
             <div class="header-text">
-                <span class="fs-sm text-grey-200"> {{ resource.metrics.views or 0 }} {{ _('downloads') }}</span>
+                <span class="fs-sm text-grey-400"> {{ resource.metrics.views or 0 }} {{ _('downloads') }}</span>
                 <h4>
                     {{ resource.title or _('Nameless resource') }}
                     {% if resource.from_community and resource.owner %}
-                    <p class="fs-sm m-0 text-grey-100">{{resource.owner}}</p>
+                    <p class="fs-sm m-0 text-grey-300">{{resource.owner}}</p>
                     {% endif %}
                 </h4>
                 <strong class="text-green-300">Disponible</strong>
