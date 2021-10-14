@@ -176,9 +176,9 @@
                                 <dt>{{ _('Frequency') }}</dt>
                                 <dd>{{ dataset.frequency_label }}</dd>
                                 {% endif %}
-                                <dt class="f-bold text-grey-400">{{ _('Creation date') }}</dt>
+                                <dt>{{ _('Creation date') }}</dt>
                                 <dd>{{ dataset.created_at|dateformat(format='long') }}</dd>
-                                <dt class="f-bold text-grey-400">{{ _('Latest resource update') }}</dt>
+                                <dt>{{ _('Latest resource update') }}</dt>
                                 <dd>{{ dataset.last_update|dateformat(format='long') }}</dd>
                             </dl>
                         </div>
