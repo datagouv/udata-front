@@ -203,10 +203,9 @@
                     {% endif %}
                     </div>
                     {% if dataset.extras %}
-                    <h2 class="subtitle fr-mb-0">{{ _('Extras') }}</h2>
-                    <div class="vuejs">
-                        <read-more>
-                            <dl class="metadata fr-grid-row fr-grid-row--gutters">
+                        <details>
+                            <summary class="subtitle fr-mb-0">{{ _('Extras') }}</summary>
+                            <dl class="metadata fr-my-0 fr-grid-row fr-grid-row--gutters">
                                 {% for extra_name, extra_value in dataset.extras.items() %}
                                 <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
                                     <dt>{{ extra_name }}</dt>
@@ -214,8 +213,7 @@
                                 </div>
                                 {% endfor %}
                             </dl>
-                        </read-more>
-                    </div>
+                        </details>
                 {% endif %}
                 </div>
                 <div id="tab-actions-panel" class="fr-tabs__panel" role="tabpanel"
