@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix min-heigth used in posts images to center them [#23](https://github.com/etalab/udata-front/pull/23)
 
 ## 1.1.0 (2021-10-12)
 
