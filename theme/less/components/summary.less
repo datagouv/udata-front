@@ -40,11 +40,17 @@ Summaries allow users to have an overview of content and navigate between page s
 
     .fr-summary__link {
         padding-left: 0.5rem;
+        color: @blue-400;
+        .sup, .sup::before, .sup::after  {
+            color: var(--g600);
+        }
     }
 
     .fr-summary__link::before {
         position: relative;
         left: 0;
+        font-weight: normal;
+        color: @grey-500;
     }
 
     .fr-summary__list {
