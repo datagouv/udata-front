@@ -179,7 +179,7 @@ Additionally, you can run javascript-related commands through `npm run`.
 #### 🚜 Jinja2 templates
 
 Because [udata][] is written in Python, its templating engine is Jinja 2.
-This means that the HTML received by clients is built at runtime, for each request, using good ole templates with `{% block %}` tags and includes.
+This means that the HTML received by clients is built at runtime, for each request, using templates with `{% block %}` tags and includes.
 
 Those template are responsible for building the pages using layouts and blocks. Here are a few to get started (in `udata_front/theme/gouvfr/templates`), from less specific to more specific :
 
