@@ -13,11 +13,14 @@
 - [Notes on this repo](#notes-on-this-repo)
 - [Compatibility](#compatibility)
 - [Installation](#installation)
-- [Development](#development)
-- [Theme (front-end)](#theme-front-end)
+- [Theme development](#theme-development)
   - [🚀 Getting started](#-getting-started)
-    - [🏗 Installing the dependencies](#-installing-the-dependencies)
-    - [💪 Starting the development server](#-starting-the-development-server)
+    - [🐍 Python development](#-python-development)
+      - [🧱 Installing the python dependencies](#-installing-the-python-dependencies)
+      - [🚩 Starting the python development server](#-starting-the-python-development-server)
+    - [☕ Javascript development](#-javascript-development)
+      - [🏗 Installing the javascript dependencies](#-installing-the-javascript-dependencies)
+      - [💪 Starting the javascript development server](#-starting-the-javascript-development-server)
     - [👀 Other dev commands](#-other-dev-commands)
   - [🏰 General architecture](#-general-architecture)
     - [🚜 Jinja2 templates](#-jinja2-templates)
@@ -58,11 +61,15 @@ PLUGINS = ['front']
 THEME = 'gouvfr'
 ```
 
-## Development
+## Theme development
 
-Prepare a [udata development environment][udata-develop].
+The front-end theme for the public facing website, is split into two parts :
+- The [Jinja](https://jinja.palletsprojects.com/en/2.11.x/) templates are located inside `udata_front/theme/gouvfr/templates`.
+- The [Less](https://lesscss.org/), [Vue](https://vuejs.org) & other sourcefiles for the front-end are located in `theme`.
 
-Note that we're using [pip-tools][udata-deps] on this repository too.
+### 🚀 Getting started
+
+Before you start your developper journey, you have to setup your python and/or javascript development tools.
 
 It is recommended to have a workspace with the following layout:
 
@@ -78,21 +85,6 @@ $WORKSPACE
 └── udata.cfg
 ```
 
-The following steps use the same Python virtual environment
-and the same version of npm (for JS) as `udata`.
-
-Clone the `udata-front` repository into your workspace
-and install it in development mode:
-
-```shell
-git clone https://github.com/etalab/udata-front.git
-cd udata-front
-pre-commit install
-pip install -e . -r requirements/test.pip -r requirements/develop.pip
-```
-
-> NB: the `udata.(in|pip)` files are used by the CI to stay in sync with `udata` requirements. You shouldn't need to tinker with them on your local environment, but they might be updated by the CI when you make a Pull Request.
-
 Modify your local `udata.cfg` configuration file as following:
 
 ```python
@@ -100,47 +92,52 @@ PLUGINS = ['front']
 THEME = 'gouvfr'
 ```
 
-You can execute `udata-front` specific tasks from the `udata-front` directory.
+#### 🐍 Python development
 
-**ex:** Build the assets:
+##### 🧱 Installing the python dependencies
+
+Prepare a [udata development environment][udata-develop].
+
+Note that we're using [pip-tools][udata-deps] on this repository too.
+
+The following steps use the same Python virtual environment as `udata`.
+
+Install `udata-front` in development mode:
 
 ```shell
 cd udata-front
-npm install
-inv assets-build
+pre-commit install
+pip install -e . -r requirements/test.pip -r requirements/develop.pip
 ```
 
-You can list available development commands with:
+> NB: the `udata.(in|pip)` files are used by the CI to stay in sync with `udata` requirements. You shouldn't need to tinker with them on your local environment, but they might be updated by the CI when you make a Pull Request.
 
+##### 🚩 Starting the python development server
+
+
+Simply run the udata project with udata-front loaded as a plugin:
 ```shell
-inv -l
+cd udata
+inv serve
 ```
 
+#### ☕ Javascript development
 
-## Theme (front-end)
-
-The front-end theme for the public facing website, is split into two parts :
-- The [Jinja](https://jinja.palletsprojects.com/en/2.11.x/) templates are located inside `udata_front/theme/gouvfr/templates`.
-- The [Less](https://lesscss.org/), [Vue](https://vuejs.org) & other sourcefiles for the front-end are located in `theme`.
-
-### 🚀 Getting started
-
-Before you start your developper journey, you have to setup your front-end tools.
-
-#### 🏗 Installing the dependencies
+##### 🏗 Installing the javascript dependencies
 
 First, you need to use [Node](https://nodejs.org/) (version 14+) on your platform. You should consider [installing NVM](https://github.com/creationix/nvm#installation) which uses the existing .nvmrc.
 ```shell
+cd udata-front
+
 nvm install
 nvm use
 
-```shell
 npm install
 ```
 
 And voilà ! ✨
 
-#### 💪 Starting the development server
+##### 💪 Starting the javascript development server
 
 Simply run this command in the project directory :
 
@@ -153,7 +150,20 @@ Note that a webserver is started by Parcel (default port is `1234`), however we 
 
 #### 👀 Other dev commands
 
-Finally, we have a bunch of commands to make your life a tad easier, that you can run through `npm run`.
+Finally, we have a bunch of commands to make your life a tad easier.
+
+You can execute `udata-front` specific tasks from the `udata-front` directory with `invoke`. You can list available development commands with:
+
+```shell
+inv -l
+```
+Example commands:
+- `i18n`: Extract translatable strings
+- `i18nc`: Compile translations
+- `qa`: Run a quality report
+- `test`: Run tests suite
+
+Additionally, you can run javascript-related commands through `npm run`.
 
 - `build`: Builds the final CSS/JS files and the UI-Kit Documentation. You should probably use this one in production.
 - `build:app`: Builds the final CSS/JS files without the UI-Kit
