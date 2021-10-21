@@ -161,7 +161,7 @@
                         <li>
                             <a href="{{ url_for('datasets.list', tag=tag) }}"
                                 title="{{ tag }}">
-                                {{ tag }}
+                                {{ tag|truncate(35, True) }}
                             </a>
                         </li>
                         {% endfor %}
