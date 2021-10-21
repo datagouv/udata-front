@@ -179,6 +179,12 @@
                                  <dd>
                                      {{dataset.id}}
                                  </dd>
+                                {# Harvesting source #}
+                                {% set source = dataset.extras['remote_url'] %}
+                                {% if source %}
+                                <dt class="f-bold text-grey-400">{{ _('Remote source') }}</dt>
+                                <dd><a rel="nofollow" href="{{ source }}">{{ _('Remote source') }}</a></dd>
+                                {% endif%}
                             </dl>
                         </div>
                         <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
