@@ -1,6 +1,5 @@
 from authlib.integrations.flask_oauth2 import AuthorizationServer
 from authlib.oauth2 import OAuth2Error
-from flask import request
 
 from udata.auth import current_user, login_required
 from udata.i18n import I18nBlueprint
