@@ -76,5 +76,10 @@
   "Read more": "Read more",
   "Read less": "Read less",
   "remove from favorites": "remove from favorites",
-  "add to favorites": "add to favorites"
+  "add to favorites": "add to favorites",
+  "First page": "",
+  "Previous page": "",
+  "Page": "",
+  "Next page": "",
+  "Last page": ""
 }

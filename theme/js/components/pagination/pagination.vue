@@ -13,10 +13,9 @@ A simple pagination Vue component that allow you to paginate long collections.
 Simply provide necessary props :
 
 * page : current page
-* page_size : page... size. How many elements will be on each page
+* page_size : how many elements will be on each page
 * total_results : total collection length
 * changePage : a function that will be called on each button click. It will be passed a single argument : the new page number
-* light : optional param that will add a `.light` class and trigger the corresponding color scheme
 
 Check the example below for more infos :
 
@@ -52,55 +51,85 @@ export default {
 -->
 
 <template>
-  <ul
-    class="pagination-wrapper"
-    :class="{ light }"
-    role="navigation"
-    aria-label="pagination"
-  >
-    <li>
-      <a
-        :class="{ disabled: page === 1 }"
-        class="previous"
-        :aria-disabled="page === 1"
-        @click.prevent="_onClick(page - 1)"
-      ></a>
-    </li>
-    <li>
-      <a
-        :class="{ active: page === 1 }"
-        :aria-disabled="page === 1"
-        @click.prevent="_onClick(1)"
-        >1</a
-      >
-    </li>
-    <li v-for="index in visible_pages">
-      <a
-        :class="{ active: page === index }"
-        :aria-current="page === index ? 'page' : false"
-        @click.prevent="_onClick(index)"
-        v-if="index"
-        >{{ index }}</a
-      >
-      <span class="ellipsis" role="img" aria-label="ellipsis" aria-hidden="true" v-else>...</span>
-    </li>
-    <li>
-      <a
-        :class="{ active: page === pages.length }"
-        :aria-disabled="page === pages.length"
-        @click.prevent="_onClick(pages.length)"
-        >{{ pages.length }}</a
-      >
-    </li>
-    <li>
-      <a
-        :class="{ disabled: page === pages.length }"
-        class="next"
-        :aria-disabled="page === pages.length"
-        @click.prevent="_onClick(page + 1)"
-      ></a>
-    </li>
-  </ul>
+  <nav role="navigation" class="fr-pagination fr-pagination--centered" aria-label="Pagination">
+    <ul class="fr-pagination__list">
+      <li>
+        <a
+          :class="{ 'fr-pagination__link--disabled': page === 1 }"
+          :aria-disabled="page === 1"
+          class="fr-pagination__link fr-pagination__link--first"
+          @click.prevent="_onClick(1)"
+        >
+          {{ $t('First page') }}
+        </a>
+      </li>
+      <li>
+        <a
+          :class="{ 'fr-pagination__link--disabled': page === 1 }"
+          :aria-disabled="page === 1"
+          class="fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label"
+          @click.prevent="_onClick(page - 1)"
+        >
+          {{ $t('Previous page') }}
+        </a>
+      </li>
+      <li>
+        <a
+          :aria-current="page === 1 ? 'page' : null"
+          :aria-disabled="page === 1"
+          class="fr-pagination__link fr-displayed-sm"
+          :title="$t('Page', {nb: 1})"
+          @click.prevent="_onClick(1)"
+        >
+          1
+        </a>
+      </li>
+      <li v-for="index in visible_pages">
+        <a
+          class="fr-pagination__link"
+          :aria-current="page === index ? 'page' : null"
+          :title="$t('Page', {nb: index})"
+          @click.prevent="_onClick(index)"
+          v-if="index"
+          >
+          {{ index }}
+        </a>
+        <a class="fr-pagination__link fr-displayed-lg" v-else>
+          …
+        </a>
+      </li>
+      <li>
+        <a
+          class="fr-pagination__link"
+          :aria-current="page === pages.length ? 'page' : null"
+          :title="$t('Page', {nb: pages.length})"
+          @click.prevent="_onClick(pages.length)"
+        >
+          {{ pages.length }}
+        </a>
+      </li>
+      <li>
+        <a
+          :class="{ disabled: page === pages.length }"
+          class="fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label"
+          :aria-disabled="page === pages.length"
+          @click.prevent="_onClick(page + 1)"
+        >
+          {{ $t('Next page') }}
+        </a>
+      </li>
+      <li>
+        <a
+          :class="{ 'fr-pagination__link--disabled': page === pages.length }"
+          class="fr-pagination__link fr-pagination__link--last"
+          :aria-disabled="page === pages.length"
+          @click.prevent="_onClick(pages.length)"
+        >
+          {{ $t('Last page') }}
+        </a>
+      </li>
+    </ul>
+  </nav>
 </template>
 
 <script>
@@ -114,7 +143,6 @@ export default {
     changePage: Function,
     page_size: Number,
     total_results: Number,
-    light: Boolean,
   },
   computed: {
     pages() {
@@ -122,7 +150,7 @@ export default {
     },
     visible_pages() {
       const length = this.pages.length;
-      const pagesAround = 1; //Pages around current one
+      const pagesAround = 1; // Pages around current one
       const pagesShown = Math.min(pagesAround * 2 + 1, length);
 
       if (length < pagesAround + 2) return [];

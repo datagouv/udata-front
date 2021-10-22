@@ -80,7 +80,6 @@ It's located in `templates/macros/paginator.html` and can be used easily.
 
 @import (less) "@gouvfr/dsfr/dist/css/pagination.css";
 
-// pagination-wrapper
 .fr-pagination {
     --bf500: @blue-400;
     a {
@@ -100,4 +99,8 @@ It's located in `templates/macros/paginator.html` and can be used easily.
 .fr-pagination--centered {
     display: flex;
     justify-content: center;
+}
+
+.fr-pagination__link--disabled {
+    cursor: not-allowed;
 }
