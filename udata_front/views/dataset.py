@@ -1,6 +1,6 @@
 from collections import defaultdict, OrderedDict
 
-from flask import abort, request, url_for, redirect
+from flask import abort, request, url_for, redirect, current_app
 from werkzeug.contrib.atom import AtomFeed
 
 from udata.models import Reuse, Follow
@@ -128,7 +128,8 @@ def group_resources_by_type(resources):
     """Group a list of `resources` by `type` with order"""
     groups = defaultdict(list)
     for resource in resources:
-        groups[getattr(resource, 'type')].append(resource)
+        if groups[getattr(resource, 'type')].__len__() <= current_app.config.get('RESOURCES_DEFAULT_PAGE_SIZE'):
+            groups[getattr(resource, 'type')].append(resource)
     ordered = OrderedDict()
     for rtype, rtype_label in RESOURCE_TYPES.items():
         if groups[rtype]:
