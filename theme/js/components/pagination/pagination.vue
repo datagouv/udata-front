@@ -40,9 +40,9 @@ export default {
   },
   methods: {
     changePage(index) {
-      this.page = index; //Change current page
-      this.loadPage(); //Load corresponding new info
-      scrollToTop(); //Then scroll to the top
+      this.page = index; // Change current page
+      this.loadPage(); // Load corresponding new info
+      scrollToTop(); // Then scroll to the top
     }
   }
 };
@@ -55,7 +55,6 @@ export default {
     <ul class="fr-pagination__list">
       <li>
         <a
-          :class="{ 'fr-pagination__link--disabled': page === 1 }"
           :aria-disabled="page === 1"
           class="fr-pagination__link fr-pagination__link--first"
           @click.prevent="_onClick(1)"
@@ -65,7 +64,6 @@ export default {
       </li>
       <li>
         <a
-          :class="{ 'fr-pagination__link--disabled': page === 1 }"
           :aria-disabled="page === 1"
           class="fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label"
           @click.prevent="_onClick(page - 1)"
@@ -94,7 +92,7 @@ export default {
           >
           {{ index }}
         </a>
-        <a class="fr-pagination__link fr-displayed-lg" v-else>
+        <a class="fr-pagination__link fr-displayed-lg" aria-disabled="true" v-else>
           …
         </a>
       </li>
@@ -110,7 +108,6 @@ export default {
       </li>
       <li>
         <a
-          :class="{ disabled: page === pages.length }"
           class="fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label"
           :aria-disabled="page === pages.length"
           @click.prevent="_onClick(page + 1)"
@@ -120,7 +117,6 @@ export default {
       </li>
       <li>
         <a
-          :class="{ 'fr-pagination__link--disabled': page === pages.length }"
           class="fr-pagination__link fr-pagination__link--last"
           :aria-disabled="page === pages.length"
           @click.prevent="_onClick(pages.length)"
@@ -157,15 +153,16 @@ export default {
 
       if (this.page <= pagesShown) return [...range(pagesShown, 2), null];
 
-      if (this.page >= length - pagesShown + 1)
+      if (this.page >= length - pagesShown + 1) {
         return [null, ...range(pagesShown, length - pagesShown)];
+      }
 
       return [null, ...range(pagesShown, this.page - pagesAround), null];
     },
   },
   methods: {
     _onClick(index) {
-      if (index !== this.page) return this.changePage(index);
+      if (index !== this.page && index > 0 && index <= this.pages.length) return this.changePage(index);
     },
   },
 };
