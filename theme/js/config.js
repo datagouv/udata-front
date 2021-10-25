@@ -76,9 +76,10 @@ export const check_urls = _jsonMeta("check-urls");
 export const unchecked_types = _jsonMeta("unchecked-types");
 
 /**
- * The API root/base URL
+ * The API root/base URLs
  */
 export const api_root = _meta("api-root");
+export const api_2_root = _meta("api-2-root");
 
 /**
  * The API Swagger specifications URL
@@ -189,6 +190,7 @@ export default {
   title,
   csrf_token,
   api_root,
+  api_2_root,
   api_specs,
   theme_static,
   static_root,
