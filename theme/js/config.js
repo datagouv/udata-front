@@ -149,10 +149,10 @@ export const map = _jsonMeta("map-config");
 export const tags = _jsonMeta("tags-config");
 
 /**
- * Max number of resources to display uncollapsed in dataset view
+ * Max number of resources to display per page in dataset view
  */
-export const dataset_max_resources_uncollapsed = _jsonMeta(
-  "dataset-max-resources-uncollapsed"
+export const resources_default_page_size = _jsonMeta(
+  "resources-default-page-size"
 );
 
 /**
@@ -205,7 +205,7 @@ export default {
   map,
   tags,
   values,
-  dataset_max_resources_uncollapsed,
+  resources_default_page_size,
   markdown,
   read_only_enabled,
 };

@@ -10,10 +10,11 @@
               :id="'resource-' + resource.id"
               v-for="resource in resources"
             >
-              <resource v-bind="resource" />
+              <resource :resource="resource" :type="type" :type-label="typeLabel"/>
             </li>
           </ul>
           <pagination
+            class="fr-mt-3w"
             v-if="total_results > page_size"
             :page="current_page"
             :page_size="page_size"
@@ -30,7 +31,7 @@
 import Loader from "../loader.vue";
 import Pagination from "../../pagination/pagination.vue";
 import Resource from "./resource.vue";
-import config from "../../../config";
+import config, {resources_default_page_size} from "../../../config";
 
 export default {
   name: "resources",
@@ -43,7 +44,7 @@ export default {
     return {
       resources: [],
       current_page: 1,
-      page_size: 20,
+      page_size: config.resources_default_page_size,
       total_results: 0,
       loading: true,
       readOnlyEnabled: config.read_only_enabled,
@@ -53,7 +54,15 @@ export default {
     datasetId: {
       type: String,
       required: true,
-    }
+    },
+    type: {
+      type: String,
+      required: true,
+    },
+    typeLabel: {
+      type: String,
+      required: true,
+    },
   },
   mounted() {
     this.loadPage(this.current_page);
@@ -72,8 +81,8 @@ export default {
       if (this.$refs.top && scroll)
         this.$refs.top.scrollIntoView({ behavior: "smooth" });
 
-      return this.$api
-        .get("/datasets/" + this.datasetId + "/resources", {
+      return this.$apiv2
+        .get("/datasets/" + this.datasetId + "/resources/", {
           params: {
             page,
             page_size: this.page_size,

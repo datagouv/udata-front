@@ -1,9 +1,186 @@
 <template>
-
+  <article
+      class="card resource-card" :class="{'resource-card-community': resource.from_community}">
+      <div class="card-body">
+          <header class="card-header" :id="'resource-' + resource.id + '-header'">
+              <div class="edit-button">
+                  <a
+                    :href="adminUrl"
+                    :aria-label="$t('Edit resource')"
+                    v-if="canEdit"
+                    v-html="EditIcon"
+                  >
+                  </a>
+              </div>
+              <div class="header-text">
+                  <span class="fs-sm text-grey-400"> {{ resource.metrics.views || 0 }} {{ $t('downloads') }}</span>
+                  <h4>
+                      {{ resource.title || $t('Nameless resource') }}
+                      <p class="fs-sm m-0 text-grey-300" v-if="resource.from_community && resource.owner">{{resource.owner}}</p>
+                  </h4>
+                  <strong class="text-green-300">Disponible</strong>
+              </div>
+              <div class="button-bar">
+                  <ul>
+                      <li class="accordion">
+                        <a
+                          @click.prevent="expand"
+                          role="button"
+                          :aria-expanded="expanded"
+                          :aria-label="$t('See more details')"
+                          :aria-controls="'resource-' + resource.id"
+                          class="accordion-button"
+                          v-html="ChevronIcon"
+                        ></a>
+                      </li>
+                      <li v-if="resource.preview_url">
+                          <modals-container></modals-container>
+                          <a
+                            href="#"
+                            class="btn-action"
+                            :title="$t('Preview')"
+                            @click.prevent="$showModal('preview', {url: resource.preview_url}, true)"
+                            v-html="EyeIcon"
+                          >
+                          </a>
+                      </li>
+                      <li>
+                        <a
+                          @click.prevent
+                          href="#"
+                          :id="resource.id + '-copy'"
+                          :title="$t('Copy permalink to clipboard')"
+                          :data-clipboard-text="resource.latest"
+                          class="btn-action"
+                          v-html="CopyIcon"
+                        >
+                        </a>
+                      </li>
+                      <li v-if="resource.format === 'url'">
+                        <a
+                          :href="resource.latest"
+                          class="btn-action"
+                          :aria-label="$t('Resource link')"
+                          v-html="LinkIcon"
+                        >
+                        </a>
+                      </li>
+                      <li v-else>
+                        <a
+                          :href="resource.latest"
+                          class="btn-action"
+                          :aria-label="$t('Download resource')"
+                          download
+                          v-html="DownloadIcon"
+                        >
+                        </a>
+                      </li>
+                      <!--{{ hook('dataset.resource.card.extra-buttons') }}
+                     TODO(NKL): add extra-buttons -->
+                  </ul>
+                  <div class="filetype">
+                      <strong>{{ resource.format.trim().toLowerCase() }}</strong>
+                      <em v-if="resource.filesize">({{ $filters.filesize(resource.filesize) }})</em>
+                  </div>
+              </div>
+          </header>
+          <section
+            class="card-content accordion-content"
+            :class="{active: expanded}"
+            :style="{height: expanded ? 'auto' : 0}"
+            :aria-labelledby="'resource-' + resource.id + '-header'"
+            :id="'resource-' + resource.id"
+          >
+              <div class="resource-description" v-if="resource.description">
+                  {{ resource.description }} <!-- |markdown-->
+              </div>
+              <dl class="description-list">
+                  <div>
+                      <dt>{{ $t('URL') }}</dt>
+                      <dd><a :href="resource.url">{{resource.url}}</a></dd>
+                  </div>
+                  <div>
+                      <dt>{{ $t('Permalink') }}</dt>
+                      <dd><a :href="resource.latest">{{resource.latest}}</a></dd>
+                  </div>
+                  <div>
+                      <dt>{{ $t('Type') }}</dt>
+                      <dd>{{ typeLabel }}</dd>
+                  </div>
+                  <div>
+                      <dt>{{ $t('MIME Type') }}</dt>
+                      <dd>{{resource.mime}}</dd>
+                  </div>
+                  <div v-if="resource.checksum">
+                      <dt>{{resource.checksum.type}}</dt>
+                      <dd>{{resource.checksum.value}}</dd>
+                  </div>
+                  <div>
+                      <dt>{{ $t('Created on') }}</dt>
+                    <!-- |dateformat(format='long') -->
+                      <dd>{{resource.created_at}}</dd>
+                  </div>
+                  <div>
+                      <dt>{{ $t('Modified on') }}</dt>
+                    <!-- |dateformat(format='long') -->
+                      <dd>{{resource.modified}}</dd>
+                  </div>
+                  <div>
+                      <dt>{{ $t('Published on') }}</dt>
+                    <!-- |dateformat(format='long') -->
+                      <dd>{{resource.published}}</dd>
+                  </div>
+              </dl>
+          </section>
+      </div>
+  </article>
 </template>
 
 <script>
+import config from "../../../config";
+import ChevronIcon from "svg/chevron.svg";
+import CopyIcon from "svg/actions/copy.svg";
+import DownloadIcon from "svg/actions/download.svg";
+import EditIcon from "svg/actions/edit.svg";
+import EyeIcon from "svg/actions/eye.svg";
+import LinkIcon from "svg/actions/link.svg";
+
 export default {
+  props: {
+    resource: {
+      type: Object,
+      required: true
+    },
+    canEdit: {
+      type: Boolean,
+      default: false
+    },
+    type: {
+      type: String,
+      required: true,
+    },
+    typeLabel: {
+      type: String,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      adminUrl: config.admin_root, // dataset/{id}/resource/{resource_id},
+      expanded: false,
+      ChevronIcon,
+      CopyIcon,
+      DownloadIcon,
+      EditIcon,
+      EyeIcon,
+      LinkIcon,
+    }
+  },
+  methods: {
+    expand() {
+      this.expanded = !this.expanded;
+    }
+  }
 }
 </script>
 

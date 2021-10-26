@@ -81,5 +81,21 @@
   "First page": "First Page",
   "Previous page": "Previous page",
   "Next page": "Next page",
-  "Last page": "Last page"
+  "Last page": "Last page",
+  "downloads": "downloads",
+  "Nameless resource": "Nameless resource",
+  "See more details": "See more details",
+  "Preview": "Preview",
+  "Copy permalink to clipboard": "Copy permalink to clipboard",
+  "Resource link": "Resource link",
+  "Download resource": "Download resource",
+  "URL": "URL",
+  "Permalink": "Permalink",
+  "Type": "Type",
+  "MIME Type": "MIME Type",
+  "Created on": "Created on",
+  "Modified on": "Modified on",
+  "Published on": "Published on",
+  "An error occurred while fetching resources": "An error occurred while fetching resources",
+  "Edit resource": "Edit resource"
 }

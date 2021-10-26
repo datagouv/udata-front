@@ -10,9 +10,22 @@ const excerpt = (val, length = 300) => {
   return RemoveMarkdown(truncate(val, length));
 };
 
+const filesize = (val) => {
+    const suffix = 'o'
+    const units = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z']
+    for (let unit of units) {
+        if (Math.abs(val) < 1024.0) {
+          return `${val.toFixed(1)}${unit}${suffix}`
+        }
+        val /= 1024.0
+    }
+    return `${val.toFixed(1)}Y${suffix}`
+}
+
 export const filters = {
   truncate,
   excerpt,
+  filesize,
 };
 
 //Expose all filters to the app
