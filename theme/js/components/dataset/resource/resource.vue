@@ -11,6 +11,7 @@
                     v-html="EditIcon"
                   >
                   </a>
+                <!-- TODO(NKL): add canEdit logic -->
               </div>
               <div class="header-text">
                   <span class="fs-sm text-grey-400"> {{ resource.metrics.views || 0 }} {{ $t('downloads') }}</span>
@@ -92,7 +93,7 @@
             :id="'resource-' + resource.id"
           >
               <div class="resource-description" v-if="resource.description">
-                  {{ resource.description }} <!-- |markdown-->
+                  {{ resource.description }} <!-- TODO(NKL): add $filter for markdown, previously |markdown-->
               </div>
               <dl class="description-list">
                   <div>
@@ -117,17 +118,17 @@
                   </div>
                   <div>
                       <dt>{{ $t('Created on') }}</dt>
-                    <!-- |dateformat(format='long') -->
+                    <!-- TODO(NKL): format date, previously |dateformat(format='long') -->
                       <dd>{{resource.created_at}}</dd>
                   </div>
                   <div>
                       <dt>{{ $t('Modified on') }}</dt>
-                    <!-- |dateformat(format='long') -->
+                    <!-- TODO(NKL): format date, previously |dateformat(format='long') -->
                       <dd>{{resource.modified}}</dd>
                   </div>
                   <div>
                       <dt>{{ $t('Published on') }}</dt>
-                    <!-- |dateformat(format='long') -->
+                    <!-- TODO(NKL): format date, previously |dateformat(format='long') -->
                       <dd>{{resource.published}}</dd>
                   </div>
               </dl>
@@ -166,7 +167,7 @@ export default {
   },
   data() {
     return {
-      adminUrl: config.admin_root, // dataset/{id}/resource/{resource_id},
+      adminUrl: config.admin_root, // TODO(NKL): use proper URL dataset/{id}/resource/{resource_id},
       expanded: false,
       ChevronIcon,
       CopyIcon,
