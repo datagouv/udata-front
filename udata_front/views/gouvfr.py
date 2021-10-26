@@ -132,6 +132,16 @@ def dataset_apis(ctx):
     return theme.render('dataset-apis.html', apis=dataset.extras.get(APIGOUVFR_EXTRAS_KEY))
 
 
+@template_hook('oauth_theme_raw')
+def oauth_theme_raw(ctx):
+    return theme.render("raw.html")
+
+
+@template_hook('oauth_theme_content')
+def oauth_theme_content(ctx):
+    return theme.render("api/oauth_authorize.html")
+
+
 # TODO : better this, redirect is not the best. How to serve it instead ?!
 @blueprint.route('/_stylemark/<path:filename>/')
 def stylemark(filename):
