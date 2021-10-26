@@ -31,7 +31,7 @@
 import Loader from "../loader.vue";
 import Pagination from "../../pagination/pagination.vue";
 import Resource from "./resource.vue";
-import config, {resources_default_page_size} from "../../../config";
+import config from "../../../config";
 
 export default {
   name: "resources",
