@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Move template hook logic to udata and add oauth hooks [#29](https://github.com/etalab/udata-front/pull/29)
 
 ## 1.1.1 (2021-10-22)
 
@@ -11,7 +11,6 @@
 - Fix min-heigth used in posts images to center them [#23](https://github.com/etalab/udata-front/pull/23)
 - Update dataset page with navigation quickfixes and add DSFR components [#18](https://github.com/etalab/udata-front/pull/18)
 - Implement feedbacks on quickfixes [#26](https://github.com/etalab/udata-front/pull/26)
-- Move template hook logic to udata and add oauth hooks [#29](https://github.com/etalab/udata-front/pull/29)
 
 ## 1.1.0 (2021-10-12)
 
