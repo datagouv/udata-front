@@ -1,6 +1,5 @@
 import inspect
 from importlib import import_module
-from jinja2 import Markup, contextfunction
 from flask import abort, current_app
 from flask_navigation import Navigation
 from udata import entrypoints
@@ -9,6 +8,7 @@ from udata.i18n import I18nBlueprint
 nav = Navigation()
 
 front = I18nBlueprint('front', __name__)
+
 
 @front.app_context_processor
 def inject_current_theme():
