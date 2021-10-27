@@ -2,7 +2,7 @@ from urllib.parse import urlencode
 
 from flask import Blueprint, current_app
 from udata.app import cache
-from udata.hooks import template_hook
+from udata.frontend import template_hook
 
 from udata_front import theme
 

@@ -9,8 +9,8 @@ from mongoengine.errors import ValidationError
 from udata_front import theme
 from udata_front.theme import theme_static_with_version
 from udata.app import cache
+from udata.frontend import template_hook
 from udata.models import Reuse, Dataset
-from udata.hooks import template_hook
 from udata.i18n import I18nBlueprint
 
 from udata_front import APIGOUVFR_EXTRAS_KEY
