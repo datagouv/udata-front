@@ -65,7 +65,7 @@
     ]
   },
   "stylemarkPath": {
-    "input": "udata_front/theme/gouvfr/static/",
+    "input": "theme/",
     "output": "udata_front/theme/gouvfr/static/stylemark/"
   },
   "alias": {
