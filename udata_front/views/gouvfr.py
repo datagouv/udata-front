@@ -140,7 +140,7 @@ def oauth_theme_raw(ctx):
 @template_hook('oauth_theme_content')
 def oauth_theme_content(ctx):
     grant = ctx['grant']
-    return theme.render("api/oauth_authorize.html", grant=grant)
+    return theme.render('api/oauth_authorize.html', grant=grant)
 
 
 # TODO : better this, redirect is not the best. How to serve it instead ?!
