@@ -134,7 +134,7 @@ def dataset_apis(ctx):
 
 @template_hook('oauth_theme_raw')
 def oauth_theme_raw(ctx):
-    return theme.render("raw.html")
+    return theme.render('raw.html')
 
 
 @template_hook('oauth_theme_content')
