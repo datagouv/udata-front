@@ -3,6 +3,7 @@ from importlib import import_module
 from flask import abort, current_app
 from flask_navigation import Navigation
 from udata import entrypoints
+from udata.frontend import template_hook  # noqa
 from udata.i18n import I18nBlueprint
 
 nav = Navigation()
