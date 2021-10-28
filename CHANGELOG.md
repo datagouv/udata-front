@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+-  Standardize reuse page similar to dataset page navigation quickfixes [#31](https://github.com/etalab/udata-front/pull/31)
 
 ## 1.1.1 (2021-10-22)
 
