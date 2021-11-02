@@ -79,7 +79,7 @@
                      TODO(NKL): add extra-buttons -->
                   </ul>
                   <div class="filetype">
-                      <strong>{{ resource.format.trim().toLowerCase() }}</strong>
+                      <strong>{{ resource.format.trim().toLowerCase() }}</strong>&nbsp;
                       <em v-if="resource.filesize">({{ $filters.filesize(resource.filesize) }})</em>
                   </div>
               </div>
