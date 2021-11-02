@@ -89,6 +89,7 @@
             :class="{active: expanded}"
             :style="{height: expanded ? 'auto' : 0}"
             :aria-labelledby="'resource-' + resource.id + '-header'"
+            :hidden="!expanded"
             :id="'resource-' + resource.id"
           >
               <div class="resource-description markdown" v-if="resource.description" v-html="$filters.markdown(resource.description)">
