@@ -55,7 +55,7 @@ export default {
     <ul class="fr-pagination__list">
       <li>
         <a
-          :aria-disabled="page === 1"
+          :href="page === 1 ? null :'#'"
           class="fr-pagination__link fr-pagination__link--first"
           @click.prevent="_onClick(1)"
         >
@@ -64,7 +64,7 @@ export default {
       </li>
       <li>
         <a
-          :aria-disabled="page === 1"
+          :href="page === 1 ? null : '#'"
           class="fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label"
           @click.prevent="_onClick(page - 1)"
         >
@@ -74,7 +74,7 @@ export default {
       <li>
         <a
           :aria-current="page === 1 ? 'page' : null"
-          :aria-disabled="page === 1"
+          :href="page === 1 ? null : '#'"
           class="fr-pagination__link fr-displayed-sm"
           :title="$t('Page', {nb: 1})"
           @click.prevent="_onClick(1)"
@@ -85,14 +85,16 @@ export default {
       <li v-for="index in visible_pages">
         <a
           class="fr-pagination__link"
+          :class="{'fr-displayed-lg': index < page - 1 || index > page + 1}"
           :aria-current="page === index ? 'page' : null"
+          :href="page === index ? null : '#'"
           :title="$t('Page', {nb: index})"
           @click.prevent="_onClick(index)"
           v-if="index"
           >
           {{ index }}
         </a>
-        <a class="fr-pagination__link fr-displayed-lg" aria-disabled="true" v-else>
+        <a class="fr-pagination__link fr-displayed-lg" v-else>
           …
         </a>
       </li>
@@ -100,6 +102,7 @@ export default {
         <a
           class="fr-pagination__link"
           :aria-current="page === pages.length ? 'page' : null"
+          :href="page === pages.length ? null : '#'"
           :title="$t('Page', {nb: pages.length})"
           @click.prevent="_onClick(pages.length)"
         >
@@ -109,7 +112,7 @@ export default {
       <li>
         <a
           class="fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label"
-          :aria-disabled="page === pages.length"
+          :href="page === pages.length ? null : '#'"
           @click.prevent="_onClick(page + 1)"
         >
           {{ $t('Next page') }}
@@ -118,7 +121,7 @@ export default {
       <li>
         <a
           class="fr-pagination__link fr-pagination__link--last"
-          :aria-disabled="page === pages.length"
+          :href="page === pages.length ? null : '#'"
           @click.prevent="_onClick(pages.length)"
         >
           {{ $t('Last page') }}
@@ -146,18 +149,20 @@ export default {
     },
     visible_pages() {
       const length = this.pages.length;
-      const pagesAround = 1; // Pages around current one
-      const pagesShown = Math.min(pagesAround * 2 + 1, length);
-
-      if (length < pagesAround + 2) return [];
-
-      if (this.page <= pagesShown) return [...range(pagesShown, 2), null];
-
-      if (this.page >= length - pagesShown + 1) {
-        return [null, ...range(pagesShown, length - pagesShown)];
+      const pagesAround = 3;
+      const pagesShown = Math.min(pagesAround * 2 + 1, length - 2);
+      const start = this.page <= pagesAround ? 2 : this.page - pagesAround;
+      if (length <= 2) {
+         return [];
       }
-
-      return [null, ...range(pagesShown, this.page - pagesAround), null];
+      let pagination = [...range(pagesShown, start)];
+      if(!pagination.includes(2)) {
+        pagination.unshift(null);
+      }
+      if(!pagination.includes(length - 1)) {
+        pagination.push(null);
+      }
+      return pagination;
     },
   },
   methods: {
