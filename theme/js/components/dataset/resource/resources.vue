@@ -21,11 +21,11 @@
           </ul>
           <pagination
             class="fr-mt-3w"
-            v-if="total_results > page_size"
-            :page="current_page"
-            :page_size="page_size"
-            :total_results="total_results"
-            :changePage="changePage"
+            v-if="totalResults > pageSize"
+            :page="currentPage"
+            :page-size="pageSize"
+            :total-results="totalResults"
+            :change-page="changePage"
             light
           />
       </div>
@@ -49,9 +49,9 @@ export default {
   data() {
     return {
       resources: [],
-      current_page: 1,
-      page_size: config.resources_default_page_size,
-      total_results: 0,
+      currentPage: 1,
+      pageSize: config.resources_default_page_size,
+      totalResults: 0,
       loading: true,
       readOnlyEnabled: config.read_only_enabled,
     };
@@ -75,11 +75,11 @@ export default {
     },
   },
   mounted() {
-    this.loadPage(this.current_page);
+    this.loadPage(this.currentPage);
   },
   methods: {
      changePage(index, scroll = true) {
-      this.current_page = index;
+      this.currentPage = index;
       this.loadPage(index, scroll);
     },
     loadPage(page = 1, scroll = false) {
@@ -95,14 +95,14 @@ export default {
           params: {
             page,
             type: this.type,
-            page_size: this.page_size,
+            page_size: this.pageSize,
           },
         })
         .then((resp) => resp.data)
         .then((data) => {
           if (data.data) {
             this.resources = data.data;
-            this.total_results = data.total;
+            this.totalResults = data.total;
           }
         })
         .catch(() => {

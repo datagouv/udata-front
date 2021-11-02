@@ -22,11 +22,11 @@ Check the example below for more infos :
 ```pagination-ex.vue
 <template>
     <pagination
-      v-if="total_results > page_size"
-      :page="current_page"
-      :page_size="page_size"
-      :total_results="total_results"
-      :changePage="changePage"
+      v-if="totalResults > pageSize"
+      :page="currentPage"
+      :page-size="pageSize"
+      :total-results="totalResults"
+      :change-page="changePage"
     />
 </template>
 
@@ -82,7 +82,7 @@ export default {
           1
         </a>
       </li>
-      <li v-for="index in visible_pages">
+      <li v-for="index in visiblePages">
         <a
           class="fr-pagination__link"
           :class="{'fr-displayed-lg': index < page - 1 || index > page + 1}"
@@ -140,14 +140,14 @@ export default {
   props: {
     page: Number,
     changePage: Function,
-    page_size: Number,
-    total_results: Number,
+    pageSize: Number,
+    totalResults: Number,
   },
   computed: {
     pages() {
-      return range(Math.ceil(this.total_results / this.page_size));
+      return range(Math.ceil(this.totalResults / this.pageSize));
     },
-    visible_pages() {
+    visiblePages() {
       const length = this.pages.length;
       const pagesAround = 3;
       const pagesShown = Math.min(pagesAround * 2 + 1, length - 2);
