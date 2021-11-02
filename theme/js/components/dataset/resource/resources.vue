@@ -83,7 +83,6 @@ export default {
       this.loadPage(index, scroll);
     },
     loadPage(page = 1, scroll = false) {
-      console.log("Loading page", page);
       this.loading = true;
 
       // We can pass the second function parameter "scroll" to true if we want to scroll to the top of the resources section
@@ -95,19 +94,18 @@ export default {
         .get("/datasets/" + this.datasetId + "/resources/", {
           params: {
             page,
+            type: this.type,
             page_size: this.page_size,
           },
         })
         .then((resp) => resp.data)
         .then((data) => {
-          console.log(data)
           if (data.data) {
             this.resources = data.data;
             this.total_results = data.total;
           }
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
           this.$toast.error(
             this.$t("An error occurred while fetching resources")
           );
