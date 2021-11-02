@@ -1,4 +1,12 @@
 import RemoveMarkdown from "remove-markdown";
+import config from "../config";
+import dayjs from "dayjs";
+import markdown from "../markdown";
+import "dayjs/locale/fr";
+import "dayjs/locale/en";
+import "dayjs/locale/es";
+
+dayjs.locale(config.lang);
 
 const truncate = (val, length = 300) => {
   if (typeof val !== "string") return;
@@ -22,13 +30,19 @@ const filesize = (val) => {
     return `${val.toFixed(1)}Y${suffix}`
 }
 
+const formatDate = (date, format = 'D MMMM YYYY') => {
+  return dayjs(date).format(format);
+}
+
 export const filters = {
   truncate,
   excerpt,
   filesize,
+  formatDate,
+  markdown,
 };
 
-//Expose all filters to the app
+// Expose all filters to the app
 export default function install(app) {
   app.config.globalProperties.$filters = filters;
 }

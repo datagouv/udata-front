@@ -10,7 +10,13 @@
               :id="'resource-' + resource.id"
               v-for="resource in resources"
             >
-              <resource :resource="resource" :type="type" :type-label="typeLabel"/>
+              <resource
+                :dataset-id="datasetId"
+                :resource="resource"
+                :type="type"
+                :type-label="typeLabel"
+                :can-edit="canEdit"
+              />
             </li>
           </ul>
           <pagination
@@ -51,6 +57,10 @@ export default {
     };
   },
   props: {
+    canEdit: {
+      type: Boolean,
+      required: true
+    },
     datasetId: {
       type: String,
       required: true,

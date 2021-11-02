@@ -327,7 +327,7 @@
                 {% if nb_groups > 1 %}
                     <h4 class="fs-lg mt-xl">{{ type_label }} <sup>{{resources|length }}</sup></h4>
                 {% endif %}
-                <dataset-resources dataset-id="{{ dataset.id }}" type="{{ type }}" type-label="{{ type_label }}">
+                <dataset-resources dataset-id="{{ dataset.id }}" type="{{ type }}" type-label="{{ type_label }}" :can-edit="{{ can_edit.can()|tojson|safe }}">
                     {% set max_resources_to_show = resources_per_page if not show_all_resources else resources|length %}
                     {% for resource in resources[:max_resources_to_show] %}
                         {% with expanded = "true" %}

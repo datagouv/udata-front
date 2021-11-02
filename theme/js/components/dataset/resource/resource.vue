@@ -11,7 +11,6 @@
                     v-html="EditIcon"
                   >
                   </a>
-                <!-- TODO(NKL): add canEdit logic -->
               </div>
               <div class="header-text">
                   <span class="fs-sm text-grey-400"> {{ resource.metrics.views || 0 }} {{ $t('downloads') }}</span>
@@ -92,8 +91,7 @@
             :aria-labelledby="'resource-' + resource.id + '-header'"
             :id="'resource-' + resource.id"
           >
-              <div class="resource-description" v-if="resource.description">
-                  {{ resource.description }} <!-- TODO(NKL): add $filter for markdown, previously |markdown-->
+              <div class="resource-description markdown" v-if="resource.description" v-html="$filters.markdown(resource.description)">
               </div>
               <dl class="description-list">
                   <div>
@@ -118,18 +116,15 @@
                   </div>
                   <div>
                       <dt>{{ $t('Created on') }}</dt>
-                    <!-- TODO(NKL): format date, previously |dateformat(format='long') -->
-                      <dd>{{resource.created_at}}</dd>
+                      <dd>{{$filters.formatDate(resource.created_at)}}</dd>
                   </div>
                   <div>
                       <dt>{{ $t('Modified on') }}</dt>
-                    <!-- TODO(NKL): format date, previously |dateformat(format='long') -->
-                      <dd>{{resource.modified}}</dd>
+                      <dd>{{$filters.formatDate(resource.modified)}}</dd>
                   </div>
                   <div>
                       <dt>{{ $t('Published on') }}</dt>
-                    <!-- TODO(NKL): format date, previously |dateformat(format='long') -->
-                      <dd>{{resource.published}}</dd>
+                      <dd>{{$filters.formatDate(resource.published)}}</dd>
                   </div>
               </dl>
           </section>
@@ -148,13 +143,17 @@ import LinkIcon from "svg/actions/link.svg";
 
 export default {
   props: {
+    datasetId: {
+      type: String,
+      required: true,
+    },
     resource: {
       type: Object,
-      required: true
+      required: true,
     },
     canEdit: {
       type: Boolean,
-      default: false
+      default: false,
     },
     type: {
       type: String,
@@ -167,7 +166,7 @@ export default {
   },
   data() {
     return {
-      adminUrl: config.admin_root, // TODO(NKL): use proper URL dataset/{id}/resource/{resource_id},
+      adminUrl: `${config.admin_root}dataset/${this.datasetId}/resource/${this.resource.id}`,
       expanded: false,
       ChevronIcon,
       CopyIcon,
