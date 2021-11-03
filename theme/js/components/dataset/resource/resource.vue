@@ -24,6 +24,7 @@
                   <ul>
                       <li class="accordion">
                         <a
+                          href="#"
                           @click.prevent="expand"
                           role="button"
                           :aria-expanded="expanded"
