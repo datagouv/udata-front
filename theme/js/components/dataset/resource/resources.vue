@@ -96,7 +96,6 @@ export default {
         .then((data) => {
           if (data.data) {
             this.resources = data.data;
-            console.log(this.resources)
             this.totalResults = data.total;
           }
         })
