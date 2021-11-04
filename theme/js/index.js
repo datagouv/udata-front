@@ -71,10 +71,11 @@ elements.forEach((el) => {
     el.innerHTML = previousHtml;
 
     console.log(
-      `VueJS template compilation failed for element ${el}.
+      `VueJS template compilation failed for element ${el.className}.
       Aborted the process and rolled back the HTML.
       See error(s) above and below (probably won't help you tho) :`
     );
+    console.log(el);
     console.error(e);
     throw e;
   }
