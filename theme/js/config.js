@@ -107,6 +107,16 @@ export const admin_root = _meta("admin-root");
 export const auth_url = _meta("auth-url");
 
 /**
+ * The schema catalog URL
+ */
+export const schema_catalog_url = _meta("schema-catalog-url");
+
+/**
+ * The schema validata URL
+ */
+export const schema_validata_url = _meta("schema-validata-url");
+
+/**
  * Sentry configuration (as json) if available
  */
 const sentryEl = document.querySelector("meta[name=sentry]");
@@ -196,6 +206,8 @@ export default {
   static_root,
   admin_root,
   auth_url,
+  schema_catalog_url,
+  schema_validata_url,
   sentry,
   check_urls,
   unchecked_types,

@@ -2,6 +2,7 @@
   <article
       class="card resource-card" :class="{'resource-card-community': resource.from_community}">
       <div class="card-body">
+          <modals-container></modals-container>
           <header class="card-header" :id="'resource-' + resource.id + '-header'">
               <div class="edit-button">
                   <a
@@ -35,7 +36,6 @@
                         ></a>
                       </li>
                       <li v-if="resource.preview_url">
-                          <modals-container></modals-container>
                           <a
                             href="#"
                             class="btn-action"
@@ -76,8 +76,9 @@
                         >
                         </a>
                       </li>
-                      <!--{{ hook('dataset.resource.card.extra-buttons') }}
-                     TODO(NKL): add extra-buttons -->
+                      <li v-if="showSchemaButton">
+                        <schema-button :resource="resource"/>
+                      </li>
                   </ul>
                   <div class="filetype">
                       <strong>{{ resource.format.trim().toLowerCase() }}</strong>&nbsp;
@@ -142,8 +143,10 @@ import DownloadIcon from "svg/actions/download.svg";
 import EditIcon from "svg/actions/edit.svg";
 import EyeIcon from "svg/actions/eye.svg";
 import LinkIcon from "svg/actions/link.svg";
+import SchemaButton from "./schema-button";
 
 export default {
+  components: {SchemaButton},
   props: {
     datasetId: {
       type: String,
@@ -164,6 +167,11 @@ export default {
     typeLabel: {
       type: String,
       required: true,
+    },
+  },
+  computed: {
+    showSchemaButton() {
+      return this.resource.schema && this.resource.schema.name
     },
   },
   data() {

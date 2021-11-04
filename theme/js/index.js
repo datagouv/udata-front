@@ -23,6 +23,7 @@ import Modals from "./plugins/modals";
 import i18n from "./plugins/i18n";
 import bodyClass from "./plugins/bodyClass";
 import filters from "./plugins/filters";
+import schemaCatalog from "./plugins/schemaCatalog";
 
 import InitSentry from "./sentry";
 
@@ -40,6 +41,7 @@ const configAndMountApp = (el) => {
   app.use(i18n);
   app.use(bodyClass);
   app.use(filters);
+  app.use(schemaCatalog);
   app.use(Toaster);
 
   app.component("discussion-threads", Threads);

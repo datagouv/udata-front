@@ -1,33 +1,27 @@
 <template>
-<section class="resources-wrapper" ref="top" key="top">
+  <section class="resources-wrapper" ref="top" key="top">
     <transition mode="out-in">
       <div v-if="loading" key="loader">
         <Loader class="mt-md" />
       </div>
       <div v-else>
-          <ul>
-            <li
-              :id="'resource-' + resource.id"
-              v-for="resource in resources"
-            >
-              <resource
-                :dataset-id="datasetId"
-                :resource="resource"
-                :type="type"
-                :type-label="typeLabel"
-                :can-edit="canEdit"
-              />
-            </li>
-          </ul>
-          <pagination
-            class="fr-mt-3w"
-            v-if="totalResults > pageSize"
-            :page="currentPage"
-            :page-size="pageSize"
-            :total-results="totalResults"
-            :change-page="changePage"
-            light
-          />
+        <resource
+          v-for="resource in resources"
+          :id="'resource-' + resource.id"
+          :dataset-id="datasetId"
+          :resource="resource"
+          :type="type"
+          :type-label="typeLabel"
+          :can-edit="canEdit"
+        />
+        <pagination
+          class="fr-mt-3w"
+          v-if="totalResults > pageSize"
+          :page="currentPage"
+          :page-size="pageSize"
+          :total-results="totalResults"
+          :change-page="changePage"
+        />
       </div>
     </transition>
   </section>
@@ -78,7 +72,7 @@ export default {
     this.loadPage(this.currentPage);
   },
   methods: {
-     changePage(index, scroll = true) {
+    changePage(index, scroll = true) {
       this.currentPage = index;
       this.loadPage(index, scroll);
     },
@@ -102,6 +96,7 @@ export default {
         .then((data) => {
           if (data.data) {
             this.resources = data.data;
+            console.log(this.resources)
             this.totalResults = data.total;
           }
         })
