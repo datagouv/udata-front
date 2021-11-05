@@ -144,23 +144,38 @@ export default {
     pageSize: Number,
     totalResults: Number,
   },
+  data() {
+    return {
+      pagesAround: 3
+    }
+  },
   computed: {
     pages() {
       return range(Math.ceil(this.totalResults / this.pageSize));
     },
+    pagesShown() {
+      return Math.min(
+        this.pagesAround * 2 + 1, // we want 3 pages around the current one, this is the default
+        this.pages.length - 2, // we want to show at most all pages except the first and last
+        this.pagesAround + this.page - 1, // if we're close to the first page, we'll show less than 3 pages on the left
+        this.pagesAround + this.pages.length - this.page // if we're close to the last page, we'll show less than 3 pages on the right
+      );
+    },
+    startPage() {
+      return Math.max(
+        this.page - this.pagesAround, // we want to start 3 pages before the current one
+        2 // we don't want to start below page 2
+      )
+    },
     visiblePages() {
-      const length = this.pages.length;
-      const pagesAround = 3;
-      const pagesShown = Math.min(pagesAround * 2 + 1, length - 2);
-      const start = this.page <= pagesAround ? 2 : this.page - pagesAround;
-      if (length <= 2) {
+      if (this.pages.length <= 2) {
          return [];
       }
-      let pagination = [...range(pagesShown, start)];
+      let pagination = [...range(this.pagesShown, this.startPage)];
       if(!pagination.includes(2)) {
         pagination.unshift(null);
       }
-      if(!pagination.includes(length - 1)) {
+      if(!pagination.includes(this.pages.length - 1)) {
         pagination.push(null);
       }
       return pagination;
