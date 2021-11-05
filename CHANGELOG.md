@@ -2,7 +2,8 @@
 
 ## Current (in progress)
 
--  Standardize reuse page similar to dataset page navigation quickfixes [#31](https://github.com/etalab/udata-front/pull/31)
+- Standardize reuse page similar to dataset page navigation quickfixes [#31](https://github.com/etalab/udata-front/pull/31)
+- Move template hook logic to udata and add oauth hooks [#29](https://github.com/etalab/udata-front/pull/29)
 
 ## 1.1.1 (2021-10-22)
 
