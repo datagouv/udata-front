@@ -159,7 +159,7 @@ export const map = _jsonMeta("map-config");
 export const tags = _jsonMeta("tags-config");
 
 /**
- * Default page size for resources in dataset view.
+ * Default page size for resources in dataset view
  */
 export const resources_default_page_size = _jsonMeta(
   "resources-default-page-size"
