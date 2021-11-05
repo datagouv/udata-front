@@ -19,7 +19,8 @@
                       {{ resource.title || $t('Nameless resource') }}
                       <p class="fs-sm m-0 text-grey-300" v-if="resource.from_community && resource.owner">{{resource.owner}}</p>
                   </h4>
-                  <strong class="text-green-300">{{$t('Available')}}</strong>
+                  <strong class="text-green-300" v-if="available">{{$t('Available')}}</strong>
+                  <strong class="text-red-300" v-else-if="unavailable">{{$t('Unavailable')}}</strong>
               </div>
               <div class="button-bar">
                   <ul>
@@ -166,6 +167,15 @@ export default {
     },
   },
   computed: {
+    availabilityChecked() {
+      return this.resource.extras && this.resource.extras['check:status'];
+    },
+    available() {
+      return this.availabilityChecked && this.availabilityChecked >= 200 && this.availabilityChecked < 400;
+    },
+    unavailable() {
+      return this.availabilityChecked && this.availabilityChecked >= 400;
+    },
     showSchemaButton() {
       return this.resource.schema && this.resource.schema.name
     },
