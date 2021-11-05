@@ -19,7 +19,7 @@
                       {{ resource.title || $t('Nameless resource') }}
                       <p class="fs-sm m-0 text-grey-300" v-if="resource.from_community && resource.owner">{{resource.owner}}</p>
                   </h4>
-                  <strong class="text-green-300">Disponible</strong>
+                  <strong class="text-green-300">{{$t('Available')}}</strong>
               </div>
               <div class="button-bar">
                   <ul>
