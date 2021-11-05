@@ -81,7 +81,7 @@
                       </li>
                   </ul>
                   <div class="filetype">
-                      <strong>{{ resource.format.trim().toLowerCase() }}</strong>&nbsp;
+                      <strong>{{ resource.format?.trim()?.toLowerCase() }}</strong>&nbsp;
                       <em v-if="resource.filesize">({{ $filters.filesize(resource.filesize) }})</em>
                   </div>
               </div>
