@@ -75,7 +75,8 @@ export default {
         <a
           :aria-current="page === 1 ? 'page' : null"
           :href="page === 1 ? null : '#'"
-          class="fr-pagination__link fr-displayed-sm"
+          class="fr-pagination__link"
+          :class="{'fr-displayed-sm': page > 1}"
           :title="$t('Page', {nb: 1})"
           @click.prevent="_onClick(1)"
         >
