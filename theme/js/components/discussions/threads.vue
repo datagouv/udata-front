@@ -67,7 +67,6 @@
             :page-size="pageSize"
             :total-results="totalResults"
             :changePage="changePage"
-            light
           />
         </div>
       </div>

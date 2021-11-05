@@ -134,7 +134,6 @@
           <Dataset v-bind="result" />
         </a>
         <Pagination
-          light
           v-if="totalResults > pageSize"
           :page="currentPage"
           :page-size="pageSize"
