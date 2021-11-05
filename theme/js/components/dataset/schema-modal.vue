@@ -5,7 +5,7 @@
       <p>
         <span>{{$t('This resource is associated to the schema ')}}<b>{{ resourceSchema.name }}</b></span>
         <span v-if="resourceSchema.version">, version {{ resourceSchema.version }},</span>
-       <span> {{$t('this mean that the producer report that it adhere to the specification.')}}</span>
+       <span> {{$t('this means that the producer reports that it adheres to the specification.')}}</span>
       </p>
 
       <h3>{{$t('Documentation')}}</h3>
@@ -28,7 +28,7 @@
       <div v-if="authorizeValidation">
         <h3>{{$t('Validation')}}</h3>
         <blockquote>
-          {{$t("Resource validation based on a schema is a way to verify that the resource comply to the schema it is supposed to abide. In case of errors, a validation report show the errors found: wrongly named columns, non conform values, etc.")}}
+          {{$t("Resource validation based on a schema is a way to verify that the resource complies to the schema it is supposed to abide by. In case of errors, a validation report shows the errors found: wrongly named columns, non conform values, etc.")}}
         </blockquote>
 
         <p>
@@ -49,7 +49,7 @@
 
       <h3>{{$t('Others resources')}}</h3>
       <p>
-        {{$t('You can specify that a resource comply to a schema on your producer dashboard. Others resources complying with the schema are available on the platform.')}}
+        {{$t('You can specify that a resource complies to a schema on your producer dashboard. Other resources complying with the schema are available on the platform.')}}
       </p>
 
       <div>
@@ -67,7 +67,7 @@
 
       <h3>{{$t('About schemas')}}</h3>
       <p>
-        {{$t('Data schemas allow to describe data model : what are the fields, how are data represented, what are the possible values. Discover how schemas improve data quality and what are the use cases possibles on ')}} <a href="https://schema.data.gouv.fr" rel="noopener noreferrer" target="_blank" title="Site web schema.data.gouv.fr">schema.data.gouv.fr</a>.
+        {{$t('Data schemas allow to describe data models : what are the fields, how is data represented, what are the possible values. Discover how schemas improve data quality and use cases on ')}} <a href="https://schema.data.gouv.fr" rel="noopener noreferrer" target="_blank" title="Site web schema.data.gouv.fr">schema.data.gouv.fr</a>.
       </p>
     </div>
 

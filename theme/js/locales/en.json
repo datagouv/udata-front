@@ -101,17 +101,17 @@
   "See schema": "See schema",
   "Associated schema": "Associated schema",
   "This resource is associated to the schema ": "This resource is associated to the schema ",
-  "this mean that the producer report that it adhere to the specification.": "this mean that the producer report that it adhere to the specification.",
+  "this means that the producer reports that it adheres to the specification.": "this means that the producer reports that it adheres to the specification.",
   "Documentation": "Documentation",
   "You can view the schema documentation, discover some context and recommendations for data producers.": "You can view the schema documentation, discover some context and recommendations for data producers.",
   "Read documentation": "Read documentation",
   "Validation": "Validation",
-  "Resource validation based on a schema is a way to verify that the resource comply to the schema it is supposed to abide. In case of errors, a validation report show the errors found: wrongly named columns, non conform values, etc.": "Resource validation based on a schema is a way to verify that the resource comply to the schema it is supposed to abide. In case of errors, a validation report show the errors found: wrongly named columns, non conform values, etc.",
+  "Resource validation based on a schema is a way to verify that the resource complies to the schema it is supposed to abide by. In case of errors, a validation report shows the errors found: wrongly named columns, non conform values, etc.": "Resource validation based on a schema is a way to verify that the resource complies to the schema it is supposed to abide by. In case of errors, a validation report shows the errors found: wrongly named columns, non conform values, etc.",
   "data.gouv.fr allows you to validate your files based on a schema and correct the possible errors.": "data.gouv.fr allows you to validate your files based on a schema and correct the possible errors.",
   "Validate resource": "Validate resource",
   "Others resources": "Others resources",
-  "You can specify that a resource comply to a schema on your producer dashboard. Others resources complying with the schema are available on the platform.": "You can specify that a resource comply to a schema on your producer dashboard. Others resources complying with the schema are available on the platform.",
+  "You can specify that a resource complies to a schema on your producer dashboard. Other resources complying with the schema are available on the platform.": "You can specify that a resource complies to a schema on your producer dashboard. Other resources complying with the schema are available on the platform.",
   "See dataset linked to this schema": "See dataset linked to this schema",
   "About schemas": "About schemas",
-  "Data schemas allow to describe data model : what are the fields, how are data represented, what are the possible values. Discover how schemas improve data quality and what are the use cases possibles on ": "Data schemas allow to describe data model : what are the fields, how are data represented, what are the possible values. Discover how schemas improve data quality and what are the use cases possibles on "
+  "Data schemas allow to describe data models : what are the fields, how is data represented, what are the possible values. Discover how schemas improve data quality and use cases on ": "Data schemas allow to describe data models : what are the fields, how is data represented, what are the possible values. Discover how schemas improve data quality and use cases on "
 }
