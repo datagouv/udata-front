@@ -10,7 +10,6 @@
           :id="'resource-' + resource.id"
           :dataset-id="datasetId"
           :resource="resource"
-          :type="type"
           :type-label="typeLabel"
           :can-edit="canEdit"
         />
@@ -47,7 +46,6 @@ export default {
       pageSize: config.resources_default_page_size,
       totalResults: 0,
       loading: true,
-      readOnlyEnabled: config.read_only_enabled,
     };
   },
   props: {
@@ -112,7 +110,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

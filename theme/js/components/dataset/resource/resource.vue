@@ -160,10 +160,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    type: {
-      type: String,
-      required: true,
-    },
     typeLabel: {
       type: String,
       required: true,
@@ -193,7 +189,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
