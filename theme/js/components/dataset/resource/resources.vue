@@ -101,7 +101,7 @@ export default {
           this.$toast.error(
             this.$t("An error occurred while fetching resources")
           );
-          this.discussion = [];
+          this.resources = [];
         })
         .finally(() => {
           this.loading = false;
