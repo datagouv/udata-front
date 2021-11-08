@@ -60,6 +60,9 @@
                           :href="resource.latest"
                           :aria-label="$t('Resource link')"
                           v-html="LinkIcon"
+                          rel="nofollow"
+                          target="_blank"
+                          class="no-icon-after"
                         >
                         </a>
                       </li>
