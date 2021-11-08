@@ -4,11 +4,10 @@
       <div class="card-body">
           <modals-container></modals-container>
           <header class="card-header" :id="'resource-' + resource.id + '-header'">
-              <div class="edit-button">
+              <div class="edit-button" v-if="canEdit">
                   <a
                     :href="adminUrl"
                     :aria-label="$t('Edit resource')"
-                    v-if="canEdit"
                     v-html="EditIcon"
                   >
                   </a>
@@ -39,7 +38,6 @@
                       <li v-if="resource.preview_url">
                           <a
                             href="#"
-                            class="btn-action"
                             :title="$t('Preview')"
                             @click.prevent="$showModal('preview', {url: resource.preview_url}, true)"
                             v-html="EyeIcon"
@@ -53,7 +51,6 @@
                           :id="resource.id + '-copy'"
                           :title="$t('Copy permalink to clipboard')"
                           :data-clipboard-text="resource.latest"
-                          class="btn-action"
                           v-html="CopyIcon"
                         >
                         </a>
@@ -61,7 +58,6 @@
                       <li v-if="resource.format === 'url'">
                         <a
                           :href="resource.latest"
-                          class="btn-action"
                           :aria-label="$t('Resource link')"
                           v-html="LinkIcon"
                         >
@@ -70,7 +66,6 @@
                       <li v-else>
                         <a
                           :href="resource.latest"
-                          class="btn-action"
                           :aria-label="$t('Download resource')"
                           download
                           v-html="DownloadIcon"

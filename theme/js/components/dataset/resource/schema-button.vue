@@ -1,5 +1,5 @@
 <template>
-  <button class="btn btn-sm btn-primary hidden-md" @click.prevent="showModal">
+  <button class="btn btn-sm btn-primary" @click.prevent="showModal">
       {{$t('See schema')}}
   </button>
 </template>
