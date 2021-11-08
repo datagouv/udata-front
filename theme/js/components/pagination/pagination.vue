@@ -102,18 +102,18 @@ export default {
       <li>
         <a
           class="fr-pagination__link"
-          :aria-current="page === pages.length ? 'page' : null"
-          :href="page === pages.length ? null : '#'"
-          :title="$t('Page', {nb: pages.length})"
-          @click.prevent="_onClick(pages.length)"
+          :aria-current="page === pageCount ? 'page' : null"
+          :href="page === pageCount ? null : '#'"
+          :title="$t('Page', {nb: pageCount})"
+          @click.prevent="_onClick(pageCount)"
         >
-          {{ pages.length }}
+          {{ pageCount }}
         </a>
       </li>
       <li>
         <a
           class="fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label"
-          :href="page === pages.length ? null : '#'"
+          :href="page === pageCount ? null : '#'"
           @click.prevent="_onClick(page + 1)"
         >
           {{ $t('Next page') }}
@@ -122,8 +122,8 @@ export default {
       <li>
         <a
           class="fr-pagination__link fr-pagination__link--last"
-          :href="page === pages.length ? null : '#'"
-          @click.prevent="_onClick(pages.length)"
+          :href="page === pageCount ? null : '#'"
+          @click.prevent="_onClick(pageCount)"
         >
           {{ $t('Last page') }}
         </a>
@@ -133,9 +133,7 @@ export default {
 </template>
 
 <script>
-function range(size, startAt = 1) {
-  return [...Array(size).keys()].map((i) => i + startAt);
-}
+import getVisiblePages from "../vanilla/pagination";
 
 export default {
   props: {
@@ -150,40 +148,16 @@ export default {
     }
   },
   computed: {
-    pages() {
-      return range(Math.ceil(this.totalResults / this.pageSize));
-    },
-    pagesShown() {
-      return Math.min(
-        this.pagesAround * 2 + 1, // we want 3 pages around the current one, this is the default
-        this.pages.length - 2, // we want to show at most all pages except the first and last
-        this.pagesAround + this.page - 1, // if we're close to the first page, we'll show less than 3 pages on the left
-        this.pagesAround + this.pages.length - this.page // if we're close to the last page, we'll show less than 3 pages on the right
-      );
-    },
-    startPage() {
-      return Math.max(
-        this.page - this.pagesAround, // we want to start 3 pages before the current one
-        2 // we don't want to start below page 2
-      )
+    pageCount() {
+      return Math.ceil(this.totalResults / this.pageSize);
     },
     visiblePages() {
-      if (this.pages.length <= 2) {
-         return [];
-      }
-      let pagination = [...range(this.pagesShown, this.startPage)];
-      if(!pagination.includes(2)) {
-        pagination.unshift(null);
-      }
-      if(!pagination.includes(this.pages.length - 1)) {
-        pagination.push(null);
-      }
-      return pagination;
+      return getVisiblePages(this.page, this.pageCount);
     },
   },
   methods: {
     _onClick(index) {
-      if (index !== this.page && index > 0 && index <= this.pages.length) return this.changePage(index);
+      if (index !== this.page && index > 0 && index <= this.pageCount) return this.changePage(index);
     },
   },
 };
