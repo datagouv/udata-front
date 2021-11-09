@@ -514,36 +514,36 @@ msgstr ""
 msgid "External application authorization"
 msgstr ""
 
-#: udata_front/theme/gouvfr/templates/api/oauth_authorize.html:25
+#: udata_front/theme/gouvfr/templates/api/oauth_authorize.html:28
 #, python-format
 msgid "%(app)s want to access your %(site)s account."
 msgstr ""
 
-#: udata_front/theme/gouvfr/templates/api/oauth_authorize.html:35
+#: udata_front/theme/gouvfr/templates/api/oauth_authorize.html:38
 msgid "This site request the following rights:"
 msgstr ""
 
-#: udata_front/theme/gouvfr/templates/api/oauth_authorize.html:37
+#: udata_front/theme/gouvfr/templates/api/oauth_authorize.html:40
 msgid "Access your profile"
 msgstr ""
 
-#: udata_front/theme/gouvfr/templates/api/oauth_authorize.html:38
+#: udata_front/theme/gouvfr/templates/api/oauth_authorize.html:41
 msgid "Read your profile, the orgnization you belong to, your publications"
 msgstr ""
 
-#: udata_front/theme/gouvfr/templates/api/oauth_authorize.html:39
+#: udata_front/theme/gouvfr/templates/api/oauth_authorize.html:42
 msgid "Publish data"
 msgstr ""
 
-#: udata_front/theme/gouvfr/templates/api/oauth_authorize.html:40
+#: udata_front/theme/gouvfr/templates/api/oauth_authorize.html:43
 msgid "Publish datasets, reuses, follow or unfollow"
 msgstr ""
 
-#: udata_front/theme/gouvfr/templates/api/oauth_authorize.html:51
+#: udata_front/theme/gouvfr/templates/api/oauth_authorize.html:54
 msgid "Refuse"
 msgstr ""
 
-#: udata_front/theme/gouvfr/templates/api/oauth_authorize.html:58
+#: udata_front/theme/gouvfr/templates/api/oauth_authorize.html:61
 msgid "Accept"
 msgstr ""
 
