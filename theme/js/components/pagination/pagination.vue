@@ -66,7 +66,7 @@ export default {
         <a
           :href="page === 1 ? null : '#'"
           class="fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label"
-          @click.prevent="_onClick(page - 1)"
+          @click.prevent="previousPage"
         >
           {{ $t('Previous page') }}
         </a>
@@ -114,7 +114,7 @@ export default {
         <a
           class="fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label"
           :href="page === pageCount ? null : '#'"
-          @click.prevent="_onClick(page + 1)"
+          @click.prevent="nextPage"
         >
           {{ $t('Next page') }}
         </a>
@@ -157,8 +157,22 @@ export default {
   },
   methods: {
     _onClick(index) {
-      if (index !== this.page && index > 0 && index <= this.pageCount) return this.changePage(index);
+      if (index !== this.page) {
+        return this.changePage(index);
+      }
     },
+    nextPage() {
+      const index = this.page + 1;
+      if (index <= this.pageCount) {
+        return this.changePage(index);
+      }
+    },
+    previousPage() {
+      const index = this.page - 1;
+      if (index > 0) {
+        return this.changePage(index);
+      }
+    }
   },
 };
 </script>
