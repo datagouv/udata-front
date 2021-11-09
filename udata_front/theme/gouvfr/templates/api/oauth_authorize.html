@@ -11,17 +11,20 @@
                     <div class="fr-px-7v fr-py-5w border-bottom border-g200">
                         <div class="fr-grid-row fr-grid-row--middle">
                             {% if grant.client.organization %}
-                                <div class="fr-mr-4w">
+                                <div class="fr-mr-4w fr-mb-3w">
                                     <img
                                         alt="{{ grant.client.organization.name|placeholder_alt(grant.client.organization.logo) }}"
                                         src="{{ grant.client.organization.logo(120)|placeholder('organization') }}"
+                                        class="client-logo"
                                     />
                                 </div>
                             {% endif %}
-                            <div class="fr-col-4">
-                                <img src="{{ grant.client.image }}" alt="" class="fr-responsive-img">
+                            {% if grant.client.image %}
+                            <div class="fr-col-4 fr-mb-3w">
+                                <img src="{{ grant.client.image }}" alt="" class="fr-responsive-img client-logo">
                             </div>
-                            <p class="fr-text--lead fr-mt-3w fr-mb-0">
+                            {% endif %}
+                            <p class="fr-text--lead fr-mb-0">
                                 {{ _(
                                 '%(app)s want to access your %(site)s account.',
                                 app='<strong>%s</strong>'|format(grant.client.name)|safe,
