@@ -133,13 +133,13 @@ def dataset_apis(ctx):
 
 
 @template_hook('oauth_authorize_theme_content')
-def oauth_theme_content(ctx):
+def oauth_authorize_theme_content(ctx):
     grant = ctx['grant']
     return theme.render('api/oauth_authorize.html', grant=grant)
 
 
 @template_hook('oauth_error_theme_content')
-def oauth_theme_content(ctx):
+def oauth_error_theme_content(ctx):
     request = ctx['request']
     return theme.render('api/oauth_error.html', error=request.args.get('error'))
 
