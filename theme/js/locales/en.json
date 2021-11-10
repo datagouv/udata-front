@@ -77,7 +77,7 @@
   "Read less": "Read less",
   "remove from favorites": "remove from favorites",
   "add to favorites": "add to favorites",
-  "Page": "Page",
+  "Page": "Page {nb}",
   "First page": "First Page",
   "Previous page": "Previous page",
   "Next page": "Next page",
