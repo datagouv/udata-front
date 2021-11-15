@@ -2,6 +2,7 @@
 {% from theme('macros/follow.html') import follow_btn with context %}
 {% from theme('macros/breadcrumb.html') import breadcrumb with context %}
 {% from theme('macros/paginator.html') import paginator with context %}
+{% from theme('macros/certified.html') import badge_if_certified with context %}
 
 {% set is_hidden = (reuses.total or 0) + (datasets.total or 0) <= 0 %}
 {% set meta = {
@@ -22,49 +23,50 @@
 
 {% block main_content %}
 <section class="organization-container">
-    <header class="organization-header hagrid">
+    <header class="organization-header container">
         {% if org.deleted %}
         <div class="well-grey-100 well mb-sm">
             {{ _('This organization has been deleted. This will be permanent in the next 24 hours') }}
         </div>
         {% endif %}
-        <div class="row">
-            <div class="col-1 col-md-6 logo">
+        <div class="row align-items-start">
+            <div class="col-auto logo">
                 <img src="{{org.logo(80)|placeholder('organization') }}" alt="" />
+                <div class="logo-badge logo-badge--bottom-right">
+                    {{ badge_if_certified(org) }}
+                </div>
             </div>
-            <div class="hidden visible-md col align-items-center justify-end">
-                {{ follow_btn(org) }}
-            </div>
-            <div class="col-10 col-md-12 mt-md-sm">
+            <div class="col">
                 <div class="row-inline no-wrap align-items-center">
-                    {% if org.public_service %}
-                    <span class="icon-lg text-align-center mr-sm">{% include theme("svg/certified.svg") %}</span>
-                    {% endif %}
-                    <h1 class="my-0">
+                    <h1 class="fr-my-0 fr-h1">
                         {{ org.name }}
                     </h1>
                 </div>
-                <div class="mt-xs">
+                <div class="fr-mt-1w">
                     <ul class="row-inline align-items-center f-bold">
-                        <li class="hidden-md">
-                            {{ follow_btn(org) }}
-                        </li>
                         {% if total_datasets > 0 %}
-                        <li class="ml-md ml-md-0">
-                            <a href="#organization-datasets" class="text-blue-400">
+                        <li>
+                            <a href="#organization-datasets">
                                 {{ total_datasets }} {{ _('Datasets') }}
                             </a>
                         </li>
                         {% endif %}
                         {% if total_reuses > 0 %}
                         <li class="ml-md">
-                            <a href="#organization-reuses" class="text-green-400">
+                            <a href="#organization-reuses">
                                 {{ total_reuses }} {{ _('Reuses') }}
                             </a>
                         </li>
                         {% endif %}
                     </ul>
                 </div>
+            </div>
+            <div class="col-auto fr-mt-1v row-inline align-items-end flex-direction-column">
+                {{ follow_btn(org) }}
+                {% if can_edit %}
+                <a class="fr-btn fr-btn--secondary btn-secondary btn-secondary-grey-500 fr-mt-2w fr-fi-edit-line fr-btn--icon-left fr-displayed-sm"
+                        href="{{ url_for('admin.index', path='organization/{id}/'.format(id=org.id)) }}">{{ _('Modify organization') }}</a>
+                {% endif %}
             </div>
         </div>
     </header>
