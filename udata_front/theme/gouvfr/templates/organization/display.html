@@ -69,7 +69,7 @@
         </div>
     </div>
 </header>
-<section class="bg-beige fr-py-5w fr-my-5w">
+<section class="bg-beige fr-py-5w fr-mt-6w fr-mb-9v">
     <div class="container vuejs">
         <h2 id="description" class="fr-h2 fr-mb-0">{{ _('Description') }}</h2>
         <read-more>
@@ -79,7 +79,7 @@
 </section>
 {# TODO: proper <select> also needed in discussions and footer, then sort from URL param #}
 {% if datasets and datasets|length > 0 %}
-<section id="organization-datasets" class="fr-py-5w container">
+<section id="organization-datasets" class="fr-py-9v container">
     <h2>{{ _('Datasets') }}<sup>{{ total_datasets }}</sup></h2>
     {% for dataset in datasets %}
         <a href="{{ url_for('datasets.show', dataset=dataset) }}" title="{{ dataset.title }}"
@@ -90,7 +90,7 @@
 </section>
 {% endif %}
 {% if reuses and reuses|length > 0 %}
-<section id="organization-reuses" class="fr-py-5w container">
+<section id="organization-reuses" class="fr-py-9v container">
     <h2>{{ _('Reuses') }}<sup>{{ total_reuses }}</sup></h2>
     <ul class="row">
             {% for reuse in reuses %}
@@ -104,7 +104,7 @@
     {{ paginator(reuses, arg_name='reuses_page', url='#organization-reuses') }}
 </section>
 {% endif %}
-<section class="fr-py-5w container">
+<section class="fr-py-9v container">
     <h2>{{ _('Members') }}<sup>{{ org.members|length or 0 }}</sup></h2>
     <div class="row">
         {% for member in org.members %}
@@ -118,7 +118,7 @@
         {% endfor %}
     </div>
 </section>
-<section class="fr-py-5w container">
+<section class="fr-py-9v container">
     <div class="row">
         <div class="col-6 col-md-12">
             <h3>{{ _('Technical details') }}</h3>
