@@ -104,6 +104,11 @@ Similar to the contextual text color classes, easily set the background of an el
 @green-400: #008452;
 @green-500: #023d13;
 
+@beige: var(--beige);
+@g200: var(--g200);
+@g400: var(--g400);
+@g600: var(--g600);
+
 @contrast-white: @grey-300;
 @contrast-black: @white;
 @contrast-blue-100: @blue-300;
@@ -145,5 +150,9 @@ each(@colors, {
 });
 
 .bg-beige {
-    background-color: var(--beige);
+    background-color: @beige;
+}
+
+.text-g600 {
+    color: @g600 !important;
 }

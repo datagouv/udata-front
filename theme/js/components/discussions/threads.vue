@@ -1,51 +1,63 @@
 <template>
   <section class="discussions-wrapper" ref="top" key="top">
-    <transition mode="out-in">
-      <div v-if="loading" key="loader">
-        <Loader class="mt-md" />
+    <div class="row">
+      <div class="col">
+        <h2 id="community-discussions" class="fr-h2">{{ title }} <sup>{{totalResults}}</sup></h2>
+        <slot></slot>
       </div>
-      <div v-else>
+      <div class="col-auto row-inline flex-direction-column justify-between" v-if="!threadFromURL">
+        <ThreadsCreateButton :onClick="startThreadWithoutScroll"/>
+        <div class="fr-mt-5v">
+          <select
+          name="sortBy"
+          id="sortBy"
+          @change="changeSort(currentSort)"
+          v-model="currentSort"
+          class="fr-select bg-beige fr-select--no-border"
+        >
+          <option
+            v-for="sort in sorts"
+            :value="sort"
+            :selected="sort === currentSort"
+          >
+            {{ sort.name }}
+          </option>
+        </select>
+        </div>
+      </div>
+    </div>
+    <transition mode="out-in">
+      <template v-if="loading" key="loader">
+        <Loader class="mt-md" />
+      </template>
+      <template v-else>
         <div v-if="threadFromURL">
-          <div class="well well-secondary-green-300">
-            <div class="row-inline justify-between">
+          <div class="fr-px-3w well well-secondary-green-300">
+            <div class="fr-grid-row fr-grid-row--middle justify-between">
               {{
                 $t("You are seeing a specific discussion about this dataset")
               }}
-              <a
-                @click.prevent="viewAllDiscussions"
-                class="unstyled"
-                v-html="CloseIcon"
-              ></a>
+              <button class="fr-link--close fr-link text-green-300 fr-mr-0" @click.prevent="viewAllDiscussions">
+                {{$t('Close')}}
+              </button>
             </div>
           </div>
           <thread v-bind="threadFromURL"></thread>
-          <a
-            class="nav-link mt-xl"
+          <button
+            class="fr-link text-blue-400 fr-mt-9v fr-link--icon-left fr-fi-arrow-right-s-line"
             @click.prevent="viewAllDiscussions"
-            >{{ $t("See all discussions about this dataset") }}</a
           >
+            {{ $t("See all discussions about this dataset") }}
+          </button>
         </div>
         <div v-else>
-          <div class="row-inline justify-end align-items-center">
-            {{ $t("Sort by:") }}
-            <div class="dropdown btn-secondary-grey-500 ml-md">
-              <select
-                name="sortBy"
-                id="sortBy"
-                @change="changeSort(currentSort)"
-                v-model="currentSort"
-                class="ml-xs"
-              >
-                <option
-                  v-for="sort in sorts"
-                  :value="sort"
-                  :selected="sort === currentSort"
-                >
-                  {{ sort.name }}
-                </option>
-              </select>
-            </div>
-          </div>
+          <create-thread
+            ref="createThread"
+            :onSubmit="createThread"
+            :subjectId="subjectId"
+            :subjectClass="subjectClass"
+            v-if="!readOnlyEnabled"
+          ></create-thread>
           <ul>
             <li
               :id="'discussion-' + discussion.id"
@@ -54,13 +66,6 @@
               <thread v-bind="discussion" />
             </li>
           </ul>
-          <create-thread
-            ref="createThread"
-            :onSubmit="createThread"
-            :subjectId="subjectId"
-            :subjectClass="subjectClass"
-            v-show="!readOnlyEnabled"
-          ></create-thread>
           <pagination
             v-if="totalResults > pageSize"
             :page="currentPage"
@@ -69,7 +74,7 @@
             :changePage="changePage"
           />
         </div>
-      </div>
+      </template>
     </transition>
   </section>
 </template>
@@ -83,6 +88,7 @@ import CreateThread from "./threads-create.vue";
 import Thread from "./thread.vue";
 import Loader from "./loader.vue";
 import CloseIcon from "svg/close.svg";
+import ThreadsCreateButton from "./threads-create-button";
 
 const URL_REGEX = /discussion-([a-f0-9]{24})-?([0-9]+)?$/i;
 
@@ -94,8 +100,11 @@ const sorts = [
   },
 ];
 
+const defaultTitle = i18n.global.t("Discussions");
+
 export default {
   components: {
+    ThreadsCreateButton,
     "create-thread": CreateThread,
     Thread,
     Pagination,
@@ -106,7 +115,7 @@ export default {
       discussions: [], // Store list of discussions (page)
       threadFromURL: null, // Single thread (load from URL)
       currentPage: 1, // Current pagination page
-      pageSize: 20,
+      pageSize: 5,
       totalResults: 0,
       loading: true,
       currentSort: sorts[0],
@@ -116,8 +125,13 @@ export default {
     };
   },
   props: {
+    description: String,
     subjectId: String,
     subjectClass: String,
+    title: {
+      type: String,
+      default: defaultTitle,
+    }
   },
   watch: {
     // Update DOM counter on results count change
@@ -222,19 +236,21 @@ export default {
     },
     // Can be called from outside the component to start a new thread programmatically
     startThread() {
-      if (!this.$refs.createThread) return;
-
-      this.$refs.createThread.displayForm();
+      this.startThreadWithoutScroll();
       this.$refs.createThread.$el.scrollIntoView();
+    },
+    // Can be called from outside the component to start a new thread programmatically
+    startThreadWithoutScroll() {
+      if (!this.$refs.createThread) return;
+      this.$refs.createThread.displayForm();
     },
     // Callback that will be passed to the create-thread component
     createThread(data) {
-      const vm = this;
       return this.$api
         .post("/discussions/", data)
         .then(() => {
-          vm.current_page = 1;
-          vm.loadPage(1, true);
+          this.currentPage = 1;
+          this.loadPage(1, true);
         })
         .catch((err) =>
           this.$toast.error(

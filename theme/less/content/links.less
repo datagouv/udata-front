@@ -73,6 +73,7 @@ a {
     position: relative;
     margin-left: 0.75em;
     color: @grey-400;
+    --bf500: @grey-400;
     font-weight: @font-weight-bold;
     text-decoration: underline;
     text-decoration-color: @grey-200;
@@ -84,7 +85,7 @@ a {
         }
     }
 
-    &::before {
+    &:not(.nav-link--no-icon)::before {
         position: absolute;
         left: -0.75em;
         width: 0.5em;

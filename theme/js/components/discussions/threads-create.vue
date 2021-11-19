@@ -1,17 +1,18 @@
 <template>
-  <div class="thread-create">
-    <a
-      class="btn-action my-xl"
-      @click.prevent="displayForm"
-      v-if="!showForm"
-      tabindex="0"
+  <div class="thread-create fr-mt-2w">
+    <ThreadsCreateButton
+      v-if="showCreateButton && !showForm"
+      :onClick="displayForm"
     >
-      <span v-html="AddIcon"></span>
-      <span>{{ $t("Start a new discussion") }}</span>
-    </a>
-    <div v-if="showForm" class="thread-wrapper">
-      <div class="thread-header">
-        <div class="thread-title">{{ $t("New discussion") }}</div>
+    </ThreadsCreateButton>
+    <div v-if="showForm" class="bg-beige">
+      <div class="fr-grid-row fr-grid-row--middle border-bottom border-g400">
+        <div class="fr-col fr-p-2w fr-p-md-0 fr-h6 fr-mb-0">{{ $t("New discussion") }}</div>
+        <div>
+          <button class="fr-link--close fr-link text-grey-500 fr-mr-0" @click="hideForm">
+            {{$t('Close')}}
+          </button>
+        </div>
       </div>
       <div class="thread-comment">
         <form @submit.prevent="submit">
@@ -56,12 +57,14 @@
 <script>
 import config from "../../config";
 import Author from "./author";
-import AddIcon from "svg/actions/add.svg"; //Not the best but we don't have many svg
+import AddIcon from "svg/actions/add.svg";
+import ThreadsCreateButton from "./threads-create-button"; //Not the best but we don't have many svg
 
 const log = console.log;
 
 export default {
   components: {
+    ThreadsCreateButton,
     Author
   },
   data() {
@@ -75,16 +78,23 @@ export default {
     };
   },
   props: {
+    showCreateButton: {
+      type: Boolean,
+      default: false
+    },
     subjectId: String,
     subjectClass: String,
     onSubmit: Function,
   },
   methods: {
-    displayForm: function () {
+    displayForm() {
       this.$auth(
         this.$t("You must be logged in to start a discussion.")
       );
       this.showForm = true;
+    },
+    hideForm() {
+      this.showForm = false;
     },
     submit() {
       const vm = this;
