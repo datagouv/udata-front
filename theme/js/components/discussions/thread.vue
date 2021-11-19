@@ -74,7 +74,6 @@
 import ThreadReply from "./thread-reply.vue";
 import Avatar from "./avatar.vue";
 import Author from "./author.vue";
-import LinkIcon from "svg/permalink.svg";
 import config from "../../config";
 
 export default {
@@ -95,7 +94,6 @@ export default {
     return {
       showForm: false,
       updatedDiscussion: null,
-      LinkIcon,
       collapsed: true,
       readOnlyEnabled: config.read_only_enabled,
     };
