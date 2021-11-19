@@ -1,12 +1,12 @@
 <template>
   <section class="discussions-wrapper" ref="top" key="top">
-    <div class="row">
-      <div class="col">
+    <div class="fr-grid-row">
+      <div class="fr-col">
         <h2 id="community-discussions" class="fr-h2">{{ title }} <sup>{{totalResults}}</sup></h2>
         <slot></slot>
       </div>
-      <div class="col-auto row-inline flex-direction-column justify-between" v-if="!threadFromURL">
-        <ThreadsCreateButton :onClick="startThreadWithoutScroll"/>
+      <div class="fr-col-12 fr-col-sm-5 fr-col-md-4 fr-col-lg-3 fr-grid-row fr-grid-row--bottom flex-direction-column justify-between" v-if="!threadFromURL">
+        <ThreadsCreateButton class="fr-col--bottom" :onClick="startThreadWithoutScroll"/>
         <div class="fr-mt-5v">
           <select
           name="sortBy"
@@ -44,10 +44,10 @@
           </div>
           <thread v-bind="threadFromURL"></thread>
           <button
-            class="fr-link text-blue-400 fr-mt-9v fr-link--icon-left fr-fi-arrow-right-s-line"
+            class="nav-link nav-link--no-icon text-decoration-none fr-link fr-mt-9v fr-link--icon-left fr-fi-arrow-right-s-line"
             @click.prevent="viewAllDiscussions"
           >
-            {{ $t("See all discussions about this dataset") }}
+            <span class="text-decoration-underline">{{ $t("See all discussions about this dataset") }}</span>
           </button>
         </div>
         <div v-else>

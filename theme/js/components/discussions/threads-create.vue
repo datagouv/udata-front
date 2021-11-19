@@ -6,46 +6,48 @@
     >
     </ThreadsCreateButton>
     <div v-if="showForm" class="bg-beige">
-      <div class="fr-grid-row fr-grid-row--middle border-bottom border-g400">
-        <div class="fr-col fr-p-2w fr-p-md-0 fr-h6 fr-mb-0">{{ $t("New discussion") }}</div>
+      <div class="fr-grid-row fr-grid-row--middle border-bottom border-g400 fr-py-2w fr-px-3w">
+        <div class="fr-col fr-h6 fr-mb-0">{{ $t("New discussion") }}</div>
         <div>
           <button class="fr-link--close fr-link text-grey-500 fr-mr-0" @click="hideForm">
             {{$t('Close')}}
           </button>
         </div>
       </div>
-      <div class="thread-comment">
+      <div class="thread-comment fr-py-3w fr-px-3w">
         <form @submit.prevent="submit">
-          <div>
-            <label for="thread-title" class="fs-sm f-bold mb-sm">{{
-              $t("Title")
-            }}</label>
-          </div>
-          <input
-            type="text"
-            id="thread-title"
-            v-model="title"
-            :placeholder="$t('Title')"
+          <div class="fr-input-group">
+            <label for="thread-title" class="fr-label">
+              {{ $t("Title") }}
+            </label>
+            <input
+              class="fr-input"
+              type="text"
+              id="thread-title"
+              v-model="title"
+              :placeholder="$t('Title')"
           />
-          <div>
-            <label for="thread-comment" class="fs-sm f-bold my-sm">{{
-              $t("Message")
-            }}</label>
           </div>
-          <textarea
-            id="thread-comment"
-            v-model="comment"
-            :placeholder="$t('Comment')"
-          />
-          <footer class="row-inline justify-between align-items-center">
-            <span class="text-grey-300 fs-sm">
-              {{ $t("Comment as") }}
+          <div class="fr-input-group">
+            <label for="thread-comment" class="fr-label">
+              {{ $t("Message") }}
+            </label>
+            <textarea
+              id="thread-comment"
+              v-model="comment"
+              :placeholder="$t('Comment')"
+              class="fr-input"
+            ></textarea>
+          </div>
+          <footer class="fr-grid-row justify-between fr-grid-row--middle">
+            <span class="text-g600 fr-text--sm fr-mb-0">
+              {{ $t("Reply as") }}
               <Author :author="user" />
             </span>
             <input
               type="submit"
               :value="$t('Submit')"
-              class="btn-secondary btn-secondary-green-300"
+              class="btn-secondary btn-secondary-grey-500 fr-btn fr-btn--secondary"
             />
           </footer>
         </form>

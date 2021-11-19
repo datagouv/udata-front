@@ -1,11 +1,11 @@
 <template>
-  <div class="bg-beige fr-mt-2w fr-px-3w" :id="discussionUrl(id)">
-    <header class="fr-grid-row fr-grid-row--middle fr-py-2w border-bottom border-g400">
+  <div class="bg-beige fr-mt-2w" :id="discussionUrl(id)">
+    <header class="fr-grid-row fr-grid-row--middle justify-between fr-py-2w fr-px-3w border-bottom border-g400">
       <div class="fr-col-auto text-orange-100 fr-text--bold fr-pr-2w" v-if="closed">
         <span>{{ $t("Discussion closed") }}</span>
       </div>
-      <h3 class="fr-col-12 fr-col-sm-8 fr-col-md-9 fr-col-xl-10 fr-p-2w fr-p-md-0 fr-h6 fr-mb-0">{{ title }}</h3>
-      <div class="fr-col-sm-4 fr-col-md-3 fr-col-xl-2 text-align-right">
+      <h3 class="fr-p-2w fr-p-md-0 fr-h6 fr-mb-0">{{ title }}</h3>
+      <div class="text-align-right">
         <a
           :href="discussionUrl(id, true)"
           class="fr-link fr-link--icon-right fr-fi-links-fill unstyled"
@@ -14,12 +14,12 @@
         </a>
       </div>
     </header>
-    <div class="thread-content">
+    <div>
       <transition-group name="list">
         <article
           v-for="comment in _discussion"
           v-if="!_collapsed"
-          class="thread-comment fr-py-3w fr-pr-5w"
+          class="thread-comment fr-py-3w fr-px-3w fr-pr-5w"
           :key="'comment-' + comment.id"
         >
           <div class="fr-grid-row fr-grid-row--gutters">
@@ -45,7 +45,7 @@
       </button>
       </div>
     </div>
-    <footer class="fr-py-2w border-top border-g400">
+    <footer class="fr-py-2w fr-px-3w border-top border-g400">
       <template v-if="!closed && !readOnlyEnabled">
         <button
           class="btn--flex btn-secondary btn-secondary-grey-500 fr-btn fr-btn--secondary fr-btn--icon-right fr-fi-arrow-right-s-line"
