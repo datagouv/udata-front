@@ -7,6 +7,7 @@
 - Add resources pagination dataset page and use DSFR pagination [#30](https://github.com/etalab/udata-front/pull/30)
 - Style oauth page [#34](https://github.com/etalab/udata-front/pull/34)
 - Fix gouvfr static path [#39](https://github.com/etalab/udata-front/pull/39)
+- Remove Issues logic [#42](https://github.com/etalab/udata-front/pull/42)
 
 ## 1.1.1 (2021-10-22)
 
