@@ -119,6 +119,12 @@
       >
     </div>
   </section>
+  <section id="poc-recherche-banner" class="bg-blue-100 p-sm mt-lg text-black">
+    <span class="row-inline">
+      <span class="mx-xs" v-html="questionIcon" />
+      Come try out our&nbsp;<a href="https://rechercher.etalab.studio/">new dataset search </a>.
+    </span>
+  </section>
   <section class="search-results mt-lg mt-md-md">
     <transition mode="out-in">
       <div v-if="loading">
@@ -169,6 +175,7 @@ import Empty from "./empty";
 import Pagination from "../pagination/pagination";
 import { generateCancelToken } from "../../plugins/api";
 import filterIcon from "svg/filter.svg";
+import questionIcon from "svg/question.svg";
 
 import queryString from "query-string";
 
@@ -184,6 +191,7 @@ export default {
   },
   created() {
     this.filterIcon = filterIcon;
+    this.questionIcon = questionIcon;
 
     // Update search params from URL on page load for deep linking
     const url = new URL(window.location);
