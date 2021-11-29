@@ -58,7 +58,7 @@
             :subjectClass="subjectClass"
             v-if="!readOnlyEnabled"
           ></create-thread>
-          <ul>
+          <ul class="fr-mb-5v">
             <li
               :id="'discussion-' + discussion.id"
               v-for="discussion in discussions"
@@ -160,7 +160,7 @@ export default {
     loadPage(page = 1, scroll = false) {
       this.loading = true;
 
-      // We can pass a second "scroll" variable to true if we want to scroll to the top of the dicussions section
+      // We can pass a second "scroll" variable to true if we want to scroll to the top of the discussions section
       // This is useful for bottom of the page navigation buttons
       if (this.$refs.top && scroll)
         this.$refs.top.scrollIntoView({ behavior: "smooth" });
