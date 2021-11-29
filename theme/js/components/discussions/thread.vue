@@ -1,7 +1,7 @@
 <template>
   <div class="bg-beige fr-mt-2w" :id="discussionUrl(id)">
     <header class="fr-grid-row fr-grid-row--middle justify-between fr-py-2w fr-px-3w border-bottom border-g400">
-      <div class="fr-col-auto text-orange-100 fr-text--bold fr-pr-2w" v-if="closed">
+      <div class="fr-col-auto text-orange-200 fr-text--bold fr-pr-2w" v-if="closed">
         <span>{{ $t("Discussion closed") }}</span>
       </div>
       <h3 class="fr-p-2w fr-p-md-0 fr-h6 fr-mb-0">{{ title }}</h3>
@@ -63,7 +63,7 @@
       </template>
       <div v-if="closed" class="text-grey-300">
         {{ $t("The discussion was closed by") }} &#32;
-        <span class="text-blue-200 px-xxs"><Author :author="closed_by" /></span>
+        <strong class="px-xxs"><Author :author="closed_by" /></strong>
         {{ $t("on") }} {{ $filters.formatDate(closed) }}
       </div>
     </footer>
