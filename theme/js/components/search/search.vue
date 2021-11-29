@@ -119,10 +119,14 @@
       >
     </div>
   </section>
-  <section id="poc-recherche-banner" class="bg-blue-100 p-sm mt-lg text-black">
+  <section class="bg-blue-100 p-sm mt-lg text-black">
     <span class="row-inline">
       <span class="mx-xs" v-html="questionIcon" />
-      Come try out our&nbsp;<a href="https://rechercher.etalab.studio/">new dataset search </a>.
+      <i18n-t keypath="Come try out our" tag="span">
+        <template #dataset_search>
+          <a :href="rechercherBetaPath">{{ $t('new dataset search') }}</a>
+        </template>
+      </i18n-t>
     </span>
   </section>
   <section class="search-results mt-lg mt-md-md">
@@ -231,6 +235,7 @@ export default {
       totalResults: 0,
       queryString: "",
       facets: {},
+      rechercherBetaPath: "https://rechercher.etalab.studio/",
     };
   },
   computed: {
