@@ -25,6 +25,7 @@
               id="thread-title"
               v-model="title"
               :placeholder="$t('Title')"
+              required="required"
           />
           </div>
           <div class="fr-input-group">
@@ -36,6 +37,7 @@
               v-model="comment"
               :placeholder="$t('Comment')"
               class="fr-input"
+              required="required"
             ></textarea>
           </div>
           <footer class="fr-grid-row justify-between fr-grid-row--middle">
