@@ -5,7 +5,7 @@
         <h2 id="community-discussions" class="fr-h2">{{ title }} <sup>{{totalResults}}</sup></h2>
         <slot></slot>
       </div>
-      <div class="fr-col-12 fr-col-sm-5 fr-col-md-4 fr-col-lg-3 fr-grid-row fr-grid-row--bottom flex-direction-column justify-between" v-if="!threadFromURL">
+      <div class="fr-col-12 fr-col-sm-6 fr-col-md-5 fr-col-lg-4 fr-grid-row fr-grid-row--bottom flex-direction-column justify-between" v-if="!threadFromURL">
         <ThreadsCreateButton class="fr-col--bottom" :onClick="startThreadWithoutScroll"/>
         <div class="fr-mt-5v">
           <select
