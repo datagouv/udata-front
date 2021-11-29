@@ -36,9 +36,9 @@
           </div>
         </article>
       </transition-group>
-      <div class="fr-px-3w" v-if="_collapsed">
+      <div class="fr-grid-row" v-if="_collapsed">
         <button
-        class="fr-link text-g600 fr-text--sm fr-mb-0"
+        class="fr-px-3w fr-col fr-link text-g600 fr-text--sm fr-mb-0 rounded-0"
         @click.prevent="collapsed = false"
       >
         {{ _discussion.length }} {{ $t("messages") }}
