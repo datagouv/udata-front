@@ -2,10 +2,17 @@
 
 ## Current (in progress)
 
+- Add a banner for the new search beta on datasets search page [#43](https://github.com/etalab/udata-front/pull/43)
+
+## 1.1.2 (2021-11-23)
+
 - Standardize reuse page similar to dataset page navigation quickfixes [#31](https://github.com/etalab/udata-front/pull/31)
 - Move template hook logic to udata and add oauth hooks [#29](https://github.com/etalab/udata-front/pull/29)
-- Add resources pagination dataset page and use DSFR pagination [#30](https://github.com/etalab/udata-front/pull/30)
+- Add resources pagination dataset page and use DSFR pagination [#30](https://github.com/etalab/udata-front/pull/30) [#37](https://github.com/etalab/udata-front/pull/37)
 - Style oauth page [#34](https://github.com/etalab/udata-front/pull/34)
+- Fix horizontal scroll on mobile [#38](https://github.com/etalab/udata-front/pull/38)
+- Fix gouvfr static path [#39](https://github.com/etalab/udata-front/pull/39)
+- Remove Issues logic [#42](https://github.com/etalab/udata-front/pull/42)
 
 ## 1.1.1 (2021-10-22)
 
