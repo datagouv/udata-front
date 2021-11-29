@@ -121,7 +121,7 @@
   </section>
   <section class="bg-blue-100 p-sm mt-lg text-black">
     <span class="row-inline">
-      <span class="mx-xs" v-html="questionIcon" />
+      <span class="fr-fi-question-line mr-xs" aria-hidden="true"></span>
       <i18n-t keypath="Come try out our" tag="span">
         <template #dataset_search>
           <a :href="rechercherBetaPath">{{ $t('new dataset search') }}</a>
@@ -179,7 +179,6 @@ import Empty from "./empty";
 import Pagination from "../pagination/pagination";
 import { generateCancelToken } from "../../plugins/api";
 import filterIcon from "svg/filter.svg";
-import questionIcon from "svg/question.svg";
 
 import queryString from "query-string";
 
@@ -195,7 +194,6 @@ export default {
   },
   created() {
     this.filterIcon = filterIcon;
-    this.questionIcon = questionIcon;
 
     // Update search params from URL on page load for deep linking
     const url = new URL(window.location);
