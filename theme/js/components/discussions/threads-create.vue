@@ -3,8 +3,7 @@
     <ThreadsCreateButton
       v-if="showCreateButton && !showForm"
       :onClick="displayForm"
-    >
-    </ThreadsCreateButton>
+    />
     <div v-if="showForm" class="bg-beige">
       <div class="fr-grid-row fr-grid-row--middle border-bottom border-g400 fr-py-2w fr-px-3w">
         <div class="fr-col fr-h6 fr-mb-0">{{ $t("New discussion") }}</div>
