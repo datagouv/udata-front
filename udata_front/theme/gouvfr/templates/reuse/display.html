@@ -235,7 +235,11 @@
         <div class="container vuejs">
             <discussion-threads ref="discussions" subject-id="{{ reuse.id }}"
                 subject-class="{{ reuse.__class__.__name__ }}">
-                <p>{{ _('Discussion between the organization and the community about this reuse.') }}</p>
+                {% if dataset.organization %}
+                    <p>{{ _('Discussion between the organization and the community about this reuse.') }}</p>
+                {% elif dataset.owner %}
+                    <p>{{ _('Discussion between the owner and the community about this reuse.') }}</p>
+                {% endif %}
             </discussion-threads>
         </div>
     </section>

@@ -407,7 +407,11 @@
                 subject-id="{{ dataset.id }}"
                 subject-class="{{ dataset.__class__.__name__ }}"
             >
-                <p>{{ _('Discussion between the organization and the community about this dataset.') }}</p>
+                {% if dataset.organization %}
+                    <p>{{ _('Discussion between the organization and the community about this dataset.') }}</p>
+                {% elif dataset.owner %}
+                    <p>{{ _('Discussion between the owner and the community about this dataset.') }}</p>
+                {% endif %}
             </discussion-threads>
         </div>
     </div>
