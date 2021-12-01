@@ -234,7 +234,7 @@ export default {
       this.currentPage = index;
       this.loadPage(index, scroll);
     },
-    // Can be called from outside the component to start a new thread programmatically
+    // Can be called from outside the component to start a new thread programmatically and scroll into view
     startThread() {
       this.startThreadWithoutScroll();
       this.$refs.createThread.$el.scrollIntoView();
