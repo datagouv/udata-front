@@ -1,3 +1,15 @@
+<!--
+---
+name: Discussions
+category: Interactions
+---
+
+# Discussions
+
+Discussions allow users to interact with others.
+
+-->
+
 <template>
   <section class="discussions-wrapper" ref="top" key="top">
     <div class="fr-grid-row">
