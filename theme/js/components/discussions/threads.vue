@@ -44,7 +44,15 @@ Discussions allow users to interact with others.
       </template>
       <template v-else>
         <div v-if="threadFromURL">
-          <div class="fr-px-3w well well-secondary-green-300">
+          <div class="fr-callout">
+            <p class="fr-callout__text">
+              {{ $t("You are seeing a specific discussion about this dataset") }}
+            </p>
+            <button class="fr-btn" @click.prevent="viewAllDiscussions">
+              {{$t('See all discussions')}}
+            </button>
+          </div>
+          <div class="fr-mt-2w fr-px-3w well well-secondary-green-300">
             <div class="fr-grid-row fr-grid-row--middle justify-between">
               {{
                 $t("You are seeing a specific discussion about this dataset")
