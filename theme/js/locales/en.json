@@ -117,5 +117,6 @@
   "Available": "Available",
   "Unavailable": "Unavailable",
   "Come try out our": "Come try out our {dataset_search}.",
-  "new dataset search": "new dataset search"
+  "new dataset search": "new dataset search",
+  "Error getting search results.": "Error getting search results."
 }
