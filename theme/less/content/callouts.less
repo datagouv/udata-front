@@ -11,39 +11,7 @@ Callouts are areas that are meant to pop "out" of the page, usually with a colou
     <div class="container p-hg"></div>
 </div>
 ```
-
-## From DSFR
-
-You can use callouts from DSFR. It uses DSFR colors and conventions. It allows you to show :
-- an icon
-- a title
-- a description
-- a button
-- a colored left border
-
-```dsfr-callout.html
-<div class="fr-callout fr-fi-information-line">
-    <p class="fr-callout__title">Titre mise en avant</p>
-    <p class="fr-callout__text">
-        Les parents d’enfants de 11 à 14 ans n’ont aucune démarche à accomplir : les CAF versent automatiquement l’ARS aux familles déjà allocataires qui remplissent les conditions.
-    </p>
-    <button class="fr-btn">
-        Label bouton MD
-    </button>
-</div>
-```
 */
-
-@import (less) "@gouvfr/dsfr/dist/css/callouts.css";
-
-// TODO: remove this custom code and use DSFR customization and colors when using v1.2
-:root:not([data-fr-theme="dark"]) .fr-callout {
-    --bf500: var(--success);
-    .fr-btn {
-        --color-hover: fade(@green-300, 50%);
-        --color-active: fade(@green-300, 50%);
-    }
-}
 
 .callout {
     position: relative;
