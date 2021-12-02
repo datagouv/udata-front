@@ -76,11 +76,13 @@ export default {
     },
     loadPage(page = 1, scroll = false) {
       this.loading = true;
+      this.$bus.emit('loading');
 
       // We can pass the second function parameter "scroll" to true if we want to scroll to the top of the resources section
       // This is useful for pagination buttons
-      if (this.$refs.top && scroll)
+      if (this.$refs.top && scroll) {
         this.$refs.top.scrollIntoView({ behavior: "smooth" });
+      }
 
       return this.$apiv2
         .get("/datasets/" + this.datasetId + "/resources/", {
@@ -105,6 +107,7 @@ export default {
         })
         .finally(() => {
           this.loading = false;
+          this.$bus.emit('loaded');
         });
     },
   }

@@ -101,6 +101,7 @@ import Thread from "./thread.vue";
 import Loader from "./loader.vue";
 import CloseIcon from "svg/close.svg";
 import ThreadsCreateButton from "./threads-create-button";
+import Scrollable from "../../mixins/scrollable";
 
 const URL_REGEX = /discussion-([a-f0-9]{24})-?([0-9]+)?$/i;
 
@@ -136,6 +137,7 @@ export default {
       readOnlyEnabled: config.read_only_enabled,
     };
   },
+  mixins: [Scrollable],
   props: {
     description: String,
     subjectId: String,
@@ -174,8 +176,9 @@ export default {
 
       // We can pass a second "scroll" variable to true if we want to scroll to the top of the discussions section
       // This is useful for bottom of the page navigation buttons
-      if (this.$refs.top && scroll)
-        this.$refs.top.scrollIntoView({ behavior: "smooth" });
+      if (this.$refs.top && scroll) {
+        this.addScrollIntent(() => this.$refs.top.scrollIntoView({ behavior: "smooth" }));
+      }
 
       return this.$api
         .get("/discussions/", {
@@ -209,11 +212,7 @@ export default {
       this.loading = true;
 
       // Scroll the discussion block into view.
-      // SetTimeout is needed (instead of $nextTick) because the DOM updates are too fast for the browser to handle
-      setTimeout(
-        () => this.$refs.top.scrollIntoView({ behavior: "smooth" }),
-        100
-      );
+      this.addScrollIntent(() => this.$refs.top.scrollIntoView({ block: "start", inline: "nearest", behavior: "smooth" }));
 
       return this.$api
         .get("/discussions/" + id)
@@ -249,7 +248,7 @@ export default {
     // Can be called from outside the component to start a new thread programmatically and scroll into view
     startThread() {
       this.startThreadWithoutScroll();
-      this.$refs.createThread.$el.scrollIntoView();
+      this.addScrollIntent(() => this.$refs.top.scrollIntoView({ behavior: "smooth" }));
     },
     // Can be called from outside the component to start a new thread programmatically
     startThreadWithoutScroll() {
