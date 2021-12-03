@@ -305,13 +305,14 @@ export default {
         .then((result) => {
           this.results = result.data;
           this.totalResults = result.total;
+          this.loading = false;
         })
         .catch((error) => {
           if (!axios.isCancel(error)) {
             this.$toast.error(this.$t("Error getting search results."));
+            this.loading = false;
           }
-        })
-        .finally(() => (this.loading = false));
+        });
     },
     scrollToTop() {
       if (this.$refs.input)
