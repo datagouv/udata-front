@@ -7,6 +7,7 @@
 - :warning: `@grey-100` is now `#e5e5e5`
 - Standardize organization page similar to dataset and reuse pages [#40](https://github.com/etalab/udata-front/pull/40)
 - :warning: `--beige` is removed from DSFR and `--background-contrast-grey` is used instead
+- Update DSFR to v1.2.1 [#45](https://github.com/etalab/udata-front/pull/45)
 
 ## 1.1.2 (2021-11-23)
 
