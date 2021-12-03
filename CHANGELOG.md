@@ -6,6 +6,7 @@
 - Remove Issues logic [#42](https://github.com/etalab/udata-front/pull/42)
 - :warning: @grey-100 is now `#e5e5e5`
 - Standardize organization page similar to dataset and reuse pages [#40](https://github.com/etalab/udata-front/pull/40)
+- Fix error on search request cancelation [#44](https://github.com/etalab/udata-front/pull/44)
 
 ## 1.1.2 (2021-11-23)
 
