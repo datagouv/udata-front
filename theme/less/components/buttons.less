@@ -176,18 +176,6 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
     &.active {
         background-color: lighten(@blue-400, 10%);
     }
-
-    each(@colors, {
-        &.btn-primary-@{value} {
-            @contrast: 'contrast-@{value}';
-            background-color: @@value;
-            color: @@contrast;
-
-            &:active, &:hover, &.active {
-                background-color: lighten(@@value, 10%);
-            }
-        }
-    });
 }
 
 .btn-secondary {
