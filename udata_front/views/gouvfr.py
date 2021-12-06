@@ -9,17 +9,17 @@ from mongoengine.errors import ValidationError
 from udata_front import theme
 from udata_front.theme import theme_static_with_version
 from udata.app import cache
+from udata.frontend import template_hook
 from udata.models import Reuse, Dataset
 from udata.i18n import I18nBlueprint
 
 from udata_front import APIGOUVFR_EXTRAS_KEY
-from udata_front.frontend import template_hook
 
 log = logging.getLogger(__name__)
 
 blueprint = I18nBlueprint('gouvfr', __name__,
                           template_folder='../templates',
-                          static_folder='static',
+                          static_folder='../static',
                           static_url_path='/static/gouvfr')
 
 PAGE_CACHE_DURATION = 60 * 5  # in seconds
@@ -130,6 +130,18 @@ def has_apis(ctx):
 def dataset_apis(ctx):
     dataset = ctx['dataset']
     return theme.render('dataset-apis.html', apis=dataset.extras.get(APIGOUVFR_EXTRAS_KEY))
+
+
+@template_hook('oauth_authorize_theme_content')
+def oauth_authorize_theme_content(ctx):
+    grant = ctx['grant']
+    return theme.render('api/oauth_authorize.html', grant=grant)
+
+
+@template_hook('oauth_error_theme_content')
+def oauth_error_theme_content(ctx):
+    request = ctx['request']
+    return theme.render('api/oauth_error.html', error=request.args.get('error'))
 
 
 # TODO : better this, redirect is not the best. How to serve it instead ?!

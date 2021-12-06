@@ -2,13 +2,26 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add a banner for the new search beta on datasets search page [#43](https://github.com/etalab/udata-front/pull/43)
+- Remove Issues logic [#42](https://github.com/etalab/udata-front/pull/42)
+- :warning: @grey-100 is now `#e5e5e5`
+- Standardize organization page similar to dataset and reuse pages [#40](https://github.com/etalab/udata-front/pull/40)
+- Fix RGAA criterion 10.7 Each element focusable has a visible focus [#46](https://github.com/etalab/udata-front/pull/46)
+
+## 1.1.2 (2021-11-23)
+
+- Standardize reuse page similar to dataset page navigation quickfixes [#31](https://github.com/etalab/udata-front/pull/31)
+- Move template hook logic to udata and add oauth hooks [#29](https://github.com/etalab/udata-front/pull/29)
+- Add resources pagination dataset page and use DSFR pagination [#30](https://github.com/etalab/udata-front/pull/30) [#37](https://github.com/etalab/udata-front/pull/37)
+- Style oauth page [#34](https://github.com/etalab/udata-front/pull/34)
+- Fix horizontal scroll on mobile [#38](https://github.com/etalab/udata-front/pull/38)
+- Fix gouvfr static path [#39](https://github.com/etalab/udata-front/pull/39)
 
 ## 1.1.1 (2021-10-22)
 
 - Update README to reflect front changes [#17](https://github.com/etalab/udata-front/pull/17)
 - Add Participate banner in the footer [#24](https://github.com/etalab/udata-front/pull/24)
-- Fix min-heigth used in posts images to center them [#23](https://github.com/etalab/udata-front/pull/23)
+- Fix min-height used in posts images to center them [#23](https://github.com/etalab/udata-front/pull/23)
 - Update dataset page with navigation quickfixes and add DSFR components [#18](https://github.com/etalab/udata-front/pull/18)
 - Implement feedbacks on quickfixes [#26](https://github.com/etalab/udata-front/pull/26)
 
