@@ -291,8 +291,8 @@ export default {
 
       this.currentRequest = generateCancelToken();
 
-      const promise = this.$api
-        .get("/datasets/", {
+      const promise = this.$apiv2
+        .get("/datasets/search/", {
           cancelToken: this.currentRequest.token,
           params: {
             q: this.queryString,
