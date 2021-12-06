@@ -174,8 +174,9 @@ export default {
 
       // We can pass a second "scroll" variable to true if we want to scroll to the top of the discussions section
       // This is useful for bottom of the page navigation buttons
-      if (this.$refs.top && scroll)
+      if (this.$refs.top && scroll) {
         this.$refs.top.scrollIntoView({ behavior: "smooth" });
+      }
 
       return this.$api
         .get("/discussions/", {
@@ -212,7 +213,7 @@ export default {
       // SetTimeout is needed (instead of $nextTick) because the DOM updates are too fast for the browser to handle
       setTimeout(
         () => this.$refs.top.scrollIntoView({ behavior: "smooth" }),
-        100
+        500
       );
 
       return this.$api
