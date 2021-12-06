@@ -117,5 +117,7 @@
   "Available": "Available",
   "Unavailable": "Unavailable",
   "Come try out our": "Come try out our {dataset_search}.",
-  "new dataset search": "new dataset search"
+  "new dataset search": "new dataset search",
+  "X datasets": "0 datasets | 1 dataset | {n} datasets",
+  "Private": "Private"
 }
