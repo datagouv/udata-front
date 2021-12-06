@@ -245,13 +245,13 @@
             </discussion-threads>
         </div>
     </section>
-    <section class="reuse-cards container fr-py-7w">
+    <section class="container fr-py-7w">
         <h2 id="more-reuses" class="fr-h2">{{ _('More reuses') }}</h2>
         <p>{{ _('Discover more reuses.') }}</p>
-        <ul class="fr-grid-row fr-grid-row--gutters no-wrap">
+        <ul class="fr-grid-row fr-grid-row--gutters no-wrap overflow-x-scroll">
             {% for reuse in related_reuses %}
             {% set features = ['preview'] %}
-            <li class="fr-col-12 fr-col-sm-6 fr-col-md-4 fr-col-lg-3">
+            <li class="fr-col">
                 {% include theme('reuse/card.html') %}
             </li>
             {% endfor %}

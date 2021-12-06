@@ -2,7 +2,7 @@
 Vue and simpler -->
 
 <template>
-  <article class="reuse-card text-align-center fr-text--sm fr-mb-0">
+  <article class="reuse-card text-align-center fr-text--sm fr-mb-0" :class="{'reuse-card--fluid': fluid}">
     <Placeholder
       class="reuse-image fr-mb-3v fr-responsive-img"
       alt=""
@@ -38,7 +38,11 @@ export default {
     },
     private: {
       type: Boolean,
-      default: false
+      default: false,
+    },
+    fluid: {
+      type: Boolean,
+      default: false,
     }
   },
   components: {

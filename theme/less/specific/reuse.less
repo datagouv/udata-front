@@ -5,28 +5,17 @@
     }
 }
 
-.reuse-cards {
-    @media @query-xl {
-        overflow-x: scroll;
-
-        .row {
-            flex-wrap: nowrap;
-
-            //Prevent reuse cards from being too small
-            > div,
-            > li {
-                min-width: 250px;
-            }
-        }
-    }
-}
-
 // Generic reuse cards
 .reuse-card {
+    width: 285px;
     .reuse-image {
         border-radius: @spacing-md;
         height: 480px;
         object-fit: cover;
         object-position: center center;
+    }
+
+    &.reuse-card--fluid {
+        width: 100%;
     }
 }
