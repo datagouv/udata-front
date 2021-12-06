@@ -63,6 +63,8 @@ import Author from "./author";
 import AddIcon from "svg/actions/add.svg";
 import ThreadsCreateButton from "./threads-create-button"; //Not the best but we don't have many svg
 
+const log = console.log;
+
 export default {
   components: {
     ThreadsCreateButton,
