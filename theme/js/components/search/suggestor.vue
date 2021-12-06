@@ -134,7 +134,7 @@ export default {
       if (!q)
         query = this.$api.get(this.listUrl).then((resp) => resp.data.data);
       else
-        query = this.$api
+        query = this.$apiv2
           .get(this.suggestUrl, { params: { q } })
           .then((resp) => resp.data);
 
