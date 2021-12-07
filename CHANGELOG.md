@@ -7,6 +7,9 @@
 - :warning: @grey-100 is now `#e5e5e5`
 - Standardize organization page similar to dataset and reuse pages [#40](https://github.com/etalab/udata-front/pull/40)
 - Fix RGAA criterion 10.7 Each element focusable has a visible focus [#46](https://github.com/etalab/udata-front/pull/46)
+- Fix Stylemark generation to include JS files and properly include other assets [#33](https://github.com/etalab/udata-front/pull/33)
+- Redirect about page to "ressources" page in menu [#48](https://github.com/etalab/udata-front/pull/48)
+- Standardize article discussions and quick fixes to discussions [#41](https://github.com/etalab/udata-front/pull/41)
 - Fix error on search request cancelation [#44](https://github.com/etalab/udata-front/pull/44)
 
 ## 1.1.2 (2021-11-23)
