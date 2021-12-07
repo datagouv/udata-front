@@ -116,5 +116,6 @@
   "new dataset search": "nouvelle recherche de jeux de données",
   "Close": "Fermer",
   "Copy permalink": "Copier le lien vers la discussion",
-  "Discussions": "Discussions"
+  "Discussions": "Discussions",
+  "Error getting search results.": "Error getting search results."
 }
