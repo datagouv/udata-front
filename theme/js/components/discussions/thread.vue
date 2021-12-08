@@ -115,8 +115,8 @@ export default {
       return (link ? "#" : "") + "discussion-" + id;
     },
     discussionExternalUrl(id) {
-      window.location.hash = this.discussionUrl(id, true)
-      return window.location.toString()
+      hash = this.discussionUrl(id, true)
+      return window.location.origin + window.location.pathname + hash
     },
     replyToThread (values) {
       return this.$api
