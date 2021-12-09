@@ -376,14 +376,9 @@
 
         {% block reuses_section %}
         <h2 id="community-reuses" class="fr-h2">{{ _('Reuses') }} <sup>{{ total_reuses }}</sup></h2>
-        <div class="row fr-mb-3w">
-            <div class="col-6 col-md-12 text-grey-300">
-                {% trans %}You reused these data and published an article, a computer graphics, or an application?
-                It's time to let you know!
-                Reference your work in just a few clicks and increase your visibility.{% endtrans %}
-            </div>
-        </div>
-        <div class="fr-mt-9v fr-pt-2w fr-pt-md-0 fr-grid-row fr-grid-row--gutters no-wrap fr-mb-2w overflow-x-scroll">
+        <p class="fr-my-0">{{ _('Explore the reuses of this dataset.') }}</p>
+        <p class="fr-mt-0 fr-mb-3w">{{ _('Did you use this data ? Reference your work and increase your visibility.') }}</p>
+        <div class="fr-pt-2w fr-pt-md-0 fr-grid-row fr-grid-row--gutters no-wrap fr-mb-2w overflow-x-scroll">
             {% for reuse in reuses %}
             {% set features = ['preview'] %}
             <div class="fr-col">
