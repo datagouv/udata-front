@@ -94,7 +94,7 @@
     <h2>{{ _('Reuses') }}<sup>{{ total_reuses }}</sup></h2>
     <ul class="fr-grid-row fr-grid-row--gutters no-wrap fr-mb-2w overflow-x-scroll">
         {% for reuse in reuses %}
-        <li class="fr-col text-align-center">
+        <li class="fr-col">
             {% include theme('reuse/card.html') %}
         </li>
         {% endfor %}

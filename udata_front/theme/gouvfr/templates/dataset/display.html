@@ -1,6 +1,7 @@
 {% extends theme('layouts/1-column.html') %}
 {% from theme('macros/follow.html') import follow_btn with context %}
 {% from theme('macros/integrate.html') import integrate_btn with context %}
+{% from theme('macros/paginator.html') import paginator with context %}
 {% from theme('macros/breadcrumb.html') import breadcrumb with context %}
 
 ## FIXME: remove inspire:indentifier robots condition when geo.data.gouv.fr is shutdown
@@ -289,7 +290,7 @@
                     </li>
                     <li>
                         <a class="fr-summary__link" href="#community-reuses">
-                            {{ _('Reuses') }}  <sup class="sup">{{ reuses|length }}</sup>
+                            {{ _('Reuses') }}  <sup class="sup">{{ total_reuses }}</sup>
                         </a>
                     </li>
                     <li>
@@ -374,7 +375,7 @@
         {% endif %}
 
         {% block reuses_section %}
-        <h2 id="community-reuses" class="fr-h2">{{ _('Reuses') }} <sup>{{ reuses|length }}</sup></h2>
+        <h2 id="community-reuses" class="fr-h2">{{ _('Reuses') }} <sup>{{ total_reuses }}</sup></h2>
         <div class="row fr-mb-3w">
             <div class="col-6 col-md-12 text-grey-300">
                 {% trans %}You reused these data and published an article, a computer graphics, or an application?
@@ -382,14 +383,15 @@
                 Reference your work in just a few clicks and increase your visibility.{% endtrans %}
             </div>
         </div>
-        <div class="row mt-xl fr-pt-2w fr-pt-md-0 overflow-x-scroll">
+        <div class="fr-mt-9v fr-pt-2w fr-pt-md-0 fr-grid-row fr-grid-row--gutters no-wrap fr-mb-2w overflow-x-scroll">
             {% for reuse in reuses %}
             {% set features = ['preview'] %}
-            <div class="col-3 col-md-6">
+            <div class="fr-col">
                 {% include theme('reuse/card.html') %}
             </div>
             {% endfor %}
         </div>
+        {{ paginator(reuses, arg_name='reuses_page', url='#community-reuses') }}
         {% if not read_only_mode %}
         <div class="row">
             <div class="col-12">
