@@ -1,11 +1,11 @@
 {% cache cache_duration, 'reuse-card', reuse.id|string, g.lang_code %}
-
+{% set card_fluid = card_fluid or False %}
 <a
     class="unstyled w-100 block"
     href="{{ url_for('reuses.show', reuse=reuse, _external=True) }}"
     title="{{ reuse.title }}"
 >
-    <article class="reuse-card text-align-center fr-text--sm fr-mb-0">
+    <article class="reuse-card {% if card_fluid %}reuse-card--fluid{% endif %} text-align-center fr-text--sm fr-mb-0">
         <img
             class="reuse-image fr-mb-3v fr-responsive-img"
             src="{{ reuse.image|placeholder('reuse', external=True) }}"
