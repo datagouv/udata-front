@@ -92,9 +92,9 @@
 {% if reuses and reuses|length > 0 %}
 <section id="organization-reuses" class="fr-py-9v container">
     <h2>{{ _('Reuses') }}<sup>{{ total_reuses }}</sup></h2>
-    <ul class="fr-grid-row fr-grid-row--gutters no-wrap fr-mb-2w overflow-x-scroll">
+    <ul class="fr-grid-row no-wrap fr-mb-2w overflow-x-scroll">
         {% for reuse in reuses %}
-        <li class="fr-col">
+        <li class="fr-p-3v">
             {% include theme('reuse/card.html') %}
         </li>
         {% endfor %}
