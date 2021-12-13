@@ -132,10 +132,10 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         datasets = [
             VisibleDatasetFactory(organization=organization) for _ in range(2)]
         empty_datasets = [
-            DatasetFactory(organization=organization, resources=[]) for _ in range(2)]
+            DatasetFactory(organization=organization, resources=[]) for _ in range(1)]
         private_datasets = [
             VisibleDatasetFactory(organization=organization, private=True)
-            for _ in range(2)]
+            for _ in range(1)]
         response = self.get(url_for('organizations.show', org=organization))
 
         self.assert200(response)
@@ -168,10 +168,10 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         organization = OrganizationFactory(members=[member])
         reuses = [VisibleReuseFactory(organization=organization) for _ in range(2)]
         empty_reuses = [
-            ReuseFactory(organization=organization, datasets=[]) for _ in range(2)]
+            ReuseFactory(organization=organization, datasets=[]) for _ in range(1)]
         private_reuses = [
             VisibleReuseFactory(organization=organization, private=True)
-            for _ in range(2)]
+            for _ in range(1)]
         response = self.get(url_for('organizations.show', org=organization))
 
         self.assert200(response)
