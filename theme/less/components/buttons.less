@@ -165,6 +165,7 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
     }
 }
 
+
 .btn-primary {
     .btn;
 
@@ -196,6 +197,7 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
     color: @blue-400;
     border: 1px solid transparent;
     border-color: @blue-400;
+    --bf500: @blue-400;
 
     background: none;
 
@@ -210,14 +212,24 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
             @contrast: 'contrast-@{value}';
             border-color: @@value;
             color: @@value;
+            --bf500: @@value;
         }
     });
 
     &.fr-btn--secondary {
-        :root:not([data-fr-theme="dark"])  & {
+        :root:not([data-fr-theme="dark"]) & {
             --color-hover: transparent;
         }
-        box-shadow: none;
+        border: none;
+    }
+
+    // inline-flex is DSFR default and is required for right icons to work
+    &.btn--flex {
+        display: inline-flex;
+    }
+
+    &.fr-btn--sm {
+        .fr-btn--sm;
     }
 
     &.btn-with-arrow {
