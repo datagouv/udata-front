@@ -1363,7 +1363,7 @@ msgstr "Je serai informé de l'activité de cette organisation"
 
 #: udata_front/theme/gouvfr/templates/participez/participez.html:11
 msgid "Go to documentation"
-msgstr "Accéder à la documentation"
+msgstr "Consultez la documentation"
 
 #: udata_front/theme/gouvfr/templates/post/display.html:27
 #: udata_front/theme/gouvfr/templates/reuse/card_old.html:41
