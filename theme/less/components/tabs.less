@@ -63,11 +63,10 @@ You can use tabs from DSFR. It uses DSFR colors and conventions. It allows you t
 
 .tabs {
     display: flex;
+    flex-wrap: wrap;
 
     .tab {
-        + .tab {
-            margin-left: @spacing-sm;
-        }
+        margin: @spacing-xxs;
 
         //Prevents children from taking the click events.
         //Might be dangerous, remove if needed
