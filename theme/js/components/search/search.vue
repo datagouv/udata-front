@@ -69,14 +69,14 @@
         <div
           class="col-1 col-lg-2 hidden-md text-align-center mt-lg-md text-align-right-lg"
         >
-          <a
+          <button
             class="btn-secondary btn-secondary-grey-200 px-md"
             @click="extendedForm = !extendedForm"
             data-cy="extend-form"
           >
             <span v-if="!extendedForm">…</span>
             <span v-else>X</span>
-          </a>
+          </button>
         </div>
       </div>
       <div
@@ -111,11 +111,11 @@
         </div>
       </div>
     </div>
-    <div class="my-xl text-align-center hidden visible-md">
-      <a
-        class="btn-secondary btn-secondary-grey-400"
+    <div class="fr-my-9v text-align-center fr-hidden-md">
+      <button
+        class="fr-btn fr-btn--secondary btn-secondary btn-secondary-grey-400"
         @click="extendedForm = !extendedForm"
-        >{{ $t("Submit") }}</a
+        >{{ $t("Submit") }}</button
       >
     </div>
   </section>

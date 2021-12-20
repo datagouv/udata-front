@@ -33,12 +33,9 @@
         }
 
         .close-icon {
-            cursor: pointer;
-
             svg {
                 width: 25px;
                 height: 25px;
-
                 * {
                     fill: @blue-400;
                 }
@@ -99,7 +96,7 @@
 .suggest-enter-from,
 .suggest-leave-to {
     transform: translate3d(100%, 0, 0);
-    background: fade(@blue-300, 60%);
+    opacity: 0.6;
 }
 
 .suggest-enter-to {
@@ -127,7 +124,7 @@
         }
 
         .site-header {
-            height: 100vh; //Allow scroll inside the suggest view but prevent rest of the body scroll
+            height: 100vh; // Allow scroll inside the suggest view but prevent rest of the body scroll
             overflow: scroll;
         }
     }

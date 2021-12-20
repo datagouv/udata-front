@@ -92,6 +92,11 @@ a {
     text-decoration: underline;
     text-decoration-color: @grey-200;
     text-underline-position: under;
+    font-size: 1rem;
+    &:not([disabled]):not(:disabled):hover {
+        text-decoration-color: initial;
+        --blend-size: 0%;
+    }
 
     &.text-decoration-none {
         &:hover {
