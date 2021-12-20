@@ -25,7 +25,7 @@ Discussions allow users to interact with others.
           id="sortBy"
           @change="changeSort(currentSort)"
           v-model="currentSort"
-          class="fr-select bg-contrast-grey fr-select--no-border"
+          class="fr-select bg-beige fr-select--no-border"
         >
           <option
             v-for="sort in sorts"

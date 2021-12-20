@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-contrast-grey fr-mt-2w" :id="discussionUrl(id)">
+  <div class="bg-beige fr-mt-2w" :id="discussionUrl(id)">
     <header class="fr-grid-row fr-grid-row--middle justify-between fr-py-2w fr-px-3w border-bottom border-g400">
       <div class="fr-col-auto text-orange-200 fr-text--bold fr-pr-2w" v-if="closed">
         <span>{{ $t("Discussion closed") }}</span>
