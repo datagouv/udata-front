@@ -70,7 +70,7 @@
           class="col-1 col-lg-2 hidden-md text-align-center mt-lg-md text-align-right-lg"
         >
           <button
-            class="btn-secondary btn-secondary-grey-200 px-md"
+            class="btn-secondary btn-secondary-grey-200 text-grey-380 px-md"
             @click="extendedForm = !extendedForm"
             data-cy="extend-form"
           >

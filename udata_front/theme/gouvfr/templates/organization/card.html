@@ -18,7 +18,7 @@
             <p>{{ organization.description|mdstrip(180) }}</p>
         </div>
         <div class="card-footer">
-            <ul class="card-features text-grey-300 fs-xs">
+            <ul class="card-features text-grey-380 fs-xs">
                 {% if organization.metrics.datasets %}
                 <li>{{ organization.metrics.datasets or 0 }} {{ _('datasets') }}</li>
                 {% endif %}

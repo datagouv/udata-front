@@ -17,7 +17,7 @@
                   <span class="fs-sm text-grey-400"> {{ resource.metrics.views || 0 }} {{ $t('downloads') }}</span>
                   <h4>
                       {{ resource.title || $t('Nameless resource') }}
-                      <p class="fs-sm m-0 text-grey-300" v-if="resource.from_community && resource.owner">{{resource.owner}}</p>
+                      <p class="fs-sm m-0 text-grey-380" v-if="resource.from_community && resource.owner">{{resource.owner}}</p>
                   </h4>
                   <strong class="text-green-400" v-if="available">{{$t('Available')}}</strong>
                   <strong class="text-default-error" v-else-if="unavailable">{{$t('Unavailable')}}</strong>

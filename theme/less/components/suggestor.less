@@ -1,15 +1,18 @@
 .suggestor {
+    .multiselect-placeholder, .multiselect-no-options, .multiselect-no-results {
+        color: @grey-380;
+    }
     .multiselect-input {
         padding: @spacing-xxs 40px @spacing-xxs @spacing-xxs;
         border-color: @grey-200;
     }
 
-    //Loader spinner
+    // Loader spinner
     .multiselect-spinner {
         top: 5px;
     }
 
-    //Labels when the dropdown is closed (with the "+n" label when more than two options are selected)
+    // Labels when the dropdown is closed (with the "+n" label when more than two options are selected)
     .suggestor-labels {
         display: flex;
         justify-content: space-between;
@@ -31,7 +34,7 @@
         }
     }
 
-    //Generic tags class, overwrite the lib defaults
+    // Generic tags class, overwrite the lib defaults
     .multiselect-tag {
         margin: 0;
         margin-right: @spacing-xxs;
@@ -50,7 +53,7 @@
         }
     }
 
-    //Tags already selected that appear in the dropdown, fully expanded
+    // Tags already selected that appear in the dropdown, fully expanded
     .suggestor-search-labels {
         display: flex;
         flex-wrap: wrap;
@@ -71,7 +74,7 @@
         }
     }
 
-    //Unselected option
+    // Unselected option
     .multiselect-option {
         border-radius: 2px;
         padding: 0;
@@ -95,7 +98,7 @@
         }
     }
 
-    //When dropdown is closed, search should take no width
+    // When dropdown is closed, search should take no width
     &.is-multiple .multiselect-search {
         width: 0;
     }
@@ -105,11 +108,11 @@
 
         input {
             padding: @spacing-xs;
-            padding-left: 10px; //Same as placeholder
+            padding-left: 10px; // Same as placeholder
         }
     }
 
-    //Makes the already selected options disappear
+    // Makes the already selected options disappear
     .multiselect-option.is-selected {
         display: none;
     }
