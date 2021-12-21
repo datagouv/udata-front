@@ -64,7 +64,7 @@
     {% endif %}
     {# FIXME: remove when geo.data.gouv.fr is shutdown #}
     {% if 'geop:dataset_id' in dataset.extras %}
-    <div class="well well-orange-200 py-sm mb-lg">
+    <div class="well well-warning py-sm mb-lg">
         ⚠️ {{ _("This dataset is handled by the <a href='{geo_link}'>geo.data.gouv.fr</a> platform.
         This platform is not actively maintained and as a result, you may find some bogus data or metadata.
         More information about <a href='{blog_link}'>the shutdown of geo.data.gouv.fr is available here.</a>").format(
