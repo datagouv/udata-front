@@ -25,36 +25,34 @@
               <div class="button-bar">
                   <ul>
                       <li class="accordion">
-                        <a
-                          href="#"
+                        <button
                           @click.prevent="expand"
                           role="button"
                           :aria-expanded="expanded"
                           :aria-label="$t('See more details')"
                           :aria-controls="'resource-' + resource.id"
-                          class="accordion-button"
-                          v-html="ChevronIcon"
-                        ></a>
+                          class="accordion-button fr-fi-arrow-right-s-line fr-p-0"
+                        >
+                        </button>
                       </li>
                       <li v-if="resource.preview_url">
-                          <a
-                            href="#"
+                          <button
                             :title="$t('Preview')"
                             @click.prevent="$showModal('preview', {url: resource.preview_url}, true)"
                             v-html="EyeIcon"
+                            class="fr-p-0 rounded-circle"
                           >
-                          </a>
+                          </button>
                       </li>
                       <li>
-                        <a
-                          @click.prevent
-                          href="#"
+                        <button
+                          class="fr-p-0 rounded-circle"
                           :id="resource.id + '-copy'"
                           :title="$t('Copy permalink to clipboard')"
                           :data-clipboard-text="resource.latest"
                           v-html="CopyIcon"
                         >
-                        </a>
+                        </button>
                       </li>
                       <li v-if="resource.format === 'url'">
                         <a
