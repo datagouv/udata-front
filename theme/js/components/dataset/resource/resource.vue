@@ -20,7 +20,7 @@
                       <p class="fs-sm m-0 text-grey-300" v-if="resource.from_community && resource.owner">{{resource.owner}}</p>
                   </h4>
                   <strong class="text-green-400" v-if="available">{{$t('Available')}}</strong>
-                  <strong class="text-red-300" v-else-if="unavailable">{{$t('Unavailable')}}</strong>
+                  <strong class="text-default-error" v-else-if="unavailable">{{$t('Unavailable')}}</strong>
               </div>
               <div class="button-bar">
                   <ul>
