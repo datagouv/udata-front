@@ -40,6 +40,8 @@
         margin-right: @spacing-xxs;
         padding: @spacing-xs;
         background-color: @blue-300;
+        color: @blue-500;
+
         border-radius: 2px;
 
         display: block;
@@ -95,6 +97,10 @@
 
         &.is-pointed {
             background: none;
+            span {
+                background: @blue-300;
+                color: @contrast-blue-300;
+            }
         }
     }
 
