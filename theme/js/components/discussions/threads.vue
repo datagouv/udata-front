@@ -23,6 +23,7 @@ Discussions allow users to interact with others.
           <select
           name="sortBy"
           id="sortBy"
+          :aria-label="$t('Sort discussions by')"
           @change="changeSort(currentSort)"
           v-model="currentSort"
           class="fr-select fr-select--no-border"
