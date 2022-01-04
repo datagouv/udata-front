@@ -98,7 +98,7 @@ export default {
     // Little library hacking to add a placeholder to the search input when the selector is open
     this.$refs.multiselect.$refs.input.placeholder =
       this.searchPlaceholder || this.placeholder;
-    this.$refs.multiselect.$refs.input.title =
+    this.$refs.multiselect.$refs.input.ariaLabel =
       this.searchPlaceholder || this.placeholder;
   },
   async created() {

@@ -32,6 +32,7 @@ If the submitUrl prop is passed, it will redirect on Submit.
         @click.prevent="stop"
         v-html="closeIcon"
         v-if="stop"
+        :aria-label="$t('Close')"
       />
     </form>
   </section>
