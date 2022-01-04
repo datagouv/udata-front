@@ -17,6 +17,8 @@ They also come in a bigger size with the `.big` class.
 ```
 */
 
+@import (less) "@gouvfr/dsfr/dist/component/tag/tag.css";
+
 .tags {
     display: flex;
     flex-wrap: wrap;
@@ -57,5 +59,16 @@ They also come in a bigger size with the `.big` class.
         & {
             color: @grey-300;
         }
+    }
+}
+
+.fr-tag {
+    &:hover {
+        text-decoration: none;
+    }
+
+    &.active {
+        background-color: var(--background-action-high-blue-cumulus);
+        color: @white;
     }
 }
