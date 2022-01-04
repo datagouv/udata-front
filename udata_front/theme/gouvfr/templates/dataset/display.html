@@ -333,7 +333,7 @@
             {% set resources_per_page = config.RESOURCES_DEFAULT_PAGE_SIZE %}
             {% for (type, type_label), resources in grouped_resources.items() %}
                 {% if nb_groups > 1 %}
-                    <h4 class="fs-lg mt-xl">{{ type_label }} <sup>{{resources|length }}</sup></h4>
+                    <h3 class="fr-h6 fr-mb-3v fr-mt-9v">{{ type_label }} <sup>{{resources|length }}</sup></h3>
                 {% endif %}
                 <dataset-resources dataset-id="{{ dataset.id }}" type="{{ type }}" type-label="{{ type_label }}" :can-edit="{{ can_edit.can()|tojson|safe }}">
                     {% set max_resources_to_show = resources_per_page if not show_all_resources else resources|length %}
