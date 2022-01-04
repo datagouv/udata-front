@@ -23,16 +23,16 @@ There is also `.fr-tags-group` to group multiple tags together like a row.
 
 ```dsfr-tags.html
 <nav class="tabs fr-tags-group">
-    <a href="#editorial-datasets" class="tab fr-tag fr-tag--blue-cumulus fr-displayed-lg">
+    <a href="#editorial-datasets" class="tab fr-tag fr-displayed-lg">
         Données mises en avant
     </a>
-    <a href="#recent-datasets" class="tab fr-tag fr-tag--blue-cumulus fr-displayed-lg">
+    <a href="#recent-datasets" class="tab fr-tag fr-displayed-lg">
         Dernières données
     </a>
-    <a href="#reference-datasets" class="tab fr-tag fr-tag--blue-cumulus fr-displayed-lg active">
+    <a href="#reference-datasets" class="tab fr-tag fr-displayed-lg active">
         Données de référence
     </a>
-    <a href="/fr/datasets/" class="fr-tag fr-tag--blue-cumulus">Voir plus</a>
+    <a href="/fr/datasets/" class="fr-tag">Voir plus</a>
 </nav>
 ```
 */
@@ -82,13 +82,17 @@ There is also `.fr-tags-group` to group multiple tags together like a row.
     }
 }
 
-.fr-tag {
+a.fr-tag {
     &:hover {
         text-decoration: none;
     }
 
+    color: var(--text-default-info);
+    --blend: var(--background-contrast-info-blend);
+    background-color: var(--background-contrast-info);
+
     &.active {
-        background-color: var(--background-action-high-blue-cumulus);
+        background-color: @blue-350;
         color: @white;
     }
 }

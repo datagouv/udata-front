@@ -103,12 +103,12 @@
                     {% for tab_id, label, _, _ in dataset_tabs %}
                     <a
                         href="#{{tab_id}}"
-                        class="tab fr-tag fr-tag--blue-cumulus {% if loop.first %}active {% endif %}fr-displayed-lg"
+                        class="tab fr-tag {% if loop.first %}active {% endif %}fr-displayed-lg"
                     >
                         {{ label }}
                     </a>
                     {% endfor %}
-                    <a href="{{ url_for('datasets.list') }}" class="fr-tag fr-tag--blue-cumulus">{{ _('See more') }}</a>
+                    <a href="{{ url_for('datasets.list') }}" class="fr-tag">{{ _('See more') }}</a>
                 </nav>
             </div>
         </div>
@@ -146,13 +146,13 @@
                     {% for tab_id, label, _, _ in reuses_tabs %}
                     <a
                         href="#{{tab_id}}"
-                        class="tab fr-tag fr-tag--blue-cumulus {% if loop.first %}active {% endif %}fr-displayed-lg"
+                        class="tab fr-tag {% if loop.first %}active {% endif %}fr-displayed-lg"
                     >
                         {{ label }}
                     </a>
                     {% endfor %}
                     <a href="{{ url_for('reuses.list', sort='-created') }}" title="{{ _('Latest reuses') }}"
-                        class="fr-tag fr-tag--blue-cumulus">{{ _('See more') }}</a>
+                        class="fr-tag">{{ _('See more') }}</a>
                 </nav>
             </div>
         </div>

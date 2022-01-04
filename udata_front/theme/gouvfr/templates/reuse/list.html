@@ -51,7 +51,7 @@
             <li>
                 <a
                     href="{{ url_for('reuses.list') }}"
-                    class="fr-tag fr-tag--blue-cumulus{% if not reuses.query._filters.type %} active{% endif %}">
+                    class="fr-tag{% if not reuses.query._filters.type %} active{% endif %}">
                     {{ _('All') }}
                 </a>
             </li>
@@ -59,7 +59,7 @@
                 <li>
                     <a
                         href="{{ reuses.query.to_url(url, replace=True, **{'type': tab_id}) }}"
-                        class="fr-tag fr-tag--blue-cumulus{% if reuses.query._filters and reuses.query._filters.type and reuses.query._filters.type.type == tab_id %} active{% endif %}"
+                        class="fr-tag{% if reuses.query._filters and reuses.query._filters.type and reuses.query._filters.type.type == tab_id %} active{% endif %}"
                     >
                         {{ label }}
                     </a>
