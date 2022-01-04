@@ -2,14 +2,9 @@
     .multiselect-placeholder, .multiselect-no-options, .multiselect-no-results {
         color: @grey-380;
     }
-    .multiselect-input {
-        padding: @spacing-xxs 40px @spacing-xxs @spacing-xxs;
+    &.multiselect {
+        min-height: 48px;
         border-color: @grey-200;
-    }
-
-    // Loader spinner
-    .multiselect-spinner {
-        top: 5px;
     }
 
     // Labels when the dropdown is closed (with the "+n" label when more than two options are selected)
@@ -41,6 +36,7 @@
         padding: @spacing-xs;
         background-color: @blue-300;
         color: @blue-500;
+        line-height: 1.35;
 
         border-radius: 2px;
 
@@ -80,10 +76,9 @@
     .multiselect-option {
         border-radius: 2px;
         padding: 0;
-        min-height: 0;
         color: @blue-500;
 
-        margin: @spacing-xs;
+        margin: @spacing-xxs;
 
         span {
             background: @blue-100;

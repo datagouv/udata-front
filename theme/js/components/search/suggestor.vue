@@ -50,8 +50,8 @@ Simply provide the many necessary props :
     object
     ref="multiselect"
   >
-    <template v-slot:multiplelabel="{ values }">
-      <div class="suggestor-labels" v-if="!opened">
+    <template #multiplelabel="{ values }">
+      <div class="multiselect-multiple-label" v-if="!opened">
         <div class="multiselect-tag" v-if="values.length >= 1">
           {{ values[0].label }}
         </div>
@@ -61,7 +61,7 @@ Simply provide the many necessary props :
       </div>
       <div v-else />
     </template>
-    <template v-slot:beforelist v-if="value.length">
+    <template #beforelist v-if="value.length">
       <div class="suggestor-search-labels is-opened">
         <div class="multiselect-tag" v-for="v in value">
           <span>{{ v.label }}</span>
@@ -72,9 +72,9 @@ Simply provide the many necessary props :
   </Multiselect>
 </template>
 
+
 <script>
 import Multiselect from "@vueform/multiselect";
-import "@vueform/multiselect/themes/default.css";
 import i18n from "../../plugins/i18n";
 
 export default {
@@ -95,9 +95,6 @@ export default {
     },
   },
   mounted() {
-    // Little library hacking to add a placeholder to the search input when the selector is open
-    this.$refs.multiselect.$refs.input.placeholder =
-      this.searchPlaceholder || this.placeholder;
     this.$refs.multiselect.$refs.input.ariaLabel =
       this.searchPlaceholder || this.placeholder;
   },
@@ -118,7 +115,14 @@ export default {
     };
   },
   watch: {
-    values: function (value) {
+    opened(value) {
+      if(value) {
+        this.$refs.multiselect.$refs.input.placeholder = this.searchPlaceholder || this.placeholder;
+      } else {
+        this.$refs.multiselect.$refs.input.placeholder = '';
+      }
+    },
+    values (value) {
       // This lib doesn't support `undefined` values and will not reset its state.
       // This allows to reset the value if the parent component decides to clear the value.
       if (typeof value === "undefined") this.value = [];
@@ -132,13 +136,13 @@ export default {
       if (!q && !this.listUrl) return Promise.resolve([]);
 
       // On initial render, q will be undefined. We fetch the collection instead of fetching a suggest result using the listUrl
-      if (!q)
+      if (!q) {
         query = this.$api.get(this.listUrl).then((resp) => resp.data.data);
-      else
+      } else {
         query = this.$api
           .get(this.suggestUrl, { params: { q } })
           .then((resp) => resp.data);
-
+      }
       return query.then(this.serializer);
     },
     fillInitialValues: function () {
@@ -147,9 +151,13 @@ export default {
       // `this.values` can be a single value (String) or an array of values so we need to normalize it
 
       let selected = null;
-      if (typeof this.values === "string") selected = [this.values];
-      else if (Array.isArray(this.values)) selected = this.values;
-      else selected = [];
+      if (typeof this.values === "string") {
+        selected = [this.values];
+      } else if (Array.isArray(this.values)) {
+        selected = this.values;
+      } else {
+        selected = [];
+      }
 
       // Now for each value, three cases :
       // * We have a entityUrl prop that we will call for each value to get the corresponding label
