@@ -15,6 +15,26 @@ They also come in a bigger size with the `.big` class.
 </ul>
 <span class="big tag">Big tag</span>
 ```
+
+## DSFR tags
+
+We can use DSFR tags and their customizations. See Tabs-js for how to use it as tabs.
+There is also `.fr-tags-group` to group multiple tags together like a row.
+
+```dsfr-tags.html
+<nav class="tabs fr-tags-group">
+    <a href="#editorial-datasets" class="tab fr-tag fr-tag--blue-cumulus fr-displayed-lg">
+        Données mises en avant
+    </a>
+    <a href="#recent-datasets" class="tab fr-tag fr-tag--blue-cumulus fr-displayed-lg">
+        Dernières données
+    </a>
+    <a href="#reference-datasets" class="tab fr-tag fr-tag--blue-cumulus fr-displayed-lg active">
+        Données de référence
+    </a>
+    <a href="/fr/datasets/" class="fr-tag fr-tag--blue-cumulus">Voir plus</a>
+</nav>
+```
 */
 
 @import (less) "@gouvfr/dsfr/dist/component/tag/tag.css";
