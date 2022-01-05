@@ -23,7 +23,7 @@
 <div class="container py-md">
     <h1 class="m-0">{{ post.name }}</h1>
     {% if post.published %}
-    <p class="text-grey-300 fs-xs">
+    <p class="text-grey-380 fs-xs">
         {{ _('Published on %(date)s',date=post.published|dateformat(format='long')) }}
     </p>
     {% else %}
