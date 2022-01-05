@@ -56,7 +56,6 @@ theme.menu(gouvfr_menu)
 opendata_links = [
     nav.Item(_('News'), 'posts.list'),
     nav.Item(_('Reference Data'), 'gouvfr.show_page', args={'slug': 'spd/reference'}),
-    nav.Item(_('Featured topics'), 'gouvfr.show_page', args={'slug': 'donnees-cles-par-sujet'}),
     nav.Item(_('Portal for European data'), None, url='https://data.europa.eu'),
 ]
 
