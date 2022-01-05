@@ -1,36 +1,21 @@
-//Home section
+// Home section
 .reuse {
     .tab-content {
         min-width: @breakpoint-lg;
     }
 }
 
-.reuse-cards {
-    @media @query-xl {
-        overflow-x: scroll;
-
-        .row {
-            flex-wrap: nowrap;
-
-            //Prevent reuse cards from being too small
-            > div,
-            > li {
-                min-width: 250px;
-            }
-        }
-    }
-}
-
-//Generic reuse cards
+// Generic reuse cards
 .reuse-card {
+    width: 285px;
     .reuse-image {
         border-radius: @spacing-md;
-        max-width: 100%;
-        width: 100%;
-        min-height: 320px;
+        height: 480px;
+        object-fit: cover;
+        object-position: center center;
+    }
 
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center center;
+    &.reuse-card--fluid {
+        width: 100%;
     }
 }

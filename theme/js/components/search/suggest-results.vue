@@ -12,8 +12,8 @@ Used by the suggest feature to display typeahead-style results when you type you
 -->
 
 <template>
-  <div class="row p-md results">
-    <div class="p-md col col-md-12">
+  <div class="row fr-p-2w results">
+    <div class="fr-p-2w col col-md-12">
       <a
         class="unstyled row-inline justify-between see-all"
         :href="datasetUrl"
@@ -40,7 +40,7 @@ Used by the suggest feature to display typeahead-style results when you type you
           :queryString="queryString"
           :link="datasetUrl"
         />
-        <div class="my-md cards-container reuse-cards" v-else>
+        <div class="fr-my-2w cards-container" v-else>
           <ul>
             <li v-for="dataset in results.datasets">
               <a :href="dataset.page" :title="dataset.title" class="unstyled">
@@ -48,13 +48,13 @@ Used by the suggest feature to display typeahead-style results when you type you
               </a>
             </li>
           </ul>
-          <a class="nav-link pt-md" :href="datasetUrl">{{
+          <a class="nav-link fr-pt-2w" :href="datasetUrl">{{
             $t("Search in datasets")
           }}</a>
         </div>
       </transition>
     </div>
-    <div class="p-md col col-md-12">
+    <div class="fr-p-2w col col-md-12">
       <a
         class="unstyled row-inline justify-between see-all"
         :href="reuseUrl"
@@ -73,7 +73,7 @@ Used by the suggest feature to display typeahead-style results when you type you
         }}
       </p>
       <transition mode="out-in">
-        <reuse-loader class="my-md" v-if="loading" />
+        <reuse-loader class="fr-my-2w" v-if="loading" />
         <Empty
           v-else-if="!results.reuses.length > 0"
           :cta="$t('See the reuses')"
@@ -81,15 +81,15 @@ Used by the suggest feature to display typeahead-style results when you type you
           :queryString="queryString"
           :link="reuseUrl"
         />
-        <div class="my-md cards-container" v-else>
+        <div class="fr-my-2w cards-container" v-else>
           <ul class="row">
-            <li v-for="reuse in results.reuses" class="col text-align-center">
+            <li v-for="reuse in results.reuses" class="col-6">
               <a :href="reuse.page" :title="reuse.title" class="unstyled">
-                <Reuse v-bind="reuse" />
+                <Reuse v-bind="reuse" :fluid="true" />
               </a>
             </li>
           </ul>
-          <a class="nav-link pt-md" :href="reuseUrl">{{
+          <a class="nav-link fr-pt-2w" :href="reuseUrl">{{
             $t("Search reuses")
           }}</a>
         </div>
