@@ -7,6 +7,7 @@
 - :warning: `.btn-tab` is removed, use `.fr-tag` instead [57](https://github.com/etalab/udata-front/pull/57)
 - :warning: @bg-beige is remove, use @background-contrast-grey instead
 - Update colors to fix accessibility issues [#45](https://github.com/etalab/udata-front/pull/45)
+- Add topic information on reuse metadata and add a filter by topic on reuse search page [#50](https://github.com/etalab/udata-front/pull/50)
 
 ## 1.2.0 (2021-12-10)
 
