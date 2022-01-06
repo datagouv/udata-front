@@ -52,15 +52,17 @@ You can use tabs from DSFR. It uses DSFR colors and conventions. It allows you t
 
 */
 
-.tab {
-    // Prevents children from taking the click events.
-    // Might be dangerous, remove if needed
-    >* {
-        pointer-events: none;
-    }
+.tabs {
+    .tab {
+        // Prevents children from taking the click events.
+        // Might be dangerous, remove if needed
+        > * {
+            pointer-events: none;
+        }
 
-    &.active {
-        pointer-events: none;
+        &.active {
+            pointer-events: none;
+        }
     }
 }
 
