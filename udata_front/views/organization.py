@@ -19,6 +19,7 @@ from udata.core.dataset.csv import (
 from udata.core.organization.permissions import (
     EditOrganizationPermission, OrganizationPrivatePermission
 )
+from udata.core.organization.search import OrganizationSearch
 
 
 blueprint = I18nBlueprint('organizations', __name__,
@@ -36,6 +37,7 @@ class OrganizationListView(SearchView):
     model = Organization
     context_name = 'organizations'
     template_name = 'organization/list.html'
+    search_adapter = OrganizationSearch
 
 
 class OrgView(object):
