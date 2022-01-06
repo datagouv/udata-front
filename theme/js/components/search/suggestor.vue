@@ -38,7 +38,7 @@ Simply provide the many necessary props :
     :delay="50"
     :maxHeight="450"
     searchable
-    :placeholder="opened ? '' : placeholder"
+    :placeholder="placeholder"
     :noOptionsText="emptyPlaceholder"
     :noResultsText="emptyPlaceholder"
     mode="multiple"
