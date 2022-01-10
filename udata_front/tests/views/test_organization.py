@@ -21,6 +21,7 @@ from udata.tests.helpers import capture_mails, assert_starts_with
 
 from udata_front.tests import GouvFrSettings
 from udata_front.tests.frontend import GouvfrFrontTestCase
+from udata_front.views.organization import OrganizationDetailView
 
 pytestmark = [
     pytest.mark.usefixtures('clean_db'),
@@ -152,6 +153,31 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         self.assertEqual(total_datasets,
                          len(datasets) + len(private_datasets) + len(empty_datasets))
 
+    def test_render_display_with_paginated_datasets(self):
+        '''It should render the organization page with paginated datasets'''
+        organization = OrganizationFactory()
+        datasets_len = OrganizationDetailView.page_size + 1
+        datasets = [
+            VisibleDatasetFactory(organization=organization) for _ in range(datasets_len)]
+        response = self.get(url_for('organizations.show', org=organization))
+
+        self.assert200(response)
+        rendered_datasets = self.get_context_variable('datasets')
+        self.assertEqual(len(rendered_datasets), OrganizationDetailView.page_size)
+
+    def test_render_display_with_paginated_datasets_on_second_page(self):
+        '''It should render the organization page with paginated datasets'''
+        organization = OrganizationFactory()
+        second_page_len = 1
+        datasets_len = OrganizationDetailView.page_size + second_page_len
+        datasets = [
+            VisibleDatasetFactory(organization=organization) for _ in range(datasets_len)]
+        response = self.get(url_for('organizations.show', org=organization, datasets_page=2))
+
+        self.assert200(response)
+        rendered_datasets = self.get_context_variable('datasets')
+        self.assertEqual(len(rendered_datasets), second_page_len)
+
     def test_render_display_with_reuses(self):
         '''It should render the organization page with some reuses'''
         organization = OrganizationFactory()
@@ -188,6 +214,31 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
 
         total_reuses = self.get_context_variable('total_reuses')
         self.assertEqual(total_reuses, len(reuses) + len(private_reuses) + len(empty_reuses))
+
+    def test_render_display_with_paginated_reuses(self):
+        '''It should render the organization page with paginated reuses'''
+        organization = OrganizationFactory()
+        reuses_len = OrganizationDetailView.page_size + 1
+        reuses = [
+            VisibleReuseFactory(organization=organization) for _ in range(reuses_len)]
+        response = self.get(url_for('organizations.show', org=organization))
+
+        self.assert200(response)
+        rendered_reuses = self.get_context_variable('reuses')
+        self.assertEqual(len(rendered_reuses), OrganizationDetailView.page_size)
+
+    def test_render_display_with_paginated_reuses_on_second_page(self):
+        '''It should render the organization page with paginated datasets'''
+        second_page_len = 1
+        reuses_len = OrganizationDetailView.page_size + second_page_len
+        organization = OrganizationFactory()
+        reuses = [
+            VisibleReuseFactory(organization=organization) for _ in range(reuses_len)]
+        response = self.get(url_for('organizations.show', org=organization, reuses_page=2))
+
+        self.assert200(response)
+        rendered_reuses = self.get_context_variable('reuses')
+        self.assertEqual(len(rendered_reuses), second_page_len)
 
     def test_render_display_with_followers(self):
         '''It should render the organization page with followers'''
