@@ -50,7 +50,7 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
 
     def test_render_display(self):
         '''It should render the organization page'''
-        organization = OrganizationFactory(description='* Title 1\n* Title 2',)
+        organization = OrganizationFactory(description='* Title 1\n* Title 2', )
         url = url_for('organizations.show', org=organization)
         response = self.get(url)
         self.assert200(response)
@@ -129,6 +129,7 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         me = self.login()
         member = Member(user=me, role='editor')
         organization = OrganizationFactory(members=[member])
+        # We show paginated datasets on the organisation page so rendered_datasets length will be at most 4
         datasets = [
             VisibleDatasetFactory(organization=organization) for _ in range(2)]
         empty_datasets = [
@@ -166,6 +167,7 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         me = self.login()
         member = Member(user=me, role='editor')
         organization = OrganizationFactory(members=[member])
+        # We show paginated reuses on the organisation page so rendered_reuses length will be at most 4
         reuses = [VisibleReuseFactory(organization=organization) for _ in range(2)]
         empty_reuses = [
             ReuseFactory(organization=organization, datasets=[]) for _ in range(1)]
