@@ -135,7 +135,6 @@
 
 <script>
 import config from "../../../config";
-import ChevronIcon from "svg/chevron.svg";
 import CopyIcon from "svg/actions/copy.svg";
 import DownloadIcon from "svg/actions/download.svg";
 import EditIcon from "svg/actions/edit.svg";
@@ -181,7 +180,6 @@ export default {
     return {
       adminUrl: `${config.admin_root}dataset/${this.datasetId}/resource/${this.resource.id}`,
       expanded: false,
-      ChevronIcon,
       CopyIcon,
       DownloadIcon,
       EditIcon,
