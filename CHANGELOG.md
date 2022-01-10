@@ -6,6 +6,7 @@
 - Add topic information on reuse metadata and add a filter by topic on reuse search page [#50](https://github.com/etalab/udata-front/pull/50)
 - Update DSFR to v1.2.1 [#45](https://github.com/etalab/udata-front/pull/45)
 - :warning: `.btn-tab` is removed, use `.fr-tag` instead [57](https://github.com/etalab/udata-front/pull/57)
+- Fix latest modification date for dataset and resources on dataset page [#62](https://github.com/etalab/udata-front/pull/62)
 
 ## 1.2.0 (2021-12-10)
 
