@@ -35,7 +35,7 @@ Simply provide the many necessary props :
   <Multiselect
     v-model="value"
     :options="options"
-    :delay="50"
+    :delay="delay"
     :maxHeight="450"
     searchable
     :placeholder="placeholder"
@@ -48,7 +48,6 @@ Simply provide the many necessary props :
     @open="opened = true"
     @close="opened = false"
     object
-    :canClear="true"
     ref="multiselect"
   >
     <template #multiplelabel="{ values }">
@@ -102,8 +101,12 @@ export default {
   async created() {
     // If we're in "suggest" mode, the options will be the suggest function that will be called on each search change
     // If not, we call the getInitialOptions fn that will populate the options var
-    if (this.suggestUrl) this.options = this.suggest;
-    else this.options = await this.getInitialOptions();
+    if (this.suggestUrl) {
+      this.options = this.suggest;
+      this.delay = 50;
+    } else {
+      this.options = await this.getInitialOptions();
+    }
 
     // Then we fill the select with existing value if there is any, using the previously made list if needs be
     this.fillInitialValues();
@@ -113,6 +116,7 @@ export default {
       value: [], // Current selected value(s) object array `[{label: 'A', value: 'a'}, {label: 'B', value: 'b'}]`
       opened: false, // Tracks whether the select is open
       options: null, // Current options list, same structure as `value` above (but contains all possible options). Can be dynamic (async)
+      delay: -1, // Disable async loading
     };
   },
   watch: {
@@ -198,14 +202,13 @@ export default {
         .then(this.serializer);
     },
     // Tries to guess values and labels. Harder than it looks.
-    serializer: function (data) {
+    serializer (data) {
       return data.map((obj) => ({
         label: obj.name || obj.title || obj.text || obj?.properties?.name,
         value: obj.id || obj.text,
       }));
     },
-    onSelect: function (value) {
-      // This is a temporary dirty thing that limits the selected options to 1.
+    onSelect () {
       if (this.value.length === 2) {
         this.deselect(this.value[0]);
         this.$refs.multiselect.close();
