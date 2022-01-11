@@ -1,9 +1,11 @@
 .suggestor {
+    --ms-tag-py: @spacing-xs;
+    --ms-py: @spacing-sm;
     .multiselect-placeholder, .multiselect-no-options, .multiselect-no-results {
         color: @grey-380;
     }
-    &.multiselect {
-        min-height: 48px;
+    .multiselect-search {
+        min-height: calc(var(--ms-font-size, 1rem)*var(--ms-line-height, 1.375) + var(--ms-py, .5rem)*2);
         border-color: @grey-200;
     }
 
@@ -33,7 +35,7 @@
     .multiselect-tag {
         margin: 0;
         margin-right: @spacing-xxs;
-        padding: @spacing-xs;
+        padding: var(--ms-tag-py);
         background-color: @blue-300;
         color: @blue-500;
         line-height: 1.35;

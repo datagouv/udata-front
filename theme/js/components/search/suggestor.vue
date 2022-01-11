@@ -48,6 +48,7 @@ Simply provide the many necessary props :
     @open="opened = true"
     @close="opened = false"
     object
+    :canClear="true"
     ref="multiselect"
   >
     <template #multiplelabel="{ values }">
