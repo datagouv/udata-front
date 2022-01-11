@@ -157,8 +157,8 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         '''It should render the organization page with paginated datasets'''
         organization = OrganizationFactory()
         datasets_len = OrganizationDetailView.page_size + 1
-        datasets = [
-            VisibleDatasetFactory(organization=organization) for _ in range(datasets_len)]
+        for _ in range(datasets_len):
+            VisibleDatasetFactory(organization=organization)
         response = self.get(url_for('organizations.show', org=organization))
 
         self.assert200(response)
@@ -170,8 +170,8 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         organization = OrganizationFactory()
         second_page_len = 1
         datasets_len = OrganizationDetailView.page_size + second_page_len
-        datasets = [
-            VisibleDatasetFactory(organization=organization) for _ in range(datasets_len)]
+        for _ in range(datasets_len):
+            VisibleDatasetFactory(organization=organization)
         response = self.get(url_for('organizations.show', org=organization, datasets_page=2))
 
         self.assert200(response)
@@ -219,8 +219,8 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         '''It should render the organization page with paginated reuses'''
         organization = OrganizationFactory()
         reuses_len = OrganizationDetailView.page_size + 1
-        reuses = [
-            VisibleReuseFactory(organization=organization) for _ in range(reuses_len)]
+        for _ in range(reuses_len):
+            VisibleReuseFactory(organization=organization)
         response = self.get(url_for('organizations.show', org=organization))
 
         self.assert200(response)
@@ -232,8 +232,8 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         second_page_len = 1
         reuses_len = OrganizationDetailView.page_size + second_page_len
         organization = OrganizationFactory()
-        reuses = [
-            VisibleReuseFactory(organization=organization) for _ in range(reuses_len)]
+        for _ in range(reuses_len):
+            VisibleReuseFactory(organization=organization)
         response = self.get(url_for('organizations.show', org=organization, reuses_page=2))
 
         self.assert200(response)
