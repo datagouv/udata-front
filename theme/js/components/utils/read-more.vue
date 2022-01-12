@@ -72,7 +72,7 @@ export default {
       let contentHeight = Array.from(this.$refs.container.children)
       .map(getHeight)
       .reduce((total, height) => total + height, 0)
-      this.readMoreRequired = contentHeight > DEFAULT_HEIGHT;
+      this.readMoreRequired = contentHeight > getHeight(this.$refs.container);
       this.containerHeight = DEFAULT_HEIGHT;
       if(!this.readMoreRequired) {
         this.containerHeight = contentHeight;
