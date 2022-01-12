@@ -2,7 +2,12 @@
 
 ## Current (in progress)
 
+- Nothing yet
+
+## 1.2.1 (2022-01-11)
+
 - Change urls in Participate banner to relevant etalab guides [#53](https://github.com/etalab/udata-front/pull/53)
+- Add topic information on reuse metadata and add a filter by topic on reuse search page [#50](https://github.com/etalab/udata-front/pull/50)
 - Update DSFR to v1.2.1 [#45](https://github.com/etalab/udata-front/pull/45)
 - :warning: @bg-beige is remove, use @background-contrast-grey instead
 - Update colors to fix accessibility issues [#56](https://github.com/etalab/udata-front/pull/56)
