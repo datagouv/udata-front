@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix thread header wrapped when title is too long [#64](https://github.com/etalab/udata-front/pull/64)
 
 ## 1.2.1 (2022-01-11)
 
