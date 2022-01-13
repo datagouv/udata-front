@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix auth messages not shown from query parameter [#68](https://github.com/etalab/udata-front/pull/68)
 
 ## 1.2.1 (2022-01-11)
 
