@@ -77,13 +77,8 @@
     <ul class="search-results row mt-lg-md">
         {% with card_fluid=True %}
         {% for reuse in reuses %}
-        <li class="col-3 col-lg-6 col-sm-12 my-sm-sm text-align-center">
-            <a
-                href="{{ url_for('reuses.show', reuse=reuse) }}"
-                title="{{ reuse.title }}"
-            >
-                {% include theme('reuse/card.html') %}
-            </a>
+        <li class="col-3 col-lg-6 col-sm-12 my-sm-sm text-align-center fr-mb-3v">
+            {% include theme('reuse/card.html') %}
         </li>
         {% endfor %}
         {% endwith %}
