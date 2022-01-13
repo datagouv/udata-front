@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-beige fr-mt-2w" :id="discussionUrl(id)">
-    <header class="fr-grid-row fr-grid-row--middle justify-between fr-py-2w fr-px-3w border-bottom no-wrap wrap-md">
-      <div class="fr-col-auto text-orange-200 fr-text--bold fr-pr-2w" v-if="closed">
+  <div class="bg-contrast-grey fr-mt-2w" :id="discussionUrl(id)">
+    <header class="fr-grid-row fr-grid-row--middle justify-between fr-py-2w fr-px-3w no-wrap wrap-md">
+      <div class="fr-col-auto text-default-warning fr-text--bold fr-pr-2w" v-if="closed">
         <span>{{ $t("Discussion closed") }}</span>
       </div>
       <h3 class="fr-mx-3v fr-mx-md-0 fr-h6 fr-mb-0">{{ title }}</h3>
@@ -47,7 +47,7 @@
       </button>
       </div>
     </div>
-    <footer class="fr-py-2w fr-px-3w border-top">
+    <footer class="fr-py-2w fr-px-3w">
       <template v-if="!closed && !readOnlyEnabled">
         <button
           class="btn--flex btn-secondary btn-secondary-grey-500 fr-btn fr-btn--secondary fr-btn--icon-right fr-fi-arrow-right-s-line"
@@ -63,7 +63,7 @@
           @close="showForm = false"
         />
       </template>
-      <div v-if="closed" class="text-grey-300">
+      <div v-if="closed" class="text-grey-380">
         {{ $t("The discussion was closed by") }} &#32;
         <strong class="px-xxs"><Author :author="closed_by" /></strong>
         {{ $t("on") }} {{ $filters.formatDate(closed) }}
