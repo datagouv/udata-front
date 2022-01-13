@@ -12,7 +12,7 @@ Vue and simpler -->
     <div>
       {{ type_label }}
     </div>
-    <div class="text-grey-300">
+    <div class="text-grey-380">
       {{ $tc('X datasets', datasets) }}
     </div>
     <div>
@@ -24,7 +24,6 @@ Vue and simpler -->
 
 <script>
 import Placeholder from "../utils/placeholder";
-import icon from "svg/actions/star.svg";
 
 export default {
   props: {
@@ -47,11 +46,6 @@ export default {
   },
   components: {
     Placeholder,
-  },
-  data() {
-   return {
-     icon
-   }
-  },
+  }
 };
 </script>

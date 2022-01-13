@@ -3,14 +3,14 @@
     <div class="card-logo">
       <Placeholder type="reuse" :src="image_url" :alt="title" />
       <div class="logo-badge">
-        <span v-html="private" v-if="private" />
+        <span v-html="privateIcon" v-if="private" />
         <span v-html="certified" v-else-if="organization?.public_service" />
       </div>
     </div>
     <div class="card-data">
-      <h4 class="card-body">
+      <h3 class="card-body h4">
         {{ title }}
-      </h4>
+      </h3>
       <div class="card-footer">
         <ul class="card-features fs-xs"></ul>
       </div>
@@ -21,12 +21,12 @@
 <script>
 import Placeholder from "../utils/placeholder";
 import certified from "svg/certified.svg";
-import private from "svg/private.svg";
+import privateIcon from "svg/private.svg";
 
 export default {
   created() {
     this.certified = certified;
-    this.private = private;
+    this.privateIcon = privateIcon;
   },
   props: {
     title: String,

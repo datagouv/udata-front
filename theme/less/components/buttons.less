@@ -16,24 +16,6 @@ Primary buttons exist for every color in this UI-kit. Please refer to the [color
 
 ```buttons-primary.html
 <p><a href="#" role="button" class="btn-primary">Default button</a></p>
-<p><a href="#" role="button" class="btn-primary btn-primary-white">btn-primary-white</a></p>
-<p><a href="#" role="button" class="btn-primary btn-primary-blue-100">btn-primary-blue-100</a></p>
-<p><a href="#" role="button" class="btn-primary btn-primary-blue-200">btn-primary-blue-200</a></p>
-<p><a href="#" role="button" class="btn-primary btn-primary-blue-300">btn-primary-blue-300</a></p>
-<p><a href="#" role="button" class="btn-primary btn-primary-blue-400">btn-primary-blue-400</a></p>
-<p><a href="#" role="button" class="btn-primary btn-primary-blue-500">btn-primary-blue-500</a></p>
-<p><a href="#" role="button" class="btn-primary btn-primary-orange-100">btn-primary-orange-100</a></p>
-<p><a href="#" role="button" class="btn-primary btn-primary-yellow-100">btn-primary-yellow-100</a></p>
-<p><a href="#" role="button" class="btn-primary btn-primary-grey-50">btn-primary-grey-50</a></p>
-<p><a href="#" role="button" class="btn-primary btn-primary-grey-100">btn-primary-grey-100</a></p>
-<p><a href="#" role="button" class="btn-primary btn-primary-grey-200">btn-primary-grey-200</a></p>
-<p><a href="#" role="button" class="btn-primary btn-primary-grey-300">btn-primary-grey-300</a></p>
-<p><a href="#" role="button" class="btn-primary btn-primary-grey-380">btn-primary-grey-380</a></p>
-<p><a href="#" role="button" class="btn-primary btn-primary-grey-400">btn-primary-grey-400</a></p>
-<p><a href="#" role="button" class="btn-primary btn-primary-grey-500">btn-primary-grey-500</a></p>
-<p><a href="#" role="button" class="btn-primary btn-primary-green-300">btn-primary-green-300</a></p>
-<p><a href="#" role="button" class="btn-primary btn-primary-green-400">btn-primary-green-400</a></p>
-<p><a href="#" role="button" class="btn-primary btn-primary-green-500">btn-primary-green-500</a></p>
 ```
 
 ## Secondary buttons
@@ -43,12 +25,10 @@ As for primary buttons, secondary buttons exist in every color available.
 <p><a href="#" role="button" class="btn-secondary">Default button</a></p>
 <p><a href="#" role="button" class="btn-secondary btn-secondary-white">btn-secondary-white</a></p>
 <p><a href="#" role="button" class="btn-secondary btn-secondary-blue-100">btn-secondary-blue-100</a></p>
-<p><a href="#" role="button" class="btn-secondary btn-secondary-blue-200">btn-secondary-blue-200</a></p>
 <p><a href="#" role="button" class="btn-secondary btn-secondary-blue-300">btn-secondary-blue-300</a></p>
 <p><a href="#" role="button" class="btn-secondary btn-secondary-blue-400">btn-secondary-blue-400</a></p>
 <p><a href="#" role="button" class="btn-secondary btn-secondary-blue-500">btn-secondary-blue-500</a></p>
 <p><a href="#" role="button" class="btn-secondary btn-secondary-orange-100">btn-secondary-orange-100</a></p>
-<p><a href="#" role="button" class="btn-secondary btn-secondary-yellow-100">btn-secondary-yellow-100</a></p>
 <p><a href="#" role="button" class="btn-secondary btn-secondary-grey-50">btn-secondary-grey-50</a></p>
 <p><a href="#" role="button" class="btn-secondary btn-secondary-grey-100">btn-secondary-grey-100</a></p>
 <p><a href="#" role="button" class="btn-secondary btn-secondary-grey-200">btn-secondary-grey-200</a></p>
@@ -56,9 +36,7 @@ As for primary buttons, secondary buttons exist in every color available.
 <p><a href="#" role="button" class="btn-secondary btn-secondary-grey-380">btn-secondary-grey-380</a></p>
 <p><a href="#" role="button" class="btn-secondary btn-secondary-grey-400">btn-secondary-grey-400</a></p>
 <p><a href="#" role="button" class="btn-secondary btn-secondary-grey-500">btn-secondary-grey-500</a></p>
-<p><a href="#" role="button" class="btn-secondary btn-secondary-green-300">btn-secondary-green-300</a></p>
 <p><a href="#" role="button" class="btn-secondary btn-secondary-green-400">btn-secondary-green-400</a></p>
-<p><a href="#" role="button" class="btn-secondary btn-secondary-green-500">btn-secondary-green-500</a></p>
 ```
 
 ## Arrows
@@ -117,18 +95,7 @@ Because of technical limitations, this styleguide hardcodes the svg icon. When u
 ```
 
 ## Tab buttons
-On some pages, you'll find secondary buttons looking like little "tabs" that can be toggled thanks to ECMAScript-compatible language such as JavaScript.
-Those tabs are actually smaller versions of `.btn-secondary-200` with no text-decorations, and become `.btn-secondary-400` when active.
-Because developpers are lazy and less code is better code, there's a `.btn-tab` class that will default to those values.
-
-```btn-tab.html
-<nav class="tabs">
-    <a href="#editorial-datasets" class="btn-tab tab hidden-lg active">Featured datasets</a>
-    <a href="#recent-datasets" class="btn-tab tab hidden-lg">Latest datasets</a>
-    <a href="#reference-datasets" class="btn-tab tab hidden-lg">@@Jeux de données de référence</a>
-    <a href="/fr/datasets/" class="btn-tab tab">See more</a>
-</nav>
-```
+These are now removed, see tags instead.
 
 ## From DSFR
 
@@ -145,8 +112,7 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
 ```
 */
 
-@import (less) "@gouvfr/dsfr/dist/css/buttons.css";
-
+@import (less) "@gouvfr/dsfr/dist/component/button/button.css";
 .btn {
     display: inline-block;
     appearance: none;
@@ -169,14 +135,12 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
 
 .btn-primary {
     .btn;
-
-    color: white;
+    color: @white;
     background-color: @blue-400;
-
     &:active,
     &:hover,
     &.active {
-        background-color: lighten(@blue-400, 10%);
+        --blend: @blue-400-blend;
     }
 }
 
@@ -186,7 +150,7 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
     color: @blue-400;
     border: 1px solid transparent;
     border-color: @blue-400;
-    --bf500: @blue-400;
+    --border-action-high-blue-france: @blue-400;
 
     background: none;
 
@@ -201,7 +165,7 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
             @contrast: 'contrast-@{value}';
             border-color: @@value;
             color: @@value;
-            --bf500: @@value;
+            --border-action-high-blue-france: @@value;
         }
     });
 
@@ -250,7 +214,7 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
     }
 }
 
-//Bottoni molto grandi 🤏
+// Bottoni molto grandi 🤏
 .btn-venti {
     position: relative;
     display: block;
@@ -286,31 +250,6 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
         &:after {
             right: @spacing-lg;
         }
-    }
-}
-
-//Secondary buttons for pill-shaped "tabs"
-//Defaults to grey-200 and grey-400 for active btns
-//And smaller margins
-.btn-tab {
-    .btn-secondary;
-    .btn-secondary-grey-200;
-
-    padding: @spacing-xs @spacing-sm;
-    font-size: @font-size-sm;
-    font-weight: @font-weight-normal;
-    transition: border ease 0.1s;
-    transition-property: border, color;
-
-    &:active,
-    &:hover,
-    &.active {
-        text-decoration: none;
-    }
-
-    &.active,
-    &:hover {
-        .btn-secondary-grey-400;
     }
 }
 

@@ -32,7 +32,7 @@ Summaries allow users to have an overview of content and navigate between page s
  */
 
 // summaries from dsfr
-@import (less) "@gouvfr/dsfr/dist/css/summary.css";
+@import (less) "@gouvfr/dsfr/dist/component/summary/summary.css";
 
 .fr-summary {
     --ol-start: 1.5rem;
@@ -40,9 +40,8 @@ Summaries allow users to have an overview of content and navigate between page s
     font-size: @font-size-sm;
 
     .fr-summary__link {
-        color: @blue-400;
         .sup, .sup::before, .sup::after  {
-            color: var(--g600);
+            color: @contrast-grey-100;
         }
     }
 
