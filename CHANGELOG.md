@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add temporal coverage back to dataset page [#63](https://github.com/etalab/udata-front/pull/63)
 
 ## 1.2.1 (2022-01-11)
 
