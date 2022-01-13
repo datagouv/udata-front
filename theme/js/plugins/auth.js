@@ -38,7 +38,7 @@ export default function install(app) {
    * raising a AuthenticationRequired error.
    *
    * @param  {String} message The contextual message to display on login screen
-   * @throws  {Error} When the user is not authentified
+   * @throws  {Error} When the user is not authenticated
    */
   app.config.globalProperties.$auth = function (message) {
     if (!this.$user) {
