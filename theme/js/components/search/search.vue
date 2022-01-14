@@ -32,6 +32,7 @@
           <Suggestor
             :placeholder="$t('Organizations')"
             :searchPlaceholder="$t('Search an organization...')"
+            :suggestApi=this.$apiv2
             listUrl="/organizations/?sort=-followers"
             suggestUrl="/organizations/suggest/"
             entityUrl="/organizations/"
@@ -43,6 +44,7 @@
           <Suggestor
             :placeholder="$t('Tags')"
             :searchPlaceholder="$t('Search a tag...')"
+            :suggestApi=this.$apiv2
             suggestUrl="/tags/suggest/"
             :values="facets.tag"
             :onChange="handleSuggestorChange('tag')"
@@ -61,6 +63,7 @@
           <Suggestor
             :placeholder="$t('Formats')"
             :searchPlaceholder="$t('Search a format...')"
+            :suggestApi=this.$apiv2
             suggestUrl="/datasets/suggest/formats/"
             :values="facets.format"
             :onChange="handleSuggestorChange('format')"
@@ -94,6 +97,7 @@
           <Suggestor
             :placeholder="$t('Geographic area')"
             :searchPlaceholder="$t('Search a geographic area...')"
+            :suggestApi=this.$apiv2
             suggestUrl="/spatial/zones/suggest/"
             entityUrl="/spatial/zone/"
             :values="facets.geozone"
