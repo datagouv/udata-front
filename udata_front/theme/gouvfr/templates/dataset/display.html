@@ -397,10 +397,9 @@
         </div>
         <p class="fr-my-0">{{ _('Explore the reuses of this dataset.') }}</p>
         <p class="fr-mt-0 fr-mb-3w">{{ _('Did you use this data ? Reference your work and increase your visibility.') }}</p>
-        <div class="fr-pt-2w fr-pt-md-0 fr-grid-row no-wrap fr-mb-2w overflow-x-scroll">
+        <div class="fr-pt-2w fr-pt-md-0 fr-grid-row fr-grid-row--gutters fr-mb-2w">
             {% for reuse in reuses %}
-            {% set features = ['preview'] %}
-            <div class="fr-p-3v">
+            <div class="fr-mb-3v fr-col-lg-3 fr-col-sm-6 fr-col-12">
                 {% include theme('reuse/card.html') %}
             </div>
             {% endfor %}

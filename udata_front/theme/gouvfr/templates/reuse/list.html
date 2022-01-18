@@ -40,7 +40,7 @@
 ) %}
 
 {% block main_content %}
-<section class="fr-container">
+<section class="container">
     <div class="fr-pt-3v search-input">
         <form method="GET" class="fr-grid-row fr-text--lead fr-mb-0">
             <span class="icon active">{% include theme("svg/search.svg") %}</span>
@@ -75,9 +75,8 @@
         </ul>
     </div>
     <ul class="search-results fr-grid-row fr-grid-row--gutters mt-lg-md">
-        {% with card_fluid=True %}
         {% for reuse in reuses %}
-        <li class="fr-col-lg-3 fr-col-md-4 fr-col-sm-6 fr-col-12 my-sm-sm text-align-center fr-mb-3v">
+        <li class="fr-col-lg-3 fr-col-md-4 fr-col-sm-6 fr-col-12 my-sm-sm fr-mb-3v">
             {% include theme('reuse/card.html') %}
         </li>
         {% endfor %}

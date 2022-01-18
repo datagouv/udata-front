@@ -1,5 +1,4 @@
 {% cache cache_duration, 'reuse-card', reuse.id|string, g.lang_code %}
-{% set card_fluid = card_fluid or False %}
 <a
     class="unstyled w-100 fr-grid-row fr-grid-row--center"
     href="{{ url_for('reuses.show', reuse=reuse, _external=True) }}"

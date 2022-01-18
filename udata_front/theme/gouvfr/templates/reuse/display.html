@@ -261,10 +261,9 @@
     <section class="container fr-py-7w">
         <h2 id="more-reuses" class="fr-h2">{{ _('More reuses') }}</h2>
         <p>{{ _('Discover more reuses.') }}</p>
-        <ul class="fr-grid-row no-wrap overflow-x-scroll">
+        <ul class="fr-grid-row fr-grid-row--gutters">
             {% for reuse in related_reuses %}
-            {% set features = ['preview'] %}
-            <li class="fr-p-3v">
+            <li class="fr-mb-3v fr-col-lg-3 fr-col-sm-6 fr-col-12">
                 {% include theme('reuse/card.html') %}
             </li>
             {% endfor %}
