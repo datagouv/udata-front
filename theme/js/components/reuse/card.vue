@@ -2,7 +2,7 @@
 Vue and simpler -->
 
 <template>
-  <article class="reuse-card text-align-center fr-text--sm fr-mb-0" :class="{'reuse-card--fluid': fluid}">
+  <article class="reuse-card text-align-center fr-text--sm fr-mb-0">
     <Placeholder
       class="reuse-image fr-mb-3v fr-responsive-img"
       alt=""
