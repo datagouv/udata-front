@@ -2,14 +2,13 @@
 {% import theme('macros/forms.html') as forms with context %}
 
 {% block content %}
-<section class="py-xl py-lg-lg bg-grey-50">
-    <div class="container">
-        <div class="row">
-            <div class="col-6 text-align-center offset-3 form-container col-md-12 offset-md-0">
+<section class="fr-py-9v py-lg-lg bg-grey-50">
+    <div class="fr-container">
+        <div class="fr-grid-row">
+            <div class="text-align-center form-container fr-col-12 fr-col-md-6 fr-col-offset-md-3">
                 <form class="form" method="post" action="{{ url_for('security.register') }}">
-                    <fieldset>
-                        <legend class="h2 mb-0">{{ _('Sign up') }}</legend>
-                        <p class="mb-xl f-light fs-sm text-align-left">
+                    <h1 class="fr-h4 fr-mb-0">{{ _('Sign up') }}</h1>
+                        <p class="fr-mb-9v f-light fr-text--sm text-align-left">
                             <a href="{{config.GUIDES_USER_ACCOUNT_URL}}" target="_blank">
                                 {{ _('Why create an account?') }}
                             </a>
@@ -23,8 +22,7 @@
                                 {{ _('I have read and accept <a href="%(url)s"> the terms and conditions of the service.</a>', url=url_for('site.terms')) }}
                             </label>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">{{ _('Sign up') }}</button>
-                    </fieldset>
+                        <button type="submit" class="fr-btn btn-primary">{{ _('Sign up') }}</button>
                 </form>
             </div>
         </div>

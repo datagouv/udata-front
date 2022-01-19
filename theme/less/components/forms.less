@@ -6,21 +6,16 @@ category: Components
 
 Simple forms for simple needs.
 
-We're assuming some well formed `fieldsets` with proper `legends`, this is mostyly used in the login/signup flows.
-
-A well formed form (eh) should include one main fieldset with a proper legend.
+We can use fieldset if needed to group inputs of the same kind.
 
 ```form.html
-    <form class="form"">
-        <fieldset>
-            <legend>Legend</legend>
-            <div class="field">
+    <form class="form">
+         <div class="field">
                 <label for="field" class="required">
                     Label
                 </label>
                 <input id="field" name="field" type="email" required></input>
             </div>
-        </fieldset>
     </form>
 ```
 */
@@ -37,22 +32,6 @@ A well formed form (eh) should include one main fieldset with a proper legend.
 
 form.form {
     padding: @spacing-sm 0;
-
-    legend {
-        padding: 0;
-    }
-
-    fieldset {
-        border-radius: 4px;
-        margin-inline-start: 0;
-        margin-inline-end: 0;
-        padding-block-start: 0;
-        padding-block-end: 0;
-        padding-inline-start: 0;
-        padding-inline-end: 0;
-        min-inline-size: min-content;
-        border: 0;
-    }
 
     .field {
         text-align: left;
