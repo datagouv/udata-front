@@ -39,10 +39,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    fluid: {
-      type: Boolean,
-      default: false,
-    }
   },
   components: {
     Placeholder,
