@@ -25,6 +25,7 @@ A well formed form (eh) should include one main fieldset with a proper legend.
 ```
 */
 @import (less) "@gouvfr/dsfr/dist/component/form/form.css";
+@import (less) "@gouvfr/dsfr/dist/component/checkbox/checkbox.css";
 @import (less) "@gouvfr/dsfr/dist/component/input/input.css";
 @import (less) "@gouvfr/dsfr/dist/component/select/select.css";
 .form-container {
@@ -93,24 +94,12 @@ form.form {
         appearance: none;
         flex-grow: 1;
     }
-
-    .field-checkbox {
-         flex-direction: row;
-
-         label {
-             margin-left: @spacing-xs;
-             line-height: @font-size-lg;
-         }
-    }
-
-    input[type="checkbox"] {
-        width: @font-size-lg;
-        height: @font-size-lg;
-        border-color: @grey-100;
-        display: inline;
-    }
 }
 
 .fr-select--no-border {
     box-shadow: none;
+}
+
+.fr-checkbox-group input[type="checkbox"]:checked + label::before {
+    --background-active-blue-france: @blue-400;
 }
