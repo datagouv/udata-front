@@ -16,7 +16,7 @@
   </div>
   <div class="row-inline fr-mt-3v justify-between align-items-center">
     <h1 class="fr-m-0 fr-h4">
-      {{ $t("Datasets") }}<sup>{{ totalResults || 0 }}</sup>
+      {{ $t("Datasets") }}<sup>{{ _totalResults }}</sup>
     </h1>
     <a :href="reuseUrl" title="" class="nav-link fr-text--sm fr-mb-0 fr-displayed-md fr-mt-3v">
       {{ $t("Search reuses") }}
@@ -133,9 +133,9 @@
       <div v-if="loading">
         <Loader />
       </div>
-      <ul v-else-if="results.length">
+      <ul v-else-if="_results.length">
         <li
-          v-for="result in results"
+          v-for="result in _results"
           :key="result.id"
         >
           <a
@@ -146,11 +146,11 @@
           </a>
         </li>
         <Pagination
-          v-if="totalResults > pageSize"
+          v-if="_totalResults > pageSize"
           :page="currentPage"
-          :page-size="pageSize"
-          :total-results="totalResults"
-          :change-page="changePage"
+          :pageSize="pageSize"
+          :totalResults="_totalResults"
+          :changePage="changePage"
           class="fr-mt-2w"
         />
       </ul>
@@ -179,7 +179,7 @@ import Dataset from "../dataset/search-result";
 import Loader from "../dataset/loader";
 import Empty from "./empty";
 import Pagination from "../pagination/pagination";
-import { generateCancelToken } from "../../plugins/api";
+import {generateCancelToken} from "../../plugins/api";
 import filterIcon from "svg/filter.svg";
 import axios from "axios";
 import queryString from "query-string";
@@ -193,6 +193,20 @@ export default {
     Empty,
     Loader,
     Pagination,
+  },
+  props: {
+    disableFirstSearch: {
+      type: Boolean,
+      default: false,
+    },
+    results: {
+      type: Array,
+      default: () => []
+    },
+    totalResults: {
+      type: Number,
+      default: 0,
+    }
   },
   created() {
     this.filterIcon = filterIcon;
@@ -210,7 +224,9 @@ export default {
     }
     // set all other search params as facets
     this.facets = searchParams;
-    this.search();
+    if(!this.disableFirstSearch) {
+      this.search();
+    }
   },
   watch: {
     paramUrl: {
@@ -218,8 +234,7 @@ export default {
       handler(val) {
         // Update URL to match current search params value for deep linking
         let url = new URL(window.location);
-        const searchParams = queryString.stringify(val, { skipNull: true });
-        url.search = searchParams;
+        url.search = queryString.stringify(val, {skipNull: true});
         history.pushState(null, "", url);
       },
     },
@@ -227,12 +242,12 @@ export default {
   data() {
     return {
       extendedForm: false, // On desktop, extended form is simply another row of filters. On mobile, form is hidden until extendedForm is triggered
-      results: [],
+      _results: this.results,
       loading: false,
       currentRequest: null,
       pageSize: 20,
       currentPage: 1,
-      totalResults: 0,
+      _totalResults: this.totalResults,
       queryString: "",
       facets: {},
       rechercherBetaPath: "https://rechercher.etalab.studio/",
@@ -305,8 +320,8 @@ export default {
         })
         .then((res) => res.data)
         .then((result) => {
-          this.results = result.data;
-          this.totalResults = result.total;
+          this._results = result.data;
+          this._totalResults = result.total;
           this.loading = false;
         })
         .catch((error) => {

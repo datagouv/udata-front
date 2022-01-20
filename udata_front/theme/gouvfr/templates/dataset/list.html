@@ -24,7 +24,11 @@
 
 {% block main_content %}
 <section class="container search py-lg vuejs">
-    <Search>
+    <Search
+        :total-results="{{datasets.total}}"
+        :disable-first-search="false"
+        :results="{{ datasets|tojson }}"
+    >
         <noscript>
             <div class="pt-sm search-input">
                 <form method="GET" class="row-inline fs-lg">
