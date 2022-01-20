@@ -75,7 +75,6 @@ import useGeoZone from "../../composables/useGeoZone";
 export default {
   props: {
     title: String,
-    image_url: String,
     organization: Object,
     owner: Object,
     description: String,
