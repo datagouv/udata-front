@@ -16,7 +16,8 @@ from werkzeug import url_decode, url_encode
 from . import front
 
 from udata import assets
-from udata.core.dataset.api_fields import dataset_fields
+from udata.api import api
+from udata.core.dataset.api_fields import dataset_fields, dataset_page_fields
 from udata.core.dataset.models import Dataset
 from udata.models import db
 from udata.i18n import format_date, _, pgettext, get_current_locale
@@ -396,8 +397,13 @@ def to_json(data):
 @front.app_template_filter()
 def to_api_format(data):
     if isinstance(data, list) and isinstance(data[0], Dataset):
-        return [marshal(d, dataset_fields) for d in data]
+        return [to_dataset_api_format for d in data]
     return list(data)
+
+
+@api.marshal_with(dataset_page_fields)
+def to_dataset_api_format(dataset):
+    return dataset
 
 
 @front.app_template_filter()

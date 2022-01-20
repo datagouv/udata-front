@@ -97,7 +97,7 @@ export default {
   setup(props) {
     const {organisationCertified} = useOrganizationCertified(props.organization)
     const {geoZone} = useGeoZone(props.spatial)
-
+    console.log(props.organization)
     return {
       organisationCertified,
       geoZone,
