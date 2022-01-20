@@ -19,7 +19,7 @@
                         <div class="fr-checkbox-group">
                             <input id="accept_conditions" type="checkbox" name="accept_conditions" required />
                             <label class="fr-label" for="accept_conditions">
-                                {{ _('I have read and accept <a href="%(url)s"> the terms and conditions of the service.</a>', url=url_for('site.terms')) }}
+                                <span>{{ _('I have read and accept <a href="%(url)s"> the terms and conditions of the service.</a>', url=url_for('site.terms')) }}</span>
                             </label>
                         </div>
                         <button type="submit" class="fr-btn btn-primary">{{ _('Sign up') }}</button>
