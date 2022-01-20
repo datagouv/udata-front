@@ -26,8 +26,8 @@
 <section class="container search py-lg vuejs">
     <Search
         :total-results="{{datasets.total}}"
-        :disable-first-search="false"
-        :results="{{ datasets|tojson }}"
+        :disable-first-search="true"
+        :results="{{ datasets|to_api_format|to_json }}"
     >
         <noscript>
             <div class="pt-sm search-input">
