@@ -3,8 +3,8 @@
     <div class="card-logo">
       <Placeholder type="reuse" :src="image_url" :alt="title" />
       <div class="logo-badge">
-        <span v-html="privateIcon" v-if="private" />
-        <span v-html="certified" v-else-if="organization?.public_service" />
+        <span v-html="lock" v-if="private" />
+        <span v-html="certified" v-else-if="organisationCertified" />
       </div>
     </div>
     <div class="card-data">
@@ -21,12 +21,12 @@
 <script>
 import Placeholder from "../utils/placeholder";
 import certified from "svg/certified.svg";
-import privateIcon from "svg/private.svg";
+import lock from "svg/private.svg";
+import useOrganizationCertified from "../../composables/useOrganizationCertified";
 
 export default {
-  created() {
-    this.certified = certified;
-    this.privateIcon = privateIcon;
+  components: {
+    Placeholder,
   },
   props: {
     title: String,
@@ -34,8 +34,13 @@ export default {
     organization: Object,
     private: Boolean,
   },
-  components: {
-    Placeholder,
-  },
+  setup(props) {
+    const {organisationCertified} = useOrganizationCertified(props.organization)
+    return {
+      certified,
+      lock,
+      organisationCertified,
+    };
+  }
 };
 </script>
