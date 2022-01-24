@@ -395,7 +395,8 @@ def to_json(data):
 
 
 def is_results_of_type(search_results, result_type):
-    return isinstance(search_results, SearchResult) and all(isinstance(dataset, result_type) for dataset in search_results)
+    return isinstance(search_results, SearchResult) and all(
+        isinstance(dataset, result_type) for dataset in search_results)
 
 
 @front.app_template_filter()
