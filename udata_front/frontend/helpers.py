@@ -16,11 +16,11 @@ from werkzeug import url_decode, url_encode
 from . import front
 
 from udata import assets
-from udata.api import api
-from udata.core.dataset.api_fields import dataset_fields, dataset_page_fields
+from udata.core.dataset.api_fields import dataset_fields
 from udata.core.dataset.models import Dataset
 from udata.models import db
 from udata.i18n import format_date, _, pgettext, get_current_locale
+from udata.search.result import SearchResult
 from udata.utils import camel_to_lodash
 from udata_front.theme import theme_static_with_version
 
@@ -394,16 +394,19 @@ def to_json(data):
     return json.dumps(data)
 
 
+def is_results_of_type(search_results, result_type):
+    return isinstance(search_results, SearchResult) and all(isinstance(dataset, result_type) for dataset in search_results)
+
+
 @front.app_template_filter()
 def to_api_format(data):
-    if isinstance(data, list) and isinstance(data[0], Dataset):
-        return [to_dataset_api_format for d in data]
+    if is_results_of_type(data, Dataset):
+        return [to_dataset_api_format(d) for d in data]
     return list(data)
 
 
-@api.marshal_with(dataset_page_fields)
 def to_dataset_api_format(dataset):
-    return dataset
+    return marshal(dataset, dataset_fields)
 
 
 @front.app_template_filter()
