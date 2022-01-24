@@ -2,7 +2,7 @@
 Vue. -->
 
 <template>
-  <article class="dataset-card dataset-search-result">
+  <article class="dataset-card dataset-search-result py-xs">
     <div class="card-logo" v-if="organization">
       <Placeholder
         type="dataset"
@@ -88,17 +88,12 @@ export default {
   components: {
     Placeholder,
   },
-  data() {
-    return {
-      certified: certified,
-      lock: lock,
-    };
-  },
   setup(props) {
     const {organisationCertified} = useOrganizationCertified(props.organization)
     const {geoZone} = useGeoZone(props.spatial)
-    console.log(props.organization)
     return {
+      certified,
+      lock,
       organisationCertified,
       geoZone,
     };
