@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Fix modals not working [#71](https://github.com/etalab/udata-front/pull/71)
+- Add banner for harvested dataset [#73](https://github.com/etalab/udata-front/pull/73)
 
 ## 1.2.2 (2022-01-21)
 
