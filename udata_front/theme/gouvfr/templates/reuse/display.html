@@ -19,6 +19,8 @@
 
 {% set read_only_mode = config['READ_ONLY_MODE'] %}
 
+{% set visible_datasets = reuse.datasets|visibles %}
+
 {% block extra_head %}
 <link rel="canonical" href="{{ url_for('reuses.show', reuse=reuse) }}" />
 <link rel="alternate" type="application/json+oembed" href="{{ url_for('api.oembed', url=reuse.external_url) }}"
@@ -132,6 +134,12 @@
                                     <dd>
                                         {{ reuse.type_label }}
                                     </dd>
+                                {% if reuse.topic %}
+                                <dt>{{ _('Topic') }}</dt>
+                                    <dd>
+                                        {{ reuse.topic_label }}
+                                    </dd>
+                                {% endif %}
                                 <dt>{{ _('ID') }}</dt>
                                     <dd>
                                         {{reuse.id}}
@@ -167,10 +175,19 @@
                             {{integrate_btn(reuse)}}
                             <h2 class="subtitle fr-mt-3w">{{ _('Permalink') }}</h2>
                             <div class="embed-wrapper">
-                                <input readonly id="permalink" onClick="this.select();"
-                                        value="{{ reuse.external_url }}" />
-                                <label for="permalink" class="icon-copy" id="permalink-copy"
-                                        data-clipboard-target="#permalink" title="Copy this">
+                                <input
+                                    readonly
+                                    id="permalink"
+                                    onClick="this.select();"
+                                    value="{{ reuse.external_url }}"
+                                />
+                                <label
+                                    for="permalink"
+                                    class="icon-copy"
+                                    id="permalink-copy"
+                                    data-clipboard-target="#permalink"
+                                >
+                                    <span class="visually-hidden">{{ _('Copy this') }}</span>
                                     {% include theme('svg/copy.svg') %}
                                 </label>
                             </div>
@@ -190,7 +207,7 @@
                     </li>
                     <li>
                         <a class="fr-summary__link" href="#used-datasets">
-                            {{ _('Used datasets') }} <sup class="sup">{{reuse.datasets | length}}</sup>
+                            {{ _('Used datasets') }} <sup class="sup">{{visible_datasets | length}}</sup>
                         </a>
                     </li>
                     <li>
@@ -208,7 +225,7 @@
         </div>
     </section>
 
-    <section class="bg-beige fr-py-5w">
+    <section class="bg-contrast-grey fr-py-5w">
         <div class="container vuejs">
             <h2 id="description" class="fr-h2 fr-mb-0">{{ _('Description') }}</h2>
             <read-more>
@@ -220,11 +237,11 @@
         <div class="row-inline">
             <h2 id="used-datasets" class="fr-h2">
                 {{ _('Used datasets') }}
-                <sup>{{ reuse.datasets|length }}</sup>
+                <sup>{{ visible_datasets|length }}</sup>
             </h2>
         </div>
     <ul class="row">
-        {% for dataset in reuse.datasets %}
+        {% for dataset in visible_datasets %}
         <li class="col-md-12 col-6">
             {% include theme('dataset/card.html') %}
         </li>

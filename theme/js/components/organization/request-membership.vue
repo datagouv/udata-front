@@ -10,10 +10,12 @@ A simple request membership prompt.
 -->
 
 <template>
-    <li class="my-md">
-        <a @click.prevent="JoinOrga"
-      class="nav-link">{{ $t('Ask to join the organization as a producer') }}</a>
-    </li>
+  <button
+    @click.prevent="JoinOrga"
+    class="nav-link nav-link--no-icon text-decoration-none fr-link fr-link--icon-left fr-fi-arrow-right-s-line"
+  >
+    <span class="text-decoration-underline">{{ $t('Ask to join the organization as a producer') }}</span>
+  </button>
 </template>
 
 <script>
@@ -30,7 +32,7 @@ data() {
   methods: {
     JoinOrga: function () {
 
-      this.$auth(this.$t("You must be connected to join an organization"));
+      this.$auth();
 
       this.comment = prompt(this.$t('You can add some details here for your membership request'));
 

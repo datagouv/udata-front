@@ -29,7 +29,7 @@
                         <strong>L'emploi</strong>
                     </a>
                     <a href="{{ url_for('gouvfr.show_page', slug='donnees-logement-urbanisme') }}"
-                        class="btn-venti bg-green-350">
+                        class="btn-venti bg-green-400">
                         Données relatives au
                         <strong>Logement et à l'Urbanisme</strong>
                     </a>
@@ -72,7 +72,7 @@
             <h3>{% include theme('svg/logotype.svg') %} {{ _('is') }}</h3>
             <div class="row-inline justify-between mt-xl mt-md-md">
                 {% for (label, metric) in metrics %}
-                <div class="filet my-md-xxs {% if metric == 'reuses' %}filet-currentcolor text-green-300{% endif %}">
+                <div class="filet my-md-xxs {% if metric == 'reuses' %}filet-currentcolor text-green-400{% endif %}">
                     <div class="fs-hg f-bold text-grey-400">{{ current_site.metrics[metric] }}</div>
                     <span class="text-grey-400">{{ label }}</span>
                 </div>
@@ -84,9 +84,10 @@
 
 
 {# Datasets section #}
-{% set nb_datasets = current_site.settings.home_datasets|length %}
+{% set visible_datasets = current_site.settings.home_datasets|visibles %}
+{% set nb_datasets = visible_datasets|length %}
 {% set dataset_tabs = (
-    ('editorial-datasets', _('Featured datasets'), current_site.settings.home_datasets, {}),
+    ('editorial-datasets', _('Featured datasets'), visible_datasets, {}),
     ('recent-datasets', _('Latest datasets'), recent_datasets[:nb_datasets], {'sort': '-created'}),
     ('reference-datasets', _('Reference datasets'), spd_datasets, {}),
 ) %}
@@ -99,12 +100,16 @@
                 <h2>{{ _('Datasets') }}</h2>
             </div>
             <div class="col-auto">
-                <nav class="tabs">
+                <nav class="tabs fr-tags-group">
                     {% for tab_id, label, _, _ in dataset_tabs %}
-                    <a href="#{{tab_id}}"
-                        class="btn-tab tab {% if loop.first %}active{% endif %} hidden-lg">{{ label }}</a>
+                    <a
+                        href="#{{tab_id}}"
+                        class="tab fr-tag {% if loop.first %}active {% endif %}fr-displayed-lg"
+                    >
+                        {{ label }}
+                    </a>
                     {% endfor %}
-                    <a href="{{ url_for('datasets.list') }}" class="btn-tab tab">{{ _('See more') }}</a>
+                    <a href="{{ url_for('datasets.list') }}" class="fr-tag">{{ _('See more') }}</a>
                 </nav>
             </div>
         </div>
@@ -124,9 +129,10 @@
 {# End datasets section #}
 
 {# Reuses section #}
-{% set nb_reuses = current_site.settings.home_reuses|length %}
+{% set visible_reuses = current_site.settings.home_reuses|visibles %}
+{% set nb_reuses = visible_reuses|length %}
 {% set reuses_tabs = (
-    ('best-reuses', _('Featured reuses'), current_site.settings.home_reuses, {}),
+    ('best-reuses', _('Featured reuses'), visible_reuses, {}),
     ('latest-reuses', _('Latest reuses'), recent_reuses[:nb_reuses], {'sort': '-created'}),
 ) %}
 
@@ -138,13 +144,17 @@
                 <h2>{{ _('Data reuses') }}</h2>
             </div>
             <div class="col-auto">
-                <nav class="tabs">
+                <nav class="tabs fr-tags-group">
                     {% for tab_id, label, _, _ in reuses_tabs %}
-                    <a href="#{{tab_id}}"
-                        class="btn-tab tab {% if loop.first %}active{% endif %} hidden-lg">{{ label }}</a>
+                    <a
+                        href="#{{tab_id}}"
+                        class="tab fr-tag {% if loop.first %}active {% endif %}fr-displayed-lg"
+                    >
+                        {{ label }}
+                    </a>
                     {% endfor %}
                     <a href="{{ url_for('reuses.list', sort='-created') }}" title="{{ _('Latest reuses') }}"
-                        class="btn-tab tab">{{ _('See more') }}</a>
+                        class="fr-tag">{{ _('See more') }}</a>
                 </nav>
             </div>
         </div>

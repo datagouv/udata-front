@@ -66,7 +66,7 @@ Disclaimer : the search-result component is weird in styling and uses a lot of f
     </div>
     <div class="card-data">
         <h4 class="card-title">Recusandaeé suscipité ameté nihilé natusé doloreé magnié commodié.</h4>
-        <div class="card-description text-grey-300 mt-xs"> Quiaé aliasé exé. Architectoé laudantiumé corporisé
+        <div class="card-description text-grey-380 mt-xs"> Quiaé aliasé exé. Architectoé laudantiumé corporisé
             consequaturé laboriosamé esté. Teneturé incidunté voluptatemé minimaé fugité inventoreé fugiaté. </div>
     </div>
     <dl class="card-hover">
@@ -103,7 +103,7 @@ Disclaimer : the search-result component is weird in styling and uses a lot of f
         position: relative;
         margin: 0 @spacing-md;
 
-        h4 {
+        .h4 {
             margin-bottom: 0;
         }
 
@@ -115,7 +115,7 @@ Disclaimer : the search-result component is weird in styling and uses a lot of f
                 font-size: @font-size-sm;
 
                 li {
-                    color: @grey-300;
+                    color: @grey-380;
 
                     + li {
                         margin-left: 15px;
@@ -125,7 +125,7 @@ Disclaimer : the search-result component is weird in styling and uses a lot of f
         }
     }
 
-    //Smaller version with no border for display in small spaces (search box for instance)
+    // Smaller version with no border for display in small spaces (search box for instance)
     &.compact {
         padding: @spacing-xs 0;
 
@@ -142,10 +142,10 @@ Disclaimer : the search-result component is weird in styling and uses a lot of f
         }
     }
 
-    //Fancier version for search results, with an hover section for details
-    //Disclaimer : the search-result component is weird in styling and uses a lot of fixed pixel values. Please beware if you make any changes in it, you might break responsive.
+    // Fancier version for search results, with an hover section for details
+    // Disclaimer : the search-result component is weird in styling and uses a lot of fixed pixel values. Please beware if you make any changes in it, you might break responsive.
     &.dataset-search-result {
-        padding: 0 @spacing-xs; //Unfortunately, we need some sweet borders
+        padding: 0 @spacing-xs; // Unfortunately, we need some sweet borders
 
         border-top: 1px solid @grey-100;
 
@@ -175,8 +175,6 @@ Disclaimer : the search-result component is weird in styling and uses a lot of f
         .card-hover {
             flex-basis: 260px;
             flex-shrink: 0;
-
-            visibility: hidden;
             align-self: stretch;
 
             display: flex;
@@ -194,7 +192,7 @@ Disclaimer : the search-result component is weird in styling and uses a lot of f
                 margin-bottom: @spacing-sm;
                 padding: 0 @spacing-xs;
 
-                color: @grey-300;
+                color: @grey-380;
                 font-size: @font-size-xs;
 
                 dd {
@@ -204,14 +202,6 @@ Disclaimer : the search-result component is weird in styling and uses a lot of f
 
             @media @query-lg {
                 display: none;
-            }
-        }
-
-        &:hover {
-            background: @blue-100;
-
-            .card-hover {
-                visibility: visible;
             }
         }
 
@@ -229,7 +219,7 @@ Disclaimer : the search-result component is weird in styling and uses a lot of f
             flex-direction: column;
             justify-content: center;
 
-            color: @grey-300;
+            color: @grey-380;
             font-size: @font-size-xs;
 
             li {
@@ -241,7 +231,7 @@ Disclaimer : the search-result component is weird in styling and uses a lot of f
                 border-left: none;
 
                 padding: @spacing-xs;
-                padding-left: 112px; //Logo width + little margin
+                padding-left: 112px; // Logo width + little margin
 
                 flex-direction: row;
                 justify-content: space-between;
@@ -250,6 +240,22 @@ Disclaimer : the search-result component is weird in styling and uses a lot of f
 
         &:after {
             display: none;
+        }
+    }
+}
+
+a {
+    &, &:focus:not(:focus-visible) {
+        .dataset-search-result .card-hover {
+            visibility: hidden;
+        }
+    }
+    &:hover, &:focus, &:focus-visible {
+        .dataset-search-result {
+            background: @blue-100;
+            .card-hover {
+                visibility: visible;
+            }
         }
     }
 }
