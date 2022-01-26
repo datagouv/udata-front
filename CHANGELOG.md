@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Fix modals not working [#71](https://github.com/etalab/udata-front/pull/71)
+- Fix auth messages not shown from query parameter [#68](https://github.com/etalab/udata-front/pull/68)
 - Fix RGAA criterion 10.14 [#72](https://github.com/etalab/udata-front/pull/72)
 
 ## 1.2.2 (2022-01-21)
