@@ -2,22 +2,20 @@
 
 {% block body %}
 {% include theme("header.html") with context %}
-{% set flashed_messages = get_flashed_messages() %}
-{% set query_param_message = request.args.get('message') %}
-{% if query_param_message %}
-    {% set flashed_messages = flashed_messages + [query_param_message] %}
+{% set messages = get_flashed_messages() %}
+{% set login_required = request.args.get('login_required') %}
+{% if login_required %}
+    {% set messages = messages + [_('You must be connected to do this action.')] %}
 {% endif %}
-{% with messages = flashed_messages %}
-    {% if messages %}
-        <div class="container py-lg">
-            {% for message in messages %}
-            <div class="well well-secondary-grey-100">
-                {{ message }}
-            </div>
-            {% endfor %}
+{% if messages %}
+    <div class="container py-lg">
+        {% for message in messages %}
+        <div class="well well-secondary-grey-100">
+            {{ message }}
         </div>
-    {% endif %}
-{% endwith %}
+        {% endfor %}
+    </div>
+{% endif %}
 <main>
     {% block content %}{% endblock %}
 </main>
