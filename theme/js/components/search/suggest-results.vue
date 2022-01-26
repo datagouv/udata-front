@@ -85,7 +85,7 @@ Used by the suggest feature to display typeahead-style results when you type you
           <ul class="row">
             <li v-for="reuse in results.reuses" class="col-6">
               <a :href="reuse.page" :title="reuse.title" class="unstyled">
-                <Reuse v-bind="reuse" :fluid="true" />
+                <Reuse v-bind="reuse" />
               </a>
             </li>
           </ul>
