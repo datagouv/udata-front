@@ -134,15 +134,15 @@ export default {
 
       const promises = endpoints.map(({ name, size }) =>
         this.$api
-          .get(name + "/suggest/", {
+          .get(name + "/", {
             cancelToken: this.currentRequest.token,
             params: {
               q: queryString,
-              size,
+              page_size: size,
             },
           })
           .then((res) => ({
-            [name]: res.data,
+            [name]: res.data.data,
           }))
       );
 
