@@ -12,8 +12,8 @@ Used by the suggest feature to display typeahead-style results when you type you
 -->
 
 <template>
-  <div class="row fr-p-2w results">
-    <div class="fr-p-2w col col-md-12">
+  <div class="fr-grid-row fr-grid-row--gutters fr-py-2w results">
+    <div class="fr-col col-md-12 fr-grid-row flex-direction-column">
       <a
         class="unstyled row-inline justify-between see-all"
         :href="datasetUrl"
@@ -43,7 +43,7 @@ Used by the suggest feature to display typeahead-style results when you type you
         <div class="fr-my-2w cards-container" v-else>
           <ul>
             <li v-for="dataset in results.datasets">
-              <a :href="dataset.page" :title="dataset.title" class="unstyled">
+              <a :href="dataset.page" :title="dataset.title" class="unstyled block">
                 <Dataset v-bind="dataset" />
               </a>
             </li>
@@ -54,7 +54,7 @@ Used by the suggest feature to display typeahead-style results when you type you
         </div>
       </transition>
     </div>
-    <div class="fr-p-2w col col-md-12">
+    <div class="fr-col col-md-12">
       <a
         class="unstyled row-inline justify-between see-all"
         :href="reuseUrl"
@@ -84,7 +84,7 @@ Used by the suggest feature to display typeahead-style results when you type you
         <div class="fr-my-2w cards-container" v-else>
           <ul class="row">
             <li v-for="reuse in results.reuses" class="col-6">
-              <a :href="reuse.page" :title="reuse.title" class="unstyled">
+              <a :href="reuse.page" :title="reuse.title" class="unstyled block">
                 <Reuse v-bind="reuse" />
               </a>
             </li>
