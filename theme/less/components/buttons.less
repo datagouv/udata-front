@@ -5,14 +5,10 @@ category: Components
 ---
 
 ## Primary buttons
-The `.btn` classes are designed to be used with the `<button>` element.
+The `.fr-btn` classes are designed to be used with the `<button>` element.
 
 However, you can also use these classes on `<a>` or `<input>` elements (though some browsers may apply a slightly different rendering).
 When using button classes on `<a>` elements that are used to trigger in-page functionality (like collapsing content), rather than linking to new pages or sections within the current page, these links should be given a `role="button"` to appropriately convey their purpose to assistive technologies such as screen readers.
-
-Primary buttons exist for every color in this UI-kit. Please refer to the [colors page](/#colors) to see available text and background colors.
-
-*Some of them are unusable due to the low contrast they offer.*
 
 ```buttons-primary.html
 <p><a href="#" role="button" class="fr-btn">Default button</a></p>
@@ -110,18 +106,6 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
     &.disabled {
         opacity: 0.6;
         pointer-events: none;
-    }
-}
-
-
-.btn-primary {
-    .btn;
-    color: @white;
-    background-color: @blue-400;
-    &:active,
-    &:hover,
-    &.active {
-        --blend: @blue-400-blend;
     }
 }
 
