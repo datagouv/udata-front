@@ -18,21 +18,20 @@ When using button classes on `<a>` elements that are used to trigger in-page fun
 As for primary buttons, secondary buttons exist in every color available.
 
 ```buttons-secondary.html
-<p><a href="#" role="button" class="btn-secondary">Default button</a></p>
-<p><a href="#" role="button" class="btn-secondary btn-secondary-white">btn-secondary-white</a></p>
-<p><a href="#" role="button" class="btn-secondary btn-secondary-blue-100">btn-secondary-blue-100</a></p>
-<p><a href="#" role="button" class="btn-secondary btn-secondary-blue-300">btn-secondary-blue-300</a></p>
-<p><a href="#" role="button" class="btn-secondary btn-secondary-blue-400">btn-secondary-blue-400</a></p>
-<p><a href="#" role="button" class="btn-secondary btn-secondary-blue-500">btn-secondary-blue-500</a></p>
-<p><a href="#" role="button" class="btn-secondary btn-secondary-orange-100">btn-secondary-orange-100</a></p>
-<p><a href="#" role="button" class="btn-secondary btn-secondary-grey-50">btn-secondary-grey-50</a></p>
-<p><a href="#" role="button" class="btn-secondary btn-secondary-grey-100">btn-secondary-grey-100</a></p>
-<p><a href="#" role="button" class="btn-secondary btn-secondary-grey-200">btn-secondary-grey-200</a></p>
-<p><a href="#" role="button" class="btn-secondary btn-secondary-grey-300">btn-secondary-grey-300</a></p>
-<p><a href="#" role="button" class="btn-secondary btn-secondary-grey-380">btn-secondary-grey-380</a></p>
-<p><a href="#" role="button" class="btn-secondary btn-secondary-grey-400">btn-secondary-grey-400</a></p>
-<p><a href="#" role="button" class="btn-secondary btn-secondary-grey-500">btn-secondary-grey-500</a></p>
-<p><a href="#" role="button" class="btn-secondary btn-secondary-green-400">btn-secondary-green-400</a></p>
+<p><a href="#" role="button" class="fr-btn fr-btn--secondary">Default button</a></p>
+<p><a href="#" role="button" class="fr-btn fr-btn--secondary fr-btn--secondary-white">fr-btn--secondary-white</a></p>
+<p><a href="#" role="button" class="fr-btn fr-btn--secondary fr-btn--secondary-blue-100">fr-btn--secondary-blue-100</a></p>
+<p><a href="#" role="button" class="fr-btn fr-btn--secondary fr-btn--secondary-blue-300">fr-btn--secondary-blue-300</a></p>
+<p><a href="#" role="button" class="fr-btn fr-btn--secondary fr-btn--secondary-blue-400">fr-btn--secondary-blue-400</a></p>
+<p><a href="#" role="button" class="fr-btn fr-btn--secondary fr-btn--secondary-blue-500">fr-btn--secondary-blue-500</a></p>
+<p><a href="#" role="button" class="fr-btn fr-btn--secondary fr-btn--secondary-grey-50">fr-btn--secondary-grey-50</a></p>
+<p><a href="#" role="button" class="fr-btn fr-btn--secondary fr-btn--secondary-grey-100">fr-btn--secondary-grey-100</a></p>
+<p><a href="#" role="button" class="fr-btn fr-btn--secondary fr-btn--secondary-grey-200">fr-btn--secondary-grey-200</a></p>
+<p><a href="#" role="button" class="fr-btn fr-btn--secondary fr-btn--secondary-grey-300">fr-btn--secondary-grey-300</a></p>
+<p><a href="#" role="button" class="fr-btn fr-btn--secondary fr-btn--secondary-grey-380">fr-btn--secondary-grey-380</a></p>
+<p><a href="#" role="button" class="fr-btn fr-btn--secondary fr-btn--secondary-grey-400">fr-btn--secondary-grey-400</a></p>
+<p><a href="#" role="button" class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500">fr-btn--secondary-grey-500</a></p>
+<p><a href="#" role="button" class="fr-btn fr-btn--secondary fr-btn--secondary-green-400">fr-btn--secondary-green-400</a></p>
 ```
 
 ## *Venti* buttons
@@ -71,7 +70,7 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
 
 ```button-icons-dsfr.html
 <a
-    class="btn-secondary btn-secondary-grey-500 fr-btn--icon-left fr-fi-edit-line"
+    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-fi-edit-line"
     href="#"
 >
     Modify information
@@ -115,35 +114,11 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
 }
 
 .btn-secondary {
-    .btn;
-
     color: @blue-400;
     border: 1px solid transparent;
     border-color: @blue-400;
     --border-action-high-blue-france: @blue-400;
     background: none;
-
-    &:active,
-    &:hover,
-    &.active {
-        text-decoration: underline;
-    }
-
-    &.fr-btn--secondary {
-        :root:not([data-fr-theme="dark"]) & {
-            --color-hover: transparent;
-        }
-        border: none;
-    }
-
-    // inline-flex is DSFR default and is required for right icons to work
-    &.btn--flex {
-        display: inline-flex;
-    }
-
-    &.fr-btn--sm {
-        .fr-btn--sm;
-    }
 }
 
 each(@colors, {
