@@ -5,7 +5,7 @@
     </div>
 
     <footer class="modal-footer">
-      <button class="btn-primary" @click.prevent="close()"> X </button>
+      <button class="fr-btn fr-fi-close-line" @click.prevent="close()"> {{$t('Close')}} </button>
     </footer>
   </vue-final-modal>
 </template>
