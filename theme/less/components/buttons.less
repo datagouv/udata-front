@@ -146,8 +146,12 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
 
 // Data.gouv customization
 .fr-btn {
-    --background-action-high-blue-france: @blue-400;
+    background-color: @blue-400;
+    --blend: @blue-400-blend;
     border-radius: 3em;
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 .btn-secondary {
