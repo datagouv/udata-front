@@ -24,7 +24,7 @@ The `url` prop is the API URL.
         v-html="icon"
         class="magic row-inline"
         :class="{ active: animating }"
-        :style="{ color: _following ? 'inherit' : 'white' }"
+        :style="{ color: _following ? 'inherit' : 'transparent' }"
       ></span>
       <strong>
         {{ _followers }} {{ $tc("favourites", _followers) }}
