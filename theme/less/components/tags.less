@@ -39,49 +39,6 @@ There is also `.fr-tags-group` to group multiple tags together like a row.
 
 @import (less) "@gouvfr/dsfr/dist/component/tag/tag.css";
 
-.tags {
-    display: flex;
-    flex-wrap: wrap;
-
-    > li {
-        .tag;
-    }
-}
-
-.tag {
-    .border;
-    border-color: @blue-400;
-    display: inline-block;
-    border-radius: 1.5rem;
-    font-size: @font-size-sm;
-    padding: 0.25rem 0.75rem;
-    margin-bottom: @spacing-xs;
-    margin-right: @spacing-xs;
-
-    > *,
-    & {
-        color: @blue-400;
-    }
-
-    > a {
-        cursor: pointer;
-    }
-
-    &.big {
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-weight: @font-weight-bold;
-
-        // Maybe make some color classes like tag-grey-200 if more are needed
-        background-color: @grey-200;
-        border: none;
-        > *,
-        & {
-            color: @contrast-grey-200;
-        }
-    }
-}
-
 a.fr-tag {
     &:hover {
         text-decoration: none;
