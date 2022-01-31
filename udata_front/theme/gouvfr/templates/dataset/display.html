@@ -357,7 +357,7 @@
                         {% endwith %}
                     {% endfor %}
                     {% if resources|length > resources_per_page and not show_all_resources %}
-                        <a class="btn btn-secondary accordion-button trigger-once fr-mt-2w" href="?resources=all">
+                        <a class="fr-btn fr-btn--secondary fr-mt-2w" href="?resources=all">
                             {{ _('See the %(nb)d resources of type %(type)s', nb=resources|length, type=type_label) }}
                         </a>
                     {% endif %}

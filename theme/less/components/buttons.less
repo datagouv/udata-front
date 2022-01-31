@@ -113,14 +113,6 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
     --border-action-high-blue-france: @blue-400;
 }
 
-.btn-secondary {
-    color: @blue-400;
-    border: 1px solid transparent;
-    border-color: @blue-400;
-    --border-action-high-blue-france: @blue-400;
-    background: none;
-}
-
 each(@colors, {
     .fr-btn--secondary-@{value} {
         @contrast: 'contrast-@{value}';
