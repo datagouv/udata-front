@@ -11,7 +11,7 @@ Vue. -->
       />
       <div class="logo-badge logo-badge--bottom-right">
         <span v-html="lock" v-if="private" />
-        <span v-html="certified" v-else-if="organisationCertified" />
+        <span v-html="certified" v-else-if="organizationCertified" />
       </div>
     </div>
     <div class="card-logo" v-else-if="owner">
@@ -89,12 +89,12 @@ export default {
     Placeholder,
   },
   setup(props) {
-    const {organisationCertified} = useOrganizationCertified(props.organization)
+    const {organizationCertified} = useOrganizationCertified(props.organization)
     const {geoZone} = useGeoZone(props.spatial)
     return {
       certified,
       lock,
-      organisationCertified,
+      organizationCertified,
       geoZone,
     };
   }

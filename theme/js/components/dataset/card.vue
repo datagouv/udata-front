@@ -4,7 +4,7 @@
       <Placeholder type="reuse" :src="image_url" :alt="title" />
       <div class="logo-badge">
         <span v-html="lock" v-if="private" />
-        <span v-html="certified" v-else-if="organisationCertified" />
+        <span v-html="certified" v-else-if="organizationCertified" />
       </div>
     </div>
     <div class="card-data">
@@ -35,11 +35,11 @@ export default {
     private: Boolean,
   },
   setup(props) {
-    const {organisationCertified} = useOrganizationCertified(props.organization)
+    const {organizationCertified} = useOrganizationCertified(props.organization)
     return {
       certified,
       lock,
-      organisationCertified,
+      organizationCertified,
     };
   }
 };
