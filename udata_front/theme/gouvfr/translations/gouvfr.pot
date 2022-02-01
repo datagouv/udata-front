@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: udata-front 1.2.4.dev0\n"
 "Report-Msgid-Bugs-To: data.gouv@data.gouv.fr\n"
-"POT-Creation-Date: 2022-02-01 11:30+0100\n"
-"PO-Revision-Date: 2022-02-01 11:30+0100\n"
+"POT-Creation-Date: 2022-02-01 13:29+0100\n"
+"PO-Revision-Date: 2022-02-01 13:29+0100\n"
 "Last-Translator: Data.gouv.fr Team <data.gouv@data.gouv.fr>\n"
 "Language: en\n"
 "Language-Team: Data.gouv.fr Team <data.gouv@data.gouv.fr>\n"
@@ -1878,7 +1878,7 @@ msgid "Work in progress"
 msgstr ""
 
 #: udata_front/theme/gouvfr/templates/user/base.html:39
-msgid "User pages are currently investigated to offer you an improved experience."
+msgid "The user page is currently being renovated to improve user experience."
 msgstr ""
 
 #: udata_front/theme/gouvfr/templates/user/base.html:78
