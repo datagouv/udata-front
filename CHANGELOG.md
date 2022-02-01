@@ -2,7 +2,11 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- :warning: Button changes [#75](https://github.com/etalab/udata-front/pull/75)
+  - Remove underline from button hover
+  - `.btn`, `.btn-secondary` and `.btn-secondary` are removed. Use DSFR and `.fr-btn--secondary-{color}` instead.
+  - `.tags` and `.tag` are removed. Use DSFR ones instead.
+  - `.dropdown` is removed. Use DSFR select instead.
 
 ## 1.2.3 (2022-01-27)
 
