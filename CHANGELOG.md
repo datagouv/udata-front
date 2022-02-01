@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add banner to broken user page [#76](https://github.com/etalab/udata-front/pull/76)
 
 ## 1.2.3 (2022-01-27)
 
