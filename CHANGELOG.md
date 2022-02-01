@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Update reuse style [#52](https://github.com/etalab/udata-front/pull/52)
 
 ## 1.2.1 (2022-01-11)
 
