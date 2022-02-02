@@ -50,8 +50,8 @@ Vue. -->
     </dl>
     <ul class="card-footer">
       <li>
-        <strong>{{ resources.length || 0 }}</strong>
-        {{ $tc("resources", resources.length || 0) }}
+        <strong>{{ resources.total }}</strong>
+        {{ $tc("resources", resources.total) }}
       </li>
       <li>
         <strong>{{ metrics.reuses || 0 }}</strong>
@@ -81,7 +81,7 @@ export default {
     frequency: String,
     spatial: Object,
     metrics: Object,
-    resources: Array,
+    resources: Object,
     private: Boolean,
   },
   components: {
