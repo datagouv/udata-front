@@ -18,7 +18,6 @@ A pretty complex component that looks like a `<select>` but with many hidden fea
 Simply provide the many necessary props :
 
 * onChange: Function that will be called on each value select/deselect action,
-* suggestApi: The api to used. this.$api by default.
 * suggestUrl: This is the URL that will be called (if provided) when the user performs a search within the select.
   If not provided, suggest mode will be disabled and typing in the select will only filter the existing options.
 * listUrl: This is the URL that will be called to populate the select options on mount.
@@ -84,7 +83,6 @@ export default {
   },
   props: {
     onChange: Function,
-    suggestApi: Function,
     suggestUrl: String,
     listUrl: String,
     entityUrl: String,
@@ -138,7 +136,6 @@ export default {
   methods: {
     suggest: function (q) {
       let query;
-      let suggestApi = this.suggestApi || this.$api;
 
       // For collections with no listing URL, if no `q` is given we can return early because the suggest API will return no results.
       if (!q && !this.listUrl) return Promise.resolve([]);
@@ -147,7 +144,7 @@ export default {
       if (!q) {
         query = this.$api.get(this.listUrl).then((resp) => resp.data.data);
       } else {
-        query = suggestApi
+        query = this.$api
           .get(this.suggestUrl, { params: { q } })
           .then((resp) => resp.data);
       }
