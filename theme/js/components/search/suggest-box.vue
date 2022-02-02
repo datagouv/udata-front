@@ -133,8 +133,8 @@ export default {
       this.currentRequest = generateCancelToken();
 
       const promises = endpoints.map(({ name, size }) =>
-        this.$api
-          .get(name + "/", {
+        this.$apiv2
+          .get(name + "/search/", {
             cancelToken: this.currentRequest.token,
             params: {
               q: queryString,
