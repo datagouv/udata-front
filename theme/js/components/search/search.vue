@@ -16,7 +16,7 @@
   </div>
   <div class="row-inline fr-mt-3v justify-between align-items-center">
     <h1 class="fr-m-0 fr-h4">
-      {{ $t("Datasets") }}<sup>{{ _totalResults }}</sup>
+      {{ $t("Datasets") }}<sup>{{ totalResults }}</sup>
     </h1>
     <a :href="reuseUrl" title="" class="nav-link fr-text--sm fr-mb-0 fr-displayed-md fr-mt-3v">
       {{ $t("Search reuses") }}
@@ -128,14 +128,14 @@
       </i18n-t>
     </span>
   </section>
-  <section class="search-results fr-mt-1w fr-mt-md-3w">
+  <section class="search-results fr-mt-1w fr-mt-md-3w" ref="results" v-bind="$attrs">
     <transition mode="out-in">
-      <div v-if="loading">
+      <div v-if="loading || (disableFirstSearch && !results.length)">
         <Loader />
       </div>
-      <ul v-else-if="_results.length">
+      <ul v-else-if="results.length">
         <li
-          v-for="result in _results"
+          v-for="result in results"
           :key="result.id"
         >
           <a
@@ -146,10 +146,10 @@
           </a>
         </li>
         <Pagination
-          v-if="_totalResults > pageSize"
+          v-if="totalResults > pageSize"
           :page="currentPage"
           :pageSize="pageSize"
-          :totalResults="_totalResults"
+          :totalResults="totalResults"
           :changePage="changePage"
           class="fr-mt-2w"
         />
@@ -199,18 +199,8 @@ export default {
       type: Boolean,
       default: false,
     },
-    results: {
-      type: Array,
-      default: () => []
-    },
-    totalResults: {
-      type: Number,
-      default: 0,
-    }
   },
   created() {
-    this.filterIcon = filterIcon;
-
     // Update search params from URL on page load for deep linking
     const url = new URL(window.location);
     let searchParams = queryString.parse(url.search);
@@ -228,6 +218,12 @@ export default {
       this.search();
     }
   },
+  mounted() {
+    if(this.disableFirstSearch) {
+      this.results = JSON.parse(this.$refs.results.dataset.results);
+      this.totalResults = JSON.parse(this.$refs.results.dataset.totalResults);
+    }
+  },
   watch: {
     paramUrl: {
       deep: true,
@@ -242,15 +238,16 @@ export default {
   data() {
     return {
       extendedForm: false, // On desktop, extended form is simply another row of filters. On mobile, form is hidden until extendedForm is triggered
-      _results: this.results,
+      results: [],
       loading: false,
       currentRequest: null,
       pageSize: 20,
       currentPage: 1,
-      _totalResults: this.totalResults,
+      totalResults: 0,
       queryString: "",
       facets: {},
       rechercherBetaPath: "https://rechercher.etalab.studio/",
+      filterIcon,
     };
   },
   computed: {
@@ -320,8 +317,8 @@ export default {
         })
         .then((res) => res.data)
         .then((result) => {
-          this._results = result.data;
-          this._totalResults = result.total;
+          this.results = result.data;
+          this.totalResults = result.total;
           this.loading = false;
         })
         .catch((error) => {
