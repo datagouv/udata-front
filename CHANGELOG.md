@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix duplicate request on dataset search [#70](https://github.com/etalab/udata-front/pull/70)
 
 ## 1.2.2 (2022-01-21)
 
