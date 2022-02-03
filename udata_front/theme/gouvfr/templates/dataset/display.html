@@ -331,6 +331,7 @@
         {% endif %}
 
         <div class="ressources-files fr-my-4w vuejs">
+            <modals-container></modals-container>
             {% set show_all_resources = request.args.get('resources') == 'all' %}
             {% set grouped_resources = dataset.resources|group_resources_by_type %}
             {% set nb_groups = grouped_resources.keys()|length %}
@@ -339,7 +340,14 @@
                 {% if nb_groups > 1 %}
                     <h3 class="fr-h6 fr-mb-3v fr-mt-9v">{{ type_label }} <sup>{{resources|length }}</sup></h3>
                 {% endif %}
-                <dataset-resources dataset-id="{{ dataset.id }}" type="{{ type }}" type-label="{{ type_label }}" :can-edit="{{ can_edit.can()|tojson|safe }}">
+                <dataset-resources
+                    dataset-id="{{ dataset.id }}"
+                    type="{{ type }}"
+                    type-label="{{ type_label }}"
+                    :can-edit="{{ can_edit.can()|tojson|safe }}"
+                >
+                </dataset-resources>
+                <noscript>
                     {% set max_resources_to_show = resources_per_page if not show_all_resources else resources|length %}
                     {% for resource in resources[:max_resources_to_show] %}
                         {% with expanded = "true" %}
@@ -351,7 +359,7 @@
                             {{ _('See the %(nb)d resources of type %(type)s', nb=resources|length, type=type_label) }}
                         </a>
                     {% endif %}
-                </dataset-resources>
+                </noscript>
             {% else %}
                 <p class="text-center">{{ _('No resources') }}</p>
             {% endfor %}
@@ -372,11 +380,20 @@
             </div>
         </div>
 
-        {% if not read_only_mode %}
-        <div class="resource-list">
-            {% for resource in dataset.community_resources %}
-            {% include theme('dataset/resource/card.html') %}
-            {% endfor %}
+        <div class="resource-list vuejs">
+            <modals-container></modals-container>
+            <dataset-resources
+                dataset-id="{{ dataset.id }}"
+                type="community"
+                type-label="{{ _('Community resources') }}"
+                :can-edit="{{ can_edit.can()|tojson|safe }}"
+            >
+            </dataset-resources>
+            <noscript>
+                {% for resource in dataset.community_resources %}
+                {% include theme('dataset/resource/card.html') %}
+                {% endfor %}
+            </noscript>
             {% if not read_only_mode %}
             <a class="btn-action fr-my-3w"
                 href="{{ url_for('admin.index', path='community-resource/new/', **{'dataset_id': dataset.id}) }}">
@@ -384,7 +401,6 @@
             </a>
             {% endif %}
         </div>
-        {% endif %}
 
         {% block reuses_section %}
         <h2 id="community-reuses" class="fr-h2">{{ _('Reuses') }} <sup>{{ reuses|length }}</sup></h2>
@@ -392,7 +408,8 @@
             <div class="col-6 col-md-12 text-grey-380">
                 {% trans %}You reused these data and published an article, a computer graphics, or an application?
                 It's time to let you know!
-                Reference your work in just a few clicks and increase your visibility.{% endtrans %}
+                Reference your work in just a few clicks and increase your visibility.
+                {% endtrans %}
             </div>
         </div>
         <div class="row mt-xl fr-pt-2w fr-pt-md-0 reuse-cards">

@@ -27,10 +27,14 @@
 </template>
 
 <script>
+import {useI18n} from 'vue-i18n'
+import {onMounted, ref} from 'vue';
 import Loader from "../loader.vue";
 import Pagination from "../../pagination/pagination.vue";
 import Resource from "./resource.vue";
 import config from "../../../config";
+import {useToast} from "../../../composables/useToast";
+import {fetchDatasetCommunityResources, fetchDatasetResources} from "../../../api/resources";
 
 export default {
   name: "resources",
@@ -39,19 +43,14 @@ export default {
     Pagination,
     Resource,
   },
-  data() {
-    return {
-      resources: [],
-      currentPage: 1,
-      pageSize: config.resources_default_page_size,
-      totalResults: 0,
-      loading: true,
-    };
-  },
   props: {
     canEdit: {
       type: Boolean,
       required: true
+    },
+    community: {
+      type: Boolean,
+      default: false,
     },
     datasetId: {
       type: String,
@@ -66,47 +65,63 @@ export default {
       required: true,
     },
   },
-  mounted() {
-    this.loadPage(this.currentPage);
-  },
-  methods: {
-    changePage(index, scroll = true) {
-      this.currentPage = index;
-      this.loadPage(index, scroll);
-    },
-    loadPage(page = 1, scroll = false) {
-      this.loading = true;
+  setup(props) {
+    const { t } = useI18n();
+    const toast = useToast();
+    const currentPage = ref(1);
+    const resources = ref([]);
+    const pageSize = config.resources_default_page_size;
+    const totalResults = ref(0);
+    const loading = ref(true);
+    const top = ref(null);
 
-      // We can pass the second function parameter "scroll" to true if we want to scroll to the top of the resources section
-      // This is useful for pagination buttons
-      if (this.$refs.top && scroll)
-        this.$refs.top.scrollIntoView({ behavior: "smooth" });
+    // We can pass the second function parameter "scroll" to true if we want to scroll to the top of the resources section
+    // This is useful for pagination buttons
+    const loadPage = (page = 1, scroll = false) => {
+      loading.value = true;
+      if (scroll && top.value) {
+        top.scrollIntoView({ behavior: "smooth" });
+      }
+      let fetchData;
+      if(props.type === "community") {
+        fetchData = fetchDatasetCommunityResources(props.datasetId, page, pageSize);
+      } else {
+        fetchData = fetchDatasetResources(props.datasetId, props.type, page, pageSize);
+      }
 
-      return this.$apiv2
-        .get("/datasets/" + this.datasetId + "/resources/", {
-          params: {
-            page,
-            type: this.type,
-            page_size: this.pageSize,
-          },
-        })
-        .then((resp) => resp.data)
+      return fetchData
         .then((data) => {
           if (data.data) {
-            this.resources = data.data;
-            this.totalResults = data.total;
+            resources.value = data.data;
+            totalResults.value = data.total;
           }
         })
         .catch(() => {
-          this.$toast.error(
-            this.$t("An error occurred while fetching resources")
+          toast.error(
+            t("An error occurred while fetching resources")
           );
-          this.resources = [];
+          resources.value = [];
         })
         .finally(() => {
-          this.loading = false;
+          loading.value = false;
         });
-    },
+    };
+
+    const changePage = (index, scroll = true) => {
+      currentPage.value = index;
+      loadPage(index, scroll);
+    };
+
+    onMounted(() => loadPage(currentPage.value));
+
+    return {
+      currentPage,
+      loading,
+      changePage,
+      pageSize,
+      resources,
+      totalResults,
+    }
   }
 }
 </script>

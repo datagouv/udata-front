@@ -27,7 +27,7 @@ The `url` prop is the API URL.
         :style="{ color: _following ? 'inherit' : 'white' }"
       ></span>
       <strong>
-        {{ _followers }} {{ $tc("favourites", _followers) }}
+        {{ _followers }} {{ $t("favourites", _followers) }}
       </strong>
   </button>
 </template>
@@ -45,7 +45,7 @@ export default {
   computed: {
     label() {
       let action = this._following ? this.$t('remove from favorites') : this.$t('add to favorites');
-      return this._followers + ' ' + this.$tc('favourites', this._followers) + ', ' + action;
+      return this._followers + ' ' + this.$t('favourites', this._followers) + ', ' + action;
     }
   },
   created() {

@@ -42,7 +42,7 @@ const configAndMountApp = (el) => {
   app.use(bodyClass);
   app.use(filters);
   app.use(schemaCatalog);
-  app.use(Toaster);
+  app.use(Toaster).provide('toast', app.config.globalProperties.$toast);
 
   app.component("discussion-threads", Threads);
   app.component("suggest", Suggest);

@@ -2,7 +2,6 @@
   <article
       class="card resource-card" :class="{'resource-card-community': resource.from_community}">
       <div class="card-body">
-          <modals-container></modals-container>
           <header class="card-header" :id="'resource-' + resource.id + '-header'">
               <div class="edit-button">
                   <a

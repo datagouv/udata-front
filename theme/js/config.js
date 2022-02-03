@@ -21,7 +21,7 @@ function _meta(name) {
 
 /**
  * A simple helper to parse JSON from a <meta/> tag
- * @return {[type]} [description]
+ * @return {any} meta content as json or false on error
  */
 function _jsonMeta(name) {
   const data = _meta(name);

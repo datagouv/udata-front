@@ -121,7 +121,7 @@
   <section class="bg-blue-100 fr-p-3v fr-mt-3w text-black">
     <span class="row-inline">
       <span class="fr-fi-question-line fr-mr-1w" aria-hidden="true"></span>
-      <i18n-t keypath="Come try out our" tag="span">
+      <i18n-t keypath="Come try out our" tag="span" scope="global">
         <template #dataset_search>
           <a :href="rechercherBetaPath">{{ $t('new dataset search') }}</a>
         </template>
