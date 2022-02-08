@@ -1,9 +1,16 @@
 {% set resource_format = resource.format|trim|lower %}
 {% set expanded = expanded or "false" %}
+{% set available = resource.extras['check:status']
+    and resource.extras['check:status'] >= 200 and resource.extras['check:status'] < 400 %}
+{% set unavailable = resource.extras['check:status'] and resource.extras['check:status'] >= 400 %}
 <article
-    class="card resource-card {% if resource.from_community %}resource-card-community{% endif %}">
+    class="card resource-card {% if resource.from_community %}resource-card-community{% endif %}"
+>
     <div class="card-body">
-        <header class="card-header" id="resource-{{resource.id}}-header">
+        <header
+            class="card-header fr-grid-row fr-grid-row--gutters fr-grid-row--middle no-wrap wrap-md"
+            id="resource-{{resource.id}}-header"
+        >
             <div class="edit-button">
                 {% if can_edit %}
                 <a href="{{ url_for('admin.index', path='dataset/{id}/resource/{resource_id}'.format(id=dataset.id, resource_id=resource.id)) }}"
@@ -13,14 +20,17 @@
                 {% endif %}
             </div>
             <div class="header-text">
-                <span class="fs-sm text-grey-400"> {{ resource.metrics.views or 0 }} {{ _('downloads') }}</span>
-                <h4>
-                    {{ resource.title or _('Nameless resource') }}
-                    {% if resource.from_community and resource.owner %}
+                <h4>{{ resource.title or _('Nameless resource') }}</h4>
+                <div class="fs-sm text-grey-400"> {{ resource.metrics.views or 0 }} {{ _('downloads') }}</div>
+                {% if available %}
+                    <div class="text-green-400">{{ _('Available') }}</div>
+                {% elif unavailable %}
+                    <div class="text-default-error">{{ _('Unavailable') }}</div>
+                {% endif %}
+
+                {% if resource.from_community and resource.owner %}
                     <p class="fs-sm m-0 text-grey-380">{{resource.owner}}</p>
-                    {% endif %}
-                </h4>
-                <strong class="text-green-400">Disponible</strong>
+                {% endif %}
             </div>
             <div class="button-bar">
                 <ul>

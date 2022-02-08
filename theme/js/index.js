@@ -23,9 +23,19 @@ import Modals from "./plugins/modals";
 import i18n from "./plugins/i18n";
 import bodyClass from "./plugins/bodyClass";
 import filters from "./plugins/filters";
-import schemaCatalog from "./plugins/schemaCatalog";
 
 import InitSentry from "./sentry";
+
+/**
+ * @interface Ref
+ * @template T
+ * @property {T} value
+ */
+
+/**
+ * @typedef {Object} Ref
+ * @property value - The referenced value
+*/
 
 const configAndMountApp = (el) => {
   const app = createApp({});
@@ -41,7 +51,6 @@ const configAndMountApp = (el) => {
   app.use(i18n);
   app.use(bodyClass);
   app.use(filters);
-  app.use(schemaCatalog);
   app.use(Toaster).provide('toast', app.config.globalProperties.$toast);
 
   app.component("discussion-threads", Threads);

@@ -86,4 +86,5 @@ const _showModal = (app) => (name, params) => {
 
 export default function install(app) {
   app.config.globalProperties.$showModal = _showModal(app);
+  app.provide('$showModal', app.config.globalProperties.$showModal);
 }

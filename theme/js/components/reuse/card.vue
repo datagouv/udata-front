@@ -5,7 +5,7 @@ Vue and simpler -->
   <article class="reuse-card">
     <Placeholder
       class="reuse-image mb-sm"
-      :alt="title"
+      alt=""
       backgroundImage
       :src="image_url"
       type="reuse"

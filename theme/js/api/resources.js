@@ -1,11 +1,25 @@
 import {api, apiv2} from "../plugins/api";
 
 /**
- * @param {String} datasetId
- * @param {String} type
- * @param {Number} page
- * @param {Number} pageSize
- * @return Promise
+ * @typedef {Owned} ResourceModel
+ * @property {Object} created_at
+ * @property {Object} description
+ * @property {Object} extras
+ * @property {number} filesize
+ * @property {string} filetype
+ * @property {string} last_modified
+ * @property {string} preview_url
+ * @property {string} published
+ * @property {Object} schema
+ * @property {string} url
+ */
+
+/**
+ * @param {string} datasetId
+ * @param {string} type
+ * @param {number} page
+ * @param {number} pageSize
+ * @return Promise<Array<ResourceModel>>
  */
 export const fetchDatasetResources = (datasetId, type, page, pageSize) => {
   return apiv2
@@ -20,10 +34,10 @@ export const fetchDatasetResources = (datasetId, type, page, pageSize) => {
 }
 
 /**
- * @param {String} datasetId
- * @param {Number} page
- * @param {Number} pageSize
- * @return Promise
+ * @param {string} datasetId
+ * @param {number} page
+ * @param {number} pageSize
+ * @return Promise<Array<ResourceModel>>
  */
 export const fetchDatasetCommunityResources = (datasetId, page, pageSize) => {
   return api

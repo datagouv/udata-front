@@ -1,7 +1,7 @@
 <template>
   <article class="dataset-card compact">
     <div class="card-logo">
-      <Placeholder type="reuse" :src="image_url" :alt="title" />
+      <Placeholder type="reuse" :src="image_url" alt="" />
       <div class="logo-badge">
         <span v-html="privateIcon" v-if="private" />
         <span v-html="certified" v-else-if="organization?.public_service" />
