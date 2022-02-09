@@ -379,8 +379,20 @@
 {% block community %}
 <section class="community_container fr-pb-7w" id="community">
     <div class="container">
-        <h2 id="community-resources" class="fr-h2 fr-mb-5v">{{ _('Community resources') }}
-            <sup>{{ dataset.community_resources|length }}</sup></h2>
+        <div class="fr-grid-row">
+            <h2 id="community-resources" class="fr-h2 fr-col fr-mb-5v">{{ _('Community resources') }}
+                <sup>{{ dataset.community_resources|length }}</sup>
+            </h2>
+            {% if not read_only_mode %}
+                <div class="fr-col-12 fr-col-sm-6 fr-col-md-5 fr-col-lg-4 text-align-right">
+                    <a class="fr-btn fr-btn--secondary btn-secondary btn-secondary-grey-500 fr-fi-add-line fr-btn--icon-left"
+                        href="{{ url_for('admin.index', path='community-resource/new/', **{'dataset_id': dataset.id}) }}">
+                        {{ _('Publish a resource') }}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
         <div class="row fr-mb-4w">
             <p class="col-6 col-md-12">
                 {{ _('You have built a more comprehensive database than those presented here? This is the time to share it!') }}
@@ -407,12 +419,6 @@
                 {% include theme('dataset/resource/card.html') %}
                 {% endfor %}
             </noscript>
-            {% if not read_only_mode %}
-            <a class="btn-action fr-mt-3w"
-                href="{{ url_for('admin.index', path='community-resource/new/', **{'dataset_id': dataset.id}) }}">
-                {% include theme("svg/actions/add.svg") %}{{ _('Add a community resource') }}
-            </a>
-            {% endif %}
         </div>
 
         {% block reuses_section %}

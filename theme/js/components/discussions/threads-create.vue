@@ -60,7 +60,6 @@
 <script>
 import config from "../../config";
 import Author from "./author";
-import AddIcon from "svg/actions/add.svg";
 import ThreadsCreateButton from "./threads-create-button"; // Not the best but we don't have many svg
 
 export default {
@@ -75,7 +74,6 @@ export default {
       title: "",
       comment: "",
       user: config.user,
-      AddIcon,
     };
   },
   props: {
