@@ -407,7 +407,7 @@
                 dataset-id="{{ dataset.id }}"
                 type="community"
                 type-label="{{ _('Community resources') }}"
-                :can-edit="{{ can_edit.can()|tojson|safe }}"
+                :can-edit-resources='{{ dataset.community_resources|permissions|tojson|safe }}'
             >
             </dataset-resources>
             <noscript>

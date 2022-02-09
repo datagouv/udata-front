@@ -11,7 +11,7 @@
           :dataset-id="datasetId"
           :resource="resource"
           :type-label="typeLabel"
-          :can-edit="canEdit"
+          :can-edit="getCanEdit(resource)"
         />
         <Pagination
           class="fr-mt-3w"
@@ -28,7 +28,7 @@
 
 <script>
 import {useI18n} from 'vue-i18n'
-import {onMounted, ref} from 'vue';
+import {onMounted, ref, reactive} from 'vue';
 import Loader from "../loader.vue";
 import Pagination from "../../pagination/pagination.vue";
 import Resource from "./resource.vue";
@@ -46,11 +46,11 @@ export default {
   props: {
     canEdit: {
       type: Boolean,
-      required: true
+      default: false
     },
-    community: {
-      type: Boolean,
-      default: false,
+    canEditResources: {
+      type: Object,
+      default() { return {}}
     },
     datasetId: {
       type: String,
@@ -112,6 +112,13 @@ export default {
       loadPage(index, scroll);
     };
 
+    const getCanEdit = (resource) => {
+      if(props.canEdit) {
+        return props.canEdit;
+      }
+      return props.canEditResources[resource.id];
+    }
+
     onMounted(() => loadPage(currentPage.value));
 
     return {
@@ -121,6 +128,7 @@ export default {
       pageSize,
       resources,
       totalResults,
+      getCanEdit,
     }
   }
 }
