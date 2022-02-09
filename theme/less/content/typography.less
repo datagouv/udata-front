@@ -274,6 +274,12 @@ each(@font-sizes, {
     white-space: pre-wrap;
 }
 
+.text-overflow-ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 each(@breakpoints, .(@bk, @_k, @_i) {
     @var: 'query-@{bk}';
 

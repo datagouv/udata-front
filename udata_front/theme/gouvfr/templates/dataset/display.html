@@ -351,9 +351,7 @@
                 <noscript>
                     {% set max_resources_to_show = resources_per_page if not show_all_resources else resources|length %}
                     {% for resource in resources[:max_resources_to_show] %}
-                        {% with expanded = "true" %}
-                        {% include theme('dataset/resource/card.html') %}
-                        {% endwith %}
+                    {% include theme('dataset/resource/card.html') %}
                     {% endfor %}
                     {% if resources|length > resources_per_page and not show_all_resources %}
                         <a class="btn btn-secondary accordion-button trigger-once fr-mt-2w" href="?resources=all">

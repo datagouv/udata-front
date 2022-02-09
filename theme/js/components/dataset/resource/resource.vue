@@ -1,38 +1,42 @@
 <template>
-  <article class="resource-card">
+  <article class="border-bottom">
     <header
-      class="fr-my-2w fr-grid-row fr-grid-row--gutters fr-grid-row--middle no-wrap wrap-md justify-between"
+      class="fr-py-2w fr-grid-row fr-grid-row--gutters fr-grid-row--middle no-wrap wrap-md justify-between"
       :id="'resource-' + resource.id + '-header'"
     >
       <div class="fr-col-auto">
-        <h4 class="fr-mb-1v">{{ resource.title || $t('Nameless resource') }}</h4>
+        <h4
+          class="fr-mb-1v"
+          :id="'resource-' + resource.id + '-title'"
+        >
+          {{ resource.title || $t('Nameless resource') }}
+        </h4>
         <div class="fr-text--sm fr-mb-0 text-grey-380">
-          {{$t('Updated on X', {date: $filters.formatDate(lastUpdate)})}} —
           <template v-if="resource.owner">
             {{ $t('From X', {owner: owner}) }} —
           </template>
+          {{$t('Updated on X', {date: $filters.formatDate(lastUpdate)})}} —
           {{ resource.format?.trim()?.toLowerCase() }}
           <template v-if="resource.filesize">({{ $filters.filesize(resource.filesize) }})</template> —
           {{ resource.metrics.views || 0 }} {{ $t('downloads') }}
         </div>
-        <div class="text-green-400" v-if="available">{{$t('Available')}}</div>
-        <div class="text-default-error" v-else-if="unavailable">{{$t('Unavailable')}}</div>
       </div>
-      <div class="fr-col-auto">
-        <ul class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle no-wrap wrap-md">
-          <li class="fr-col-auto fr-mr-3w" v-if="showSchemaButton">
+      <div class="fr-col-auto text-default-error" v-if="unavailable">{{$t('Unavailable')}}</div>
+      <div class="fr-col-auto" v-else>
+        <ul class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
+          <li class="fr-col-auto fr-mr-5w" v-if="showSchemaButton">
             <schema-button :resource="resource"/>
           </li>
-          <li class="fr-col-auto" v-if="canEdit">
+          <li class="fr-col-auto fr-mr-3v" v-if="canEdit">
             <a
               :href="adminUrl"
+              :title="$t('Edit resource')"
               class="fr-btn fr-btn--secondary fr-btn--sm fr-fi-edit-line"
             >
-              {{$t('Edit resource')}}
             </a>
           </li>
 
-          <li class="fr-col-auto" v-if="resource.preview_url">
+          <li class="fr-col-auto fr-mr-3v" v-if="resource.preview_url">
             <button
               :title="$t('Preview')"
               @click.prevent="$showModal('preview', {url: resource.preview_url}, true)"
@@ -40,7 +44,7 @@
             >
             </button>
           </li>
-          <li class="fr-col-auto">
+          <li class="fr-col-auto fr-mr-3v">
             <button
               :id="resource.id + '-copy'"
               :title="$t('Copy permalink to clipboard')"
@@ -49,10 +53,10 @@
             >
             </button>
           </li>
-          <li class="fr-col-auto" v-if="resource.format !== 'url'">
+          <li class="fr-col-auto" v-if="resource.format === 'url'">
             <a
               :href="resource.latest"
-              :aria-label="$t('Resource link')"
+              :title="$t('Resource link')"
               rel="nofollow"
               target="_blank"
               class="fr-btn fr-btn--sm fr-fi-external-link-line"
@@ -62,18 +66,18 @@
           <li class="fr-col-auto" v-else>
             <a
               :href="resource.latest"
-              :aria-label="$t('Download resource')"
+              :title="$t('Download resource')"
               download
               class="fr-btn fr-btn--sm fr-fi-download-line"
             >
             </a>
           </li>
-          <li class="fr-col-auto fr-ml-3v">
+          <li class="fr-col-auto fr-ml-7v">
             <button
               @click.prevent="expand"
               role="button"
               :aria-expanded="expanded"
-              :aria-label="$t('See more details')"
+              :title="$t('See more details')"
               :aria-controls="'resource-' + resource.id"
               class="accordion-button fr-fi-arrow-right-s-line fr-p-1w"
             >
@@ -83,47 +87,63 @@
       </div>
     </header>
     <section
-      class="accordion-content"
+      class="accordion-content fr-pt-5v fr-pb-4w"
       :class="{active: expanded}"
       :style="{height: expanded ? 'auto' : 0}"
-      :aria-labelledby="'resource-' + resource.id + '-header'"
+      :aria-labelledby="'resource-' + resource.id + '-title'"
       :hidden="!expanded"
       :id="'resource-' + resource.id"
     >
-      <div class="resource-description markdown" v-if="resource.description" v-html="$filters.markdown(resource.description)">
+      <div class=" fr-mt-0 markdown" v-if="resource.description" v-html="$filters.markdown(resource.description)">
       </div>
-      <dl class="description-list">
-        <div>
-          <dt>{{ $t('URL') }}</dt>
-          <dd><a :href="resource.url">{{resource.url}}</a></dd>
+      <dl>
+        <div class="fr-grid-row fr-grid--gutters fr-mb-2w">
+          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('URL') }}</dt>
+          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10 text-overflow-ellipsis">
+            <a :href="resource.url">{{resource.url}}</a>
+          </dd>
         </div>
-        <div>
-          <dt>{{ $t('Permalink') }}</dt>
-          <dd><a :href="resource.latest">{{resource.latest}}</a></dd>
+        <div class="fr-grid-row fr-grid--gutters fr-mb-2w">
+          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Permalink') }}</dt>
+          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10 text-overflow-ellipsis">
+            <a :href="resource.latest">{{resource.latest}}</a>
+          </dd>
         </div>
-        <div>
-          <dt>{{ $t('Type') }}</dt>
-          <dd>{{ typeLabel }}</dd>
+        <div class="fr-grid-row fr-grid--gutters fr-mb-2w">
+          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Type') }}</dt>
+          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
+            {{ typeLabel }}
+          </dd>
         </div>
-        <div>
-          <dt>{{ $t('MIME Type') }}</dt>
-          <dd>{{resource.mime}}</dd>
+        <div class="fr-grid-row fr-grid--gutters fr-mb-2w">
+          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('MIME Type') }}</dt>
+          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
+            {{resource.mime}}
+          </dd>
         </div>
-        <div v-if="resource.checksum">
-          <dt>{{resource.checksum.type}}</dt>
-          <dd>{{resource.checksum.value}}</dd>
+        <div v-if="resource.checksum" class="fr-grid-row fr-grid--gutters fr-mb-2w">
+          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{resource.checksum.type}}</dt>
+          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
+            {{resource.checksum.value}}
+          </dd>
         </div>
-        <div>
-          <dt>{{ $t('Created on') }}</dt>
-          <dd>{{$filters.formatDate(resource.created_at)}}</dd>
+        <div class="fr-grid-row fr-grid--gutters fr-mb-2w">
+          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Created on') }}</dt>
+          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
+            {{$filters.formatDate(resource.created_at)}}
+          </dd>
         </div>
-        <div>
-          <dt>{{ $t('Modified on') }}</dt>
-          <dd>{{$filters.formatDate(resource.last_modified)}}</dd>
+        <div class="fr-grid-row fr-grid--gutters fr-mb-2w">
+          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Modified on') }}</dt>
+          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
+            {{$filters.formatDate(resource.last_modified)}}
+          </dd>
         </div>
-        <div>
-          <dt>{{ $t('Published on') }}</dt>
-          <dd>{{$filters.formatDate(resource.published)}}</dd>
+        <div class="fr-grid-row fr-grid--gutters">
+          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Published on') }}</dt>
+          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
+            {{$filters.formatDate(resource.published)}}
+          </dd>
         </div>
       </dl>
     </section>
