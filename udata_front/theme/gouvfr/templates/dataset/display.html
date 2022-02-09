@@ -336,10 +336,6 @@
 <section class="ressources fr-py-10w">
     <div class="container">
         <h2 id="resources" class="fr-h2">{{ _('Resources') }} <sup>{{dataset.resources | length}}</sup></h2>
-        {% if dataset.community_resources|length or 1 %}
-        <a class="nav-link" href="#community-resources">{{ _('See also: community resources') }}</a>
-        {% endif %}
-
         <div class="ressources-files fr-my-4w vuejs">
             <modals-container></modals-container>
             {% set show_all_resources = request.args.get('resources') == 'all' %}
@@ -347,7 +343,7 @@
             {% set nb_groups = grouped_resources.keys()|length %}
             {% set resources_per_page = config.RESOURCES_DEFAULT_PAGE_SIZE %}
             {% for (type, type_label), resources in grouped_resources.items() %}
-                <h3 class="fr-mb-3v fr-mt-9v fr-text--sm fr-text--bold text-transform-uppercase">
+                <h3 class="fr-mt-4w fr-mb-1w fr-text--sm fr-text--bold text-transform-uppercase">
                     {{ type_label }} {% if nb_groups > 1 %}<sup>{{resources|length }}</sup>{% endif %}
                 </h3>
                 <dataset-resources
