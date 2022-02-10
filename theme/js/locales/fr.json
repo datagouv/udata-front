@@ -17,7 +17,6 @@
   "Reply": "Répondre",
   "The discussion was closed by": "La discussion a été close par",
   "on": "le",
-  "You must be logged in to start a discussion.": "Vous devez être connecté pour commencer une discussion.",
   "Start a new discussion": "Démarrer une nouvelle discussion",
   "New discussion": "Nouvelle discussion",
   "Title": "Titre",
@@ -60,12 +59,10 @@
   "See the reuses": "Voir toutes les réutilisations",
   "No reuse matching your query": "Nous n’avons pas de réutilisation correspondant à votre requête",
   "No results found.": "Aucun résultat.",
-  "You must be connected to add a favourite.": "Vous devez être connecté pour ajouter un favori.",
   "Reuses": "Réutilisations",
   "Datasets are collections of data, i.e. structured information, easily readable by a machine.": "Les jeux de données sont des recueils de données, c’est-à-dire des informations structurées, facilement lisibles par une machine.",
   "Reuses refer to the use of data for an other purpose than the one they were produced for.": "Les réutilisations désignent l’utilisation des données à d’autres fins que celle de la mission pour laquelle les données ont été produites.",
   "Ask to join the organization as a producer": "Demander à rejoindre l'organisation en tant que producteur",
-  "You must be connected to join an organization": "Vous devez être connecté pour rejoindre une organisation",
   "You can add some details here for your membership request": "Vous pouvez ajouter des détails sur votre demande d'adhésion",
   "A request has been sent to the administrators": "Une demande a été envoyée aux administrateurs",
   "Error while requesting membership": "Erreur lors de la demande d'adhésion",
@@ -110,7 +107,6 @@
   "See dataset linked to this schema": "Voir les jeux de données associés à ce schéma",
   "About schemas": "À propos des schémas",
   "Data schemas allow to describe data models : what are the fields, how is data represented, what are the possible values. Discover how schemas improve data quality and use cases on ": "Les schémas de données permettent de décrire des modèles de données : quels sont les différents champs, comment sont représentées les données, quelles sont les valeurs possibles. Découvrez comment les schémas améliorent la qualité des données et quels sont les cas d'usages possibles sur ",
-  "Available": "Disponible",
   "Unavailable": "Indisponible",
   "Come try out our": "Venez tester notre {dataset_search}.",
   "new dataset search": "nouvelle recherche de jeux de données",
@@ -122,5 +118,5 @@
   "Private": "",
   "From X": "Par {owner}",
   "Updated on X": "Mis à jour le {date}",
-  "An error occurred while fetching schemas": "Une erreur est survenue lors de la récupération des schémas"
+  "An error occurred while fetching schemas": ""
 }
