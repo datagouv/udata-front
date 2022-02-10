@@ -26,9 +26,9 @@ The `url` prop is the API URL.
         :class="{ active: animating }"
         :style="{ color: _following ? 'inherit' : 'transparent' }"
       ></span>
-      <strong>
+      <span class="fr-ml-1w">
         {{ _followers }} {{ $tc("favourites", _followers) }}
-      </strong>
+      </span>
   </button>
 </template>
 
