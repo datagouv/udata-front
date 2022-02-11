@@ -4,6 +4,7 @@
 
 - Fix `<read-more>` component height when it contains `<img>` [65](https://github.com/etalab/udata-front/pull/65)
 - Update reuse style [#52](https://github.com/etalab/udata-front/pull/52)
+- Add featured button component back for sysadmin [#79](https://github.com/etalab/udata-front/pull/79)
 
 ## 1.2.3 (2022-01-27)
 
