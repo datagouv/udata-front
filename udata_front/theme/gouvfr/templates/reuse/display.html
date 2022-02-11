@@ -66,6 +66,11 @@
                 <a class="fr-btn fr-btn--secondary btn-secondary btn-secondary-grey-500 fr-mt-2w fr-fi-edit-line fr-btn--icon-left fr-displayed-sm"
                         href="{{ url_for('admin.index', path='reuse/{id}/'.format(id=reuse.id)) }}">{{ _('Modify reuse') }}</a>
                 {% endif %}
+                {% if sysadmin %}
+                <div class="fr-mt-0 vuejs">
+                    <featured-button subject-id="{{ reuse.id }}" subject-type="reuse" :featured="{{ reuse.featured|tojson|safe }}"></featured-button>
+                </div>
+                {% endif %}
             </div>
         </div>
     </header>
