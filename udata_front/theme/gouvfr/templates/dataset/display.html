@@ -394,13 +394,15 @@
                 {{ _('You have built a more comprehensive database than those presented here? This is the time to share it!') }}
             </p>
         </div>
-        <h3 class="fr-mb-3v fr-text--sm fr-text--bold text-transform-uppercase">
+        {% if length %}
+            <h3 class="fr-mb-3v fr-text--sm fr-text--bold text-transform-uppercase">
             {{ _('Data') }}
         </h3>
         {{ banner_warning(
             "fr-fi-alert-line",
             _("These resources are published by the community and the producer isn't responsible for them.")
         )}}
+        {% endif %}
         <div class="resource-list vuejs">
             <modals-container></modals-container>
             <dataset-resources
