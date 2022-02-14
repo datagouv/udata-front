@@ -18,7 +18,7 @@
           {{$t('Updated on X', {date: $filters.formatDate(lastUpdate)})}} —
           {{ resource.format?.trim()?.toLowerCase() }}
           <template v-if="resource.filesize">({{ $filters.filesize(resource.filesize) }})</template> —
-          {{ resource.metrics.views || 0 }} {{ $t('downloads') }}
+          {{ $t('X downloads', resource.metrics.views || 0) }}
         </div>
       </div>
       <div class="fr-col-auto text-default-error" v-if="unavailable">{{$t('Unavailable')}}</div>
