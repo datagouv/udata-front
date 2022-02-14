@@ -94,6 +94,8 @@ These are now removed, see tags instead.
 You can use icons from DSFR. You can find the list on [DSFR documentation](https://gouvfr.atlassian.net/wiki/spaces/DB/pages/222331396/Ic+nes+-+Icons) with their classes.
 There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around the icon.
 
+`.fr-fi-svg` is a special class allowing you to use a SVG icon instead of DSFR `.fr-fi` icons.
+
 ```button-icons-dsfr.html
 <a
     class="btn-secondary btn-secondary-grey-500 fr-btn--icon-left fr-fi-edit-line"
@@ -105,6 +107,19 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
 */
 
 @import (less) "@gouvfr/dsfr/dist/component/button/button.css";
+
+.fr-btn {
+    &.fr-btn--sm.fr-fi-svg {
+        svg {
+            width: 1.5rem;
+        }
+        &:not([class*="fr-btn--icon-"]) {
+            padding-left: 0.25rem;
+            padding-right: 0.25rem;
+        }
+    }
+}
+
 .btn {
     display: inline-block;
     appearance: none;

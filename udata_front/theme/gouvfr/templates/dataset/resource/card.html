@@ -38,8 +38,10 @@
                             <a
                                 href="{{ url_for('admin.index', path='dataset/{id}/resource/{resource_id}'.format(id=dataset.id, resource_id=resource.id)) }}"
                                 title="{{ _('Edit resource') }}"
-                                class="fr-btn fr-btn--secondary fr-btn--sm fr-fi-edit-line"
-                            ></a>
+                                class="fr-btn fr-btn--secondary fr-btn--sm fr-fi-svg"
+                            >
+                                {% include theme('svg/edit.svg') %}
+                            </a>
                         </li>
                     {% endif %}
                     <li class="fr-col-auto fr-mr-3v">

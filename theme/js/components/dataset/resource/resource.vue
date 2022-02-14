@@ -31,16 +31,17 @@
             <a
               :href="adminUrl"
               :title="$t('Edit resource')"
-              class="fr-btn fr-btn--secondary fr-btn--sm fr-fi-edit-line"
+              class="fr-btn fr-btn--secondary fr-btn--sm fr-fi-svg"
+              v-html="edit"
             >
             </a>
           </li>
-
           <li class="fr-col-auto fr-mr-3v" v-if="resource.preview_url">
             <button
               :title="$t('Preview')"
               @click.prevent="$showModal('preview', {url: resource.preview_url}, true)"
-              class="fr-btn fr-btn--secondary fr-btn--sm fr-fi-eye-line"
+              class="fr-btn fr-btn--secondary fr-btn--sm fr-fi-svg"
+              v-html="preview"
             >
             </button>
           </li>
@@ -154,6 +155,8 @@
 import config from "../../../config";
 import SchemaButton from "./schema-button";
 import useOwner from "../../../composables/useOwned";
+import edit from "svg/edit.svg";
+import preview from "svg/preview.svg";
 
 export default {
   components: {SchemaButton},
@@ -179,7 +182,9 @@ export default {
   setup(props) {
     const owner = useOwner(props.resource);
     return {
+      edit,
       owner,
+      preview,
     }
   },
   computed: {
