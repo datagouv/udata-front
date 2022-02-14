@@ -4,17 +4,12 @@ name: Icons
 category: Components
 ---
 
+`.fr-fi-svg` is a special class allowing you to use a SVG icon instead of DSFR `.fr-fi` icons.
+
 ## Icons sizes
 
-Size does matter, after all.
+They are port of DSFR `.fr-fi--*` sizing that only works with `::before` and `::after`.
 
-Quick utility for SVG icons sizing. Icons can come up in multiple sizes : `sm`, `lg`... Pick your weapon !
-
-```certified.html
-<div class="icon-lg">
-    {% include('svg/certified.svg') %}
-</div>
-```
 */
 
 //Those are the base-64 encoded icons used in CSS
@@ -22,7 +17,17 @@ Quick utility for SVG icons sizing. Icons can come up in multiple sizes : `sm`, 
 @icon-left-chevron: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNiIgaGVpZ2h0PSI5IiB2aWV3Qm94PSIwIDAgNiA5IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMC43ODEyNSAzLjc1QzAuNjI1IDMuOTA2MjUgMC42MjUgNC4xMjUgMC43ODEyNSA0LjI4MTI1TDQuNDM3NSA3LjkwNjI1QzQuNTkzNzUgOC4wNjI1IDQuODQzNzUgOC4wNjI1IDQuOTY4NzUgNy45MDYyNUw1LjE4NzUgNy42ODc1QzUuMzQzNzUgNy41MzEyNSA1LjM0Mzc1IDcuMzEyNSA1LjE4NzUgNy4xNTYyNUwyIDRMNS4yMTg3NSAwLjg3NUM1LjM0Mzc1IDAuNzE4NzUgNS4zNDM3NSAwLjUgNS4yMTg3NSAwLjM0Mzc1TDQuOTY4NzUgMC4xMjVDNC44NDM3NSAtMC4wMzEyNSA0LjU5Mzc1IC0wLjAzMTI1IDQuNDM3NSAwLjEyNUwwLjc4MTI1IDMuNzVaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K";
 @icon-arrow: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9ImFycm93LXJpZ2h0LWxpbmUiPgo8cGF0aCBpZD0iJiMyNDA7JiMxNTk7JiMxNDI7JiMxNjg7IENvdWxldXIgaWMmIzE5NTsmIzE4MDtuZSIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xNi4xNzIgMTFMMTAuODA4IDUuNjM2MDVMMTIuMjIyIDQuMjIyMDVMMjAgMTJMMTIuMjIyIDE5Ljc3OEwxMC44MDggMTguMzY0TDE2LjE3MiAxM0g0VjExSDE2LjE3MloiIGZpbGw9IndoaXRlIi8+CjwvZz4KPC9zdmc+Cg==";
 
-.icon-lg svg {
-    width: 30px;
-    height: 30px;
+.fr-fi-svg {
+    svg {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+    &.fr-fi--sm svg {
+        width: 1rem;
+        height: 1rem;
+    }
+    &.fr-fi--lg svg {
+        width: 2rem;
+        height: 2rem;
+    }
 }

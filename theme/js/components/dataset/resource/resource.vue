@@ -4,21 +4,24 @@
       class="fr-py-2w fr-grid-row fr-grid-row--gutters fr-grid-row--middle no-wrap wrap-md justify-between"
       :id="'resource-' + resource.id + '-header'"
     >
-      <div class="fr-col-auto">
-        <h4
+      <div class="fr-col-auto fr-grid-row fr-grid-row--top">
+        <div class="fr-col-auto fr-mx-2w fr-fi-svg fr-fi--sm" v-html="resourceImage"></div>
+        <div class="fr-col-auto">
+          <h4
           class="fr-mb-1v"
           :id="'resource-' + resource.id + '-title'"
         >
           {{ resource.title || $t('Nameless resource') }}
         </h4>
-        <div class="fr-text--sm fr-mb-0 text-grey-380">
-          <template v-if="resource.owner">
-            {{ $t('From X', {owner: owner}) }} —
-          </template>
-          {{$t('Updated on X', {date: $filters.formatDate(lastUpdate)})}} —
-          {{ resource.format?.trim()?.toLowerCase() }}
-          <template v-if="resource.filesize">({{ $filters.filesize(resource.filesize) }})</template> —
-          {{ $t('X downloads', resource.metrics.views || 0) }}
+          <div class="fr-text--sm fr-mb-0 text-grey-380">
+            <template v-if="resource.owner">
+              {{ $t('From X', {owner: owner}) }} —
+            </template>
+            {{$t('Updated on X', {date: $filters.formatDate(lastUpdate)})}} —
+            {{ resource.format?.trim()?.toLowerCase() }}
+            <template v-if="resource.filesize">({{ $filters.filesize(resource.filesize) }})</template> —
+            {{ $t('X downloads', resource.metrics.views || 0) }}
+          </div>
         </div>
       </div>
       <div class="fr-col-auto text-default-error" v-if="unavailable">{{$t('Unavailable')}}</div>
@@ -88,7 +91,7 @@
       </div>
     </header>
     <section
-      class="accordion-content fr-pt-5v fr-pb-4w"
+      class="accordion-content fr-pt-5v fr-pb-4w fr-pl-6w"
       :class="{active: expanded}"
       :style="{height: expanded ? 'auto' : 0}"
       :aria-labelledby="'resource-' + resource.id + '-title'"
@@ -157,6 +160,7 @@ import SchemaButton from "./schema-button";
 import useOwner from "../../../composables/useOwned";
 import edit from "svg/edit.svg";
 import preview from "svg/preview.svg";
+import useResourceImage from "../../../composables/useResourceImage";
 
 export default {
   components: {SchemaButton},
@@ -181,10 +185,12 @@ export default {
   },
   setup(props) {
     const owner = useOwner(props.resource);
+    const resourceImage = useResourceImage(props.resource);
     return {
       edit,
       owner,
       preview,
+      resourceImage,
     }
   },
   computed: {

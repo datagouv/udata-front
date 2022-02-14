@@ -8,24 +8,29 @@
         class="fr-py-2w fr-grid-row fr-grid-row--gutters fr-grid-row--middle no-wrap wrap-md justify-between"
         id="resource-{{resource.id}}-header"
     >
-        <div class="fr-col-auto">
-            <h4
-                class="fr-mb-1v"
-                id="resource-{{resource.id}}-title"
-            >
-                {{ resource.title or _('Nameless resource') }}
-            </h4>
-            <div class="fr-text--sm fr-mb-0 text-grey-380">
-                {% if resource.owner %}
-                    {{ _('From %(owner)s', owner=resource.owner) }} —
-                {% endif %}
-                {{_('Updated on %(date)s', date=last_update|dateformat(format='long'))}} —
-                {{ resource_format }}
-                {% if resource.filesize %}
-                    ({{ resource.filesize | filesize }})
-                {% endif %}
-                —
-                {{ resource.metrics.views or 0 }} {{ _('downloads') }}
+        <div class="fr-col-auto fr-grid-row fr-grid-row--top">
+            <div class="fr-col-auto fr-mx-2w fr-fi-svg fr-fi--sm">
+                {% include theme('svg/resources/archive.svg') %}
+            </div>
+            <div class="fr-col-auto">
+                <h4
+                    class="fr-mb-1v"
+                    id="resource-{{resource.id}}-title"
+                >
+                    {{ resource.title or _('Nameless resource') }}
+                </h4>
+                <div class="fr-text--sm fr-mb-0 text-grey-380">
+                    {% if resource.owner %}
+                        {{ _('From %(owner)s', owner=resource.owner) }} —
+                    {% endif %}
+                    {{_('Updated on %(date)s', date=last_update|dateformat(format='long'))}} —
+                    {{ resource_format }}
+                    {% if resource.filesize %}
+                        ({{ resource.filesize | filesize }})
+                    {% endif %}
+                    —
+                    {{ resource.metrics.views or 0 }} {{ _('downloads') }}
+                </div>
             </div>
         </div>
         {% if unavailable %}
@@ -76,7 +81,7 @@
         {% endif %}
     </header>
     <section
-        class="accordion-content active fr-pt-5v fr-pb-4w"
+        class="accordion-content active fr-pt-5v fr-pb-4w fr-pl-6w"
         aria-labelledby="resource-{{resource.id}}-title"
         id="resource-{{resource.id}}"
     >
