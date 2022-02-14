@@ -2,8 +2,23 @@
 
 ## Current (in progress)
 
-- Fix modals not working [#71](https://github.com/etalab/udata-front/pull/71)
+- Fix `<read-more>` component height when it contains `<img>` [65](https://github.com/etalab/udata-front/pull/65)
+- Update reuse style [#52](https://github.com/etalab/udata-front/pull/52)
+- Add banner to broken user page [#76](https://github.com/etalab/udata-front/pull/76)
+- :warning: Button changes [#75](https://github.com/etalab/udata-front/pull/75)
+  - Remove underline from button hover
+  - `.btn`, `.btn-secondary` and `.btn-secondary` are removed. Use DSFR and `.fr-btn--secondary-{color}` instead.
+  - `.tags` and `.tag` are removed. Use DSFR ones instead.
+  - `.dropdown` is removed. Use DSFR select instead.
+- Fix duplicate request on dataset search [#70](https://github.com/etalab/udata-front/pull/70)
 - Add banner for harvested dataset [#73](https://github.com/etalab/udata-front/pull/73)
+
+## 1.2.3 (2022-01-27)
+
+- Fix modals not working [#71](https://github.com/etalab/udata-front/pull/71)
+- Fix auth messages not shown from query parameter [#68](https://github.com/etalab/udata-front/pull/68)
+- Fix RGAA criterion 10.14 [#72](https://github.com/etalab/udata-front/pull/72)
+- Fix thread header wrapped when title is too long [#64](https://github.com/etalab/udata-front/pull/64)
 
 ## 1.2.2 (2022-01-21)
 
