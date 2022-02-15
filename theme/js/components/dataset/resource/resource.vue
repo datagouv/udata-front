@@ -15,7 +15,10 @@
         </h4>
           <div class="fr-text--sm fr-mb-0 text-grey-380">
             <template v-if="resource.owner">
-              {{ $t('From X', {owner: owner}) }} —
+              {{ $t('From') }} {{owner}} —
+            </template>
+            <template v-else-if="resource.organization">
+             {{ $t('From') }} <a :href="resource.organization.page">{{ owner }}</a> —
             </template>
             {{$t('Updated on X', {date: $filters.formatDate(lastUpdate)})}} —
             {{ resource.format?.trim()?.toLowerCase() }}
@@ -34,7 +37,7 @@
             <a
               :href="adminUrl"
               :title="$t('Edit resource')"
-              class="fr-btn fr-btn--secondary fr-btn--sm fr-fi-svg"
+              class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-fi-svg"
               v-html="edit"
             >
             </a>
@@ -43,7 +46,7 @@
             <button
               :title="$t('Preview')"
               @click.prevent="$showModal('preview', {url: resource.preview_url}, true)"
-              class="fr-btn fr-btn--secondary fr-btn--sm fr-fi-svg"
+              class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-fi-svg"
               v-html="preview"
             >
             </button>
@@ -53,7 +56,7 @@
               :id="resource.id + '-copy'"
               :title="$t('Copy permalink to clipboard')"
               :data-clipboard-text="resource.latest"
-              class="fr-btn fr-btn--secondary fr-btn--sm fr-fi-links-fill"
+              class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-fi-links-fill"
             >
             </button>
           </li>

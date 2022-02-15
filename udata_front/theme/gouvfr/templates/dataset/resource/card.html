@@ -43,7 +43,7 @@
                             <a
                                 href="{{ url_for('admin.index', path='dataset/{id}/resource/{resource_id}'.format(id=dataset.id, resource_id=resource.id)) }}"
                                 title="{{ _('Edit resource') }}"
-                                class="fr-btn fr-btn--secondary fr-btn--sm fr-fi-svg"
+                                class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-fi-svg"
                             >
                                 {% include theme('svg/edit.svg') %}
                             </a>
@@ -53,7 +53,7 @@
                         <a
                             href="#resource-{{resource.id}}-header"
                             title="{{ _('Copy permalink to clipboard') }}"
-                            class="fr-btn fr-btn--secondary fr-btn--sm fr-fi-links-fill"
+                            class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-fi-links-fill"
                         ></a>
                     </li>
                     {% if resource.format == 'url' %}
