@@ -1,7 +1,7 @@
 <template>
   <article class="dataset-card compact">
     <div class="card-logo">
-      <Placeholder type="reuse" :src="image_url" :alt="title" />
+      <Placeholder type="reuse" :src="imageUrl" :alt="title" />
       <div class="logo-badge">
         <span v-html="privateIcon" v-if="private" />
         <span v-html="certified" v-else-if="organization?.public_service" />
@@ -27,11 +27,17 @@ export default {
   created() {
     this.certified = certified;
     this.privateIcon = privateIcon;
+    this.imageUrl = this.organization ? this.organization.logo_thumbnail : this.owner.logo_thumbnail;
+  },
+  data() {
+    return {
+      imageUrl: null,
+    };
   },
   props: {
     title: String,
-    image_url: String,
     organization: Object,
+    owner: Object,
     private: Boolean,
   },
   components: {

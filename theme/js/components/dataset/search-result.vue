@@ -73,7 +73,6 @@ import lock from "svg/private.svg";
 export default {
   props: {
     title: String,
-    image_url: String,
     organization: Object,
     owner: Object,
     description: String,

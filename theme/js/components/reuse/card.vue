@@ -7,14 +7,10 @@ Vue and simpler -->
       class="reuse-image mb-sm"
       :alt="title"
       backgroundImage
-      :src="image_url"
+      :src="image"
       type="reuse"
     />
     <div class="reuse-info">
-      <div class="reuse-info-type fs-xs">
-        {{ type_label }}
-      </div>
-      <div class="reuse-info-amount fs-xs text-grey-380 mb-xs"></div>
       <div class="reuse-info-title h4">
         {{ title }}
       </div>
@@ -32,10 +28,9 @@ export default {
   },
   props: {
     title: String,
-    image_url: String,
-    type_label: String,
-    metrics: Object,
-    datasets: Number,
+    image: String,
+    organization: Object,
+    owner: Object,
   },
   components: {
     Placeholder,
