@@ -21,7 +21,9 @@
                 </h4>
                 <div class="fr-text--sm fr-mb-0 text-grey-380">
                     {% if resource.owner %}
-                        {{ _('From %(owner)s', owner=resource.owner) }} —
+                        {{ _('From %(owner)s', owner=resource.organization) }} —
+                    {% elif resource.organization %}
+                        {{ _("From <a href='%(link)s'>%(owner)s</a>", link=resource|owner_url, owner=resource.organization) }} —
                     {% endif %}
                     {{_('Updated on %(date)s', date=last_update|dateformat(format='long'))}} —
                     {{ resource_format }}
