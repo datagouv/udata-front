@@ -116,9 +116,8 @@
     {% if external_source %}
         {{ banner_info(
             "fr-fi-external-link-line",
-            _("This dataset come from an external portal.
-            <a href='{external_source}'>View the original source.</a>").format(
-                external_source=external_source)
+            _("This dataset come from an external portal.&nbsp;<a href='{external_source}'>View the original source.</a>")
+            .format(external_source=external_source)
         )}}
     {% endif %}
     {% if dataset.owner %}
