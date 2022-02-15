@@ -402,7 +402,7 @@
             </h2>
             {% if not read_only_mode %}
                 <div class="fr-col-12 fr-col-sm-6 fr-col-md-5 fr-col-lg-4 text-align-right">
-                    <a class="fr-btn fr-btn--secondary btn-secondary btn-secondary-grey-500 fr-fi-add-line fr-btn--icon-left"
+                    <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-fi-add-line fr-btn--icon-left"
                         href="{{ url_for('admin.index', path='community-resource/new/', **{'dataset_id': dataset.id}) }}">
                         {{ _('Publish a resource') }}
                     </a>
@@ -445,7 +445,7 @@
             <h2 id="community-reuses" class="fr-h2 fr-col">{{ _('Reuses') }} <sup>{{ total_reuses }}</sup></h2>
             {% if not read_only_mode %}
                 <div class="fr-col-12 fr-col-sm-6 fr-col-md-5 fr-col-lg-4 text-align-right">
-                    <a class="fr-btn fr-btn--secondary btn-secondary btn-secondary-grey-500 fr-fi-add-line fr-btn--icon-left"
+                    <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-fi-add-line fr-btn--icon-left"
                         href="{{ url_for('admin.index', path='reuse/new/', **{'dataset_id': dataset.id}) }}">
                         {{ _('Add a reuse') }}
                     </a>
