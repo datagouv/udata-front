@@ -4,21 +4,21 @@
       class="fr-py-2w fr-grid-row fr-grid-row--gutters fr-grid-row--middle no-wrap wrap-md justify-between"
       :id="'resource-' + resource.id + '-header'"
     >
-      <div class="fr-col-auto fr-grid-row fr-grid-row--top">
+      <div class="fr-col-auto fr-grid-row fr-grid-row--top no-wrap">
         <div class="fr-col-auto fr-mx-2w fr-fi-svg fr-fi--sm" v-html="resourceImage"></div>
         <div class="fr-col-auto">
           <h4
-          class="fr-mb-1v"
-          :id="'resource-' + resource.id + '-title'"
-        >
-          {{ resource.title || $t('Nameless resource') }}
-        </h4>
+            class="fr-mb-1v"
+            :id="'resource-' + resource.id + '-title'"
+          >
+            {{ resource.title || $t('Nameless resource') }}
+          </h4>
           <div class="fr-text--sm fr-mb-0 text-grey-380">
             <template v-if="resource.owner">
               {{ $t('From') }} {{owner}} —
             </template>
             <template v-else-if="resource.organization">
-             {{ $t('From') }} <a :href="resource.organization.page">{{ owner }}</a> —
+              {{ $t('From') }} <a :href="resource.organization.page">{{ owner }}</a> —
             </template>
             {{$t('Updated on X', {date: $filters.formatDate(lastUpdate)})}} —
             {{ resource.format?.trim()?.toLowerCase() }}
@@ -86,7 +86,7 @@
               :aria-expanded="expanded"
               :title="$t('See more details')"
               :aria-controls="'resource-' + resource.id"
-              class="accordion-button fr-fi-arrow-right-s-line fr-p-1w"
+              class="accordion-button rounded-circle fr-fi-arrow-right-s-line fr-p-1w"
             >
             </button>
           </li>
