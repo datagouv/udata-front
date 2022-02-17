@@ -3,7 +3,7 @@
 ## Current (in progress)
 
 - Fix `<read-more>` component height when it contains `<img>` [65](https://github.com/etalab/udata-front/pull/65)
-- Update reuse style [#52](https://github.com/etalab/udata-front/pull/52)
+- Update reuse style [#52](https://github.com/etalab/udata-front/pull/52) [#81](https://github.com/etalab/udata-front/pull/81)
 - Add banner to broken user page [#76](https://github.com/etalab/udata-front/pull/76)
 - :warning: Button changes [#75](https://github.com/etalab/udata-front/pull/75)
   - Remove underline from button hover
@@ -12,7 +12,6 @@
   - `.dropdown` is removed. Use DSFR select instead.
 - Fix duplicate request on dataset search [#70](https://github.com/etalab/udata-front/pull/70)
 - Add banner for harvested dataset [#73](https://github.com/etalab/udata-front/pull/73)
-- Fix reuses pagination on dataset display page [#81](https://github.com/etalab/udata-front/pull/81)
 
 ## 1.2.3 (2022-01-27)
 
