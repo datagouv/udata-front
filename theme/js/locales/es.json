@@ -118,5 +118,7 @@
   "Private": "Private",
   "From": "From",
   "Updated on X": "Updated on {date}",
-  "An error occurred while fetching schemas": ""
+  "An error occurred while fetching schemas": "",
+  "Search resources": "",
+  "Search": ""
 }

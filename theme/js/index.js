@@ -7,6 +7,7 @@ import FollowButton from "./components/utils/follow-button";
 import ReadMore from "./components/utils/read-more";
 import RequestMembership from "./components/organization/request-membership";
 import Resources from "./components/dataset/resource/resources.vue";
+import SearchBar from "./components/utils/search-bar.vue";
 import * as dsfr from "@gouvfr/dsfr/dist/dsfr/dsfr.module";
 
 import Tabs from "./components/vanilla/tabs";
@@ -60,6 +61,7 @@ const configAndMountApp = (el) => {
   app.component("read-more", ReadMore);
   app.component("request-membership", RequestMembership);
   app.component("dataset-resources", Resources);
+  app.component("search-bar", SearchBar);
 
   // unset delimiters used in html templates to prevent injections using {{ }}
   app.config.compilerOptions.delimiters = [];
