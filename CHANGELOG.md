@@ -13,6 +13,7 @@
 - Fix duplicate request on dataset search [#70](https://github.com/etalab/udata-front/pull/70)
 - Add banner for harvested dataset [#73](https://github.com/etalab/udata-front/pull/73)
 - Change github footer link to the tickets repository [#80](https://github.com/etalab/udata-front/pull/80)
+- Fix RGAA criterion 7.3 [#82](https://github.com/etalab/udata-front/pull/82)
 
 ## 1.2.3 (2022-01-27)
 
