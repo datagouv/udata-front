@@ -363,19 +363,21 @@
             {% set show_all_resources = request.args.get('resources') == 'all' %}
             {% set grouped_resources = dataset.resources|group_resources_by_type %}
             {% set nb_groups = grouped_resources.keys()|length %}
+            {% set has_multiple_groups = nb_groups > 1 %}
             {% set resources_per_page = config.RESOURCES_DEFAULT_PAGE_SIZE %}
             {% for (type, type_label), resources in grouped_resources.items() %}
-                <h3 class="fr-mt-4w fr-mb-1w fr-text--sm fr-text--bold text-transform-uppercase">
-                    {{ type_label }} {% if nb_groups > 1 %}<sup>{{resources|length }}</sup>{% endif %}
-                </h3>
                 <dataset-resources
                     dataset-id="{{ dataset.id }}"
                     type="{{ type }}"
                     type-label="{{ type_label }}"
                     :can-edit="{{ can_edit.can()|tojson|safe }}"
+                    :show-total="{{ has_multiple_groups|tojson|safe }}"
                 >
                 </dataset-resources>
                 <noscript>
+                    <h3 class="fr-mt-4w fr-mb-1w fr-text--sm fr-text--bold text-transform-uppercase">
+                        {{ type_label }} {% if has_multiple_groups %}<sup>{{resources|length }}</sup>{% endif %}
+                    </h3>
                     {% set max_resources_to_show = resources_per_page if not show_all_resources else resources|length %}
                     {% for resource in resources[:max_resources_to_show] %}
                     {% include theme('dataset/resource/card.html') %}
@@ -432,6 +434,7 @@
                 type="community"
                 type-label="{{ _('Community resources') }}"
                 :can-edit-resources='{{ dataset.community_resources|permissions|tojson|safe }}'
+                :show-title="false"
             >
             </dataset-resources>
             <noscript>

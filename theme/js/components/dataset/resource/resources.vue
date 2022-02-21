@@ -1,4 +1,7 @@
 <template>
+  <h3 class="fr-mt-4w fr-mb-1w fr-text--sm fr-text--bold text-transform-uppercase" v-if="showTitle">
+      {{ typeLabel }} <sup v-if="showTotal">{{ totalResults }}</sup>
+  </h3>
   <section class="resources-wrapper" ref="top" key="top">
     <transition mode="out-in">
       <div v-if="loading" key="loader">
@@ -13,9 +16,12 @@
           :type-label="typeLabel"
           :can-edit="getCanEdit(resource)"
         />
+        <p v-if="!totalResults">
+          {{$t('No resources match your search.')}}
+        </p>
         <Pagination
           class="fr-mt-3w"
-          v-if="totalResults > pageSize"
+          v-else-if="totalResults > pageSize"
           :page="currentPage"
           :page-size="pageSize"
           :total-results="totalResults"
@@ -35,6 +41,7 @@ import Resource from "./resource.vue";
 import config from "../../../config";
 import {useToast} from "../../../composables/useToast";
 import {fetchDatasetCommunityResources, fetchDatasetResources} from "../../../api/resources";
+import {bus} from "../../../plugins/eventbus";
 
 export default {
   name: "resources",
@@ -56,6 +63,14 @@ export default {
       type: String,
       required: true,
     },
+    showTitle: {
+      type: Boolean,
+      default: true,
+    },
+    showTotal: {
+      type: Boolean,
+      default: true,
+    },
     type: {
       type: String,
       required: true,
@@ -74,6 +89,8 @@ export default {
     const totalResults = ref(0);
     const loading = ref(true);
     const top = ref(null);
+    const search = ref('');
+    const isCommunityResources = ref(props.type === "community");
 
     // We can pass the second function parameter "scroll" to true if we want to scroll to the top of the resources section
     // This is useful for pagination buttons
@@ -83,10 +100,10 @@ export default {
         top.scrollIntoView({ behavior: "smooth" });
       }
       let fetchData;
-      if(props.type === "community") {
+      if(isCommunityResources.value) {
         fetchData = fetchDatasetCommunityResources(props.datasetId, page, pageSize);
       } else {
-        fetchData = fetchDatasetResources(props.datasetId, props.type, page, pageSize);
+        fetchData = fetchDatasetResources(props.datasetId, props.type, page, pageSize, search.value);
       }
 
       return fetchData
@@ -120,6 +137,13 @@ export default {
     }
 
     onMounted(() => loadPage(currentPage.value));
+
+    if(!isCommunityResources.value) {
+      bus.on("resources.search", value => {
+        search.value = value;
+        loadPage(currentPage.value);
+      });
+    }
 
     return {
       currentPage,

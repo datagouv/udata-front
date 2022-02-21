@@ -19,15 +19,17 @@ import {api, apiv2} from "../plugins/api";
  * @param {string} type
  * @param {number} page
  * @param {number} pageSize
+ * @param {string} search
  * @return Promise<Array<ResourceModel>>
  */
-export const fetchDatasetResources = (datasetId, type, page, pageSize) => {
+export const fetchDatasetResources = (datasetId, type, page, pageSize, search) => {
   return apiv2
     .get("/datasets/" + datasetId + "/resources/", {
       params: {
         page,
         type: type,
         page_size: pageSize,
+        q: search,
       },
     })
     .then((resp) => resp.data);

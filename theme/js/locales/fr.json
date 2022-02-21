@@ -120,5 +120,6 @@
   "Updated on X": "Mis à jour le {date}",
   "An error occurred while fetching schemas": "",
   "Search resources": "",
-  "Search": ""
+  "Search": "",
+  "No resources match your search.": ""
 }
