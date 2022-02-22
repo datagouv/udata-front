@@ -3,7 +3,7 @@
 ## Current (in progress)
 
 - Fix `<read-more>` component height when it contains `<img>` [65](https://github.com/etalab/udata-front/pull/65)
-- Update reuse style [#52](https://github.com/etalab/udata-front/pull/52)
+- Update reuse style [#52](https://github.com/etalab/udata-front/pull/52) [#81](https://github.com/etalab/udata-front/pull/81)
 - Add banner to broken user page [#76](https://github.com/etalab/udata-front/pull/76)
 - :warning: Button changes [#75](https://github.com/etalab/udata-front/pull/75)
   - Remove underline from button hover
@@ -13,6 +13,7 @@
 - Fix duplicate request on dataset search [#70](https://github.com/etalab/udata-front/pull/70)
 - Add banner for harvested dataset [#73](https://github.com/etalab/udata-front/pull/73)
 - Change github footer link to the tickets repository [#80](https://github.com/etalab/udata-front/pull/80)
+- Remove banner for the new search beta on datasets search page [#83](https://github.com/etalab/udata-front/pull/83)
 - Fix RGAA criterion 7.3 [#82](https://github.com/etalab/udata-front/pull/82)
 
 ## 1.2.3 (2022-01-27)
