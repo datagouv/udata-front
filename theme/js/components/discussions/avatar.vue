@@ -12,7 +12,7 @@ export default {
     user: Object,
   },
   computed: {
-    avatar_url: function () {
+    avatar_url () {
       return this.user.avatar || this.identicon(this.user.id);
     },
   },
