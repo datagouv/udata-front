@@ -27,20 +27,31 @@
           </div>
         </div>
       </div>
-      <div class="fr-col-auto text-default-error" v-if="unavailable">{{$t('Unavailable')}}</div>
-      <div class="fr-col-auto" v-else>
+      <div class="fr-col-auto fr-ml-6w fr-ml-md-0" v-if="unavailable">
+        <ul class="fr-grid-row fr-grid-row--middle fr-grid-row--gutters no-wrap wrap-md">
+           <li class="fr-col-auto text-default-error">
+             {{$t('Unavailable')}}
+           </li>
+          <li class="fr-col-auto" v-if="canEdit">
+            <EditButton
+              :dataset-id="datasetId"
+              :resource-id="resource.id"
+              :is-community-resource="isCommunityResource"
+            />
+          </li>
+        </ul>
+      </div>
+      <div class="fr-col-auto fr-ml-6w fr-ml-md-0" v-else>
         <ul class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
           <li class="fr-col-auto fr-mr-5w" v-if="showSchemaButton">
             <schema-button :resource="resource"/>
           </li>
           <li class="fr-col-auto fr-mr-3v" v-if="canEdit">
-            <a
-              :href="adminUrl"
-              :title="$t('Edit resource')"
-              class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-fi-svg"
-              v-html="edit"
-            >
-            </a>
+            <EditButton
+              :dataset-id="datasetId"
+              :resource-id="resource.id"
+              :is-community-resource="isCommunityResource"
+            />
           </li>
           <li class="fr-col-auto fr-mr-3v" v-if="resource.preview_url">
             <button
@@ -158,19 +169,22 @@
 </template>
 
 <script>
-import config from "../../../config";
 import SchemaButton from "./schema-button";
 import useOwner from "../../../composables/useOwned";
-import edit from "svg/edit.svg";
 import preview from "svg/preview.svg";
 import useResourceImage from "../../../composables/useResourceImage";
+import EditButton from "./edit-button";
 
 export default {
-  components: {SchemaButton},
+  components: {EditButton, SchemaButton},
   props: {
     datasetId: {
       type: String,
       required: true,
+    },
+    isCommunityResource: {
+      type: Boolean,
+      default: false,
     },
     /** @type ResourceModel */
     resource: {
@@ -190,7 +204,6 @@ export default {
     const owner = useOwner(props.resource);
     const resourceImage = useResourceImage(props.resource);
     return {
-      edit,
       owner,
       preview,
       resourceImage,
@@ -215,7 +228,6 @@ export default {
   },
   data() {
     return {
-      adminUrl: `${config.admin_root}dataset/${this.datasetId}/resource/${this.resource.id}`,
       expanded: false,
     }
   },

@@ -15,6 +15,7 @@
           :resource="resource"
           :type-label="typeLabel"
           :can-edit="getCanEdit(resource)"
+          :is-community-resource="isCommunityResources"
         />
         <p v-if="!totalResults">
           {{$t('No resources match your search.')}}
@@ -153,6 +154,7 @@ export default {
       resources,
       totalResults,
       getCanEdit,
+      isCommunityResources,
     }
   }
 }
