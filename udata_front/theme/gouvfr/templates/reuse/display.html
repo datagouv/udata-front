@@ -19,6 +19,8 @@
 
 {% set read_only_mode = config['READ_ONLY_MODE'] %}
 
+{% set visible_datasets = reuse.datasets|visibles %}
+
 {% block extra_head %}
 <link rel="canonical" href="{{ url_for('reuses.show', reuse=reuse) }}" />
 <link rel="alternate" type="application/json+oembed" href="{{ url_for('api.oembed', url=reuse.external_url) }}"
@@ -39,7 +41,7 @@
 <section class="reuse-container">
     <header class="reuse-header container">
         {% if reuse.private %}
-        <span class="big tag" title="{{ _('This reuse is private and will not be visible by other users') }}">
+        <span class="fr-tag" title="{{ _('This reuse is private and will not be visible by other users') }}">
             {{ _('Private') }}
         </span>
         {% endif %}
@@ -61,8 +63,18 @@
             <div class="col-auto fr-mt-1v row-inline align-items-end flex-direction-column">
                 {{ follow_btn(reuse) }}
                 {% if can_edit %}
-                <a class="fr-btn fr-btn--secondary btn-secondary btn-secondary-grey-500 fr-mt-2w fr-fi-edit-line fr-btn--icon-left fr-displayed-sm"
-                        href="{{ url_for('admin.index', path='reuse/{id}/'.format(id=reuse.id)) }}">{{ _('Modify reuse') }}</a>
+                    <a
+                        class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-fi-edit-line fr-btn--icon-left fr-displayed-sm"
+                        href="{{ url_for('admin.index', path='reuse/{id}/'.format(id=reuse.id)) }}"
+                    >
+                        {{ _('Modify reuse') }}
+                    </a>
+                    <a
+                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-fi-edit-line fr-hidden-sm"
+                    href="{{ url_for('admin.index', path='reuse/{id}/'.format(id=reuse.id)) }}"
+                >
+                    {{ _('Modify reuse') }}
+                </a>
                 {% endif %}
             </div>
         </div>
@@ -71,8 +83,11 @@
     <section class="reuse-image hagrid text-align-center">
         <img src="{{ reuse.image|placeholder('reuse') }}" class="mw-100" alt="" />
         <div>
-            <a href="{{ reuse.url }}" rel="nofollow"
-            class="btn-secondary btn-secondary-blue-400 fr-fi-eye-line fr-btn--icon-left fr-mt-4w">
+            <a
+                href="{{ reuse.url }}"
+                rel="nofollow"
+                class="fr-btn fr-btn--secondary fr-fi-eye-line fr-btn--icon-left fr-mt-4w"
+            >
                 {{ _('See the reuse') }}
             </a>
         </div>
@@ -116,9 +131,9 @@
                 <div id="tab-metadata-panel" class="fr-tabs__panel" role="tabpanel"
                         aria-labelledby="tab-metadata" tabindex="0">
                     {% if reuse.tags %}
-                    <ul class="tags fr-mb-3v">
+                    <ul class="fr-tags-group fr-mb-3v">
                         {% for tag in reuse.tags %}
-                        <li>
+                        <li class="fr-tag">
                             {{ tag|truncate(35, True) }}
                         </li>
                         {% endfor %}
@@ -132,6 +147,12 @@
                                     <dd>
                                         {{ reuse.type_label }}
                                     </dd>
+                                {% if reuse.topic %}
+                                <dt>{{ _('Topic') }}</dt>
+                                    <dd>
+                                        {{ reuse.topic_label }}
+                                    </dd>
+                                {% endif %}
                                 <dt>{{ _('ID') }}</dt>
                                     <dd>
                                         {{reuse.id}}
@@ -152,11 +173,11 @@
                     <div class="fr-grid-row fr-grid-row--gutters">
                         <div class="fr-col-12 fr-col-sm-6 vuejs">
                             <h2 class="subtitle">{{ _('Participate') }}</h2>
-                            <a class="fr-btn fr-btn--secondary btn-secondary btn-secondary-grey-500 btn-with-arrow"
+                            <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-fi-arrow-right-s-line fr-btn--icon-right"
                                 href="{{ url_for('admin.index', path='reuse/new/') }}">
                                 {{ _('Add a reuse') }}
                             </a>
-                            <a class="fr-btn fr-btn--secondary btn-secondary btn-secondary-grey-500 btn-with-arrow fr-mt-3v"
+                            <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-fi-arrow-right-s-line fr-btn--icon-right fr-mt-3v"
                                 href="#"
                                 @click.prevent="$bus.emit('discussions.startThread')">
                                 {{ _('Contact the reuser') }}
@@ -167,10 +188,19 @@
                             {{integrate_btn(reuse)}}
                             <h2 class="subtitle fr-mt-3w">{{ _('Permalink') }}</h2>
                             <div class="embed-wrapper">
-                                <input readonly id="permalink" onClick="this.select();"
-                                        value="{{ reuse.external_url }}" />
-                                <label for="permalink" class="icon-copy" id="permalink-copy"
-                                        data-clipboard-target="#permalink" title="Copy this">
+                                <input
+                                    readonly
+                                    id="permalink"
+                                    onClick="this.select();"
+                                    value="{{ reuse.external_url }}"
+                                />
+                                <label
+                                    for="permalink"
+                                    class="icon-copy"
+                                    id="permalink-copy"
+                                    data-clipboard-target="#permalink"
+                                >
+                                    <span class="visually-hidden">{{ _('Copy this') }}</span>
                                     {% include theme('svg/copy.svg') %}
                                 </label>
                             </div>
@@ -190,7 +220,7 @@
                     </li>
                     <li>
                         <a class="fr-summary__link" href="#used-datasets">
-                            {{ _('Used datasets') }} <sup class="sup">{{reuse.datasets | length}}</sup>
+                            {{ _('Used datasets') }} <sup class="sup">{{visible_datasets | length}}</sup>
                         </a>
                     </li>
                     <li>
@@ -208,7 +238,7 @@
         </div>
     </section>
 
-    <section class="bg-beige fr-py-5w">
+    <section class="bg-contrast-grey fr-py-5w">
         <div class="container vuejs">
             <h2 id="description" class="fr-h2 fr-mb-0">{{ _('Description') }}</h2>
             <read-more>
@@ -220,11 +250,11 @@
         <div class="row-inline">
             <h2 id="used-datasets" class="fr-h2">
                 {{ _('Used datasets') }}
-                <sup>{{ reuse.datasets|length }}</sup>
+                <sup>{{ visible_datasets|length }}</sup>
             </h2>
         </div>
     <ul class="row">
-        {% for dataset in reuse.datasets %}
+        {% for dataset in visible_datasets %}
         <li class="col-md-12 col-6">
             {% include theme('dataset/card.html') %}
         </li>
@@ -243,12 +273,12 @@
             </discussion-threads>
         </div>
     </section>
-    <section class="reuse-xsell reuse-cards container py-hg">
+    <section class="container fr-py-7w">
         <h2 id="more-reuses" class="fr-h2">{{ _('More reuses') }}</h2>
-        <ul class="row">
+        <p>{{ _('Discover more reuses.') }}</p>
+        <ul class="fr-grid-row fr-grid-row--gutters">
             {% for reuse in related_reuses %}
-            {% set features = ['preview'] %}
-            <li class="col-3 col-md-6">
+            <li class="fr-mb-3v fr-col-lg-3 fr-col-sm-6 fr-col-12">
                 {% include theme('reuse/card.html') %}
             </li>
             {% endfor %}

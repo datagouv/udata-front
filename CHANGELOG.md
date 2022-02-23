@@ -2,9 +2,43 @@
 
 ## Current (in progress)
 
-- Change urls in Participate banner to relevant etalab guides [#53](https://github.com/etalab/udata-front/pull/53)
-- Update DSFR to v1.2.1 [#45](https://github.com/etalab/udata-front/pull/45)
 - Remove topics code [#59](https://github.com/etalab/udata-front/pull/59)
+- Fix `<read-more>` component height when it contains `<img>` [65](https://github.com/etalab/udata-front/pull/65)
+- Update reuse style [#52](https://github.com/etalab/udata-front/pull/52) [#81](https://github.com/etalab/udata-front/pull/81)
+- Add banner to broken user page [#76](https://github.com/etalab/udata-front/pull/76)
+- :warning: Button changes [#75](https://github.com/etalab/udata-front/pull/75)
+  - Remove underline from button hover
+  - `.btn`, `.btn-secondary` and `.btn-secondary` are removed. Use DSFR and `.fr-btn--secondary-{color}` instead.
+  - `.tags` and `.tag` are removed. Use DSFR ones instead.
+  - `.dropdown` is removed. Use DSFR select instead.
+- Fix duplicate request on dataset search [#70](https://github.com/etalab/udata-front/pull/70)
+- Add banner for harvested dataset [#73](https://github.com/etalab/udata-front/pull/73)
+- Change github footer link to the tickets repository [#80](https://github.com/etalab/udata-front/pull/80)
+- Remove banner for the new search beta on datasets search page [#83](https://github.com/etalab/udata-front/pull/83)
+- Fix RGAA criterion 7.3 [#82](https://github.com/etalab/udata-front/pull/82)
+
+## 1.2.3 (2022-01-27)
+
+- Fix modals not working [#71](https://github.com/etalab/udata-front/pull/71)
+- Fix auth messages not shown from query parameter [#68](https://github.com/etalab/udata-front/pull/68)
+- Fix RGAA criterion 10.14 [#72](https://github.com/etalab/udata-front/pull/72)
+- Fix thread header wrapped when title is too long [#64](https://github.com/etalab/udata-front/pull/64)
+
+## 1.2.2 (2022-01-21)
+
+- Fix latest modification date for dataset and resources on dataset page [#62](https://github.com/etalab/udata-front/pull/62)
+- Fix hidden datasets shown on Home and Reuses [#67](https://github.com/etalab/udata-front/pull/67)
+- Add temporal coverage back to dataset page [#63](https://github.com/etalab/udata-front/pull/63)
+- :warning: @bg-beige is remove, use @background-contrast-grey instead
+- Update colors to fix accessibility issues [#56](https://github.com/etalab/udata-front/pull/56)
+- Fix missing checkbox using DSFR checkboxes [#69](https://github.com/etalab/udata-front/pull/69)
+
+## 1.2.1 (2022-01-11)
+
+- Change urls in Participate banner to relevant etalab guides [#53](https://github.com/etalab/udata-front/pull/53)
+- Add topic information on reuse metadata and add a filter by topic on reuse search page [#50](https://github.com/etalab/udata-front/pull/50)
+- Update DSFR to v1.2.1 [#45](https://github.com/etalab/udata-front/pull/45)
+- :warning: `.btn-tab` is removed, use `.fr-tag` instead [57](https://github.com/etalab/udata-front/pull/57)
 
 ## 1.2.0 (2021-12-10)
 

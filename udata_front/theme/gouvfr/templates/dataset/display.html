@@ -1,7 +1,9 @@
 {% extends theme('layouts/1-column.html') %}
 {% from theme('macros/follow.html') import follow_btn with context %}
 {% from theme('macros/integrate.html') import integrate_btn with context %}
+{% from theme('macros/paginator.html') import paginator with context %}
 {% from theme('macros/breadcrumb.html') import breadcrumb with context %}
+{% from theme('macros/banner_info.html') import banner_info %}
 
 ## FIXME: remove inspire:indentifier robots condition when geo.data.gouv.fr is shutdown
 {% set meta = {
@@ -35,7 +37,7 @@
 {% endblock %}
 
 {% block content %}
-{% cache cache_duration, 'dataset-content', dataset.id|string, g.lang_code, current_user.slug or 'anonymous' %}
+{% cache cache_duration, 'dataset-content', dataset.id|string, reuses.page|string, g.lang_code, current_user.slug or 'anonymous' %}
 
 {{ breadcrumb(self,
     breadcrum_class=breadcrum_class,
@@ -45,12 +47,12 @@
 <section
     class="content container fr-mb-6w overflow-visible {% if not dataset.organization.public_service %}non{% endif %}certified {% if dataset.archived %}archived{% endif %}">
     {% if dataset.private %}
-    <span class="big tag"
+    <span class="fr-tag"
         title="{{ _('This dataset is private and will not be visible by other users') }}">{{ _('Private') }}
     </span>
     {% endif %}
     {% if dataset.deleted %}
-    <span class="big tag"
+    <span class="fr-tag"
         title="{{ _('This dataset has been deleted. This will be permanent in the next 24 hours') }}">{{ _('Deleted') }}
     </span>
     {% endif %}
@@ -58,22 +60,22 @@
     {% set title = _('This dataset has been archived automatically because it has been deleted from the remote platform.')
         if dataset.extras.get('harvest:archived') == 'not-on-remote' else
         _('This dataset has been archived.') %}
-    <span class="big tag" title="{{ title }}">
+    <span class="fr-tag" title="{{ title }}">
         {{ _('Archived') }}
     </span>
     {% endif %}
     {# FIXME: remove when geo.data.gouv.fr is shutdown #}
     {% if 'geop:dataset_id' in dataset.extras %}
-    <div class="well well-orange-200 py-sm mb-lg">
+    <div class="well well-warning py-sm mb-lg">
         ⚠️ {{ _("This dataset is handled by the <a href='{geo_link}'>geo.data.gouv.fr</a> platform.
         This platform is not actively maintained and as a result, you may find some bogus data or metadata.
         More information about <a href='{blog_link}'>the shutdown of geo.data.gouv.fr is available here.</a>").format(
             geo_link='https://geo.data.gouv.fr',
-            blog_link='https://www.data.gouv.fr/fr/posts/extinction-de-geo-data-gouv-fr/',
+            blog_link='https://www.data.gouv.fr/fr/posts/extinction-de-geo-data-gouv-fr/'
         )}}
     </div>
     {% endif %}
-    <div class="row fr-mb-4w">
+    <div class="row fr-mb-2w">
         <div class="col">
             <h1 class="fr-mb-0 fr-h1">
                 {{ dataset.title }}
@@ -81,7 +83,7 @@
             </h1>
             <p class="fr-mb-0">
                 {% if not external_source %}
-                {{ _('Updated on %(date)s', date=dataset.last_update|dateformat(format='long')) }}
+                {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
                     {% if dataset.license %}
                     &mdash;
                     {%  endif %}
@@ -96,17 +98,34 @@
         <div class="col-auto fr-mt-1v row-inline align-items-end flex-direction-column">
             {{ follow_btn(dataset) }}
             {% if can_edit %}
-            <a class="fr-btn fr-btn--secondary btn-secondary btn-secondary-grey-500 fr-mt-2w fr-fi-edit-line fr-btn--icon-left fr-displayed-sm"
-                    href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}">{{ _('Modify dataset') }}</a>
+                <a
+                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-fi-edit-line fr-btn--icon-left fr-displayed-sm"
+                    href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
+                >
+                    {{ _('Modify dataset') }}
+                </a>
+                <a
+                class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-fi-edit-line fr-hidden-sm"
+                href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
+            >
+                {{ _('Modify dataset') }}
+            </a>
             {% endif %}
         </div>
     </div>
+    {% if external_source %}
+        {{ banner_info(
+            "fr-fi-external-link-line",
+            _("This dataset come from an external portal.&nbsp;<a href='{external_source}'>View the original source.</a>")
+            .format(external_source=external_source)
+        )}}
+    {% endif %}
     {% if dataset.owner %}
     <div class="row">
         <div class="well well-grey-100 col fr-py-3v">
             {% trans
                     date=dataset.created_at|dateformat(format='long'),
-                    update=dataset.last_update|dateformat(format='long'),
+                    update=dataset.last_modified|dateformat(format='long'),
                     author=dataset.owner.fullname
                 %}This dataset has been published on the initiative and under the responsibility of
             {{author}}<br />Published on {{date}} and updated on {{update}}{% endtrans %}
@@ -155,11 +174,14 @@
                 <div id="tab-metadata-panel" class="fr-tabs__panel" role="tabpanel"
                      aria-labelledby="tab-metadata" tabindex="0">
                     {% if dataset.tags %}
-                    <ul class="tags fr-mb-3v">
+                    <ul class="fr-tags-group fr-mb-3v">
                         {% for tag in dataset.tags %}
                         <li>
-                            <a href="{{ url_for('datasets.list', tag=tag) }}"
-                                title="{{ tag }}">
+                            <a
+                                href="{{ url_for('datasets.list', tag=tag) }}"
+                                title="{{ tag }}"
+                                class="fr-tag"
+                            >
                                 {{ tag|truncate(35, True) }}
                             </a>
                         </li>
@@ -191,6 +213,10 @@
                         <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
                             <h2 class="subtitle">{{ _('Temporality') }}</h2>
                             <dl class="metadata">
+                                {% if dataset.temporal_coverage %}
+                                <dt>{{ _('Temporal coverage') }}</dt>
+                                <dd>{{ dataset.temporal_coverage|daterange(details=True) }}</dd>
+                                {% endif %}
                                 {% if dataset.frequency %}
                                 <dt>{{ _('Frequency') }}</dt>
                                 <dd>{{ dataset.frequency_label }}</dd>
@@ -240,11 +266,11 @@
                     <div class="fr-grid-row fr-grid-row--gutters">
                         <div class="fr-col-12 fr-col-sm-6 vuejs">
                             <h2 class="subtitle">{{ _('Participate') }}</h2>
-                            <a class="fr-btn fr-btn--secondary btn-secondary btn-secondary-grey-500 btn-with-arrow"
+                            <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-fi-arrow-right-s-line fr-btn--icon-right"
                                 href="{{ url_for('admin.index', path='reuse/new/', **{'dataset_id': dataset.id}) }}">
                                 {{ _('Add a reuse') }}
                             </a>
-                            <a class="fr-btn fr-btn--secondary btn-secondary btn-secondary-grey-500 btn-with-arrow fr-mt-3v"
+                            <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-fi-arrow-right-s-line fr-btn--icon-right fr-mt-3v"
                                href="#"
                                @click.prevent="$bus.emit('discussions.startThread')">
                                 {{ _('Contact the producer') }}
@@ -255,10 +281,19 @@
                             {{integrate_btn(dataset)}}
                             <h2 class="subtitle fr-mt-3w">{{ _('Permalink') }}</h2>
                             <div class="embed-wrapper">
-                                <input readonly id="permalink" onClick="this.select();"
-                                       value="{{ dataset.external_url }}" />
-                                <label for="permalink" class="icon-copy" id="permalink-copy"
-                                       data-clipboard-target="#permalink" title="Copy this">
+                                <input
+                                    readonly
+                                    id="permalink"
+                                    onClick="this.select();"
+                                    value="{{ dataset.external_url }}"
+                                />
+                                <label
+                                    for="permalink"
+                                    class="icon-copy"
+                                    id="permalink-copy"
+                                    data-clipboard-target="#permalink"
+                                >
+                                    <span class="visually-hidden">{{ _('Copy this') }}</span>
                                     {% include theme('svg/copy.svg') %}
                                 </label>
                             </div>
@@ -289,7 +324,7 @@
                     </li>
                     <li>
                         <a class="fr-summary__link" href="#community-reuses">
-                            {{ _('Reuses') }}  <sup class="sup">{{ reuses|length }}</sup>
+                            {{ _('Reuses') }}  <sup class="sup">{{ total_reuses }}</sup>
                         </a>
                     </li>
                     <li>
@@ -302,7 +337,7 @@
         </div>
     </div>
 </section>
-<section class="bg-beige fr-py-5w">
+<section class="bg-contrast-grey fr-py-5w">
     <div class="container vuejs">
         <h2 id="description" class="fr-h2 fr-mb-0">{{ _('Description') }}</h2>
         <read-more>
@@ -324,7 +359,7 @@
             {% set resources_per_page = config.RESOURCES_DEFAULT_PAGE_SIZE %}
             {% for (type, type_label), resources in grouped_resources.items() %}
                 {% if nb_groups > 1 %}
-                    <h4 class="fs-lg mt-xl">{{ type_label }} <sup>{{resources|length }}</sup></h4>
+                    <h3 class="fr-h6 fr-mb-3v fr-mt-9v">{{ type_label }} <sup>{{resources|length }}</sup></h3>
                 {% endif %}
                 <dataset-resources dataset-id="{{ dataset.id }}" type="{{ type }}" type-label="{{ type_label }}" :can-edit="{{ can_edit.can()|tojson|safe }}">
                     {% set max_resources_to_show = resources_per_page if not show_all_resources else resources|length %}
@@ -334,7 +369,7 @@
                         {% endwith %}
                     {% endfor %}
                     {% if resources|length > resources_per_page and not show_all_resources %}
-                        <a class="btn btn-secondary accordion-button trigger-once fr-mt-2w" href="?resources=all">
+                        <a class="fr-btn fr-btn--secondary fr-mt-2w" href="?resources=all">
                             {{ _('See the %(nb)d resources of type %(type)s', nb=resources|length, type=type_label) }}
                         </a>
                     {% endif %}
@@ -353,7 +388,7 @@
         <h2 id="community-resources" class="fr-h2">{{ _('Community resources') }}
             <sup>{{ dataset.community_resources|length }}</sup></h2>
         <div class="row fr-mb-3w">
-            <div class="col-6 col-md-12 text-grey-300">
+            <div class="col-6 col-md-12 text-grey-380">
                 <p>{{ _('You have built a more comprehensive database than those presented here? This is the time to share it!') }}
                 </p>
             </div>
@@ -365,7 +400,7 @@
             {% include theme('dataset/resource/card.html') %}
             {% endfor %}
             {% if not read_only_mode %}
-            <a class="btn-action fr-my-3w"
+            <a class="btn-action fr-mt-3w"
                 href="{{ url_for('admin.index', path='community-resource/new/', **{'dataset_id': dataset.id}) }}">
                 {% include theme("svg/actions/add.svg") %}{{ _('Add a community resource') }}
             </a>
@@ -374,34 +409,29 @@
         {% endif %}
 
         {% block reuses_section %}
-        <h2 id="community-reuses" class="fr-h2">{{ _('Reuses') }} <sup>{{ reuses|length }}</sup></h2>
-        <div class="row fr-mb-3w">
-            <div class="col-6 col-md-12 text-grey-300">
-                {% trans %}You reused these data and published an article, a computer graphics, or an application?
-                It's time to let you know!
-                Reference your work in just a few clicks and increase your visibility.{% endtrans %}
-            </div>
+        <div class="fr-grid-row fr-mt-12w">
+            <h2 id="community-reuses" class="fr-h2 fr-col">{{ _('Reuses') }} <sup>{{ total_reuses }}</sup></h2>
+            {% if not read_only_mode %}
+                <div class="fr-col-12 fr-col-sm-6 fr-col-md-5 fr-col-lg-4 text-align-right">
+                    <a class="fr-btn fr-btn--secondary btn-secondary btn-secondary-grey-500 fr-fi-add-line fr-btn--icon-left"
+                        href="{{ url_for('admin.index', path='reuse/new/', **{'dataset_id': dataset.id}) }}">
+                        {{ _('Add a reuse') }}
+                    </a>
+                </div>
+            {% endif %}
         </div>
-        <div class="row mt-xl fr-pt-2w fr-pt-md-0 reuse-cards">
+        <p class="fr-my-0">{{ _('Explore the reuses of this dataset.') }}</p>
+        <p class="fr-mt-0 fr-mb-3w">{{ _('Did you use this data ? Reference your work and increase your visibility.') }}</p>
+        <div class="fr-pt-2w fr-pt-md-0 fr-grid-row fr-grid-row--gutters fr-mb-2w">
             {% for reuse in reuses %}
-            {% set features = ['preview'] %}
-            <div class="col-3 col-md-6">
+            <div class="fr-mb-3v fr-col-lg-3 fr-col-sm-6 fr-col-12">
                 {% include theme('reuse/card.html') %}
             </div>
             {% endfor %}
         </div>
-        {% if not read_only_mode %}
-        <div class="row">
-            <div class="col-12">
-                <a class="btn-action my-xl"
-                    href="{{ url_for('admin.index', path='reuse/new/', **{'dataset_id': dataset.id}) }}">
-                    {% include theme("svg/actions/add.svg") %}{{ _('Add a reuse') }}
-                </a>
-            </div>
-        </div>
-        {% endif %}
+        {{ paginator(reuses, arg_name='reuses_page', url='#community-reuses') }}
         {% endblock %}
-        <div class="vuejs">
+        <div class="vuejs fr-mt-7w">
             <discussion-threads
                 ref="discussions"
                 subject-id="{{ dataset.id }}"

@@ -4,8 +4,8 @@
       v-if="showCreateButton && !showForm"
       :onClick="displayForm"
     />
-    <div v-if="showForm" class="bg-beige">
-      <div class="fr-grid-row fr-grid-row--middle border-bottom fr-py-2w fr-px-3w">
+    <div v-if="showForm" class="bg-contrast-grey">
+      <div class="fr-grid-row fr-grid-row--middle fr-py-2w fr-px-3w">
         <div class="fr-col fr-h6 fr-mb-0">{{ $t("New discussion") }}</div>
         <div>
           <button class="fr-link--close fr-link text-grey-500 fr-mr-0" @click="hideForm">
@@ -48,7 +48,7 @@
             <input
               type="submit"
               :value="$t('Submit')"
-              class="btn-secondary btn-secondary-grey-500 fr-btn fr-btn--secondary"
+              class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500"
             />
           </footer>
         </form>
@@ -61,7 +61,7 @@
 import config from "../../config";
 import Author from "./author";
 import AddIcon from "svg/actions/add.svg";
-import ThreadsCreateButton from "./threads-create-button"; //Not the best but we don't have many svg
+import ThreadsCreateButton from "./threads-create-button"; // Not the best but we don't have many svg
 
 export default {
   components: {
@@ -89,9 +89,7 @@ export default {
   },
   methods: {
     displayForm() {
-      this.$auth(
-        this.$t("You must be logged in to start a discussion.")
-      );
+      this.$auth();
       this.showForm = true;
     },
     hideForm() {

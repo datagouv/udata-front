@@ -21,47 +21,63 @@
 {% endblock %}
 
 {# TODO : pull this from somewhere else, results.facet doesn't contain the list when you're already in a filtered mode #}
-{% set reuses_tabs = (
-    ('paper', _('Paper')),
-    ('post', _('Post')),
-    ('visualization', _('Visualization')),
-    ('api', _('Api')),
-    ('hardware', _('Hardware')),
-    ('news_article', _('News article')),
-    ('application', _('Application')),
-    ('idea', _('Idea')),
+{% set reuses_topics = (
+    ('health', _('Health')),
+    ('transport_and_mobility', _('Transport and mobility')),
+    ('housing_and_development', _('Housing and development')),
+    ('food_and_agriculture', _('Food and agriculture')),
+    ('culture_and_recreation', _('Culture and recreation')),
+    ('economy_and_business', _('Economy and business')),
+    ('environment_and_energy', _('Environment and energy')),
+    ('work_and_training', _('Work and training')),
+    ('politics_and_public_life', _('Politics and public life')),
+    ('safety_and_security', _('Safety and security')),
+    ('education_and_research', _('Education and research')),
+    ('society_and_demography', _('Society and demography')),
+    ('law_and_justice', _('Law and justice')),
+    ('open_data_tools', _('Open data tools')),
+    ('others', _('Others')),
 ) %}
 
 {% block main_content %}
 <section class="container">
-    <div class="pt-sm search-input">
-        <form method="GET" class="row-inline fs-lg">
+    <div class="fr-pt-3v search-input">
+        <form method="GET" class="fr-grid-row fr-text--lead fr-mb-0">
             <span class="icon active">{% include theme("svg/search.svg") %}</span>
             <input type="text" name="q" value="{{reuses.query._query}}" aria-label="{{ _('Search...') }}"
                 placeholder="{{ _('Search...') }}" />
         </form>
     </div>
-    <div class="row-inline pt-xl justify-between align-items-center">
+    <div class="fr-grid-row fr-pt-9v justify-between align-items-center fr-grid-row--middle">
         <h1 class="m-0 h2">{{ _('Reuses')}} <sup>{{reuses.total}}</sup></h1>
         <a href="{{ url_for('datasets.list') }}" title="{{ _('Search in datasets') }}"
             class="nav-link fs-sm">{{ _('Search in datasets') }}</a>
     </div>
-    <div class="row-inline py-lg hidden-lg">
-        <ul class="tabs">
-            <a href="{{ url_for('reuses.list') }}"
-                class="btn-tab tab {% if not reuses.query._filters.type %}active{% endif %}">{{ _('All') }}</a>
-            {% for tab_id, label in reuses_tabs %}
-            <a href="{{ reuses.query.to_url(url, replace=True, **{'type': tab_id}) }}"
-                class="btn-tab tab {% if reuses.query._filters and reuses.query._filters.type and reuses.query._filters.type.type == tab_id %}active{% endif %}">{{ label }}</a>
+    <div class="fr-grid-row fr-py-3w fr-displayed-lg">
+        <ul class="fr-tags-group">
+            <li>
+                <a
+                    href="{{ url_for('reuses.list') }}"
+                    class="fr-tag{% if not reuses.query._filters.topic %} active{% endif %}">
+                    {{ _('All') }}
+                </a>
+            </li>
+            {% for topic_id, label in reuses_topics %}
+                <li>
+                    <a
+                        href="{{ reuses.query.to_url(url, replace=True, **{'topic': topic_id}) }}"
+                        class="fr-tag{% if reuses.query._filters and reuses.query._filters.topic and reuses.query._filters.topic.topic == topic_id %} active{% endif %}"
+                    >
+                        {{ label }}
+                    </a>
+                </li>
             {% endfor %}
         </ul>
     </div>
-    <ul class="search-results row mt-lg-md">
+    <ul class="search-results fr-grid-row fr-grid-row--gutters mt-lg-md">
         {% for reuse in reuses %}
-        <li class="col-3 col-lg-6 col-sm-12 my-sm-sm text-align-center">
-            <a href="{{ url_for('reuses.show', reuse=reuse) }}"
-                title="{{ reuse.title }}">{% include theme('reuse/card.html') %}
-            </a>
+        <li class="fr-col-lg-3 fr-col-md-4 fr-col-sm-6 fr-col-12 my-sm-sm fr-mb-3v">
+            {% include theme('reuse/card.html') %}
         </li>
         {% endfor %}
     </ul>

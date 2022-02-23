@@ -5,57 +5,39 @@ category: Components
 ---
 
 Tags allow for easy categorization of datasets.
-They also come in a bigger size with the `.big` class.
 
-```tags.html
-<ul class="tags">
-    <li>coronavirus</li>
-    <li>covid-19</li>
-    <li>covid19</li>
-</ul>
-<span class="big tag">Big tag</span>
+We can use DSFR customizations. See Tabs-js for how to use it as tabs.
+There is also `.fr-tags-group` to group multiple tags together like a row.
+
+```dsfr-tags.html
+<nav class="fr-tags-group">
+    <a href="#editorial-datasets" class="fr-tag">
+        Données mises en avant
+    </a>
+    <a href="#recent-datasets" class="fr-tag">
+        Dernières données
+    </a>
+    <a href="#reference-datasets" class="fr-tag active">
+        Données de référence
+    </a>
+    <a href="/fr/datasets/" class="fr-tag">Voir plus</a>
+</nav>
 ```
 */
 
-.tags {
-    display: flex;
-    flex-wrap: wrap;
+@import (less) "@gouvfr/dsfr/dist/component/tag/tag.css";
 
-    > li {
-        .tag;
-    }
-}
-
-.tag {
-    .border;
-    border-color: @blue-400;
-    display: inline-block;
-    border-radius: 1.5rem;
-    font-size: @font-size-sm;
-    padding: 0.25rem 0.75rem;
-    margin-bottom: @spacing-xs;
-    margin-right: @spacing-xs;
-
-    > *,
-    & {
-        color: @blue-400;
+a.fr-tag {
+    &:hover {
+        text-decoration: none;
     }
 
-    > a {
-        cursor: pointer;
-    }
+    color: var(--text-default-info);
+    --blend: var(--background-contrast-info-blend);
+    background-color: var(--background-contrast-info);
 
-    &.big {
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-weight: @font-weight-bold;
-
-        // Maybe make some color classes like tag-grey-200 if more are needed
-        background-color: @grey-200;
-        border: none;
-        > *,
-        & {
-            color: @grey-300;
-        }
+    &.active {
+        background-color: @blue-400;
+        color: @white;
     }
 }
