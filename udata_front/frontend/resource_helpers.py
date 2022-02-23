@@ -1,5 +1,4 @@
 from udata_front.frontend import front
-from udata_front.theme import render
 
 
 @front.app_template_filter()
@@ -17,18 +16,18 @@ def filesize(value):
 def resource_image(resource):
     '''Display a human recognizable image for a resource'''
     formats = {
-    'doc': 'documentation',
-    'pdf': 'documentation',
-    'json': 'api',
-    'sql': 'api',
-    'xml': 'api',
-    '7z': 'archive',
-    'tar.gz': 'archive',
-    'rar': 'archive',
-    'zip': 'archive',
-    'url': 'link',
-    'csv': 'table',
-    'xls': 'table',
-    'xlsx': 'table',
+        'doc': 'documentation',
+        'pdf': 'documentation',
+        'json': 'api',
+        'sql': 'api',
+        'xml': 'api',
+        '7z': 'archive',
+        'tar.gz': 'archive',
+        'rar': 'archive',
+        'zip': 'archive',
+        'url': 'link',
+        'csv': 'table',
+        'xls': 'table',
+        'xlsx': 'table',
     }
     return 'svg/resources/{}.svg'.format(formats.get(resource.filetype, 'file'))
