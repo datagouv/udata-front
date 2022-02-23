@@ -98,4 +98,10 @@ form.form {
     >label::after {
         --text-active-blue-france: @blue-400;
     }
+
+    @media @query-sm {
+        >label::before {
+            display: none;
+        }
+    }
 }
