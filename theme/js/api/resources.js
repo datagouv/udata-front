@@ -7,6 +7,7 @@ import {api, apiv2} from "../plugins/api";
  * @property {Object} extras
  * @property {number} filesize
  * @property {string} filetype
+ * @property {string} format
  * @property {string} last_modified
  * @property {string} preview_url
  * @property {string} published
