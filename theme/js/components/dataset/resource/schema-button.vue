@@ -1,8 +1,7 @@
 <template>
-  <button class="fr-btn fr-btn--secondary fr-btn--sm" :disabled="loading" @click.prevent="showSchemaModal">
-    <span class="fr-mr-1v" v-html="triangle" />
-    <template v-if="name">{{ name }}</template>
-    <template v-else>{{ $t('See schema') }}</template>
+  <button class="fr-btn fr-btn--secondary fr-fi-svg fr-fi--sm fr-btn--icon-left fr-btn--sm" :disabled="loading" @click.prevent="showSchemaModal">
+    <div class="fr-grid-row fr-mr-1v" v-html="triangle" />
+    {{ $t('See schema') }}
   </button>
 </template>
 
@@ -19,7 +18,7 @@ export default {
     }
   },
   setup(props) {
-    const { authorizeValidation, documentationUrl, loading, name, validationUrl} = useSchema(props.resource)
+    const { authorizeValidation, documentationUrl, loading, validationUrl} = useSchema(props.resource)
     const showModal = inject('$showModal');
     const showSchemaModal = () => showModal('schema', {
       resourceSchema: props.resource.schema,
@@ -29,7 +28,6 @@ export default {
     });
     return {
       loading,
-      name,
       authorizeValidation,
       documentationUrl,
       validationUrl,

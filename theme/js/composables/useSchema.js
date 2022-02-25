@@ -27,9 +27,6 @@ export default function useSchema(resource) {
   /** @type {Ref<?Schema>} */
   const schema = computed(() => schemas.value.find(schema => schema.name === resource.schema.name));
 
-  /** @type {Ref<?string>} */
-  const name = computed(() => schema.value?.name.split('/').pop().replaceAll(/schema-?/g, ''));
-
   /** @type {Ref<boolean>} */
   const authorizeValidation = computed(() => !!schema.value && schema.value.schema_type === 'tableschema');
 
@@ -58,7 +55,6 @@ export default function useSchema(resource) {
     authorizeValidation,
     documentationUrl,
     loading,
-    name,
     validationUrl,
   }
 }
