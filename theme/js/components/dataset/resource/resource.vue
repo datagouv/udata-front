@@ -62,15 +62,6 @@
             >
             </button>
           </li>
-          <li class="fr-col-auto fr-mr-3v">
-            <button
-              :id="resource.id + '-copy'"
-              :title="$t('Copy permalink to clipboard')"
-              :data-clipboard-text="resource.latest"
-              class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-fi-links-fill"
-            >
-            </button>
-          </li>
           <li class="fr-col-auto" v-if="resource.format === 'url'">
             <a
               :href="resource.latest"

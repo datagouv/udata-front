@@ -11,7 +11,6 @@
         <div class="fr-col-auto fr-grid-row fr-grid-row--top no-wrap">
             <div class="fr-col-auto fr-mx-2w fr-fi-svg fr-fi--sm">
                 {% include theme(resource_image(resource)) %}
-                {# include theme('svg/resources/archive.svg') #}
             </div>
             <div class="fr-col-auto">
                 <h4
@@ -52,13 +51,6 @@
                             </a>
                         </li>
                     {% endif %}
-                    <li class="fr-col-auto fr-mr-3v">
-                        <a
-                            href="#resource-{{resource.id}}-header"
-                            title="{{ _('Copy permalink to clipboard') }}"
-                            class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-fi-links-fill"
-                        ></a>
-                    </li>
                     {% if resource.format == 'url' %}
                         <li class="fr-col-auto">
                             <a
