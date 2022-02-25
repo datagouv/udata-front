@@ -2,24 +2,20 @@
 Vue. -->
 
 <template>
-  <article class="dataset-card dataset-search-result">
+  <article class="dataset-card dataset-search-result py-xs">
     <div class="card-logo" v-if="organization">
       <Placeholder
         type="dataset"
         :src="organization.logo_thumbnail"
         :alt="organization.name"
       />
+      <div class="logo-badge logo-badge--bottom-right">
+        <span v-html="lock" v-if="private" />
+        <span v-html="certified" v-else-if="organizationCertified" />
+      </div>
     </div>
     <div class="card-logo" v-else-if="owner">
-      <Placeholder
-        type="dataset"
-        :src="owner.logo_thumbnail"
-        :alt="owner.fullname"
-      />
-      <div class="logo-badge">
-        <span v-html="lock" v-if="private" />
-        <span v-html="certified" v-else-if="organization?.public_service" />
-      </div>
+      <Avatar :user="owner" :size="100" />
     </div>
     <div class="card-logo" v-else>
       <Placeholder type="dataset" />
@@ -39,9 +35,9 @@ Vue. -->
         <dt>{{ $t("Frequency") }}</dt>
         <dd>{{ frequency }}</dd>
       </div>
-      <div v-if="geozone">
+      <div v-if="geoZone">
         <dt>{{ $t("Spatial coverage") }}</dt>
-        <dd>{{ geozone.join(", ") }}</dd>
+        <dd>{{ geoZone.join(", ") }}</dd>
       </div>
       <div v-if="spatial?.granularity">
         <dt>{{ $t("Territorial coverage granularity") }}</dt>
@@ -69,6 +65,9 @@ Vue. -->
 import Placeholder from "../utils/placeholder";
 import certified from "svg/certified.svg";
 import lock from "svg/private.svg";
+import useOrganizationCertified from "../../composables/useOrganizationCertified";
+import useGeoZone from "../../composables/useGeoZone";
+import Avatar from "../discussions/avatar";
 
 export default {
   props: {
@@ -84,29 +83,18 @@ export default {
     private: Boolean,
   },
   components: {
+    Avatar,
     Placeholder,
   },
-  data() {
+  setup(props) {
+    const {organizationCertified} = useOrganizationCertified(props.organization)
+    const {geoZone} = useGeoZone(props.spatial)
     return {
-      geozone: null,
+      certified,
+      lock,
+      organizationCertified,
+      geoZone,
     };
-  },
-  async mounted() {
-    this.certified = certified;
-    this.lock = lock;
-    //Fetching geozone names on load (they're not included in the dataset object)
-
-    const zones = this?.spatial?.zones;
-    if (zones) {
-      let promises = zones.map((zone) =>
-        this.$api
-          .get("spatial/zone/" + zone)
-          .then((resp) => resp.data)
-          .then((obj) => obj && obj?.properties?.name)
-      );
-
-      this.geozone = await Promise.all(promises);
-    }
-  },
+  }
 };
 </script>

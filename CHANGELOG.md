@@ -2,6 +2,25 @@
 
 ## Current (in progress)
 
+- Remove topics code [#59](https://github.com/etalab/udata-front/pull/59)
+- Fix `<read-more>` component height when it contains `<img>` [65](https://github.com/etalab/udata-front/pull/65) [85](https://github.com/etalab/udata-front/pull/85)
+- Add featured button component back for sysadmin [#79](https://github.com/etalab/udata-front/pull/79)
+- Update reuse style [#52](https://github.com/etalab/udata-front/pull/52) [#81](https://github.com/etalab/udata-front/pull/81)
+- Add banner to broken user page [#76](https://github.com/etalab/udata-front/pull/76)
+- :warning: Button changes [#75](https://github.com/etalab/udata-front/pull/75)
+  - Remove underline from button hover
+  - `.btn`, `.btn-secondary` and `.btn-secondary` are removed. Use DSFR and `.fr-btn--secondary-{color}` instead.
+  - `.tags` and `.tag` are removed. Use DSFR ones instead.
+  - `.dropdown` is removed. Use DSFR select instead.
+- Fix duplicate request on dataset search [#70](https://github.com/etalab/udata-front/pull/70) [86](https://github.com/etalab/udata-front/pull/86)
+- Add banner for harvested dataset [#73](https://github.com/etalab/udata-front/pull/73)
+- Change github footer link to the tickets repository [#80](https://github.com/etalab/udata-front/pull/80)
+- Remove banner for the new search beta on datasets search page [#83](https://github.com/etalab/udata-front/pull/83)
+- Fix RGAA criterion 7.3 [#82](https://github.com/etalab/udata-front/pull/82)
+- Use avatar_url for owner [#84](https://github.com/etalab/udata-front/pull/84)
+
+## 1.2.3 (2022-01-27)
+
 - Fix modals not working [#71](https://github.com/etalab/udata-front/pull/71)
 - Fix auth messages not shown from query parameter [#68](https://github.com/etalab/udata-front/pull/68)
 - Fix RGAA criterion 10.14 [#72](https://github.com/etalab/udata-front/pull/72)

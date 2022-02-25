@@ -21,13 +21,16 @@ They exist in many colors and two versions, primary with a solid background and 
 </div>
 ```
 */
+@import (less) "@gouvfr/dsfr/dist/component/alert/alert.css";
+
+.fr-alert p {
+    margin: var(--text-spacing);
+}
 
 .well {
     display: block;
     padding: @spacing-sm;
-
     border-radius: 4px;
-
     font-weight: @font-weight-bold;
 
     svg {
@@ -44,6 +47,17 @@ They exist in many colors and two versions, primary with a solid background and 
         display: inline;
         color: inherit;
         text-decoration: underline;
+        vertical-align: baseline;
+    }
+
+    &.well--colored-links {
+        a {
+            color: @blue-400;
+            text-decoration: none;
+        }
+    }
+
+    [class^="fr-fi-"] {
         vertical-align: baseline;
     }
 
@@ -67,13 +81,15 @@ They exist in many colors and two versions, primary with a solid background and 
 
     &.well-secondary-success {
         .well-success;
-
         border: 1px solid @border-plain-success;
     }
 
     &.well-secondary-grey-100 {
         .well-grey-100;
-
         border: 1px solid @grey-100;
+    }
+
+    &.well--green-tilleul-verveine {
+        background: var(--background-alt-green-tilleul-verveine);
     }
 }

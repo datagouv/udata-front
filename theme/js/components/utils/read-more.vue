@@ -11,7 +11,7 @@ A very simple component that display its content up to a maximum height and then
 -->
 
 <template>
-  <div ref="container" class="read-more" :class="{expand: expanded}" :style="{height: defaultHeight + 'px'}">
+  <div ref="container" class="read-more" :class="{expand: expanded}" :style="{height: containerHeight + 'px'}">
     <slot></slot>
     <a href="#" @click.prevent="toggle" v-if="readMoreRequired" class="read-more-link">
       <template v-if="expanded"> {{ $t("Read less") }}</template>
@@ -30,25 +30,20 @@ function getHeight(elt) {
     parseFloat(style.getPropertyValue('margin-bottom'));
 }
 
-const DEFAULT_HEIGHT = 284
+const DEFAULT_HEIGHT = 284;
 
 export default {
   name: "read-more",
   data() {
     return {
-      defaultHeight: DEFAULT_HEIGHT,
+      containerHeight: DEFAULT_HEIGHT,
       expanded: false,
       readMoreRequired: false,
     }
   },
   mounted() {
-    let contentHeight = Array.from(this.$refs.container.children)
-      .map(getHeight)
-      .reduce((total, height) => total + height, 0)
-    this.readMoreRequired = contentHeight > getHeight(this.$refs.container);
-    if(!this.readMoreRequired) {
-      this.defaultHeight = contentHeight
-    }
+    this.updateReadMoreHeight();
+    setTimeout(() => this.updateReadMoreHeight(), 500);
   },
   methods: {
     toggle() {
@@ -72,6 +67,16 @@ export default {
               ease: easing.anticipate,
             }).start(divStyler.set);
           }
+    },
+    updateReadMoreHeight() {
+      let contentHeight = Array.from(this.$refs.container.children)
+      .map(getHeight)
+      .reduce((total, height) => total + height, 0)
+      this.containerHeight = DEFAULT_HEIGHT;
+      this.readMoreRequired = contentHeight > this.containerHeight;
+      if(!this.readMoreRequired) {
+        this.containerHeight = contentHeight;
+      }
     }
   }
 }
