@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: udata-front\n"
 "Report-Msgid-Bugs-To: data.gouv@data.gouv.fr\n"
 "POT-Creation-Date: 2022-02-15 09:41+0100\n"
-"PO-Revision-Date: 2022-02-15 09:07\n"
+"PO-Revision-Date: 2022-02-25 15:52\n"
 "Last-Translator: Data.gouv.fr Team <data.gouv@data.gouv.fr>\n"
 "Language: fr\n"
 "Language-Team: French\n"
@@ -652,7 +652,7 @@ msgstr "Modifier le jeu de données"
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:119
 msgid "This dataset come from an external portal.&nbsp;<a href='{external_source}'>View the original source.</a>"
-msgstr ""
+msgstr "Ce jeu de données provient d'un portail externe.&nbsp;<a href='{external_source}'>Voir la source originale.</a>"
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:126
 #, python-format
@@ -792,11 +792,11 @@ msgstr "Ajouter une ressource communautaire"
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:423
 msgid "Explore the reuses of this dataset."
-msgstr ""
+msgstr "Explorez les réutilisations de ce jeu de données."
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:424
 msgid "Did you use this data ? Reference your work and increase your visibility."
-msgstr ""
+msgstr "Avez-vous utilisé ces données ? Référencez votre travail et augmentez votre visibilité."
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:441
 msgid "Discussion between the organization and the community about this dataset."
@@ -1493,7 +1493,7 @@ msgstr "Discussion entre le producteur et la communauté à propos de cette réu
 
 #: udata_front/theme/gouvfr/templates/reuse/display.html:278
 msgid "Discover more reuses."
-msgstr ""
+msgstr "Découvrez davantage de réutilisations."
 
 #: udata_front/theme/gouvfr/templates/reuse/list.html:6
 #, python-format
@@ -1848,11 +1848,11 @@ msgstr "profil"
 
 #: udata_front/theme/gouvfr/templates/user/base.html:38
 msgid "Work in progress"
-msgstr ""
+msgstr "Travail en cours"
 
 #: udata_front/theme/gouvfr/templates/user/base.html:39
 msgid "The user page is currently being renovated to improve user experience."
-msgstr ""
+msgstr "La page utilisateur est en cours de rénovation pour améliorer l'expérience utilisateur."
 
 #: udata_front/theme/gouvfr/templates/user/base.html:78
 #, python-format
