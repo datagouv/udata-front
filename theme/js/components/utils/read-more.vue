@@ -73,7 +73,7 @@ export default {
       .map(getHeight)
       .reduce((total, height) => total + height, 0)
       this.containerHeight = DEFAULT_HEIGHT;
-      this.readMoreRequired = Math.round(contentHeight) > this.containerHeight;
+      this.readMoreRequired = contentHeight > this.containerHeight;
       if(!this.readMoreRequired) {
         this.containerHeight = contentHeight;
       }
