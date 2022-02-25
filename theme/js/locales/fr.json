@@ -94,7 +94,7 @@
   "See schema": "Voir le schéma",
   "Associated schema": "Schéma associé",
   "This resource is associated to the schema ": "Cette ressource est associée au schéma ",
-  "this means that the producer reports that it adheres to the specification.": "ce qui signifie que le producteur a déclaré qu'elle en respectait la spécification.",
+  " this means that the producer reports that it adheres to the specification.": " ce qui signifie que le producteur a déclaré qu'elle en respectait la spécification.",
   "Documentation": "Documentation",
   "You can view the schema documentation, discover some context and recommendations for data producers.": "Vous pouvez consulter la documentation de ce schéma, découvrir le contexte et les recommandations destinées aux producteurs de données.",
   "Read documentation": "Lire la documentation",

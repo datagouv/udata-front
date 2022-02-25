@@ -94,7 +94,7 @@
   "See schema": "See schema",
   "Associated schema": "Associated schema",
   "This resource is associated to the schema ": "This resource is associated to the schema ",
-  "this means that the producer reports that it adheres to the specification.": "this means that the producer reports that it adheres to the specification.",
+  " this means that the producer reports that it adheres to the specification.": " this means that the producer reports that it adheres to the specification.",
   "Documentation": "Documentation",
   "You can view the schema documentation, discover some context and recommendations for data producers.": "You can view the schema documentation, discover some context and recommendations for data producers.",
   "Read documentation": "Read documentation",
