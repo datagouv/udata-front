@@ -35,7 +35,7 @@
 
 <script>
 import {useI18n} from 'vue-i18n'
-import {onMounted, ref, reactive} from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import Loader from "../loader.vue";
 import Pagination from "../../pagination/pagination.vue";
 import Resource from "./resource.vue";
@@ -143,6 +143,11 @@ export default {
       bus.on("resources.search", value => {
         search.value = value;
         loadPage(currentPage.value);
+      });
+      watch(totalResults, (count) => bus.emit('resources.search.results.updated', {type: props.type, count}));
+      bus.on("resources.search.results.total", (total) => {
+        const els = document.querySelectorAll(".resources-count");
+        if (els) els.forEach((el) => (el.innerHTML = total));
       });
     }
 
