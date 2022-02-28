@@ -97,26 +97,34 @@
                         <a class="tab {% if active %}active{% endif %}" href="{{item.url}}">{{ item.label }}</a>
                         {% endfor %}
                     </nav>
-                    <div class="col-3 hidden-xl search-box vuejs" role="search">
-                        <form action="/datasets" class="w-100 row-inline justify-between"
-                            @focus.capture.prevent="$bus.emit('suggest.startSearch')" tabindex="0">
-                            <input
-                                type="text"
-                                @keypress.prevent
-                                name="q"
-                                placeholder="{{ _('Search for data') }}"
-                                aria-label="{{ _('Search for data') }}"
-                            />
-                            <button type="submit" aria-label="{{ _('Search for data') }}">
-                                {% include theme('svg/search.svg') %}
-                            </button>
+                    <div class="col-3 hidden-xl search-box" role="search">
+                        <form
+                            action="/datasets"
+                            class="w-100 row-inline justify-between"
+                        >
+                            <div class="fr-search-bar" role="search">
+                                <label class="fr-label" for="search-resources">
+                                  {{ _('Search for data') }}
+                                </label>
+                                <input
+                                    class="fr-input"
+                                    placeholder="{{ _('Search for data') }}"
+                                    type="search"
+                                    id="search-resources"
+                                    name="q"
+                                />
+                                <button
+                                    type="submit"
+                                    class="fr-btn"
+                                    title="{{ _('Search for data') }}"
+                                >
+                                  {{ _('Search for data') }}
+                                </button>
+                              </div>
                         </form>
                     </div>
                 </div>
             </div>
         </nav>
-        <div class="vuejs">
-            <suggest ref="suggest" />
-        </div>
     </div>
 </section>

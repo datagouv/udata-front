@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 
 import Threads from "./components/discussions/threads.vue";
-import Suggest from "./components/search/suggest-box";
+import MenuSearch from "./components/search/menu-search";
 import Search from "./components/search/search";
 import FeaturedButton from './components/utils/featured';
 import FollowButton from "./components/utils/follow-button";
@@ -46,7 +46,7 @@ const configAndMountApp = (el) => {
   app.use(Toaster);
 
   app.component("discussion-threads", Threads);
-  app.component("suggest", Suggest);
+  app.component("menu-search", MenuSearch);
   app.component("search", Search);
   app.component("follow-button", FollowButton);
   app.component("featured-button", FeaturedButton);
