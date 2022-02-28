@@ -9,6 +9,9 @@ Vue and simpler -->
       :src="image"
       type="reuse"
     />
+    <div class="text-grey-300">
+          {{ $tc('X datasets', datasets.length) }}
+    </div>
     <div>
       {{ title }}
       <span class="badge grey-300 fr-ml-1w" v-if="private">{{ $t('Private') }}</span>

@@ -1,10 +1,10 @@
 <template>
   <article class="dataset-card compact">
     <div class="card-logo">
-      <Placeholder type="reuse" :src="imageUrl" :alt="title" />
+      <Placeholder type="dataset" :src="imageUrl" :alt="title" />
       <div class="logo-badge">
         <span v-html="privateIcon" v-if="private" />
-        <span v-html="certified" v-else-if="organization?.public_service" />
+        <span v-html="certified" v-else-if="organizationCertified" />
       </div>
     </div>
     <div class="card-data">
@@ -22,12 +22,15 @@
 import Placeholder from "../utils/placeholder";
 import certified from "svg/certified.svg";
 import privateIcon from "svg/private.svg";
+import useOrganizationCertified from "../../composables/useOrganizationCertified";
+import useUserAvatar from "../../composables/useUserAvatar";
 
 export default {
   created() {
     this.certified = certified;
     this.privateIcon = privateIcon;
-    this.imageUrl = this.organization ? this.organization.logo_thumbnail : this.owner.logo_thumbnail;
+    this.imageUrl = this.organization ? this.organization.logo_thumbnail : useUserAvatar(this.owner, 100);
+    this.organizationCertified = this.organization ? useOrganizationCertified(this.organization) : false;
   },
   data() {
     return {
