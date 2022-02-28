@@ -117,22 +117,44 @@
                             {% endif %}
                         </ul>
                     </div>
-                    <div class="fr-header__search fr-modal" id="modal-search">
+                    <div class="fr-header__search fr-modal fr-hidden-lg" id="modal-search">
                         <div class="fr-container fr-container-lg--fluid">
                             <button class="fr-link--close fr-link" aria-controls="modal-search">{{ _('Close') }}</button>
-                            <div class="fr-search-bar" id="search" role="search">
-                                <label class="fr-label" for="search-input">{{  _('Search for data') }}
-                                </label>
-                                <input
-                                    class="fr-input"
-                                    placeholder="{{  _('Search for data') }}"
-                                    type="search"
-                                    id="search-input"
-                                    name="search-input"
-                                >
-                                <button class="fr-btn" title="{{  _('Search for data') }}">
-                                    {{  _('Search for data') }}
-                                </button>
+                            <form action="/datasets">
+                                <div class="fr-search-bar vuejs" id="search" role="search">
+                                    <label class="fr-label" for="search-input">{{  _('Search for data') }}
+                                    </label>
+                                    <input
+                                        class="fr-input"
+                                        placeholder="{{  _('Search for data') }}"
+                                        type="search"
+                                        id="search-input"
+                                        name="q"
+                                    >
+                                    <button
+                                        type="submit"
+                                        class="fr-btn"
+                                        title="{{  _('Search for data') }}"
+                                        aria-expanded="false"
+                                        aria-controls="menu-776"
+                                        @click.prevent
+                                    >
+                                        {{  _('Search for data') }}
+                                    </button>
+                                </div>
+                            </form>
+                            <div class="fr-collapse fr-menu" id="menu-776">
+                                <ul class="fr-menu__list">
+                                    <li>
+                                        <a class="fr-nav__link" href="#" target="_self">Lien de navigation</a>
+                                    </li>
+                                    <li>
+                                        <a class="fr-nav__link" href="#" target="_self">Lien de navigation</a>
+                                    </li>
+                                    <li>
+                                        <a class="fr-nav__link" href="#" target="_self">Lien de navigation</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -144,23 +166,65 @@
         <div class="fr-container">
             <button class="fr-link--close fr-link" aria-controls="modal-mobile-menu">{{ _('Close') }}</button>
             <div class="fr-header__menu-links"></div>
-            <nav class="fr-nav" id="navigation" role="navigation" aria-label="{{ _('Main Menu') }}">
-                <ul class="fr-nav__list">
-                    {% set current_endpoint = request.url_rule.endpoint.split('.')[:1] if request.url_rule or None %}
-                    {% for item in current_theme.menu %}
-                        {% set link_endpoint = item.endpoint and item.endpoint.split('.')[:1] %}
-                        {% set active = request.url_rule.endpoint != "site.home" and (link_endpoint == current_endpoint) %}
-                        <a
-                            class="fr-nav__link"
-                            href="{{item.url}}"
-                            {% if active %}aria-current="page" {% endif %}
-                            target="_self"
-                        >
-                            {{ item.label }}
-                        </a>
-                    {% endfor %}
-                </ul>
-            </nav>
+            <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle">
+                <nav class="fr-nav fr-col" id="navigation" role="navigation" aria-label="{{ _('Main Menu') }}">
+                    <ul class="fr-nav__list">
+                        {% set current_endpoint = request.url_rule.endpoint.split('.')[:1] if request.url_rule or None %}
+                        {% for item in current_theme.menu %}
+                            {% set link_endpoint = item.endpoint and item.endpoint.split('.')[:1] %}
+                            {% set active = request.url_rule.endpoint != "site.home" and (link_endpoint == current_endpoint) %}
+                            <a
+                                class="fr-nav__link"
+                                href="{{item.url}}"
+                                {% if active %}aria-current="page" {% endif %}
+                                target="_self"
+                            >
+                                {{ item.label }}
+                            </a>
+                        {% endfor %}
+                    </ul>
+                </nav>
+                <div class="fr-col-auto fr-header__search fr-modal">
+                    <div class="fr-container fr-container-lg--fluid">
+                        <form action="/datasets">
+                            <div class="fr-search-bar vuejs" id="search" role="search">
+                                <label class="fr-label" for="search-input">{{  _('Search for data') }}
+                                </label>
+                                <input
+                                    class="fr-input"
+                                    placeholder="{{  _('Search for data') }}"
+                                    type="search"
+                                    id="search-input"
+                                    name="q"
+                                >
+                                <button
+                                    type="submit"
+                                    class="fr-btn"
+                                    title="{{  _('Search for data') }}"
+                                    aria-expanded="false"
+                                    aria-controls="menu-776"
+                                    @click.prevent
+                                >
+                                    {{  _('Search for data') }}
+                                </button>
+                            </div>
+                        </form>
+                        <div class="fr-collapse fr-menu" id="menu-776">
+                            <ul class="fr-menu__list">
+                                <li>
+                                    <a class="fr-nav__link" href="#" target="_self">Lien de navigation</a>
+                                </li>
+                                <li>
+                                    <a class="fr-nav__link" href="#" target="_self">Lien de navigation</a>
+                                </li>
+                                <li>
+                                    <a class="fr-nav__link" href="#" target="_self">Lien de navigation</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </header>
