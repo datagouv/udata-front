@@ -118,19 +118,9 @@
         >{{ $t("Submit") }}</button>
     </div>
   </section>
-  <section class="bg-blue-100 fr-p-3v fr-mt-3w text-black">
-    <span class="row-inline">
-      <span class="fr-fi-question-line fr-mr-1w" aria-hidden="true"></span>
-      <i18n-t keypath="Come try out our" tag="span" scope="global">
-        <template #dataset_search>
-          <a :href="rechercherBetaPath">{{ $t('new dataset search') }}</a>
-        </template>
-      </i18n-t>
-    </span>
-  </section>
   <section class="search-results fr-mt-1w fr-mt-md-3w" ref="results" v-bind="$attrs">
     <transition mode="out-in">
-      <div v-if="loading || (disableFirstSearch && !results.length)">
+      <div v-if="loading">
         <Loader />
       </div>
       <ul v-else-if="results.length">
@@ -214,14 +204,19 @@ export default {
     }
     // set all other search params as facets
     this.facets = searchParams;
-    if(!this.disableFirstSearch) {
+    if(this.disableFirstSearch) {
+      this.loading = true;
+    } else {
       this.search();
     }
   },
   mounted() {
     if(this.disableFirstSearch) {
-      this.results = JSON.parse(this.$refs.results.dataset.results);
-      this.totalResults = JSON.parse(this.$refs.results.dataset.totalResults);
+      if (this.$refs.results.dataset.totalResults > 0) {
+        this.results = JSON.parse(this.$refs.results.dataset.results);
+        this.totalResults = JSON.parse(this.$refs.results.dataset.totalResults);
+      }
+      this.loading = false;
     }
   },
   watch: {

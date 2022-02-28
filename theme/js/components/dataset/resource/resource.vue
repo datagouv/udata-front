@@ -56,7 +56,7 @@
           <li class="fr-col-auto fr-mr-3v" v-if="resource.preview_url">
             <button
               :title="$t('Preview')"
-              @click.prevent="$showModal('preview', {url: resource.preview_url}, true)"
+              @click.prevent="$showModal('preview', {url: resource.preview_url, title: resource.title}, true)"
               class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-fi-svg"
               v-html="preview"
             >
