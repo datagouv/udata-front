@@ -117,5 +117,9 @@
   "Private": "Private",
   "Unfeature this content": "Unfeature this content",
   "Feature this content": "Feature this content",
-  "Preview of resource X": "Preview of resource {title}"
+  "Preview of resource X": "Preview of resource {title}",
+  "Search": "Search",
+  "Search X in Y": "Search {query} in {type}",
+  "datasets": "datasets",
+  "organizations": "organizations"
 }

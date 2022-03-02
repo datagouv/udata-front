@@ -1,4 +1,5 @@
 import { createApp } from "vue";
+import * as dsfr from "@gouvfr/dsfr/dist/dsfr/dsfr.module";
 
 import Threads from "./components/discussions/threads.vue";
 import MenuSearch from "./components/search/menu-search";
@@ -8,7 +9,6 @@ import FollowButton from "./components/utils/follow-button";
 import ReadMore from "./components/utils/read-more";
 import RequestMembership from "./components/organization/request-membership";
 import Resources from "./components/dataset/resource/resources.vue";
-import * as dsfr from "@gouvfr/dsfr/dist/dsfr/dsfr.module";
 
 import Tabs from "./components/vanilla/tabs";
 import Accordion from "./components/vanilla/accordion";
@@ -27,6 +27,17 @@ import filters from "./plugins/filters";
 import schemaCatalog from "./plugins/schemaCatalog";
 
 import InitSentry from "./sentry";
+
+/**
+ * @interface Ref
+ * @template T
+ * @property {T} value
+ */
+
+/**
+ * @typedef {Object} Ref
+ * @property value - The referenced value
+*/
 
 const configAndMountApp = (el) => {
   const app = createApp({});
