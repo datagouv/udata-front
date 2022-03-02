@@ -16,7 +16,7 @@
       :aria-activedescendant="selected"
       name="q"
       v-model="q"
-      @click="show"
+      @click.stop.capture="show"
       @keypress="show"
       @blur="focusOut"
     />
@@ -28,7 +28,7 @@
       tabindex="-1"
       :aria-controls="uid"
       :aria-expanded="expanded"
-      @click.prevent="input.focus()"
+      @click.prevent.stop.capture="showAndFocus"
     >
       {{  $t('Search') }}
     </button>
@@ -40,13 +40,13 @@
       aria-labelledby="search-label"
     >
       <ul class="fr-menu__list" role="listbox">
-        <li role="option">
+        <li id="dataset-option" role="option" :aria-selected="isSelected('dataset-option')">
           <MenuSearchOption :icon="datasetIcon" :query="q" :type="$t('datasets')" :link="datasetUrl"/>
         </li>
-        <li role="option">
+        <li id="reuse-option" role="option" :aria-selected="isSelected('reuse-option')">
           <MenuSearchOption :icon="reuseIcon" :query="q" :type="$t('reuses')" :link="reuseUrl"/>
         </li>
-        <li role="option">
+        <li id="organization-option" role="option" :aria-selected="isSelected('organization-option')">
           <MenuSearchOption :icon="organizationIcon" :query="q" :type="$t('organizations')" :link="organizationUrl"/>
         </li>
       </ul>
@@ -62,11 +62,13 @@ import datasetIcon from "svg/search/dataset.svg";
 import reuseIcon from "svg/search/reuse.svg";
 import organizationIcon from "svg/search/organization.svg";
 import useSearchUrl from "../../composables/useSearchUrl";
+import useActiveDescendant from "../../composables/useActiveDescendant";
 
 export default {
   components: {MenuSearchOption},
   setup() {
-    const {expanded, selected, uid, focusOut, show, toggle, registerBackgroundEvent, removeBackgroundEvent} = useCollapse();
+    const {expanded, uid, show, registerBackgroundEvent, removeBackgroundEvent} = useCollapse();
+    const {select, selected, isSelected, focusOut} = useActiveDescendant();
     const q = ref('');
     const input = ref(null);
     const button = ref(null);
@@ -77,6 +79,11 @@ export default {
     onMounted(() => registerBackgroundEvent(input, list, button));
     onUnmounted(() => removeBackgroundEvent());
 
+    const showAndFocus = () => {
+      input.value.focus();
+      show();
+    }
+
     return {
       datasetUrl,
       reuseUrl,
@@ -86,6 +93,7 @@ export default {
       list,
       expanded,
       selected,
+      isSelected,
       uid,
       q,
       datasetIcon,
@@ -93,7 +101,7 @@ export default {
       organizationIcon,
       focusOut,
       show,
-      toggle,
+      showAndFocus,
     }
   },
 }

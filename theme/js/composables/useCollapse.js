@@ -7,19 +7,12 @@ export function useCollapse() {
   uid += 1;
   const collapseId = `collaspe-${uid}`;
   const expanded = ref(false);
-  const selected = ref(null);
-
-  const focusOut = () => {
-    selected.value = '';
-  };
 
   const show = () => expanded.value = true;
 
   const hide = () => expanded.value = false;
 
   const toggle = () => expanded.value = !expanded.value;
-
-
 
   onMounted(() => {
     registration = window.dsfr.register(`#${collapseId}`, window.dsfr.core.Collapse);
@@ -54,22 +47,18 @@ export function useCollapse() {
   }
 
   const onBackgroundPointerUp = (input, list, button) => (event) => {
-    console.log(event.target);
     if (
       !input.contains(event.target) &&
       !list.contains(event.target) &&
       !button.contains(event.target)
     ) {
-       console.log("hiding list");
-      setTimeout(hide, 300);
+      hide();
     }
   }
 
   return {
     expanded,
-    selected,
     uid: collapseId,
-    focusOut,
     show,
     toggle,
     registerBackgroundEvent,
