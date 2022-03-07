@@ -1,8 +1,10 @@
 import { ref, unref, onMounted, onUnmounted } from 'vue'
+import useKeyCodes from "./useKeyCodes";
 
 let uid = 0;
 
 export function useCollapse() {
+  const {KEYCODES} = useKeyCodes();
   let registration;
   uid += 1;
   const collapseId = `collaspe-${uid}`;
@@ -56,6 +58,19 @@ export function useCollapse() {
     }
   }
 
+  /**
+   *
+   * @param {KeyboardEvent} key
+   */
+  const handleKeyPressForCollapse = (key) => {
+    show();
+    switch (key.keyCode) {
+      case KEYCODES.ESCAPE:
+        hide();
+        break;
+    }
+  };
+
   return {
     expanded,
     uid: collapseId,
@@ -63,5 +78,6 @@ export function useCollapse() {
     toggle,
     registerBackgroundEvent,
     removeBackgroundEvent,
+    handleKeyPressForCollapse,
   }
 }

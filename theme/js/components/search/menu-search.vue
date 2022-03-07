@@ -1,3 +1,15 @@
+<!--
+---
+name: Menu Search
+category: Search
+---
+
+# Menu Search
+
+It's an input working like a [combobox](https://www.w3.org/TR/wai-aria-practices/#combobox)
+ and based on a [WAI-ARIA Authoring Practices 1.2 example](https://www.w3.org/TR/wai-aria-practices/examples/combobox/combobox-autocomplete-list.html).
+-->
+
 <template>
   <div
     class="fr-col fr-grid-row"
@@ -16,8 +28,9 @@
       :aria-activedescendant="selected"
       name="q"
       v-model="q"
-      @click.stop.capture="show"
-      @keypress="show"
+      @click.stop.capture="showAndSelectIfQuery"
+      @keydown="handleKeyDown"
+      @keypress.enter.prevent="searchSelectedOption"
       @blur="focusOut"
     />
     <button
@@ -40,14 +53,14 @@
       aria-labelledby="search-label"
     >
       <ul class="fr-menu__list" role="listbox">
-        <li id="dataset-option" role="option" :aria-selected="isSelected('dataset-option')">
-          <MenuSearchOption :icon="datasetIcon" :query="q" :type="$t('datasets')" :link="datasetUrl"/>
-        </li>
-        <li id="reuse-option" role="option" :aria-selected="isSelected('reuse-option')">
-          <MenuSearchOption :icon="reuseIcon" :query="q" :type="$t('reuses')" :link="reuseUrl"/>
-        </li>
-        <li id="organization-option" role="option" :aria-selected="isSelected('organization-option')">
-          <MenuSearchOption :icon="organizationIcon" :query="q" :type="$t('organizations')" :link="organizationUrl"/>
+        <li
+          v-for="option in options"
+          :key="option.id"
+          :id="option.id"
+          role="option"
+          :aria-selected="isSelected(option.id)"
+        >
+          <MenuSearchOption :icon="option.icon" :query="q" :type="option.type" :link="option.link"/>
         </li>
       </ul>
     </div>
@@ -55,8 +68,9 @@
 </template>
 
 <script>
-import {ref, onMounted, onUnmounted} from "vue";
-import {useCollapse} from "../../composables/useCollapse";
+import {ref, reactive, onMounted, onUnmounted} from "vue";
+import { useI18n } from 'vue-i18n'
+import { useCollapse } from "../../composables/useCollapse";
 import MenuSearchOption from "./menu-search-option";
 import datasetIcon from "svg/search/dataset.svg";
 import reuseIcon from "svg/search/reuse.svg";
@@ -67,27 +81,73 @@ import useActiveDescendant from "../../composables/useActiveDescendant";
 export default {
   components: {MenuSearchOption},
   setup() {
-    const {expanded, uid, show, registerBackgroundEvent, removeBackgroundEvent} = useCollapse();
-    const {select, selected, isSelected, focusOut} = useActiveDescendant();
+    const {t} = useI18n();
+    const {handleKeyPressForCollapse, expanded, uid, show, registerBackgroundEvent, removeBackgroundEvent} = useCollapse();
     const q = ref('');
+    const {datasetUrl, reuseUrl, organizationUrl} = useSearchUrl(q);
+    const options = reactive([
+      {
+        id: "dataset-option",
+        icon: datasetIcon,
+        type: t('datasets'),
+        link: datasetUrl,
+      },
+      {
+        id: "reuse-option",
+        icon: reuseIcon,
+        type: t('reuses'),
+        link: reuseUrl,
+      },
+      {
+        id: "organization-option",
+        icon: organizationIcon,
+        type: t('organizations'),
+        link: organizationUrl,
+      },
+    ]);
+    const {handleKeyPressForActiveDescendant, select, selected, selectedOption, isSelected, focusOut, NOT_MOVED_YET, ALREADY_MOVED_DOWN} = useActiveDescendant(options);
+
     const input = ref(null);
     const button = ref(null);
     const list = ref(null);
-
-    const {datasetUrl, reuseUrl, organizationUrl} = useSearchUrl(q);
 
     onMounted(() => registerBackgroundEvent(input, list, button));
     onUnmounted(() => removeBackgroundEvent());
 
     const showAndFocus = () => {
-      input.value.focus();
-      show();
+      if(!expanded.value) {
+        input.value.focus();
+        showAndSelectIfQuery();
+      } else {
+        searchSelectedOption();
+      }
+    }
+
+    const showAndSelectIfQuery = () => {
+      if(q.value) {
+        show();
+        select(selected.value);
+      }
+    }
+
+    const handleKeyDown = (e) => {
+      showAndSelectIfQuery();
+      let moved = NOT_MOVED_YET;
+      if(!expanded.value) {
+        moved = ALREADY_MOVED_DOWN;
+      }
+      handleKeyPressForCollapse(e);
+      handleKeyPressForActiveDescendant(e, moved);
+    }
+
+    const searchSelectedOption = () => {
+      if(selectedOption.value) {
+        window.location.href = selectedOption.value.link;
+      }
     }
 
     return {
-      datasetUrl,
-      reuseUrl,
-      organizationUrl,
+      options,
       button,
       input,
       list,
@@ -96,12 +156,11 @@ export default {
       isSelected,
       uid,
       q,
-      datasetIcon,
-      reuseIcon,
-      organizationIcon,
       focusOut,
-      show,
       showAndFocus,
+      showAndSelectIfQuery,
+      handleKeyDown,
+      searchSelectedOption,
     }
   },
 }

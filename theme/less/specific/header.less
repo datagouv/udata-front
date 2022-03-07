@@ -35,4 +35,10 @@ nav.fr-nav li::before {
     & > * {
         width: auto;
     }
+    [aria-selected=true] {
+        color: @blue-400;
+    }
+    [aria-selected=true] svg path {
+        fill: @blue-400;
+    }
 }

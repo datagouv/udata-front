@@ -3,10 +3,15 @@
     <div class="fr-grid-row fr-grid-row--middle">
       <div aria-hidden="true" class="fr-col-auto fr-mr-2w" v-html="icon">
       </div>
-      <i18n-t keypath="Search X in Y" class="fr-col" tag="div">
+      <i18n-t keypath="Search X in Y" class="fr-col" tag="div" v-if="query">
         <template #query>
-           &laquo;<em>{{query}}</em>&raquo;
+          &laquo;<em>{{query}}</em>&raquo;
         </template>
+        <template #type>
+          <strong>{{type}}</strong>
+        </template>
+      </i18n-t>
+      <i18n-t keypath="Start typing to search in X" class="fr-col" tag="div" v-else>
         <template #type>
           <strong>{{type}}</strong>
         </template>
