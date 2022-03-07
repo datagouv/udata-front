@@ -110,11 +110,11 @@
             </div>
             <div class="fr-col-auto fr-grid-row fr-grid-row--gutters">
                 <div class="fr-col-auto">
-                    <nav class="tabs fr-tags-group">
+                    <nav class="tabs fr-tags-group fr-displayed-lg">
                         {% for tab_id, label, _, _ in dataset_tabs %}
                         <a
                             href="#{{tab_id}}"
-                            class="tab fr-tag {% if loop.first %}active {% endif %}fr-displayed-lg"
+                            class="tab fr-tag {% if loop.first %}active {% endif %}"
                         >
                             {{ label }}
                         </a>
@@ -163,11 +163,11 @@
             </div>
             <div class="fr-col-auto fr-grid-row fr-grid-row--gutters">
                 <div class="fr-col-auto">
-                    <nav class="tabs fr-tags-group">
+                    <nav class="tabs fr-tags-group fr-displayed-lg">
                         {% for tab_id, label, _, _ in reuses_tabs %}
                         <a
                             href="#{{tab_id}}"
-                            class="tab fr-tag {% if loop.first %}active {% endif %}fr-displayed-lg"
+                            class="tab fr-tag {% if loop.first %}active {% endif %}"
                         >
                             {{ label }}
                         </a>
