@@ -35,45 +35,46 @@
                 </div>
             </div>
         </div>
-        {% if unavailable %}
-            <div class="fr-col-auto text-default-error">{{ _('Unavailable') }}</div>
-        {% else %}
-            <div class="fr-col-auto">
-                <ul class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
-                    {% if can_edit %}
-                        <li class="fr-col-auto fr-mr-3v">
-                            <a
-                                href="{{ url_for('admin.index', path='dataset/{id}/resource/{resource_id}'.format(id=dataset.id, resource_id=resource.id)) }}"
-                                title="{{ _('Edit resource') }}"
-                                class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-fi-svg"
-                            >
-                                {% include theme('svg/edit.svg') %}
-                            </a>
-                        </li>
-                    {% endif %}
-                    {% if resource.format == 'url' %}
-                        <li class="fr-col-auto">
-                            <a
-                                href="{{ resource.latest }}"
-                                title="{{ _('Resource link') }}"
-                                rel="nofollow"
-                                target="_blank"
-                                class="fr-btn fr-btn--sm fr-fi-external-link-line"
-                            ></a>
-                        </li>
-                    {% else %}
-                        <li class="fr-col-auto">
-                            <a
-                                href="{{ resource.latest }}"
-                                title="{{ _('Download resource') }}"
-                                download
-                                class="fr-btn fr-btn--sm fr-fi-download-line"
-                            ></a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
-        {% endif %}
+        <div class="fr-col-auto">
+            <ul class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
+                {% if unavailable %}
+                <li class="text-default-error fr-mr-5w" v-if="unavailable">
+                    {{ _('Unavailable') }}
+                </li>
+                {% endif %}
+                {% if can_edit %}
+                    <li class="fr-col-auto fr-mr-3v">
+                        <a
+                            href="{{ url_for('admin.index', path='dataset/{id}/resource/{resource_id}'.format(id=dataset.id, resource_id=resource.id)) }}"
+                            title="{{ _('Edit resource') }}"
+                            class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-fi-svg"
+                        >
+                            {% include theme('svg/edit.svg') %}
+                        </a>
+                    </li>
+                {% endif %}
+                {% if resource.format == 'url' %}
+                    <li class="fr-col-auto">
+                        <a
+                            href="{{ resource.latest }}"
+                            title="{{ _('Resource link') }}"
+                            rel="nofollow"
+                            target="_blank"
+                            class="fr-btn fr-btn--sm fr-fi-external-link-line"
+                        ></a>
+                    </li>
+                {% else %}
+                    <li class="fr-col-auto">
+                        <a
+                            href="{{ resource.latest }}"
+                            title="{{ _('Download resource') }}"
+                            download
+                            class="fr-btn fr-btn--sm fr-fi-download-line"
+                        ></a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
     </header>
     <section
         class="accordion-content active fr-pt-5v fr-pb-4w fr-pl-6w"
