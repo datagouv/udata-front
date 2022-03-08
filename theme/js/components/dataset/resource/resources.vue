@@ -98,7 +98,7 @@ export default {
     const loadPage = (page = 1, scroll = false) => {
       loading.value = true;
       if (scroll && top.value) {
-        top.scrollIntoView({ behavior: "smooth" });
+        top.value.scrollIntoView({ behavior: "smooth" });
       }
       let fetchData;
       if(isCommunityResources.value) {
@@ -160,6 +160,7 @@ export default {
       totalResults,
       getCanEdit,
       isCommunityResources,
+      top,
     }
   }
 }
