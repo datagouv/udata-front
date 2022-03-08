@@ -29,22 +29,11 @@
           </div>
         </div>
       </div>
-      <div class="fr-col-auto fr-ml-6w fr-ml-md-0" v-if="unavailable">
-        <ul class="fr-grid-row fr-grid-row--middle fr-grid-row--gutters no-wrap wrap-md">
-           <li class="fr-col-auto text-default-error">
-             {{$t('Unavailable')}}
-           </li>
-          <li class="fr-col-auto" v-if="canEdit">
-            <EditButton
-              :dataset-id="datasetId"
-              :resource-id="resource.id"
-              :is-community-resource="isCommunityResource"
-            />
-          </li>
-        </ul>
-      </div>
-      <div class="fr-col-auto fr-ml-6w fr-ml-md-0" v-else>
+      <div class="fr-col-auto fr-ml-6w fr-ml-md-0">
         <ul class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
+          <li class="text-default-error fr-mr-5w" v-if="unavailable">
+            {{$t('Unavailable')}}
+          </li>
           <li class="fr-col-auto fr-mr-5w" v-if="showSchemaButton">
             <schema-button :resource="resource"/>
           </li>
