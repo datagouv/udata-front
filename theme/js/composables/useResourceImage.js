@@ -1,4 +1,4 @@
-import api from 'svg/resources/api.svg';
+import api from 'svg/resources/code.svg';
 import archive from 'svg/resources/archive.svg';
 import documentation from 'svg/resources/documentation.svg';
 import file from 'svg/resources/file.svg';

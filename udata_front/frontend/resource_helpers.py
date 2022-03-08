@@ -18,9 +18,9 @@ def resource_image(resource):
     formats = {
         'doc': 'documentation',
         'pdf': 'documentation',
-        'json': 'api',
-        'sql': 'api',
-        'xml': 'api',
+        'json': 'code',
+        'sql': 'code',
+        'xml': 'code',
         '7z': 'archive',
         'tar.gz': 'archive',
         'rar': 'archive',
