@@ -13,7 +13,7 @@ import {ref} from 'vue';
  * @param {Owned} [owned] - The resource, dataset or reuse owned by an organization or a user.
  * @return {Ref<string>}
  */
-export default function useOwner(owned) {
+export default function useOwnerName(owned) {
   const owner = ref('');
   if(!owned) {
     return owner;
