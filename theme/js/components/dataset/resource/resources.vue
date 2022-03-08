@@ -92,6 +92,7 @@ export default {
     const top = ref(null);
     const search = ref('');
     const isCommunityResources = ref(props.type === "community");
+    const DONT_SCROLL = false;
 
     // We can pass the second function parameter "scroll" to true if we want to scroll to the top of the resources section
     // This is useful for pagination buttons
@@ -142,7 +143,7 @@ export default {
     if(!isCommunityResources.value) {
       bus.on("resources.search", value => {
         search.value = value;
-        loadPage(currentPage.value);
+        changePage(1, DONT_SCROLL);
       });
       watch(totalResults, (count) => bus.emit('resources.search.results.updated', {type: props.type, count}));
       bus.on("resources.search.results.total", (total) => {
