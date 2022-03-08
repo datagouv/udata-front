@@ -18,7 +18,7 @@ export default {
     }
   },
   setup(props) {
-    const { authorizeValidation, documentationUrl, loading, validationUrl} = useSchema(props.resource)
+    const { authorizeValidation, documentationUrl, loading, validationUrl} = useSchema(props.resource);
     const showModal = inject('$showModal');
     const showSchemaModal = () => showModal('schema', {
       resourceSchema: props.resource.schema,
