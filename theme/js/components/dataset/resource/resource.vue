@@ -195,9 +195,6 @@ export default {
     availabilityChecked() {
       return this.resource.extras && this.resource.extras['check:status'];
     },
-    available() {
-      return this.availabilityChecked && this.availabilityChecked >= 200 && this.availabilityChecked < 400;
-    },
     lastUpdate() {
       return this.resource.published > this.resource.last_modified ? this.resource.published : this.resource.last_modified;
     },
