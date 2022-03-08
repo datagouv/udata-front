@@ -21,8 +21,10 @@
               {{ $t('From') }} <a :href="resource.organization.page">{{ owner }}</a> —
             </template>
             {{$t('Updated on X', {date: $filters.formatDate(lastUpdate)})}} —
-            {{ resource.format?.trim()?.toLowerCase() }}
-            <template v-if="resource.filesize">({{ $filters.filesize(resource.filesize) }})</template> —
+            <template v-if="resource.format">
+              {{ resource.format?.trim()?.toLowerCase() }}
+              <template v-if="resource.filesize">({{ $filters.filesize(resource.filesize) }})</template> —
+            </template>
             {{ $t('X downloads', resource.metrics.views || 0) }}
           </div>
         </div>
