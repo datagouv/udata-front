@@ -1,4 +1,18 @@
+from jinja2 import contextfilter
+
 from udata_front.frontend import front
+
+
+@front.app_template_filter()
+@contextfilter
+def permissions(ctx, resources):
+    '''Return permissions for resources'''
+    permissions = {}
+    for resource in resources:
+        element_to_check = resource if resource.from_community else resource.dataset
+        can_edit_resource = ctx['can_edit_resource']
+        permissions[str(resource.id)] = can_edit_resource(element_to_check).can()
+    return permissions
 
 
 @front.app_template_filter()
