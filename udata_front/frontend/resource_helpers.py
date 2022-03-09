@@ -64,4 +64,4 @@ def resource_image(resource):
         'xls': 'table',
         'xlsx': 'table',
     }
-    return 'svg/resources/{}.svg'.format(formats.get(resource.filetype, 'file'))
+    return 'svg/resources/{}.svg'.format(formats.get(resource.format, 'file'))
