@@ -1,7 +1,7 @@
 /*
 ---
 name: Accordion
-category: Interactions
+category: 5 - Interactions
 ---
 
 # Interaction

@@ -1,7 +1,7 @@
 <!--
 ---
 name: Follow
-category: Interactions
+category: 5 - Interactions
 ---
 
 # Follow button

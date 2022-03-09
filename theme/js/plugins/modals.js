@@ -1,7 +1,7 @@
 /*
 ---
 name: Modals
-category: Interactions
+category: 5 - Interactions
 ---
 
 # Modals

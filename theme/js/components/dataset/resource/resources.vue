@@ -42,7 +42,12 @@ import Resource from "./resource.vue";
 import config from "../../../config";
 import {useToast} from "../../../composables/useToast";
 import {fetchDatasetCommunityResources, fetchDatasetResources} from "../../../api/resources";
-import {bus} from "../../../plugins/eventbus";
+import {
+  bus,
+  RESOURCES_SEARCH,
+  RESOURCES_SEARCH_RESULTS_TOTAL,
+  RESOURCES_SEARCH_RESULTS_UPDATED
+} from "../../../plugins/eventbus";
 
 export default {
   name: "resources",
@@ -141,12 +146,12 @@ export default {
     onMounted(() => loadPage(currentPage.value));
 
     if(!isCommunityResources.value) {
-      bus.on("resources.search", value => {
+      bus.on(RESOURCES_SEARCH, value => {
         search.value = value;
         changePage(1, DONT_SCROLL);
       });
-      watch(totalResults, (count) => bus.emit('resources.search.results.updated', {type: props.type, count}));
-      bus.on("resources.search.results.total", (total) => {
+      watch(totalResults, (count) => bus.emit(RESOURCES_SEARCH_RESULTS_UPDATED, {type: props.type, count}));
+      bus.on(RESOURCES_SEARCH_RESULTS_TOTAL, (total) => {
         const els = document.querySelectorAll(".resources-count");
         if (els) els.forEach((el) => (el.innerHTML = total));
       });
