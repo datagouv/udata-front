@@ -94,8 +94,6 @@ export default function useActiveDescendant(options) {
       case KEYCODES.ESCAPE:
         focusOut();
         break;
-      default:
-        select();
     }
   };
 
