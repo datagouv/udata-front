@@ -60,7 +60,7 @@
 <script>
 import config from "../../config";
 import Author from "./author";
-import ThreadsCreateButton from "./threads-create-button"; // Not the best but we don't have many svg
+import ThreadsCreateButton from "./threads-create-button";
 
 export default {
   components: {
