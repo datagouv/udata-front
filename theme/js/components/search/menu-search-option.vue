@@ -5,7 +5,7 @@
       </div>
       <i18n-t keypath="Search X in Y" class="fr-col" tag="div" v-if="query">
         <template #query>
-          &laquo;<em>{{query}}</em>&raquo;
+          <em>{{query}}</em>
         </template>
         <template #type>
           <strong>{{type}}</strong>
