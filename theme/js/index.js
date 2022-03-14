@@ -1,12 +1,12 @@
 import { createApp } from "vue";
 
 import Threads from "./components/discussions/threads.vue";
-import Suggest from "./components/search/suggest-box";
-import Search from "./components/search/search";
-import FeaturedButton from './components/utils/featured';
-import FollowButton from "./components/utils/follow-button";
-import ReadMore from "./components/utils/read-more";
-import RequestMembership from "./components/organization/request-membership";
+import Suggest from "./components/search/suggest-box.vue";
+import Search from "./components/search/search.vue";
+import FeaturedButton from './components/utils/featured.vue';
+import FollowButton from "./components/utils/follow-button.vue";
+import ReadMore from "./components/utils/read-more.vue";
+import RequestMembership from "./components/organization/request-membership.vue";
 import Resources from "./components/dataset/resource/resources.vue";
 import * as dsfr from "@gouvfr/dsfr/dist/dsfr/dsfr.module";
 

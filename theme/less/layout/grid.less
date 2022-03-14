@@ -212,8 +212,9 @@ in which case you'll have one column on each side and the main content will span
     position: relative;
 }
 
+@max-width: (12 * @breakpoint-xl / 10);
 .hagrid {
-    max-width: (12 * @breakpoint-xl)/10;
+    max-width: @max-width;
     margin: auto;
     overflow: hidden;
 
