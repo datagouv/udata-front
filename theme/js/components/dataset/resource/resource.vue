@@ -48,7 +48,7 @@
             <button
               :title="$t('Preview')"
               @click.prevent="$showModal('preview', {url: resource.preview_url, title: resource.title}, true)"
-              class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-fi-svg"
+              class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-fi-svg"
               v-html="preview"
             >
             </button>
@@ -59,7 +59,7 @@
               :title="$t('Resource link')"
               rel="nofollow"
               target="_blank"
-              class="fr-btn fr-btn--sm fr-fi-external-link-line"
+              class="fr-btn fr-fi-external-link-line"
             >
             </a>
           </li>
@@ -68,7 +68,7 @@
               :href="resource.latest"
               :title="$t('Download resource')"
               download
-              class="fr-btn fr-btn--sm fr-fi-download-line"
+              class="fr-btn fr-fi-download-line"
             >
             </a>
           </li>

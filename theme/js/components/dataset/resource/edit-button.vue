@@ -2,7 +2,7 @@
   <a
     :href="adminUrl"
     :title="$t('Edit resource')"
-    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-fi-svg"
+    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-fi-svg"
     v-html="edit"
     >
   </a>
