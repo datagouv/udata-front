@@ -361,10 +361,13 @@
 </section>
 <section class="ressources fr-py-10w">
     <div class="container">
-        <h2 id="resources" class="fr-h2">{{ _('Files') }} <sup class="resources-count">{{dataset.resources | length}}</sup></h2>
+        {% set count_resources = dataset.resources | length %}
+        <h2 id="resources" class="fr-h2">{{ _('Files') }} <sup class="resources-count">{{count_resources}}</sup></h2>
         <div class="ressources-files fr-my-4w vuejs">
             <modals-container></modals-container>
-            <search-bar event-name="resources.search"></search-bar>
+            {% if count_resources > config.RESOURCES_MIN_COUNT_TO_SHOW_SEARCH %}
+                <search-bar event-name="resources.search"></search-bar>
+            {% endif %}
             {% set show_all_resources = request.args.get('resources') == 'all' %}
             {% set grouped_resources = dataset.resources|group_resources_by_type %}
             {% set nb_groups = grouped_resources.keys()|length %}

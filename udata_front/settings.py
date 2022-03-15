@@ -11,6 +11,13 @@ SCHEMA_CATALOG_URL = 'https://schema.data.gouv.fr/schemas/schemas.json'
 # Default page size for resources on dataset page
 RESOURCES_DEFAULT_PAGE_SIZE = 6
 
+# Default page size for resources on dataset page
+RESOURCES_MIN_COUNT_TO_SHOW_SEARCH = 12
+
+# Autocomplete parameters
+SEARCH_AUTOCOMPLETE_ENABLED = True
+SEARCH_AUTOCOMPLETE_DEBOUNCE = 200  # in ms
+
 # Frontend banner parameters
 BANNER_ACTIVATED = False
 BANNER_HTML_CONTENT_EN = ''
