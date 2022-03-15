@@ -1,8 +1,8 @@
 <template>
-  <h3 class="fr-mt-4w fr-mb-1w fr-text--sm fr-text--bold text-transform-uppercase" v-if="showTitle">
+  <h3 v-if="showTitle" class="fr-mt-4w fr-mb-1w fr-text--sm fr-text--bold text-transform-uppercase" ref="top">
       {{ typeLabel }} <sup v-if="showTotal">{{ totalResults }}</sup>
   </h3>
-  <section class="resources-wrapper" ref="top" key="top">
+  <section class="resources-wrapper" key="top">
     <transition mode="out-in">
       <div v-if="loading" key="loader">
         <Loader class="mt-md" />
