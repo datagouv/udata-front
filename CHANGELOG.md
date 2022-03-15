@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add Serbian translations [#92](https://github.com/etalab/udata-front/pull/92)
 
 ## 1.2.4 (2022-03-01)
 
