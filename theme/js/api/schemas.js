@@ -1,9 +1,6 @@
 import axios from "axios";
 import config from "../config";
 
-let catalog = null;
-let catalogRequest = null;
-
 /**
  * A schema version.
  * @typedef SchemaVersion
@@ -22,10 +19,10 @@ let catalogRequest = null;
  *  @property {Array<SchemaVersion>} versions - The schema versions.
  */
 
+let catalog = null;
+let catalogRequest = null;
+
 export default function getCatalog() {
-  if(catalog) {
-    return catalog;
-  }
   if (catalogRequest) {
     return catalogRequest;
   }
