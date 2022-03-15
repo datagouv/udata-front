@@ -175,6 +175,16 @@ export const markdown = _jsonMeta("markdown-config");
  */
  export const read_only_enabled = _jsonMeta('read-only-enabled');
 
+ /**
+ * Whether the 'autocomplete' feature is enabled or not.
+ */
+export const search_autocomplete_enabled = _meta("search-autocomplete-enabled");
+
+ /**
+ * Debounce value for autocomplete.
+ */
+export const search_autocomplete_debounce = _meta("search-autocomplete-debounce");
+
 // New generic `js-config-*` variables : simply add them to `metadata.html` with a meta name="js-config-something", content="yourValue" and import this file.
 // Everything is exported in the `values` variable as key: value pairs
 const valuesPrefix = "js-config-";
