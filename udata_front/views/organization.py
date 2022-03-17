@@ -67,6 +67,7 @@ class OrganizationDetailView(OrgView, DetailView):
     def get_context(self):
         context = super(OrganizationDetailView, self).get_context()
 
+        params_datasets_page = request.args.get('datasets_page', 1, type=int)
         params_reuses_page = request.args.get('reuses_page', 1, type=int)
 
         can_edit = EditOrganizationPermission(self.organization)
@@ -92,7 +93,7 @@ class OrganizationDetailView(OrgView, DetailView):
 
         context.update({
             'reuses': reuses.paginate(params_reuses_page, self.page_size),
-            'datasets': datasets.limit(self.page_size),
+            'datasets': datasets.paginate(params_datasets_page, self.page_size),
             'total_datasets': len(datasets),
             'total_reuses': len(reuses),
             'followers': followers,
