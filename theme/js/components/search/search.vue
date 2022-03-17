@@ -26,6 +26,11 @@
     <h2 class="fr-mt-md-2w fr-mb-2w fr-mb-md-1w fr-text--sm">
       {{ $t("Search filters") }}
     </h2>
+    <div class="fr-grid-row fr-grid-row--gutters">
+      <div class="fr-col">
+          <MultiSelect />
+        </div>
+    </div>
     <div class="filters-wrapper fr-p-md-3v">
       <div class="fr-grid-row fr-grid-row--gutters justify-between align-items-center">
         <div class="fr-col-12 fr-col-md-6 fr-col-lg-3">
@@ -173,9 +178,11 @@ import {generateCancelToken} from "../../plugins/api";
 import filterIcon from "svg/filter.svg";
 import axios from "axios";
 import queryString from "query-string";
+import MultiSelect from "./multi-select";
 
 export default {
   components: {
+    MultiSelect,
     "search-input": SearchInput,
     Rangepicker,
     Suggestor,

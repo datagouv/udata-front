@@ -1,7 +1,7 @@
 <template>
 <div class="form-group">
   <label for="select-element">Que voulez-vous faire aujourd'hui ?</label>
-  <select class="form-control" id="select-element" data-select-a11y data-placeholder="Chercher dans la liste">
+  <select class="form-control" id="select-element" ref="select" data-placeholder="Chercher dans la liste">
       <option>Dormir</option>
       <option>Grimper aux arbres</option>
       <option>Tricoter</option>
@@ -12,9 +12,18 @@
 </template>
 
 <script>
-import * as classes from '@pidila/scampi/modules/select-a11y/index.scss';
+import {ref, onMounted} from "vue";
+import Select from "@conciergerie-dev/select-a11y";
 export default {
-  name: "MultiSelect"
+  setup() {
+    const select = ref(null);
+    onMounted(() => {
+      new Select(select.value);
+    });
+    return {
+      select,
+    }
+  }
 }
 </script>
 
