@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Format home page numbers [#90](https://github.com/etalab/udata-front/pull/90)
 
 ## 1.2.4 (2022-03-01)
 
