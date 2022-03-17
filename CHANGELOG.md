@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Replace see more button on home page with link [#91](https://github.com/etalab/udata-front/pull/91)
 
 ## 1.2.4 (2022-03-01)
 
