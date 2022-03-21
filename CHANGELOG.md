@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add button on organization page to see all of its datasets [#93](https://github.com/etalab/udata-front/pull/93)
 
 ## 1.2.4 (2022-03-01)
 
