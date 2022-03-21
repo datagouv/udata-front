@@ -17,6 +17,12 @@ const KEYCODES = window.dsfr.core.KeyCodes;
 
 export default function useKeyCodes() {
   return {
-    KEYCODES,
+    KEYCODES: {
+      ...KEYCODES,
+      ALT: 18,
+      CTRL: 17,
+      SHIFT: 16,
+      CAPS_LOCK: 20,
+    },
   }
 }

@@ -25,13 +25,14 @@ It's an input working like a [combobox](https://www.w3.org/TR/wai-aria-practices
       :aria-controls="uid"
       :aria-expanded="expanded"
       id="search-input"
+      data-cy="search-input"
       :aria-activedescendant="selected"
       name="q"
       v-model="q"
       @click.stop.capture="showAndSelectIfQuery"
       @keydown="handleKeyDown"
       @keypress.enter.prevent="searchSelectedOption"
-      @blur="focusOut"
+      @blur="handleFocusOut"
     />
     <button
       type="button"
@@ -82,7 +83,7 @@ export default {
   components: {MenuSearchOption},
   setup() {
     const {t} = useI18n();
-    const {handleKeyPressForCollapse, expanded, uid, show, registerBackgroundEvent, removeBackgroundEvent} = useCollapse();
+    const {handleKeyPressForCollapse, expanded, uid, show, hide, registerBackgroundEvent, removeBackgroundEvent} = useCollapse();
     const q = ref('');
     const {datasetUrl, reuseUrl, organizationUrl} = useSearchUrl(q);
     const options = reactive([
@@ -140,6 +141,11 @@ export default {
       handleKeyPressForActiveDescendant(e, moved);
     }
 
+    const handleFocusOut = () => {
+      focusOut();
+      hide();
+    }
+
     const searchSelectedOption = () => {
       if(selectedOption.value) {
         window.location.href = selectedOption.value.link;
@@ -156,8 +162,8 @@ export default {
       isSelected,
       uid,
       q,
-      focusOut,
       showAndFocus,
+      handleFocusOut,
       showAndSelectIfQuery,
       handleKeyDown,
       searchSelectedOption,

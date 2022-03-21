@@ -63,11 +63,18 @@ export function useCollapse() {
    * @param {KeyboardEvent} key
    */
   const handleKeyPressForCollapse = (key) => {
-    show();
     switch (key.keyCode) {
+      case KEYCODES.ALT:
+      case KEYCODES.CTRL:
+      case KEYCODES.SHIFT:
+      case KEYCODES.CAPS_LOCK:
+        break;
       case KEYCODES.ESCAPE:
+      case KEYCODES.TAB:
         hide();
         break;
+      default:
+        show();
     }
   };
 
@@ -75,6 +82,7 @@ export function useCollapse() {
     expanded,
     uid: collapseId,
     show,
+    hide,
     toggle,
     registerBackgroundEvent,
     removeBackgroundEvent,
