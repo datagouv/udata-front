@@ -1,8 +1,34 @@
 @import (less) "@conciergerie-dev/select-a11y/dist/select-a11y.css";
 
+.form-group .select-a11y {
+    .btn-select-a11y {
+        .fr-select;
+        .icon-select {
+            display: none;
+        }
+    }
+    .a11y-container {
+        background: @white;
+        .fr-p-2w;
+        .form-control {
+            .fr-input;
+        }
+    }
+    .a11y-suggestions {
+        .fr-mt-2w;
+        border: none;
+    }
+    .a11y-suggestion {
+        .fr-p-0;
+    }
+}
+
 .suggestor {
     --ms-tag-py: @spacing-xs;
     --ms-py: @spacing-sm;
+    .multiselect-caret {
+        z-index: 9;
+    }
     .multiselect-placeholder, .multiselect-no-options, .multiselect-no-results {
         color: @grey-380;
     }
