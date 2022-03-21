@@ -14,3 +14,21 @@ describe("Testing home page", () => {
     });
   });
 });
+
+describe("Testing search bar", () => {
+  beforeEach(() => {
+    cy.visit("/");
+    cy.injectAxe();
+  });
+  const input = 'input[data-cy="search-input"]';
+  it("Show you a search bar", () => {
+    cy.get(input).should("be.visible");
+  });
+
+  it("Open popup as you type", () => {
+    cy.get(input)
+      .type("some string")
+      .get(input)
+      .should('have.attr', 'aria-expanded', 'true');
+  });
+});
