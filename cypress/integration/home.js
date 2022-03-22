@@ -14,33 +14,3 @@ describe("Testing home page", () => {
     });
   });
 });
-
-describe("Testing search bar", () => {
-  beforeEach(() => {
-    cy.visit("/");
-    cy.injectAxe();
-    const input = 'input[data-cy="search-input"]';
-    cy.get(input).as('input');
-    cy.get('@input').invoke('attr', 'aria-controls').then(val => {
-      cy.get("#" + val).as('popup');
-    });
-  });
-  it("Show you a search bar", () => {
-    cy.get('@input').should("be.visible");
-  });
-
-  it("Open popup as you type", () => {
-    cy.get('@input')
-      .type("some string")
-      .get('@input')
-      .invoke('attr', 'aria-expanded')
-      .should('eq', 'true');
-  });
-
-  it("Focus an empty field don't open the popup", () => {
-    cy.get('@input')
-      .focus()
-      .get('@input')
-      .should('have.attr', 'aria-expanded', 'false');
-  });
-});
