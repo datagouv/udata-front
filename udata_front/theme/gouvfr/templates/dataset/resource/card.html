@@ -87,51 +87,51 @@
         </div>
         {% endif %}
         <dl>
-            <div class="fr-grid-row fr-grid--gutters fr-mb-2w">
+            <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
                 <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ _('URL') }}</dt>
                 <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10 text-overflow-ellipsis">
                     <a href="{{resource.url}}">{{resource.url}}</a>
                 </dd>
             </div>
-            <div class="fr-grid-row fr-grid--gutters fr-mb-2w">
+            <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
                 <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ _('Permalink') }}</dt>
                 <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10 text-overflow-ellipsis">
                     <a href="{{resource.json_ld.url}}">{{resource.json_ld.url}}</a>
                 </dd>
             </div>
-            <div class="fr-grid-row fr-grid--gutters fr-mb-2w">
+            <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
                 <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ _('Type') }}</dt>
                 <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
                     {{type_label}}
                 </dd>
             </div>
-            <div class="fr-grid-row fr-grid--gutters fr-mb-2w">
+            <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
                 <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ _('MIME Type') }}</dt>
                 <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
                     {{resource.mime}}
                 </dd>
             </div>
             {% if resource.checksum %}
-                <div class="fr-grid-row fr-grid--gutters fr-mb-2w">
+                <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
                     <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{resource.checksum.type}}</dt>
                     <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
                         {{resource.checksum.value}}
                     </dd>
                 </div>
             {% endif %}
-            <div class="fr-grid-row fr-grid--gutters fr-mb-2w">
+            <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
                 <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ _('Created on') }}</dt>
                 <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
                     {{resource.created_at|dateformat(format='long')}}
                 </dd>
             </div>
-            <div class="fr-grid-row fr-grid--gutters fr-mb-2w">
+            <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
                 <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ _('Modified on') }}</dt>
                 <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
                     {{resource.modified|dateformat(format='long')}}
                 </dd>
             </div>
-            <div class="fr-grid-row fr-grid--gutters">
+            <div class="fr-grid-row fr-grid-row--gutters">
                 <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ _('Published on') }}</dt>
                 <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
                     {{resource.published|dateformat(format='long')}}

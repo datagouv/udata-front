@@ -97,49 +97,49 @@
       <div class=" fr-mt-0 markdown" v-if="resource.description" v-html="$filters.markdown(resource.description)">
       </div>
       <dl>
-        <div class="fr-grid-row fr-grid--gutters fr-mb-2w">
+        <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
           <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('URL') }}</dt>
           <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10 text-overflow-ellipsis">
             <a :href="resource.url">{{resource.url}}</a>
           </dd>
         </div>
-        <div class="fr-grid-row fr-grid--gutters fr-mb-2w">
+        <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
           <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Permalink') }}</dt>
           <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10 text-overflow-ellipsis">
             <a :href="resource.latest">{{resource.latest}}</a>
           </dd>
         </div>
-        <div class="fr-grid-row fr-grid--gutters fr-mb-2w">
+        <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
           <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Type') }}</dt>
           <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
             {{ typeLabel }}
           </dd>
         </div>
-        <div class="fr-grid-row fr-grid--gutters fr-mb-2w">
+        <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
           <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('MIME Type') }}</dt>
           <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
             {{resource.mime}}
           </dd>
         </div>
-        <div v-if="resource.checksum" class="fr-grid-row fr-grid--gutters fr-mb-2w">
+        <div v-if="resource.checksum" class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
           <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{resource.checksum.type}}</dt>
           <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
             {{resource.checksum.value}}
           </dd>
         </div>
-        <div class="fr-grid-row fr-grid--gutters fr-mb-2w">
+        <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
           <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Created on') }}</dt>
           <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
             {{$filters.formatDate(resource.created_at)}}
           </dd>
         </div>
-        <div class="fr-grid-row fr-grid--gutters fr-mb-2w">
+        <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
           <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Modified on') }}</dt>
           <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
             {{$filters.formatDate(resource.last_modified)}}
           </dd>
         </div>
-        <div class="fr-grid-row fr-grid--gutters">
+        <div class="fr-grid-row fr-grid-row--gutters">
           <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Published on') }}</dt>
           <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
             {{$filters.formatDate(resource.published)}}
