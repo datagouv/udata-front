@@ -52,6 +52,7 @@ It's an input working like a [combobox](https://www.w3.org/TR/wai-aria-practices
       ref="list"
       role="listbox"
       aria-labelledby="search-label"
+      @mousedown.prevent
     >
       <ul class="fr-menu__list" role="listbox">
         <li
@@ -69,7 +70,7 @@ It's an input working like a [combobox](https://www.w3.org/TR/wai-aria-practices
 </template>
 
 <script>
-import {ref, reactive, onMounted, onUnmounted} from "vue";
+import {ref, reactive, onMounted, onUnmounted, nextTick} from "vue";
 import { useI18n } from 'vue-i18n'
 import { useCollapse } from "../../composables/useCollapse";
 import MenuSearchOption from "./menu-search-option";
@@ -144,7 +145,7 @@ export default {
     const handleFocusOut = () => {
       focusOut();
       hide();
-    }
+    };
 
     const searchSelectedOption = () => {
       if(selectedOption.value) {
