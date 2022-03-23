@@ -36,9 +36,9 @@ Urls:
 -->
 
 <template>
-  <div class="form-group">
-    <label for="select-element">{{placeholder}}</label>
-    <select class="form-control" id="select-element" multiple ref="select">
+  <div class="form-group" ref="container">
+    <label :for="id">{{placeholder}}</label>
+    <select class="form-control" :id="id" multiple ref="select">
       <option
         v-for="option in options"
         :key="option.value"
@@ -51,10 +51,11 @@ Urls:
 </template>
 
 <script>
-import {defineComponent, ref, Ref, onMounted} from "vue";
+import {defineComponent, ref, Ref, onMounted, onUpdated} from "vue";
 import Select from "@conciergerie-dev/select-a11y/dist/module";
 import {useI18n} from 'vue-i18n';
 import {api} from "../../plugins/api";
+import useUid from "../../composables/useUid";
 
 /**
  * @typedef {Object} Option
@@ -86,7 +87,29 @@ export default defineComponent({
   },
   setup(props) {
     const { t } = useI18n();
+    const { id } = useUid('multiselect');
+
+     /** 
+      * Select template Ref
+     * @type {Ref<HTMLElement|null>}
+     */
     const select = ref(null);
+
+    /**
+     * Container Template Ref
+     * @type {Ref<HTMLElement|null>}
+     */
+    const container = ref(null);
+
+    /**
+     * Popup offset if required
+     */
+    const offset = ref(0);
+
+    /**
+     * Mimimum popup width
+     */
+    const minWidth = 350;
 
     /**
      * Current options
@@ -108,10 +131,14 @@ export default defineComponent({
       if (!props.listUrl) return [];
 
       /**
-       * @type {import("axios").AxiosResponse<{data: Array}>}
+       * @type {import("axios").AxiosResponse<{data: Array}|Array>}
        */
       const resp = await api.get(props.listUrl);
-      return mapToOption(resp.data.data);
+      let data = resp.data;
+      if(!Array.isArray(data)) {
+        data = data.data;
+      }
+      return mapToOption(data);
     };
 
     /**
@@ -188,12 +215,28 @@ export default defineComponent({
       }
     }
 
+    const updatePopupStyle = () => {
+      if(container.value) {
+        let rect = container.value.getBoundingClientRect();
+        let popupWidth = Math.min(minWidth, rect.width);
+        if(window.innerWidth < popupWidth) {
+          return;
+        }
+        let availableSpace = window.innerWidth - rect.x;
+        let popupMustMove = availableSpace < minWidth;
+        offset.value = popupMustMove ? minWidth - rect.width : 0;
+        container.value.style.setProperty('--offset-a11y-container', `-${offset.value}px`);
+        container.value.style.setProperty('--min-width-a11y-container', `${minWidth}px`);
+      }
+    }
+
     suggest().then(values => {
       options.value = values;
       fillSelectedFromValues();
     });
+
     onMounted(() => {
-      new Select(select.value,  {
+      new Select(select.value, {
         text:{
           help: t('Use tab (or arrow down) to move between suggestions'),
           placeholder: props.searchPlaceholder,
@@ -203,12 +246,24 @@ export default defineComponent({
           delete: t('Delete'),
         }
       });
+      updatePopupStyle();
     });
+    onUpdated(updatePopupStyle);
     return {
+      id,
       options,
       selected,
       select,
+      container,
+      offset,
     }
   }
 });
 </script>
+
+<style scoped>
+.form-group :deep(.a11y-container) {
+  left: var(--offset-a11y-container);
+  min-width: var(--min-width-a11y-container);
+}
+</style>
