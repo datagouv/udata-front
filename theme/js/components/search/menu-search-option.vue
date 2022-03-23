@@ -1,5 +1,5 @@
 <template>
-  <a class="fr-nav__link unstyled" :href="link" target="_self">
+  <a class="fr-nav__link unstyled" :href="link">
     <div class="fr-grid-row fr-grid-row--middle">
       <div aria-hidden="true" class="fr-col-auto fr-mr-2w" v-html="icon">
       </div>
