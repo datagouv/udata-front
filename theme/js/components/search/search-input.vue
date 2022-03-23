@@ -14,7 +14,7 @@ If the submitUrl prop is passed, it will redirect on Submit.
 <template>
   <section class="search-input">
     <form :action="submitUrl" @submit="onSubmit" class="row-inline">
-      <span class="icon" :class="{ active: queryString }" v-html="icon" />
+      <span class="icon" :class="{ active: queryString }" v-html="icon"></span>
       <input
         type="text"
         name="q"
@@ -33,7 +33,7 @@ If the submitUrl prop is passed, it will redirect on Submit.
         v-html="closeIcon"
         v-if="stop"
         :aria-label="$t('Close')"
-      />
+      ></a>
     </form>
   </section>
 </template>
@@ -41,8 +41,9 @@ If the submitUrl prop is passed, it will redirect on Submit.
 <script>
 import Icon from "svg/search.svg";
 import CloseIcon from "svg/close.svg";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   created() {
     this.icon = Icon;
     this.closeIcon = CloseIcon;
@@ -85,5 +86,5 @@ export default {
       if (!this.submitUrl) event.preventDefault();
     },
   },
-};
+});
 </script>

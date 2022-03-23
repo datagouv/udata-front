@@ -10,16 +10,34 @@
     .a11y-container {
         background: @white;
         .fr-p-2w;
+        .fr-pb-1w;
         .form-control {
             .fr-input;
         }
     }
     .a11y-suggestions {
-        .fr-mt-2w;
+        .fr-mt-1w;
         border: none;
+        max-height: 50vh;
+        min-width: 350px;
     }
     .a11y-suggestion {
-        .fr-p-0;
+        .fr-p-1w;
+        &:hover, &:focus {
+            background: @grey-100;
+        }
+        &[aria-selected=true] {
+            background: @grey-200;
+            &:before {
+                content: none;
+            }
+        }
+        & + .a11y-suggestion {
+            .border-top;
+        }
+    }
+    .list-selected li {
+        display: inline-block;
     }
 }
 

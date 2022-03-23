@@ -28,7 +28,15 @@
     </h2>
     <div class="fr-grid-row fr-grid-row--gutters">
       <div class="fr-col">
-          <MultiSelect />
+          <MultiSelect
+            :placeholder="$t('Organizations')"
+            :searchPlaceholder="$t('Search an organization...')"
+            listUrl="/organizations/?sort=-followers"
+            suggestUrl="/organizations/suggest/"
+            entityUrl="/organizations/"
+            :values="facets.organization"
+            :onChange="handleSuggestorChange('organization')"
+          />
         </div>
     </div>
     <div class="filters-wrapper fr-p-md-3v">
@@ -166,21 +174,22 @@
 </template>
 
 <script>
+import {defineComponent} from "vue";
 import config from "../../config";
-import SearchInput from "./search-input";
-import Suggestor from "./suggestor";
-import Rangepicker from "./rangepicker";
-import Dataset from "../dataset/search-result";
-import Loader from "../dataset/loader";
-import Empty from "./empty";
-import Pagination from "../pagination/pagination";
+import SearchInput from "./search-input.vue";
+import Suggestor from "./suggestor.vue";
+import Rangepicker from "./rangepicker.vue";
+import Dataset from "../dataset/search-result.vue";
+import Loader from "../dataset/loader.vue";
+import Empty from "./empty.vue";
+import Pagination from "../pagination/pagination.vue";
 import {generateCancelToken} from "../../plugins/api";
 import filterIcon from "svg/filter.svg";
 import axios from "axios";
 import queryString from "query-string";
-import MultiSelect from "./multi-select";
+import MultiSelect from "./multi-select.vue";
 
-export default {
+export default defineComponent({
   components: {
     MultiSelect,
     "search-input": SearchInput,
@@ -199,7 +208,7 @@ export default {
   },
   created() {
     // Update search params from URL on page load for deep linking
-    const url = new URL(window.location);
+    const url = new URL(window.location.href);
     let searchParams = queryString.parse(url.search);
     if (searchParams.q) {
       this.queryString = searchParams.q;
@@ -231,7 +240,7 @@ export default {
       deep: true,
       handler(val) {
         // Update URL to match current search params value for deep linking
-        let url = new URL(window.location);
+        let url = new URL(window.location.href);
         url.search = queryString.stringify(val, {skipNull: true});
         history.pushState(null, "", url);
       },
@@ -341,5 +350,5 @@ export default {
       this.search();
     },
   },
-};
+});
 </script>

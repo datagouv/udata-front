@@ -1,32 +1,214 @@
+<!--
+---
+name:  Multi-select
+category: Search
+---
+
+# Multi-select
+
+A pretty simple component that looks like a `<select>` but with autocomplete features.
+
+Options can be :
+- A list from an API that will be fetched once
+- A suggest-style API that will be fetched on each character typed
+- A combination of both : a static list on load that is replaced the user types something
+
+* Initial values can be provided from props (can be used to pre-fill the select with values from the URL)
+
+## Usage
+
+Simply provide the necessary props for your case.
+
+Urls:
+* suggestUrl(optional): The URL that will be called when the user performs a search within the select.
+  If not provided, suggest mode will be disabled and typing in the select will only filter the existing options.
+* listUrl(optional): The URL that will be called to populate the select options on mount.
+  If not provided, the select will start empty and will fill with options when the user starts typing some text.
+* entityUrl(optional): The URL that will be called to fetch labels for options provided before the component mounts.
+* values: Initial values if the select needs to be pre-filled. Can be a String (single value) or an Array of values.
+  Labels will be fetched from entityUrl, or from the options list if listUrl is provided, or the value will be used as label.
+* onChange: Function that will be called on each value select/deselect action.
+* placeholder: Select placeholder, always shown
+* searchPlaceholder: Search input placeholder
+* emptyPlaceholder: Options placeholder when there is no search results
+
+```
+-->
+
 <template>
-<div class="form-group">
-  <label for="select-element">Que voulez-vous faire aujourd'hui ?</label>
-  <select class="form-control" id="select-element" ref="select" data-placeholder="Chercher dans la liste">
-      <option>Dormir</option>
-      <option>Grimper aux arbres</option>
-      <option>Tricoter</option>
-      <option selected>Faire du vélo</option>
-      <option>Rêver</option>
-  </select>
-</div>
+  <div class="form-group">
+    <label for="select-element">{{placeholder}}</label>
+    <select class="form-control" id="select-element" multiple ref="select">
+      <option
+        v-for="option in options"
+        :key="option.value"
+        :value="option.value"
+      >
+        {{option.label}}
+      </option>
+    </select>
+  </div>
 </template>
 
 <script>
-import {ref, onMounted} from "vue";
-import Select from "@conciergerie-dev/select-a11y";
-export default {
-  setup() {
+import {defineComponent, ref, Ref, onMounted} from "vue";
+import Select from "@conciergerie-dev/select-a11y/dist/module";
+import {useI18n} from 'vue-i18n';
+import {api} from "../../plugins/api";
+
+/**
+ * @typedef {Object} Option
+ * @property {string} label - Label (display) of the option
+ * @property {any} value - Value (id) of the option
+ */
+
+export default defineComponent({
+  props: {
+    suggestUrl: String,
+    listUrl: String,
+    entityUrl: String,
+    values: [Array, String],
+    onChange: {
+      type: Function,
+      required: true,
+    },
+    placeholder: {
+      type: String,
+      required: true,
+    },
+    searchPlaceholder: {
+      type: String,
+      required: true,
+    },
+    emptyPlaceholder: {
+      type: String,
+    },
+  },
+  setup(props) {
+    const { t } = useI18n();
     const select = ref(null);
+
+    /**
+     * Current options
+     * @type {Ref<Option[]>}
+     */
+    const options = ref([]);
+
+    /**
+     * Current selected value(s)
+     * @type {Ref<Option[]>}
+     */
+    const selected = ref([]);
+
+    /**
+     * Get initial set of options from API or an empty array
+     * @returns {Promise<Option[]>}
+     */
+    const getInitialOptions = async () => {
+      if (!props.listUrl) return [];
+
+      /**
+       * @type {import("axios").AxiosResponse<{data: Array}>}
+       */
+      const resp = await api.get(props.listUrl);
+      return mapToOption(resp.data.data);
+    };
+
+    /**
+     * Map an array of all different objects received from API to an array of {@link Option}
+     * @param {Array} data
+     * @returns {Option[]}
+     **/
+    const mapToOption = (data) => {
+      return data.map((obj) => ({
+        label: obj.name || obj.title || obj.text || obj?.properties?.name,
+        value: obj.id || obj.text,
+      }));
+    };
+
+    /**
+     * Get options from suggest API
+     * It uses list API if no query is provided
+     * Fallback to an empty array without query and props.listUrl
+     * @param {string} q 
+     * @returns {Promise<Option[]>}
+     */
+    const suggest = (q = '') => {
+      if(q && props.suggestUrl) {
+        return api
+          .get(props.suggestUrl, { params: { q } })
+          .then((resp) => resp.data)
+          .then(mapToOption);
+      }
+
+      return getInitialOptions();
+    };
+
+    /**
+     * Normalize provided values to array
+     * @param {string | Array | undefined} values 
+     * @returns {Ref<Array>}
+     */
+    const normalizeValues = (values) => {
+      /**
+       * Array of selected values
+       * @type {Ref<Array>}
+       */
+      let selected = ref([]);
+      if (typeof values === "string") {
+        selected.value = [values];
+      } else if (Array.isArray(values)) {
+        selected.value = values;
+      } else {
+        selected.value = [];
+      }
+      return selected;
+    }
+
+    /**
+     * Fill selected array with initial props.values.
+     * It tries to augment the values with data from props.entityUrl or options.
+     */
+    const fillSelectedFromValues = () => {
+      let selectedValues = normalizeValues(props.values);
+      for(let value of selectedValues.value) {
+        if (props.entityUrl) {
+          api
+            .get(props.entityUrl + value)
+            .then((resp) => resp.data)
+            .then((data) => mapToOption([data]))
+            .then((entities) => entities[0]?.label ?? value)
+            .then((label) => selected.value.push({ label, value }));
+          continue;
+        }
+        const option = options.value.find((opt) => opt.value === value);
+        if (option) {
+          selected.value.push(option);
+        }
+      }
+    }
+
+    suggest().then(values => {
+      options.value = values;
+      fillSelectedFromValues();
+    });
     onMounted(() => {
-      new Select(select.value);
+      new Select(select.value,  {
+        text:{
+          help: t('Use tab (or arrow down) to move between suggestions'),
+          placeholder: props.searchPlaceholder,
+          noResult: props.emptyPlaceholder || t("No results found."),
+          results: t('{x} available suggestion'),
+          deleteItem: t('Delete {t}'),
+          delete: t('Delete'),
+        }
+      });
     });
     return {
+      options,
+      selected,
       select,
     }
   }
-}
+});
 </script>
-
-<style scoped>
-
-</style>
