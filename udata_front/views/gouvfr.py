@@ -107,9 +107,10 @@ def show_page(slug):
     datasets = [get_object(Dataset, d) for d in page.get('datasets') or []]
     reuses = [r for r in reuses if r is not None]
     datasets = [d for d in datasets if d is not None]
+    content_type = page.get('content_type', 'markdown')
     return theme.render(
         'page.html',
-        page=page, reuses=reuses, datasets=datasets, gh_url=gh_url
+        page=page, reuses=reuses, datasets=datasets, gh_url=gh_url, content_type=content_type
     )
 
 
