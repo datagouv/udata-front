@@ -7,7 +7,7 @@
     "dev": "npm run clean && npm run watch",
     "build": "npm run clean && npm run build:stylemark && npm run build:app",
     "build:app": "parcel build theme/less/index.less theme/js/index.js --dist-dir udata_front/theme/gouvfr/static/",
-    "build:stylemark": "npm run build:app -- --no-minify",
+    "build:stylemark": "npm run build:app -- --no-optimize",
     "test": "cypress run",
     "i18n:report": "vue-i18n-extract report --vueFiles 'theme/**/*.vue' --languageFiles 'theme/js/locales/**/*' --separator '^'",
     "i18n:extract": "npm run i18n:report -- --add",
