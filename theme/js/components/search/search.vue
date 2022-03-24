@@ -180,7 +180,6 @@ import Pagination from "../pagination/pagination.vue";
 import { generateCancelToken } from "../../plugins/api";
 import filterIcon from "svg/filter.svg";
 import axios from "axios";
-import queryString from "query-string";
 import MultiSelect from "./multi-select.vue";
 
 export default defineComponent({
@@ -203,17 +202,18 @@ export default defineComponent({
   created() {
     // Update search params from URL on page load for deep linking
     const url = new URL(window.location.href);
-    let searchParams = queryString.parse(url.search);
-    if (searchParams.q) {
-      this.queryString = searchParams.q;
-      delete searchParams.q;
+    const params = new URLSearchParams(url.search);
+
+    if (params.has('q')) {
+      this.queryString = params.get('q');
+      params.delete('q');
     }
-    if (searchParams.page) {
-      this.currentPage = parseInt(searchParams.page);
-      delete searchParams.page;
+    if (params.has('page')) {
+      this.currentPage = parseInt(params.get('page'));
+      params.delete('page');
     }
     // set all other search params as facets
-    this.facets = searchParams;
+    this.facets = Object.fromEntries(params);
     if (this.disableFirstSearch) {
       this.loading = true;
     } else {
@@ -235,7 +235,7 @@ export default defineComponent({
       handler(val) {
         // Update URL to match current search params value for deep linking
         let url = new URL(window.location.href);
-        url.search = queryString.stringify(val, { skipNull: true });
+        url.search = new URLSearchParams(val).toString();
         history.pushState(null, "", url);
       },
     },
