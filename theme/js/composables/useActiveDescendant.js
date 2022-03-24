@@ -1,16 +1,9 @@
-import {ref, computed} from "vue";
+import {ref, Ref, computed} from "vue";
 import useKeyCodes from "./useKeyCodes";
 
-
 /**
- * @typedef Option
- * @property {string} id
- */
-
-/**
- *
- * @param {Option[]} options
- * @returns {{select: (function(*): *), focusOut: focusOut, isSelected: (function(*): boolean), selected}}
+ * @template {{id: string}} T
+ * @param {T[]} options
  */
 export default function useActiveDescendant(options) {
   const {KEYCODES} = useKeyCodes();
@@ -18,7 +11,7 @@ export default function useActiveDescendant(options) {
   /** @type Ref<string|null> */
   const selected = ref(null);
 
-  /** @type Ref<Option|null> */
+  /** @type Ref<T|null> */
   const selectedOption = computed(() => options.find(option => option.id === selected.value));
 
   /**
@@ -43,6 +36,10 @@ export default function useActiveDescendant(options) {
     selected.value = null;
   };
 
+  /**
+   * Select option at position
+   * @param {number} position 
+   */
   const selectAtPosition = (position) => {
     select(options[position].id);
   }

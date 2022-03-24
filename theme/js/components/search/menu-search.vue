@@ -70,23 +70,34 @@ It's an input working like a [combobox](https://www.w3.org/TR/wai-aria-practices
 </template>
 
 <script>
-import {ref, reactive, onMounted, onUnmounted, nextTick} from "vue";
+import {ref, defineComponent,reactive, onMounted, onUnmounted} from "vue";
 import { useI18n } from 'vue-i18n'
 import { useCollapse } from "../../composables/useCollapse";
-import MenuSearchOption from "./menu-search-option";
+import MenuSearchOption from "./menu-search-option.vue";
 import datasetIcon from "svg/search/dataset.svg";
 import reuseIcon from "svg/search/reuse.svg";
 import organizationIcon from "svg/search/organization.svg";
 import useSearchUrl from "../../composables/useSearchUrl";
 import useActiveDescendant from "../../composables/useActiveDescendant";
 
-export default {
+export default defineComponent({
   components: {MenuSearchOption},
   setup() {
     const {t} = useI18n();
     const {handleKeyPressForCollapse, expanded, uid, show, hide, registerBackgroundEvent, removeBackgroundEvent} = useCollapse();
     const q = ref('');
     const {datasetUrl, reuseUrl, organizationUrl} = useSearchUrl(q);
+    /**
+     * @typedef MenuOption
+     * @property {string} id
+     * @property {string} icon
+     * @property {string} type
+     * @property {string} link
+     */
+
+    /**
+     * @type MenuOption[]
+     */
     const options = reactive([
       {
         id: "dataset-option",
@@ -170,5 +181,5 @@ export default {
       searchSelectedOption,
     }
   },
-}
+});
 </script>
