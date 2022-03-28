@@ -51,7 +51,7 @@ Urls:
 </template>
 
 <script>
-import {defineComponent, ref, Ref, onMounted, onUpdated} from "vue";
+import {defineComponent, ref, Ref, onMounted, onUpdated, nextTick} from "vue";
 import Select from "@conciergerie-dev/select-a11y/dist/module";
 import {useI18n} from 'vue-i18n';
 import {api} from "../../plugins/api";
@@ -89,10 +89,10 @@ export default defineComponent({
     const { t } = useI18n();
     const { id } = useUid('multiselect');
 
-     /** 
-      * Select template Ref
-     * @type {Ref<HTMLElement|null>}
-     */
+    /** 
+    * Select template Ref
+    * @type {Ref<HTMLElement|null>}
+    */
     const select = ref(null);
 
     /**
@@ -215,6 +215,29 @@ export default defineComponent({
       }
     }
 
+    /**
+     * Trigger suggest based on input event
+     * @param {Event} e - Input event
+     */
+    const triggerSuggest = (e) => {
+      console.log(e);
+      if(e.target instanceof HTMLInputElement) {
+        suggest(e.target.value);
+      }
+    };
+
+    /**
+     * Trigger suggest based on input event
+     * @param {Event} e - Input event
+     */
+    const registerTriggerSuggest = (e) => {
+      const input = container.value.querySelector('input');
+      console.log(input);
+      if(input) {
+        input.addEventListener('input', triggerSuggest);
+      }
+    };
+
     const updatePopupStyle = () => {
       if(container.value) {
         let rect = container.value.getBoundingClientRect();
@@ -232,6 +255,9 @@ export default defineComponent({
         if(!select.classList.contains("fr-select")) {
           select.classList.add("fr-select");
         }
+        const button = container.value.querySelector('button');
+        button.removeEventListener('click', registerTriggerSuggest);
+        button.addEventListener('click', registerTriggerSuggest);
       }
     }
 
