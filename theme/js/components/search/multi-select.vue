@@ -225,8 +225,13 @@ export default defineComponent({
         let availableSpace = window.innerWidth - rect.x;
         let popupMustMove = availableSpace < minWidth;
         offset.value = popupMustMove ? minWidth - rect.width : 0;
-        container.value.style.setProperty('--offset-a11y-container', `-${offset.value}px`);
-        container.value.style.setProperty('--min-width-a11y-container', `${minWidth}px`);
+        const styles = container.value.style;
+        styles.setProperty('--offset-a11y-container', `-${offset.value}px`);
+        styles.setProperty('--min-width-a11y-container', `${minWidth}px`);
+        const select = container.value.querySelector('.select-a11y');
+        if(!select.classList.contains("fr-select")) {
+          select.classList.add("fr-select");
+        }
       }
     }
 
