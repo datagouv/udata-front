@@ -1,14 +1,15 @@
 import { createApp } from "vue";
+import * as dsfr from "@gouvfr/dsfr/dist/dsfr/dsfr.module";
 
 import Threads from "./components/discussions/threads.vue";
-import Suggest from "./components/search/suggest-box";
+import MenuSearch from "./components/search/menu-search";
 import Search from "./components/search/search";
 import FeaturedButton from './components/utils/featured';
 import FollowButton from "./components/utils/follow-button";
 import ReadMore from "./components/utils/read-more";
 import RequestMembership from "./components/organization/request-membership";
 import Resources from "./components/dataset/resource/resources.vue";
-import * as dsfr from "@gouvfr/dsfr/dist/dsfr/dsfr.module";
+import SearchBar from "./components/utils/search-bar.vue";
 
 import Tabs from "./components/vanilla/tabs";
 import Accordion from "./components/vanilla/accordion";
@@ -24,9 +25,19 @@ import Modals from "./plugins/modals";
 import i18n from "./plugins/i18n";
 import bodyClass from "./plugins/bodyClass";
 import filters from "./plugins/filters";
-import schemaCatalog from "./plugins/schemaCatalog";
 
 import InitSentry from "./sentry";
+
+/**
+ * @interface Ref
+ * @template T
+ * @property {T} value
+ */
+
+/**
+ * @typedef {Object} Ref
+ * @property value - The referenced value
+*/
 
 const configAndMountApp = (el) => {
   const app = createApp({});
@@ -42,17 +53,17 @@ const configAndMountApp = (el) => {
   app.use(i18n);
   app.use(bodyClass);
   app.use(filters);
-  app.use(schemaCatalog);
-  app.use(Toaster);
+  app.use(Toaster).provide('toast', app.config.globalProperties.$toast);
 
   app.component("discussion-threads", Threads);
-  app.component("suggest", Suggest);
+  app.component("menu-search", MenuSearch);
   app.component("search", Search);
   app.component("follow-button", FollowButton);
   app.component("featured-button", FeaturedButton);
   app.component("read-more", ReadMore);
   app.component("request-membership", RequestMembership);
   app.component("dataset-resources", Resources);
+  app.component("search-bar", SearchBar);
 
   // unset delimiters used in html templates to prevent injections using {{ }}
   app.config.compilerOptions.delimiters = [];

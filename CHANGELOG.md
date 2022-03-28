@@ -2,8 +2,17 @@
 
 ## Current (in progress)
 
-- Remove topics code [#59](https://github.com/etalab/udata-front/pull/59)
-- Fix `<read-more>` component height when it contains `<img>` [65](https://github.com/etalab/udata-front/pull/65) [85](https://github.com/etalab/udata-front/pull/85)
+- Add a transport banner hook [#94](https://github.com/etalab/udata-front/pull/94)
+- Add button on organization page to see all of its datasets [#93](https://github.com/etalab/udata-front/pull/93)
+- Format home page numbers [#90](https://github.com/etalab/udata-front/pull/90)
+- Let browsers decide what cursor to use [#89](https://github.com/etalab/udata-front/pull/89)
+- Replace see more button on home page with link [#91](https://github.com/etalab/udata-front/pull/91)
+- Replace Suggest with accessible combobox [#88](https://github.com/etalab/udata-front/pull/88)
+
+## 1.2.4 (2022-03-01)
+
+- **Deprecation**: Topics are now deprecated and will be removed in upcoming releases.
+- Fix `<read-more>` component height when it contains `<img>` [#65](https://github.com/etalab/udata-front/pull/65) [#85](https://github.com/etalab/udata-front/pull/85)
 - Add featured button component back for sysadmin [#79](https://github.com/etalab/udata-front/pull/79)
 - Update reuse style [#52](https://github.com/etalab/udata-front/pull/52) [#81](https://github.com/etalab/udata-front/pull/81)
 - Add banner to broken user page [#76](https://github.com/etalab/udata-front/pull/76)
@@ -18,6 +27,7 @@
 - Remove banner for the new search beta on datasets search page [#83](https://github.com/etalab/udata-front/pull/83)
 - Fix RGAA criterion 7.3 [#82](https://github.com/etalab/udata-front/pull/82)
 - Use avatar_url for owner [#84](https://github.com/etalab/udata-front/pull/84)
+- Update resources style [#78](https://github.com/etalab/udata-front/pull/78)
 
 ## 1.2.3 (2022-01-27)
 
