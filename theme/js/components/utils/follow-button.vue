@@ -1,7 +1,7 @@
 <!--
 ---
 name: Follow
-category: Interactions
+category: 5 - Interactions
 ---
 
 # Follow button
@@ -27,16 +27,17 @@ The `url` prop is the API URL.
         :style="{ color: _following ? 'inherit' : 'transparent' }"
       ></span>
       <span class="fr-ml-1w">
-        {{ _followers }} {{ $tc("favourites", _followers) }}
+        {{ _followers }} {{ $t("favourites", _followers) }}
       </span>
   </button>
 </template>
 
 <script>
+import {defineComponent} from "vue";
 import config from "../../config";
 import icon from "svg/actions/star.svg";
 
-export default {
+export default defineComponent({
   props: {
     followers: Number,
     url: String,
@@ -45,7 +46,7 @@ export default {
   computed: {
     label() {
       let action = this._following ? this.$t('remove from favorites') : this.$t('add to favorites');
-      return this._followers + ' ' + this.$tc('favourites', this._followers) + ', ' + action;
+      return this._followers + ' ' + this.$t('favourites', this._followers) + ', ' + action;
     }
   },
   created() {
@@ -61,7 +62,7 @@ export default {
     };
   },
   methods: {
-    toggleFollow: function () {
+    toggleFollow() {
       this.$auth();
 
       this.loading = true;
@@ -86,5 +87,5 @@ export default {
         .finally(() => (this.loading = false));
     },
   },
-};
+});
 </script>

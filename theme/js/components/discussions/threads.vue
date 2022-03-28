@@ -1,7 +1,7 @@
 <!--
 ---
 name: Discussions
-category: Interactions
+category: 5 - Interactions
 ---
 
 # Discussions
@@ -93,6 +93,7 @@ Discussions allow users to interact with others.
 </template>
 
 <script>
+import {defineComponent} from "vue";
 import config from "../../config";
 import i18n from "../../plugins/i18n";
 
@@ -101,7 +102,8 @@ import CreateThread from "./threads-create.vue";
 import Thread from "./thread.vue";
 import Loader from "./loader.vue";
 import CloseIcon from "svg/close.svg";
-import ThreadsCreateButton from "./threads-create-button";
+import ThreadsCreateButton from "./threads-create-button.vue";
+import {DISCUSSIONS_START_THREAD} from "../../plugins/eventbus";
 
 const URL_REGEX = /discussion-([a-f0-9]{24})-?([0-9]+)?$/i;
 
@@ -115,7 +117,7 @@ const sorts = [
 
 const defaultTitle = i18n.global.t("Discussions");
 
-export default {
+export default defineComponent({
   components: {
     ThreadsCreateButton,
     "create-thread": CreateThread,
@@ -156,7 +158,7 @@ export default {
   },
   mounted() {
     // Listen to bus events
-    this.$bus.on("discussions.startThread", () => this.startThread());
+    this.$bus.on(DISCUSSIONS_START_THREAD, () => this.startThread());
 
     // Check if URL contains a thread
     const hash = window.location.hash.substring(1);
@@ -279,5 +281,5 @@ export default {
       this.loadPage(this.page);
     },
   },
-};
+});
 </script>
