@@ -6,7 +6,7 @@
         :onChange="handleSearchChange"
         :value="queryString"
         :placeholder="$t('Search for data...')"
-        ref="input"
+        ref="inputRef"
       />
       <div
         class="filter-icon fr-hidden-md w-auto fr-mx-3v"
@@ -131,7 +131,7 @@
       </div>
     </section>
   </form>
-  <section class="search-results fr-mt-1w fr-mt-md-3w" ref="results" v-bind="$attrs">
+  <section class="search-results fr-mt-1w fr-mt-md-3w" ref="resultsRef" v-bind="$attrs">
     <transition mode="out-in">
       <div v-if="loading">
         <Loader />
@@ -168,8 +168,12 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import config from "../../config";
+import { defineComponent, ref, Ref, onMounted, computed, watch } from "vue";
+import {useI18n} from 'vue-i18n';
+import axios from "axios";
+import { generateCancelToken, api } from "../../plugins/api";
+import {useToast} from "../../composables/useToast";
+import useSearchUrl from "../../composables/useSearchUrl";
 import SearchInput from "./search-input.vue";
 import Suggestor from "./suggestor.vue";
 import Rangepicker from "./rangepicker.vue";
@@ -177,9 +181,7 @@ import Dataset from "../dataset/search-result.vue";
 import Loader from "../dataset/loader.vue";
 import Empty from "./empty.vue";
 import Pagination from "../pagination/pagination.vue";
-import { generateCancelToken } from "../../plugins/api";
 import filterIcon from "svg/filter.svg";
-import axios from "axios";
 import MultiSelect from "./multi-select.vue";
 
 export default defineComponent({
@@ -199,151 +201,230 @@ export default defineComponent({
       default: false,
     },
   },
-  created() {
-    // Update search params from URL on page load for deep linking
+  setup(props) {
+    const { t } = useI18n();
+    const toast = useToast();
+    /**
+     * Update search params from URL on page load for deep linking
+     */
     const url = new URL(window.location.href);
     const params = new URLSearchParams(url.search);
+    
+    /**
+     * Search query
+     */
+    const queryString = ref('');
 
-    if (params.has('q')) {
-      this.queryString = params.get('q');
-      params.delete('q');
-    }
-    if (params.has('page')) {
-      this.currentPage = parseInt(params.get('page'));
-      params.delete('page');
-    }
-    // set all other search params as facets
-    this.facets = Object.fromEntries(params);
-    if (this.disableFirstSearch) {
-      this.loading = true;
-    } else {
-      this.search();
-    }
-  },
-  mounted() {
-    if (this.disableFirstSearch) {
-      if (this.$refs.results.dataset.totalResults > 0) {
-        this.results = JSON.parse(this.$refs.results.dataset.results);
-        this.totalResults = JSON.parse(this.$refs.results.dataset.totalResults);
-      }
-      this.loading = false;
-    }
-  },
-  watch: {
-    paramUrl: {
-      deep: true,
-      handler(val) {
-        // Update URL to match current search params value for deep linking
-        let url = new URL(window.location.href);
-        url.search = new URLSearchParams(val).toString();
-        history.pushState(null, "", url);
-      },
-    },
-  },
-  data() {
-    return {
-      extendedForm: false, // On desktop, extended form is simply another row of filters. On mobile, form is hidden until extendedForm is triggered
-      results: [],
-      loading: false,
-      currentRequest: null,
-      pageSize: 20,
-      currentPage: 1,
-      totalResults: 0,
-      queryString: "",
-      facets: {},
-      rechercherBetaPath: "https://rechercher.etalab.studio/",
-      filterIcon,
-    };
-  },
-  computed: {
-    // Url for doing the same search (queryString only) on the reuse page
-    // TODO : switch to composition API and useSearchUrl composable
-    reuseUrl() {
-      return `${config.values.reuseUrl}?q=${this.queryString}`;
-    },
-    // Is any filter active ?
-    isFiltered() {
-      return Object.keys(this.facets).some(
-        (key) => this.facets[key]?.length > 0
-      );
-    },
-    paramUrl() {
-      let params = {};
-      for (key in this.facets) {
-        params[key] = this.facets[key];
-      }
-      if (this.currentPage > 1) params.page = this.currentPage;
-      if (this.queryString) params.q = this.queryString;
-      return params;
-    },
-  },
-  methods: {
-    handleSearchChange(input) {
-      this.queryString = input;
-      this.currentPage = 1;
-      this.search();
-    },
-    // Called on every facet selector change, updates the `facets.xxx` object then searches with new values
-    handleSuggestorChange(facet) {
-      return (values) => {
-        // Values can either be an array of varying length, or a String.
-        if (Array.isArray(values)) {
-          if (values.length > 1)
-            this.facets[facet] = values.map((obj) => obj.value);
-          else if (values.length === 1) this.facets[facet] = values[0].value;
-          else this.facets[facet] = null;
-        } else {
-          this.facets[facet] = values;
-        }
+    const {reuseUrl} = useSearchUrl(queryString);
 
-        this.currentPage = 1;
-        this.search();
-      };
-    },
-    changePage(page) {
-      this.currentPage = page;
-      this.search();
-      this.scrollToTop();
-    },
-    search() {
-      this.loading = true;
-      if (this.currentRequest) this.currentRequest.cancel();
+    /**
+     * Search results
+     */
+    const results = ref([]);
 
-      this.currentRequest = generateCancelToken();
+    /**
+     * Count of search results
+     */
+    const totalResults = ref(0);
 
-      this.$api
+    /**
+     * Current page of results
+     */
+    const currentPage = ref(0);
+
+    /**
+     * Search page size
+     */
+    const pageSize = 20;
+
+    /**
+     * All other params are kept here as facets
+     */
+    const facets = ref(null);
+
+    /**
+     * Search loading state
+     */
+    const loading = ref(false);
+
+    /**
+     * Current request if any to be cancelled if a new one comes
+     */
+    const currentRequest = ref(null);
+
+    /**
+     * Vue ref to results HTML
+     */
+    const resultsRef = ref(null);
+
+    /**
+     * Vue ref to results HTML
+     */
+    const inputRef = ref(null);
+
+    /**
+     * Track form extended state
+     * On desktop, extended form is simply another row of filters.
+     * On mobile, form is hidden until extendedForm is triggered.
+     */
+    const extendedForm = ref(false);
+
+    /**
+     * Search new dataset results
+     */
+    const search = () => {
+      loading.value = true;
+      if (currentRequest.value) currentRequest.value.cancel();
+
+      currentRequest.value = generateCancelToken();
+
+      api
         .get("/datasets/", {
-          cancelToken: this.currentRequest.token,
+          cancelToken: currentRequest.value.token,
           params: {
-            q: this.queryString,
-            ...this.facets,
-            page_size: this.pageSize,
-            page: this.currentPage,
+            q: queryString.value,
+            ...facets.value,
+            page_size: pageSize,
+            page: currentPage.value,
           },
         })
         .then((res) => res.data)
         .then((result) => {
-          this.results = result.data;
-          this.totalResults = result.total;
-          this.loading = false;
+          results.value = result.data;
+          totalResults.value = result.total;
+          loading.value = false;
         })
         .catch((error) => {
           if (!axios.isCancel(error)) {
-            this.$toast.error(this.$t("Error getting search results."));
-            this.loading = false;
+            toast.error(t("Error getting search results."));
+            loading.value = false;
           }
         });
-    },
-    scrollToTop() {
-      if (this.$refs.input)
-        this.$refs.input.$el.scrollIntoView({ behavior: "smooth" });
-    },
-    resetFilters() {
-      this.queryString = "";
-      this.facets = {};
-      this.currentPage = 1;
-      this.search();
-    },
+    }
+
+    const handleSearchChange = (input) => {
+      queryString.value = input;
+      currentPage.value = 1;
+      search();
+    };
+    
+    /**
+     * Called on every facet selector change, updates the `facets.xxx` object then searches with new values 
+     */
+    const handleSuggestorChange = (facet) => {
+      return (values) => {
+        // Values can either be an array of varying length, or a String.
+        if (Array.isArray(values)) {
+          if (values.length > 1)
+            facets.value[facet] = values.map((obj) => obj.value);
+          else if (values.length === 1) facets.value[facet] = values[0].value;
+          else facets.value[facet] = null;
+        } else {
+          facets.value[facet] = values;
+        }
+
+        currentPage.value = 1;
+        search();
+      };
+    };
+
+    /**
+     * Change current page
+     * @param {number} page
+     */
+    const changePage = (page) => {
+      currentPage.value = page;
+      search();
+      scrollToTop();
+    };
+    
+    const scrollToTop = () => {
+      if (inputRef.value)
+        inputRef.value.$el.scrollIntoView({ behavior: "smooth" });
+    };
+
+    const resetFilters = () => {
+      queryString.value = "";
+      facets.value = {};
+      currentPage.value = 1;
+      search();
+    };
+
+    /**
+     * Is any filter active ?
+     */ 
+    const isFiltered = computed(() => {
+      return Object.keys(facets.value).some(
+        (key) => facets.value[key]?.length > 0
+      );
+    });
+
+    const paramUrl = computed(() => {
+      /**
+       *  @type Record<string, string>
+       */
+      let params = {};
+      for (key in facets.value) {
+        params[key] = facets.value[key];
+      }
+      if (currentPage.value > 1) params.page = currentPage.value.toString();
+      if (queryString.value) params.q = queryString.value;
+      return params;
+    });
+
+    if (params.has('q')) {
+      queryString.value = params.get('q');
+      params.delete('q');
+    }
+    if (params.has('page')) {
+      currentPage.value = parseInt(params.get('page'));
+      params.delete('page');
+    }
+
+    watch(paramUrl, (val) => {
+        // Update URL to match current search params value for deep linking
+        let url = new URL(window.location.href);
+        url.search = new URLSearchParams(val).toString();
+        history.pushState(null, "", url);
+      }, {deep: true});
+
+    /**
+     * @type {Ref<{organization: ?string, tag: ?string, license: ?string, format: ?string, temporal_coverage: ?string, geozone: ?string, granularity: ?string}>}
+     */
+    facets.value = Object.fromEntries(params);
+    if (props.disableFirstSearch) {
+      loading.value = true;
+    } else {
+      search();
+    }
+
+    onMounted(() => {
+      if (props.disableFirstSearch) {
+        if (resultsRef.value.dataset.totalResults > 0) {
+          results.value = JSON.parse(resultsRef.value.results);
+          totalResults.value = JSON.parse(resultsRef.value.totalResults);
+        }
+        loading.value = false;
+      }
+    });
+    return {
+      reuseUrl,
+      isFiltered,
+      search,
+      handleSearchChange,
+      handleSuggestorChange,
+      changePage,
+      resetFilters,
+      filterIcon,
+      extendedForm,
+      facets,
+      results,
+      totalResults,
+      queryString,
+      loading,
+      pageSize,
+      currentPage,
+    };
   },
 });
 </script>
