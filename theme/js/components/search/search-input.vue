@@ -12,30 +12,25 @@ If the submitUrl prop is passed, it will redirect on Submit.
 -->
 
 <template>
-  <section class="search-input">
-    <form :action="submitUrl" @submit="onSubmit" class="row-inline">
-      <span class="icon" :class="{ active: queryString }" v-html="icon"></span>
+  <form :action="submitUrl" @submit="onSubmit" class="fr-col">
+    <section class="fr-search-bar">
       <input
-        type="text"
+        type="search"
         name="q"
         :value="queryString"
         @input="_onChange"
         @keydown.delete="onDelete"
         ref="input"
+        class="fr-input"
         :aria-label="placeholder || $t('Search...')"
         :placeholder="placeholder || $t('Search...')"
         data-cy="search-input"
       />
-      <a
-        href="#"
-        class="close-icon ml-sm self-center"
-        @click.prevent="stop"
-        v-html="closeIcon"
-        v-if="stop"
-        :aria-label="$t('Close')"
-      ></a>
-    </form>
-  </section>
+      <button class="fr-btn" :title="$t('Search')" type="submit">
+        {{ $t('Search') }}
+      </button>
+    </section>
+  </form>
 </template>
 
 <script>

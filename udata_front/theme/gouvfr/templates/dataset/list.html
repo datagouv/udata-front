@@ -3,15 +3,11 @@
 
 {% set toolbar_class='search-toolbar' %}
 
-{# {% block breadcrumb %}
+{% block breadcrumb %}
 <li class="active">
     {{ _('Datasets') }}
-    <small>{{ _('%(start)s to %(end)s on %(total)s',
-            start=datasets.page_start,
-            end=datasets.page_end,
-            total=datasets.total) }}</small>
 </li>
-{% endblock %} #}
+{% endblock %}
 
 {% set meta = {
     'title': _('Datasets'),
@@ -24,8 +20,10 @@
 
 {% block main_content %}
 <section
-    class="container search py-lg vuejs"
+    class="container search fr-py-2w vuejs"
 >
+    <h1 class="fr-mb-1w">{{_('Datasets')}}</h1>
+    <p>{{_('Search a dataset on %(site)s', site=current_site.title)}}</p>
     <Search
         :disable-first-search="true"
         data-total-results="{{datasets.total}}"

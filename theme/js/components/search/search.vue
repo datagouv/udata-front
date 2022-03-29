@@ -1,142 +1,108 @@
 <template>
   <form @submit.prevent="search">
-    <div class="row-inline justify-between align-items-center search-bar" ref="searchRef">
+    <div class="fr-grid-row justify-between align-items-center search-bar" ref="searchRef">
       <SearchInput
-        class="fr-my-1w fr-my-md-2w fr-text--lead fr-mb-0"
+        class="fr-mb-4w"
         :onChange="handleSearchChange"
         :value="queryString"
         :placeholder="$t('Search for data...')"
       />
-      <div
-        class="filter-icon fr-hidden-md w-auto fr-mx-3v"
-        :class="{ isFiltered, active: extendedForm }"
-        v-html="filterIcon"
-        @click="extendedForm = !extendedForm"
-      ></div>
     </div>
-    <div class="row-inline fr-mt-3v justify-between align-items-center">
-      <h1 class="fr-m-0 fr-h4">
-        {{ $t("Datasets") }}
-        <sup>{{ totalResults }}</sup>
-      </h1>
-      <a
-        :href="reuseUrl"
-        class="nav-link fr-text--sm fr-mb-0 fr-displayed-md fr-mt-3v"
-      >{{ $t("Search reuses") }}</a>
-    </div>
-    <section class="search-filters fr-p-2w fr-p-md-0" :class="{ active: extendedForm }">
-      <h2 class="fr-mt-md-2w fr-mb-2w fr-mb-md-1w fr-text--sm">{{ $t("Search filters") }}</h2>
-      <div class="filters-wrapper fr-p-md-3v">
-        <div class="fr-grid-row fr-grid-row--gutters justify-between align-items-center">
-          <div class="fr-col-12 fr-col-md-6 fr-col-lg-3">
-            <MultiSelect
-              :placeholder="$t('Organizations')"
-              :searchPlaceholder="$t('Search an organization...')"
-              listUrl="/organizations/?sort=-followers"
-              suggestUrl="/organizations/suggest/"
-              entityUrl="/organizations/"
-              :values="facets.organization"
-              :onChange="handleSuggestorChange('organization')"
-            />
-          </div>
-          <div class="fr-col-12 fr-col-md-6 fr-col-lg-3">
-            <MultiSelect
-              :placeholder="$t('Tags')"
-              :searchPlaceholder="$t('Search a tag...')"
-              suggestUrl="/tags/suggest/"
-              :values="facets.tag"
-              :onChange="handleSuggestorChange('tag')"
-            />
-          </div>
-          <div class="fr-col-12 fr-col-md-5 fr-col-lg-3">
-            <MultiSelect
-              :placeholder="$t('Licenses')"
-              :searchPlaceholder="$t('Search a license...')"
-              listUrl="/datasets/licenses/"
-              :values="facets.license"
-              :onChange="handleSuggestorChange('license')"
-            />
-          </div>
-          <div class="fr-col-12 fr-col-md-5 fr-col-lg-2">
-            <MultiSelect
-              :placeholder="$t('Formats')"
-              :searchPlaceholder="$t('Search a format...')"
-              suggestUrl="/datasets/suggest/formats/"
-              :values="facets.format"
-              :onChange="handleSuggestorChange('format')"
-            />
-          </div>
-          <div class="fr-col-2 fr-col-lg-1 fr-displayed-md text-align-center text-align-right-lg">
-            <button
-              class="fr-btn fr-btn--secondary fr-btn--secondary-grey-200 text-grey-380 fr-px-2w"
-              @click="extendedForm = !extendedForm"
-              data-cy="extend-form"
-            >
-              <span v-if="!extendedForm">…</span>
-              <span v-else>X</span>
-            </button>
-          </div>
+    <div class="fr-grid-row fr-grid-row--gutters justify-between align-items-center">
+        <div class="fr-col-12 fr-col-md-6 fr-col-lg-3">
+          <MultiSelect
+            :placeholder="$t('Organizations')"
+            :searchPlaceholder="$t('Search an organization...')"
+            listUrl="/organizations/?sort=-followers"
+            suggestUrl="/organizations/suggest/"
+            entityUrl="/organizations/"
+            :values="facets.organization"
+            :onChange="handleSuggestorChange('organization')"
+          />
         </div>
-        <div
-          v-if="extendedForm"
-          data-cy="extended-form"
-          class="fr-grid-row fr-grid-row--gutters fr-mt-3v align-items-center"
-        >
-          <div class="fr-col-12 fr-col-md-6 fr-col-lg-5 row-inline">
-            <Rangepicker
-              :value="facets.temporal_coverage"
-              :onChange="handleSuggestorChange('temporal_coverage')"
-            />
-          </div>
-          <div class="fr-col-12 fr-col-md-3">
-            <MultiSelect
-              :placeholder="$t('Geographic area')"
-              :searchPlaceholder="$t('Search a geographic area...')"
-              suggestUrl="/spatial/zones/suggest/"
-              entityUrl="/spatial/zone/"
-              :values="facets.geozone"
-              :onChange="handleSuggestorChange('geozone')"
-            />
-          </div>
-          <div class="fr-col-12 fr-col-md-3">
-            <MultiSelect
-              :placeholder="$t('Territorial granularity')"
-              :searchPlaceholder="$t('Search a granularity...')"
-              listUrl="/spatial/granularities/"
-              :values="facets.granularity"
-              :onChange="handleSuggestorChange('granularity')"
-            />
-          </div>
+        <div class="fr-col-12 fr-col-md-6 fr-col-lg-3">
+          <MultiSelect
+            :placeholder="$t('Tags')"
+            :searchPlaceholder="$t('Search a tag...')"
+            suggestUrl="/tags/suggest/"
+            :values="facets.tag"
+            :onChange="handleSuggestorChange('tag')"
+          />
+        </div>
+        <div class="fr-col-12 fr-col-md-6 fr-col-lg-3">
+          <MultiSelect
+            :placeholder="$t('Licenses')"
+            :searchPlaceholder="$t('Search a license...')"
+            listUrl="/datasets/licenses/"
+            :values="facets.license"
+            :onChange="handleSuggestorChange('license')"
+          />
+        </div>
+        <div class="fr-col-12 fr-col-md-6 fr-col-lg-3">
+          <MultiSelect
+            :placeholder="$t('Formats')"
+            :searchPlaceholder="$t('Search a format...')"
+            suggestUrl="/datasets/suggest/formats/"
+            :values="facets.format"
+            :onChange="handleSuggestorChange('format')"
+          />
         </div>
       </div>
-      <div class="fr-my-9v text-align-center fr-hidden-md">
-        <button
-          class="fr-btn fr-btn--secondary fr-btn--secondary-grey-400"
-          @click="extendedForm = !extendedForm"
-        >{{ $t("Submit") }}</button>
+      <div class="fr-grid-row fr-grid-row--gutters fr-mt-3v align-items-center">
+        <div class="fr-col-12 fr-col-md-6 fr-col-lg-6 row-inline">
+          <Rangepicker
+            :value="facets.temporal_coverage"
+            :onChange="handleSuggestorChange('temporal_coverage')"
+          />
+        </div>
+        <div class="fr-col-12 fr-col-md-3">
+          <MultiSelect
+            :placeholder="$t('Geographic area')"
+            :searchPlaceholder="$t('Search a geographic area...')"
+            suggestUrl="/spatial/zones/suggest/"
+            entityUrl="/spatial/zone/"
+            :values="facets.geozone"
+            :onChange="handleSuggestorChange('geozone')"
+          />
+        </div>
+        <div class="fr-col-12 fr-col-md-3">
+          <MultiSelect
+            :placeholder="$t('Territorial granularity')"
+            :searchPlaceholder="$t('Search a granularity...')"
+            listUrl="/spatial/granularities/"
+            :values="facets.granularity"
+            :onChange="handleSuggestorChange('granularity')"
+          />
+        </div>
       </div>
-    </section>
   </form>
   <section class="search-results fr-mt-1w fr-mt-md-3w" ref="resultsRef" v-bind="$attrs">
     <transition mode="out-in">
       <div v-if="loading">
         <Loader />
       </div>
-      <ul v-else-if="results.length">
-        <li v-for="result in results" :key="result.id">
-          <a :href="result.page" class="unstyled w-10 block">
-            <Dataset v-bind="result" />
-          </a>
-        </li>
-        <Pagination
-          v-if="totalResults > pageSize"
-          :page="currentPage"
-          :pageSize="pageSize"
-          :totalResults="totalResults"
-          :changePage="changePage"
-          class="fr-mt-2w"
-        />
-      </ul>
+      <div v-else-if="results.length">
+        <div class="fr-grid-row fr-mt-4w justify-between align-items-center">
+          <h2 class="fr-mb-2w fr-h6">
+            {{ $t("X Results", totalResults) }}
+          </h2>
+        </div>
+        <ul>
+          <li v-for="result in results" :key="result.id">
+            <a :href="result.page" class="unstyled w-10 block">
+              <Dataset v-bind="result" />
+            </a>
+          </li>
+          <Pagination
+            v-if="totalResults > pageSize"
+            :page="currentPage"
+            :pageSize="pageSize"
+            :totalResults="totalResults"
+            :changePage="changePage"
+            class="fr-mt-2w"
+          />
+        </ul>
+      </div>
       <div v-else>
         <Empty
           wide
