@@ -43,7 +43,6 @@ Urls:
       :id="id"
       multiple
       ref="select"
-      @change="onChange"
       v-model="selected"
     >
       <option
@@ -98,7 +97,7 @@ export default defineComponent({
 
     /** 
     * Select template Ref
-    * @type {Ref<HTMLElement|null>}
+    * @type {Ref<HTMLSelectElement|null>}
     */
     const select = ref(null);
 
@@ -234,10 +233,12 @@ export default defineComponent({
             );
           continue;
         }
-        const option = options.value.find((opt) => opt.value === value);
-        if (option) {
-          selectedPromises.push(Promise.resolve(option.value));
+        let option = options.value.find((opt) => opt.value === value);
+        if (!option) {
+          option = {label: value, value};
+          options.value.push(option);
         }
+        selectedPromises.push(Promise.resolve(option.value));
       }
       return Promise.all(selectedPromises)
         .then(values => selected.value.push(...values));
@@ -271,30 +272,49 @@ export default defineComponent({
       }
     };
 
-    const updatePopupStyle = () => {
-      if(container.value) {
-        let rect = container.value.getBoundingClientRect();
-        let popupWidth = Math.min(minWidth, rect.width);
-        if(window.innerWidth < popupWidth) {
-          return;
-        }
-        let availableSpace = window.innerWidth - rect.x;
-        let popupMustMove = availableSpace < minWidth;
-        offset.value = popupMustMove ? minWidth - rect.width : 0;
-        const styles = container.value.style;
-        styles.setProperty('--offset-a11y-container', `-${offset.value}px`);
-        styles.setProperty('--min-width-a11y-container', `${minWidth}px`);
-        const select = container.value.querySelector('.select-a11y');
-        if(!select.classList.contains("fr-select")) {
-          select.classList.add("fr-select");
-        }
-        const button = container.value.querySelector('button');
-        if(props.suggestUrl) {
-          button.removeEventListener('click', registerTriggerSuggest);
-          button.addEventListener('click', registerTriggerSuggest);
-        }
-      }
+    /**
+     * Register event listener to trigger on change on select change event
+     */
+    const registerTriggerOnChange = () => {
+      props.onChange(select.value.value);
+    };
+
+    const updateStylesAndEvents = () => {
+      updatePopupStyle();
+      updateSelectStyle();
+      registerSelectEvents();
     }
+
+    const updatePopupStyle = () => {
+      let rect = container.value.getBoundingClientRect();
+      let popupWidth = Math.min(minWidth, rect.width);
+      if(window.innerWidth < popupWidth) {
+        return;
+      }
+      let availableSpace = window.innerWidth - rect.x;
+      let popupMustMove = availableSpace < minWidth;
+      offset.value = popupMustMove ? minWidth - rect.width : 0;
+      const styles = container.value.style;
+      styles.setProperty('--offset-a11y-container', `-${offset.value}px`);
+      styles.setProperty('--min-width-a11y-container', `${minWidth}px`);
+    }
+
+    const updateSelectStyle = () => {
+      const selectA11y = container.value.querySelector('.select-a11y');
+      if(!selectA11y.classList.contains("fr-select")) {
+        selectA11y.classList.add("fr-select");
+      }
+    };
+    
+    const registerSelectEvents = () => {
+      const button = container.value.querySelector('button');
+      if(props.suggestUrl) {
+        button.removeEventListener('click', registerTriggerSuggest);
+        button.addEventListener('click', registerTriggerSuggest);
+      }
+      select.value.removeEventListener('change', registerTriggerOnChange);
+      select.value.addEventListener('change', registerTriggerOnChange);
+    };
 
     const makeSelect = () => {
       new Select(select.value, {
@@ -308,7 +328,7 @@ export default defineComponent({
         },
         showSelected: true,
       });
-      updatePopupStyle();
+      updateStylesAndEvents();
     };
     
     const fillOptionsAndValues = suggest()
@@ -316,7 +336,7 @@ export default defineComponent({
     .then(fillSelectedFromValues);
 
     onMounted(() => fillOptionsAndValues.then(makeSelect));
-    onUpdated(updatePopupStyle);
+    onUpdated(updateStylesAndEvents);
     return {
       id,
       options,

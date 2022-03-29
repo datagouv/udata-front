@@ -58,7 +58,7 @@
             />
           </div>
           <div class="fr-col-12 fr-col-md-5 fr-col-lg-2">
-            <Suggestor
+            <MultiSelect
               :placeholder="$t('Formats')"
               :searchPlaceholder="$t('Search a format...')"
               suggestUrl="/datasets/suggest/formats/"
@@ -89,7 +89,7 @@
             />
           </div>
           <div class="fr-col-12 fr-col-md-3">
-            <Suggestor
+            <MultiSelect
               :placeholder="$t('Geographic area')"
               :searchPlaceholder="$t('Search a geographic area...')"
               suggestUrl="/spatial/zones/suggest/"
@@ -310,7 +310,6 @@ export default defineComponent({
         } else {
           facets.value[facet] = values;
         }
-
         currentPage.value = 1;
         search();
       };
@@ -354,7 +353,9 @@ export default defineComponent({
        */
       let params = {};
       for (key in facets.value) {
-        params[key] = facets.value[key];
+        if(facets.value[key]) {
+          params[key] = facets.value[key];
+        }
       }
       if (currentPage.value > 1) params.page = currentPage.value.toString();
       if (queryString.value) params.q = queryString.value;
