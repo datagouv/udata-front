@@ -2,6 +2,10 @@
 
 ## Current (in progress)
 
+- Nothing yet
+
+## 1.2.5 (2022-03-29)
+
 - Add a transport banner hook [#94](https://github.com/etalab/udata-front/pull/94)
 - Add button on organization page to see all of its datasets [#93](https://github.com/etalab/udata-front/pull/93)
 - Format home page numbers [#90](https://github.com/etalab/udata-front/pull/90)
