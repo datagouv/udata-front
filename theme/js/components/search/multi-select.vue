@@ -51,7 +51,7 @@ Urls:
 </template>
 
 <script>
-import {defineComponent, ref, Ref, onMounted, onUpdated, nextTick} from "vue";
+import {defineComponent, ref, Ref, onMounted, onUpdated} from "vue";
 import Select from "@conciergerie-dev/select-a11y/dist/module";
 import {useI18n} from 'vue-i18n';
 import {api} from "../../plugins/api";
@@ -172,6 +172,16 @@ export default defineComponent({
     };
 
     /**
+     * Set options from DOM processing
+     * @param {Option[]} values
+     * @returns {Option[]}
+     */
+    const setOptions = (values) => {
+      options.value = values;
+      return values;
+    };
+
+    /**
      * Normalize provided values to array
      * @param {string | Array | undefined} values 
      * @returns {Ref<Array>}
@@ -215,26 +225,31 @@ export default defineComponent({
       }
     }
 
-    /**
-     * Trigger suggest based on input event
-     * @param {Event} e - Input event
-     */
-    const triggerSuggest = (e) => {
-      console.log(e);
-      if(e.target instanceof HTMLInputElement) {
-        suggest(e.target.value);
-      }
-    };
+    let suggesting = false;
 
     /**
      * Trigger suggest based on input event
      * @param {Event} e - Input event
      */
-    const registerTriggerSuggest = (e) => {
+    const triggerSuggest = (e) => {
+      if(e.target instanceof HTMLInputElement && !suggesting) {
+        e.stopImmediatePropagation();
+        suggesting = true;
+        suggest(e.target.value).then(setOptions).then(() => {
+          e.target.dispatchEvent(e);
+        }).finally(() => suggesting = false);
+      }
+    };
+
+    /**
+     * Register event listener to trigger suggest on input event
+     */
+    const registerTriggerSuggest = () => {
       const input = container.value.querySelector('input');
-      console.log(input);
       if(input) {
-        input.addEventListener('input', triggerSuggest);
+        input.addEventListener('input', triggerSuggest, {
+          capture: true,
+        });
       }
     };
 
@@ -256,13 +271,16 @@ export default defineComponent({
           select.classList.add("fr-select");
         }
         const button = container.value.querySelector('button');
-        button.removeEventListener('click', registerTriggerSuggest);
-        button.addEventListener('click', registerTriggerSuggest);
+        if(props.suggestUrl) {
+          button.removeEventListener('click', registerTriggerSuggest);
+          button.addEventListener('click', registerTriggerSuggest);
+        }
       }
     }
 
-    suggest().then(values => {
-      options.value = values;
+    suggest()
+    .then(setOptions)
+    .then(() => {
       fillSelectedFromValues();
     });
 
