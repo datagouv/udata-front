@@ -19,11 +19,6 @@ from udata_front.tests.frontend import GouvfrFrontTestCase
 class DatasetBlueprintTest(GouvfrFrontTestCase):
     settings = GouvFrSettings
 
-    def test_render_list_empty(self):
-        '''It should render the dataset list page event if empty'''
-        response = self.get(url_for('datasets.list'))
-        self.assert200(response)
-
     def test_render_display(self):
         '''It should render the dataset page'''
         dataset = VisibleDatasetFactory()
