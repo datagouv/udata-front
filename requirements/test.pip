@@ -27,7 +27,9 @@ flask==1.1.4
 idna==2.10
     # via requests
 importlib-metadata==4.6.3
-    # via pytest
+    # via
+    #   pluggy
+    #   pytest
 itsdangerous==1.1.0
     # via
     #   -c requirements/install.pip
@@ -75,6 +77,8 @@ six==1.16.0
     #   pytest
     #   python-dateutil
     #   requests-mock
+typing-extensions==3.10.0.0
+    # via importlib-metadata
 urllib3==1.25.11
     # via
     #   -c requirements/install.pip
