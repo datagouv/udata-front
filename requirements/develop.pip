@@ -29,7 +29,6 @@ flake8==3.7.7
 importlib-metadata==4.6.3
     # via
     #   -c requirements/test.pip
-    #   pluggy
     #   pytest
 invoke==1.2.0
     # via -r requirements/develop.in
@@ -77,10 +76,6 @@ six==1.16.0
     #   bleach
     #   pytest
     #   readme-renderer
-typing-extensions==3.10.0.0
-    # via
-    #   -c requirements/test.pip
-    #   importlib-metadata
 wcwidth==0.2.5
     # via
     #   -c requirements/test.pip
