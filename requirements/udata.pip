@@ -162,6 +162,8 @@ idna==2.10
     #   requests
     #   udata
     #   urlextract
+importlib-metadata==4.6.3
+    # via jsonschema
 isodate==0.6.0
     # via
     #   rdflib
