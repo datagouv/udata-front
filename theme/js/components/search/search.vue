@@ -1,12 +1,11 @@
 <template>
   <form @submit.prevent="search">
-    <div class="row-inline justify-between align-items-center search-bar">
-      <search-input
+    <div class="row-inline justify-between align-items-center search-bar" ref="searchRef">
+      <SearchInput
         class="fr-my-1w fr-my-md-2w fr-text--lead fr-mb-0"
         :onChange="handleSearchChange"
         :value="queryString"
         :placeholder="$t('Search for data...')"
-        ref="inputRef"
       />
       <div
         class="filter-icon fr-hidden-md w-auto fr-mx-3v"
@@ -27,23 +26,10 @@
     </div>
     <section class="search-filters fr-p-2w fr-p-md-0" :class="{ active: extendedForm }">
       <h2 class="fr-mt-md-2w fr-mb-2w fr-mb-md-1w fr-text--sm">{{ $t("Search filters") }}</h2>
-      <div class="fr-grid-row fr-grid-row--gutters">
-        <div class="fr-col-offset-7 fr-col-5">
-          <MultiSelect
-            :placeholder="$t('Organizations')"
-            :searchPlaceholder="$t('Search an organization...')"
-            listUrl="/organizations/?sort=-followers"
-            suggestUrl="/organizations/suggest/"
-            entityUrl="/organizations/"
-            :values="facets.organization"
-            :onChange="handleSuggestorChange('organization')"
-          />
-        </div>
-      </div>
       <div class="filters-wrapper fr-p-md-3v">
         <div class="fr-grid-row fr-grid-row--gutters justify-between align-items-center">
           <div class="fr-col-12 fr-col-md-6 fr-col-lg-3">
-            <Suggestor
+            <MultiSelect
               :placeholder="$t('Organizations')"
               :searchPlaceholder="$t('Search an organization...')"
               listUrl="/organizations/?sort=-followers"
@@ -54,7 +40,7 @@
             />
           </div>
           <div class="fr-col-12 fr-col-md-6 fr-col-lg-3">
-            <Suggestor
+            <MultiSelect
               :placeholder="$t('Tags')"
               :searchPlaceholder="$t('Search a tag...')"
               suggestUrl="/tags/suggest/"
@@ -187,7 +173,7 @@ import MultiSelect from "./multi-select.vue";
 export default defineComponent({
   components: {
     MultiSelect,
-    "search-input": SearchInput,
+    SearchInput,
     Rangepicker,
     Suggestor,
     Dataset,
@@ -254,13 +240,15 @@ export default defineComponent({
 
     /**
      * Vue ref to results HTML
+     * @type {Ref<HTMLElement | null>}
      */
     const resultsRef = ref(null);
 
     /**
      * Vue ref to results HTML
+     * @type {Ref<HTMLElement | null>}
      */
-    const inputRef = ref(null);
+    const searchRef = ref(null);
 
     /**
      * Track form extended state
@@ -339,8 +327,9 @@ export default defineComponent({
     };
     
     const scrollToTop = () => {
-      if (inputRef.value)
-        inputRef.value.$el.scrollIntoView({ behavior: "smooth" });
+      if (searchRef.value) {
+        searchRef.value.scrollIntoView({ behavior: "smooth" });
+      }
     };
 
     const resetFilters = () => {
@@ -397,16 +386,16 @@ export default defineComponent({
     } else {
       search();
     }
-
     onMounted(() => {
-      if (props.disableFirstSearch) {
-        if (resultsRef.value.dataset.totalResults > 0) {
-          results.value = JSON.parse(resultsRef.value.results);
-          totalResults.value = JSON.parse(resultsRef.value.totalResults);
+      if (props.disableFirstSearch && resultsRef.value) {
+        if (parseInt(resultsRef.value.dataset.totalResults) > 0) {
+          results.value = JSON.parse(resultsRef.value.dataset.results);
+          totalResults.value = JSON.parse(resultsRef.value.dataset.totalResults);
         }
         loading.value = false;
       }
     });
+
     return {
       reuseUrl,
       isFiltered,
@@ -424,6 +413,8 @@ export default defineComponent({
       loading,
       pageSize,
       currentPage,
+      resultsRef,
+      searchRef,
     };
   },
 });
