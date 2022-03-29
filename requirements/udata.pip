@@ -335,7 +335,7 @@ wtforms-json==0.3.3
     # via udata
 xmltodict==0.12.0
     # via udata
-zipp==3.7.0
+zipp==3.5.0
     # via importlib-metadata
 zxcvbn==4.4.28
     # via udata
