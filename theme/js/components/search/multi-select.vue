@@ -38,7 +38,14 @@ Urls:
 <template>
   <div class="form-group" ref="container">
     <label :for="id">{{placeholder}}</label>
-    <select class="form-control" :id="id" multiple ref="select">
+    <select
+      class="form-control"
+      :id="id"
+      multiple
+      ref="select"
+      @change="onChange"
+      v-model="selected"
+    >
       <option
         v-for="option in options"
         :key="option.value"
@@ -207,22 +214,33 @@ export default defineComponent({
      * It tries to augment the values with data from props.entityUrl or options.
      */
     const fillSelectedFromValues = () => {
+      const selectedPromises = [];
       let selectedValues = normalizeValues(props.values);
       for(let value of selectedValues.value) {
         if (props.entityUrl) {
-          api
-            .get(props.entityUrl + value)
-            .then((resp) => resp.data)
-            .then((data) => mapToOption([data]))
-            .then((entities) => entities[0]?.label ?? value)
-            .then((label) => selected.value.push({ label, value }));
+          selectedPromises.push(
+            api
+              .get(props.entityUrl + value)
+              .then((resp) => resp.data)
+              .then((data) => mapToOption([data]))
+              .then((entities) => entities[0]?.label ?? value)
+              .then((label) => {
+                const newOption = options.value.every(option => option.value !== value);
+                if(newOption) {
+                  options.value.push({label, value});
+                }
+              })
+              .then(() => value)
+            );
           continue;
         }
         const option = options.value.find((opt) => opt.value === value);
         if (option) {
-          selected.value.push(option);
+          selectedPromises.push(Promise.resolve(option.value));
         }
       }
+      return Promise.all(selectedPromises)
+        .then(values => selected.value.push(...values));
     }
 
     let suggesting = false;
@@ -278,25 +296,26 @@ export default defineComponent({
       }
     }
 
-    suggest()
-    .then(setOptions)
-    .then(() => {
-      fillSelectedFromValues();
-    });
-
-    onMounted(() => {
+    const makeSelect = () => {
       new Select(select.value, {
-        text:{
+        text: {
           help: t('Use tab (or arrow down) to move between suggestions'),
           placeholder: props.searchPlaceholder,
           noResult: props.emptyPlaceholder || t("No results found."),
           results: t('{x} available suggestion'),
           deleteItem: t('Delete {t}'),
           delete: t('Delete'),
-        }
+        },
+        showSelected: true,
       });
       updatePopupStyle();
-    });
+    };
+    
+    const fillOptionsAndValues = suggest()
+    .then(setOptions)
+    .then(fillSelectedFromValues);
+
+    onMounted(() => fillOptionsAndValues.then(makeSelect));
     onUpdated(updatePopupStyle);
     return {
       id,
