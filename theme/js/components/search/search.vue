@@ -123,7 +123,7 @@
 import { defineComponent, ref, Ref, onMounted, computed, watch } from "vue";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
-import { generateCancelToken, api } from "../../plugins/api";
+import { generateCancelToken, apiv2 } from "../../plugins/api";
 import {useToast} from "../../composables/useToast";
 import useSearchUrl from "../../composables/useSearchUrl";
 import SearchInput from "./search-input.vue";
@@ -232,8 +232,8 @@ export default defineComponent({
 
       currentRequest.value = generateCancelToken();
 
-      api
-        .get("/datasets/", {
+      apiv2
+        .get("/datasets/search/", {
           cancelToken: currentRequest.value.token,
           params: {
             q: queryString.value,
