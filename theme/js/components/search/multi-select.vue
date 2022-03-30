@@ -46,7 +46,7 @@ Urls:
       v-model="selected"
     >
       <option
-        v-for="option in options"
+        v-for="option in displayedOptions"
         :key="option.value"
         :value="option.value"
       >
@@ -57,10 +57,10 @@ Urls:
 </template>
 
 <script>
-import {defineComponent, ref, Ref, onMounted, onUpdated} from "vue";
+import {defineComponent, ref, Ref, computed, onMounted, onUpdated} from "vue";
 import Select from "@conciergerie-dev/select-a11y/dist/module";
 import {useI18n} from 'vue-i18n';
-import {api} from "../../plugins/api";
+import {api, generateCancelToken} from "../../plugins/api";
 import useUid from "../../composables/useUid";
 
 /**
@@ -118,16 +118,31 @@ export default defineComponent({
     const minWidth = 350;
 
     /**
+     * Maximum options count
+     */
+    const maxOptionsCount = 200;
+
+    /**
      * Current options
      * @type {Ref<Option[]>}
      */
     const options = ref([]);
 
     /**
+     * Displayed Options limited to {@link maxOptionsCount}
+     */
+    const displayedOptions = computed(() => options.value.slice(0, maxOptionsCount));
+
+    /**
      * Current selected value(s)
      * @type {Ref<Option[]>}
      */
     const selected = ref([]);
+
+    /**
+     * Current request if any to be cancelled if a new one comes
+     */
+    const currentRequest = ref(null);
 
     /**
      * Get initial set of options from API or an empty array
@@ -168,8 +183,16 @@ export default defineComponent({
      */
     const suggest = (q = '') => {
       if(q && props.suggestUrl) {
+        if (currentRequest.value) {
+          currentRequest.value.cancel();
+        }
+
+        currentRequest.value = generateCancelToken();
         return api
-          .get(props.suggestUrl, { params: { q } })
+          .get(props.suggestUrl, {
+            params: { q },
+            cancelToken: currentRequest.value.token,
+          })
           .then((resp) => resp.data)
           .then(mapToOption);
       }
@@ -244,19 +267,26 @@ export default defineComponent({
         .then(values => selected.value.push(...values));
     }
 
-    let suggesting = false;
+    let suggesting = null;
 
     /**
      * Trigger suggest based on input event
      * @param {Event} e - Input event
      */
     const triggerSuggest = (e) => {
-      if(e.target instanceof HTMLInputElement && !suggesting) {
-        e.stopImmediatePropagation();
-        suggesting = true;
-        suggest(e.target.value).then(setOptions).then(() => {
-          e.target.dispatchEvent(e);
-        }).finally(() => suggesting = false);
+      if(e.target instanceof HTMLInputElement && e.isTrusted) {
+        if(suggesting !== e.target.value) {
+          suggesting = null;
+        }
+        if(!suggesting) {
+          e.stopImmediatePropagation();
+          suggesting = e.target.value;
+          suggest(e.target.value).then(setOptions).then(() => {
+            if (e.target) {
+              e.target.dispatchEvent(e);
+            }
+          }).finally(() => suggesting = null);
+        }
       }
     };
 
@@ -327,6 +357,7 @@ export default defineComponent({
           delete: t('Delete'),
         },
         showSelected: true,
+        enableTextFilter: !props.suggestUrl,
       });
       updateStylesAndEvents();
     };
@@ -339,7 +370,7 @@ export default defineComponent({
     onUpdated(updateStylesAndEvents);
     return {
       id,
-      options,
+      displayedOptions,
       selected,
       select,
       container,
