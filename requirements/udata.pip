@@ -290,7 +290,7 @@ tlds==2021080800
     # via udata
 typing-extensions==3.10.0.0
     # via importlib-metadata
-udata @ git+https://github.com/opendatateam/udata.git
+git+https://github.com/opendatateam/udata.git
     # via -r requirements/udata.in
 ujson==1.35
     # via udata
