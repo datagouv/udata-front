@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix organizationCertified error when organization is null [#98](https://github.com/etalab/udata-front/pull/98)
 
 ## 1.2.5 (2022-03-29)
 
