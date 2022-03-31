@@ -60,8 +60,10 @@ Urls:
 import {defineComponent, ref, Ref, computed, onMounted, onUpdated} from "vue";
 import Select from "@conciergerie-dev/select-a11y/dist/module";
 import {useI18n} from 'vue-i18n';
+import axios from "axios";
 import {api, generateCancelToken} from "../../plugins/api";
 import useUid from "../../composables/useUid";
+import { useToast } from "../../composables/useToast";
 
 /**
  * @typedef {Object} Option
@@ -93,6 +95,7 @@ export default defineComponent({
   },
   setup(props) {
     const { t } = useI18n();
+    const toast = useToast();
     const { id } = useUid('multiselect');
 
     /** 
@@ -194,7 +197,13 @@ export default defineComponent({
             cancelToken: currentRequest.value.token,
           })
           .then((resp) => resp.data)
-          .then(mapToOption);
+          .then(mapToOption)
+          .catch((error) => {
+            if (!axios.isCancel(error)) {
+              toast.error(t("Error getting {type}.", {type: props.placeholder}));
+            }
+            return [];
+          });
       }
 
       return getInitialOptions();
