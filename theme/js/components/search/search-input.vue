@@ -13,7 +13,7 @@ If the submitUrl prop is passed, it will redirect on Submit.
 
 <template>
   <section class="search-input">
-    <form :action="submitUrl" @submit="onSubmit" class="row-inline">
+    <form :action="submitUrl" @submit="onSubmit" class="row-inline no-wrap">
       <span class="icon" :class="{ active: queryString }" v-html="icon" />
       <input
         type="text"

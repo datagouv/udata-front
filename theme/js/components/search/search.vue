@@ -1,5 +1,5 @@
 <template>
-  <div class="row-inline justify-between align-items-center search-bar">
+  <div class="row-inline justify-between align-items-center search-bar no-wrap">
     <search-input
       class="fr-my-1w fr-my-md-2w fr-text--lead fr-mb-0"
       :onChange="handleSearchChange"
