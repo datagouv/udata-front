@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix mobile bugs after header changes [#99](https://github.com/etalab/udata-front/pull/99)
 
 ## 1.2.5 (2022-03-29)
 
