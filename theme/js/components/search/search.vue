@@ -247,6 +247,7 @@ export default {
   },
   computed: {
     // Url for doing the same search (queryString only) on the reuse page
+    // TODO : switch to composition API and useSearchUrl composable
     reuseUrl() {
       return `${config.values.reuseUrl}?q=${this.queryString}`;
     },
@@ -300,8 +301,8 @@ export default {
 
       this.currentRequest = generateCancelToken();
 
-      this.$api
-        .get("/datasets/", {
+      this.$apiv2
+        .get("/datasets/search/", {
           cancelToken: this.currentRequest.token,
           params: {
             q: this.queryString,
