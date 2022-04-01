@@ -61,7 +61,7 @@ def get_pages_gh_urls(slug):
 
 
 def detect_pages_extension(raw_url):
-    if requests.head(raw_url + '.md').status_code == 200:
+    if requests.head(f'{raw_url}.md').status_code == 200:
         return 'md'
     return 'html'
 
@@ -113,7 +113,7 @@ def get_object(model, id_or_slug):
 
 @blueprint.route('/pages/<path:slug>/')
 def show_page(slug):
-    content, gh_url, content_type = get_page_content(slug)
+    content, gh_url, extension = get_page_content(slug)
     page = frontmatter.loads(content)
     reuses = [get_object(Reuse, r) for r in page.get('reuses') or []]
     datasets = [get_object(Dataset, d) for d in page.get('datasets') or []]
@@ -121,7 +121,7 @@ def show_page(slug):
     datasets = [d for d in datasets if d is not None]
     return theme.render(
         'page.html',
-        page=page, reuses=reuses, datasets=datasets, gh_url=gh_url, content_type=content_type
+        page=page, reuses=reuses, datasets=datasets, gh_url=gh_url, extension=extension
     )
 
 
