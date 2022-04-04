@@ -125,6 +125,7 @@
 import { defineComponent, ref, Ref, onMounted, computed, watch } from "vue";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
+import { CancelTokenSource } from "axios";
 import { generateCancelToken, apiv2 } from "../../plugins/api";
 import {useToast} from "../../composables/useToast";
 import useSearchUrl from "../../composables/useSearchUrl";
@@ -194,7 +195,7 @@ export default defineComponent({
     /**
      * All other params are kept here as facets
      */
-    const facets = ref(null);
+    const facets = ref({});
 
     /**
      * Search loading state
@@ -203,6 +204,7 @@ export default defineComponent({
 
     /**
      * Current request if any to be cancelled if a new one comes
+     * @type {Ref<CancelTokenSource | null>}
      */
     const currentRequest = ref(null);
 
@@ -330,12 +332,14 @@ export default defineComponent({
       return params;
     });
 
-    if (params.has('q')) {
-      queryString.value = params.get('q');
+    let q = params.get('q');
+    if (q) {
+      queryString.value = q;
       params.delete('q');
     }
-    if (params.has('page')) {
-      currentPage.value = parseInt(params.get('page'));
+    let page = params.get('page');
+    if (page) {
+      currentPage.value = parseInt(page);
       params.delete('page');
     }
 
@@ -357,9 +361,13 @@ export default defineComponent({
     }
     onMounted(() => {
       if (props.disableFirstSearch && resultsRef.value) {
-        if (parseInt(resultsRef.value.dataset.totalResults) > 0) {
-          results.value = JSON.parse(resultsRef.value.dataset.results);
-          totalResults.value = JSON.parse(resultsRef.value.dataset.totalResults);
+        let total = resultsRef.value.dataset.totalResults;
+        if (total && parseInt(total) > 0) {
+          let datasetResults = resultsRef.value.dataset.results;
+          if(datasetResults) {
+            results.value = JSON.parse(datasetResults);
+          }
+          totalResults.value = JSON.parse(total);
         }
         loading.value = false;
       }

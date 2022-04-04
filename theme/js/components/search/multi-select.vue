@@ -61,6 +61,7 @@ import {defineComponent, ref, Ref, computed, onMounted, onUpdated} from "vue";
 import Select from "@conciergerie-dev/select-a11y/dist/module";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
+import { CancelTokenSource } from "axios";
 import {api, generateCancelToken} from "../../plugins/api";
 import useUid from "../../composables/useUid";
 import { useToast } from "../../composables/useToast";
@@ -148,7 +149,7 @@ export default defineComponent({
 
     /**
      * Current request if any to be cancelled if a new one comes
-     * @type Ref<CancelTokenSource | null>
+     * @type {Ref<CancelTokenSource | null>}
      */
     const currentRequest = ref(null);
 
@@ -310,19 +311,24 @@ export default defineComponent({
      * Register event listener to trigger suggest on input event
      */
     const registerTriggerSuggest = () => {
+      if(!container.value) {
+        return;
+      }
       const input = container.value.querySelector('input');
       if(input) {
         input.addEventListener('input', triggerSuggest, {
           capture: true,
         });
-      }
+      } 
     };
 
     /**
      * Register event listener to trigger on change on select change event
      */
     const registerTriggerOnChange = () => {
-      props.onChange(select.value.value);
+      if(select.value) {
+        props.onChange(select.value.value);
+      }
     };
 
     const updateStylesAndEvents = () => {
@@ -332,6 +338,9 @@ export default defineComponent({
     }
 
     const updatePopupStyle = () => {
+      if(!container.value) {
+        return;
+      }
       let rect = container.value.getBoundingClientRect();
       let popupWidth = Math.min(minWidth, rect.width);
       if(window.innerWidth < popupWidth) {
@@ -346,20 +355,28 @@ export default defineComponent({
     }
 
     const updateSelectStyle = () => {
+      if(!container.value) {
+        return;
+      }
       const selectA11y = container.value.querySelector('.select-a11y');
-      if(!selectA11y.classList.contains("fr-select")) {
+      if(selectA11y && !selectA11y.classList.contains("fr-select")) {
         selectA11y.classList.add("fr-select");
       }
     };
     
     const registerSelectEvents = () => {
+      if(!container.value) {
+        return;
+      }
       const button = container.value.querySelector('button');
-      if(props.suggestUrl) {
+      if(button && props.suggestUrl) {
         button.removeEventListener('click', registerTriggerSuggest);
         button.addEventListener('click', registerTriggerSuggest);
       }
-      select.value.removeEventListener('change', registerTriggerOnChange);
-      select.value.addEventListener('change', registerTriggerOnChange);
+      if(select.value) {
+        select.value.removeEventListener('change', registerTriggerOnChange);
+        select.value.addEventListener('change', registerTriggerOnChange);
+      }
     };
 
     const makeSelect = () => {
