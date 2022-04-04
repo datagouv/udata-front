@@ -92,6 +92,10 @@ export default defineComponent({
     emptyPlaceholder: {
       type: String,
     },
+    minimumCharacterBeforeSuggest: {
+      type: Number,
+      default: 1,
+    }
   },
   setup(props) {
     const { t } = useI18n();
@@ -144,6 +148,7 @@ export default defineComponent({
 
     /**
      * Current request if any to be cancelled if a new one comes
+     * @type Ref<CancelTokenSource | null>
      */
     const currentRequest = ref(null);
 
@@ -283,7 +288,9 @@ export default defineComponent({
      * @param {Event} e - Input event
      */
     const triggerSuggest = (e) => {
-      if(e.target instanceof HTMLInputElement && e.isTrusted) {
+      if(e.target instanceof HTMLInputElement 
+      && e.isTrusted 
+      && e.target.value.length >= props.minimumCharacterBeforeSuggest) {
         if(suggesting !== e.target.value) {
           suggesting = null;
         }
