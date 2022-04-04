@@ -57,7 +57,7 @@ Urls:
 </template>
 
 <script>
-import {defineComponent, ref, Ref, computed, onMounted, onUpdated} from "vue";
+import {defineComponent, ref, Ref, computed, onMounted, onUpdated, reactive} from "vue";
 import Select from "@conciergerie-dev/select-a11y/dist/module";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
@@ -152,6 +152,24 @@ export default defineComponent({
      * @type {Ref<CancelTokenSource | null>}
      */
     const currentRequest = ref(null);
+
+    /**
+     * Select instance
+     * @type {Select | null}
+     */
+    const selectA11y = ref(null);
+
+    const noResultAfterSearch = computed(() => props.emptyPlaceholder || t("No results found."));
+    const noResultWaitingTyping = computed(() => t("Start typing to search in X", {type: props.placeholder.toLocaleLowerCase()}));
+
+    const texts = reactive({
+      help: t('Use tab (or arrow down) to move between suggestions'),
+      placeholder: props.searchPlaceholder,
+      noResult: noResultAfterSearch.value,
+      results: t('{x} available suggestion'),
+      deleteItem: t('Delete {t}'),
+      delete: t('Delete'),
+    });
 
     /**
      * Get initial set of options from API or an empty array
@@ -282,6 +300,9 @@ export default defineComponent({
         .then(values => selected.value.push(...values));
     }
 
+    /**
+     * @type string | null
+     */
     let suggesting = null;
 
     /**
@@ -289,6 +310,7 @@ export default defineComponent({
      * @param {Event} e - Input event
      */
     const triggerSuggest = (e) => {
+      updateNoSuggestion();
       if(e.target instanceof HTMLInputElement 
       && e.isTrusted 
       && e.target.value.length >= props.minimumCharacterBeforeSuggest) {
@@ -319,8 +341,19 @@ export default defineComponent({
         input.addEventListener('input', triggerSuggest, {
           capture: true,
         });
-      } 
+      }
     };
+
+    const updateNoSuggestion = () => {
+      if(!selectA11y.value) {
+        return;
+      }
+      texts.noResult = noResultAfterSearch.value;
+      if(!suggesting || suggesting.length < props.minimumCharacterBeforeSuggest) {
+        texts.noResult = noResultWaitingTyping.value;
+      }
+      selectA11y.value.setText(texts);
+    }
 
     /**
      * Register event listener to trigger on change on select change event
@@ -335,6 +368,7 @@ export default defineComponent({
       updatePopupStyle();
       updateSelectStyle();
       registerSelectEvents();
+      updateNoSuggestion();
     }
 
     const updatePopupStyle = () => {
@@ -380,15 +414,8 @@ export default defineComponent({
     };
 
     const makeSelect = () => {
-      new Select(select.value, {
-        text: {
-          help: t('Use tab (or arrow down) to move between suggestions'),
-          placeholder: props.searchPlaceholder,
-          noResult: props.emptyPlaceholder || t("No results found."),
-          results: t('{x} available suggestion'),
-          deleteItem: t('Delete {t}'),
-          delete: t('Delete'),
-        },
+      selectA11y.value = new Select(select.value, {
+        text: texts,
         showSelected: true,
         enableTextFilter: !props.suggestUrl,
       });

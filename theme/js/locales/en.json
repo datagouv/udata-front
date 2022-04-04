@@ -115,7 +115,7 @@
   "Search X in Y": "Search “{query}” in {type}",
   "datasets": "datasets",
   "organizations": "organizations",
-  "Start typing to search in X": "Start typing to search in {type}",
+  "Start typing to search in X": "Start typing to search in {type}...",
   "X Results": "{count} Result | {count} Result | {count} Results",
   "Error getting {type}.": "Error getting {type}."
 }

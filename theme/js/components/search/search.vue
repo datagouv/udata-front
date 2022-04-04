@@ -221,13 +221,6 @@ export default defineComponent({
     const searchRef = ref(null);
 
     /**
-     * Track form extended state
-     * On desktop, extended form is simply another row of filters.
-     * On mobile, form is hidden until extendedForm is triggered.
-     */
-    const extendedForm = ref(false);
-
-    /**
      * Search new dataset results
      */
     const search = () => {
@@ -382,7 +375,6 @@ export default defineComponent({
       changePage,
       resetFilters,
       filterIcon,
-      extendedForm,
       facets,
       results,
       totalResults,
