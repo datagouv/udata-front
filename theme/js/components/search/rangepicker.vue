@@ -16,10 +16,10 @@ d1.yyyy-d1.mm-d1.dd-d2.yyyy-d2.mm-d2.dd
 -->
 
 <template>
-  <div class="rangepicker row-inline w-100 justify-between">
-    <div class="row-inline align-items-center">
+  <div class="rangepicker fr-grid-row w-100 justify-between">
+    <div class="fr-grid-row align-items-center">
       <strong class="text-grey-380 f-normal mr-xxs">{{ $t("from") }}</strong>
-      <div class="datepicker">
+      <div class="datepicker fr-select fr-select--width-auto">
         <Datepicker
           v-model="dateRange.start"
           :upperLimit="dateRange.end"
@@ -27,19 +27,18 @@ d1.yyyy-d1.mm-d1.dd-d2.yyyy-d2.mm-d2.dd
           placeholder="__/__/__"
           :locale="locale"
         />
-        <span
-          class="clear"
+        <button
+          class="fr-fi-close-line clear"
           @click="clear"
-          v-html="closeIcon"
           v-if="dateRange.start"
-        />
+        ></button>
       </div>
     </div>
-    <div class="row-inline align-items-center">
+    <div class="fr-grid-row fr-mt-1w align-items-center">
       <strong class="text-grey-380 f-normal mr-xxs ml-xs">{{
         $t("to")
       }}</strong>
-      <div class="datepicker">
+      <div class="datepicker fr-select fr-select--width-auto">
         <Datepicker
           v-model="dateRange.end"
           :lowerLimit="dateRange.start"
@@ -47,12 +46,11 @@ d1.yyyy-d1.mm-d1.dd-d2.yyyy-d2.mm-d2.dd
           placeholder="__/__/__"
           :locale="locale"
         />
-        <span
-          class="clear"
+        <button
+          class="fr-fi-close-line clear"
           @click="clear"
-          v-html="closeIcon"
           v-if="dateRange.end"
-        />
+        ></button>
       </div>
     </div>
   </div>
@@ -62,22 +60,19 @@ d1.yyyy-d1.mm-d1.dd-d2.yyyy-d2.mm-d2.dd
 import config from "../../config";
 import Datepicker from "vue3-datepicker";
 import "vue3-datepicker/dist/vue3-datepicker.css";
-import closeIcon from "svg/close.svg";
 import { format } from "date-fns";
 import fr from "date-fns/locale/fr";
 import en from "date-fns/locale/en-GB";
 import es from "date-fns/locale/es";
+import { defineComponent } from "vue";
 
 const locales = { fr, en, es };
 
-export default {
+export default defineComponent({
   components: {
     Datepicker,
   },
   created() {
-    this.closeIcon = closeIcon;
-    this.locale = locales[config.lang];
-
     if (!this.value) return;
 
     this.dateRange.start = new Date(this.value.slice(0, 10));
@@ -88,7 +83,7 @@ export default {
     onChange: Function,
   },
   watch: {
-    value: function (value) {
+    value (value) {
       //This allows to reset the value if the parent component decides to clear the value using the prop.
       if (typeof value === "undefined") {
         this.dateRange.start = null;
@@ -98,14 +93,18 @@ export default {
   },
   data() {
     return {
+      /**
+       * @type {Object.<string, Date | null>}
+       */
       dateRange: {
         start: null,
         end: null,
       },
+      locale: locales[config.lang],
     };
   },
   methods: {
-    _onChange: function () {
+    _onChange () {
       if (!this.onChange) return;
 
       let value = null;
@@ -118,12 +117,12 @@ export default {
 
       return this.onChange(value);
     },
-    clear: function () {
+    clear () {
       this.dateRange.start = null;
       this.dateRange.end = null;
 
       this._onChange();
     },
   },
-};
+});
 </script>
