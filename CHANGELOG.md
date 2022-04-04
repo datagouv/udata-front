@@ -2,7 +2,14 @@
 
 ## Current (in progress)
 
+- Add support for HTML static pages and more DSFR components [#96](https://github.com/etalab/udata-front/pull/96)
+- Fix mobile bugs after header changes [#99](https://github.com/etalab/udata-front/pull/99)
 - Fix organizationCertified error when organization is null [#98](https://github.com/etalab/udata-front/pull/98)
+
+## 2.0.0 (2022-03-30)
+
+### Breaking change
+- :warning: Use refactored search endpoints from udata [#60](https://github.com/etalab/udata-front/pull/60)
 
 ## 1.2.5 (2022-03-29)
 
@@ -12,7 +19,6 @@
 - Let browsers decide what cursor to use [#89](https://github.com/etalab/udata-front/pull/89)
 - Replace see more button on home page with link [#91](https://github.com/etalab/udata-front/pull/91)
 - Replace Suggest with accessible combobox [#88](https://github.com/etalab/udata-front/pull/88)
-- Use refactored search endpoints from udata [#60](https://github.com/etalab/udata-front/pull/60)
 
 ## 1.2.4 (2022-03-01)
 
