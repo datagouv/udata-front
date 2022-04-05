@@ -49,6 +49,7 @@ Urls:
         v-for="option in displayedOptions"
         :key="option.value"
         :value="option.value"
+        :data-image="option.image"
       >
         {{option.label}}
       </option>
@@ -70,6 +71,7 @@ import { useToast } from "../../composables/useToast";
  * @typedef {Object} Option
  * @property {string} label - Label (display) of the option
  * @property {any} value - Value (id) of the option
+ * @property {string=} image - Image (optional) to show
  */
 
 export default defineComponent({
@@ -198,6 +200,7 @@ export default defineComponent({
       return data.map((obj) => ({
         label: obj.name || obj.title || obj.text || obj?.properties?.name,
         value: obj.id || obj.text,
+        image: obj.logo_thumbnail || obj.logo,
       }));
     };
 
