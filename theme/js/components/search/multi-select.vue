@@ -209,7 +209,7 @@ export default defineComponent({
      * It uses list API if no query is provided
      * Fallback to an empty array without query and props.listUrl
      * @param {string} q 
-     * @returns {Promise<Option[]>}
+     * @returns {Promise<Option[] | void>}
      */
     const suggest = (q = '') => {
       if(q && props.suggestUrl) {
@@ -229,7 +229,6 @@ export default defineComponent({
             if (!axios.isCancel(error)) {
               toast.error(t("Error getting {type}.", {type: props.placeholder}));
             }
-            return [];
           });
       }
 
@@ -238,11 +237,13 @@ export default defineComponent({
 
     /**
      * Set options from DOM processing
-     * @param {Option[]} values
-     * @returns {Option[]}
+     * @param {Option[] | void} values
+     * @returns {Option[] | void}
      */
     const setOptions = (values) => {
-      options.value = values;
+      if(values) {
+        options.value = values;
+      }
       return values;
     };
 
@@ -323,8 +324,8 @@ export default defineComponent({
         if(!suggesting) {
           e.stopImmediatePropagation();
           suggesting = e.target.value;
-          suggest(e.target.value).then(setOptions).then(() => {
-            if (e.target) {
+          suggest(e.target.value).then(setOptions).then(values => {
+            if (values && e.target) {
               e.target.dispatchEvent(e);
             }
           }).finally(() => suggesting = null);
