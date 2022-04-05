@@ -136,7 +136,6 @@ import Dataset from "../dataset/search-result.vue";
 import Loader from "../dataset/loader.vue";
 import Empty from "./empty.vue";
 import Pagination from "../pagination/pagination.vue";
-import filterIcon from "svg/filter.svg";
 import MultiSelect from "./multi-select.vue";
 
 export default defineComponent({
@@ -374,7 +373,6 @@ export default defineComponent({
       handleSuggestorChange,
       changePage,
       resetFilters,
-      filterIcon,
       facets,
       results,
       totalResults,
