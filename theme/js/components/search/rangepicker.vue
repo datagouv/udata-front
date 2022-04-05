@@ -16,9 +16,11 @@ d1.yyyy-d1.mm-d1.dd-d2.yyyy-d2.mm-d2.dd
 -->
 
 <template>
-  <div class="rangepicker fr-grid-row w-100 justify-between">
-    <div class="fr-grid-row align-items-center">
-      <strong class="text-grey-380 f-normal mr-xxs">{{ $t("from") }}</strong>
+  <div class="rangepicker fr-grid-row fr-grid-row--gutters w-100">
+    <div class="fr-col-auto fr-grid-row align-items-center">
+      <div class="text-grey-380 mr-xxs">
+        {{ $t("from") }}
+      </div>
       <div class="datepicker fr-select fr-select--width-auto">
         <Datepicker
           v-model="dateRange.start"
@@ -34,10 +36,10 @@ d1.yyyy-d1.mm-d1.dd-d2.yyyy-d2.mm-d2.dd
         ></button>
       </div>
     </div>
-    <div class="fr-grid-row fr-mt-1w align-items-center">
-      <strong class="text-grey-380 f-normal mr-xxs ml-xs">{{
-        $t("to")
-      }}</strong>
+    <div class="fr-col-auto fr-grid-row align-items-center">
+      <div class="text-grey-380 mr-xxs">
+        {{ $t("to") }}
+      </div>
       <div class="datepicker fr-select fr-select--width-auto">
         <Datepicker
           v-model="dateRange.end"
