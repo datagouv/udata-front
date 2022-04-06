@@ -196,13 +196,11 @@ export default defineComponent({
      * @param {Array} data
      * @returns {Option[]}
      **/
-    const mapToOption = (data) => {
-      return data.map((obj) => ({
-        label: obj.name || obj.title || obj.text || obj?.properties?.name,
-        value: obj.id || obj.text,
-        image: obj.logo_thumbnail || obj.logo,
-      }));
-    };
+    const mapToOption = (data) => data.map((obj) => ({
+      label: obj.name || obj.title || obj.text || obj?.properties?.name,
+      value: obj.id || obj.text,
+      image: obj.logo_thumbnail || obj.logo || obj.image_url,
+    }));
 
     /**
      * Get options from suggest API
