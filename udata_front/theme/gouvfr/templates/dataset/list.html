@@ -37,6 +37,9 @@
         :disable-first-search="true"
         data-total-results="{{datasets.total}}"
         data-results="{{ datasets|to_api_format|to_json }}"
+        :sorts='[{"sort": "created", "order": "desc"},
+        {"sort": "reuses", "order": "desc"},
+        {"sort": "followers", "order": "desc"}]'
     >
     </Search>
     <noscript>

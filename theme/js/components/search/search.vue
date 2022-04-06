@@ -84,10 +84,31 @@
         <Loader />
       </div>
       <div v-else-if="results.length">
-        <div class="fr-grid-row fr-mt-4w justify-between align-items-center">
-          <h2 class="fr-mb-2w fr-h6">
+        <div class="fr-grid-row fr-mt-4w fr-pt-3v fr-mb-3v justify-between fr-grid-row--middle border-top border-default-grey">
+          <div>
             {{ $t("X Results", totalResults) }}
-          </h2>
+          </div>
+          <div class="fr-grid-row align-items-center">
+            <label for="sort-search" class="fr-col-auto fr-text--sm fr-m-0 fr-mr-1w">
+                {{$t('Sort by:')}}
+            </label>
+            <div class="fr-col">
+                <select
+                  id="sort-search"
+                  class="fr-select"
+                  name="sort"
+                  v-model="searchSort"
+                  @change="handleSortChange"
+                >
+                  <option value="">
+                    {{$t('Relevance')}}
+                  </option>
+                  <option v-for="{sort, label} in sortOptions" :value='sort'>
+                    {{$t(label)}}
+                  </option>
+                </select>
+            </div>
+          </div>
         </div>
         <ul>
           <li v-for="result in results" :key="result.id">
@@ -122,7 +143,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, Ref, onMounted, computed, watch } from "vue";
+import { defineComponent, ref, Ref, onMounted, computed, watch, PropType } from "vue";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
 import { CancelTokenSource } from "axios";
@@ -154,6 +175,11 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    sorts: {
+      /** @type {PropType<Array<{order: string, sort: string}>>} */
+      type: Array,
+      default: [],
+    }
   },
   setup(props) {
     const { t } = useI18n();
@@ -169,7 +195,15 @@ export default defineComponent({
      */
     const queryString = ref('');
 
+    /**
+     * Reuse url of the query
+     */
     const {reuseUrl} = useSearchUrl(queryString);
+
+    /**
+     * Query sort
+     */
+    const searchSort = ref('');
 
     /**
      * Search results
@@ -225,9 +259,7 @@ export default defineComponent({
     const search = () => {
       loading.value = true;
       if (currentRequest.value) currentRequest.value.cancel();
-
       currentRequest.value = generateCancelToken();
-
       apiv2
         .get("/datasets/search/", {
           cancelToken: currentRequest.value.token,
@@ -236,6 +268,7 @@ export default defineComponent({
             ...facets.value,
             page_size: pageSize,
             page: currentPage.value,
+            sort: searchSort.value ? searchSort.value : null,
           },
         })
         .then((res) => res.data)
@@ -252,6 +285,10 @@ export default defineComponent({
         });
     }
 
+    /**
+     * Called when user type in search field
+     * @param {string} input - input typed by user
+     */
     const handleSearchChange = (input) => {
       queryString.value = input;
       currentPage.value = 1;
@@ -276,6 +313,14 @@ export default defineComponent({
         search();
       };
     };
+
+    /**
+     * Called when user change sort
+     */
+    const handleSortChange = () => {
+      currentPage.value = 1;
+      search();
+    }
 
     /**
      * Change current page
@@ -308,6 +353,11 @@ export default defineComponent({
         (key) => facets.value[key]?.length > 0
       );
     });
+
+    const sortOptions = computed(() => props.sorts.map(sort => ({
+        sort: sort.order == 'asc' ? sort.sort : '-'+sort.sort,
+        label: sort.sort,
+      })));
 
     const paramUrl = computed(() => {
       /**
@@ -382,6 +432,9 @@ export default defineComponent({
       currentPage,
       resultsRef,
       searchRef,
+      sortOptions,
+      searchSort,
+      handleSortChange,
     };
   },
 });
