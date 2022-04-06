@@ -14,6 +14,7 @@ import SearchBar from "./components/utils/search-bar.vue";
 import Tabs from "./components/vanilla/tabs";
 import Accordion from "./components/vanilla/accordion";
 import Clipboard from "./components/vanilla/clipboard";
+import SortSearch from "./components/vanilla/sort-search";
 
 import VueFinalModal from "vue-final-modal";
 import Toaster from "@meforma/vue-toaster";

@@ -1,0 +1,34 @@
+{% macro sort_search(result) %}
+{% if kwargs %}
+    {% set to_url = result.query.to_url %}
+    {% if in_url('sort') %}
+        {% if request.args.sort.startswith('-') %}
+            {% set current_sort = request.args.sort %}
+        {% endif %}
+    {% endif %}
+{% endif %}
+<div class="fr-grid-row align-items-center">
+    <label for="sort-search" class="fr-col-auto fr-text--sm fr-m-0 fr-mr-1w">
+        {{_('Sort by:')}}
+    </label>
+    <div class="fr-col">
+        <select
+            id="sort-search"
+            aria-label="{{ _('Sort search') }}"
+            class="fr-select"
+            data-select-sort
+            name="sort"
+        >
+            <option value="" {{selected(current_sort, Nil)}} disabled>
+                {{_('Relevance')}}
+            </option>
+            {% for field, (label, order) in kwargs|dictsort(by='value') %}
+                {% set sort = field if order == 'asc' else '-'+field %}
+                <option value='{{sort}}' {{selected(current_sort, sort)}}>
+                    {{label}}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+{% endmacro %}

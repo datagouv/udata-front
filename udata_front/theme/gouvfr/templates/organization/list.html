@@ -1,5 +1,6 @@
 {% extends theme("layouts/1-column.html") %}
 {% from theme('macros/paginator.html') import paginator with context %}
+{% from theme('macros/sort_search.html') import sort_search %}
 
 {% set toolbar_class='search-toolbar' %}
 
@@ -27,8 +28,18 @@
     <div class="pt-sm search-input">
         <form method="GET" class="row-inline fs-lg">
             <span class="icon active">{% include theme("svg/search.svg") %}</span>
-            <input type="text" name="q" value="{{organizations.query._query}}" aria-label="{{ _('Search...') }}"
-                placeholder="{{ _('Search...') }}" />
+            <input
+                type="text"
+                name="q"
+                value="{{organizations.query._query}}"
+                aria-label="{{ _('Search...') }}"
+                placeholder="{{ _('Search...') }}"
+            />
+            {{sort_search(organizations,
+                created=(_('Creation date'), 'desc'),
+                reuses=(_('Reuses'), 'desc'),
+                followers=(_('Followers'), 'desc')
+            )}}
         </form>
     </div>
     <div class="row-inline pt-xl justify-between align-items-center">
