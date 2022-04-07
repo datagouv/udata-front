@@ -1,82 +1,85 @@
 <template>
-  <form @submit.prevent="search">
-    <div class="fr-grid-row justify-between align-items-center search-bar" ref="searchRef">
+  <form class="fr-pt-3v" @submit.prevent="search">
+    <div class="fr-grid-row fr-grid-row--middle justify-between search-bar" ref="searchRef">
       <SearchInput
-        class="fr-mb-4w"
         :onChange="handleSearchChange"
         :value="queryString"
         :placeholder="$t('Search for data...')"
       />
     </div>
-    <div class="fr-grid-row fr-grid-row--gutters justify-between align-items-center">
-        <div class="fr-col-12 fr-col-md-6 fr-col-lg-3">
-          <MultiSelect
-            :placeholder="$t('Organizations')"
-            :searchPlaceholder="$t('Search an organization...')"
-            listUrl="/organizations/?sort=-followers"
-            suggestUrl="/organizations/suggest/"
-            entityUrl="/organizations/"
-            :values="facets.organization"
-            :onChange="handleSuggestorChange('organization')"
-          />
-        </div>
-        <div class="fr-col-12 fr-col-md-6 fr-col-lg-3">
-          <MultiSelect
-            :placeholder="$t('Tags')"
-            :searchPlaceholder="$t('Search a tag...')"
-            suggestUrl="/tags/suggest/"
-            :values="facets.tag"
-            :onChange="handleSuggestorChange('tag')"
-            :minimumCharacterBeforeSuggest="3"
-          />
-        </div>
-        <div class="fr-col-12 fr-col-md-6 fr-col-lg-3">
-          <MultiSelect
-            :placeholder="$t('Licenses')"
-            :searchPlaceholder="$t('Search a license...')"
-            listUrl="/datasets/licenses/"
-            :values="facets.license"
-            :onChange="handleSuggestorChange('license')"
-          />
-        </div>
-        <div class="fr-col-12 fr-col-md-6 fr-col-lg-3">
-          <MultiSelect
-            :placeholder="$t('Formats')"
-            :searchPlaceholder="$t('Search a format...')"
-            suggestUrl="/datasets/suggest/formats/"
-            :values="facets.format"
-            :onChange="handleSuggestorChange('format')"
-            :minimumCharacterBeforeSuggest="2"
-          />
-        </div>
+    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-pt-5v">
+      <div class="fr-col-auto">
+        <MultiSelect
+          :placeholder="$t('Licenses')"
+          :searchPlaceholder="$t('Search a license...')"
+          listUrl="/datasets/licenses/"
+          :values="facets.license"
+          :onChange="handleSuggestorChange('license')"
+        />
       </div>
-      <div class="fr-grid-row fr-grid-row--gutters fr-mt-3v align-items-center">
-        <div class="fr-col-12 fr-col-md-6 fr-col-lg-6 row-inline">
-          <Rangepicker
-            :value="facets.temporal_coverage"
-            :onChange="handleSuggestorChange('temporal_coverage')"
-          />
-        </div>
-        <div class="fr-col-12 fr-col-md-3">
-          <MultiSelect
-            :placeholder="$t('Geographic area')"
-            :searchPlaceholder="$t('Search a geographic area...')"
-            suggestUrl="/spatial/zones/suggest/"
-            entityUrl="/spatial/zone/"
-            :values="facets.geozone"
-            :onChange="handleSuggestorChange('geozone')"
-          />
-        </div>
-        <div class="fr-col-12 fr-col-md-3">
-          <MultiSelect
-            :placeholder="$t('Territorial granularity')"
-            :searchPlaceholder="$t('Search a granularity...')"
-            listUrl="/spatial/granularities/"
-            :values="facets.granularity"
-            :onChange="handleSuggestorChange('granularity')"
-          />
-        </div>
+      <div class="fr-col-auto">
+        <MultiSelect
+          :placeholder="$t('Geographic area')"
+          :searchPlaceholder="$t('Search a geographic area...')"
+          suggestUrl="/spatial/zones/suggest/"
+          entityUrl="/spatial/zone/"
+          :values="facets.geozone"
+          :onChange="handleSuggestorChange('geozone')"
+        />
       </div>
+      <div class="fr-col-auto">
+        <Rangepicker
+          :value="facets.temporal_coverage"
+          :onChange="handleSuggestorChange('temporal_coverage')"
+        />
+      </div>
+      <div class="fr-col-auto">
+        <MultiSelect
+          :placeholder="$t('Tags')"
+          :searchPlaceholder="$t('Search a tag...')"
+          suggestUrl="/tags/suggest/"
+          :values="facets.tag"
+          :onChange="handleSuggestorChange('tag')"
+          :minimumCharacterBeforeSuggest="3"
+        />
+      </div>
+      <div class="fr-col-auto">
+        <MultiSelect
+          :placeholder="$t('Formats')"
+          :searchPlaceholder="$t('Search a format...')"
+          suggestUrl="/datasets/suggest/formats/"
+          :values="facets.format"
+          :onChange="handleSuggestorChange('format')"
+          :minimumCharacterBeforeSuggest="2"
+        />
+      </div>
+      <div class="fr-col-auto">
+        <MultiSelect
+          :placeholder="$t('Organizations')"
+          :searchPlaceholder="$t('Search an organization...')"
+          listUrl="/organizations/?sort=-followers"
+          suggestUrl="/organizations/suggest/"
+          entityUrl="/organizations/"
+          :values="facets.organization"
+          :onChange="handleSuggestorChange('organization')"
+        />
+      </div>
+      <div class="fr-col-auto">
+        <MultiSelect
+          :placeholder="$t('Territorial granularity')"
+          :searchPlaceholder="$t('Search a granularity...')"
+          listUrl="/spatial/granularities/"
+          :values="facets.granularity"
+          :onChange="handleSuggestorChange('granularity')"
+        />
+      </div>
+      <div class="fr-col-auto">
+        <SchemaFilter
+          :values="facets.schema"
+          :onChange="handleSuggestorChange('schema')"
+        />
+      </div>
+    </div>
   </form>
   <section class="search-results fr-mt-1w fr-mt-md-3w" ref="resultsRef" v-bind="$attrs">
     <transition mode="out-in">
@@ -103,8 +106,8 @@
                   <option value="">
                     {{$t('Relevance')}}
                   </option>
-                  <option v-for="{sort, label} in sortOptions" :value='sort'>
-                    {{$t(label)}}
+                  <option v-for="{value, label} in sortOptions" :value='value'>
+                    {{label}}
                   </option>
                 </select>
             </div>
@@ -155,6 +158,7 @@ import Suggestor from "./suggestor.vue";
 import Rangepicker from "./rangepicker.vue";
 import Dataset from "../dataset/search-result.vue";
 import Loader from "../dataset/loader.vue";
+import SchemaFilter from "./schema-filter.vue";
 import Empty from "./empty.vue";
 import Pagination from "../pagination/pagination.vue";
 import MultiSelect from "./multi-select.vue";
@@ -163,6 +167,7 @@ export default defineComponent({
   components: {
     MultiSelect,
     SearchInput,
+    SchemaFilter,
     Rangepicker,
     Suggestor,
     Dataset,
@@ -176,7 +181,7 @@ export default defineComponent({
       default: false,
     },
     sorts: {
-      /** @type {PropType<Array<{order: string, sort: string}>>} */
+      /** @type {PropType<Array<{label: string, order: string, value: string}>>} */
       type: Array,
       default: [],
     }
@@ -264,11 +269,8 @@ export default defineComponent({
         .get("/datasets/search/", {
           cancelToken: currentRequest.value.token,
           params: {
-            q: queryString.value,
-            ...facets.value,
+            ...paramUrl.value,
             page_size: pageSize,
-            page: currentPage.value,
-            sort: searchSort.value ? searchSort.value : null,
           },
         })
         .then((res) => res.data)
@@ -307,7 +309,11 @@ export default defineComponent({
           else if (values.length === 1) facets.value[facet] = values[0].value;
           else facets.value[facet] = null;
         } else {
-          facets.value[facet] = values;
+          if(values) {
+            facets.value[facet] = values;
+          } else {
+            facets.value[facet] = null;
+          }
         }
         currentPage.value = 1;
         search();
@@ -355,8 +361,8 @@ export default defineComponent({
     });
 
     const sortOptions = computed(() => props.sorts.map(sort => ({
-        sort: sort.order == 'asc' ? sort.sort : '-'+sort.sort,
-        label: sort.sort,
+        value: sort.order == 'asc' ? sort.value : '-' + sort.value,
+        label: sort.label,
       })));
 
     const paramUrl = computed(() => {
@@ -371,6 +377,7 @@ export default defineComponent({
       }
       if (currentPage.value > 1) params.page = currentPage.value.toString();
       if (queryString.value) params.q = queryString.value;
+      if(searchSort.value) params.sort = searchSort.value;
       return params;
     });
 
@@ -393,7 +400,7 @@ export default defineComponent({
       }, {deep: true});
 
     /**
-     * @type {Ref<{organization: ?string, tag: ?string, license: ?string, format: ?string, temporal_coverage: ?string, geozone: ?string, granularity: ?string}>}
+     * @type {Ref<{organization: ?string, tag: ?string, license: ?string, format: ?string, temporal_coverage: ?string, geozone: ?string, granularity: ?string, schema: ?string}>}
      */
     facets.value = Object.fromEntries(params);
     if (props.disableFirstSearch) {

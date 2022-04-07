@@ -16,8 +16,8 @@ d1.yyyy-d1.mm-d1.dd-d2.yyyy-d2.mm-d2.dd
 -->
 
 <template>
-  <div class="rangepicker fr-grid-row fr-grid-row--gutters w-100">
-    <div class="fr-col-auto fr-grid-row align-items-center">
+  <div class="rangepicker fr-grid-row fr-grid-row--gutters">
+    <div class="fr-col-auto fr-grid-row fr-grid-row--middle">
       <div class="text-grey-380 mr-xxs">
         {{ $t("from") }}
       </div>

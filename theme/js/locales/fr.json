@@ -115,5 +115,14 @@
   "Search X in Y": "Rechercher «{query}» dans les {type}",
   "datasets": "jeux de données",
   "organizations": "organisations",
-  "Start typing to search in X": "Commencez à taper pour rechercher parmi les {type}..."
+  "Start typing to search in X": "Commencez à taper pour rechercher parmi les {type}...",
+  "Use tab (or arrow down) to move between suggestions": "",
+  "{x} available suggestion": "",
+  "Delete {t}": "",
+  "Delete": "",
+  "Schema": "",
+  "Search a schema...": "",
+  "X Results": "",
+  "Sort by:": "",
+  "Relevance": ""
 }

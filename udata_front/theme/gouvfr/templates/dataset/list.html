@@ -19,6 +19,12 @@
 
 {% set bundle = 'search' %}
 
+{% set sorts = [
+    {"label": _('Creation date'),"value": "created", "order": "desc"},
+    {"label": _('Reuses'), "value": "reuses", "order": "desc"},
+    {"label": _('Followers'),"value": "followers", "order": "desc"}
+] %}
+
 {% block main_content %}
 <section
     class="container overflow-visible fr-py-2w vuejs"
@@ -36,10 +42,8 @@
     <Search
         :disable-first-search="true"
         data-total-results="{{datasets.total}}"
-        data-results="{{ datasets|to_api_format|to_json }}"
-        :sorts='[{"sort": "created", "order": "desc"},
-        {"sort": "reuses", "order": "desc"},
-        {"sort": "followers", "order": "desc"}]'
+        data-results="{{datasets|to_api_format|to_json}}"
+        :sorts="{{sorts|to_json}}"
     >
     </Search>
     <noscript>

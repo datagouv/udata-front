@@ -115,5 +115,14 @@
   "Search X in Y": "Search “{query}” in {type}",
   "datasets": "datasets",
   "organizations": "organizations",
-  "Start typing to search in X": "Start typing to search in {type}"
+  "Start typing to search in X": "Start typing to search in {type}",
+  "Use tab (or arrow down) to move between suggestions": "",
+  "{x} available suggestion": "",
+  "Delete {t}": "",
+  "Delete": "",
+  "Schema": "",
+  "Search a schema...": "",
+  "X Results": "",
+  "Sort by:": "",
+  "Relevance": ""
 }

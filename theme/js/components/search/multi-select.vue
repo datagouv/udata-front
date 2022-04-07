@@ -20,17 +20,28 @@ Options can be :
 Simply provide the necessary props for your case.
 
 Urls:
-* suggestUrl(optional): The URL that will be called when the user performs a search within the select.
+- `suggestUrl`(optional): The URL that will be called when the user performs a search within the select.
   If not provided, suggest mode will be disabled and typing in the select will only filter the existing options.
-* listUrl(optional): The URL that will be called to populate the select options on mount.
+  If provided, you can add a `minimumCharacterBeforeSuggest` props
+- `listUrl`(optional): The URL that will be called to populate the select options on mount.
   If not provided, the select will start empty and will fill with options when the user starts typing some text.
-* entityUrl(optional): The URL that will be called to fetch labels for options provided before the component mounts.
-* values: Initial values if the select needs to be pre-filled. Can be a String (single value) or an Array of values.
+- `entityUrl`(optional): The URL that will be called to fetch labels for options provided before the component mounts.
+
+Placeholders:
+- `placeholder`: Select placeholder, always shown
+- `searchPlaceholder`: Search input placeholder
+- `emptyPlaceholder`: Options placeholder when there is no search results
+
+Options:
+- `initialOptions`: Initial list of options
+- `values`: Initial values if the select needs to be pre-filled. Can be a String (single value) or an Array of values.
   Labels will be fetched from entityUrl, or from the options list if listUrl is provided, or the value will be used as label.
-* onChange: Function that will be called on each value select/deselect action.
-* placeholder: Select placeholder, always shown
-* searchPlaceholder: Search input placeholder
-* emptyPlaceholder: Options placeholder when there is no search results
+
+Configuration:
+- `minimumCharacterBeforeSuggest`: wait for this count of character before calling suggest
+
+Callback:
+- `onChange`: Function that will be called on each value select/deselect action.
 
 ```
 -->
@@ -58,7 +69,7 @@ Urls:
 </template>
 
 <script>
-import {defineComponent, ref, Ref, computed, onMounted, onUpdated, reactive} from "vue";
+import {defineComponent, ref, Ref, computed, onMounted, onUpdated, reactive, PropType} from "vue";
 import Select from "@conciergerie-dev/select-a11y/dist/module";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
@@ -79,6 +90,8 @@ export default defineComponent({
     suggestUrl: String,
     listUrl: String,
     entityUrl: String,
+    /** @type {PropType<Promise<Option[]>>} */
+    initialOptions: Promise,
     values: [Array, String],
     onChange: {
       type: Function,
@@ -178,6 +191,7 @@ export default defineComponent({
      * @returns {Promise<Option[]>}
      */
     const getInitialOptions = async () => {
+      if(props.initialOptions) return props.initialOptions;
       if (!props.listUrl) return [];
 
       /**
