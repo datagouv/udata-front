@@ -399,11 +399,10 @@ export default defineComponent({
         history.pushState(null, "", url);
       }, {deep: true});
 
-    const paramEntries = Array.from(params.entries()).map(([key, param]) => [key, decodeURIComponent(param)])
     /**
      * @type {Ref<{organization: ?string, tag: ?string, license: ?string, format: ?string, temporal_coverage: ?string, geozone: ?string, granularity: ?string, schema: ?string}>}
      */
-    facets.value = Object.fromEntries(paramEntries);
+    facets.value = Object.fromEntries(params);
     if (props.disableFirstSearch) {
       loading.value = true;
     } else {

@@ -81,7 +81,7 @@ import { useToast } from "../../composables/useToast";
  * @typedef {Object} Option
  * @property {string} label - Label (display) of the option
  * @property {any} value - Value (id) of the option
- * @property {string=} image - Image (optional) to show
+ * @property {string} [image] - Image (optional) to show
  */
 
 export default defineComponent({
@@ -157,9 +157,9 @@ export default defineComponent({
 
     /**
      * Current selected value(s)
-     * @type {Ref<Option[]>}
+     * @type {Ref<Option | null>}
      */
-    const selected = ref([]);
+    const selected = ref(null);
 
     /**
      * Current request if any to be cancelled if a new one comes
@@ -311,7 +311,7 @@ export default defineComponent({
         selectedPromises.push(Promise.resolve(option.value));
       }
       return Promise.all(selectedPromises)
-        .then(values => selected.value.push(...values));
+        .then(values => selected.value = values[0]);
     }
 
     /**
@@ -431,7 +431,6 @@ export default defineComponent({
       try {
         selectA11y.value = new Select(select.value, {
           text: texts,
-          showSelected: true,
           enableTextFilter: !props.suggestUrl,
           useLabelAsButton: true,
         });
