@@ -223,27 +223,26 @@ export default defineComponent({
      * @returns {Promise<Option[] | void>}
      */
     const suggest = (q = '') => {
-      if(q && props.suggestUrl) {
-        if (currentRequest.value) {
-          currentRequest.value.cancel();
-        }
-
-        currentRequest.value = generateCancelToken();
-        return api
-          .get(props.suggestUrl, {
-            params: { q },
-            cancelToken: currentRequest.value.token,
-          })
-          .then((resp) => resp.data)
-          .then(mapToOption)
-          .catch((error) => {
-            if (!axios.isCancel(error)) {
-              toast.error(t("Error getting {type}.", {type: props.placeholder}));
-            }
-          });
+      if(!q || !props.suggestUrl) {
+        return getInitialOptions();
+      }
+      if (currentRequest.value) {
+        currentRequest.value.cancel();
       }
 
-      return getInitialOptions();
+      currentRequest.value = generateCancelToken();
+      return api
+        .get(props.suggestUrl, {
+          params: { q },
+          cancelToken: currentRequest.value.token,
+        })
+        .then((resp) => resp.data)
+        .then(mapToOption)
+        .catch((error) => {
+          if (!axios.isCancel(error)) {
+            toast.error(t("Error getting {type}.", {type: props.placeholder}));
+          }
+        });
     };
 
     /**
@@ -434,6 +433,7 @@ export default defineComponent({
           text: texts,
           showSelected: true,
           enableTextFilter: !props.suggestUrl,
+          useLabelAsButton: true,
         });
         updateStylesAndEvents();
       } catch (e) {
