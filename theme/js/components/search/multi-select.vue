@@ -52,7 +52,6 @@ Callback:
     <select
       class="form-control"
       :id="id"
-      multiple
       ref="select"
       v-model="selected"
     >
@@ -430,12 +429,16 @@ export default defineComponent({
     };
 
     const makeSelect = () => {
-      selectA11y.value = new Select(select.value, {
-        text: texts,
-        showSelected: true,
-        enableTextFilter: !props.suggestUrl,
-      });
-      updateStylesAndEvents();
+      try {
+        selectA11y.value = new Select(select.value, {
+          text: texts,
+          showSelected: true,
+          enableTextFilter: !props.suggestUrl,
+        });
+        updateStylesAndEvents();
+      } catch (e) {
+        console.log(e);
+      }
     };
     
     const fillOptionsAndValues = suggest()
