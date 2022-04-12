@@ -8,55 +8,8 @@
       />
     </div>
     <div class="fr-grid-row fr-grid-row--gutters fr-pt-5v">
-      <div class="fr-col-auto">
+      <div class="fr-col-12 fr-col-sm-6 fr-col-md-5 fr-col-lg-4">
         <MultiSelect
-          :placeholder="$t('Licenses')"
-          :searchPlaceholder="$t('Search a license...')"
-          listUrl="/datasets/licenses/"
-          :values="facets.license"
-          :onChange="handleSuggestorChange('license')"
-        />
-      </div>
-      <div class="fr-col-auto">
-        <MultiSelect
-          class="multiselect--lg"
-          :placeholder="$t('Geographic area')"
-          :searchPlaceholder="$t('Search a geographic area...')"
-          suggestUrl="/spatial/zones/suggest/"
-          entityUrl="/spatial/zone/"
-          :values="facets.geozone"
-          :onChange="handleSuggestorChange('geozone')"
-        />
-      </div>
-      <div class="fr-col-auto">
-        <Rangepicker
-          :value="facets.temporal_coverage"
-          :onChange="handleSuggestorChange('temporal_coverage')"
-        />
-      </div>
-      <div class="fr-col-auto">
-        <MultiSelect
-          :placeholder="$t('Tags')"
-          :searchPlaceholder="$t('Search a tag...')"
-          suggestUrl="/tags/suggest/"
-          :values="facets.tag"
-          :onChange="handleSuggestorChange('tag')"
-          :minimumCharacterBeforeSuggest="3"
-        />
-      </div>
-      <div class="fr-col-auto">
-        <MultiSelect
-          :placeholder="$t('Formats')"
-          :searchPlaceholder="$t('Search a format...')"
-          suggestUrl="/datasets/suggest/formats/"
-          :values="facets.format"
-          :onChange="handleSuggestorChange('format')"
-          :minimumCharacterBeforeSuggest="2"
-        />
-      </div>
-      <div class="fr-col-auto">
-        <MultiSelect
-          class="multiselect--lg"
           :placeholder="$t('Organizations')"
           :searchPlaceholder="$t('Search an organization...')"
           listUrl="/organizations/?sort=-followers"
@@ -66,7 +19,42 @@
           :onChange="handleSuggestorChange('organization')"
         />
       </div>
-      <div class="fr-col-auto">
+      <div class="fr-col-12 fr-col-sm-6 fr-col-md-3 fr-col-lg-2">
+        <MultiSelect
+          :placeholder="$t('Formats')"
+          :searchPlaceholder="$t('Search a format...')"
+          suggestUrl="/datasets/suggest/formats/"
+          :values="facets.format"
+          :onChange="handleSuggestorChange('format')"
+          :minimumCharacterBeforeSuggest="2"
+        />
+      </div>
+      <div class="fr-col-12 fr-col-sm-6 fr-col-md-4 fr-col-lg-2">
+        <MultiSelect
+          :placeholder="$t('Licenses')"
+          :searchPlaceholder="$t('Search a license...')"
+          listUrl="/datasets/licenses/"
+          :values="facets.license"
+          :onChange="handleSuggestorChange('license')"
+        />
+      </div>
+      <div class="fr-col-12 fr-col-sm-6 fr-col-lg-4">
+        <Rangepicker
+          :value="facets.temporal_coverage"
+          :onChange="handleSuggestorChange('temporal_coverage')"
+        />
+      </div>
+      <div class="fr-col-12 fr-col-sm-6 fr-col-lg-3">
+        <MultiSelect
+          :placeholder="$t('Geographic area')"
+          :searchPlaceholder="$t('Search a geographic area...')"
+          suggestUrl="/spatial/zones/suggest/"
+          entityUrl="/spatial/zone/"
+          :values="facets.geozone"
+          :onChange="handleSuggestorChange('geozone')"
+        />
+      </div>
+      <div class="fr-col-12 fr-col-sm-6 fr-col-md-4 fr-col-lg-3">
         <MultiSelect
           :placeholder="$t('Territorial granularity')"
           :searchPlaceholder="$t('Search a granularity...')"
@@ -75,7 +63,17 @@
           :onChange="handleSuggestorChange('granularity')"
         />
       </div>
-      <div class="fr-col-auto">
+      <div class="fr-col-12 fr-col-sm-6 fr-col-md-4 fr-col-lg-3">
+        <MultiSelect
+          :placeholder="$t('Tags')"
+          :searchPlaceholder="$t('Search a tag...')"
+          suggestUrl="/tags/suggest/"
+          :values="facets.tag"
+          :onChange="handleSuggestorChange('tag')"
+          :minimumCharacterBeforeSuggest="3"
+        />
+      </div>
+      <div class="fr-col-12 fr-col-sm-6 fr-col-md-4 fr-col-lg-3">
         <SchemaFilter
           :values="facets.schema"
           :onChange="handleSuggestorChange('schema')"

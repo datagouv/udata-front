@@ -47,7 +47,7 @@ Callback:
 -->
 
 <template>
-  <div class="multiselect" ref="container">
+  <div class="multiselect w-100" ref="container">
     <label :for="id">{{placeholder}}</label>
     <select
       class="multiselect__input"
