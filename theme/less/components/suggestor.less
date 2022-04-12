@@ -1,8 +1,15 @@
 @import (less) "@conciergerie-dev/select-a11y/dist/select-a11y.css";
-
-.form-group .select-a11y {
+// 15rem 10rem 12rem
+.multiselect .select-a11y {
+    width: 10rem;
     .btn-select-a11y {
         background: none;
+        span {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            display: block;
+        }
         .icon-select {
             display: none;
         }
@@ -11,7 +18,7 @@
         background: @white;
         .fr-p-2w;
         .fr-pb-1w;
-        .form-control {
+        .multiselect__input {
             .fr-input;
         }
     }
@@ -168,4 +175,8 @@
     .multiselect-option.is-selected {
         display: none;
     }
+}
+
+.multiselect.multiselect--lg .select-a11y {
+    width: 15rem;
 }

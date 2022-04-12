@@ -47,10 +47,10 @@ Callback:
 -->
 
 <template>
-  <div class="form-group" ref="container">
+  <div class="multiselect" ref="container">
     <label :for="id">{{placeholder}}</label>
     <select
-      class="form-control"
+      class="multiselect__input"
       :id="id"
       ref="select"
       v-model="selected"
@@ -459,7 +459,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.form-group :deep(.a11y-container) {
+.multiselect :deep(.a11y-container) {
   left: var(--offset-a11y-container);
   min-width: var(--min-width-a11y-container);
 }

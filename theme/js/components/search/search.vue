@@ -7,7 +7,7 @@
         :placeholder="$t('Search for data...')"
       />
     </div>
-    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-pt-5v">
+    <div class="fr-grid-row fr-grid-row--gutters fr-pt-5v">
       <div class="fr-col-auto">
         <MultiSelect
           :placeholder="$t('Licenses')"
@@ -19,6 +19,7 @@
       </div>
       <div class="fr-col-auto">
         <MultiSelect
+          class="multiselect--lg"
           :placeholder="$t('Geographic area')"
           :searchPlaceholder="$t('Search a geographic area...')"
           suggestUrl="/spatial/zones/suggest/"
@@ -55,6 +56,7 @@
       </div>
       <div class="fr-col-auto">
         <MultiSelect
+          class="multiselect--lg"
           :placeholder="$t('Organizations')"
           :searchPlaceholder="$t('Search an organization...')"
           listUrl="/organizations/?sort=-followers"
