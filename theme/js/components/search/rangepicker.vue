@@ -16,45 +16,43 @@ d1.yyyy-d1.mm-d1.dd-d2.yyyy-d2.mm-d2.dd
 -->
 
 <template>
-  <div class="rangepicker fr-grid-row fr-grid-row--gutters">
-    <div class="fr-col-auto fr-grid-row fr-grid-row--middle">
-      <div class="text-grey-380 mr-xxs">
-        {{ $t("from") }}
-      </div>
-      <div class="datepicker fr-select fr-select--width-auto">
-        <Datepicker
-          v-model="dateRange.start"
-          :upperLimit="dateRange.end"
-          @update:modelValue="_onChange"
-          placeholder="__/__/__"
-          :locale="locale"
-        />
+  <div class="rangepicker fr-select" :class="{'rangepicker--selected': start}">
+    <div v-show="selectorShown === selectorShownStart">
+      <p class="rangepicker__hint fr-m-0">{{$t('Select lower bound:')}}</p>
+      <Datepicker
+        v-model="start"
+        :upperLimit="end ?? tomorrow"
+        :locale="locale"
+        @update:modelValue="showEndSelector"
+        ref="startRef"
+      />
+    </div>
+    <div v-show="selectorShown === selectorShownEnd">
+    <p class="rangepicker__hint fr-m-0">{{$t('Select upper bound:')}}</p>
+      <Datepicker
+        v-model="end"
+        :lowerLimit="start"
+        :upperLimit="tomorrow"
+        :locale="locale"
+        @update:modelValue="hideSelector"
+        ref="endRef"
+      />
+    </div>
+    <button
+      class="rangepicker__button w-100 text-align-left"
+      @click.prevent="showStartSelector"
+      v-if="selectorShown === null"
+    >
+      <template v-if="!start">{{$t('Publication date')}}</template>
+      <template v-else>
+        {{filters.formatDate(start, formatTemplate)}}<template v-if="end">–{{filters.formatDate(end, formatTemplate)}}</template>
         <button
           class="fr-fi-close-line clear"
-          @click="clear"
-          v-if="dateRange.start"
+          @click.stop="clear"
+          v-if="start"
         ></button>
-      </div>
-    </div>
-    <div class="fr-col-auto fr-grid-row align-items-center">
-      <div class="text-grey-380 mr-xxs">
-        {{ $t("to") }}
-      </div>
-      <div class="datepicker fr-select fr-select--width-auto">
-        <Datepicker
-          v-model="dateRange.end"
-          :lowerLimit="dateRange.start"
-          @update:modelValue="_onChange"
-          placeholder="__/__/__"
-          :locale="locale"
-        />
-        <button
-          class="fr-fi-close-line clear"
-          @click="clear"
-          v-if="dateRange.end"
-        ></button>
-      </div>
-    </div>
+      </template>
+      </button>
   </div>
 </template>
 
@@ -62,11 +60,12 @@ d1.yyyy-d1.mm-d1.dd-d2.yyyy-d2.mm-d2.dd
 import config from "../../config";
 import Datepicker from "vue3-datepicker";
 import "vue3-datepicker/dist/vue3-datepicker.css";
-import { format } from "date-fns";
+import { add, format } from "date-fns";
 import fr from "date-fns/locale/fr";
 import en from "date-fns/locale/en-GB";
 import es from "date-fns/locale/es";
-import { defineComponent } from "vue";
+import { defineComponent, ref, watch } from "vue";
+import { filters } from "../../plugins/filters";
 
 const locales = { fr, en, es };
 
@@ -74,57 +73,94 @@ export default defineComponent({
   components: {
     Datepicker,
   },
-  created() {
-    if (!this.value) return;
-
-    this.dateRange.start = new Date(this.value.slice(0, 10));
-    this.dateRange.end = new Date(this.value.slice(10));
-  },
   props: {
     value: String,
     onChange: Function,
   },
-  watch: {
-    value (value) {
-      //This allows to reset the value if the parent component decides to clear the value using the prop.
+  setup(props) {
+    const start = ref(null);
+    const end = ref(null);
+    const tomorrow = add(new Date(), {days: 1});
+
+    const startRef = ref(null);
+    const endRef = ref(null);
+
+    const selectorShown = ref(null);
+    const selectorShownStart = "START";
+    const selectorShownEnd = "END";
+
+    /**
+     * Format for dayjs 
+     * L is for localized DD/MM/YYYY
+     */
+    const formatTemplate = 'L';
+
+    if (props.value) {
+      start.value = new Date(props.value.slice(0, 10));
+      end.value = new Date(props.value.slice(10));
+    }
+
+    watch(() => props.value, value => {
       if (typeof value === "undefined") {
-        this.dateRange.start = null;
-        this.dateRange.end = null;
+        start.value = null;
+        end.value = null;
       }
-    },
-  },
-  data() {
-    return {
-      /**
-       * @type {Object.<string, Date | null>}
-       */
-      dateRange: {
-        start: null,
-        end: null,
-      },
-      locale: locales[config.lang],
-    };
-  },
-  methods: {
-    _onChange () {
-      if (!this.onChange) return;
+    });
+
+    watch([start, end], () => {
+      if (!props.onChange) return;
 
       let value = null;
 
-      if (this.dateRange.start && this.dateRange.end)
+      if (start.value && end.value)
         value =
-          format(this.dateRange.start, "yyyy-MM-dd") +
+          format(start.value, "yyyy-MM-dd") +
           "-" +
-          format(this.dateRange.end, "yyyy-MM-dd");
+          format(end.value, "yyyy-MM-dd");
 
-      return this.onChange(value);
-    },
-    clear () {
-      this.dateRange.start = null;
-      this.dateRange.end = null;
+      return props.onChange(value);
+    });
 
-      this._onChange();
-    },
+    const clear = () => {
+      start.value = null;
+      end.value = null;
+    };
+
+    const showSelector = (selectorRef) => {
+      selectorRef.value.renderView(selectorRef.value.initialView);
+    }
+
+    const showStartSelector = () => {
+      selectorShown.value = selectorShownStart;
+      showSelector(startRef);
+    }
+
+    const showEndSelector = () => {
+      selectorShown.value = selectorShownEnd;
+      showSelector(endRef);
+    }
+
+    const hideSelector = () => {
+      selectorShown.value = null;
+    }
+
+    return {
+      start,
+      end,
+      startRef,
+      endRef,
+      showStartSelector,
+      showEndSelector,
+      hideSelector,
+      selectorShown,
+      selectorShownStart,
+      selectorShownEnd,
+      locale: locales[config.lang],
+      clear,
+      filters,
+      formatTemplate,
+      tomorrow,
+    }
   },
 });
 </script>
