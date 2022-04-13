@@ -1,11 +1,15 @@
 .rangepicker {
     &.rangepicker--selected {
         background-image: none;
+        .rangepicker__button {
+            color: @grey-500;
+        }
     }
     position: relative;
     padding: 0;
     .rangepicker__hint, .rangepicker__button {
         padding: 0.5rem 2.5rem 0.5rem 1rem;
+        color: @text-mention-grey;
     }
     .clear {
         position: absolute;
