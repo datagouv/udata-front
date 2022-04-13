@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Update search pages [#95](https://github.com/etalab/udata-front/pull/95)
 
 ## 2.0.2 (2022-04-11)
 

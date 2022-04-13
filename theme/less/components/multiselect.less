@@ -1,0 +1,52 @@
+@import (less) "@conciergerie-dev/select-a11y/dist/select-a11y.css";
+.multiselect .select-a11y {
+    padding: 0;
+    .btn-select-a11y {
+        padding: 0.5rem 2.5rem 0.5rem 1rem;
+        background: none;
+        span {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            display: block;
+        }
+        .icon-select {
+            display: none;
+        }
+    }
+    .a11y-container {
+        background: @white;
+        .fr-p-2w;
+        .fr-pb-1w;
+        .multiselect__input {
+            .fr-input;
+        }
+    }
+    .a11y-suggestions {
+        .fr-mt-1w;
+        border: none;
+        max-height: 50vh;
+    }
+    .a11y-suggestion {
+        .fr-p-1w;
+        &:hover, &:focus {
+            background: @grey-100;
+        }
+        &[aria-selected=true] {
+            background: @grey-200;
+            &:before {
+                content: none;
+            }
+        }
+        & + .a11y-suggestion {
+            .border-top;
+        }
+    }
+    .a11y-img {
+        .logo;
+        .fr-p-1v;
+    }
+    .list-selected li {
+        display: inline-block;
+    }
+}

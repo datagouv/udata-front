@@ -16,7 +16,7 @@
           suggestUrl="/organizations/suggest/"
           entityUrl="/organizations/"
           :values="facets.organization"
-          :onChange="handleSuggestorChange('organization')"
+          :onChange="handleFacetChange('organization')"
         />
       </div>
       <div class="fr-col-12 fr-col-sm-6 fr-col-md-3 fr-col-lg-2">
@@ -25,7 +25,7 @@
           :searchPlaceholder="$t('Search a format...')"
           suggestUrl="/datasets/suggest/formats/"
           :values="facets.format"
-          :onChange="handleSuggestorChange('format')"
+          :onChange="handleFacetChange('format')"
           :minimumCharacterBeforeSuggest="2"
         />
       </div>
@@ -35,13 +35,13 @@
           :searchPlaceholder="$t('Search a license...')"
           listUrl="/datasets/licenses/"
           :values="facets.license"
-          :onChange="handleSuggestorChange('license')"
+          :onChange="handleFacetChange('license')"
         />
       </div>
       <div class="fr-col-12 fr-col-sm-6 fr-col-lg-4">
         <Rangepicker
           :value="facets.temporal_coverage"
-          :onChange="handleSuggestorChange('temporal_coverage')"
+          :onChange="handleFacetChange('temporal_coverage')"
         />
       </div>
       <div class="fr-col-12 fr-col-sm-6 fr-col-lg-3">
@@ -51,7 +51,7 @@
           suggestUrl="/spatial/zones/suggest/"
           entityUrl="/spatial/zone/"
           :values="facets.geozone"
-          :onChange="handleSuggestorChange('geozone')"
+          :onChange="handleFacetChange('geozone')"
         />
       </div>
       <div class="fr-col-12 fr-col-sm-6 fr-col-md-4 fr-col-lg-3">
@@ -60,7 +60,7 @@
           :searchPlaceholder="$t('Search a granularity...')"
           listUrl="/spatial/granularities/"
           :values="facets.granularity"
-          :onChange="handleSuggestorChange('granularity')"
+          :onChange="handleFacetChange('granularity')"
         />
       </div>
       <div class="fr-col-12 fr-col-sm-6 fr-col-md-4 fr-col-lg-3">
@@ -69,14 +69,14 @@
           :searchPlaceholder="$t('Search a tag...')"
           suggestUrl="/tags/suggest/"
           :values="facets.tag"
-          :onChange="handleSuggestorChange('tag')"
+          :onChange="handleFacetChange('tag')"
           :minimumCharacterBeforeSuggest="3"
         />
       </div>
       <div class="fr-col-12 fr-col-sm-6 fr-col-md-4 fr-col-lg-3">
         <SchemaFilter
           :values="facets.schema"
-          :onChange="handleSuggestorChange('schema')"
+          :onChange="handleFacetChange('schema')"
         />
       </div>
     </div>
@@ -154,7 +154,6 @@ import { generateCancelToken, apiv2 } from "../../plugins/api";
 import {useToast} from "../../composables/useToast";
 import useSearchUrl from "../../composables/useSearchUrl";
 import SearchInput from "./search-input.vue";
-import Suggestor from "./suggestor.vue";
 import Rangepicker from "./rangepicker.vue";
 import Dataset from "../dataset/search-result.vue";
 import Loader from "../dataset/loader.vue";
@@ -169,7 +168,6 @@ export default defineComponent({
     SearchInput,
     SchemaFilter,
     Rangepicker,
-    Suggestor,
     Dataset,
     Empty,
     Loader,
@@ -300,7 +298,7 @@ export default defineComponent({
     /**
      * Called on every facet selector change, updates the `facets.xxx` object then searches with new values 
      */
-    const handleSuggestorChange = (facet) => {
+    const handleFacetChange = (facet) => {
       return (values) => {
         // Values can either be an array of varying length, or a String.
         if (Array.isArray(values)) {
@@ -427,7 +425,7 @@ export default defineComponent({
       isFiltered,
       search,
       handleSearchChange,
-      handleSuggestorChange,
+      handleFacetChange,
       changePage,
       resetFilters,
       facets,
