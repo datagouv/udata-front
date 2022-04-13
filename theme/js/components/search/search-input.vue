@@ -12,36 +12,32 @@ If the submitUrl prop is passed, it will redirect on Submit.
 -->
 
 <template>
-  <form :action="submitUrl" @submit="onSubmit" class="fr-col">
-    <section class="fr-search-bar">
-      <input
-        type="search"
-        name="q"
-        :value="queryString"
-        @input="_onChange"
-        @keydown.delete="onDelete"
-        ref="input"
-        class="fr-input"
-        :aria-label="placeholder || $t('Search...')"
-        :placeholder="placeholder || $t('Search...')"
-        data-cy="search-input"
-      />
-      <button class="fr-btn" :title="$t('Search')" type="submit">
-        {{ $t('Search') }}
-      </button>
-    </section>
-  </form>
+  <section class="fr-search-bar">
+    <input
+      type="search"
+      name="q"
+      :value="queryString"
+      @input="_onChange"
+      @keydown.delete="onDelete"
+      ref="input"
+      class="fr-input"
+      :aria-label="placeholder || $t('Search...')"
+      :placeholder="placeholder || $t('Search...')"
+      data-cy="search-input"
+    />
+    <button class="fr-btn" :title="$t('Search')" type="submit">
+      {{ $t('Search') }}
+    </button>
+  </section>
 </template>
 
 <script>
 import Icon from "svg/search.svg";
-import CloseIcon from "svg/close.svg";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   created() {
     this.icon = Icon;
-    this.closeIcon = CloseIcon;
     this.queryString = this.value;
   },
   watch: {
@@ -55,10 +51,8 @@ export default defineComponent({
   },
   props: {
     onChange: Function,
-    stop: Function,
     value: String,
     placeholder: String,
-    submitUrl: String,
   },
   data() {
     return {
@@ -76,10 +70,7 @@ export default defineComponent({
       this.$refs.input.focus({
         preventScroll: true,
       });
-    },
-    onSubmit(event) {
-      if (!this.submitUrl) event.preventDefault();
-    },
+    }
   },
 });
 </script>
