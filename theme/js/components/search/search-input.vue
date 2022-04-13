@@ -12,7 +12,7 @@ If the submitUrl prop is passed, it will redirect on Submit.
 -->
 
 <template>
-  <section class="fr-search-bar">
+  <section class="fr-search-bar w-100">
     <input
       type="search"
       name="q"
