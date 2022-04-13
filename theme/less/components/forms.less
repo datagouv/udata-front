@@ -44,18 +44,10 @@ form.form {
     label {
         font-size: @font-size-sm;
         margin-bottom: @spacing-xxs;
-        position: relative;
-
         &.required::after {
-            position: absolute;
-            top: 2px;
             margin-left: @spacing-xxs;
-            width: @spacing-xxs;
-            height: @spacing-xxs;
-            background-color: @blue-400;
-            content: '';
-            display: inline-block;
-            border-radius: @spacing-xxs;
+            color: @blue-400;
+            content: '*';
         }
     }
 

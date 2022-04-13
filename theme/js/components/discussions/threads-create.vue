@@ -13,10 +13,11 @@
           </button>
         </div>
       </div>
-      <div class="thread-comment fr-py-3w fr-px-3w">
+      <div class="thread-comment fr-pb-3w fr-px-3w">
         <form @submit.prevent="submit">
+          <p class="fr-mt-0">{{$t('All fields are required.')}}</p>
           <div class="fr-input-group">
-            <label for="thread-title" class="fr-label">
+            <label for="thread-title" class="fr-label required">
               {{ $t("Title") }}
             </label>
             <input
@@ -29,7 +30,7 @@
           />
           </div>
           <div class="fr-input-group">
-            <label for="thread-comment" class="fr-label">
+            <label for="thread-comment" class="fr-label required">
               {{ $t("Message") }}
             </label>
             <textarea

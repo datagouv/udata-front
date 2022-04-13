@@ -8,12 +8,12 @@
         </button>
       </div>
     </div>
-    <form @submit.prevent="submit">
+    <form class="form" @submit.prevent="submit">
       <div class="fr-input-group">
         <label class="fr-label" for="textarea">
-          {{$t('Comment')}}
+          {{$t('Comment (required field)')}}
         </label>
-        <textarea v-model="comment" class="fr-input" id="textarea"></textarea>
+        <textarea v-model="comment" required class="fr-input" id="textarea"></textarea>
       </div>
       <footer class="fr-grid-row justify-between fr-grid-row--middle">
         <span class="text-mention-grey fr-text--sm fr-mb-0">
