@@ -14,8 +14,8 @@
         </div>
       </div>
       <div class="thread-comment fr-pb-3w fr-px-3w">
-        <form @submit.prevent="submit">
-          <p class="fr-mt-0">{{$t('All fields are required.')}}</p>
+        <form class="form fr-p-0" @submit.prevent="submit">
+          <p class="fr-mt-0 fr-mb-1w fr-text--sm">{{$t('* : Required field')}}</p>
           <div class="fr-input-group">
             <label for="thread-title" class="fr-label required">
               {{ $t("Title") }}

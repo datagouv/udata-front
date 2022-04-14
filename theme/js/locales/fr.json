@@ -116,6 +116,5 @@
   "datasets": "jeux de données",
   "organizations": "organisations",
   "Start typing to search in X": "Commencez à taper pour rechercher parmi les {type}",
-  "Comment (required field)": "",
-  "All fields are required.": ""
+  "* : Required field": ""
 }
