@@ -7,14 +7,40 @@
         :placeholder="$t('Search for data...')"
       />
     </div>
+    <div class="fr-grid-row fr-mt-2w fr-pt-3v fr-mb-3v justify-between fr-grid-row--middle">
+      <p class="fr-text--lg fr-text--bold fr-my-0" v-if="totalResults">
+        {{ $t("X Results", totalResults) }}
+      </p>
+      <div class="fr-grid-row align-items-center">
+        <label for="sort-search" class="fr-col-auto fr-text--sm fr-m-0 fr-mr-1w">
+            {{$t('Sort by:')}}
+        </label>
+        <div class="fr-col">
+            <select
+              id="sort-search"
+              class="fr-select"
+              name="sort"
+              v-model="searchSort"
+              @change="handleSortChange"
+            >
+              <option value="">
+                {{$t('Relevance')}}
+              </option>
+              <option v-for="{value, label} in sortOptions" :value='value'>
+                {{label}}
+              </option>
+            </select>
+        </div>
+      </div>
+    </div>
     <div class="fr-grid-row fr-mt-1w fr-mt-md-3w">
-      <div class="fr-col-12 fr-col-md-3 order-2 order-md-1">
-        <nav class="fr-sidemenu fr-sidemenu--right" aria-label="Menu latéral">
+      <div class="fr-col-12 fr-col-md-4 fr-col-lg-3">
+        <nav class="fr-sidemenu" :aria-label="$t('Filter results')">
           <div class="fr-sidemenu__inner">
-            <button class="fr-sidemenu__btn fr-mt-1w" hidden aria-controls="fr-sidemenu-wrapper" aria-expanded="false">Tri et Filtres</button>
+            <button class="fr-sidemenu__btn fr-mt-1w" hidden aria-controls="fr-sidemenu-wrapper" aria-expanded="false">{{$t('Filter results')}}</button>
             <div class="fr-collapse" id="fr-sidemenu-wrapper">
-              <div class="fr-sidemenu__title">Titre de rubrique</div>
-              <div class="fr-grid-row fr-grid-row--gutters fr-pt-5v">
+              <div class="fr-sidemenu__title fr-mb-3v">{{$t('Filter results')}}</div>
+              <div class="fr-grid-row fr-grid-row--gutters">
                 <div class="fr-col-12">
                   <MultiSelect
                     :placeholder="$t('Organizations')"
@@ -91,54 +117,26 @@
           </div>
         </nav>
       </div>
-      <section class="fr-col-12 fr-col-md-9 order-1 order-md-2 search-results" ref="resultsRef" v-bind="$attrs">
+      <section class="fr-col-12 fr-col-md-8 fr-col-lg-9 search-results" ref="resultsRef" v-bind="$attrs">
         <transition mode="out-in">
           <div v-if="loading">
             <Loader />
           </div>
-          <div v-else-if="results.length">
-            <div class="fr-grid-row fr-mt-4w fr-pt-3v fr-mb-3v justify-between fr-grid-row--middle border-top border-default-grey">
-              <div>
-                {{ $t("X Results", totalResults) }}
-              </div>
-              <div class="fr-grid-row align-items-center">
-                <label for="sort-search" class="fr-col-auto fr-text--sm fr-m-0 fr-mr-1w">
-                    {{$t('Sort by:')}}
-                </label>
-                <div class="fr-col">
-                    <select
-                      id="sort-search"
-                      class="fr-select"
-                      name="sort"
-                      v-model="searchSort"
-                      @change="handleSortChange"
-                    >
-                      <option value="">
-                        {{$t('Relevance')}}
-                      </option>
-                      <option v-for="{value, label} in sortOptions" :value='value'>
-                        {{label}}
-                      </option>
-                    </select>
-                </div>
-              </div>
-            </div>
-            <ul>
-              <li v-for="result in results" :key="result.id">
-                <a :href="result.page" class="unstyled w-10 block">
-                  <Dataset v-bind="result" />
-                </a>
-              </li>
-              <Pagination
-                v-if="totalResults > pageSize"
-                :page="currentPage"
-                :pageSize="pageSize"
-                :totalResults="totalResults"
-                :changePage="changePage"
-                class="fr-mt-2w"
-              />
-            </ul>
-          </div>
+          <ul v-else-if="results.length">
+            <li v-for="result in results" :key="result.id">
+              <a :href="result.page" class="unstyled w-10 block">
+                <Dataset v-bind="result" />
+              </a>
+            </li>
+            <Pagination
+              v-if="totalResults > pageSize"
+              :page="currentPage"
+              :pageSize="pageSize"
+              :totalResults="totalResults"
+              :changePage="changePage"
+              class="fr-mt-2w"
+            />
+          </ul>
           <div v-else>
             <Empty
               wide
@@ -233,7 +231,7 @@ export default defineComponent({
     /**
      * Current page of results
      */
-    const currentPage = ref(0);
+    const currentPage = ref(1);
 
     /**
      * Search page size
