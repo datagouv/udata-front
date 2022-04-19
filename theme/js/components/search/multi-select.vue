@@ -55,6 +55,9 @@ Callback:
       ref="select"
       v-model="selected"
     >
+    <option value="">
+        {{$t('All')}}
+      </option>
       <option
         v-for="option in displayedOptions"
         :key="option.value"
@@ -68,7 +71,7 @@ Callback:
 </template>
 
 <script>
-import {defineComponent, ref, Ref, computed, onMounted, onUpdated, reactive, PropType} from "vue";
+import {defineComponent, ref, Ref, computed, onMounted, onUpdated, reactive, PropType, unref} from "vue";
 import Select from "@conciergerie-dev/select-a11y/dist/module";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
@@ -80,7 +83,7 @@ import { useToast } from "../../composables/useToast";
 /**
  * @typedef {Object} Option
  * @property {string} label - Label (display) of the option
- * @property {any} value - Value (id) of the option
+ * @property {string} value - Value (id) of the option
  * @property {string} [image] - Image (optional) to show
  */
 
@@ -157,9 +160,11 @@ export default defineComponent({
 
     /**
      * Current selected value(s)
-     * @type {Ref<Option | null>}
+     * @type {Ref<string | null>}
      */
     const selected = ref(null);
+
+    const defaultValue = '';
 
     /**
      * Current request if any to be cancelled if a new one comes
@@ -260,20 +265,18 @@ export default defineComponent({
     /**
      * Normalize provided values to array
      * @param {string | Array | undefined} values 
-     * @returns {Ref<Array>}
+     * @returns {Ref<string>}
      */
     const normalizeValues = (values) => {
       /**
-       * Array of selected values
-       * @type {Ref<Array>}
+       * Selected value
+       * @type {Ref<string>}
        */
-      let selected = ref([]);
+      const selected = ref('');
       if (typeof values === "string") {
-        selected.value = [values];
-      } else if (Array.isArray(values)) {
         selected.value = values;
-      } else {
-        selected.value = [];
+      } else if (Array.isArray(values)) {
+        selected.value = values[0];
       }
       return selected;
     }
@@ -283,35 +286,32 @@ export default defineComponent({
      * It tries to augment the values with data from props.entityUrl or options.
      */
     const fillSelectedFromValues = () => {
-      const selectedPromises = [];
-      let selectedValues = normalizeValues(props.values);
-      for(let value of selectedValues.value) {
-        if (props.entityUrl) {
-          selectedPromises.push(
-            api
-              .get(props.entityUrl + value)
-              .then((resp) => resp.data)
-              .then((data) => mapToOption([data]))
-              .then((entities) => entities[0]?.label ?? value)
-              .then((label) => {
-                const newOption = options.value.every(option => option.value !== value);
-                if(newOption) {
-                  options.value.push({label, value});
-                }
-              })
-              .then(() => value)
-            );
-          continue;
+      let selectedPromise = null;
+      let value = unref(normalizeValues(props.values));
+      if (value && props.entityUrl) {
+          selectedPromise = api
+            .get(props.entityUrl + value)
+            .then((resp) => resp.data)
+            .then((data) => mapToOption([data]))
+            .then((entities) => entities[0]?.label ?? value)
+            .then((label) => {
+              const newOption = options.value.every(option => option.value !== value);
+              if(newOption) {
+                options.value.push({label, value});
+              }
+            })
+            .then(() => value);
+        } else {
+          let option = options.value.find((opt) => opt.value === value);
+          if (!option) {
+            option = {label: value, value};
+            options.value.push(option);
+          }
+          selectedPromise = Promise.resolve(option.value);
         }
-        let option = options.value.find((opt) => opt.value === value);
-        if (!option) {
-          option = {label: value, value};
-          options.value.push(option);
-        }
-        selectedPromises.push(Promise.resolve(option.value));
-      }
-      return Promise.all(selectedPromises)
-        .then(values => selected.value = values[0]);
+      return selectedPromise
+        .then(value => selected.value = value)
+        .then(value => value ? value : selected.value = defaultValue);
     }
 
     /**
@@ -432,7 +432,6 @@ export default defineComponent({
         selectA11y.value = new Select(select.value, {
           text: texts,
           enableTextFilter: !props.suggestUrl,
-          useLabelAsButton: true,
         });
         updateStylesAndEvents();
       } catch (e) {

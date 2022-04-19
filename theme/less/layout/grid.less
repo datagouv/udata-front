@@ -354,6 +354,10 @@ each(range(@columns), {
     .offset-@{index} {
         .offset(@index);
     }
+
+    .order-@{index} {
+        order: @index;
+    }
 });
 
 // Generating responsive classes col-{sm|md|lg|xl}-{n}
@@ -369,6 +373,10 @@ each(@breakpoints, .(@bk, @_k, @_i) {
 
             .offset-@{bk}-@{index} {
                 .offset(@index);
+            }
+
+            .order-@{bk}-@{index} {
+                order: @index;
             }
         });
 
