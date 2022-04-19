@@ -23,6 +23,12 @@
 </li>
 {% endblock %}
 
+{% set sorts = [
+    {"label": _('Creation date'),"value": "created", "order": "desc"},
+    {"label": _('Reuses'), "value": "reuses", "order": "desc"},
+    {"label": _('Followers'),"value": "followers", "order": "desc"}
+] %}
+
 {% block main_content %}
 <section class="fr-container fr-py-2w">
     <h1 class="fr-mb-1w">{{_('Organizations')}}</h1>
@@ -47,11 +53,7 @@
             </div>
             <div class="w-100 fr-grid-row fr-mt-7v fr-pt-3v justify-between align-items-center fr-grid-row--middle border-top border-default-grey">
                 <p class="fr-m-0">{{ _('%(result)s results', result=organizations.total) }}</p>
-                {{sort_search(organizations,
-                created=(_('Creation date'), 'desc'),
-                reuses=(_('Reuses'), 'desc'),
-                followers=(_('Followers'), 'desc')
-            )}}
+                {{sort_search(organizations, sorts)}}
             </div>
         </form>
     </div>

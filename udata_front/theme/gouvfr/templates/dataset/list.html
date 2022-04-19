@@ -68,11 +68,7 @@
                 </div>
                 <div class="w-100 fr-grid-row fr-mt-7v fr-pt-3v justify-between align-items-center fr-grid-row--middle border-top border-default-grey">
                     <p class="fr-m-0">{{ _('%(result)s results', result=datasets.total) }}</p>
-                    {{sort_search(datasets,
-                        created=(_('Creation date'), 'desc'),
-                        reuses=(_('Reuses'), 'desc'),
-                        followers=(_('Followers'), 'desc')
-                    )}}
+                    {{sort_search(datasets, sorts)}}
                 </div>
             </form>
         </div>

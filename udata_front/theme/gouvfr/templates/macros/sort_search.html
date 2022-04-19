@@ -1,10 +1,7 @@
-{% macro sort_search(result) %}
-{% if kwargs %}
-    {% set to_url = result.query.to_url %}
+{% macro sort_search(result, sorts) %}
+{% if sorts %}
     {% if in_url('sort') %}
-        {% if request.args.sort.startswith('-') %}
-            {% set current_sort = request.args.sort %}
-        {% endif %}
+        {% set current_sort = request.args.sort %}
     {% endif %}
 {% endif %}
 <div class="fr-grid-row align-items-center">
@@ -21,10 +18,10 @@
             <option value="" {{selected(current_sort, Nil)}} disabled>
                 {{_('Relevance')}}
             </option>
-            {% for field, (label, order) in kwargs|dictsort(by='value') %}
-                {% set sort = field if order == 'asc' else '-'+field %}
+            {% for field in sorts %}
+                {% set sort = field.value if field.order == 'asc' else '-'+field.value %}
                 <option value='{{sort}}' {{selected(current_sort, sort)}}>
-                    {{label}}
+                    {{field.label}}
                 </option>
             {% endfor %}
         </select>
