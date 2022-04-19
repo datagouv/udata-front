@@ -72,12 +72,6 @@
                   />
                 </div>
                 <div class="fr-col-12">
-                  <Rangepicker
-                    :value="facets.temporal_coverage"
-                    :onChange="handleFacetChange('temporal_coverage')"
-                  />
-                </div>
-                <div class="fr-col-12">
                   <MultiSelect
                     :placeholder="$t('Geographic area')"
                     :searchPlaceholder="$t('Search a geographic area...')"
@@ -164,7 +158,6 @@ import { generateCancelToken, apiv2 } from "../../plugins/api";
 import {useToast} from "../../composables/useToast";
 import useSearchUrl from "../../composables/useSearchUrl";
 import SearchInput from "./search-input.vue";
-import Rangepicker from "./rangepicker.vue";
 import Dataset from "../dataset/search-result.vue";
 import Loader from "../dataset/loader.vue";
 import SchemaFilter from "./schema-filter.vue";
@@ -177,7 +170,6 @@ export default defineComponent({
     MultiSelect,
     SearchInput,
     SchemaFilter,
-    Rangepicker,
     Dataset,
     Empty,
     Loader,
@@ -408,7 +400,7 @@ export default defineComponent({
       }, {deep: true});
 
     /**
-     * @type {Ref<{organization: ?string, tag: ?string, license: ?string, format: ?string, temporal_coverage: ?string, geozone: ?string, granularity: ?string, schema: ?string}>}
+     * @type {Ref<{organization: ?string, tag: ?string, license: ?string, format: ?string, geozone: ?string, granularity: ?string, schema: ?string}>}
      */
     facets.value = Object.fromEntries(params);
     if (props.disableFirstSearch) {
