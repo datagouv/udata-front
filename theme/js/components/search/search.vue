@@ -70,7 +70,6 @@
                     :searchPlaceholder="$t('Search a format...')"
                     :allOption="$t('All formats')"
                     listUrl="/datasets/extensions/"
-                    suggestUrl="/datasets/suggest/formats/"
                     :values="facets.format"
                     :onChange="handleFacetChange('format')"
                     :minimumCharacterBeforeSuggest="2"
