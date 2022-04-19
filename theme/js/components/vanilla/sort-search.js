@@ -6,7 +6,6 @@ export default (() => {
         const selects = document.querySelectorAll("[data-select-sort]");
 
         selects.forEach((select) => {
-            // Tabs buttons = pills button
             const options = select.querySelectorAll("option");
 
             options.forEach((option) => {
