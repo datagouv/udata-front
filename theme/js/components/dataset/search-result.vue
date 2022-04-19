@@ -26,7 +26,7 @@ Vue. -->
         {{ $filters.excerpt(description) }}
       </div>
     </div>
-    <dl class="card-hover">
+    <dl class="card-hover fr-displayed-xl">
       <div v-if="temporal_coverage">
         <dt>{{ $t("Temporal coverage") }}</dt>
         <dd>{{ temporal_coverage.start + " - " + temporal_coverage.end }}</dd>
