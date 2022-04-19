@@ -403,6 +403,11 @@ export default defineComponent({
         let url = new URL(window.location.href);
         url.search = new URLSearchParams(val).toString();
         history.pushState(null, "", url);
+        /** @type NodeListOf<HTMLAnchorElement> */
+        let linksWithQuery = document.querySelectorAll('[data-q]');
+        for (let link of linksWithQuery) {
+          link.href = reuseUrl.value;
+        }
       }, {deep: true});
 
     /**
@@ -429,7 +434,6 @@ export default defineComponent({
     });
 
     return {
-      reuseUrl,
       isFiltered,
       search,
       handleSearchChange,
