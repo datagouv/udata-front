@@ -45,6 +45,7 @@
                   <MultiSelect
                     :placeholder="$t('Organizations')"
                     :searchPlaceholder="$t('Search an organization...')"
+                    :allOption="$t('All organizations')"
                     listUrl="/organizations/?sort=-followers"
                     suggestUrl="/organizations/suggest/"
                     entityUrl="/organizations/"
@@ -54,8 +55,21 @@
                 </div>
                 <div class="fr-col-12">
                   <MultiSelect
+                    :placeholder="$t('Tags')"
+                    :searchPlaceholder="$t('Search a tag...')"
+                    :allOption="$t('All tags')"
+                    suggestUrl="/tags/suggest/"
+                    :values="facets.tag"
+                    :onChange="handleFacetChange('tag')"
+                    :minimumCharacterBeforeSuggest="3"
+                  />
+                </div>
+                <div class="fr-col-12">
+                  <MultiSelect
                     :placeholder="$t('Formats')"
                     :searchPlaceholder="$t('Search a format...')"
+                    :allOption="$t('All formats')"
+                    listUrl="/datasets/extensions/"
                     suggestUrl="/datasets/suggest/formats/"
                     :values="facets.format"
                     :onChange="handleFacetChange('format')"
@@ -66,15 +80,23 @@
                   <MultiSelect
                     :placeholder="$t('Licenses')"
                     :searchPlaceholder="$t('Search a license...')"
+                    :allOption="$t('All licenses')"
                     listUrl="/datasets/licenses/"
                     :values="facets.license"
                     :onChange="handleFacetChange('license')"
                   />
                 </div>
                 <div class="fr-col-12">
+                  <SchemaFilter
+                    :values="facets.schema"
+                    :onChange="handleFacetChange('schema')"
+                  />
+                </div>
+                <div class="fr-col-12">
                   <MultiSelect
                     :placeholder="$t('Geographic area')"
                     :searchPlaceholder="$t('Search a geographic area...')"
+                    :allOption="$t('All areas')"
                     suggestUrl="/spatial/zones/suggest/"
                     entityUrl="/spatial/zone/"
                     :values="facets.geozone"
@@ -85,25 +107,10 @@
                   <MultiSelect
                     :placeholder="$t('Territorial granularity')"
                     :searchPlaceholder="$t('Search a granularity...')"
+                    :allOption="$t('All granularities')"
                     listUrl="/spatial/granularities/"
                     :values="facets.granularity"
                     :onChange="handleFacetChange('granularity')"
-                  />
-                </div>
-                <div class="fr-col-12">
-                  <MultiSelect
-                    :placeholder="$t('Tags')"
-                    :searchPlaceholder="$t('Search a tag...')"
-                    suggestUrl="/tags/suggest/"
-                    :values="facets.tag"
-                    :onChange="handleFacetChange('tag')"
-                    :minimumCharacterBeforeSuggest="3"
-                  />
-                </div>
-                <div class="fr-col-12">
-                  <SchemaFilter
-                    :values="facets.schema"
-                    :onChange="handleFacetChange('schema')"
                   />
                 </div>
               </div>

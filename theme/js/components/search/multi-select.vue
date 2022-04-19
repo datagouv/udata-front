@@ -55,8 +55,8 @@ Callback:
       ref="select"
       v-model="selected"
     >
-    <option value="">
-        {{$t('All')}}
+    <option v-if="allOption" value="">
+        {{allOption}}
       </option>
       <option
         v-for="option in displayedOptions"
@@ -109,6 +109,10 @@ export default defineComponent({
     },
     emptyPlaceholder: {
       type: String,
+    },
+    allOption: {
+      type: String,
+      default: '',
     },
     minimumCharacterBeforeSuggest: {
       type: Number,
@@ -215,8 +219,8 @@ export default defineComponent({
      * @returns {Option[]}
      **/
     const mapToOption = (data) => data.map((obj) => ({
-      label: obj.name || obj.title || obj.text || obj?.properties?.name,
-      value: obj.id || obj.text,
+      label: obj.name || obj.title || obj.text || obj?.properties?.name || obj,
+      value: obj.id || obj.text || obj,
       image: obj.logo_thumbnail || obj.logo || obj.image_url,
     }));
 

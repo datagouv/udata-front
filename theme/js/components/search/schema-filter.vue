@@ -2,6 +2,7 @@
     <MultiSelect
         :placeholder="$t('Schema')"
         :searchPlaceholder="$t('Search a schema...')"
+        :allOption="$t('All schemas')"
         :initialOptions="initialOptions"
         :values="values"
         :onChange="onChange"
