@@ -46,14 +46,14 @@
     <div class="fr-grid-row fr-grid-row--middle justify-between">
         <div>{{_('Search a reuse on %(site)s', site=current_site.title)}}</div>
         <a
-            href="{{ url_for('datasets.list') }}"
+            href="{{ url_for('datasets.list', q=reuses.query._query) }}"
             class="fr-link fr-text--sm fr-m-0">
             {{ _('Search in datasets') }}
         </a>
     </div>
     <div class="fr-pt-3v">
         <form method="GET" class="fr-grid-row">
-            <div class="fr-search-bar w-100" role="search">
+            <div class="fr-search-bar fr-search-bar--lg w-100" role="search">
                 <label class="fr-label" for="search-reuses">
                     {{ _('Search...') }}
                 </label>
