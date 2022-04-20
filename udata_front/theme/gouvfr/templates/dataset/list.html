@@ -47,8 +47,12 @@
         <ul class="search-results mt-lg">
             {% for dataset in datasets %}
             <li>
-                <a href="{{ url_for('datasets.show', dataset=dataset) }}" title="{{ dataset.title }}"
-                    class="unstyled w-100">{% include theme('dataset/search-result.html') %}
+                <a
+                    href="{{ url_for('datasets.show', dataset=dataset) }}"
+                    title="{{ dataset.title }}"
+                    class="fr-raw-link unstyled w-100"
+                >
+                    {% include theme('dataset/search-result.html') %}
                 </a>
             </li>
             {% endfor %}

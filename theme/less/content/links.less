@@ -56,12 +56,7 @@ You can use links from DSFR. It uses DSFR colors and conventions. It allows you 
 
 a {
     color: @blue-400;
-    text-decoration: none;
     cursor: pointer;
-
-    &:hover {
-        text-decoration: underline;
-    }
 
     &:focus {
         outline: 5px auto -webkit-focus-ring-color;
@@ -85,6 +80,7 @@ a {
 }
 
 .nav-link {
+    .fr-raw-link;
     position: relative;
     color: @grey-400;
     font-weight: @font-weight-bold;
@@ -132,18 +128,8 @@ a {
 
 .fr-link {
     --text-action-high-blue-france: @blue-400;
-    &:hover {
-        text-decoration: none;
-    }
 }
 
 .fr-link.rounded-0 {
     .rounded-0;
-}
-
-.fr-link {
-    --text-action-high-blue-france: @blue-400;
-    &:hover {
-        text-decoration: none;
-    }
 }

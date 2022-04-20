@@ -79,12 +79,9 @@ These are now removed, see tags instead.
     --background-action-high-blue-france: @blue-400;
     --background-action-high-blue-france-blend: @blue-400-blend;
     border-radius: 3em;
-    &:hover {
-        text-decoration: none;
-    }
 }
 
-.fr-btn--secondary {
+.fr-btn--secondary, .fr-btn--tertiary {
     --text-action-high-blue-france: @blue-400;
     --border-action-high-blue-france: @blue-400;
 }
@@ -100,6 +97,7 @@ each(@colors, {
 
 // Bottoni molto grandi 🤏
 .btn-venti {
+    .fr-raw-link;
     position: relative;
     display: block;
     padding: @spacing-lg @spacing-md;

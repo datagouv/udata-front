@@ -82,7 +82,7 @@
                 {{ dataset.title }}
                 {% if dataset.acronym %}<small>{{ dataset.acronym }}</small>{% endif %}
             </h1>
-            <p class="fr-mb-0">
+            <p class="fr-my-0">
                 {% if not external_source %}
                 {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
                     {% if dataset.license %}

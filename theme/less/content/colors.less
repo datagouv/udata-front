@@ -65,6 +65,14 @@ Similar to the contextual text color classes, easily set the background of an el
 
 */
 
+// This one is missing from DSFR 1.4
+:root {
+    --grey-850-200: #cecece;
+}
+:root[data-fr-theme=dark] {
+    --grey-850-200: #3a3a3a;
+}
+
 @white: var(--grey-1000-50);
 @blue-100: var(--blue-cumulus-975-75);
 @blue-300: var(--blue-cumulus-850-200);
@@ -124,6 +132,8 @@ each(@colors, {
 
     .bg-@{value} {
         background-color: @@value;
+        --hover-tint: @@value;
+        --active-tint: @@value;
     }
 });
 

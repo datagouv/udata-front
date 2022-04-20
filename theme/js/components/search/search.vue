@@ -130,7 +130,7 @@
         >
           <a
             :href="result.page"
-            class="unstyled w-10 block"
+            class="fr-raw-link unstyled w-100 block"
           >
             <Dataset v-bind="result" />
           </a>

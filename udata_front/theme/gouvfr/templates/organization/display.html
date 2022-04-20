@@ -92,8 +92,12 @@
 <section id="organization-datasets" class="fr-py-9v container">
     <h2>{{ _('Datasets') }}<sup>{{ total_datasets }}</sup></h2>
     {% for dataset in datasets %}
-        <a href="{{ url_for('datasets.show', dataset=dataset) }}" title="{{ dataset.title }}"
-            class="unstyled block w-100">{% include theme('dataset/search-result.html') %}
+        <a
+            href="{{ url_for('datasets.show', dataset=dataset) }}"
+            title="{{ dataset.title }}"
+            class="fr-raw-link unstyled block w-100"
+        >
+        {% include theme('dataset/search-result.html') %}
         </a>
     {% endfor %}
     <div class="fr-my-2w">
@@ -161,7 +165,7 @@
                 {% if can_edit and not read_only_mode %}
                 <li class="fr-my-2w">
                     <a
-                        class="nav-link nav-link--no-icon text-decoration-none fr-link fr-link--icon-left fr-fi-arrow-right-s-line"
+                        class="nav-link nav-link--no-icon fr-raw-link text-decoration-none fr-link fr-link--icon-left fr-fi-arrow-right-s-line"
                         href="{{ url_for('admin.index', path='organization/{id}/'.format(id=org.id)) }}"
                     >
                         <span class="text-decoration-underline">{{ _('Modify information') }}</span>
@@ -171,7 +175,7 @@
                 <li class="fr-my-2w">
                     <a
                         href="{{ url_for('organizations.datasets_csv', org=org) }}"
-                        class="nav-link nav-link--no-icon text-decoration-none fr-link fr-link--icon-left fr-fi-arrow-right-s-line"
+                        class="nav-link nav-link--no-icon fr-raw-link text-decoration-none fr-link fr-link--icon-left fr-fi-arrow-right-s-line"
                     >
                         <span class="text-decoration-underline">{{ _('Download list of datasets as csv file') }}</span>
                     </a>
