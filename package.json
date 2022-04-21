@@ -13,7 +13,7 @@
     "i18n:extract": "npm run i18n:report -- --add",
     "clean": "rimraf .parcel-cache",
     "start": "npm run dev",
-    "watch": "parcel theme/js/index.js theme/less/index.less --dist-dir udata_front/theme/gouvfr/static/ --host=dev.local --port=1234 --hmr-port=1235"
+    "watch": "parcel theme/js/index.js theme/less/index.less --dist-dir udata_front/theme/gouvfr/static/ --port=1234 --hmr-port=1235"
   },
   "dependencies": {
     "@meforma/vue-toaster": "^1.2.0",
