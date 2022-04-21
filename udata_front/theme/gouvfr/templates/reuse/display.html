@@ -64,7 +64,7 @@
                 {{ follow_btn(reuse) }}
                 {% if can_edit %}
                     <a
-                        class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-fi-edit-line fr-btn--icon-left fr-unhidden-sm"
+                        class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-fi-edit-line fr-btn--icon-left fr-hidden fr-unhidden-sm"
                         href="{{ url_for('admin.index', path='reuse/{id}/'.format(id=reuse.id)) }}"
                     >
                         {{ _('Modify reuse') }}

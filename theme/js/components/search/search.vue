@@ -18,7 +18,7 @@
     <h1 class="fr-m-0 fr-h4">
       {{ $t("Datasets") }}<sup>{{ totalResults }}</sup>
     </h1>
-    <a :href="reuseUrl" title="" class="nav-link fr-text--sm fr-mb-0 fr-unhidden-md fr-mt-3v">
+    <a :href="reuseUrl" title="" class="nav-link fr-text--sm fr-mb-0 fr-hidden fr-unhidden-md fr-mt-3v">
       {{ $t("Search reuses") }}
     </a>
   </div>
@@ -67,7 +67,7 @@
           />
         </div>
         <div
-          class="fr-col-2 fr-col-lg-1 fr-unhidden-md text-align-center text-align-right-lg"
+          class="fr-col-2 fr-col-lg-1 fr-hidden fr-unhidden-md text-align-center text-align-right-lg"
         >
           <button
             class="fr-btn fr-btn--secondary fr-btn--secondary-grey-200 text-grey-380 fr-px-2w"
