@@ -65,7 +65,7 @@
       </template>
       <div v-if="closed" class="text-grey-380">
         {{ $t("The discussion was closed by") }} &#32;
-        <strong class="px-xxs"><Author :author="closed_by" /></strong>
+        <strong class="fr-px-1v"><Author :author="closed_by" /></strong>
         {{ $t("on") }} {{ $filters.formatDate(closed) }}
       </div>
     </footer>

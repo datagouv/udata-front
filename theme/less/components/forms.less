@@ -43,19 +43,19 @@ form.form {
 
     label {
         font-size: @font-size-sm;
-        margin-bottom: @spacing-xxs;
+        .fr-mb-1v;
         position: relative;
 
         &.required::after {
             position: absolute;
             top: 2px;
-            margin-left: @spacing-xxs;
+            .fr-ml-1v;
             width: @spacing-xxs;
             height: @spacing-xxs;
             background-color: @blue-400;
             content: '';
             display: inline-block;
-            border-radius: @spacing-xxs;
+            .rounded-xxs;
         }
     }
 
@@ -63,7 +63,8 @@ form.form {
     input[type="email"],
     input[type="password"] {
         display: block;
-        padding: @spacing-xxs @spacing-xs;
+        .fr-py-1v;
+        .fr-px-1w;
 
         font-size: @font-size-md;
         font-family: @font-family-base;

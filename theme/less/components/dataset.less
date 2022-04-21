@@ -90,8 +90,7 @@ Disclaimer : the search-result component is weird in styling and uses a lot of f
     position: relative;
     display: flex;
     align-items: center;
-
-    padding: @spacing-xxs 0;
+    .fr-py-1v;
 
     .card-logo {
         flex: 0 0 100px;
@@ -165,7 +164,8 @@ Disclaimer : the search-result component is weird in styling and uses a lot of f
 
         .card-logo {
             padding: @spacing-xs @spacing-xs;
-            margin: @spacing-xxs 0;
+            .fr-my-1v;
+            .fr-mx-0;
 
             @media @query-lg {
                 padding-top: @spacing-md;
@@ -180,7 +180,8 @@ Disclaimer : the search-result component is weird in styling and uses a lot of f
             display: flex;
             flex-wrap: wrap;
             align-items: flex-start;
-            padding: @spacing-md @spacing-xxs;
+            .fr-py-2w;
+            .fr-px-1v;
 
             border-left: 1px solid @grey-100;
 
@@ -223,7 +224,8 @@ Disclaimer : the search-result component is weird in styling and uses a lot of f
             font-size: @font-size-xs;
 
             li {
-                margin: @spacing-xxs 0;
+                .fr-my-1v;
+                .fr-mx-0;
             }
 
             @media @query-lg {

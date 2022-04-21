@@ -3,7 +3,7 @@
     {% set image = post.image|placeholder('post') %}
     <div class="hero-image w-100 rounded-xxs" style="background-image: url('{{image}}')"></div>
     <div class="result-body p-md">
-        <h3 class="result-title m-0">{{ post.name }}</h3>
+        <h3 class="result-title fr-m-0">{{ post.name }}</h3>
         <p class="fs-sm text-grey-380 my-sm">
             {{ _('Published on') }}
             {{ post.published|dateformat(format='long') }}
