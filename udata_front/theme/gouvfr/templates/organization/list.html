@@ -57,9 +57,7 @@
             </div>
         </form>
     </div>
-    <div class="row-inline pt-xl justify-between align-items-center">
-        <h1 class="m-0 h2">{{ _('Organizations')}} <sup>{{organizations.total}}</sup></h1>
-    </div>
+    {% if organizations %}
     <ul class="search-results mt-lg">
         {% for organization in organizations %}
         <li>
@@ -70,5 +68,6 @@
         {% endfor %}
     </ul>
     {{ paginator(organizations) }}
+    {% endif %}
 </section>
 {% endblock %}

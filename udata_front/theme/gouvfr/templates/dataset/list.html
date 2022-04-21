@@ -72,6 +72,7 @@
                 </div>
             </form>
         </div>
+        {% if datasets %}
         <ul class="search-results fr-mt-3v">
             {% for dataset in datasets %}
             <li>
@@ -82,6 +83,7 @@
             {% endfor %}
         </ul>
         {{ paginator(datasets) }}
+        {% endif %}
     </noscript>
 </section>
 {% endblock %}

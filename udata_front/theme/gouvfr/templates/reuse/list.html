@@ -87,7 +87,7 @@
                         <li>
                             <a
                                 href="{{ reuses.query.to_url(url, replace=True, **{'topic': topic_id}) }}"
-                                class="fr-tag{% if reuses.query._filters and reuses.query._filters.topic and reuses.query._filters.topic.topic == topic_id %} active{% endif %}"
+                                class="fr-tag{% if reuses.query._filters and reuses.query._filters.topic and reuses.query._filters.topic == topic_id %} active{% endif %}"
                             >
                                 {{ label }}
                             </a>
@@ -101,6 +101,7 @@
             </div>
         </form>
     </div>
+    {%if reuses %}
     <ul class="search-results fr-grid-row fr-grid-row--gutters mt-lg-md">
         {% for reuse in reuses %}
         <li class="fr-col-lg-3 fr-col-md-4 fr-col-sm-6 fr-col-12 my-sm-sm fr-mb-3v">
@@ -109,5 +110,6 @@
         {% endfor %}
     </ul>
     {{ paginator(reuses) }}
+    {% endif %}
 </section>
 {% endblock %}
