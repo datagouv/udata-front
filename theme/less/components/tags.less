@@ -27,13 +27,18 @@ There is also `.fr-tags-group` to group multiple tags together like a row.
 
 @import (less) "@gouvfr/dsfr/dist/component/tag/tag.css";
 
-a.fr-tag {
-    color: var(--text-default-info);
+a.fr-tag, button.fr-tag {
+    --text-action-high-blue-france: var(--text-default-info);
     --blend: var(--background-contrast-info-blend);
-    background-color: var(--background-contrast-info);
+    --background-action-low-blue-france: var(--background-contrast-info);
+    --background-action-low-blue-france-hover: var(--background-contrast-info-hover);
+    --background-action-low-blue-france-active: var(--background-contrast-info-active);
+    --background-action-high-blue-france-hover: @blue-400-hover;
 
-    &.active {
-        background-color: @blue-400;
-        color: @white;
+    &[aria-pressed="true"] {
+        --background-action-high-blue-france: @blue-400;
+        &::after {
+            --text-action-high-blue-france: @blue-400;
+        }
     }
 }

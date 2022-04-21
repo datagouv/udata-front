@@ -27,35 +27,30 @@ Tip : if the href is invalid (no div with specified `id`), the tabs will kinda c
 
 export default (() => {
   document.addEventListener("DOMContentLoaded", () => {
-    const tabs = document.querySelectorAll(".tabs");
-
-    // For each .tabs container
+    const tabs = document.querySelectorAll("[data-tabs]");
     tabs.forEach((tab) => {
-      // Tabs buttons = pills button
-      const tabsButtons = tab.querySelectorAll(".tab[href^='#']");
-
+      const tabsButtons = tab.querySelectorAll("[role=tab]");
       tabsButtons.forEach((tabButton) => {
         tabButton.addEventListener("click", (el) => {
           el.preventDefault();
 
-          // Find the previously active pill button
           const previouslyActive = Array.from(tabsButtons).find((tab) =>
-            tab.classList.contains("active")
+            tab.getAttribute("aria-selected") === "true"
           );
-
-          // Remove the "active" class from the previously active tabPane and pill button
+          console.log(previouslyActive);
           if (previouslyActive) {
-            previouslyActive.classList.remove("active");
+            previouslyActive.setAttribute("aria-selected", "false");
+            previouslyActive.setAttribute("aria-pressed", "false");
             document
-              .querySelector(previouslyActive.getAttribute("href"))
-              .classList.remove("active");
+              .getElementById(previouslyActive.getAttribute("aria-controls"))
+              .classList.remove("fr-unhidden");
           }
 
-          // Add active to new pill and tab pane
-          el.target.classList.add("active");
+          el.target.setAttribute("aria-selected", "true");
+          el.target.setAttribute("aria-pressed", "true");
           document
-            .querySelector(el.target.getAttribute("href"))
-            .classList.add("active");
+            .getElementById(el.target.getAttribute("aria-controls"))
+            .classList.add("fr-unhidden");
         });
       });
     });

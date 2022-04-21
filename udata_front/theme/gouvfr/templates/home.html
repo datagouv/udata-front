@@ -110,14 +110,21 @@
             </div>
             <div class="fr-col-auto fr-grid-row fr-grid-row--gutters">
                 <div class="fr-col-auto">
-                    <nav class="tabs fr-tags-group fr-hidden fr-unhidden-lg">
+                    <nav class="fr-tags-group fr-hidden fr-unhidden-lg" data-tabs role="tablist">
                         {% for tab_id, label, _, _ in dataset_tabs %}
-                        <a
-                            href="#{{tab_id}}"
-                            class="tab fr-tag {% if loop.first %}active {% endif %}"
+                        <button
+                            role="tab"
+                            aria-controls="{{tab_id}}"
+                            class="fr-tag"
+                            {% if loop.first %}
+                                aria-pressed="true"
+                                aria-selected="true"
+                            {% else %}
+                                aria-pressed="false"
+                            {% endif %}
                         >
                             {{ label }}
-                        </a>
+                        </button>
                         {% endfor %}
                     </nav>
                 </div>
@@ -132,7 +139,7 @@
             </div>
         </div>
         {% for tab_id, label, datasets, kwargs in dataset_tabs  %}
-        <div class="tab-content {% if loop.first %}active{% endif %}" id={{tab_id}}>
+        <div class="fr-hidden {% if loop.first %}fr-unhidden{% endif %}" role="tabpanel" id={{tab_id}}>
             <div class="row pt-xl pt-md-md">
                 {% for dataset in datasets %}
                 <div class="col-lg-12 col-4">{% include theme('dataset/card.html') %}
@@ -156,21 +163,28 @@
 
 {# Reuse section #}
 <section class="reuse py-hg py-md-lg">
-    <div class="hagrid">
+    <div class="hagrid overflow-visible">
         <div class="fr-grid-row fr-grid-row--gutters justify-between">
             <div class="fr-col-auto">
                 <h2>{{ _('Data reuses') }}</h2>
             </div>
             <div class="fr-col-auto fr-grid-row fr-grid-row--gutters">
                 <div class="fr-col-auto">
-                    <nav class="tabs fr-tags-group fr-hidden fr-unhidden-lg">
+                    <nav class="tabs fr-tags-group fr-hidden fr-unhidden-lg" role="tablist">
                         {% for tab_id, label, _, _ in reuses_tabs %}
-                        <a
-                            href="#{{tab_id}}"
-                            class="tab fr-tag {% if loop.first %}active {% endif %}"
+                        <button
+                            aria-controls="{{tab_id}}"
+                            class="fr-tag"
+                            {% if loop.first %}
+                                aria-pressed="true"
+                                aria-selected="true"
+                            {% else %}
+                                aria-pressed="false"
+                            {% endif %}
+                            role="tab"
                         >
                             {{ label }}
-                        </a>
+                        </button>
                         {% endfor %}
                     </nav>
                 </div>
@@ -188,7 +202,7 @@
     </div>
     <div class="hagrid">
         {% for tab_id, label, reuses, kwargs in reuses_tabs  %}
-        <div class="tab-content {% if loop.first %}active{% endif %}" id="{{tab_id}}">
+        <div class="fr-hidden {% if loop.first %}fr-unhidden{% endif %}" role="tabpanel" id="{{tab_id}}">
             <div class="fr-grid-row fr-grid-row--gutters pt-xl pt-md-md">
                 {% for reuse in reuses %}
                 <div class="mb-md fr-col-lg-3 fr-col-sm-6 fr-col-12">
