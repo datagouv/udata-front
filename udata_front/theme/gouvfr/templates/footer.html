@@ -3,7 +3,7 @@
     <footer>
         {% include theme("participez/participez.html") %}
     </footer>
-    <footer class="footer-links bg-grey-50 text-grey-500 fr-py-9v py-lg-xl">
+    <footer class="footer-links bg-grey-50 text-grey-500 fr-py-9v">
         <div class="hagrid">
             <div class="fr-grid-row fr-grid-row--gutters">
                 <div class="fr-col-12 fr-col-lg-3">
@@ -127,7 +127,7 @@
         </div>
     </footer>
     <div class="hagrid">
-        <footer class="footer-brand fr-py-7w py-lg-xl text-grey-500">
+        <footer class="footer-brand fr-py-7w text-grey-500">
             <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--bottom">
                 <div class="fr-col-12 fr-col-lg-4 marianne-logo">
                     <a href="{{ url_for('site.home') }}" title="{{ _('Go back to home page') }}" class="mw-100">
@@ -136,7 +136,7 @@
                 </div>
                 <ul class="fr-col-12 fr-col-lg-6 fr-grid-row network">
                     {% for item in nav.gouvfr_network %}
-                    <li class="mr-lg mt-md fr-text--bold">
+                    <li class="fr-mr-3w fr-mt-2w fr-text--bold">
                         <a class="unstyled" href="{{ item.url }}">{{ item.label }}</a>
                     </li>
                     {% endfor %}

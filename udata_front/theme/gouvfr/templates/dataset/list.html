@@ -24,7 +24,7 @@
 
 {% block main_content %}
 <section
-    class="container search py-lg vuejs"
+    class="container search fr-py-3w vuejs"
 >
     <Search
         :disable-first-search="true"
@@ -33,18 +33,18 @@
     >
     </Search>
     <noscript>
-        <div class="pt-sm search-input">
+        <div class="fr-pt-3v search-input">
             <form method="GET" class="row-inline fs-lg">
                 <span class="icon active">{% include theme("svg/search.svg") %}</span>
                 <input type="text" name="q" value="{{datasets.query._query}}" aria-label="{{ _('Search...') }}"
                     placeholder="{{ _('Search...') }}" />
             </form>
         </div>
-        <div class="row-inline pt-xl pt-lg-lg justify-between align-items-center">
+        <div class="row-inline fr-pt-9v pt-lg-lg justify-between align-items-center">
             <h1 class="fr-m-0 h2">{{ _('Datasets')}} <sup>{{datasets.total}}</sup></h1>
             <a href="{{ url_for('reuses.list') }}" title="" class="nav-link fs-sm mt-lg-sm">{{ _('Search reuses') }}</a>
         </div>
-        <ul class="search-results mt-lg">
+        <ul class="search-results fr-mt-3w">
             {% for dataset in datasets %}
             <li>
                 <a

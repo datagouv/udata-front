@@ -36,7 +36,7 @@ d1.yyyy-d1.mm-d1.dd-d2.yyyy-d2.mm-d2.dd
       </div>
     </div>
     <div class="row-inline align-items-center">
-      <strong class="text-grey-380 f-normal mr-xxs ml-xs">{{
+      <strong class="text-grey-380 f-normal fr-mr-1v fr-ml-1w">{{
         $t("to")
       }}</strong>
       <div class="datepicker">

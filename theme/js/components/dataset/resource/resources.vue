@@ -5,7 +5,7 @@
   <section class="resources-wrapper" key="top">
     <transition mode="out-in">
       <div v-if="loading" key="loader">
-        <Loader class="mt-md" />
+        <Loader class="fr-mt-2w" />
       </div>
       <div v-else>
         <Resource

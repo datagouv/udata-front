@@ -133,7 +133,7 @@
         {% set user = member.user %}
         {% set role = member.role %}
         <div
-            class="col-4 col-md-12 pl-md-0 border-md-0 pb-sm {% if not loop.index0 % 3 == 0 %}border-left pl-lg{% endif %}"
+            class="col-4 col-md-12 fr-pl-0 border-md-0 fr-pb-3v {% if not loop.index0 % 3 == 0 %}border-left fr-pl-md-3w{% endif %}"
         >
             {% include theme('user/card.html') %}
         </div>
@@ -149,7 +149,7 @@
                     <dt class="f-light">ID</dt>
                     <dd class="f-bold fr-m-0">{{ org.id }}</dd>
                 </div>
-                <div class="my-sm">
+                <div class="fr-my-3v">
                     <dt class="f-light">{{ _('Creation date') }}</dt>
                     <dd class="f-bold fr-m-0">{{ org.created_at|dateformat(format='long') }}</dd>
                 </div>
@@ -159,7 +159,7 @@
                 </div>
             </dl>
         </div>
-        <div class="col-6 col-md-12 my-md-lg">
+        <div class="col-6 col-md-12 fr-my-3w fr-my-md-0">
             <h3>{{ _('Actions') }}</h3>
             <ul class="nav-list fr-ml-n3v">
                 {% if can_edit and not read_only_mode %}

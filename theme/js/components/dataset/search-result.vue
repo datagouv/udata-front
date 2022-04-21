@@ -2,7 +2,7 @@
 Vue. -->
 
 <template>
-  <article class="dataset-card dataset-search-result py-xs">
+  <article class="dataset-card dataset-search-result fr-py-1w">
     <div class="card-logo" v-if="organization">
       <Placeholder
         type="dataset"
@@ -22,7 +22,7 @@ Vue. -->
     </div>
     <div class="card-data">
       <h4 class="card-title">{{ title }}</h4>
-      <div class="card-description text-grey-380 mt-xs">
+      <div class="card-description text-grey-380 fr-mt-1w">
         {{ $filters.excerpt(description) }}
       </div>
     </div>

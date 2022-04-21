@@ -41,7 +41,7 @@ Discussions allow users to interact with others.
     </div>
     <transition mode="out-in">
       <template v-if="loading" key="loader">
-        <Loader class="mt-md" />
+        <Loader class="fr-mt-2w" />
       </template>
       <template v-else>
         <div v-if="threadFromURL">

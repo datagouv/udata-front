@@ -24,17 +24,17 @@
 
 {% block main_content %}
 <section class="container">
-    <div class="pt-sm search-input">
+    <div class="fr-pt-3v search-input">
         <form method="GET" class="row-inline fs-lg">
             <span class="icon active">{% include theme("svg/search.svg") %}</span>
             <input type="text" name="q" value="{{organizations.query._query}}" aria-label="{{ _('Search...') }}"
                 placeholder="{{ _('Search...') }}" />
         </form>
     </div>
-    <div class="row-inline pt-xl justify-between align-items-center">
+    <div class="row-inline fr-pt-9v justify-between align-items-center">
         <h1 class="fr-m-0 h2">{{ _('Organizations')}} <sup>{{organizations.total}}</sup></h1>
     </div>
-    <ul class="search-results mt-lg">
+    <ul class="search-results fr-mt-3w">
         {% for organization in organizations %}
         <li>
             <a

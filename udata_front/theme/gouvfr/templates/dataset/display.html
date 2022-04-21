@@ -67,7 +67,7 @@
     {% endif %}
     {# FIXME: remove when geo.data.gouv.fr is shutdown #}
     {% if 'geop:dataset_id' in dataset.extras %}
-    <div class="well well-warning py-sm mb-lg">
+    <div class="well well-warning fr-py-3v fr-mb-3w">
         ⚠️ {{ _("This dataset is handled by the <a href='{geo_link}'>geo.data.gouv.fr</a> platform.
         This platform is not actively maintained and as a result, you may find some bogus data or metadata.
         More information about <a href='{blog_link}'>the shutdown of geo.data.gouv.fr is available here.</a>").format(
@@ -277,7 +277,7 @@
                 {% endif %}
                 </div>
                 <div id="tab-actions-panel" class="fr-tabs__panel" role="tabpanel"
-                     aria-labelledby="tab-actions" tabindex="0">
+                    aria-labelledby="tab-actions" tabindex="0">
                     <div class="fr-grid-row fr-grid-row--gutters">
                         <div class="fr-col-12 fr-col-sm-6 vuejs">
                             <h2 class="subtitle">{{ _('Participate') }}</h2>
