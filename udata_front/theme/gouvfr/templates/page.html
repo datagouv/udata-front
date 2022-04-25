@@ -35,14 +35,12 @@
 {% endif %}
 
 {% if reuses %}
-<div class="container mt-md">
+<div class="container fr-mt-2w">
     <h2>{{ _('Reuses') }} <sup>{{ reuses|length }}</sup></h2>
-    <ul class="row">
+    <ul class="fr-grid-row fr-grid-row--gutters text-align-center">
         {% for reuse in reuses %}
-        <li class="col-3 col-lg-6 col-sm-12 my-sm-sm text-align-center">
-            <a href="{{ url_for('reuses.show', reuse=reuse) }}"
-                title="{{ reuse.title }}">{% include theme('reuse/card.html') %}
-            </a>
+        <li class="fr-col-lg-3 fr-col-md-4 fr-col-sm-6 fr-col-12 fr-mb-3v">
+            {% include theme('reuse/card.html') %}
         </li>
         {% endfor %}
     </ul>
