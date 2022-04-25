@@ -11,12 +11,12 @@
 {% block content %}
 {% cache cache_duration, 'home', g.lang_code %}
 
-<section class="hero fr-py-9v py-lg-lg">
+<section class="hero fr-py-3w fr-py-md-9v">
     <div class="hagrid">
-        <div class="row">
-            <div class="col-5 col-lg-12">
-                <h1 class="fr-mt-0 fr-mb-2w fr-mb-md-0">{{ _('Open platform for French public data') }}</h1>
-                <div class="fr-mt-2w mt-lg-sm">
+        <div class="fr-grid-row fr-grid-row--gutters">
+            <div class="fr-col-12 fr-col-lg-5">
+                <h1 class="fr-mt-0 fr-mb-2w">{{ _('Open platform for French public data') }}</h1>
+                <div>
                     <h4>{{ _('Featured topics') }}</h4>
                     <a href="{{ url_for('gouvfr.show_page', slug='donnees-des-elections') }}"
                         class="btn-venti fr-my-2w bg-blue-400">
@@ -43,7 +43,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6 offset-1 offset-lg-0 col-lg-12 mt-lg-md">
+            <div class="fr-col-12 fr-col-offset-lg-1 fr-col-lg-6">
                 <h4>{{ _('News') }}</h4>
                 {% if last_post %}
                 {% set post = last_post %}
