@@ -285,9 +285,11 @@
                                 href="{{ url_for('admin.index', path='reuse/new/', **{'dataset_id': dataset.id}) }}">
                                 {{ _('Add a reuse') }}
                             </a>
-                            <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-fi-arrow-right-s-line fr-btn--icon-right fr-mt-3v"
-                               href="#"
-                               @click.prevent="$bus.emit('discussions.startThread')">
+                            <a 
+                                class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-fi-arrow-right-s-line fr-btn--icon-right fr-mt-3v"
+                                href="#"
+                                @click.prevent="$bus.emit('discussions.startThread')"
+                            >
                                 {{ _('Contact the producer') }}
                             </a>
                         </div>
