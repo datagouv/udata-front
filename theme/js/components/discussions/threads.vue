@@ -101,7 +101,6 @@ import Pagination from "../pagination/pagination.vue";
 import CreateThread from "./threads-create.vue";
 import Thread from "./thread.vue";
 import Loader from "./loader.vue";
-import CloseIcon from "svg/close.svg";
 import ThreadsCreateButton from "./threads-create-button.vue";
 import {DISCUSSIONS_START_THREAD} from "../../plugins/eventbus";
 
@@ -135,7 +134,6 @@ export default defineComponent({
       loading: true,
       currentSort: sorts[0],
       sorts,
-      CloseIcon,
       readOnlyEnabled: config.read_only_enabled,
     };
   },
