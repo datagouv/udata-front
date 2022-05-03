@@ -125,5 +125,13 @@
   "Schema": "Schema",
   "Search a schema...": "Search a schema...",
   "Sort by:": "Sort by:",
-  "Relevance": "Relevance"
+  "Relevance": "Relevance",
+  "Filter results": "Filter results",
+  "All organizations": "All organizations",
+  "All tags": "All tags",
+  "All formats": "All formats",
+  "All licenses": "All licenses",
+  "All areas": "All areas",
+  "All granularities": "All granularities",
+  "All schemas": "All schemas"
 }
