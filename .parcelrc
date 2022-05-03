@@ -4,5 +4,8 @@
     "*.less": ["parcel-transformer-more"],
     "*.svg": ["@parcel/transformer-inline-string"]
   },
+  "optimizers": {
+    "*.svg": ["...", "@parcel/optimizer-data-url"]
+  },
   "reporters": ["...", "parcel-reporter-copystatic", "parcel-reporter-stylemark"]
 }

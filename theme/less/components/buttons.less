@@ -71,7 +71,7 @@ Use the `bg-{color}` classes to style the background accordingly.
 These are now removed, see tags instead.
 */
 
-@import (inline) "@gouvfr/dsfr/dist/component/button/button.css";
+@import (less) "@gouvfr/dsfr/dist/component/button/button.css";
 
 // Data.gouv customization
 .fr-btn {
@@ -83,6 +83,10 @@ These are now removed, see tags instead.
 
 .fr-header__menu-links .fr-btn {
     border-radius: 0;
+    --text-action-high-blue-france: @blue-400;
+}
+
+.fr-btn--close {
     --text-action-high-blue-france: @blue-400;
 }
 
