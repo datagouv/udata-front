@@ -72,7 +72,7 @@ Callback:
 
 <script>
 import {defineComponent, ref, Ref, computed, onMounted, onUpdated, reactive, PropType, unref} from "vue";
-import Select from "@conciergerie-dev/select-a11y/dist/module";
+import Select from "@conciergerie.dev/select-a11y/dist/module";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
 import { CancelTokenSource } from "axios";
@@ -402,8 +402,8 @@ export default defineComponent({
       let popupMustMove = availableSpace < minWidth;
       offset.value = popupMustMove ? minWidth - rect.width : 0;
       const styles = container.value.style;
-      styles.setProperty('--offset-a11y-container', `-${offset.value}px`);
-      styles.setProperty('--min-width-a11y-container', `${minWidth}px`);
+      styles.setProperty('--offset-select-a11y__overlay', `-${offset.value}px`);
+      styles.setProperty('--min-width-select-a11y__overlay', `${minWidth}px`);
     }
 
     const updateSelectStyle = () => {
@@ -436,6 +436,7 @@ export default defineComponent({
         selectA11y.value = new Select(select.value, {
           text: texts,
           enableTextFilter: !props.suggestUrl,
+          clearable: true,
         });
         updateStylesAndEvents();
       } catch (e) {
@@ -462,8 +463,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.multiselect :deep(.a11y-container) {
-  left: var(--offset-a11y-container);
-  min-width: var(--min-width-a11y-container);
+.multiselect :deep(.select-a11y__overlay) {
+  left: var(--offset-select-a11y__overlay);
+  min-width: var(--min-width-select-a11y__overlay);
 }
 </style>
