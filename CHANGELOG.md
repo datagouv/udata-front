@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add support for HTML in posts [#106](https://github.com/etalab/udata-front/pull/106)
 
 ## 2.0.2 (2022-04-11)
 
