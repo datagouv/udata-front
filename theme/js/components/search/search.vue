@@ -170,7 +170,7 @@ import Loader from "../dataset/loader";
 import Empty from "./empty";
 import Pagination from "../pagination/pagination";
 import {generateCancelToken} from "../../plugins/api";
-import filterIcon from "svg/filter.svg";
+import filterIcon from "bundle-text:svg/filter.svg";
 import axios from "axios";
 import queryString from "query-string";
 

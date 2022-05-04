@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import edit from "svg/edit.svg";
+import edit from "bundle-text:svg/edit.svg";
 import config from "../../../config";
 
 export default {

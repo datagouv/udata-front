@@ -100,7 +100,7 @@ import Pagination from "../pagination/pagination.vue";
 import CreateThread from "./threads-create.vue";
 import Thread from "./thread.vue";
 import Loader from "./loader.vue";
-import CloseIcon from "svg/close.svg";
+import CloseIcon from "bundle-text:svg/close.svg";
 import ThreadsCreateButton from "./threads-create-button";
 import {DISCUSSIONS_START_THREAD} from "../../plugins/eventbus";
 

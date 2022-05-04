@@ -8,7 +8,7 @@
 <script>
 import {inject} from 'vue';
 import useSchema from "../../../composables/useSchema";
-import triangle from "svg/triangle.svg";
+import triangle from "bundle-text:svg/triangle.svg";
 
 export default {
   props: {

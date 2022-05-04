@@ -24,7 +24,7 @@ Nothing to see here ! Well actually it's a small component that says this.
 </template>
 
 <script>
-import Empty from "svg/search/empty.svg";
+import Empty from "bundle-text:svg/search/empty.svg";
 
 export default {
   props: {

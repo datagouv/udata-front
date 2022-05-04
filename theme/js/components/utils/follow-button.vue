@@ -34,7 +34,7 @@ The `url` prop is the API URL.
 
 <script>
 import config from "../../config";
-import icon from "svg/actions/star.svg";
+import icon from "bundle-text:svg/actions/star.svg";
 
 export default {
   props: {

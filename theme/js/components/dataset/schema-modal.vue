@@ -76,7 +76,7 @@
 
 <script>
 import config from "../../config";
-import CloseIcon from "svg/close.svg";
+import CloseIcon from "bundle-text:svg/close.svg";
 
 export default {
   name: "Schema",

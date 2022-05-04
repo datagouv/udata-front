@@ -17,6 +17,9 @@ This is a port of DSFR `.fr-fi--*` for SVG sizing. DSFR ones only works with `::
 @icon-arrow: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9ImFycm93LXJpZ2h0LWxpbmUiPgo8cGF0aCBpZD0iJiMyNDA7JiMxNTk7JiMxNDI7JiMxNjg7IENvdWxldXIgaWMmIzE5NTsmIzE4MDtuZSIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xNi4xNzIgMTFMMTAuODA4IDUuNjM2MDVMMTIuMjIyIDQuMjIyMDVMMjAgMTJMMTIuMjIyIDE5Ljc3OEwxMC44MDggMTguMzY0TDE2LjE3MiAxM0g0VjExSDE2LjE3MloiIGZpbGw9IndoaXRlIi8+CjwvZz4KPC9zdmc+Cg==";
 
 .fr-fi-svg {
+    &::before {
+        content: none;
+    }
     svg {
         width: 1.5rem;
         height: 1.5rem;

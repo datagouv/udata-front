@@ -62,7 +62,7 @@ d1.yyyy-d1.mm-d1.dd-d2.yyyy-d2.mm-d2.dd
 import config from "../../config";
 import Datepicker from "vue3-datepicker";
 import "vue3-datepicker/dist/vue3-datepicker.css";
-import closeIcon from "svg/close.svg";
+import closeIcon from "bundle-text:svg/close.svg";
 import { format } from "date-fns";
 import fr from "date-fns/locale/fr";
 import en from "date-fns/locale/en-GB";

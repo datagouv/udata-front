@@ -153,7 +153,7 @@
 <script>
 import SchemaButton from "./schema-button";
 import useOwnerName from "../../../composables/useOwnerName";
-import preview from "svg/preview.svg";
+import preview from "bundle-text:svg/preview.svg";
 import useResourceImage from "../../../composables/useResourceImage";
 import EditButton from "./edit-button";
 

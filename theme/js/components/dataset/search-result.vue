@@ -63,8 +63,8 @@ Vue. -->
 
 <script>
 import Placeholder from "../utils/placeholder";
-import certified from "svg/certified.svg";
-import lock from "svg/private.svg";
+import certified from "bundle-text:svg/certified.svg";
+import lock from "bundle-text:svg/private.svg";
 import useOrganizationCertified from "../../composables/useOrganizationCertified";
 import useGeoZone from "../../composables/useGeoZone";
 import Avatar from "../discussions/avatar";
