@@ -39,7 +39,7 @@
           <div class="fr-sidemenu__inner">
             <button class="fr-sidemenu__btn fr-mt-1w" hidden aria-controls="fr-sidemenu-wrapper" aria-expanded="false">{{$t('Filter results')}}</button>
             <div class="fr-collapse" id="fr-sidemenu-wrapper">
-              <div class="fr-sidemenu__title fr-mb-3v">{{$t('Filter results')}}</div>
+              <div class="fr-sidemenu__title fr-mb-3v">{{$t('Filters')}}</div>
               <div class="fr-grid-row fr-grid-row--gutters">
                 <div class="fr-col-12">
                   <MultiSelect
@@ -102,7 +102,7 @@
                     :onChange="handleFacetChange('geozone')"
                   />
                 </div>
-                <div class="fr-col-12">
+                <div class="fr-col-12 fr-mb-3w">
                   <MultiSelect
                     :placeholder="$t('Territorial granularity')"
                     :searchPlaceholder="$t('Search a granularity...')"
