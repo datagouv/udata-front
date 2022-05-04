@@ -102,7 +102,7 @@
                     :onChange="handleFacetChange('geozone')"
                   />
                 </div>
-                <div class="fr-col-12 fr-mb-3w">
+                <div class="fr-col-12">
                   <MultiSelect
                     :placeholder="$t('Territorial granularity')"
                     :searchPlaceholder="$t('Search a granularity...')"
@@ -111,6 +111,14 @@
                     :values="facets.granularity"
                     :onChange="handleFacetChange('granularity')"
                   />
+                </div>
+                <div class="fr-col-12 fr-mb-3w">
+                  <button
+                    class="fr-btn fr-btn--secondary fr-fi-close-circle-line fr-btn--icon-left"
+                    @click="resetFilters"
+                  >
+                    {{$t('Reset filters')}}
+                  </button>
                 </div>
               </div>
             </div>
@@ -146,7 +154,7 @@
               :copyAfter="
                 $t('You can try to reset the filters to expand your search.')
               "
-              :onClick="() => resetFilters()"
+              :onClick="() => resetForm()"
             />
           </div>
         </transition>
@@ -351,10 +359,14 @@ export default defineComponent({
     };
 
     const resetFilters = () => {
-      queryString.value = "";
       facets.value = {};
       currentPage.value = 1;
       search();
+    };
+
+    const resetForm = () => {
+      queryString.value = "";
+      resetFilters();
     };
 
     /**
@@ -439,6 +451,7 @@ export default defineComponent({
       handleSearchChange,
       handleFacetChange,
       changePage,
+      resetForm,
       resetFilters,
       facets,
       results,

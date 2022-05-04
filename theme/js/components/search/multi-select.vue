@@ -71,7 +71,7 @@ Callback:
 </template>
 
 <script>
-import {defineComponent, ref, Ref, computed, onMounted, onUpdated, reactive, PropType, unref} from "vue";
+import {defineComponent, ref, Ref, computed, onMounted, onUpdated, reactive, PropType, unref, watch} from "vue";
 import Select from "@conciergerie.dev/select-a11y/dist/module";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
@@ -443,6 +443,14 @@ export default defineComponent({
         console.log(e);
       }
     };
+
+    if(props.values) {
+
+    }
+    watch(() => props.values, () => {
+      let value = unref(normalizeValues(props.values));
+      selectA11y.value.selectOption(value);
+    });
     
     const fillOptionsAndValues = suggest()
     .then(setOptions)

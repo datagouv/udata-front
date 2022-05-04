@@ -37,7 +37,7 @@
     "yargs": "^15.4.1"
   },
   "devDependencies": {
-    "@conciergerie.dev/select-a11y": "^2.0.2",
+    "@conciergerie.dev/select-a11y": "^2.1.0",
     "@gouvfr/dsfr": "^1.2.0",
     "@parcel/transformer-inline-string": "^2.4.0",
     "@parcel/transformer-less": "^2.4.0",
