@@ -2,7 +2,8 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Update DSFR to 1.5.1 [#107](https://github.com/etalab/udata-front/pull/107)
+  -  :warning: SVG in JS must use `bundle-text:` prefix now
 
 ## 2.0.2 (2022-04-11)
 
