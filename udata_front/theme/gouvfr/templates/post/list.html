@@ -21,11 +21,11 @@
 {% endblock %}
 
 {% block main_content %}
-<div class="container">
+<div class="fr-container">
     <h1 class="mb-0">{{ _('Posts') }}</h1>
 </div>
 <div class="alert-info bg-blue-400 text-white my-xl">
-    <div class="container">
+    <div class="fr-container">
         <p>{{ _('To stay up-to-date, you can subscribe to')}}
             <a href="https://infolettres.etalab.gouv.fr/subscribe/rn7y93le1" title="{{ _('Subscribe') }}"
                 class="f-bold text-white text-decoration-underline">
@@ -34,7 +34,7 @@
         </p>
     </div>
 </div>
-<div class="container">
+<div class="fr-container">
     <div class="row">
         {% for post in posts %}
         <div class="col-4 col-lg-6 col-sm-12">

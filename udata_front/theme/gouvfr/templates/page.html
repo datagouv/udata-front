@@ -11,7 +11,7 @@
 {% set body_class = 'post-display' %}
 
 {% block main_content %}
-<div class="container py-lg" v-pre>
+<div class="fr-container py-lg" v-pre>
     {% if extension == 'md' %}
         <div>{{ page.content|markdown }}</div>
     {% else %}
@@ -20,7 +20,7 @@
 </div>
 
 {% if datasets %}
-<div class="container mt-md">
+<div class="fr-container mt-md">
     <h2>{{ _('Datasets') }} <sup>{{ datasets|length }}</sup></h2>
     <div class="row">
         <div class="col-12">
@@ -35,7 +35,7 @@
 {% endif %}
 
 {% if reuses %}
-<div class="container mt-md">
+<div class="fr-container mt-md">
     <h2>{{ _('Reuses') }} <sup>{{ reuses|length }}</sup></h2>
     <ul class="row">
         {% for reuse in reuses %}
@@ -49,7 +49,7 @@
 </div>
 {% endif %}
 
-<div class="container my-hg">
+<div class="fr-container my-hg">
     <div class="col-6 col-md-12">
         <h2 class="fs-xxl">{{ _('Actions') }}</h2>
         <ul class="nav-list">

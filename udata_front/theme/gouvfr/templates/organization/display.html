@@ -22,7 +22,7 @@
 {% endblock %}
 
 {% block main_content %}
-<header class="container">
+<header class="fr-container">
     {% if org.deleted %}
     <div class="well-grey-100 well fr-mb-3v">
         {{ _('This organization has been deleted. This will be permanent in the next 24 hours') }}
@@ -80,7 +80,7 @@
     </div>
 </header>
 <section class="bg-contrast-grey fr-py-5w fr-mt-6w fr-mb-9v">
-    <div class="container vuejs">
+    <div class="fr-container vuejs">
         <h2 id="description" class="fr-h2 fr-mb-0">{{ _('Description') }}</h2>
         <read-more>
             {{ org.description|markdown }}
@@ -89,7 +89,7 @@
 </section>
 {# TODO: proper <select> also needed in discussions and footer, then sort from URL param #}
 {% if datasets and datasets|length > 0 %}
-<section id="organization-datasets" class="fr-py-9v container">
+<section id="organization-datasets" class="fr-py-9v fr-container">
     <h2>{{ _('Datasets') }}<sup>{{ total_datasets }}</sup></h2>
     {% for dataset in datasets %}
         <a href="{{ url_for('datasets.show', dataset=dataset) }}" title="{{ dataset.title }}"
@@ -110,7 +110,7 @@
 </section>
 {% endif %}
 {% if reuses and reuses|length > 0 %}
-<section id="organization-reuses" class="fr-py-9v container">
+<section id="organization-reuses" class="fr-py-9v fr-container">
     <h2>{{ _('Reuses') }}<sup>{{ total_reuses }}</sup></h2>
     <ul class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
         {% for reuse in reuses %}
@@ -122,7 +122,7 @@
     {{ paginator(reuses, arg_name='reuses_page', url='#organization-reuses') }}
 </section>
 {% endif %}
-<section class="fr-py-9v container">
+<section class="fr-py-9v fr-container">
     <h2>{{ _('Members') }}<sup>{{ org.members|length or 0 }}</sup></h2>
     <div class="row">
         {% for member in org.members %}
@@ -136,7 +136,7 @@
         {% endfor %}
     </div>
 </section>
-<section class="fr-py-9v container">
+<section class="fr-py-9v fr-container">
     <div class="row">
         <div class="col-6 col-md-12">
             <h3>{{ _('Technical details') }}</h3>

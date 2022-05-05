@@ -1,14 +1,14 @@
 /* Special styling for grid blocks */
-.container [class^="col"],
-.container-fluid [class^="col"] {
+.fr-container [class^="col"],
+.fr-container--fluid [class^="col"] {
     padding: 30px;
     color: white;
     font-weight: bold;
     text-align: center;
 }
 
-.container .row + .row,
-.container-fluid .row + .row {
+.fr-container .row + .row,
+.fr-container--fluid .row + .row {
     margin-top: 50px;
 }
 

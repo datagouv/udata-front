@@ -46,7 +46,7 @@
 ) }}
 
 <section
-    class="content container fr-mb-6w overflow-visible {% if not dataset.organization.public_service %}non{% endif %}certified {% if dataset.archived %}archived{% endif %}">
+    class="content fr-container fr-mb-6w overflow-visible {% if not dataset.organization.public_service %}non{% endif %}certified {% if dataset.archived %}archived{% endif %}">
     {% if dataset.private %}
     <span class="fr-tag"
         title="{{ _('This dataset is private and will not be visible by other users') }}">{{ _('Private') }}
@@ -353,7 +353,7 @@
     </div>
 </section>
 <section class="bg-contrast-grey fr-py-5w">
-    <div class="container vuejs">
+    <div class="fr-container vuejs">
         <h2 id="description" class="fr-h2 fr-mb-0">{{ _('Description') }}</h2>
         <read-more>
             {{ dataset.description|markdown }}
@@ -361,7 +361,7 @@
     </div>
 </section>
 <section class="ressources fr-py-10w">
-    <div class="container">
+    <div class="fr-container">
         {% set count_resources = dataset.resources | length %}
         <h2 id="resources" class="fr-h2">{{ _('Files') }} <sup class="resources-count">{{count_resources}}</sup></h2>
         <div class="ressources-files fr-my-4w vuejs">
@@ -407,7 +407,7 @@
 </section>
 {% block community %}
 <section class="community_container fr-pb-7w" id="community">
-    <div class="container">
+    <div class="fr-container">
         <div class="fr-grid-row">
             <h2 id="community-resources" class="fr-h2 fr-col fr-mb-5v">{{ _('Community resources') }}
                 <sup>{{ dataset.community_resources|length }}</sup>

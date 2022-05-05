@@ -39,7 +39,7 @@
 ) }}
 
 <section class="reuse-container">
-    <header class="reuse-header container">
+    <header class="reuse-header fr-container">
         {% if reuse.private %}
         <span class="fr-tag" title="{{ _('This reuse is private and will not be visible by other users') }}">
             {{ _('Private') }}
@@ -98,7 +98,7 @@
         </div>
     </section>
 
-    <section class="fr-grid-row fr-grid-row--gutters fr-mt-4w fr-mb-6w container">
+    <section class="fr-grid-row fr-grid-row--gutters fr-mt-4w fr-mb-6w fr-container">
         <div class="fr-col-12 fr-col-md-8">
             <div class="fr-tabs">
                 <ul class="fr-tabs__list" role="tablist" aria-label="{{ _('Reuse informations') }}">
@@ -244,14 +244,14 @@
     </section>
 
     <section class="bg-contrast-grey fr-py-5w">
-        <div class="container vuejs">
+        <div class="fr-container vuejs">
             <h2 id="description" class="fr-h2 fr-mb-0">{{ _('Description') }}</h2>
             <read-more>
                 {{ reuse.description|markdown }}
             </read-more>
         </div>
     </section>
-    <section class="reuse-sources container overflow-visible my-lg">
+    <section class="reuse-sources fr-container overflow-visible my-lg">
         <div class="row-inline">
             <h2 id="used-datasets" class="fr-h2">
                 {{ _('Used datasets') }}
@@ -267,7 +267,7 @@
     </ul>
     </section>
     <section class="community_container fr-pb-7w" id="community">
-        <div class="container vuejs">
+        <div class="fr-container vuejs">
             <discussion-threads ref="discussions" subject-id="{{ reuse.id }}"
                 subject-class="{{ reuse.__class__.__name__ }}">
                 {% if reuse.organization %}
@@ -278,7 +278,7 @@
             </discussion-threads>
         </div>
     </section>
-    <section class="container fr-py-7w">
+    <section class="fr-container fr-py-7w">
         <h2 id="more-reuses" class="fr-h2">{{ _('More reuses') }}</h2>
         <p>{{ _('Discover more reuses.') }}</p>
         <ul class="fr-grid-row fr-grid-row--gutters">

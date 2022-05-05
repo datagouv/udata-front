@@ -13,7 +13,7 @@ It's a grid. You know how grids work. Even if you don't, you'll understand in no
 
 ### Containers
 
-`.container` class is a 1100px-wide centered container.
+`.fr-container` class is a 78rem-wide (1248px) centered container.
 
 ### Rows
 
@@ -38,7 +38,7 @@ By default, `.col` classes allow for an easy auto-layout : they all take an equa
 They're also available for each responsive breakpoint with `.col-{breakpoint}` classes.
 
 ```grid-auto.html
-<div class="container">
+<div class="fr-container">
     <div class="row">
         <div class="col bg-blue-300">3 blocks</div>
         <div class="col bg-blue-300">3 blocks</div>
@@ -59,7 +59,7 @@ They're also available for each responsive breakpoint with `.col-{breakpoint}` c
 
 You can also specify a block width by using `.col-{n}` classes, *with n ∈ [1...12]*. You can also mix & match by specifing only one or two colomn widths and letting the others in auto mode :
 ```grid-width.html
-<div class="container">
+<div class="fr-container">
     <div class="row">
         <div class="col-4 bg-blue-300">col-4</div>
         <div class="col-3 bg-blue-300">col-3</div>
@@ -82,7 +82,7 @@ The grid provides 4 breakpoints : `sm`, `md`, `lg` and `xl`. You can use the cor
 For example, if you want a layout with 3 blocks of 4 columns on desktop and stack them on medium widths :
 
 ```grid-responsive.html
-<div class="container">
+<div class="fr-container">
     <div class="row">
         <div class="col-4 col-sm-12 bg-blue-300">col-4 col-sm-12</div>
         <div class="col-4 col-sm-12 bg-blue-300">col-4 col-sm-12</div>
@@ -97,7 +97,7 @@ You can offset a block to the right by using `.offset-{sm|md|lg|xl}-{n}` (*with 
 Please note that special cancelling classes `.offset-{ø|sm|md|lg|xl}-0` exist, allowing you to reset offset on specific resolutions. This allows for offsetting a block on desktop and not on mobile for example.
 
 ```grid-offset.html
-<div class="container">
+<div class="fr-container">
     <div class="row">
         <div class="col-6 col-sm-12 offset-sm-0 offset-6 bg-blue-300">col-6 offset-md-6 col-sm-12 offset-sm-0</div>
     </div>
@@ -110,7 +110,7 @@ By default, blocks on the same row will take up an equal height. You can opt for
 When you need to alter the alignment of one item you can use `.self-stretch`, `.self-start`, `.self-end`, and `.self-center`,
 
 ```grid-valign.html
-<div class="container">
+<div class="fr-container">
     <div class="row align-items-center">
         <div class="col-6 bg-blue-300"><div style="min-height: 200px">Huge block</div></div>
         <div class="col-3 bg-blue-300">Smoll centered block</div>
@@ -123,7 +123,7 @@ When you need to alter the alignment of one item you can use `.self-stretch`, `.
 Sometimes you also need to specify an horizontal alignment for some items in a row, you can use `.justify-start`, `.justify-end`, `.justify-center`, `.justify-between`, `.justify-around`, and `.justify-evenly`
 
 ```grid-halign.html
-<div class="container-fluid">
+<div class="fr-container--fluid">
     <div class="row justify-between">
         <div class="col-3 bg-blue-300">Evenly spaced blocks</div>
         <div class="col-3 bg-blue-300">Evenly spaced blocks</div>
@@ -134,10 +134,10 @@ Sometimes you also need to specify an horizontal alignment for some items in a r
 
 ### Fluid grids
 
-Sometimes you need to occupy the available space fully, you can use `.container-fluid` to still have a grid available to you when needed.
+Sometimes you need to occupy the available space fully, you can use `.fr-container--fluid` to still have a grid available to you when needed.
 
 ```grid-fluid.html
-<div class="container-fluid">
+<div class="fr-container--fluid">
     <div class="row">
         <div class="col bg-blue-300">3 blocks</div>
         <div class="col bg-blue-300">3 blocks</div>
@@ -181,20 +181,6 @@ in which case you'll have one column on each side and the main content will span
 
 @columns: 12;
 @gutter: 10px;
-
-.container-fluid {
-    width: 100%;
-}
-
-.container {
-    max-width: @breakpoint-xl;
-    margin: auto;
-    overflow: hidden;
-
-    @media @query-hg {
-        padding: 0 @spacing-md;
-    }
-}
 
 .overflow-hidden {
     overflow: hidden !important;
