@@ -7,11 +7,11 @@
         :placeholder="$t('Search for data...')"
       />
     </div>
-    <div class="fr-grid-row fr-grid-row--gutters fr-mt-2w fr-mb-3v justify-between fr-grid-row--middle">
+    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-mt-2w fr-mb-3v justify-between">
       <p class="fr-col-auto fr-text--lg fr-text--bold fr-my-0" v-if="totalResults">
         {{ $t("X Results", totalResults) }}
       </p>
-      <div class="fr-col-auto fr-grid-row align-items-center">
+      <div class="fr-col-auto fr-grid-row fr-grid-row--middle">
         <label for="sort-search" class="fr-col-auto fr-text--sm fr-m-0 fr-mr-1w">
             {{$t('Sort by:')}}
         </label>

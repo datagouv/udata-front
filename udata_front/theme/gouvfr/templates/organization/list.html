@@ -51,8 +51,8 @@
                     {{ _('Search') }}
                 </button>
             </div>
-            <div class="w-100 fr-grid-row fr-pt-5v justify-between align-items-center fr-grid-row--middle">
-                <p class="fr-m-0">{{ _('%(result)s results', result=organizations.total) }}</p>
+            <div class="w-100 fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-mt-5v justify-between align-items-center">
+                <p class="fr-col-auto fr-text--lg fr-text--bold fr-my-0">{{ _('%(result)s results', result=organizations.total) }}</p>
                 {{sort_search(organizations, sorts)}}
             </div>
         </form>
