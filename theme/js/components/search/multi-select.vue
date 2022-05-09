@@ -394,16 +394,16 @@ export default defineComponent({
         return;
       }
       let rect = container.value.getBoundingClientRect();
-      let popupWidth = Math.min(minWidth, rect.width);
+      let popupWidth = minWidth;
       if(window.innerWidth < popupWidth) {
-        return;
+        popupWidth = Math.min(minWidth, rect.width);
       }
       let availableSpace = window.innerWidth - rect.x;
-      let popupMustMove = availableSpace < minWidth;
-      offset.value = popupMustMove ? minWidth - rect.width : 0;
+      let popupMustMove = availableSpace < popupWidth;
+      offset.value = popupMustMove ? popupWidth - rect.width : 0;
       const styles = container.value.style;
       styles.setProperty('--offset-select-a11y__overlay', `-${offset.value}px`);
-      styles.setProperty('--min-width-select-a11y__overlay', `${minWidth}px`);
+      styles.setProperty('--min-width-select-a11y__overlay', `${popupWidth}px`);
     }
 
     const updateSelectStyle = () => {
