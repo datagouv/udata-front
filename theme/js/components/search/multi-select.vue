@@ -11,7 +11,7 @@ A pretty simple component that looks like a `<select>` but with autocomplete fea
 Options can be :
 - A list from an API that will be fetched once
 - A suggest-style API that will be fetched on each character typed
-- A combination of both : a static list on load that is replaced the user types something
+- A combination of both : a static list on load that is replaced when the user types something
 
 * Initial values can be provided from props (can be used to pre-fill the select with values from the URL)
 
