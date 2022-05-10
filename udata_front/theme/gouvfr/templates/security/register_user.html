@@ -14,7 +14,7 @@
                             </a>
                         </p>
                         <p class="fr-mt-2w fr-mb-1w fr-text--sm text-align-left">
-                            {{ _("* : Required field") }}
+                            {{ _("Fields preceded by a star (<span class='required-field-star'>*</span>) are required.") }}
                         </p>
                         {{ forms.render_fields(register_user_form, exclude=[register_user_form.submit]) }}
                         {% block extra_tos %}

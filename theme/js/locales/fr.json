@@ -116,5 +116,5 @@
   "datasets": "jeux de données",
   "organizations": "organisations",
   "Start typing to search in X": "Commencez à taper pour rechercher parmi les {type}",
-  "* : Required field": ""
+  "Fields preceded by a star ({markup}) are required.": ""
 }

@@ -9,7 +9,15 @@
       </div>
     </div>
     <form class="form fr-p-0" @submit.prevent="submit">
-      <p class="fr-mt-0 fr-mb-1w fr-text--sm">{{$t('* : Required field')}}</p>
+      <i18n-t
+        keypath="Fields preceded by a star ({markup}) are required."
+        tag="p"
+        class="fr-mt-0 fr-mb-1w fr-text--sm"
+      >
+        <template #markup>
+          <span class="required-field-star">*</span>
+        </template>
+      </i18n-t>
       <div class="fr-input-group">
         <label class="fr-label required" for="textarea">
           {{$t('Comment')}}

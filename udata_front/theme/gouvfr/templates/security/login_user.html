@@ -11,7 +11,7 @@
                 <form class="form" method="post" action="{{ url_for('security.login') }}">
                     <h1 class="fr-h4 fr-mb-0">{{ _('Log in') }}</h1>
                         <p class="fr-mt-2w fr-mb-1w fr-text--sm text-align-left">
-                            {{ _("* : Required field") }}
+                            {{ _("Fields preceded by a star (<span class='required-field-star'>*</span>) are required.") }}
                         </p>
                         {{ forms.render_fields(login_user_form, submit=_('Log in')) }}
                         <div class="fr-mt-3w">

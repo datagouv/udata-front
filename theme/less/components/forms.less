@@ -31,6 +31,10 @@ We can use fieldset if needed to group inputs of the same kind.
     padding: @spacing-lg;
 }
 
+.required-field-star {
+    color: @blue-400;
+}
+
 form.form {
     padding: @spacing-sm 0;
 
@@ -46,8 +50,8 @@ form.form {
         margin-bottom: @spacing-xxs;
         &.required::after {
             margin-left: @spacing-xxs;
-            color: @blue-400;
             content: '*';
+            .required-field-star;
         }
     }
 

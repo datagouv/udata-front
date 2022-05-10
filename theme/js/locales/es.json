@@ -116,5 +116,5 @@
   "datasets": "datasets",
   "organizations": "organizations",
   "Start typing to search in X": "Start typing to search in {type}",
-  "* : Required field": ""
+  "Fields preceded by a star ({markup}) are required.": ""
 }
