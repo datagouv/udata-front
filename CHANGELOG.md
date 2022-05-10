@@ -3,6 +3,8 @@
 ## Current (in progress)
 
 - Add support for HTML in posts [#106](https://github.com/etalab/udata-front/pull/106)
+- Fix RGAA criterion 1.1 [#104](https://github.com/etalab/udata-front/pull/104)
+- Fix RGAA criterion 10.4 [#103](https://github.com/etalab/udata-front/pull/103)
 
 ## 2.0.2 (2022-04-11)
 
