@@ -127,6 +127,12 @@ jobs:
       - run:
           name: Install NodeJS and dependencies
           command: nvm install && npm install
+      - run:
+          name: Install LighthouseCI
+          command: npm install -g @lhci/cli@0.8.x
+      - run:
+          name: Run Lighthouse
+          command: lhci autorun
       - save_cache:
           key: js-cache-{{ arch }}-{{ checksum "js.deps" }}
           paths:
