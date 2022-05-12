@@ -12,7 +12,7 @@
       <i18n-t
         keypath="Fields preceded by a star ({markup}) are required."
         tag="p"
-        class="fr-mt-0 fr-mb-1w fr-text--sm"
+        class="fr-mt-0 fr-mb-1w fr-text--xs"
       >
         <template #markup>
           <span class="required-field-star">*</span>
