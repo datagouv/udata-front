@@ -17,7 +17,7 @@ const truncate = (val, length = 300) => {
 
 const excerpt = (val, length = 300) => {
   if (typeof val !== "string") return;
-  return RemoveMarkdown(truncate(val, length));
+  return truncate(RemoveMarkdown(val), length);
 };
 
 const filesize = (val) => {
