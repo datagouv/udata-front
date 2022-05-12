@@ -58,7 +58,7 @@
     </div>
     <div class="fr-pt-3v">
         <form method="GET" class="fr-grid-row">
-            <div class="fr-search-bar fr-search-bar--lg w-100" role="search">
+            <div class="fr-search-bar fr-search-bar--lg w-100 fr-mb-5v" role="search">
                 <label class="fr-label" for="search-reuses">
                     {{ _('Search...') }}
                 </label>
@@ -74,7 +74,7 @@
                     {{ _('Search') }}
                 </button>
             </div>
-            <div class="fr-grid-row fr-pt-5v fr-displayed-lg">
+            <div class="fr-grid-row fr-mb-1v fr-displayed-lg">
                 <ul class="fr-tags-group">
                     <li>
                         <a
@@ -95,14 +95,14 @@
                     {% endfor %}
                 </ul>
             </div>
-            <div class="w-100 fr-grid-row fr-pt-5v justify-between align-items-center fr-grid-row--middle">
-                <p class="fr-m-0">{{ _('%(result)s results', result=reuses.total) }}</p>
+            <div class="w-100 fr-grid-row justify-between align-items-center fr-grid-row--middle">
+                <p class="fr-col-auto fr-text--lg fr-text--bold fr-my-0">{{ _('%(result)s results', result=reuses.total) }}</p>
                 {{sort_search(reuses, sorts)}}
             </div>
         </form>
     </div>
     {%if reuses %}
-    <ul class="search-results fr-grid-row fr-grid-row--gutters mt-lg-md">
+    <ul class="search-results fr-grid-row fr-grid-row--gutters fr-mt-2w">
         {% for reuse in reuses %}
         <li class="fr-col-lg-3 fr-col-md-4 fr-col-sm-6 fr-col-12 my-sm-sm fr-mb-3v">
             {% include theme('reuse/card.html') %}
