@@ -242,7 +242,7 @@ export default defineComponent({
       currentRequest.value = generateCancelToken();
       return api
         .get(props.suggestUrl, {
-          params: { q },
+          params: { q, size: maxOptionsCount },
           cancelToken: currentRequest.value.token,
         })
         .then((resp) => resp.data)
