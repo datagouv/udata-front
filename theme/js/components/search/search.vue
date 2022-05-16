@@ -61,7 +61,7 @@
                     suggestUrl="/tags/suggest/"
                     :values="facets.tag"
                     :onChange="handleFacetChange('tag')"
-                    :minimumCharacterBeforeSuggest="3"
+                    :minimumCharacterBeforeSuggest="1"
                   />
                 </div>
                 <div class="fr-col-12">
