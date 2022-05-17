@@ -77,7 +77,8 @@ These are now removed, see tags instead.
 .fr-btn {
     font-size: @font-size-sm;
     --background-action-high-blue-france: @blue-400;
-    --background-action-high-blue-france-blend: @blue-400-blend;
+    --background-action-high-blue-france-hover: @blue-400-hover;
+    --background-action-high-blue-france-active: @blue-400-active;
     border-radius: 3em;
 }
 
@@ -103,6 +104,11 @@ each(@colors, {
         --border-action-high-blue-france: @@value;
     }
 });
+
+.fr-btn--secondary-white {
+    --hover: #f6f6f633;
+    --active: #ededed33;
+}
 
 // Bottoni molto grandi 🤏
 .btn-venti {
