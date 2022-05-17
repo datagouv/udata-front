@@ -61,7 +61,7 @@
                     suggestUrl="/tags/suggest/"
                     :values="facets.tag"
                     :onChange="handleFacetChange('tag')"
-                    :minimumCharacterBeforeSuggest="1"
+                    :minimumCharacterBeforeSuggest="2"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -72,7 +72,6 @@
                     listUrl="/datasets/extensions/"
                     :values="facets.format"
                     :onChange="handleFacetChange('format')"
-                    :minimumCharacterBeforeSuggest="2"
                   />
                 </div>
                 <div class="fr-col-12">

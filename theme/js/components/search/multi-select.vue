@@ -183,7 +183,6 @@ export default defineComponent({
     const selectA11y = ref(null);
 
     const noResultAfterSearch = computed(() => props.emptyPlaceholder || t("No results found."));
-    const noResultWaitingTyping = computed(() => t("Start typing to search in X", {type: props.placeholder.toLocaleLowerCase()}));
 
     const texts = reactive({
       help: t('Use tab (or arrow down) to move between suggestions'),
@@ -216,23 +215,23 @@ export default defineComponent({
     /**
      * Map an array of all different objects received from API to an array of {@link Option}
      * @param {Array} data
-     * @returns {Option[]}
+     * @returns {Array<Option>}
      **/
     const mapToOption = (data) => data.map((obj) => ({
-      label: obj.name || obj.title || obj.text || obj?.properties?.name || obj,
-      value: obj.id || obj.text || obj,
-      image: obj.logo_thumbnail || obj.logo || obj.image_url,
+      label: obj.name ?? obj.title ?? obj.text ?? obj?.properties?.name ?? obj.label ?? obj,
+      value: obj.id ?? obj.text ?? obj.value ?? obj,
+      image: obj.logo_thumbnail ?? obj.logo ?? obj.image_url ?? obj.image,
     }));
 
     /**
      * Get options from suggest API
      * It uses list API if no query is provided
-     * Fallback to an empty array without query and props.listUrl
+     * Fallback to an empty array without props.listUrl
      * @param {string} q 
-     * @returns {Promise<Option[] | void>}
+     * @returns {Promise<Array<Option>>}
      */
-    const suggest = (q = '') => {
-      if(!q || !props.suggestUrl) {
+    const suggest = (q) => {
+      if(q.length < props.minimumCharacterBeforeSuggest || !props.suggestUrl) {
         return getInitialOptions();
       }
       if (currentRequest.value) {
@@ -245,14 +244,34 @@ export default defineComponent({
           params: { q, size: maxOptionsCount },
           cancelToken: currentRequest.value.token,
         })
-        .then((resp) => resp.data)
-        .then(mapToOption)
+        .then((resp) => {
+          /** @type Array */
+          const suggestions = resp.data;
+          return suggestions;
+        })
         .catch((error) => {
           if (!axios.isCancel(error)) {
             toast.error(t("Error getting {type}.", {type: props.placeholder}));
           }
+          return [];
         });
     };
+
+    const suggestAndMapToOption = (q = '') => suggest(q).then(addAllOptionAndMapToOption);
+
+    /**
+     * Get options from suggest API
+     * It uses list API if no query is provided
+     * Fallback to an empty array without query and props.listUrl
+     * @param {Array} suggestions 
+     * @returns {Array<Option>}
+     */
+    const addAllOptionAndMapToOption = (suggestions) => {
+      if(props.allOption) {
+        suggestions.unshift({name: props.allOption, id: ''});
+      }
+      return mapToOption(suggestions);
+    }
 
     /**
      * Set options from DOM processing
@@ -319,61 +338,6 @@ export default defineComponent({
     }
 
     /**
-     * @type string | null
-     */
-    let suggesting = null;
-
-    /**
-     * Trigger suggest based on input event
-     * @param {Event} e - Input event
-     */
-    const triggerSuggest = (e) => {
-      updateNoSuggestion();
-      if(e.target instanceof HTMLInputElement 
-      && e.isTrusted 
-      && e.target.value.length >= props.minimumCharacterBeforeSuggest) {
-        if(suggesting !== e.target.value) {
-          suggesting = null;
-        }
-        if(!suggesting) {
-          e.stopImmediatePropagation();
-          suggesting = e.target.value;
-          suggest(e.target.value).then(setOptions).then(values => {
-            if (values && e.target) {
-              e.target.dispatchEvent(e);
-            }
-          }).finally(() => suggesting = null);
-        }
-      }
-    };
-
-    /**
-     * Register event listener to trigger suggest on input event
-     */
-    const registerTriggerSuggest = () => {
-      if(!container.value) {
-        return;
-      }
-      const input = container.value.querySelector('input');
-      if(input) {
-        input.addEventListener('input', triggerSuggest, {
-          capture: true,
-        });
-      }
-    };
-
-    const updateNoSuggestion = () => {
-      if(!selectA11y.value) {
-        return;
-      }
-      texts.noResult = noResultAfterSearch.value;
-      if(!suggesting || suggesting.length < props.minimumCharacterBeforeSuggest) {
-        texts.noResult = noResultWaitingTyping.value;
-      }
-      selectA11y.value.setText(texts);
-    }
-
-    /**
      * Register event listener to trigger on change on select change event
      */
     const registerTriggerOnChange = () => {
@@ -386,7 +350,6 @@ export default defineComponent({
       updatePopupStyle();
       updateSelectStyle();
       registerSelectEvents();
-      updateNoSuggestion();
     }
 
     const updatePopupStyle = () => {
@@ -411,7 +374,7 @@ export default defineComponent({
         return;
       }
       const selectA11y = container.value.querySelector('.select-a11y');
-      if(selectA11y && !selectA11y.classList.contains("fr-select")) {
+      if(selectA11y) {
         selectA11y.classList.add("fr-select");
       }
     };
@@ -420,11 +383,6 @@ export default defineComponent({
       if(!container.value) {
         return;
       }
-      const button = container.value.querySelector('button');
-      if(button && props.suggestUrl) {
-        button.removeEventListener('click', registerTriggerSuggest);
-        button.addEventListener('click', registerTriggerSuggest);
-      }
       if(select.value) {
         select.value.removeEventListener('change', registerTriggerOnChange);
         select.value.addEventListener('change', registerTriggerOnChange);
@@ -432,27 +390,27 @@ export default defineComponent({
     };
 
     const makeSelect = () => {
+      const options = {
+        text: texts,
+        clearable: true,
+      };
+      if(props.suggestUrl) {
+        options.fillSuggestions = suggestAndMapToOption;
+      }
       try {
-        selectA11y.value = new Select(select.value, {
-          text: texts,
-          enableTextFilter: !props.suggestUrl,
-          clearable: true,
-        });
+        selectA11y.value = new Select(select.value, options);
         updateStylesAndEvents();
       } catch (e) {
         console.log(e);
       }
     };
 
-    if(props.values) {
-
-    }
     watch(() => props.values, () => {
       let value = unref(normalizeValues(props.values));
       selectA11y.value.selectOption(value);
     });
     
-    const fillOptionsAndValues = suggest()
+    const fillOptionsAndValues = suggestAndMapToOption()
     .then(setOptions)
     .then(fillSelectedFromValues);
 
