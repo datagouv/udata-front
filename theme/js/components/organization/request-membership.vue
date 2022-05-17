@@ -43,7 +43,7 @@ data() {
         })
         .catch(error => {
             alert(this.$t('Error while requesting membership'));
-            log.error(error);
+            console.error(error);
         });
       }
   }
