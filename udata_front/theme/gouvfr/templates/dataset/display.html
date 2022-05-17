@@ -166,8 +166,13 @@
                         </button>
                     </li>
                 </ul>
-                <div id="tab-producer-panel" class="fr-tabs__panel fr-tabs__panel--selected" role="tabpanel"
-                     aria-labelledby="tab-producer" tabindex="0">
+                <div
+                    id="tab-producer-panel"
+                    class="fr-tabs__panel fr-tabs__panel--selected"
+                    role="tabpanel"
+                    aria-labelledby="tab-producer"
+                    tabindex="0"
+                >
                     {% if dataset.organization %}
                     {% with organization=dataset.organization, producer_type='organization' %}
                     {% include theme('organization/producer-summary.html') %}
@@ -178,8 +183,13 @@
                     {% endwith %}
                     {% endif %}
                 </div>
-                <div id="tab-metadata-panel" class="fr-tabs__panel" role="tabpanel"
-                     aria-labelledby="tab-metadata" tabindex="0">
+                <div
+                    id="tab-metadata-panel"
+                    class="fr-tabs__panel"
+                    role="tabpanel"
+                    aria-labelledby="tab-metadata"
+                    tabindex="0"
+                >
                     {% if dataset.tags %}
                     <ul class="fr-tags-group fr-mb-3v">
                         {% for tag in dataset.tags %}
