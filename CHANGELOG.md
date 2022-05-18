@@ -2,6 +2,10 @@
 
 ## Current (in progress)
 
+- Add support for HTML in posts [#106](https://github.com/etalab/udata-front/pull/106)
+- Fix RGAA criterion 1.1 [#104](https://github.com/etalab/udata-front/pull/104)
+- Fix RGAA criterion 10.4 [#103](https://github.com/etalab/udata-front/pull/103)
+- Add geographical page on home venti button [#109](https://github.com/etalab/udata-front/pull/109)
 - Update DSFR to 1.5.1 [#107](https://github.com/etalab/udata-front/pull/107)
   -  :warning: SVG in JS must use `bundle-text:` prefix now
 
