@@ -24,9 +24,10 @@
 {% endblock %}
 
 {% set sorts = [
-    {"label": _('Creation date'),"value": "created", "order": "desc"},
-    {"label": _('Reuses'), "value": "reuses", "order": "desc"},
-    {"label": _('Followers'),"value": "followers", "order": "desc"}
+    {"label": _('Newests'),"value": "created", "order": "desc"},
+    {"label": _('Oldests'),"value": "created", "order": "asc"},
+    {"label": _('Followers'),"value": "followers", "order": "desc"},
+    {"label": _('Reuses'), "value": "reuses", "order": "desc"}
 ] %}
 
 {% block main_content %}
