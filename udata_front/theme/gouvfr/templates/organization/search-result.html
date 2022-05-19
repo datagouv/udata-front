@@ -1,14 +1,10 @@
 {% cache cache_duration, 'org-search-result', organization.id|string, g.lang_code %}
-{% from theme('macros/certified.html') import badge_if_certified with context %}
 {% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate with context %}
 <article class="row-inline p-sm">
     <div class="result-logo">
         <div class="logo">
             <img alt="" src="{{ organization.logo(70)|placeholder('organization') }}" width="70"
                 height="70">
-            <div class="logo-badge">
-                {{ badge_if_certified(organization) }}
-            </div>
         </div>
     </div>
     <div class="result-body col col-md px-lg px-md-sm m-md-0">
