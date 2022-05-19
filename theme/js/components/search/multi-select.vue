@@ -56,9 +56,6 @@ Callback:
       ref="select"
       v-model="selected"
     >
-    <option v-if="allOption" value="">
-        {{allOption}}
-      </option>
       <option
         v-for="option in displayedOptions"
         :key="option.value"
