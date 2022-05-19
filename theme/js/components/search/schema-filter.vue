@@ -1,6 +1,7 @@
 <template>
     <MultiSelect
         :placeholder="$t('Schema')"
+        :explanation="$t('Data schemas describe data models: what are the fields, how are data shown, what are the available values, etc. See schema.data.gouv.fr')"
         :searchPlaceholder="$t('Search a schema...')"
         :allOption="$t('All schemas')"
         :initialOptions="initialOptions"

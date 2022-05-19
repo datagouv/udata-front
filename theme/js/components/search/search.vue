@@ -7,33 +7,7 @@
         :placeholder="$t('Search for data...')"
       />
     </div>
-    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-mt-2w fr-mb-3v justify-between">
-      <p class="fr-col-auto fr-text--lg fr-text--bold fr-my-0" v-if="totalResults">
-        {{ $t("X Results", totalResults) }}
-      </p>
-      <div class="fr-col-auto fr-grid-row fr-grid-row--middle">
-        <label for="sort-search" class="fr-col-auto fr-text--sm fr-m-0 fr-mr-1w">
-            {{$t('Sort by:')}}
-        </label>
-        <div class="fr-col">
-            <select
-              id="sort-search"
-              class="fr-select"
-              name="sort"
-              v-model="searchSort"
-              @change="handleSortChange"
-            >
-              <option value="">
-                {{$t('Relevance')}}
-              </option>
-              <option v-for="{value, label} in sortOptions" :value='value'>
-                {{label}}
-              </option>
-            </select>
-        </div>
-      </div>
-    </div>
-    <div class="fr-grid-row fr-mt-1w fr-mt-md-3w">
+    <div class="fr-grid-row fr-mt-1w fr-mt-md-5v">
       <div class="fr-col-12 fr-col-md-4 fr-col-lg-3">
         <nav class="fr-sidemenu" :aria-label="$t('Filter results')">
           <div class="fr-sidemenu__inner">
@@ -77,6 +51,7 @@
                 <div class="fr-col-12">
                   <MultiSelect
                     :placeholder="$t('Licenses')"
+                    :explanation="$t('Licenses define reuse rules for published datasets. See page data.gouv.fr/licences')"
                     :searchPlaceholder="$t('Search a license...')"
                     :allOption="$t('All licenses')"
                     listUrl="/datasets/licenses/"
@@ -92,9 +67,10 @@
                 </div>
                 <div class="fr-col-12">
                   <MultiSelect
-                    :placeholder="$t('Geographic area')"
-                    :searchPlaceholder="$t('Search a geographic area...')"
-                    :allOption="$t('All areas')"
+                    :placeholder="$t('Spatial coverage')"
+                    :explanation="$t('Geographic areas covered by data and for which they are relevant.')"
+                    :searchPlaceholder="$t('Search a spatial coverage...')"
+                    :allOption="$t('All coverages')"
                     suggestUrl="/spatial/zones/suggest/"
                     entityUrl="/spatial/zone/"
                     :values="facets.geozone"
@@ -103,7 +79,8 @@
                 </div>
                 <div class="fr-col-12">
                   <MultiSelect
-                    :placeholder="$t('Territorial granularity')"
+                    :placeholder="$t('Spatial granularity')"
+                    :explanation="$t('Finest level of geographic detail covered by data.')"
                     :searchPlaceholder="$t('Search a granularity...')"
                     :allOption="$t('All granularities')"
                     listUrl="/spatial/granularities/"
@@ -124,12 +101,38 @@
           </div>
         </nav>
       </div>
-      <section class="fr-col-12 fr-col-md-8 fr-col-lg-9 search-results" ref="resultsRef" v-bind="$attrs">
+      <section class="fr-col-12 fr-col-md-8 fr-col-lg-9 fr-mt-2w fr-mt-md-0 search-results" ref="resultsRef" v-bind="$attrs">
+        <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle justify-between fr-pb-1w">
+          <p class="fr-col-auto fr-my-0" v-if="totalResults">
+            {{ $t("X Results", totalResults) }}
+          </p>
+          <div class="fr-col-auto fr-grid-row fr-grid-row--middle">
+            <label for="sort-search" class="fr-col-auto fr-text--sm fr-m-0 fr-mr-1w">
+                {{$t('Sort by:')}}
+            </label>
+            <div class="fr-col">
+                <select
+                  id="sort-search"
+                  class="fr-select"
+                  name="sort"
+                  v-model="searchSort"
+                  @change="handleSortChange"
+                >
+                  <option value="">
+                    {{$t('Relevance')}}
+                  </option>
+                  <option v-for="{value, label} in sortOptions" :value='value'>
+                    {{label}}
+                  </option>
+                </select>
+            </div>
+          </div>
+        </div>
         <transition mode="out-in">
           <div v-if="loading">
             <Loader />
           </div>
-          <ul v-else-if="results.length">
+          <ul v-else-if="results.length" class="fr-mt-1w border-default-grey border-top">
             <li v-for="result in results" :key="result.id">
               <a :href="result.page" class="unstyled w-10 block">
                 <Dataset v-bind="result" />

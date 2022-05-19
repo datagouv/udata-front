@@ -35,9 +35,6 @@
   "Search a license...": "Search a license...",
   "Formats": "Formats",
   "Search a format...": "Search a format...",
-  "Geographic area": "Geographic area",
-  "Search a geographic area...": "Search a geographic area...",
-  "Territorial granularity": "Territorial granularity",
   "Search a granularity...": "Search a granularity...",
   "Reset filters": "Reset filters",
   "No dataset matching your query": "No dataset matching your query",
@@ -121,7 +118,14 @@
   "All tags": "",
   "All formats": "",
   "All licenses": "",
-  "All areas": "",
   "All granularities": "",
-  "All schemas": ""
+  "All schemas": "",
+  "Data schemas describe data models: what are the fields, how are data shown, what are the available values, etc. See schema.data.gouv.fr": "",
+  "Licenses define reuse rules for published datasets. See page data.gouv.fr/licences": "",
+  "Spatial coverage": "",
+  "Geographic areas covered by data and for which they are relevant.": "",
+  "Search a spatial coverage...": "",
+  "All coverages": "",
+  "Spatial granularity": "",
+  "Finest level of geographic detail covered by data.": ""
 }

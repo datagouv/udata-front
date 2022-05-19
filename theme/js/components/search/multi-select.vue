@@ -27,10 +27,11 @@ Urls:
   If not provided, the select will start empty and will fill with options when the user starts typing some text.
 - `entityUrl`(optional): The URL that will be called to fetch labels for options provided before the component mounts.
 
-Placeholders:
+Texts:
 - `placeholder`: Select placeholder, always shown
 - `searchPlaceholder`: Search input placeholder
 - `emptyPlaceholder`: Options placeholder when there is no search results
+- `explanation`: Title attribute added to select label
 
 Options:
 - `initialOptions`: Initial list of options
@@ -48,7 +49,7 @@ Callback:
 
 <template>
   <div class="multiselect w-100" ref="container" :data-selected="!!selected">
-    <label :for="id">{{placeholder}}</label>
+    <label :for="id" :title="explanation">{{placeholder}} <span v-if="explanation" class="fr-fi-information-line" aria-hidden="true"></span></label>
     <select
       class="multiselect__input"
       :id="id"
@@ -102,6 +103,10 @@ export default defineComponent({
     placeholder: {
       type: String,
       required: true,
+    },
+    explanation: {
+      type: String,
+      default: '',
     },
     searchPlaceholder: {
       type: String,
