@@ -12,7 +12,7 @@
                 <a class="fr-tile__link inline" href="{{ url_for('organizations.show', org=organization) }}">{{ organization_name_with_certificate(organization) }}</a>
             </h4>
         </div>
-        <p class="fr-tile__desc fr-mb-2w">{{ organization.description|mdstrip(150) }}</p>
+        <p class="fr-tile__desc fr-mb-3w">{{ organization.description|mdstrip(150) }}</p>
         {% if organization.metrics.datasets or organization.metrics.reuses %}
         <ul class="fr-tags-group fr-mt-auto">
             {% if organization.metrics.datasets %}
