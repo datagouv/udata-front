@@ -1,38 +1,32 @@
 {% cache cache_duration, 'org-search-result', organization.id|string, g.lang_code %}
-{% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate with context %}
-<article class="row-inline p-sm">
-    <div class="result-logo">
-        <div class="logo">
-            <img alt="" src="{{ organization.logo(70)|placeholder('organization') }}" width="70"
-                height="70">
+{% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate %}
+<article class="fr-tile fr-tile--left fr-enlarge-link">
+    <div class="fr-tile__body">
+        <div class="fr-grid-row fr-grid-row--middle fr-mb-3w">
+            <div class="fr-tile__img fr-col-auto fr-m-0">
+                <div class="logo">
+                    <img src="{{ organization.logo(70)|placeholder('organization') }}" class="fr-responsive-img" alt="">
+                </div>
+            </div>
+            <h4 class="fr-tile__title fr-col fr-ml-1w">
+                <a class="fr-tile__link inline" href="{{ url_for('organizations.show', org=organization) }}">{{ organization_name_with_certificate(organization) }}</a>
+            </h4>
         </div>
+        <p class="fr-tile__desc fr-mb-2w">{{ organization.description|mdstrip(150) }}</p>
+        {% if organization.metrics.datasets or organization.metrics.reuses %}
+        <ul class="fr-tags-group fr-mt-auto">
+            {% if organization.metrics.datasets %}
+            <li>
+                <span class="fr-tag">{{ ngettext('Dataset: <strong class="fr-ml-1v">%(num)d</strong>', 'Datasets: <strong class="fr-ml-1v">%(num)d</strong>', organization.metrics.datasets or 0) }}</span>
+            </li>
+            {% endif %}
+            {% if organization.metrics.reuses %}
+            <li>
+                <span class="fr-tag">{{ ngettext('Reuse: <strong class="fr-ml-1v">%(num)d</strong>', 'Reuses: <strong class="fr-ml-1v">%(num)d</strong>', organization.metrics.reuses or 0) }}</span>
+            </li>
+            {% endif %}
+        </ul>
+        {% endif %}
     </div>
-    <div class="result-body col col-md px-lg px-md-sm m-md-0">
-        <h4 class="result-title ellipsis">{{ organization_name_with_certificate(organization) }}</h4>
-        <div class="result-description text-grey-380">
-            {{ organization.description|mdstrip(300) }}
-        </div>
-    </div>
-    <ul
-        class="col-2 col-md-12 self-center offset-md-3 row-inline-md mt-md-sm justify-end result-infos fs-sm text-align-right">
-        {% if organization.metrics.datasets %}
-        <li title="{{ _('Number of datasets') }}" class="mr-md-md">
-            {{ ngettext('%(num)d dataset', '%(num)d datasets', organization.metrics.datasets or 0) }}
-        </li>
-        {% endif %}
-        {% if organization.metrics.reuses %}
-        <li title="{{ _('Number of reuses by the organization') }}" class="mr-md-md">
-            {{ ngettext('%(num)d reuse', '%(num)d reuses', organization.metrics.reuses or 0) }}
-        </li>
-        {% endif %}
-        {% if organization.metrics.followers %}
-        <li title="{{ _('Number of followers') }}" class="mr-md-md">
-            {{ ngettext('%(num)d follower', '%(num)d followers', organization.metrics.followers or 0) }}
-        </li>
-        {% endif %}
-        <li title="{{ _('Number of members') }}">
-            {{ ngettext('%(num)d members', '%(num)d members', organization.members|length) }}
-        </li>
-    </ul>
 </article>
 {% endcache %}
