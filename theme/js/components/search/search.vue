@@ -92,6 +92,7 @@
                   <button
                     class="fr-btn fr-btn--secondary fr-fi-close-circle-line fr-btn--icon-left"
                     @click="resetFilters"
+                    v-if="isFiltered"
                   >
                     {{$t('Reset filters')}}
                   </button>
