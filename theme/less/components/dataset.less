@@ -125,23 +125,6 @@ Disclaimer : the search-result component is weird in styling and uses a lot of f
         }
     }
 
-    // Smaller version with no border for display in small spaces (search box for instance)
-    &.compact {
-        padding: @spacing-xs 0;
-
-        .card-logo {
-            flex: 0 1 60px;
-
-            img {
-                max-width: 60px;
-            }
-        }
-
-        .card-features {
-            font-size: @font-size-xs!important;
-        }
-    }
-
     // Fancier version for search results, with an hover section for details
     // Disclaimer : the search-result component is weird in styling and uses a lot of fixed pixel values. Please beware if you make any changes in it, you might break responsive.
     &.dataset-search-result {

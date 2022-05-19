@@ -239,6 +239,11 @@ def owner_name_acronym(obj):
     return ''
 
 
+@front.app_template_filter()
+def external_source(dataset):
+    return dataset.extras['remote_url'] if 'remote_url' in dataset.extras else None
+
+
 @front.app_template_global()
 @front.app_template_filter()
 def isodate(value, format='short'):

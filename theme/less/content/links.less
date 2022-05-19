@@ -141,9 +141,10 @@ a {
     .rounded-0;
 }
 
-.fr-link {
-    --text-action-high-blue-france: @blue-400;
-    &:hover {
-        text-decoration: none;
-    }
+.not-enlarged {
+    .relative;
+}
+
+.fr-enlarge-link .not-enlarged a::before {
+    background: none;
 }
