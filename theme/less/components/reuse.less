@@ -1,0 +1,15 @@
+// Generic reuse cards
+.reuse-card {
+    width: 100%;
+    max-width: 300px;
+    .reuse-image {
+        border-radius: @spacing-md;
+        height: 480px;
+        object-fit: cover;
+        object-position: center center;
+        @supports (aspect-ratio: 3/5) {
+            aspect-ratio: 3/5;
+            min-height: auto;
+        }
+    }
+}
