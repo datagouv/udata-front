@@ -1,5 +1,6 @@
 {% cache cache_duration, 'org-search-result', organization.id|string, g.lang_code %}
 {% from theme('macros/certified.html') import badge_if_certified with context %}
+{% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate with context %}
 <article class="row-inline p-sm">
     <div class="result-logo">
         <div class="logo">
@@ -11,7 +12,7 @@
         </div>
     </div>
     <div class="result-body col col-md px-lg px-md-sm m-md-0">
-        <h4 class="result-title ellipsis">{{ organization.name }}</h4>
+        <h4 class="result-title ellipsis">{{ organization_name_with_certificate(organization) }}</h4>
         <div class="result-description text-grey-380">
             {{ organization.description|mdstrip(300) }}
         </div>
