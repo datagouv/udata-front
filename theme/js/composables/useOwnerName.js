@@ -1,4 +1,4 @@
-import {ref} from 'vue';
+import {ref, Ref} from 'vue';
 
 /**
  * A resource, dataset, reuse or any other object owned by an organization or a user.
