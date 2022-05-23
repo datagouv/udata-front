@@ -1,5 +1,5 @@
 <template>
-  {{ organization.name }}&nbsp;
+  {{ organization.name }} 
   <span v-if="organizationCertified" v-html="certified"
     :title="$t('The identity of this public service is certified by {certifier}', { certifier: title })">
   </span>
