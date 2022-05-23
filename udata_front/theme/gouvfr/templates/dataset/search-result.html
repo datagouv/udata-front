@@ -39,14 +39,18 @@
                 </a>
                 {% if dataset.private %}<span class="badge grey-300 fr-ml-1w">{{ _('Private') }}</span>{% endif %}
             </h4>
+            {% if dataset.organization or dataset.owner %}
             <p class="fr-m-0 not-enlarged">
                 {{ _('From') }} 
                 {% if dataset.organization %}
                 <a href="{{ url_for('organizations.show', org=dataset.organization) }}">
                     {{organization_name_with_certificate(dataset.organization)}}
                 </a>
+                {% elif dataset.owner %}
+                {{owner_name(dataset)}}
                 {% endif %}
             </p>
+            {% endif %}
             <p class="fr-mt-1w fr-mb-2w">
                 {{ dataset.description|mdstrip(300) }}
             </p>
