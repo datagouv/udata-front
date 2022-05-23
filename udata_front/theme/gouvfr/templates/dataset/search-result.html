@@ -41,7 +41,7 @@
             </h4>
             {% if dataset.organization or dataset.owner %}
             <p class="fr-m-0 not-enlarged">
-                {{ _('From') }} 
+                {{ _('From') }}
                 {% if dataset.organization %}
                 <a href="{{ url_for('organizations.show', org=dataset.organization) }}">
                     {{organization_name_with_certificate(dataset.organization)}}
@@ -55,7 +55,7 @@
                 {{ dataset.description|mdstrip(300) }}
             </p>
             <p class="fr-mb-0">
-                {% if not (dataset|external_source) %}
+                {% if not external_source(dataset) %}
                 {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
                     {% if dataset.license %}
                     &mdash;

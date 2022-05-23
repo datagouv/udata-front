@@ -239,7 +239,7 @@ def owner_name_acronym(obj):
     return ''
 
 
-@front.app_template_filter()
+@front.app_template_global()
 def external_source(dataset):
     return dataset.extras['remote_url'] if 'remote_url' in dataset.extras else None
 
