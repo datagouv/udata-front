@@ -116,5 +116,10 @@
   "datasets": "datasets",
   "organizations": "organizations",
   "Start typing to search in X": "Start typing to search in {type}",
-  "Fields preceded by a star ({markup}) are required.": ""
+  "Fields preceded by a star ({markup}) are required.": "",
+  "Private": "",
+  "Updated on {date}": "",
+  "{n} reuses": "",
+  "{n} favorites": "",
+  "The identity of this public service is certified by {certifier}": ""
 }

@@ -1,100 +1,144 @@
-<!-- This is similar to the Jinja2 `dataset/search-result.html` template but in
-Vue. -->
-
 <template>
-  <article class="dataset-card dataset-search-result py-xs">
-    <div class="card-logo" v-if="organization">
-      <Placeholder
-        type="dataset"
-        :src="organization.logo_thumbnail"
-        :alt="organization.name"
-      />
-      <div class="logo-badge logo-badge--bottom-right">
-        <span v-html="lock" v-if="private" />
-        <span v-html="certified" v-else-if="organizationCertified" />
+  <article class="fr-pt-5v fr-pb-6v border-bottom border-default-grey fr-enlarge-link">
+    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
+      <div class="fr-col-auto">
+          <div class="logo">
+            <Placeholder
+              v-if="organization"
+              type="dataset"
+              :src="organization.logo_thumbnail"
+              :alt="organization.name"
+              :size="60"
+            />
+            <Avatar
+              v-else-if="owner"
+              :user="owner"
+              :size="60"
+            />
+            <Placeholder
+              v-else
+              type="dataset"
+            />
+          </div>
       </div>
+      <div class="fr-col">
+        <h4 class="fr-mb-0">
+          <a :href="page" class="text-grey-500">
+            {{ title }}
+            <small v-if="acronym">{{ acronym }}</small>
+          </a>
+          <span
+            v-if="private"
+            class="badge grey-300 fr-ml-1w"
+          >
+            {{ $t('Private') }}
+          </span>
+        </h4>
+        <p class="fr-m-0 not-enlarged" v-if="organization || owner">
+          {{ $t('From') }} 
+          <a :href="page" v-if="organization">
+              <OrganizationNameWithCertificate :organization="organization" />
+          </a>
+          <template v-if="owner">{{ownerName}}</template>
+        </p>
+        <p class="fr-mt-1w fr-mb-2w">
+          {{ $filters.excerpt(description) }}
+        </p>
+        <p class="fr-mb-0">
+          <!-- TODO : useExternalSource et !externalSource -->
+          <template v-if="true">
+            {{ $t('Updated on {date}', {date: $filters.formatDate(last_modified)}) }}
+              <template v-if="license">
+                &mdash;
+              </template>
+          </template>
+          <template v-if="license">
+            <span class="not-enlarged" v-if="license.url">
+              <a :href="license.url" class="text-mention-grey text-decoration-underline">
+                {{license.title}}
+              </a>
+            </span>
+            <template v-else>
+              {{license.title}}
+            </template>
+          </template>
+        </p>
+      </div>
+      <ul class="fr-col-auto fr-tags-group flex-direction-column fr-grid-row--bottom self-center">
+            <li>
+              <span class="fr-tag">
+                <i18n-t keypath="{n} reuses" :plural="resources.length || 0" scope="global">
+                  <template #n>
+                    <strong class="fr-mr-1v">{{resources.length || 0}}</strong>
+                  </template>
+                </i18n-t>
+                </span>
+            </li>
+            <li>
+              <span class="fr-tag">
+                <i18n-t keypath="{n} favorites" :plural="metrics.followers || 0" scope="global">
+                  <template #n>
+                    <strong class="fr-mr-1v">{{metrics.followers}}</strong>
+                  </template>
+                </i18n-t>
+              </span>
+            </li>
+        </ul>
     </div>
-    <div class="card-logo" v-else-if="owner">
-      <Avatar :user="owner" :size="100" />
-    </div>
-    <div class="card-logo" v-else>
-      <Placeholder type="dataset" />
-    </div>
-    <div class="card-data">
-      <h4 class="card-title">{{ title }}</h4>
-      <div class="card-description text-grey-380 mt-xs">
-        {{ $filters.excerpt(description) }}
-      </div>
-    </div>
-    <dl class="card-hover">
-      <div v-if="temporal_coverage">
-        <dt>{{ $t("Temporal coverage") }}</dt>
-        <dd>{{ temporal_coverage.start + " - " + temporal_coverage.end }}</dd>
-      </div>
-      <div v-if="frequency">
-        <dt>{{ $t("Frequency") }}</dt>
-        <dd>{{ frequency }}</dd>
-      </div>
-      <div v-if="geoZone">
-        <dt>{{ $t("Spatial coverage") }}</dt>
-        <dd>{{ geoZone.join(", ") }}</dd>
-      </div>
-      <div v-if="spatial?.granularity">
-        <dt>{{ $t("Territorial coverage granularity") }}</dt>
-        <dd>{{ spatial.granularity }}</dd>
-      </div>
-    </dl>
-    <ul class="card-footer">
-      <li>
-        <strong>{{ resources.total || 0 }}</strong>
-        {{ $t("resources", resources.total || 0) }}
-      </li>
-      <li>
-        <strong>{{ metrics.reuses || 0 }}</strong>
-        {{ $t("reuses", metrics.reuses || 0) }}
-      </li>
-      <li>
-        <strong>{{ metrics.followers || 0 }}</strong>
-        {{ $t("favourites", metrics.followers || 0) }}
-      </li>
-    </ul>
   </article>
 </template>
 
 <script>
-import Placeholder from "../utils/placeholder";
-import certified from "svg/certified.svg";
+import { defineComponent } from "vue";
 import lock from "svg/private.svg";
-import useOrganizationCertified from "../../composables/useOrganizationCertified";
-import useGeoZone from "../../composables/useGeoZone";
-import Avatar from "../discussions/avatar";
+import useLicense from "../../composables/useLicense";
+import useOwnerName from "../../composables/useOwnerName";
+import Avatar from "../discussions/avatar.vue";
+import OrganizationNameWithCertificate from "../organization/organization-name-with-certificate.vue";
+import Placeholder from "../utils/placeholder.vue";
 
-export default {
+export default defineComponent({
   props: {
-    title: String,
+    acronym: String,
+    description: {
+      type: String,
+      required: true,
+    },
+    last_modified: {
+      type: Date,
+      required: true,
+    },
+    license: {
+      type: String,
+      required: true,
+    },
+    metrics: Object,
     organization: Object,
     owner: Object,
-    description: String,
-    temporal_coverage: Object,
-    frequency: String,
-    spatial: Object,
-    metrics: Object,
-    resources: Object,
+    page: {
+      type: String,
+      required: true,
+    },
     private: Boolean,
+    resources: Object,
+    title: {
+      type: String,
+      required: true,
+    },
   },
   components: {
     Avatar,
+    OrganizationNameWithCertificate,
     Placeholder,
   },
   setup(props) {
-    const {organizationCertified} = useOrganizationCertified(props.organization)
-    const {geoZone} = useGeoZone(props.spatial)
+    const ownerName = useOwnerName(props.owner);
+    const license = useLicense(props.license);
     return {
-      certified,
+      license,
       lock,
-      organizationCertified,
-      geoZone,
+      ownerName,
     };
   }
-};
+});
 </script>

@@ -116,5 +116,10 @@
   "datasets": "jeux de données",
   "organizations": "organisations",
   "Start typing to search in X": "Commencez à taper pour rechercher parmi les {type}",
-  "Fields preceded by a star ({markup}) are required.": ""
+  "Fields preceded by a star ({markup}) are required.": "",
+  "Private": "",
+  "Updated on {date}": "",
+  "{n} reuses": "",
+  "{n} favorites": "",
+  "The identity of this public service is certified by {certifier}": ""
 }
