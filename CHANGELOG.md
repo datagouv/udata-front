@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Fix RGAA criterion 1.1 [#104](https://github.com/etalab/udata-front/pull/104)
+- Use DSFR container and remove custom ones [#111](https://github.com/etalab/udata-front/pull/111)
 
 ## 2.0.2 (2022-04-11)
 
