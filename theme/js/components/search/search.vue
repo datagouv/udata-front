@@ -214,6 +214,10 @@ export default {
     if(this.disableFirstSearch) {
       if (this.$refs.results.dataset.totalResults > 0) {
         this.results = JSON.parse(this.$refs.results.dataset.results);
+        this.results = this.results.map(result => {
+          result.last_modified = new Date(result.last_modified);
+          return result;
+        });
         this.totalResults = JSON.parse(this.$refs.results.dataset.totalResults);
       }
       this.loading = false;
