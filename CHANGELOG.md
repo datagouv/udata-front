@@ -7,6 +7,7 @@
 - Fix RGAA criterion 10.4 [#103](https://github.com/etalab/udata-front/pull/103)
 - Add geographical page on home venti button [#109](https://github.com/etalab/udata-front/pull/109)
 - Fix RGAA criterion 11.10 [#102](https://github.com/etalab/udata-front/pull/102)
+- Update search results [#110](https://github.com/etalab/udata-front/pull/110)
 
 ## 2.0.2 (2022-04-11)
 
