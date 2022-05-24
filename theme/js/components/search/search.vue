@@ -402,29 +402,21 @@ export default defineComponent({
       return params;
     });
 
-    let q = params.get('q');
+    const q = params.get('q');
     if (q) {
       queryString.value = q;
       params.delete('q');
     }
-    let page = params.get('page');
+    const page = params.get('page');
     if (page) {
       currentPage.value = parseInt(page);
       params.delete('page');
     }
-
-    watch(paramUrl, (val) => {
-        // Update URL to match current search params value for deep linking
-        let url = new URL(window.location.href);
-        url.search = new URLSearchParams(val).toString();
-        history.pushState(null, "", url);
-        /** @type NodeListOf<HTMLAnchorElement> */
-        let linksWithQuery = document.querySelectorAll('[data-q]');
-        for (let link of linksWithQuery) {
-          link.href = reuseUrl.value;
-        }
-      }, {deep: true});
-
+    const sort = params.get('sort');
+    if(sort) {
+      searchSort.value = sort;
+      params.delete('sort');
+    }
     /**
      * @type {Ref<{organization: ?string, tag: ?string, license: ?string, format: ?string, geozone: ?string, granularity: ?string, schema: ?string}>}
      */
@@ -434,6 +426,19 @@ export default defineComponent({
     } else {
       search();
     }
+
+    watch(paramUrl, (val) => {
+      // Update URL to match current search params value for deep linking
+      let url = new URL(window.location.href);
+      url.search = new URLSearchParams(val).toString();
+      history.pushState(null, "", url);
+      /** @type NodeListOf<HTMLAnchorElement> */
+      let linksWithQuery = document.querySelectorAll('[data-q]');
+      for (let link of linksWithQuery) {
+        link.href = reuseUrl.value;
+      }
+    }, {deep: true});
+
     onMounted(() => {
       if (props.disableFirstSearch && resultsRef.value) {
         let total = resultsRef.value.dataset.totalResults;
