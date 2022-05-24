@@ -4,7 +4,7 @@
       <SearchInput
         :onChange="handleSearchChange"
         :value="queryString"
-        :placeholder="$t('Search for data...')"
+        :placeholder="$t('Ex. 2022 presiential election')"
       />
     </div>
     <div class="fr-grid-row fr-mt-1w fr-mt-md-5v">

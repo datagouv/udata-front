@@ -26,7 +26,6 @@
   "An error occurred while creating the discussion ": "Une erreur est survenue lors de la création de la discussion ",
   "There are no results for your search": "Aucun résultat ne correspond à votre recherche",
   "Search...": "Rechercher...",
-  "Search for data...": "Rechercher des données...",
   "Organizations": "Organisations",
   "Search an organization...": "Chercher une organisation...",
   "Tags": "Mots clés",
@@ -128,5 +127,6 @@
   "Search a spatial coverage...": "",
   "All coverages": "",
   "Spatial granularity": "",
-  "Finest level of geographic detail covered by data.": ""
+  "Finest level of geographic detail covered by data.": "",
+  "Ex. 2022 presiential election": ""
 }

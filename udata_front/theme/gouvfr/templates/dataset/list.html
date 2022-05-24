@@ -32,7 +32,7 @@
 >
     <h1 class="fr-mb-1w">{{_('Datasets')}}</h1>
     <div class="fr-grid-row fr-grid-row--middle justify-between">
-        <div>{{_('Search a dataset on %(site)s', site=current_site.title)}}</div>
+        <div>{{_('Search among %(count)s datasets on %(site)s',count=current_site.metrics['datasets']|format_number, site=current_site.title)}}</div>
         <a
             href="{{ url_for('reuses.list', q=datasets.query._query) }}"
             data-q
