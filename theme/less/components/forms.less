@@ -22,13 +22,17 @@ We can use fieldset if needed to group inputs of the same kind.
 @import (less) "@gouvfr/dsfr/dist/component/form/form.css";
 @import (less) "@gouvfr/dsfr/dist/component/checkbox/checkbox.css";
 @import (less) "@gouvfr/dsfr/dist/component/input/input.css";
-@import (less) "@gouvfr/dsfr/dist/component/select/select.css";
+@import (inline) "@gouvfr/dsfr/dist/component/select/select.css";
 @import (less) "@gouvfr/dsfr/dist/component/toggle/toggle.css";
 .form-container {
     background-color: @white;
     border: 1px solid @grey-100;
     border-radius: 4px;
     padding: @spacing-lg;
+}
+
+.required-field-star {
+    color: @blue-400;
 }
 
 form.form {
@@ -43,19 +47,11 @@ form.form {
 
     label {
         font-size: @font-size-sm;
-        .fr-mb-1v;
-        position: relative;
-
+        margin-bottom: @spacing-xxs;
         &.required::after {
-            position: absolute;
-            top: 2px;
-            .fr-ml-1v;
-            width: @spacing-xxs;
-            height: @spacing-xxs;
-            background-color: @blue-400;
-            content: '';
-            display: inline-block;
-            .rounded-xxs;
+            margin-left: @spacing-xxs;
+            content: '*';
+            .required-field-star;
         }
     }
 
@@ -77,8 +73,16 @@ form.form {
     }
 }
 
+.fr-select {
+    --border-plain-grey: @blue-400;
+}
+
 .fr-select--no-border {
     box-shadow: none;
+}
+
+.fr-select--width-auto {
+    width: auto;
 }
 
 .fr-checkbox-group input[type="checkbox"]:checked + label::before {
