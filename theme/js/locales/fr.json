@@ -120,13 +120,13 @@
   "All licenses": "Toutes les licences",
   "All granularities": "Toutes les granularités",
   "All schemas": "Tous les schémas",
-  "Data schemas describe data models: what are the fields, how are data shown, what are the available values, etc. See schema.data.gouv.fr": "Data schemas describe data models: what are the fields, how are data shown, what are the available values, etc. See schema.data.gouv.fr",
-  "Licenses define reuse rules for published datasets. See page data.gouv.fr/licences": "Licenses define reuse rules for published datasets. See page data.gouv.fr/licences",
+  "Data schemas describe data models: what are the fields, how are data shown, what are the available values, etc. See schema.data.gouv.fr": "Les schémas de données permettent de décrire des modèles de données : quels sont les différents champs, comment sont représentées les données, quelles sont les valeurs possibles etc. Voir schema.data.gouv.fr",
+  "Licenses define reuse rules for published datasets. See page data.gouv.fr/licences": "Les licences définissent les règles de réutilisation des jeux de données publiés. Voir la page data.gouv.fr/licences",
   "Spatial coverage": "Couverture spatiale",
-  "Geographic areas covered by data and for which they are relevant.": "Geographic areas covered by data and for which they are relevant.",
-  "Search a spatial coverage...": "Search a spatial coverage...",
+  "Geographic areas covered by data and for which they are relevant.": "Zones géographiques couvertes par les données et pour lesquelles elles sont pertinentes.",
+  "Search a spatial coverage...": "Rechercher une couverture spatiale...",
   "All coverages": "Toutes les couvertures",
   "Spatial granularity": "Granularité spatiale",
-  "Finest level of geographic detail covered by data.": "Finest level of geographic detail covered by data.",
+  "Finest level of geographic detail covered by data.": "Niveau de détail géographique le plus fin que peut couvrir les données.",
   "Ex. 2022 presiential election": "Ex. 2022 presiential election"
 }
