@@ -1,6 +1,6 @@
 <template>
   <vue-final-modal class="modal-wrapper">
-    <div class="modal-body markdown">
+    <div class="modal-body markdown fr-p-5v fr-mb-11v text-grey-500">
       <h2>{{$t('Associated schema')}}</h2>
       <p>
         <span>{{$t('This resource is associated to the schema ')}}<b>{{ resourceSchema.name }}</b></span>
@@ -60,7 +60,7 @@
         </a>
       </div>
 
-      <hr>
+      <hr class="fr-mt-3w">
 
       <h3>{{$t('About schemas')}}</h3>
       <p>
@@ -93,14 +93,3 @@ export default {
   },
 };
 </script>
-
-<style lang="less" scoped>
-  .modal-body {
-    color: #000000;
-    padding: 20px;
-    margin-bottom: 45px;
-  }
-  hr {
-    margin-top: 25px;
-  }
-</style>
