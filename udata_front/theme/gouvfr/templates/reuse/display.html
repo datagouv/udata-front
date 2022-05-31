@@ -64,13 +64,13 @@
                 {{ follow_btn(reuse) }}
                 {% if can_edit %}
                     <a
-                        class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-fi-edit-line fr-btn--icon-left fr-hidden fr-unhidden-sm"
+                        class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-edit-line fr-btn--icon-left fr-hidden fr-unhidden-sm"
                         href="{{ url_for('admin.index', path='reuse/{id}/'.format(id=reuse.id)) }}"
                     >
                         {{ _('Modify reuse') }}
                     </a>
                     <a
-                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-fi-edit-line fr-hidden-sm"
+                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-edit-line fr-hidden-sm"
                     href="{{ url_for('admin.index', path='reuse/{id}/'.format(id=reuse.id)) }}"
                 >
                     {{ _('Modify reuse') }}
@@ -91,7 +91,7 @@
             <a
                 href="{{ reuse.url }}"
                 rel="nofollow"
-                class="fr-btn fr-btn--secondary fr-fi-eye-line fr-btn--icon-left fr-mt-4w"
+                class="fr-btn fr-btn--secondary fr-icon-eye-line fr-btn--icon-left fr-mt-4w"
             >
                 {{ _('See the reuse') }}
             </a>
@@ -178,11 +178,11 @@
                     <div class="fr-grid-row fr-grid-row--gutters">
                         <div class="fr-col-12 fr-col-sm-6 vuejs">
                             <h2 class="subtitle">{{ _('Participate') }}</h2>
-                            <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-fi-arrow-right-s-line fr-btn--icon-right"
+                            <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-arrow-right-s-line fr-btn--icon-right"
                                 href="{{ url_for('admin.index', path='reuse/new/') }}">
                                 {{ _('Add a reuse') }}
                             </a>
-                            <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-fi-arrow-right-s-line fr-btn--icon-right fr-mt-3v"
+                            <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-arrow-right-s-line fr-btn--icon-right fr-mt-3v"
                                 href="#"
                                 @click.prevent="$bus.emit('discussions.startThread')">
                                 {{ _('Contact the reuser') }}

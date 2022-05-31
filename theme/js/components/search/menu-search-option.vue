@@ -17,7 +17,7 @@
         </template>
       </i18n-t>
       <div aria-hidden="true" class="fr-col-auto">
-        <span class="fr-fi-arrow-right-line fr-fi--sm" aria-hidden="true"></span>
+        <span class="fr-icon-arrow-right-s-line fr-icon--sm" aria-hidden="true"></span>
       </div>
     </div>
   </a>

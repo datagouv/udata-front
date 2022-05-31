@@ -18,7 +18,7 @@
           :href="documentationUrl"
           rel="noopener noreferrer"
           target="_blank"
-          class="fr-btn fr-btn--sm fr-fi-information-line fr-btn--icon-left"
+          class="fr-btn fr-btn--sm fr-icon-information-line fr-btn--icon-left"
         >
           {{$t('Read documentation')}}
         </a>
@@ -39,7 +39,7 @@
             :href="validationUrl"
             rel="noopener noreferrer"
             target="_blank"
-            class="fr-btn fr-btn--sm fr-fi-checkbox-circle-line fr-btn--icon-left">
+            class="fr-btn fr-btn--sm fr-icon-checkbox-circle-line fr-btn--icon-left">
             {{$t('Validate resource')}}
           </a>
         </div>
@@ -55,7 +55,7 @@
           :href="datasetSchemaUrl"
           rel="noopener noreferrer"
           target="_blank"
-          class="fr-btn fr-btn--sm fr-fi-file-line fr-btn--icon-left">
+          class="fr-btn fr-btn--sm fr-icon-file-line fr-btn--icon-left">
           {{$t('See dataset linked to this schema')}}
         </a>
       </div>
@@ -69,7 +69,7 @@
     </div>
 
     <footer class="modal-footer">
-      <button class="fr-btn fr-fi-close-line" @click.prevent="close()" :title="$t('Close')">{{$t('Close')}}</button>
+      <button class="fr-btn fr-icon-close-line" @click.prevent="close()" :title="$t('Close')">{{$t('Close')}}</button>
     </footer>
   </vue-final-modal>
 </template>

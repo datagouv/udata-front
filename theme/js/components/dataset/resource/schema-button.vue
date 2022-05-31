@@ -1,5 +1,5 @@
 <template>
-  <button class="fr-btn fr-btn--secondary fr-fi-svg fr-fi--sm fr-btn--icon-left fr-btn--sm" :disabled="loading" @click.prevent="showSchemaModal">
+  <button class="fr-btn fr-btn--secondary fr-icon-svg fr-icon--sm fr-btn--icon-left fr-btn--sm" :disabled="loading" @click.prevent="showSchemaModal">
     <span class="fr-grid-row fr-mr-1v" v-html="triangle"></span>
     {{ $t('See schema') }}
   </button>

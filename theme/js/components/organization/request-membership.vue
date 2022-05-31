@@ -12,7 +12,7 @@ A simple request membership prompt.
 <template>
   <button
     @click.prevent="JoinOrga"
-    class="nav-link nav-link--no-icon text-decoration-none fr-link fr-link--icon-left fr-fi-arrow-right-s-line"
+    class="nav-link nav-link--no-icon text-decoration-none fr-link fr-link--icon-left fr-icon-arrow-right-s-line"
   >
     <span class="text-decoration-underline">{{ $t('Ask to join the organization as a producer') }}</span>
   </button>

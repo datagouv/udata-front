@@ -5,7 +5,7 @@
       :id="'resource-' + resource.id + '-header'"
     >
       <div class="fr-col-auto fr-grid-row fr-grid-row--top no-wrap">
-        <div class="fr-col-auto fr-mx-2w fr-fi-svg fr-fi--sm" v-html="resourceImage"></div>
+        <div class="fr-col-auto fr-mx-2w fr-icon-svg fr-icon--sm" v-html="resourceImage"></div>
         <div class="fr-col-auto">
           <h4
             class="fr-mb-1v"
@@ -48,7 +48,7 @@
             <button
               :title="$t('Preview')"
               @click.prevent="showModal('preview', {url: resource.preview_url, title: resource.title}, true)"
-              class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-fi-svg"
+              class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-icon-svg"
               v-html="preview"
             >
             </button>
@@ -59,7 +59,7 @@
               :title="$t('Resource link')"
               rel="nofollow"
               target="_blank"
-              class="fr-btn fr-btn--sm fr-fi-external-link-line"
+              class="fr-btn fr-btn--sm fr-icon-external-link-line"
             >
             </a>
           </li>
@@ -68,7 +68,7 @@
               :href="resource.latest"
               :title="$t('Download resource')"
               download
-              class="fr-btn fr-btn--sm fr-fi-download-line"
+              class="fr-btn fr-btn--sm fr-icon-download-line"
             >
             </a>
           </li>
@@ -79,7 +79,7 @@
               :aria-expanded="expanded"
               :title="$t('See more details')"
               :aria-controls="'resource-' + resource.id"
-              class="accordion-button rounded-circle fr-fi-arrow-right-s-line fr-p-1w"
+              class="accordion-button rounded-circle fr-icon-arrow-right-s-line fr-p-1w"
             >
             </button>
           </li>

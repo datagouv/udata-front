@@ -20,7 +20,7 @@
         <div class="fr-container">
             <!--[if lte IE 8]>
                 {{ banner_warning(
-                "fr-fi-alert-line",
+                "fr-icon-alert-line",
                 _('Internet Explorer 8 and below are not anymore supported.
                 Please upgrade or change your browser to access the website.
                 <a class="fr-link" href="http://browsehappy.com/">More information →</a>'))}}
@@ -66,7 +66,7 @@
                         <ul class="fr-links-group">
                             {% if current_user.is_authenticated %}
                                 <li>
-                                    <div class="fr-link fr-fi-svg fr-fi--sm fr-grid-row text-grey-500">
+                                    <div class="fr-link fr-icon-svg fr-icon--sm fr-grid-row text-grey-500">
                                         <img
                                             src="{{ current_user|avatar_url(24) }}"
                                             width="24"
@@ -81,7 +81,7 @@
                                 <li>
                                     <a
                                         href="{{ url_for('admin.index') }}"
-                                        class="fr-link fr-fi-svg fr-fi--sm"
+                                        class="fr-link fr-icon-svg fr-icon--sm"
                                     >
                                         <span class="fr-mr-1w fr-grid-row">
                                             {% include theme('svg/administration.svg') %}
@@ -92,7 +92,7 @@
                                 <li>
                                     <a
                                         href="{{ url_for('security.logout') }}"
-                                        class="fr-link fr-fi-logout-box-r-line"
+                                        class="fr-link fr-icon-logout-box-r-line"
                                     >
                                         {{ _('Logout') }}
                                     </a>
@@ -102,7 +102,7 @@
                                     <a
                                         href="{{ url_for('security.login', next=next_url) }}"
                                         title="{{ _('Log in') }}"
-                                        class="fr-link fr-fi-lock-line"
+                                        class="fr-link fr-icon-lock-line"
                                     >
                                         {{ _('Log in') }}
                                     </a>

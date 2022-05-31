@@ -100,13 +100,13 @@
             {{ follow_btn(dataset) }}
             {% if can_edit %}
                 <a
-                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-fi-edit-line fr-btn--icon-left fr-hidden fr-unhidden-sm"
+                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-edit-line fr-btn--icon-left fr-hidden fr-unhidden-sm"
                     href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
                 >
                     {{ _('Modify dataset') }}
                 </a>
                 <a
-                class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-fi-edit-line fr-hidden-sm"
+                class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-edit-line fr-hidden-sm"
                 href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
             >
                 {{ _('Modify dataset') }}
@@ -121,7 +121,7 @@
     </div>
     {% if external_source %}
         {{ banner_info(
-            "fr-fi-external-link-line",
+            "fr-icon-external-link-line",
             _("This dataset come from an external portal.&nbsp;<a href='{external_source}'>View the original source.</a>")
             .format(external_source=external_source)
         )}}
@@ -291,12 +291,12 @@
                     <div class="fr-grid-row fr-grid-row--gutters">
                         <div class="fr-col-12 fr-col-sm-6 vuejs">
                             <h2 class="subtitle">{{ _('Participate') }}</h2>
-                            <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-fi-arrow-right-s-line fr-btn--icon-right"
+                            <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-arrow-right-s-line fr-btn--icon-right"
                                 href="{{ url_for('admin.index', path='reuse/new/', **{'dataset_id': dataset.id}) }}">
                                 {{ _('Add a reuse') }}
                             </a>
                             <a 
-                                class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-fi-arrow-right-s-line fr-btn--icon-right fr-mt-3v"
+                                class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-arrow-right-s-line fr-btn--icon-right fr-mt-3v"
                                 href="#"
                                 @click.prevent="$bus.emit('discussions.startThread')"
                             >
@@ -426,7 +426,7 @@
             </h2>
             {% if not read_only_mode %}
                 <div class="fr-col-12 fr-col-sm-6 fr-col-md-5 fr-col-lg-4 text-align-right">
-                    <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-fi-add-line fr-btn--icon-left"
+                    <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-add-line fr-btn--icon-left"
                         href="{{ url_for('admin.index', path='community-resource/new/', **{'dataset_id': dataset.id}) }}">
                         {{ _('Publish a resource') }}
                     </a>
@@ -444,7 +444,7 @@
             {{ _('Data') }}
         </h3>
         {{ banner_warning(
-            "fr-fi-alert-line",
+            "fr-icon-alert-line",
             _("These resources are published by the community and the producer isn't responsible for them.")
         )}}
         {% endif %}
@@ -470,7 +470,7 @@
             <h2 id="community-reuses" class="fr-h2 fr-col">{{ _('Reuses') }} <sup>{{ total_reuses }}</sup></h2>
             {% if not read_only_mode %}
                 <div class="fr-col-12 fr-col-sm-6 fr-col-md-5 fr-col-lg-4 text-align-right">
-                    <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-fi-add-line fr-btn--icon-left"
+                    <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-add-line fr-btn--icon-left"
                         href="{{ url_for('admin.index', path='reuse/new/', **{'dataset_id': dataset.id}) }}">
                         {{ _('Add a reuse') }}
                     </a>

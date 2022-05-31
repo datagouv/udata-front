@@ -64,13 +64,13 @@
             {{ follow_btn(org) }}
             {% if can_edit %}
                 <a
-                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-fi-edit-line fr-btn--icon-left fr-hidden fr-unhidden-sm"
+                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-edit-line fr-btn--icon-left fr-hidden fr-unhidden-sm"
                     href="{{ url_for('admin.index', path='organization/{id}/'.format(id=org.id)) }}"
                 >
                     {{ _('Modify organization') }}
                 </a>
                 <a
-                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-fi-edit-line fr-hidden-sm"
+                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-edit-line fr-hidden-sm"
                     href="{{ url_for('admin.index', path='organization/{id}/'.format(id=org.id)) }}"
                 >
                     {{ _('Modify organization') }}
@@ -106,7 +106,7 @@
     <div class="text-align-center">
         <a
             href="{{ url_for('datasets.list', organization=org.id) }}"
-            class="fr-btn fr-btn--secondary fr-fi-eye-line fr-btn--icon-left"
+            class="fr-btn fr-btn--secondary fr-icon-eye-line fr-btn--icon-left"
         >
             {{ _('See %(count)s datasets', count=total_datasets ) }}
         </a>
@@ -165,7 +165,7 @@
                 {% if can_edit and not read_only_mode %}
                 <li class="fr-my-2w">
                     <a
-                        class="nav-link nav-link--no-icon fr-raw-link text-decoration-none fr-link fr-link--icon-left fr-fi-arrow-right-s-line"
+                        class="nav-link nav-link--no-icon fr-raw-link text-decoration-none fr-link fr-link--icon-left fr-icon-arrow-right-s-line"
                         href="{{ url_for('admin.index', path='organization/{id}/'.format(id=org.id)) }}"
                     >
                         <span class="text-decoration-underline">{{ _('Modify information') }}</span>
@@ -175,7 +175,7 @@
                 <li class="fr-my-2w">
                     <a
                         href="{{ url_for('organizations.datasets_csv', org=org) }}"
-                        class="nav-link nav-link--no-icon fr-raw-link text-decoration-none fr-link fr-link--icon-left fr-fi-arrow-right-s-line"
+                        class="nav-link nav-link--no-icon fr-raw-link text-decoration-none fr-link fr-link--icon-left fr-icon-arrow-right-s-line"
                     >
                         <span class="text-decoration-underline">{{ _('Download list of datasets as csv file') }}</span>
                     </a>
