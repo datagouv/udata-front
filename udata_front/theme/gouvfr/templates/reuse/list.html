@@ -81,7 +81,7 @@
                         <a
                             href="{{ url_for('reuses.list') }}"
                             class="fr-tag"
-                            {% if reuses.query._filters and reuses.query._filters.topic and reuses.query._filters.topic == topic_id %}aria-pressed="true"{% endif %}
+                            {% if  not reuses.query._filters.topic %}aria-pressed="true"{% endif %}
                         >
                             {{ _('All') }}
                         </a>
