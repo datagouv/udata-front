@@ -6,7 +6,7 @@ import link from 'bundle-text:svg/resources/link.svg';
 import table from 'bundle-text:svg/resources/table.svg';
 /***
  *
- * @param {ResourceModel} resource
+ * @param {import("../api/resources").ResourceModel} resource
  */
 export default function useResourceImage(resource) {
   switch (resource.format?.trim()?.toLowerCase()) {
