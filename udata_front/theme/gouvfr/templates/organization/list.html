@@ -34,7 +34,7 @@
     <div class="row-inline pt-xl justify-between align-items-center">
         <h1 class="m-0 h2">{{ _('Organizations')}} <sup>{{organizations.total}}</sup></h1>
     </div>
-    <ul class="search-results fr-mt-3w fr-grid-row fr-grid-row--gutters">
+    <ul class="search-results fr-my-3w fr-grid-row fr-grid-row--gutters">
         {% for organization in organizations %}
         <li class="fr-col-12 fr-col-sm-6 fr-col-lg-4">
             {% include theme('organization/search-result.html') %}
