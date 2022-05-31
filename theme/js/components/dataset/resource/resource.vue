@@ -20,10 +20,10 @@
             <template v-else-if="resource.organization">
               {{ $t('From') }} <a :href="resource.organization.page">{{ owner }}</a> —
             </template>
-            {{$t('Updated on X', {date: $filters.formatDate(lastUpdate)})}} —
+            {{$t('Updated on X', {date: filters.formatDate(lastUpdate)})}} —
             <template v-if="resource.format">
               {{ resource.format?.trim()?.toLowerCase() }}
-              <template v-if="resource.filesize">({{ $filters.filesize(resource.filesize) }})</template> —
+              <template v-if="resource.filesize">({{ filters.filesize(resource.filesize) }})</template> —
             </template>
             {{ $t('X downloads', resource.metrics.views || 0) }}
           </div>
@@ -47,7 +47,7 @@
           <li class="fr-col-auto fr-mr-3v" v-if="resource.preview_url">
             <button
               :title="$t('Preview')"
-              @click.prevent="$showModal('preview', {url: resource.preview_url, title: resource.title}, true)"
+              @click.prevent="showModal('preview', {url: resource.preview_url, title: resource.title}, true)"
               class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-fi-svg"
               v-html="preview"
             >
@@ -94,7 +94,7 @@
       :hidden="!expanded"
       :id="'resource-' + resource.id"
     >
-      <div class=" fr-mt-0 markdown" v-if="resource.description" v-html="$filters.markdown(resource.description)">
+      <div class=" fr-mt-0 markdown" v-if="resource.description" v-html="filters.markdown(resource.description)">
       </div>
       <dl>
         <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
@@ -130,19 +130,19 @@
         <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
           <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Created on') }}</dt>
           <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
-            {{$filters.formatDate(resource.created_at)}}
+            {{filters.formatDate(resource.created_at)}}
           </dd>
         </div>
         <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
           <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Modified on') }}</dt>
           <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
-            {{$filters.formatDate(resource.last_modified)}}
+            {{filters.formatDate(resource.last_modified)}}
           </dd>
         </div>
         <div class="fr-grid-row fr-grid-row--gutters">
           <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Published on') }}</dt>
           <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
-            {{$filters.formatDate(resource.published)}}
+            {{filters.formatDate(resource.published)}}
           </dd>
         </div>
       </dl>
@@ -151,13 +151,13 @@
 </template>
 
 <script>
-import SchemaButton from "./schema-button";
+import { inject, defineComponent, ref, computed } from "vue";
+import SchemaButton from "./schema-button.vue";
 import useOwnerName from "../../../composables/useOwnerName";
-import preview from "bundle-text:svg/preview.svg";
 import useResourceImage from "../../../composables/useResourceImage";
-import EditButton from "./edit-button";
+import EditButton from "./edit-button.vue";
 
-export default {
+export default defineComponent({
   components: {EditButton, SchemaButton},
   props: {
     datasetId: {
@@ -168,7 +168,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    /** @type ResourceModel */
+    /** @type import("../../../api/resources").ResourceModel */
     resource: {
       type: Object,
       required: true,
@@ -185,35 +185,26 @@ export default {
   setup(props) {
     const owner = useOwnerName(props.resource);
     const resourceImage = useResourceImage(props.resource);
+    const filters = inject('$filters');
+    const showModal = inject('$showModal');
+    const expanded = ref(false);
+    const expand = () => expanded.value = !expanded.value;
+    const availabilityChecked = computed(() => props.resource.extras && props.resource.extras['check:status']);
+    const lastUpdate = computed(() => props.resource.published > props.resource.last_modified ? props.resource.published : props.resource.last_modified);
+    const unavailable = computed(() => availabilityChecked.value && availabilityChecked.value >= 400);
+    const showSchemaButton = computed(() => props.resource.schema && props.resource.schema.name);
     return {
       owner,
-      preview,
       resourceImage,
+      filters,
+      showModal,
+      expanded,
+      expand,
+      availabilityChecked,
+      lastUpdate,
+      unavailable,
+      showSchemaButton,
     }
   },
-  computed: {
-    availabilityChecked() {
-      return this.resource.extras && this.resource.extras['check:status'];
-    },
-    lastUpdate() {
-      return this.resource.published > this.resource.last_modified ? this.resource.published : this.resource.last_modified;
-    },
-    unavailable() {
-      return this.availabilityChecked && this.availabilityChecked >= 400;
-    },
-    showSchemaButton() {
-      return this.resource.schema && this.resource.schema.name
-    },
-  },
-  data() {
-    return {
-      expanded: false,
-    }
-  },
-  methods: {
-    expand() {
-      this.expanded = !this.expanded;
-    }
-  }
-}
+});
 </script>
