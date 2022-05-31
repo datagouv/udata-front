@@ -11,11 +11,11 @@
         <Resource
           v-for="resource in resources"
           :id="'resource-' + resource.id"
-          :dataset-id="datasetId"
+          :datasetId="datasetId"
+          :isCommunityResource="isCommunityResources"
           :resource="resource"
-          :type-label="typeLabel"
-          :can-edit="getCanEdit(resource)"
-          :is-community-resource="isCommunityResources"
+          :canEdit="getCanEdit(resource)"
+          :typeLabel="typeLabel"
         />
         <p v-if="!totalResults">
           {{$t('No resources match your search.')}}
@@ -63,7 +63,7 @@ export default defineComponent({
     },
     canEditResources: {
       type: Object,
-      default:() => {{}}
+      default:() => ({})
     },
     datasetId: {
       type: String,
