@@ -156,6 +156,7 @@ import SchemaButton from "./schema-button.vue";
 import useOwnerName from "../../../composables/useOwnerName";
 import useResourceImage from "../../../composables/useResourceImage";
 import EditButton from "./edit-button.vue";
+import preview from 'bundle-text:svg/preview.svg';
 
 export default defineComponent({
   components: {EditButton, SchemaButton},
@@ -204,6 +205,7 @@ export default defineComponent({
       lastUpdate,
       unavailable,
       showSchemaButton,
+      preview,
     }
   },
 });
