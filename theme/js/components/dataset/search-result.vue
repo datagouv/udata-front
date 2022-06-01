@@ -22,7 +22,7 @@
           </div>
       </div>
       <div class="fr-col">
-        <h4 class="fr-mb-0">
+        <h4 class="fr-mb-1v">
           <a :href="page" class="text-grey-500">
             {{ title }}
             <small v-if="acronym">{{ acronym }}</small>
@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, computed, ComputedRef } from "vue";
 import lock from "svg/private.svg";
 import useLicense from "../../composables/useLicense";
 import useOwnerName from "../../composables/useOwnerName";
@@ -113,6 +113,7 @@ export default defineComponent({
       required: true,
     },
     metrics: Object,
+    /** @type {?{name: string}} */
     organization: Object,
     owner: Object,
     page: {
@@ -132,7 +133,18 @@ export default defineComponent({
     Placeholder,
   },
   setup(props) {
-    const ownerName = useOwnerName(props.owner);
+    /** @type {ComputedRef<import("../../composables/useOwnerName").Owned>} */
+    const owned = computed(() => {
+      let owned = {};
+      if(props.organization) {
+        owned.organization = props.organization;
+      }
+      if(props.owner) {
+        owned.owner = props.owner;
+      }
+      return owned;
+    });
+    const ownerName = useOwnerName(owned);
     const license = useLicense(props.license);
     return {
       license,

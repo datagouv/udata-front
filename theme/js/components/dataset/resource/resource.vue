@@ -156,8 +156,9 @@ import useOwnerName from "../../../composables/useOwnerName";
 import preview from "svg/preview.svg";
 import useResourceImage from "../../../composables/useResourceImage";
 import EditButton from "./edit-button";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   components: {EditButton, SchemaButton},
   props: {
     datasetId: {
@@ -168,7 +169,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    /** @type ResourceModel */
+    /** @type import('vue').PropOptions<import("../../../api/resources").ResourceModel> */
     resource: {
       type: Object,
       required: true,
@@ -215,5 +216,5 @@ export default {
       this.expanded = !this.expanded;
     }
   }
-}
+});
 </script>

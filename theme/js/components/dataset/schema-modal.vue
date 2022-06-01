@@ -77,8 +77,9 @@
 <script>
 import config from "../../config";
 import CloseIcon from "svg/close.svg";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   name: "Schema",
   props: {
     resourceSchema: Object,
@@ -97,7 +98,7 @@ export default {
       CloseIcon,
     }
   },
-};
+});
 </script>
 
 <style lang="less" scoped>
