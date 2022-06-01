@@ -51,8 +51,8 @@
         </div>
         {% endif %}
 
-        <div class="row fr-mb-4w">
-            <div class="col">
+        <div class="fr-grid-row fr-grid-row--gutters fr-mb-4w">
+            <div class="fr-col">
                 <h1 class="fr-mb-0 fr-h1">
                     {{ reuse.title }}
                 </h1>
@@ -60,7 +60,7 @@
                     {{ _('Published on %(date)s', date=reuse.created_at|dateformat(format='long')) }}
                 </p>
             </div>
-            <div class="col-auto fr-mt-1v row-inline align-items-end flex-direction-column">
+            <div class="fr-col-auto fr-mt-1v fr-grid-row align-items-end flex-direction-column">
                 {{ follow_btn(reuse) }}
                 {% if can_edit %}
                     <a
@@ -85,7 +85,7 @@
         </div>
     </header>
 
-    <section class="reuse-image hagrid text-align-center">
+    <section class="reuse-image fr-container text-align-center">
         <img src="{{ reuse.image|placeholder('reuse') }}" class="mw-100" alt="" />
         <div>
             <a
@@ -252,15 +252,15 @@
         </div>
     </section>
     <section class="reuse-sources fr-container fr-my-3w">
-        <div class="row-inline">
+        <div class="fr-grid-row">
             <h2 id="used-datasets" class="fr-h2">
                 {{ _('Used datasets') }}
                 <sup>{{ visible_datasets|length }}</sup>
             </h2>
         </div>
-    <ul class="row">
+    <ul class="fr-grid-row fr-grid-row--gutters">
         {% for dataset in visible_datasets %}
-        <li class="col-md-12 col-6">
+        <li class="fr-col-md-6 fr-col-12">
             {% include theme('dataset/card.html') %}
         </li>
         {% endfor %}

@@ -22,8 +22,8 @@
 {% if datasets %}
 <div class="fr-container fr-mt-2w">
     <h2>{{ _('Datasets') }} <sup>{{ datasets|length }}</sup></h2>
-    <div class="row">
-        <div class="col-12">
+    <div class="fr-grid-row fr-grid-row--gutters">
+        <div class="fr-col-12">
             {% for dataset in datasets %}
             <a href="{{ url_for('datasets.show', dataset=dataset) }}" title="{{ dataset.title }}"
                 class="unstyled w-100">{% include theme('dataset/search-result.html') %}
@@ -48,7 +48,7 @@
 {% endif %}
 
 <div class="fr-container fr-my-7w">
-    <div class="col-6 col-md-12">
+    <div class="fr-col-md-6 fr-col-12">
         <h2 class="fs-xxl">{{ _('Actions') }}</h2>
         <ul class="nav-list">
             <li class="fr-my-2w">

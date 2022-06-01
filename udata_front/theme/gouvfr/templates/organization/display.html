@@ -28,15 +28,15 @@
         {{ _('This organization has been deleted. This will be permanent in the next 24 hours') }}
     </div>
     {% endif %}
-    <div class="row align-items-start">
-        <div class="col-auto logo logo--80">
+    <div class="fr-grid-row align-items-start">
+        <div class="fr-col-auto logo logo--80">
             <img src="{{org.logo(80)|placeholder('organization') }}" alt="" />
             <div class="logo-badge logo-badge--bottom-right">
                 {{ badge_if_certified(org) }}
             </div>
         </div>
-        <div class="col">
-            <div class="row-inline no-wrap align-items-center">
+        <div class="fr-col">
+            <div class="fr-grid-row no-wrap align-items-center">
                 <h1 class="fr-my-0 fr-h1">
                     {{ org.name }}
                 </h1>
@@ -60,7 +60,7 @@
                 </ul>
             </div>
         </div>
-        <div class="col-auto fr-mt-1v row-inline align-items-end flex-direction-column">
+        <div class="fr-col-auto fr-mt-1v fr-grid-row align-items-end flex-direction-column">
             {{ follow_btn(org) }}
             {% if can_edit %}
                 <a
@@ -128,12 +128,12 @@
 {% endif %}
 <section class="fr-py-9v fr-container">
     <h2>{{ _('Members') }}<sup>{{ org.members|length or 0 }}</sup></h2>
-    <div class="row">
+    <div class="fr-grid-row">
         {% for member in org.members %}
         {% set user = member.user %}
         {% set role = member.role %}
         <div
-            class="col-4 col-md-12 fr-pl-0 border-md-0 fr-pb-3v {% if not loop.index0 % 3 == 0 %}border-left fr-pl-md-3w{% endif %}"
+            class="fr-col-md-4 fr-col-12 fr-pl-0 border-md-0 fr-pb-3v {% if not loop.index0 % 3 == 0 %}border-left fr-pl-md-3w{% endif %}"
         >
             {% include theme('user/card.html') %}
         </div>
@@ -141,8 +141,8 @@
     </div>
 </section>
 <section class="fr-py-9v fr-container">
-    <div class="row">
-        <div class="col-6 col-md-12">
+    <div class="fr-grid-row">
+        <div class="fr-col-md-6 fr-col-12">
             <h3>{{ _('Technical details') }}</h3>
             <dl class="text-grey-380 fs-sm">
                 <div>
@@ -159,7 +159,7 @@
                 </div>
             </dl>
         </div>
-        <div class="col-6 col-md-12 fr-my-3w fr-my-md-0">
+        <div class="fr-col-md-6 fr-col-12 fr-my-3w fr-my-md-0">
             <h3>{{ _('Actions') }}</h3>
             <ul class="nav-list fr-ml-n3v">
                 {% if can_edit and not read_only_mode %}
