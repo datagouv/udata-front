@@ -60,7 +60,7 @@
                     {{ _('Published on %(date)s', date=reuse.created_at|dateformat(format='long')) }}
                 </p>
             </div>
-            <div class="fr-col-auto fr-mt-1v fr-grid-row align-items-end flex-direction-column">
+            <div class="fr-col-auto fr-mt-1v fr-grid-row fr-grid-row--bottom flex-direction-column">
                 {{ follow_btn(reuse) }}
                 {% if can_edit %}
                     <a

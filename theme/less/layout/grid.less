@@ -32,7 +32,7 @@ When you need to alter the alignment of one item you can use `.self-stretch`, `.
 
 ```grid-valign.html
 <div class="fr-container">
-    <div class="fr-grid-row align-items-center">
+    <div class="fr-grid-row fr-grid-row--middle">
         <div class="fr-col-6 bg-blue-300"><div style="min-height: 200px">Huge block</div></div>
         <div class="fr-col-3 bg-blue-300">Smoll centered block</div>
         <div class="fr-col-3 bg-blue-300 self-end">Smoll block at the bottom</div>
@@ -102,14 +102,6 @@ Sometimes you need to occupy the available space fully, you can use `.fr-contain
 
 .flex-direction-column {
     flex-direction: column;
-}
-
-.align-items-center {
-    align-items: center;
-}
-
-.align-items-end {
-    align-items: flex-end;
 }
 
 // Horizontal alignment
