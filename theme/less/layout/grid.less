@@ -27,7 +27,7 @@ Use `.fr-grid-row` from DSFR.
 
 ### Vertical alignement
 
-By default, blocks on the same row will take up an equal height. You can opt for a different behaviour by using the `.align-items-start`, `.align-items-center` and `.align-items-end` classes on the `.fr-grid-row` div.
+By default, blocks on the same row will take up an equal height. You can opt for a different behaviour by using the `.fr-grid-row--top`, `.fr-grid-row--middle` and `.fr-grid-row--bottom` classes on the `.fr-grid-row` div.
 When you need to alter the alignment of one item you can use `.self-stretch`, `.self-start`, `.self-end`, and `.self-center`,
 
 ```grid-valign.html
@@ -102,11 +102,6 @@ Sometimes you need to occupy the available space fully, you can use `.fr-contain
 
 .flex-direction-column {
     flex-direction: column;
-}
-
-// Row vertical alignments
-.align-items-start {
-    align-items: flex-start;
 }
 
 .align-items-center {
