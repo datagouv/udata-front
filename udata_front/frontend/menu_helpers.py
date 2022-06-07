@@ -1,6 +1,9 @@
-from udata_front.frontend import front
+from typing import List
+
 from flask_navigation.item import Item
 from flask import Request
+
+from udata_front.frontend import front
 
 
 def get_current_endpoint(request: Request):
@@ -20,6 +23,6 @@ def is_current_page(request: Request, item: Item) -> bool:
 
 
 @front.app_template_global()
-def is_parent_of_current_endpoint(request: Request, items: list[Item]) -> bool:
+def is_parent_of_current_endpoint(request: Request, items: List[Item]) -> bool:
     current_item_in_items = map(lambda item: is_current_page(request, item), items)
     return any(current_item_in_items)
