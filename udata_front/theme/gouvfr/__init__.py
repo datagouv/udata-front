@@ -54,12 +54,12 @@ gouvfr_menu = nav.Bar('gouvfr_menu', [
             args={'slug': 'about/ressources'}
         ),
         nav.Item(
-            _('Why publish data ?'),
+            _('How to publish data ?'),
             'gouvfr.show_page',
             args={'slug': 'onboarding/producteurs'}
         ),
         nav.Item(
-            _('Why use data ?'),
+            _('How to use data ?'),
             'gouvfr.show_page',
             args={'slug': 'onboarding/reutilisateurs'}
         ),
