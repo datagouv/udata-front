@@ -29,10 +29,12 @@
     </div>
     {% endif %}
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
-        <div class="fr-col-auto logo logo--80">
-            <img src="{{org.logo(80)|placeholder('organization') }}" alt="" />
-            <div class="logo-badge logo-badge--bottom-right">
-                {{ badge_if_certified(org) }}
+        <div class="fr-col-auto">
+            <div class="logo logo--80">
+                <img src="{{org.logo(80)|placeholder('organization') }}" alt="" />
+                <div class="logo-badge logo-badge--bottom-right">
+                    {{ badge_if_certified(org) }}
+                </div>
             </div>
         </div>
         <div class="fr-col">
