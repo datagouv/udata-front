@@ -24,5 +24,4 @@ def is_current_page(request: Request, item: Item) -> bool:
 
 @front.app_template_global()
 def is_parent_of_current_endpoint(request: Request, items: List[Item]) -> bool:
-    current_item_in_items = map(lambda item: is_current_page(request, item), items)
-    return any(current_item_in_items)
+    return any(is_current_page(request, item) for item in items)
