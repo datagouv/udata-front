@@ -8,6 +8,7 @@
 
 - Add accessibility compliance status in footer [#114](https://github.com/etalab/udata-front/pull/114)
 - Fix SVG display issue [#116](https://github.com/etalab/udata-front/pull/116)
+- Use DSFR container and remove custom ones [#111](https://github.com/etalab/udata-front/pull/111)
 
 ## 2.0.3 (2022-06-03)
 
@@ -19,7 +20,7 @@
 - Fix RGAA criterion 11.10 [#102](https://github.com/etalab/udata-front/pull/102)
 - Update DSFR to 1.5.1 [#107](https://github.com/etalab/udata-front/pull/107)
   -  :warning: SVG in JS must use `bundle-text:` prefix now
-- Use DSFR container and remove custom ones [#111](https://github.com/etalab/udata-front/pull/111)
+- Add new menu items [#113](https://github.com/etalab/udata-front/pull/113)
 
 ## 2.0.2 (2022-04-11)
 
