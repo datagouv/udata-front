@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add aria-current to breadcumbs [#121](https://github.com/etalab/udata-front/pull/121)
 
 ## 2.0.5 (2022-06-14)
 
