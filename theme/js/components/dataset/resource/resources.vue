@@ -5,17 +5,17 @@
   <section class="resources-wrapper" key="top">
     <transition mode="out-in">
       <div v-if="loading" key="loader">
-        <Loader class="mt-md" />
+        <Loader class="fr-mt-2w" />
       </div>
       <div v-else>
         <Resource
           v-for="resource in resources"
           :id="'resource-' + resource.id"
-          :dataset-id="datasetId"
+          :datasetId="datasetId"
+          :isCommunityResource="isCommunityResources"
           :resource="resource"
-          :type-label="typeLabel"
-          :can-edit="getCanEdit(resource)"
-          :is-community-resource="isCommunityResources"
+          :canEdit="getCanEdit(resource)"
+          :typeLabel="typeLabel"
         />
         <p v-if="!totalResults">
           {{$t('No resources match your search.')}}
@@ -35,7 +35,7 @@
 
 <script>
 import {useI18n} from 'vue-i18n'
-import {onMounted, ref, watch} from 'vue';
+import {onMounted, ref, watch, defineComponent} from 'vue';
 import Loader from "../loader.vue";
 import Pagination from "../../pagination/pagination.vue";
 import Resource from "./resource.vue";
@@ -49,7 +49,7 @@ import {
   RESOURCES_SEARCH_RESULTS_UPDATED
 } from "../../../plugins/eventbus";
 
-export default {
+export default defineComponent({
   name: "resources",
   components: {
     Loader,
@@ -63,7 +63,7 @@ export default {
     },
     canEditResources: {
       type: Object,
-      default() { return {}}
+      default:() => ({})
     },
     datasetId: {
       type: String,
@@ -169,5 +169,5 @@ export default {
       top,
     }
   }
-}
+});
 </script>

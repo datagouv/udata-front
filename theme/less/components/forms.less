@@ -10,7 +10,7 @@ We can use fieldset if needed to group inputs of the same kind.
 
 ```form.html
     <form class="form">
-         <div class="field">
+            <div class="field">
                 <label for="field" class="required">
                     Label
                 </label>
@@ -22,7 +22,7 @@ We can use fieldset if needed to group inputs of the same kind.
 @import (less) "@gouvfr/dsfr/dist/component/form/form.css";
 @import (less) "@gouvfr/dsfr/dist/component/checkbox/checkbox.css";
 @import (less) "@gouvfr/dsfr/dist/component/input/input.css";
-@import (less) "@gouvfr/dsfr/dist/component/select/select.css";
+@import (inline) "@gouvfr/dsfr/dist/component/select/select.css";
 @import (less) "@gouvfr/dsfr/dist/component/toggle/toggle.css";
 .form-container {
     background-color: @white;
@@ -59,7 +59,8 @@ form.form {
     input[type="email"],
     input[type="password"] {
         display: block;
-        padding: @spacing-xxs @spacing-xs;
+        .fr-py-1v;
+        .fr-px-1w;
 
         font-size: @font-size-base;
         font-family: @font-family-base;
@@ -72,8 +73,16 @@ form.form {
     }
 }
 
+.fr-select {
+    --border-plain-grey: @blue-400;
+}
+
 .fr-select--no-border {
     box-shadow: none;
+}
+
+.fr-select--width-auto {
+    width: auto;
 }
 
 .fr-checkbox-group input[type="checkbox"]:checked + label::before {
@@ -86,7 +95,8 @@ form.form {
         z-index: 200;
         &:checked {
             --background-active-blue-france: @blue-400;
-            --background-active-blue-france-blend: @blue-400-blend;
+            --background-active-blue-france-hover: @blue-400-hover;
+            --background-active-blue-france-active: @blue-400-active;
         }
     }
 

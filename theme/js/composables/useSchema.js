@@ -7,7 +7,7 @@ import {useToast} from "./useToast";
 /**
  *
  * @param {import("../api/resources").ResourceModel} resource
- * @returns {{documentationUrl: ComputedRef<string>, authorizeValidation: ComputedRef<boolean>, validationUrl: ComputedRef<string>, loading: Ref<boolean>}}
+ * @returns {{documentationUrl: ComputedRef<string>, authorizeValidation: ComputedRef<boolean>, validationUrl: ComputedRef<?string>, loading: Ref<boolean>}}
  */
 export default function useSchema(resource) {
   const { t } = useI18n();
@@ -24,7 +24,7 @@ export default function useSchema(resource) {
       );
     }).finally(() => loading.value = false);
 
-  /** @type {ComputedRef<?import("../api/schemas").Schema>} */
+  /** @type {ComputedRef<import("../api/schemas").Schema | undefined>} */
   const schema = computed(() => schemas.value.find(schema => schema.name === resource.schema.name));
 
   const authorizeValidation = computed(() => !!schema.value && schema.value.schema_type === 'tableschema');
@@ -35,9 +35,10 @@ export default function useSchema(resource) {
     if(!authorizeValidation) {
       return null;
     }
+    /** @type {object} */
     let schemaPath = {'schema_name': `schema-datagouvfr.${resource.schema.name}`};
     if(resource.schema.version) {
-      const versionUrl = schema.value.versions.find(version => version.version_name === resource.schema.version)?.schema_url;
+      const versionUrl = schema.value?.versions.find(version => version.version_name === resource.schema.version)?.schema_url;
       schemaPath = {"schema_url": versionUrl};
     }
     const query = new URLSearchParams({

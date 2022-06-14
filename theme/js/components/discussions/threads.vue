@@ -41,7 +41,7 @@ Discussions allow users to interact with others.
     </div>
     <transition mode="out-in">
       <template v-if="loading" key="loader">
-        <Loader class="mt-md" />
+        <Loader class="fr-mt-2w" />
       </template>
       <template v-else>
         <div v-if="threadFromURL">
@@ -57,7 +57,7 @@ Discussions allow users to interact with others.
           </div>
           <thread v-bind="threadFromURL"></thread>
           <button
-            class="nav-link nav-link--no-icon text-decoration-none fr-link fr-mt-9v fr-link--icon-left fr-fi-arrow-right-s-line"
+            class="nav-link nav-link--no-icon text-decoration-none fr-link fr-mt-9v fr-link--icon-left fr-icon-arrow-right-s-line"
             @click.prevent="viewAllDiscussions"
           >
             <span class="text-decoration-underline">{{ $t("See all discussions about this dataset") }}</span>
@@ -93,6 +93,7 @@ Discussions allow users to interact with others.
 </template>
 
 <script>
+import {defineComponent} from "vue";
 import config from "../../config";
 import i18n from "../../plugins/i18n";
 
@@ -100,8 +101,7 @@ import Pagination from "../pagination/pagination.vue";
 import CreateThread from "./threads-create.vue";
 import Thread from "./thread.vue";
 import Loader from "./loader.vue";
-import CloseIcon from "svg/close.svg";
-import ThreadsCreateButton from "./threads-create-button";
+import ThreadsCreateButton from "./threads-create-button.vue";
 import {DISCUSSIONS_START_THREAD} from "../../plugins/eventbus";
 
 const URL_REGEX = /discussion-([a-f0-9]{24})-?([0-9]+)?$/i;
@@ -116,7 +116,7 @@ const sorts = [
 
 const defaultTitle = i18n.global.t("Discussions");
 
-export default {
+export default defineComponent({
   components: {
     ThreadsCreateButton,
     "create-thread": CreateThread,
@@ -134,7 +134,6 @@ export default {
       loading: true,
       currentSort: sorts[0],
       sorts,
-      CloseIcon,
       readOnlyEnabled: config.read_only_enabled,
     };
   },
@@ -280,5 +279,5 @@ export default {
       this.loadPage(this.page);
     },
   },
-};
+});
 </script>

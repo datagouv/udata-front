@@ -42,7 +42,7 @@
 
 <script>
 import config from "../../config";
-import Author from "./author";
+import Author from "./author.vue";
 
 const log = console.log;
 

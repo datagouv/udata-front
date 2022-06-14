@@ -90,7 +90,7 @@
 
 <script>
 import { defineComponent, computed, ComputedRef } from "vue";
-import lock from "svg/private.svg";
+import lock from "bundle-text:svg/private.svg";
 import useLicense from "../../composables/useLicense";
 import useOwnerName from "../../composables/useOwnerName";
 import Avatar from "../discussions/avatar.vue";
@@ -113,7 +113,6 @@ export default defineComponent({
       required: true,
     },
     metrics: Object,
-    /** @type {?{name: string}} */
     organization: Object,
     owner: Object,
     page: {

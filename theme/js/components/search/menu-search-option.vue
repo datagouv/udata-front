@@ -17,14 +17,15 @@
         </template>
       </i18n-t>
       <div aria-hidden="true" class="fr-col-auto">
-        <span class="fr-fi-arrow-right-line fr-fi--sm" aria-hidden="true"></span>
+        <span class="fr-icon-arrow-right-s-line fr-icon--sm" aria-hidden="true"></span>
       </div>
     </div>
   </a>
 </template>
 
 <script>
-export default {
+import {defineComponent} from "vue";
+export default defineComponent({
   props: {
     icon: {
       type: String,
@@ -43,7 +44,7 @@ export default {
       required: true,
     },
   }
-}
+});
 </script>
 
 <style scoped>

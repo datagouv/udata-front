@@ -2,12 +2,29 @@
 
 ## Current (in progress)
 
+- Update search results [#110](https://github.com/etalab/udata-front/pull/110)
+
+## 2.0.5 (2022-06-14)
+
+- Add new menu items and change edito pages slug [#113](https://github.com/etalab/udata-front/pull/113) [#120](https://github.com/etalab/udata-front/pull/120)
+- Replace news by release notes in footer [#117](https://github.com/etalab/udata-front/pull/117)
+- Use DSFR container and remove custom ones [#111](https://github.com/etalab/udata-front/pull/111)
+
+## 2.0.4 (2022-06-09)
+
+- Add accessibility compliance status in footer [#114](https://github.com/etalab/udata-front/pull/114)
+- Fix SVG display issue [#116](https://github.com/etalab/udata-front/pull/116)
+
+## 2.0.3 (2022-06-03)
+
+- Update search pages [#95](https://github.com/etalab/udata-front/pull/95)
 - Add support for HTML in posts [#106](https://github.com/etalab/udata-front/pull/106)
 - Fix RGAA criterion 1.1 [#104](https://github.com/etalab/udata-front/pull/104)
 - Fix RGAA criterion 10.4 [#103](https://github.com/etalab/udata-front/pull/103)
 - Add geographical page on home venti button [#109](https://github.com/etalab/udata-front/pull/109)
 - Fix RGAA criterion 11.10 [#102](https://github.com/etalab/udata-front/pull/102)
-- Update search results [#110](https://github.com/etalab/udata-front/pull/110)
+- Update DSFR to 1.5.1 [#107](https://github.com/etalab/udata-front/pull/107)
+  -  :warning: SVG in JS must use `bundle-text:` prefix now
 
 ## 2.0.2 (2022-04-11)
 

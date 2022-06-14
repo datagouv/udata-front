@@ -65,11 +65,20 @@ Similar to the contextual text color classes, easily set the background of an el
 
 */
 
+// This one is missing from DSFR >1.4.
+:root {
+    --grey-850-200: #cecece;
+}
+:root[data-fr-theme=dark] {
+    --grey-850-200: #3a3a3a;
+}
+
 @white: var(--grey-1000-50);
 @blue-100: var(--blue-cumulus-975-75);
 @blue-300: var(--blue-cumulus-850-200);
 @blue-400: var(--blue-cumulus-sun-368-moon-732);
-@blue-400-blend: var(--blue-cumulus-sun-368-moon-732-blend);
+@blue-400-hover: var(--blue-cumulus-sun-368-moon-732-hover);
+@blue-400-active: var(--blue-cumulus-sun-368-moon-732-active);
 @blue-450: #5b70b8;
 @blue-470: #494e77;
 @blue-500: #070d54;
@@ -80,20 +89,29 @@ Similar to the contextual text color classes, easily set the background of an el
 @grey-300: var(--grey-625-425);
 @grey-380: var(--grey-425-625);
 @grey-400: var(--grey-200-850);
+@grey-400-hover: var(--grey-200-850-hover);
+@grey-400-active: var(--grey-200-850-active);
 @grey-500: var(--grey-50-1000);
 @green-400: var(--green-emeraude-sun-425-moon-753);
 
 @background-contrast-grey: var(--background-contrast-grey);
-@border-default-grey: var(--border-default-grey);
-@text-mention-grey: var(--text-mention-grey);
-@text-default-success: var(--text-default-success);
-@border-plain-success: var(--border-plain-success);
 @background-contrast-success: var(--background-contrast-success);
-@text-default-warning: var(--text-default-warning);
 @background-contrast-warning: var(--background-contrast-warning);
-@text-default-error: var(--text-default-error);
 @background-alt-blue-cumulus: var(--background-alt-blue-cumulus);
+@background-alt-blue-cumulus-hover: var(--background-alt-blue-cumulus-hover);
+@background-alt-blue-cumulus-active: var(--background-alt-blue-cumulus-active);
+@background-action-low-blue-cumulus: var(--background-action-low-blue-cumulus);
+@background-action-low-blue-cumulus-hover: var(--background-action-low-blue-cumulus-hover);
+@background-action-low-blue-cumulus-active: var(--background-action-low-blue-cumulus-active);
 @background-alt-green-tilleul-verveine: var(--background-alt-green-tilleul-verveine);
+
+@border-default-grey: var(--border-default-grey);
+@border-plain-success: var(--border-plain-success);
+
+@text-mention-grey: var(--text-mention-grey);
+@text-default-error: var(--text-default-error);
+@text-default-success: var(--text-default-success);
+@text-default-warning: var(--text-default-warning);
 
 @contrast-white: var(--text-default-grey);
 @contrast-blue-100: var(--text-default-grey);
@@ -124,6 +142,8 @@ each(@colors, {
 
     .bg-@{value} {
         background-color: @@value;
+        --hover-tint: @@value;
+        --active-tint: @@value;
     }
 });
 

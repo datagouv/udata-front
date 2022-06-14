@@ -17,8 +17,8 @@ jobs:
           command: export BASE_BRANCH=$(base_branch)
       - restore_cache:
           keys:
-          - py-cache-v15-{{ arch }}-{{ .Branch }}
-          - py-cache-v15-{{ arch }}-{{ .Environment.BASE_BRANCH }}
+          - py-cache-v16-{{ arch }}-{{ .Branch }}
+          - py-cache-v16-{{ arch }}-{{ .Environment.BASE_BRANCH }}
       - run:
           name: Create venv and install pip-tools
           command: |
@@ -47,7 +47,7 @@ jobs:
           name: Commit any change in compiled *.pip
           command: |
             echo "here is the git diff after dependencies update:"
-            git diff
+            git --no-pager diff
             if [[ $CIRCLE_TAG ]]; then
               echo "This a tag build, do not push changes"
             else
@@ -86,7 +86,7 @@ jobs:
                         -r requirements/develop.pip
             pip install -e .
       - save_cache:
-          key: py-cache-v15-{{ arch }}-{{ .Branch }}
+          key: py-cache-v16-{{ arch }}-{{ .Branch }}
           paths:
           - venv
       - run:
@@ -118,20 +118,23 @@ jobs:
       - run:
           name: Get the base reference branch
           command: export BASE_BRANCH=$(base_branch)
+      - run:
+          name: patch-package hash
+          command: md5sum patches/* > patches.hash
       - restore_cache:
           keys:
-            - js-cache-{{ arch }}-{{ checksum "js.deps" }}
-            - js-cache-{{ arch }}-{{ .Branch }}
+            - js-cache-{{ arch }}-{{ checksum "js.deps" }}-{{ checksum "patches.hash" }}
+            - js-cache-{{ arch }}-{{ .Branch }}-{{ checksum "patches.hash" }}
             - js-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
       - run:
           name: Install NodeJS and dependencies
           command: nvm install && npm install
       - save_cache:
-          key: js-cache-{{ arch }}-{{ checksum "js.deps" }}
+          key: js-cache-{{ arch }}-{{ checksum "js.deps" }}-{{ checksum "patches.hash" }}
           paths:
           - node_modules
       - save_cache:
-          key: js-cache-{{ arch }}-{{ .Branch }}
+          key: js-cache-{{ arch }}-{{ .Branch }}-{{ checksum "patches.hash" }}
           paths:
           - node_modules
       - run:
