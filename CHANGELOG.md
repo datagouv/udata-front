@@ -4,6 +4,12 @@
 
 - Fix RGAA criterion 7.5 [#118](https://github.com/etalab/udata-front/pull/118)
 
+## 2.0.5 (2022-06-14)
+
+- Add new menu items and change edito pages slug [#113](https://github.com/etalab/udata-front/pull/113) [#120](https://github.com/etalab/udata-front/pull/120)
+- Replace news by release notes in footer [#117](https://github.com/etalab/udata-front/pull/117)
+- Use DSFR container and remove custom ones [#111](https://github.com/etalab/udata-front/pull/111)
+
 ## 2.0.4 (2022-06-09)
 
 - Add accessibility compliance status in footer [#114](https://github.com/etalab/udata-front/pull/114)
