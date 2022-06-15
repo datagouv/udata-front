@@ -229,6 +229,7 @@ export default defineComponent({
 
     /**
      * Search results
+     * @type {Ref<Array>}
      */
     const results = ref([]);
 
@@ -446,6 +447,10 @@ export default defineComponent({
           let datasetResults = resultsRef.value.dataset.results;
           if(datasetResults) {
             results.value = JSON.parse(datasetResults);
+            results.value = results.value.map(result => {
+              result.last_modified = new Date(result.last_modified);
+              return result;
+            });
           }
           totalResults.value = JSON.parse(total);
         }
