@@ -139,13 +139,25 @@
             {{filters.formatDate(resource.last_modified)}}
           </dd>
         </div>
-        <div class="fr-grid-row fr-grid-row--gutters">
+        <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
           <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Published on') }}</dt>
           <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
             {{filters.formatDate(resource.published)}}
           </dd>
         </div>
       </dl>
+      <details>
+        <summary class="subtitle fr-mb-0">{{ $t('Extras') }}</summary>
+        <dl>
+            <div
+              v-for="(value, key) in resource.extras"
+              class="fr-grid-row fr-grid-row--gutters fr-mb-2w"
+            >
+              <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ key }}</dt>
+              <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10"> {{ value }} </dd>          
+            </div>
+        </dl>
+      </details>
     </section>
   </article>
 </template>
