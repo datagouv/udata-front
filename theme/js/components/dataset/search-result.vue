@@ -42,7 +42,7 @@
           <template v-if="owner">{{ownerName}}</template>
         </p>
         <p class="fr-mt-1w fr-mb-2w">
-          {{ $filters.excerpt(description) }}
+          {{ $filters.excerpt(description, 160) }}
         </p>
         <p class="fr-mb-0">
           <!-- TODO : useExternalSource et !externalSource -->
