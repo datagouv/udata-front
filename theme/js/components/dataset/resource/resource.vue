@@ -146,7 +146,7 @@
           </dd>
         </div>
       </dl>
-      <details>
+      <details v-if="Object.keys(resource.extras).length>0">
         <summary class="subtitle fr-mb-0">{{ $t('Extras') }}</summary>
         <dl>
             <div
