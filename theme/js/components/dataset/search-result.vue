@@ -28,6 +28,13 @@ Vue. -->
     </div>
     <ul class="card-footer">
       <li>
+        <label :title="JSON.stringify(quality)">
+          <span class="fr-icon-information-line fr-fi--sm"></span>
+          score qualité :
+          <strong>{{ quality.score }}</strong>
+        </label>
+      </li>
+      <li>
         <strong>{{ resources.total || 0 }}</strong>
         {{ $t("resources", resources.total || 0) }}
       </li>
@@ -63,6 +70,7 @@ export default {
     metrics: Object,
     resources: Object,
     private: Boolean,
+    quality: Object,
   },
   components: {
     Avatar,
