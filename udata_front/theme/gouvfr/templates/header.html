@@ -164,7 +164,7 @@
                         {% set active = is_current_endpoint(request, item) %}
                         <li class="fr-nav__item">
                             {% if item.items %}
-                            {% set id = item.label|cut: " " %}
+                            {% set id = item.label|replace(" ", '') %}
                             {% set active = is_parent_of_current_endpoint(request, item.items) %}
                             <button class="fr-nav__btn" aria-expanded="false" aria-controls="{{ id }}" {% if active %}aria-current="true"{% endif %}>{{item.label}}</button>
                             <div class="fr-collapse fr-menu" id="{{ id }}">
