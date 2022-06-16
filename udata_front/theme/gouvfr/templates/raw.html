@@ -31,9 +31,9 @@
 </head>
 
 <body class="{{body_class}} theme-{{current_theme.variant}}">
-    <section id="app">
+    <div id="app">
         {% block body %}{% endblock %}
-    </section>
+    </div>
 
     <script src="{{ theme_static('js/index.js') }}"></script>
     {% block extra_js %}{% endblock %}
