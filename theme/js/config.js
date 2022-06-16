@@ -149,11 +149,6 @@ export const hidpi =
     ).matches);
 
 /**
- * Map configuration
- */
-export const map = _jsonMeta("map-config");
-
-/**
  * Tags constraints
  */
 export const tags = _jsonMeta("tags-config");
