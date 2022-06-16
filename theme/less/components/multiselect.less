@@ -10,7 +10,7 @@
             padding: 0.5rem 2.5rem 0.5rem 1rem;
             background: none;
             color: @text-mention-grey;
-            div {
+            span {
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
@@ -20,9 +20,14 @@
                 display: none;
             }
         }
-        .select-a11y-button__clear::before {
-            &:extend(.fr-icon-close-circle-line::before);
-            &:extend([class^="fr-icon-"]::before);
+        .select-a11y-button__clear {
+            &:extend(.fr-icon-close-circle-line);
+            &:extend([class^="fr-icon-"]);
+            margin: 2px;
+            &::before {
+                &:extend(.fr-icon-close-circle-line::before);
+                &:extend([class^="fr-icon-"]::before);
+            }
         }
         .select-a11y__overlay {
             background: @white;
