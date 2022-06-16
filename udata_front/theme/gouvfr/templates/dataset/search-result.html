@@ -1,6 +1,6 @@
 {% cache cache_duration, 'dataset-search-result', dataset.id|string, g.lang_code %}
 {% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate %}
-<article class="fr-pt-5v fr-pb-6v border-bottom border-default-grey fr-enlarge-link">
+<article class="fr-pt-5v fr-pb-6v fr-px-1w border-bottom border-default-grey fr-enlarge-link">
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
         <div class="fr-col-auto">
             <div class="logo">
@@ -53,7 +53,7 @@
             <p class="fr-mt-1w fr-mb-2w">
                 {{ dataset.description|mdstrip(300) }}
             </p>
-            <p class="fr-mb-0">
+            <p class="fr-mb-0 text-mention-grey">
                 {% if not external_source(dataset) %}
                 {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
                     {% if dataset.license %}
@@ -63,7 +63,7 @@
                 {% if dataset.license %}
                 {% if dataset.license.url %}
                 <span class="not-enlarged">
-                <a href="{{ dataset.license.url }}" class="text-mention-grey text-decoration-underline">
+                <a href="{{ dataset.license.url }}" class="text-decoration-underline">
                     {% endif %}
                 {{ dataset.license.title }}
                 {% if dataset.license.url %}</a></span>{% endif %}

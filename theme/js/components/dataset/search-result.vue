@@ -1,5 +1,5 @@
 <template>
-  <article class="fr-pt-5v fr-pb-6v border-bottom border-default-grey fr-enlarge-link">
+  <article class="fr-pt-5v fr-pb-6v fr-px-1w border-bottom border-default-grey fr-enlarge-link">
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
       <div class="fr-col-auto">
           <div class="logo">
@@ -44,7 +44,7 @@
         <p class="fr-mt-1w fr-mb-2w">
           {{ $filters.excerpt(description, 160) }}
         </p>
-        <p class="fr-mb-0">
+        <p class="fr-mb-0 text-mention-grey">
           <!-- TODO : useExternalSource et !externalSource -->
           <template v-if="true">
             {{ $t('Updated on {date}', {date: $filters.formatDate(last_modified)}) }}
@@ -54,7 +54,7 @@
           </template>
           <template v-if="license">
             <span class="not-enlarged" v-if="license.url">
-              <a :href="license.url" class="text-mention-grey text-decoration-underline">
+              <a :href="license.url" class="text-decoration-underline">
                 {{license.title}}
               </a>
             </span>
