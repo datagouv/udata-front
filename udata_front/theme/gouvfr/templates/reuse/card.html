@@ -11,7 +11,7 @@
                 {% if reuse.private %}<span class="fr-badge fr-ml-1w">{{ _('Private') }}</span>{% endif %}
                 </a>
             </h4>
-            <p class="fr-card__desc fr-my-1v">
+            <p class="fr-card__desc fr-my-1v not-enlarged">
                 {% if reuse.organization or reuse.owner %}
                     {{ _(' by ') }}
                     {% if reuse.organization %}
@@ -26,7 +26,7 @@
                 {% endif %}
             </p>
             <div class="fr-card__end fr-m-0 fr-p-0">
-                <p class="fr-card__detail fr-text--sm not-enlarged fr-m-0">
+                <p class="fr-card__detail fr-text--sm fr-m-0">
                     {{ _('Published on %(date)s', date=reuse.created_at|dateformat(format='long')) }}
                 </p>
             </div>
