@@ -54,7 +54,7 @@
           </template>
           <template v-if="license">
             <span class="not-enlarged" v-if="license.url">
-              <a :href="license.url" class="text-decoration-underline text-decoration-underline--dsfr">
+              <a :href="license.url" class="text-decoration-underline text-decoration-underline--dsfr text-mention-grey">
                 {{license.title}}
               </a>
             </span>
