@@ -277,6 +277,18 @@ export default defineComponent({
     const searchRef = ref(null);
 
     /**
+     * 
+     * @param {Array} data 
+     */
+    const formatResults = (data) => {
+      results.value = data.map(result => {
+        result.last_modified = new Date(result.last_modified);
+        return result;
+      });
+      return results;
+    };
+
+    /**
      * Search new dataset results
      */
     const search = () => {
@@ -293,7 +305,7 @@ export default defineComponent({
         })
         .then((res) => res.data)
         .then((result) => {
-          results.value = result.data;
+          formatResults(result.data);
           totalResults.value = result.total;
           loading.value = false;
         })
@@ -446,11 +458,7 @@ export default defineComponent({
         if (total && parseInt(total) > 0) {
           let datasetResults = resultsRef.value.dataset.results;
           if(datasetResults) {
-            results.value = JSON.parse(datasetResults);
-            results.value = results.value.map(result => {
-              result.last_modified = new Date(result.last_modified);
-              return result;
-            });
+            formatResults(JSON.parse(datasetResults));
           }
           totalResults.value = JSON.parse(total);
         }

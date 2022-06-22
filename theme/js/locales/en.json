@@ -131,5 +131,6 @@
   "Private": "Private",
   "Updated on {date}": "Updated on {date}",
   "{n} favorites": "{n} favorite | {n} favorite | {n} favorites",
-  "The identity of this public service is certified by {certifier}": " The identity of this public service is certified by {certifier}"
+  "The identity of this public service is certified by {certifier}": " The identity of this public service is certified by {certifier}",
+  "{n} reuses": "{n} reuses | {n} reuse | {n} reuses"
 }
