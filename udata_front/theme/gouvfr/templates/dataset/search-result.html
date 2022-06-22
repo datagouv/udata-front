@@ -45,6 +45,7 @@
                 {% if dataset.organization %}
                 <a href="{{ url_for('organizations.show', org=dataset.organization) }}">
                     {{organization_name_with_certificate(dataset.organization)}}
+                </a>
                 {% elif dataset.owner %}
                 {{owner_name(dataset)}}
                 {% endif %}
@@ -63,7 +64,7 @@
                 {% if dataset.license %}
                 {% if dataset.license.url %}
                 <span class="not-enlarged">
-                <a href="{{ dataset.license.url }}" class="text-decoration-underline">
+                <a href="{{ dataset.license.url }}" class="text-decoration-underline text-decoration-underline--dsfr">
                     {% endif %}
                 {{ dataset.license.title }}
                 {% if dataset.license.url %}</a></span>{% endif %}
