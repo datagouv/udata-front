@@ -7,7 +7,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import certified from "svg/certified.svg";
+import certified from "bundle-text:svg/certified.svg";
 import { title } from "../../config";
 import useOrganizationCertified from "../../composables/useOrganizationCertified";
 
