@@ -102,7 +102,7 @@
   "organizations": "organizations",
   "Start typing to search in X": "Start typing to search in {type}",
   "Fields preceded by a star ({markup}) are required.": "Fields preceded by a star ({markup}) are required.",
-  "{n} reuses": "{n} reuse | {n} reuse | {n} reuses",
+  "{count} results": "{count} results | {count} result | {count} results",
   "Use tab (or arrow down) to move between suggestions": "Use tab (or arrow down) to move between suggestions",
   "{x} available suggestion": "{x} available suggestion",
   "Delete {t}": "Delete {t}",
@@ -131,6 +131,5 @@
   "Private": "Private",
   "Updated on {date}": "Updated on {date}",
   "{n} favorites": "{n} favorite | {n} favorite | {n} favorites",
-  "The identity of this public service is certified by {certifier}": " The identity of this public service is certified by {certifier}",
-  "{count} results": "{count} results | {count} result | {count} results"
+  "The identity of this public service is certified by {certifier}": " The identity of this public service is certified by {certifier}"
 }
