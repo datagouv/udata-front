@@ -67,9 +67,9 @@
       <ul class="fr-col-auto fr-tags-group flex-direction-column fr-grid-row--bottom self-center">
             <li>
               <span class="fr-tag">
-                <i18n-t keypath="{n} reuses" :plural="resources.length || 0" scope="global">
+                <i18n-t keypath="{n} reuses" :plural="metrics.reuses || 0" scope="global">
                   <template #n>
-                    <strong class="fr-mr-1v">{{resources.length || 0}}</strong>
+                    <strong class="fr-mr-1v">{{metrics.reuses || 0}}</strong>
                   </template>
                 </i18n-t>
                 </span>
