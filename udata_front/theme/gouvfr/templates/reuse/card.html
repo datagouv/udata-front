@@ -2,8 +2,8 @@
 {% cache cache_duration, 'reuse-card', reuse.id|string, g.lang_code %}
 <article class="fr-card fr-card--no-icon fr-enlarge-link">
     <div class="fr-card__body">
-        <div class="fr-card__content">
-            <h4 class="fr-card__title fr-text--md fr-m-0">
+        <div class="fr-card__content fr-p-2w">
+            <h4 class="fr-card__title fr-text--md fr-mt-1w">
                 <a
                     href="{{ url_for('reuses.show', reuse=reuse, _external=True) }}"
                 >
@@ -11,7 +11,11 @@
                 {% if reuse.private %}<span class="fr-badge fr-ml-1w">{{ _('Private') }}</span>{% endif %}
                 </a>
             </h4>
-            <p class="fr-card__desc fr-my-1v not-enlarged">
+            <p class="fr-card__detail fr-m-0">
+                {{ reuse.type_label }}
+            </p>
+            <p class="fr-card__desc fr-mt-1w text-mention-grey not-enlarged">
+                {{ _('Published on %(date)s', date=reuse.created_at|dateformat(format='long')) }}
                 {% if reuse.organization or reuse.owner %}
                     {{ _(' by ') }}
                     {% if reuse.organization %}
@@ -25,11 +29,6 @@
                     {% endif %}
                 {% endif %}
             </p>
-            <div class="fr-card__end fr-m-0 fr-p-0">
-                <p class="fr-card__detail fr-text--sm fr-m-0">
-                    {{ _('Published on %(date)s', date=reuse.created_at|dateformat(format='long')) }}
-                </p>
-            </div>
         </div>
     </div>
     <div class="fr-card__header">
