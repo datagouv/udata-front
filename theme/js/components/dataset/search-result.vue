@@ -45,8 +45,7 @@
           {{ $filters.excerpt(description, 160) }}
         </p>
         <p class="fr-mb-0 text-mention-grey">
-          <!-- TODO : useExternalSource et !externalSource -->
-          <template v-if="true">
+          <template v-if="!externalSource">
             {{ $t('Updated on {date}', {date: $filters.formatDate(last_modified)}) }}
               <template v-if="license">
                 &mdash;
@@ -93,6 +92,7 @@ import { defineComponent, computed, ComputedRef } from "vue";
 import lock from "bundle-text:svg/private.svg";
 import useLicense from "../../composables/useLicense";
 import useOwnerName from "../../composables/useOwnerName";
+import useExternalSource from "../../composables/useExternalSource";
 import Avatar from "../discussions/avatar.vue";
 import OrganizationNameWithCertificate from "../organization/organization-name-with-certificate.vue";
 import Placeholder from "../utils/placeholder.vue";
@@ -103,6 +103,9 @@ export default defineComponent({
     description: {
       type: String,
       required: true,
+    },
+    extras: {
+      type: Object,
     },
     last_modified: {
       type: Date,
@@ -145,7 +148,9 @@ export default defineComponent({
     });
     const ownerName = useOwnerName(owned);
     const license = useLicense(props.license);
+    const externalSource = useExternalSource(props.extras);
     return {
+      externalSource,
       license,
       lock,
       ownerName,
