@@ -10,8 +10,8 @@ Vue. -->
         :alt="organization.name"
       />
       <div class="logo-badge logo-badge--bottom-right">
-        <span v-html="lock" v-if="private" />
-        <span v-html="certified" v-else-if="organizationCertified" />
+        <span v-html="lock" v-if="private"></span>
+        <span v-html="certified" v-else-if="organizationCertified"></span>
       </div>
     </div>
     <div class="card-logo" v-else-if="owner">
@@ -44,14 +44,15 @@ Vue. -->
 </template>
 
 <script>
-import Placeholder from "../utils/placeholder";
+import Placeholder from "../utils/placeholder.vue";
 import certified from "bundle-text:svg/certified.svg";
 import lock from "bundle-text:svg/private.svg";
 import useOrganizationCertified from "../../composables/useOrganizationCertified";
 import useGeoZone from "../../composables/useGeoZone";
-import Avatar from "../discussions/avatar";
+import Avatar from "../discussions/avatar.vue";
 
 export default {
+  inheritAttrs: false,
   props: {
     title: String,
     organization: Object,
