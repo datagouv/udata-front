@@ -133,12 +133,14 @@
           <div v-if="loading">
             <Loader />
           </div>
-          <ul v-else-if="results.length" class="fr-mt-1w border-default-grey border-top">
-            <li v-for="result in results" :key="result.id">
-              <a :href="result.page" class="unstyled fr-raw-link w-10 block">
-                <Dataset v-bind="result" />
-              </a>
-            </li>
+          <div v-else-if="results.length">
+            <ul class="fr-mt-1w border-default-grey border-top">
+              <li v-for="result in results" :key="result.id">
+                <a :href="result.page" class="unstyled fr-raw-link w-10 block">
+                  <Dataset v-bind="result" />
+                </a>
+              </li>
+            </ul> 
             <Pagination
               v-if="totalResults > pageSize"
               :page="currentPage"
@@ -147,7 +149,7 @@
               :changePage="changePage"
               class="fr-mt-2w"
             />
-          </ul>
+          </div>
           <div v-else>
             <Empty
               wide
