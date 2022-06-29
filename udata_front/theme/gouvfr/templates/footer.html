@@ -1,181 +1,183 @@
 {% cache cache_duration, 'footer', g.lang_code|default(config.DEFAULT_LANGUAGE)|string,'-'.join((package_version('udata'), package_version('udata-front'))) %}
-{% include theme("participez/participez.html") %}
-<footer class="fr-footer" role="contentinfo" id="footer">
-    <div class="fr-footer__top">
-        <div class="fr-container">
-            <div class="fr-grid-row fr-grid-row--start fr-grid-row--gutters">
-                <div class="fr-col-12 fr-col-sm-3">
-                    <h3 class="fr-footer__top-cat">{{ _('The Open Data') }}</h3>
-                    <ul class="fr-footer__top-list">
-                        {% for item in nav.gouvfr_opendata %}
-                        <li>
-                            <a class="fr-footer__top-link" href="{{ item.url }}">{{ item.label }}</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="fr-col-12 fr-col-sm-3">
-                    <h3 class="fr-footer__top-cat">{{ _('Support') }}</h3>
-                    <ul class="fr-footer__top-list">
-                        {% for item in nav.gouvfr_support %}
-                        <li>
-                            <a class="fr-footer__top-link" href="{{ item.url }}">{{ item.label }}</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="fr-col-12 fr-col-sm-3">
-                    <h3 class="fr-footer__top-cat">{{ _('Social networks') }}</h3>
-                    <ul class="fr-footer__top-list socials fr-grid-row">
-                        <li>
-                            <a class="fr-footer__top-link fr-raw-link" href="https://twitter.com/datagouvfr" title="Twitter">
-                                {% include theme('svg/socials/twitter.svg') %}
-                            </a>
-                        </li>
-                        <li class="fr-ml-9v">
-                            <a class="fr-footer__top-link fr-raw-link" href="https://www.linkedin.com/company/etalab" title="Linkedin">
-                                {% include theme('svg/socials/linkedin.svg') %}
-                            </a>
-                        </li>
-                        <li class="fr-ml-9v">
-                            <a class="fr-footer__top-link fr-raw-link" href="https://github.com/etalab/data.gouv.fr/" title="Github">
-                                {% include theme('svg/socials/github.svg') %}
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="fr-footer__top-list fr-grid-row">
-                        <li>
-                            <a
-                                href="{{ url_for('datasets.recent_feed') }}"
-                                title="{{ _('RSS feed') }}"
-                                class="fr-footer__top-link"
-                            >
-                                RSS
-                            </a>
-                        </li>
-                        <li class="fr-ml-9v">
-                            <a
-                                href="https://infolettres.etalab.gouv.fr/subscribe/rn7y93le1"
-                                title="{{ _('Newsletter') }}"
-                                class="fr-footer__top-link"
-                            >
-                                {{ _('Newsletter') }}
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="fr-col-12 fr-col-sm-3">
-                    <div class="fr-footer__top-cat etalab-logo">
-                        <a
-                            href="http://www.etalab.gouv.fr"
-                            title="{{ _('Go to Etalab’s blog') }}"
-                            class="fr-raw-link"
-                        >
-                            {% include theme('svg/logo-etalab.svg') %}
-                        </a>
+<footer role="contentinfo">
+    {% include theme("participez/participez.html") %}
+    <div class="fr-footer" id="footer">
+        <div class="fr-footer__top">
+            <div class="fr-container">
+                <div class="fr-grid-row fr-grid-row--start fr-grid-row--gutters">
+                    <div class="fr-col-12 fr-col-sm-3">
+                        <h3 class="fr-footer__top-cat">{{ _('The Open Data') }}</h3>
+                        <ul class="fr-footer__top-list">
+                            {% for item in nav.gouvfr_opendata %}
+                            <li>
+                                <a class="fr-footer__top-link" href="{{ item.url }}">{{ item.label }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
                     </div>
-                    <ul class="fr-text--sm fr-my-0">
-                        <li>{{ _('A DINUM department') }}</li>
-                        <li>
+                    <div class="fr-col-12 fr-col-sm-3">
+                        <h3 class="fr-footer__top-cat">{{ _('Support') }}</h3>
+                        <ul class="fr-footer__top-list">
+                            {% for item in nav.gouvfr_support %}
+                            <li>
+                                <a class="fr-footer__top-link" href="{{ item.url }}">{{ item.label }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="fr-col-12 fr-col-sm-3">
+                        <h3 class="fr-footer__top-cat">{{ _('Social networks') }}</h3>
+                        <ul class="fr-footer__top-list socials fr-grid-row">
+                            <li>
+                                <a class="fr-footer__top-link fr-raw-link" href="https://twitter.com/datagouvfr" title="Twitter">
+                                    {% include theme('svg/socials/twitter.svg') %}
+                                </a>
+                            </li>
+                            <li class="fr-ml-9v">
+                                <a class="fr-footer__top-link fr-raw-link" href="https://www.linkedin.com/company/etalab" title="Linkedin">
+                                    {% include theme('svg/socials/linkedin.svg') %}
+                                </a>
+                            </li>
+                            <li class="fr-ml-9v">
+                                <a class="fr-footer__top-link fr-raw-link" href="https://github.com/etalab/data.gouv.fr/" title="Github">
+                                    {% include theme('svg/socials/github.svg') %}
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="fr-footer__top-list fr-grid-row">
+                            <li>
+                                <a
+                                    href="{{ url_for('datasets.recent_feed') }}"
+                                    title="{{ _('RSS feed') }}"
+                                    class="fr-footer__top-link"
+                                >
+                                    RSS
+                                </a>
+                            </li>
+                            <li class="fr-ml-9v">
+                                <a
+                                    href="https://infolettres.etalab.gouv.fr/subscribe/rn7y93le1"
+                                    title="{{ _('Newsletter') }}"
+                                    class="fr-footer__top-link"
+                                >
+                                    {{ _('Newsletter') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="fr-col-12 fr-col-sm-3">
+                        <div class="fr-footer__top-cat etalab-logo">
                             <a
-                                href="https://numerique.gouv.fr"
-                                title="{{ _('DINUM website') }}"
-                                class="fr-text--bold fr-footer__top-link w-100"
+                                href="http://www.etalab.gouv.fr"
+                                title="{{ _('Go to Etalab’s blog') }}"
+                                class="fr-raw-link"
                             >
-                                numerique.gouv.fr
+                                {% include theme('svg/logo-etalab.svg') %}
                             </a>
-                        </li>
-                    </ul>
-                    <ul class="fr-mt-2w text-grey-380">
-                        <li>
-                            <a
-                                href="https://github.com/opendatateam/udata/"
-                                title="{{ _('Open-source engine') }}"
-                                class="fr-footer__top-link"
-                            >
-                                udata
-                            </a>
-                            <a
-                                href="https://pypi.org/project/udata/{{ package_version('udata') }}/"
-                                title="{{ _('Deployed version') }}"
-                                class="fr-footer__top-link"
-                            >
-                                {{ package_version('udata') }}
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="https://github.com/etalab/udata-front/"
-                                title="{{ _('Data.gouv.fr extension') }}"
-                                class="fr-footer__top-link"
-                            >
-                                udata-front
-                            </a>
-                            <a href="https://pypi.org/project/udata-front/{{ package_version('udata-front') }}/"
-                                title="{{ _('Deployed version') }}"
-                                class="fr-footer__top-link"
-                            >
-                                {{ package_version('udata-front') }}
-                            </a>
-                        </li>
-                    </ul>
+                        </div>
+                        <ul class="fr-text--sm fr-my-0">
+                            <li>{{ _('A DINUM department') }}</li>
+                            <li>
+                                <a
+                                    href="https://numerique.gouv.fr"
+                                    title="{{ _('DINUM website') }}"
+                                    class="fr-text--bold fr-footer__top-link w-100"
+                                >
+                                    numerique.gouv.fr
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="fr-mt-2w text-grey-380">
+                            <li>
+                                <a
+                                    href="https://github.com/opendatateam/udata/"
+                                    title="{{ _('Open-source engine') }}"
+                                    class="fr-footer__top-link"
+                                >
+                                    udata
+                                </a>
+                                <a
+                                    href="https://pypi.org/project/udata/{{ package_version('udata') }}/"
+                                    title="{{ _('Deployed version') }}"
+                                    class="fr-footer__top-link"
+                                >
+                                    {{ package_version('udata') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="https://github.com/etalab/udata-front/"
+                                    title="{{ _('Data.gouv.fr extension') }}"
+                                    class="fr-footer__top-link"
+                                >
+                                    udata-front
+                                </a>
+                                <a href="https://pypi.org/project/udata-front/{{ package_version('udata-front') }}/"
+                                    title="{{ _('Deployed version') }}"
+                                    class="fr-footer__top-link"
+                                >
+                                    {{ package_version('udata-front') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="fr-container">
-        <div class="fr-footer__body">
-            <div class="fr-footer__brand fr-enlarge-link">
-                <a href="/" title="Retour à l’accueil">
-                    <p class="fr-logo" title="république française">
-                        république
-                        <br>française
-                    </p>
-                </a>
+        <div class="fr-container">
+            <div class="fr-footer__body">
+                <div class="fr-footer__brand fr-enlarge-link">
+                    <a href="/" title="Retour à l’accueil">
+                        <p class="fr-logo" title="république française">
+                            république
+                            <br>française
+                        </p>
+                    </a>
+                </div>
+                <div class="fr-footer__content">
+                    <ul class="fr-footer__content-list">
+                        {% for item in nav.gouvfr_network %}
+                        <li class="fr-footer__content-item">
+                            <a class="fr-footer__content-link" href="{{ item.url }}">{{ item.label }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="fr-col-6 fr-col-sm-4 fr-col-md-3 fr-col-lg-2 fr-ml-auto self-end">
+                    <select
+                            aria-label="{{ _('Language selector') }}"
+                            class="fr-select"
+                            onchange="location = location.href.replace(new RegExp('\/\\w{2}\/'), '/' + this.value + '/', regex=true)"
+                        >
+                            {% for code, name in config['LANGUAGES'].items() %}
+                                {% if g.lang_code == code %}
+                                <option value={{code}} selected>
+                                    {{name}}
+                                </option>
+                                {% else %}
+                                <option value={{code}}>
+                                    {{name}}
+                                </option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                </div>
             </div>
-            <div class="fr-footer__content">
-                <ul class="fr-footer__content-list">
-                    {% for item in nav.gouvfr_network %}
-                    <li class="fr-footer__content-item">
-                        <a class="fr-footer__content-link" href="{{ item.url }}">{{ item.label }}</a>
-                    </li>
+            <div class="fr-footer__bottom">
+                <ul class="fr-footer__bottom-list">
+                    {% for item in nav.gouvfr_footer %}
+                        <li class="fr-footer__bottom-item">
+                            <a href="{{ '' if item.items else item.url }}" class="fr-footer__bottom-link">
+                                {{ item.label }}
+                            </a>
+                        </li>
                     {% endfor %}
                 </ul>
-            </div>
-            <div class="fr-col-6 fr-col-sm-4 fr-col-md-3 fr-col-lg-2 fr-ml-auto self-end">
-                <select
-                        aria-label="{{ _('Language selector') }}"
-                        class="fr-select"
-                        onchange="location = location.href.replace(new RegExp('\/\\w{2}\/'), '/' + this.value + '/', regex=true)"
-                    >
-                        {% for code, name in config['LANGUAGES'].items() %}
-                            {% if g.lang_code == code %}
-                            <option value={{code}} selected>
-                                {{name}}
-                            </option>
-                            {% else %}
-                            <option value={{code}}>
-                                {{name}}
-                            </option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
-            </div>
-        </div>
-        <div class="fr-footer__bottom">
-            <ul class="fr-footer__bottom-list">
-                {% for item in nav.gouvfr_footer %}
-                    <li class="fr-footer__bottom-item">
-                        <a href="{{ '' if item.items else item.url }}" class="fr-footer__bottom-link">
-                            {{ item.label }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-            <div class="fr-footer__bottom-copy">
-                <p>{{ _("Unless otherwise stated, all content of this site is availabe under <a href='{lo_url}'>Open Licence 2.0</a>").format(
-                    lo_url='https://github.com/etalab/licence-ouverte/blob/master/LO.md#licence-ouverte-20open-licence-20'
-                ) }}</p>
+                <div class="fr-footer__bottom-copy">
+                    <p>{{ _("Unless otherwise stated, all content of this site is availabe under <a href='{lo_url}'>Open Licence 2.0</a>").format(
+                        lo_url='https://github.com/etalab/licence-ouverte/blob/master/LO.md#licence-ouverte-20open-licence-20'
+                    ) }}</p>
+                </div>
             </div>
         </div>
     </div>
