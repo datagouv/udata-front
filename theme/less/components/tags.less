@@ -35,9 +35,11 @@ a.fr-tag, button.fr-tag {
     --background-action-high-blue-france-hover: @blue-400-hover;
     --background-action-high-blue-france-active: @blue-400-active;
 
-    &[aria-pressed="true"] {
+    &[aria-selected="true"] {
+        &:extend(button.fr-tag[aria-pressed="true"]);
         --background-action-high-blue-france: @blue-400;
         &::after {
+            &:extend(button.fr-tag[aria-pressed="true"]::after);
             --text-action-high-blue-france: @blue-400;
         }
     }
