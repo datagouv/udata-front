@@ -8,6 +8,7 @@
 - Add aria-current to breadcumbs [#121](https://github.com/etalab/udata-front/pull/121)
 - Add missing default og:image [#127](https://github.com/etalab/udata-front/pull/127)
 - Fix 500 on favicon in admin [#126](https://github.com/etalab/udata-front/pull/126)
+- Removed manifest logic [#129](https://github.com/etalab/udata-front/pull/129)
 
 ## 2.0.5 (2022-06-14)
 
