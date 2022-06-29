@@ -135,9 +135,7 @@
           </div>
           <ul v-else-if="results.length" class="fr-mt-1w border-default-grey border-top">
             <li v-for="result in results" :key="result.id">
-              <a :href="result.page" class="unstyled fr-raw-link w-10 block">
-                <Dataset v-bind="result" />
-              </a>
+              <Dataset v-bind="result" />
             </li>
             <Pagination
               v-if="totalResults > pageSize"
