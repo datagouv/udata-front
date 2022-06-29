@@ -12,11 +12,42 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
+const axios = require('axios').default;
+
 /**
  * @type {Cypress.PluginConfig}
  */
 // eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
+  on('task', {
+    log(message) {
+      console.log(message)
+
+      return null
+    },
+    table(message) {
+      console.table(message)
+
+      return null
+    },
+    sitemapLocations() {
+      return getLocations(`${config.baseUrl}/sitemap.xml`).then(locations =>
+        Promise.all(locations.map(url => getLocations(url))).then(result => result.flat())
+      );
+    },
+  })
 }
+
+const getLocations = (url) => axios.get(url, {
+method: 'GET',
+headers: {
+  'Content-Type': 'application/xml',
+},
+})
+.then(res => res.data)
+.then(xml => {
+  const locs = [...xml.matchAll(`<loc>(.|\n)*?</loc>`)].map(([loc]) =>
+    loc.replace('<loc>', '').replace('</loc>', ''),
+  )
+  return locs;
+});
