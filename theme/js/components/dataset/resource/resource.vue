@@ -160,6 +160,7 @@ import preview from 'bundle-text:svg/preview.svg';
 
 export default defineComponent({
   components: {EditButton, SchemaButton},
+  inheritAttrs: false,
   props: {
     datasetId: {
       type: String,
