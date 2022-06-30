@@ -51,27 +51,31 @@
                 {% endif %}
             </p>
             {% endif %}
-            <p class="fr-mt-1w fr-mb-2w">
+            <p class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm">
                 {{ dataset.description|mdstrip(300) }}
             </p>
             <p class="fr-mb-0 text-mention-grey">
                 {% if not external_source(dataset) %}
                 {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
                     {% if dataset.license %}
-                    &mdash;
+                    <span class="fr-hidden fr-unhidden-sm">
+                        &mdash;
+                    </span>
                     {%  endif %}
                 {% endif %}
                 {% if dataset.license %}
-                {% if dataset.license.url %}
-                <span class="not-enlarged">
-                <a href="{{ dataset.license.url }}" class="text-decoration-underline text-decoration-underline--dsfr text-mention-grey">
-                    {% endif %}
-                {{ dataset.license.title }}
-                {% if dataset.license.url %}</a></span>{% endif %}
+                <span class="fr-hidden fr-unhidden-sm">
+                    {% if dataset.license.url %}
+                    <span class="not-enlarged">
+                    <a href="{{ dataset.license.url }}" class="text-decoration-underline text-decoration-underline--dsfr text-mention-grey">
+                        {% endif %}
+                    {{ dataset.license.title }}
+                    {% if dataset.license.url %}</a></span>{% endif %}
+                </span>
                 {% endif %}
             </p>
         </div>
-        <ul class="fr-col-auto fr-tags-group flex-direction-column fr-grid-row--bottom self-center">
+        <ul class="fr-hidden fr-unhidden-sm fr-col-auto fr-tags-group flex-direction-column fr-grid-row--bottom self-center">
             <li>
                 <span class="fr-tag">
                     {{ ngettext('<strong class="fr-mr-1v">%(num)d</strong> reuse', '<strong class="fr-mr-1v">%(num)d</strong> reuses', dataset.metrics.reuses or 0) }}
