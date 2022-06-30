@@ -31,23 +31,39 @@ module.exports = (on, config) => {
       return null
     },
     sitemapLocations() {
-      return getLocations(`${config.baseUrl}/sitemap.xml`).then(locations =>
-        Promise.all(locations.map(url => getLocations(url))).then(result => result.flat())
+      console.log('Starting script');
+      return getLocations(`http://dev.local:7000/sitemap.xml`).then(locations =>
+        Promise.all(locations.map(url => getLocations(url)))
+          .then(result => result.flat())
+          .then(urls => {
+            let countDatasets = 0;
+            let countReuses = 0;
+            let countOrganizations = 0;
+            return urls.filter(url =>
+              (!url.includes('/datasets/') || ++countDatasets <= 200) &&
+              (!url.includes('/reuses/') || ++countReuses <= 200) &&
+              (!url.includes('/organizations/') || ++countOrganizations <= 200)
+            );
+          })
       );
     },
   })
 }
 
-const getLocations = (url) => axios.get(url, {
-method: 'GET',
-headers: {
-  'Content-Type': 'application/xml',
-},
-})
-.then(res => res.data)
-.then(xml => {
-  const locs = [...xml.matchAll(`<loc>(.|\n)*?</loc>`)].map(([loc]) =>
-    loc.replace('<loc>', '').replace('</loc>', ''),
-  )
-  return locs;
-});
+const getLocations = (url) => {
+  console.log(`Getting locations from ${url}`);
+  return axios.get(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/xml',
+    },
+  })
+    .then(res => res.data)
+    .then(xml => {
+      const locs = [...xml.matchAll(`<loc>(.|\n)*?</loc>`)].map(([loc]) =>
+        loc.replace('<loc>', '').replace('</loc>', ''),
+      );
+      console.log(`Found ${locs.length} locations`);
+      return locs;
+    });
+}
