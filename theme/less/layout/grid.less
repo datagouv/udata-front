@@ -112,19 +112,6 @@ Sometimes you need to occupy the available space fully, you can use `.fr-contain
     flex-direction: row !important;
 }
 
-each(@dsfr-breakpoints, .(@bk, @_k, @_i) {
-    @var: 'dsfr-query-@{bk}';
-    @media @@var {
-        .flex-direction-column-@{bk} {
-            .flex-direction-column;
-        }
-
-        .flex-direction-row-@{bk} {
-            .flex-direction-row;
-        }
-    }
-});
-
 // Horizontal alignment
 .justify-start {
     justify-content: flex-start;

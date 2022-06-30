@@ -1,8 +1,7 @@
 <template>
   <article class="fr-pt-5v fr-pb-6v fr-px-1w border-bottom border-default-grey fr-enlarge-link">
-    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top fr-grid-row--right">
-      <div class="fr-col-12 fr-col-sm fr-col-md-12 fr-col-lg fr-grid-row fr-grid-row--gutters">
-        <div class="fr-col-auto">
+    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
+      <div class="fr-col-auto">
           <div class="logo">
             <Placeholder
               v-if="organization"
@@ -22,7 +21,7 @@
             />
           </div>
         </div>
-        <div class="fr-col-12 fr-col-sm">
+      <div class="fr-col">
           <h4 class="fr-mb-1v">
             <a :href="page" class="text-grey-500">
               {{ title }}
@@ -42,7 +41,7 @@
             </a>
             <template v-if="owner">{{ownerName}}</template>
           </p>
-          <p class="fr-mt-1w fr-mb-2w">
+          <p class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm">
             {{ $filters.excerpt(description, 160) }}
           </p>
           <p class="fr-mb-0 text-mention-grey">
@@ -64,8 +63,7 @@
             </template>
           </p>
         </div>
-      </div>
-      <ul class="fr-col-auto fr-tags-group fr-grid-row--bottom self-center flex-direction-column-sm flex-direction-row-md flex-direction-column-lg">
+      <ul class="fr-hidden fr-unhidden-sm fr-hidden-md fr-unhidden-lg fr-col-auto fr-tags-group fr-grid-row--bottom self-center flex-direction-column">
             <li>
               <span class="fr-tag">
                 <i18n-t keypath="{n} reuses" :plural="metrics.reuses || 0" scope="global">
@@ -100,6 +98,7 @@ import OrganizationNameWithCertificate from "../organization/organization-name-w
 import Placeholder from "../utils/placeholder.vue";
 
 export default defineComponent({
+  inheritAttrs: false,
   props: {
     acronym: String,
     description: {
