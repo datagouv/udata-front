@@ -58,13 +58,13 @@
                 {% if not external_source(dataset) %}
                 {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
                     {% if dataset.license %}
-                    <span class="fr-hidden fr-unhidden-sm">
+                    <span class="fr-hidden inline-sm">
                         &mdash;
                     </span>
                     {%  endif %}
                 {% endif %}
                 {% if dataset.license %}
-                <span class="fr-hidden fr-unhidden-sm">
+                <span class="fr-hidden inline-sm">
                     {% if dataset.license.url %}
                     <span class="not-enlarged">
                     <a href="{{ dataset.license.url }}" class="text-decoration-underline text-decoration-underline--dsfr text-mention-grey">
