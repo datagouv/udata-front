@@ -99,14 +99,31 @@ Sometimes you need to occupy the available space fully, you can use `.fr-contain
 }
 
 @media @query-md {
-        .wrap-md {
-            .wrap;
-        }
+    .wrap-md {
+        .wrap;
     }
+}
 
 .flex-direction-column {
     flex-direction: column !important;
 }
+
+.flex-direction-row {
+    flex-direction: row !important;
+}
+
+each(@dsfr-breakpoints, .(@bk, @_k, @_i) {
+    @var: 'dsfr-query-@{bk}';
+    @media @@var {
+        .flex-direction-column-@{bk} {
+            .flex-direction-column;
+        }
+
+        .flex-direction-row-@{bk} {
+            .flex-direction-row;
+        }
+    }
+});
 
 // Horizontal alignment
 .justify-start {

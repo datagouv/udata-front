@@ -1,7 +1,8 @@
 <template>
   <article class="fr-pt-5v fr-pb-6v fr-px-1w border-bottom border-default-grey fr-enlarge-link">
-    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
-      <div class="fr-col-auto">
+    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top fr-grid-row--right">
+      <div class="fr-col-12 fr-col-sm fr-col-md-12 fr-col-lg fr-grid-row fr-grid-row--gutters">
+        <div class="fr-col-auto">
           <div class="logo">
             <Placeholder
               v-if="organization"
@@ -20,50 +21,51 @@
               type="dataset"
             />
           </div>
-      </div>
-      <div class="fr-col">
-        <h4 class="fr-mb-1v">
-          <a :href="page" class="text-grey-500">
-            {{ title }}
-            <small v-if="acronym">{{ acronym }}</small>
-          </a>
-          <span
-            v-if="private"
-            class="badge grey-300 fr-ml-1w"
-          >
-            {{ $t('Private') }}
-          </span>
-        </h4>
-        <p class="fr-m-0 not-enlarged" v-if="organization || owner">
-          {{ $t('From') }} 
-          <a :href="page" v-if="organization">
-              <OrganizationNameWithCertificate :organization="organization" />
-          </a>
-          <template v-if="owner">{{ownerName}}</template>
-        </p>
-        <p class="fr-mt-1w fr-mb-2w">
-          {{ $filters.excerpt(description, 160) }}
-        </p>
-        <p class="fr-mb-0 text-mention-grey">
-          <template v-if="!externalSource">
-            {{ $t('Updated on {date}', {date: $filters.formatDate(last_modified)}) }}
-              <template v-if="license">
-                &mdash;
-              </template>
-          </template>
-          <template v-if="license">
-            <span class="not-enlarged" v-if="license.url">
-              <a :href="license.url" class="text-decoration-underline text-decoration-underline--dsfr text-mention-grey">
-                {{license.title}}
-              </a>
+        </div>
+        <div class="fr-col-12 fr-col-sm">
+          <h4 class="fr-mb-1v">
+            <a :href="page" class="text-grey-500">
+              {{ title }}
+              <small v-if="acronym">{{ acronym }}</small>
+            </a>
+            <span
+              v-if="private"
+              class="badge grey-300 fr-ml-1w"
+            >
+              {{ $t('Private') }}
             </span>
-            <template v-else>
-              {{license.title}}
+          </h4>
+          <p class="fr-m-0 not-enlarged" v-if="organization || owner">
+            {{ $t('From') }} 
+            <a :href="page" v-if="organization">
+                <OrganizationNameWithCertificate :organization="organization" />
+            </a>
+            <template v-if="owner">{{ownerName}}</template>
+          </p>
+          <p class="fr-mt-1w fr-mb-2w">
+            {{ $filters.excerpt(description, 160) }}
+          </p>
+          <p class="fr-mb-0 text-mention-grey">
+            <template v-if="!externalSource">
+              {{ $t('Updated on {date}', {date: $filters.formatDate(last_modified)}) }}
+                <template v-if="license">
+                  &mdash;
+                </template>
             </template>
-          </template>
-        </p>
+            <template v-if="license">
+              <span class="not-enlarged" v-if="license.url">
+                <a :href="license.url" class="text-decoration-underline text-decoration-underline--dsfr text-mention-grey">
+                  {{license.title}}
+                </a>
+              </span>
+              <template v-else>
+                {{license.title}}
+              </template>
+            </template>
+          </p>
+        </div>
       </div>
-      <ul class="fr-col-auto fr-tags-group flex-direction-column fr-grid-row--bottom self-center">
+      <ul class="fr-col-auto fr-tags-group fr-grid-row--bottom self-center flex-direction-column-sm flex-direction-row-md flex-direction-column-lg">
             <li>
               <span class="fr-tag">
                 <i18n-t keypath="{n} reuses" :plural="metrics.reuses || 0" scope="global">
