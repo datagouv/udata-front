@@ -47,11 +47,11 @@
           <p class="fr-mb-0 text-mention-grey">
             <template v-if="!externalSource">
               {{ $t('Updated on {date}', {date: $filters.formatDate(last_modified)}) }}
-                <template v-if="license">
+                <span v-if="license" class="fr-hidden fr-unhidden-sm">
                   &mdash;
-                </template>
+                </span>
             </template>
-            <template v-if="license">
+            <span v-if="license" class="fr-hidden fr-unhidden-sm">
               <span class="not-enlarged" v-if="license.url">
                 <a :href="license.url" class="text-decoration-underline text-decoration-underline--dsfr text-mention-grey">
                   {{license.title}}
@@ -60,7 +60,7 @@
               <template v-else>
                 {{license.title}}
               </template>
-            </template>
+            </span>
           </p>
         </div>
       <ul class="fr-hidden fr-unhidden-sm fr-hidden-md fr-unhidden-lg fr-col-auto fr-tags-group fr-grid-row--bottom self-center flex-direction-column">
