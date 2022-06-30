@@ -10,8 +10,7 @@ it('should be accessible', () => {
                 },
                 {
                     rules: {
-                        'empty-heading': { enabled: false },
-                        'scrollable-region-focusable': { enabled: false },
+                        'color-contrast': { enabled: false },
                     },
                 },
             )
