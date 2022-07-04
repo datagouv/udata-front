@@ -130,7 +130,7 @@
   "Ex. 2022 presidential election": "Ex : élections présidentielles 2022",
   "Private": "Privé",
   "Updated on {date}": "Mis à jour le {date}",
-  "{n} favorites": "{n} favorites | {n} favorite | {n} favorites",
-  "The identity of this public service is certified by {certifier}": "The identity of this public service is certified by {certifier}",
+  "{n} favorites": "{n} favoris | {n} favori | {n} favoris",
+  "The identity of this public service is certified by {certifier}": "L'identité de ce service public est certifiée par {certifier}",
   "{n} reuses": "{n} réutilisations | {n} réutilisation | {n} réutilisations"
 }
