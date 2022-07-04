@@ -15,7 +15,7 @@
         {{ topic.name }}
         </a>
     </li>
-    <li class="active">
+    <li class="active" aria-current="page">
         {{ _('Datasets') }}
         <small>{{ _('%(start)s to %(end)s on %(total)s',
             start=datasets.page_start,
@@ -32,7 +32,7 @@
 
                 <ul class="search-results">
                     {% for dataset in datasets %}
-                    {% include theme('dataset/search-result.html') %}
+                        {% include theme('dataset/search-result.html') %}
                     {% endfor %}
                 </ul>
 
