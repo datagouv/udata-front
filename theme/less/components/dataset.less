@@ -116,3 +116,12 @@ Disclaimer : the search-result component is weird in styling and uses a lot of f
         }
     }
 }
+
+meter.quality-score {
+    &::-webkit-meter-suboptimum-value {
+        background-color: @grey-300;
+    }
+    &::-webkit-meter-optimum-value {
+        background-color: @background-flat-success;
+    }
+}

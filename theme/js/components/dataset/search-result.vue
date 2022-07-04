@@ -45,6 +45,9 @@
             {{ $filters.excerpt(description, 160) }}
           </p>
           <p class="fr-mb-0 text-mention-grey">
+            <span class="fr-icon-information-line" aria-hidden="true"></span>
+            {{$t('Metadata quality:')}}
+            <QualityScore :score="10"/>
             <template v-if="!externalSource">
               {{ $t('Updated on {date}', {date: $filters.formatDate(last_modified)}) }}
                 <span v-if="license" class="fr-hidden inline-sm">
@@ -96,6 +99,7 @@ import useExternalSource from "../../composables/useExternalSource";
 import Avatar from "../discussions/avatar.vue";
 import OrganizationNameWithCertificate from "../organization/organization-name-with-certificate.vue";
 import Placeholder from "../utils/placeholder.vue";
+import QualityScore from "./quality-score.vue";
 
 export default defineComponent({
   inheritAttrs: false,
@@ -134,6 +138,7 @@ export default defineComponent({
     Avatar,
     OrganizationNameWithCertificate,
     Placeholder,
+    QualityScore,
   },
   setup(props) {
     /** @type {ComputedRef<import("../../composables/useOwnerName").Owned>} */
