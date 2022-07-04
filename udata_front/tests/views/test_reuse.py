@@ -12,6 +12,7 @@ from udata_front.tests import GouvFrSettings
 from udata_front.tests.frontend import GouvfrFrontTestCase
 from udata.frontend.markdown import mdstrip
 
+
 class ReuseBlueprintTest(GouvfrFrontTestCase):
     settings = GouvFrSettings
     modules = ['admin']
@@ -130,10 +131,13 @@ class ReuseBlueprintTest(GouvfrFrontTestCase):
         '''It should render the reuse list'''
         reuses = [
             ReuseFactory(owner=UserFactory(), title="Small title"),
-            ReuseFactory(owner=UserFactory(), title="A really long title that will trigger a strip that should be handled in front and test")
+            ReuseFactory(
+                owner=UserFactory(),
+                title="A really long title that should be handled in front and test"
+            )
         ]
         url = url_for('reuses.list', reuses=reuses)
         response = self.get(url)
         self.assert200(response)
         for reuse in reuses:
-            assert mdstrip(reuse.title, 55).encode('utf-8') in response.data 
+            assert mdstrip(reuse.title, 55).encode('utf-8') in response.data
