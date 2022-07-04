@@ -102,7 +102,7 @@
   "organizations": "organisations",
   "Start typing to search in X": "Commencez à taper pour rechercher parmi les {type}",
   "Fields preceded by a star ({markup}) are required.": "Les champs précédés d'une étoile ({markup}) sont obligatoires.",
-  "{count} results": "{count} results | {count} result | {count} results",
+  "{count} results": "{count} résultats | {count} résultat | {count} résultats",
   "Use tab (or arrow down) to move between suggestions": "Utiliser la tabulation (ou la flèche du bas) pour vous déplacer entre les suggestions",
   "{x} available suggestion": "{x} suggestions disponibles",
   "Delete {t}": "Supprimer {t}",
@@ -128,9 +128,9 @@
   "Spatial granularity": "Granularité spatiale",
   "Finest level of geographic detail covered by data.": "Niveau de détail géographique le plus fin que peut couvrir les données.",
   "Ex. 2022 presidential election": "Ex : élections présidentielles 2022",
-  "Private": "Private",
-  "Updated on {date}": "Updated on {date}",
-  "{n} favorites": "{n} favorite | {n} favorite | {n} favorites",
-  "The identity of this public service is certified by {certifier}": " The identity of this public service is certified by {certifier}",
-  "{n} reuses": "{n} reuses | {n} reuse | {n} reuses"
+  "Private": "Privé",
+  "Updated on {date}": "Mis à jour le {date}",
+  "{n} favorites": "{n} favoris | {n} favori | {n} favoris",
+  "The identity of this public service is certified by {certifier}": "L'identité de ce service public est certifiée par {certifier}",
+  "{n} reuses": "{n} réutilisations | {n} réutilisation | {n} réutilisations"
 }
