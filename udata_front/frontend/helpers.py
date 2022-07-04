@@ -13,7 +13,6 @@ from werkzeug import url_decode, url_encode
 
 from . import front
 
-from udata import assets
 from udata.core.dataset.apiv2 import dataset_fields
 from udata.core.dataset.models import Dataset
 from udata.models import db
