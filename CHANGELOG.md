@@ -10,6 +10,7 @@
 - Fix 500 on favicon in admin [#126](https://github.com/etalab/udata-front/pull/126)
 - Update search results [#110](https://github.com/etalab/udata-front/pull/110)
 - Fix test error with long reuse title [#133](https://github.com/etalab/udata-front/pull/133) 
+- Fix dataset link to organization [#134](https://github.com/etalab/udata-front/pull/134)
 
 ## 2.0.5 (2022-06-14)
 
