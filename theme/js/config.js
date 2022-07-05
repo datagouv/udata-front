@@ -180,8 +180,6 @@ export const search_autocomplete_enabled = _jsonMeta("search-autocomplete-enable
  */
 export const search_autocomplete_debounce = _jsonMeta("search-autocomplete-debounce");
 
-export const quality_max_score = _jsonMeta('quality-max-score');
-
 // New generic `js-config-*` variables : simply add them to `metadata.html` with a meta name="js-config-something", content="yourValue" and import this file.
 // Everything is exported in the `values` variable as key: value pairs
 const valuesPrefix = "js-config-";
@@ -226,5 +224,4 @@ export default {
   resources_default_page_size,
   markdown,
   read_only_enabled,
-  quality_max_score,
 };

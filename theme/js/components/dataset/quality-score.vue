@@ -6,7 +6,6 @@
 
 <script>
 import { defineComponent } from "vue";
-import { quality_max_score } from "../../config"
 
 export default defineComponent({
     props: {
@@ -16,8 +15,9 @@ export default defineComponent({
         },
     },
     setup(props) {
+        const quality_max_score = 1;
         return {
-            high: Math.ceil(quality_max_score*2/3),
+            high: quality_max_score*2/3,
             quality_max_score,
             score: props.score,
         };
