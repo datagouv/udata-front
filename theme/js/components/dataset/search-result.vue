@@ -47,7 +47,7 @@
           <p class="fr-mb-0 text-mention-grey">
             <span class="fr-icon-information-line" aria-hidden="true"></span>
             {{$t('Metadata quality:')}}
-            <QualityScore :score="10"/>
+            <QualityScore :score="8"/>
             <template v-if="!externalSource">
               &mdash;
               {{ $t('Updated on {date}', {date: $filters.formatDate(last_modified)}) }}
