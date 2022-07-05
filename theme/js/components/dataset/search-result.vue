@@ -47,7 +47,7 @@
           <p class="fr-mb-0 text-mention-grey">
             <span class="fr-icon-information-line" aria-hidden="true"></span>
             {{$t('Metadata quality:')}}
-            <QualityScore :score="8"/>
+            <QualityScore :score="quality.score"/>
             <template v-if="!externalSource">
               &mdash;
               {{ $t('Updated on {date}', {date: $filters.formatDate(last_modified)}) }}
@@ -129,6 +129,10 @@ export default defineComponent({
       required: true,
     },
     private: Boolean,
+    quality: {
+      type: Object,
+      required: true,
+    },
     resources: Object,
     title: {
       type: String,
