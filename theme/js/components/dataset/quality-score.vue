@@ -1,6 +1,6 @@
 <template>
     <meter class="quality-score" min="0" low="0" :high="high" :max="quality_max_score" :optimum="quality_max_score" :value="score">
-        Scode de {{score}}/{{quality_max_score}}
+        {{score}}/{{quality_max_score}}
     </meter>
 </template>
 
@@ -17,7 +17,7 @@ export default defineComponent({
     },
     setup(props) {
         return {
-            high: Math.ceil(10*2/3),
+            high: Math.ceil(quality_max_score*2/3),
             quality_max_score,
             score: props.score,
         };
