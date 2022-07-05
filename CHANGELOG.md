@@ -3,6 +3,13 @@
 ## Current (in progress)
 
 - Fix RGAA criterion 7.5 [#118](https://github.com/etalab/udata-front/pull/118)
+- Remove map related stuff [#124](https://github.com/etalab/udata-front/pull/124)
+- Fix clear button now shown on multiselect [#125](https://github.com/etalab/udata-front/pull/125)
+- Add aria-current to breadcumbs [#121](https://github.com/etalab/udata-front/pull/121)
+- Add missing default og:image [#127](https://github.com/etalab/udata-front/pull/127)
+- Fix 500 on favicon in admin [#126](https://github.com/etalab/udata-front/pull/126)
+- Update search results [#110](https://github.com/etalab/udata-front/pull/110)
+- Fix test error with long reuse title [#133](https://github.com/etalab/udata-front/pull/133)
 - Fix RGAA criterion 8.2 [#130](https://github.com/etalab/udata-front/pull/130)
 
 ## 2.0.5 (2022-06-14)

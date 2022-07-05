@@ -133,14 +133,10 @@
           <div v-if="loading">
             <Loader />
           </div>
-          <div v-else-if="results.length">
-            <ul class="fr-mt-1w border-default-grey border-top">
-              <li v-for="result in results" :key="result.id">
-                <a :href="result.page" class="unstyled fr-raw-link w-10 block">
-                  <Dataset v-bind="result" />
-                </a>
-              </li>
-            </ul> 
+          <ul v-else-if="results.length" class="fr-mt-1w border-default-grey border-top">
+            <li v-for="result in results" :key="result.id">
+              <Dataset v-bind="result" />
+            </li>
             <Pagination
               v-if="totalResults > pageSize"
               :page="currentPage"
@@ -149,7 +145,7 @@
               :changePage="changePage"
               class="fr-mt-2w"
             />
-          </div>
+          </ul>
           <div v-else>
             <Empty
               wide
@@ -231,6 +227,7 @@ export default defineComponent({
 
     /**
      * Search results
+     * @type {Ref<Array>}
      */
     const results = ref([]);
 
@@ -278,6 +275,18 @@ export default defineComponent({
     const searchRef = ref(null);
 
     /**
+     * 
+     * @param {Array} data 
+     */
+    const formatResults = (data) => {
+      results.value = data.map(result => {
+        result.last_modified = new Date(result.last_modified);
+        return result;
+      });
+      return results;
+    };
+
+    /**
      * Search new dataset results
      */
     const search = () => {
@@ -294,7 +303,7 @@ export default defineComponent({
         })
         .then((res) => res.data)
         .then((result) => {
-          results.value = result.data;
+          formatResults(result.data);
           totalResults.value = result.total;
           loading.value = false;
         })
@@ -447,7 +456,7 @@ export default defineComponent({
         if (total && parseInt(total) > 0) {
           let datasetResults = resultsRef.value.dataset.results;
           if(datasetResults) {
-            results.value = JSON.parse(datasetResults);
+            formatResults(JSON.parse(datasetResults));
           }
           totalResults.value = JSON.parse(total);
         }
