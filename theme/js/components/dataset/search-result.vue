@@ -49,12 +49,13 @@
             {{$t('Metadata quality:')}}
             <QualityScore :score="10"/>
             <template v-if="!externalSource">
+              &mdash;
               {{ $t('Updated on {date}', {date: $filters.formatDate(last_modified)}) }}
-                <span v-if="license" class="fr-hidden inline-sm">
-                  &mdash;
-                </span>
             </template>
             <span v-if="license" class="fr-hidden inline-sm">
+              <template v-if="!externalSource">
+                &mdash;
+              </template>
               <span class="not-enlarged" v-if="license.url">
                 <a :href="license.url" class="text-decoration-underline text-decoration-underline--dsfr text-mention-grey">
                   {{license.title}}
