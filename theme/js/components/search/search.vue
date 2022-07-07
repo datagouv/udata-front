@@ -134,8 +134,8 @@
             <Loader />
           </div>
           <ul v-else-if="results.length" class="fr-mt-1w border-default-grey border-top">
-            <li v-for="result in results" :key="result.id">
-              <Dataset v-bind="result" />
+            <li v-for="(result, key) in results" :key="result.id">
+              <Dataset v-bind="result" :style="zIndex(key)" />
             </li>
             <Pagination
               v-if="totalResults > pageSize"
@@ -230,6 +230,14 @@ export default defineComponent({
      * @type {Ref<Array>}
      */
     const results = ref([]);
+
+    /**
+     * 
+     * @param {number} key 
+     */
+    const zIndex = (key) => {
+      return {zIndex: results.value.length - key}
+    };
 
     /**
      * Count of search results
@@ -484,6 +492,7 @@ export default defineComponent({
       sortOptions,
       searchSort,
       handleSortChange,
+      zIndex,
     };
   },
 });

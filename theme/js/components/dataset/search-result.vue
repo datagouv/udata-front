@@ -1,5 +1,5 @@
 <template>
-  <article class="fr-pt-5v fr-pb-6v fr-px-1w border-bottom border-default-grey fr-enlarge-link">
+  <article class="fr-pt-5v fr-pb-6v fr-px-1w border-bottom border-default-grey fr-enlarge-link" :style="style">
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
       <div class="fr-col-auto">
           <div class="logo">
@@ -45,9 +45,53 @@
             {{ $filters.excerpt(description, 160) }}
           </p>
           <p class="fr-mb-0 text-mention-grey">
-            <span class="fr-icon-information-line" aria-hidden="true"></span>
-            {{$t('Metadata quality:')}}
-            <QualityScore :score="quality.score"/>
+            <Tooltip>
+                <template #tooltip>
+                  <h5 class="fr-text--sm fr-my-0">{{$t("Metadata quality:")}}</h5>
+                  <QualityItem
+                    :passed="quality.dataset_description_quality"
+                    :messagePassed='$t("Data description filled")'
+                    :messageFailed='$t("Data description empty")'
+                    class="fr-my-1w"
+                  />
+                  <QualityItem
+                    :passed="quality.license"
+                    :messagePassed='$t("License filled")'
+                    :messageFailed='$t("No license set")'
+                    class="fr-my-1w"
+                  />
+                  <QualityItem
+                    :passed="quality.update_frequency && quality.update_fulfilled_in_time"
+                    :messagePassed='$t("Update frequency followed")'
+                    :messageFailed='quality.update_fulfilled_in_time ? $t("Update frequency not followed") : $t("Update frequency not set")'
+                    class="fr-my-1w"
+                  />
+                  <QualityItem
+                    :passed="quality.has_open_format"
+                    :messagePassed='$t("File formats are open")'
+                    :messageFailed='$t("File formats are closed")'
+                    class="fr-my-1w"
+                  />
+                  <QualityItem
+                    :passed="quality.temporal_coverage"
+                    :messagePassed='$t("Temporal coverage filled")'
+                    :messageFailed='$t("Temporal coverage not set")'
+                    class="fr-my-1w"
+                  />
+                  <QualityItem
+                    :passed="quality.temporal_coverage"
+                    :messagePassed='$t("Spatial coverage filled")'
+                    :messageFailed='$t("Spatial coverage not set")'
+                    class="fr-my-1w"
+                  />
+                  <div class="fr-grid-row fr-grid-row--right not-enlarged">
+                    <a href="#" target="_blank">{{$t("Learn more about this indicator")}}</a>
+                  </div>
+                </template>
+                <span class="fr-icon-information-line" aria-hidden="true"></span>
+                {{$t('Metadata quality:')}}
+                <QualityScore :score="quality.score"/>
+            </Tooltip>
             <template v-if="!externalSource">
               &mdash;
               {{ $t('Updated on {date}', {date: $filters.formatDate(last_modified)}) }}
@@ -101,8 +145,18 @@ import Avatar from "../discussions/avatar.vue";
 import OrganizationNameWithCertificate from "../organization/organization-name-with-certificate.vue";
 import Placeholder from "../utils/placeholder.vue";
 import QualityScore from "./quality-score.vue";
+import Tooltip from "../utils/tooltip.vue";
+import QualityItem from "./quality-item.vue";
 
 export default defineComponent({
+  components: {
+    Avatar,
+    OrganizationNameWithCertificate,
+    Placeholder,
+    QualityScore,
+    Tooltip,
+    QualityItem,
+},
   inheritAttrs: false,
   props: {
     acronym: String,
@@ -134,16 +188,14 @@ export default defineComponent({
       required: true,
     },
     resources: Object,
+    style: {
+      type: Object,
+      default: () => ({})
+    },
     title: {
       type: String,
       required: true,
     },
-  },
-  components: {
-    Avatar,
-    OrganizationNameWithCertificate,
-    Placeholder,
-    QualityScore,
   },
   setup(props) {
     /** @type {ComputedRef<import("../../composables/useOwnerName").Owned>} */
