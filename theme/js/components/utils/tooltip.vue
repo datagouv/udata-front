@@ -1,5 +1,5 @@
 <template>
-    <span class="tooltip__wrapper">
+    <span class="tooltip__wrapper text-grey-500">
         <slot></slot>
         <div class="tooltip">
             <slot name="tooltip"></slot>

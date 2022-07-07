@@ -45,7 +45,7 @@
             {{ $filters.excerpt(description, 160) }}
           </p>
           <p class="fr-mb-0 text-mention-grey">
-            <Tooltip>
+            <Tooltip class="fr-hidden inline-sm">
                 <template #tooltip>
                   <h5 class="fr-text--sm fr-my-0">{{$t("Metadata quality:")}}</h5>
                   <QualityItem
@@ -91,9 +91,9 @@
                 <span class="fr-icon-information-line" aria-hidden="true"></span>
                 {{$t('Metadata quality:')}}
                 <QualityScore :score="quality.score"/>
+                &mdash;
             </Tooltip>
             <template v-if="!externalSource">
-              &mdash;
               {{ $t('Updated on {date}', {date: $filters.formatDate(last_modified)}) }}
             </template>
             <span v-if="license" class="fr-hidden inline-sm">
