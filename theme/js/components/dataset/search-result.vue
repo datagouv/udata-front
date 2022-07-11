@@ -2,25 +2,25 @@
   <article class="fr-pt-5v fr-pb-6v fr-px-1w border-bottom border-default-grey fr-enlarge-link" :style="style">
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
       <div class="fr-col-auto">
-          <div class="logo">
-            <Placeholder
-              v-if="organization"
-              type="dataset"
-              :src="organization.logo_thumbnail"
-              :alt="organization.name"
-              :size="60"
-            />
-            <Avatar
-              v-else-if="owner"
-              :user="owner"
-              :size="60"
-            />
-            <Placeholder
-              v-else
-              type="dataset"
-            />
-          </div>
+        <div class="logo">
+          <Placeholder
+            v-if="organization"
+            type="dataset"
+            :src="organization.logo_thumbnail"
+            :alt="organization.name"
+            :size="60"
+          />
+          <Avatar
+            v-else-if="owner"
+            :user="owner"
+            :size="60"
+          />
+          <Placeholder
+            v-else
+            type="dataset"
+          />
         </div>
+      </div>
       <div class="fr-col">
           <h4 class="fr-mb-1v">
             <a :href="page" class="text-grey-500">
@@ -79,7 +79,7 @@
                     class="fr-my-1w"
                   />
                   <QualityItem
-                    :passed="quality.temporal_coverage"
+                    :passed="quality.spatial_coverage"
                     :messagePassed='$t("Spatial coverage filled")'
                     :messageFailed='$t("Spatial coverage not set")'
                     class="fr-my-1w"
