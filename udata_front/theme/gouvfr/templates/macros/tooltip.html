@@ -1,0 +1,8 @@
+{% macro tooltip(class) %}
+    <span class="tooltip__wrapper text-grey-500 {{class}}">
+        {{caller()}}
+        <div class="tooltip">
+            {{caller("tooltip")}}
+        </div>
+    </span>
+{% endmacro %}

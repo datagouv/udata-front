@@ -1,7 +1,9 @@
 {% cache cache_duration, 'dataset-search-result', dataset.id|string, g.lang_code %}
 {% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate %}
+{% from theme('macros/quality_item.html') import quality_item %}
 {% from theme('macros/quality_score.html') import quality_score %}
-<article class="fr-pt-5v fr-pb-6v fr-px-1w border-bottom border-default-grey fr-enlarge-link">
+{% from theme('macros/tooltip.html') import tooltip %}
+<article class="fr-pt-5v fr-pb-6v fr-px-1w border-bottom border-default-grey fr-enlarge-link" style="{{z_index}}">
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
         <div class="fr-col-auto">
             <div class="logo">
@@ -55,11 +57,57 @@
             <p class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm">
                 {{ dataset.description|mdstrip(300) }}
             </p>
-            <p class="fr-mb-0 text-mention-grey">
-                {{_('Metadata quality:')}}
-                {{quality_score(dataset.quality.score)}}
+            <div class="fr-mb-0 text-mention-grey">
+                {% call(slot) tooltip("fr-hidden inline-sm") %}
+                    {% if slot == "tooltip" %}
+                    <h5 class="fr-text--sm fr-my-0">{{_("Metadata quality:")}}</h5>
+                    {{quality_item(
+                        dataset.quality.dataset_description_quality,
+                        _("Data description filled"),
+                        _("Data description empty"),
+                        "fr-my-1w"
+                    )}}
+                    {{quality_item(
+                        dataset.quality.license,
+                        _("License filled"),
+                        _("No license set"),
+                        "fr-my-1w"
+                    )}}
+                    {{quality_item(
+                        dataset.quality.update_frequency and dataset.quality.update_fulfilled_in_time,
+                        _("Update frequency followed"),
+                        _("Update frequency not followed") if dataset.quality.update_fulfilled_in_time else _("Update frequency not set"),
+                        "fr-my-1w"
+                    )}}
+                    {{quality_item(
+                        dataset.quality.has_open_format,
+                        _("File formats are open"),
+                        _("File formats are closed"),
+                        "fr-my-1w"
+                    )}}
+                    {{quality_item(
+                        dataset.quality.temporal_coverage,
+                        _("Temporal coverage filled"),
+                        _("Temporal coverage not set"),
+                        "fr-my-1w"
+                    )}}
+                    {{quality_item(
+                        dataset.quality.spatial_coverage,
+                        _("Spatial coverage filled"),
+                        _("Spatial coverage not set"),
+                        "fr-my-1w"
+                    )}}
+                    <div class="fr-grid-row fr-grid-row--right not-enlarged">
+                        <a href="#" target="_blank">{{_("Learn more about this indicator")}}</a>
+                    </div>
+                    {% else %}
+                    <span class="fr-icon-information-line" aria-hidden="true"></span>
+                    {{_('Metadata quality:')}}
+                    {{quality_score(dataset.quality.score)}}
+                    &mdash;
+                    {% endif %}
+                {% endcall %}
                 {% if not external_source(dataset) %}
-                &mdash; 
                 {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
                     {% if dataset.license %}
                     <span class="fr-hidden inline-sm">
@@ -77,7 +125,7 @@
                     {% if dataset.license.url %}</a></span>{% endif %}
                 </span>
                 {% endif %}
-            </p>
+            </div>
         </div>
         <ul class="fr-hidden fr-unhidden-sm fr-col-auto fr-tags-group flex-direction-column fr-grid-row--bottom self-center">
             <li>
