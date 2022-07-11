@@ -85,11 +85,18 @@
                     class="fr-my-1w"
                   />
                   <div class="fr-grid-row fr-grid-row--right not-enlarged">
-                    <a href="#" target="_blank">{{$t("Learn more about this indicator")}}</a>
+                    <a
+                      href="https://guides.etalab.gouv.fr/qualite/documenter-les-donnees/"
+                      target="_blank"
+                    >
+                      {{$t("Learn more about this indicator")}}
+                    </a>
                   </div>
                 </template>
-                <span class="fr-icon-information-line" aria-hidden="true"></span>
-                {{$t('Metadata quality:')}}
+                <span class="fr-icon-info-line" aria-hidden="true"></span>
+                <span class="fr-reset-link">
+                  {{$t('Metadata quality:')}}
+                </span>
                 <QualityScore :score="quality.score"/>
                 &mdash;
             </Tooltip>

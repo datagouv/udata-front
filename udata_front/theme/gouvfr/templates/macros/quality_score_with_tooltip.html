@@ -1,0 +1,61 @@
+{% from theme('macros/quality_item.html') import quality_item %}
+{% from theme('macros/quality_score.html') import quality_score %}
+{% from theme('macros/tooltip.html') import tooltip %}
+{% macro quality_score_with_tooltip(dataset) %}
+{% call(slot) tooltip("fr-hidden inline-sm") %}
+    {% if slot == "tooltip" %}
+    <h5 class="fr-text--sm fr-my-0">{{_("Metadata quality:")}}</h5>
+    {{quality_item(
+        dataset.quality.dataset_description_quality,
+        _("Data description filled"),
+        _("Data description empty"),
+        "fr-my-1w"
+    )}}
+    {{quality_item(
+        dataset.quality.license,
+        _("License filled"),
+        _("No license set"),
+        "fr-my-1w"
+    )}}
+    {{quality_item(
+        dataset.quality.update_frequency and dataset.quality.update_fulfilled_in_time,
+        _("Update frequency followed"),
+        _("Update frequency not followed") if dataset.quality.update_fulfilled_in_time else _("Update frequency not set"),
+        "fr-my-1w"
+    )}}
+    {{quality_item(
+        dataset.quality.has_open_format,
+        _("File formats are open"),
+        _("File formats are closed"),
+        "fr-my-1w"
+    )}}
+    {{quality_item(
+        dataset.quality.temporal_coverage,
+        _("Temporal coverage filled"),
+        _("Temporal coverage not set"),
+        "fr-my-1w"
+    )}}
+    {{quality_item(
+        dataset.quality.spatial_coverage,
+        _("Spatial coverage filled"),
+        _("Spatial coverage not set"),
+        "fr-my-1w"
+    )}}
+    <div class="fr-grid-row fr-grid-row--right not-enlarged">
+        <a
+            href="https://guides.etalab.gouv.fr/qualite/documenter-les-donnees/"
+            target="_blank"
+        >
+            {{_("Learn more about this indicator")}}
+        </a>
+    </div>
+    {% else %}
+    <span class="fr-icon-info-line" aria-hidden="true"></span>
+    <span class="fr-reset-link">
+        {{_('Metadata quality:')}}
+    </span>
+    {{quality_score(dataset.quality.score)}}
+    &mdash;
+    {% endif %}
+{% endcall %}
+{% endmacro %}
