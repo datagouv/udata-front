@@ -1,8 +1,8 @@
 {% from theme('macros/quality_item.html') import quality_item %}
 {% from theme('macros/quality_score.html') import quality_score %}
 {% from theme('macros/tooltip.html') import tooltip %}
-{% macro quality_score_with_tooltip(dataset) %}
-{% call(slot) tooltip("fr-hidden inline-sm") %}
+{% macro quality_score_with_tooltip(dataset, class) %}
+{% call(slot) tooltip(class) %}
     {% if slot == "tooltip" %}
     <h5 class="fr-text--sm fr-my-0">{{_("Metadata quality:")}}</h5>
     {{quality_item(

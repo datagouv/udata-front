@@ -84,7 +84,7 @@
                 {% if dataset.acronym %}<small>{{ dataset.acronym }}</small>{% endif %}
             </h1>
             <div class="fr-my-1w">
-                {{quality_score_with_tooltip(dataset)}}
+                {{quality_score_with_tooltip(dataset, 'inline')}}
                 {% if not external_source %}
                 {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
                     {% if dataset.license %}

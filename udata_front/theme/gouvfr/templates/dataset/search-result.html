@@ -56,7 +56,7 @@
                 {{ dataset.description|mdstrip(300) }}
             </p>
             <div class="fr-mb-0 text-mention-grey">
-                {{quality_score_with_tooltip(dataset)}}
+                {{quality_score_with_tooltip(dataset, "fr-hidden inline-sm")}}
                 {% if not external_source(dataset) %}
                 {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
                     {% if dataset.license %}
