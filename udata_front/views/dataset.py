@@ -78,7 +78,7 @@ class ProtectedDatasetView(DatasetView):
 @blueprint.route('/<dataset:dataset>/', endpoint='show')
 class DatasetDetailView(DatasetView, DetailView):
     template_name = 'dataset/display.html'
-    page_size = 4
+    page_size = 8
 
     def dispatch_request(self, *args, **kwargs):
         return super(DatasetDetailView, self).dispatch_request(*args, **kwargs)
