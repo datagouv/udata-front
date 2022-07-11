@@ -253,7 +253,7 @@
             </read-more>
         </div>
     </section>
-    <section class="reuse-sources fr-container fr-my-3w">
+    <section class="reuse-sources fr-container fr-my-7w">
         <div class="fr-grid-row">
             <h2 id="used-datasets" class="fr-h2">
                 {{ _('Used datasets') }}
@@ -262,8 +262,8 @@
         </div>
     <ul class="fr-grid-row fr-grid-row--gutters">
         {% for dataset in visible_datasets %}
-        <li class="fr-col-md-6 fr-col-12">
-            {% include theme('dataset/card.html') %}
+        <li class="fr-col-12">
+            {% include theme('dataset/search-result.html') %}
         </li>
         {% endfor %}
     </ul>
