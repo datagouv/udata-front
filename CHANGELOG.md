@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Update search results [#136](https://github.com/etalab/udata-front/pull/136) 
 
 ## 2.0.6 (2022-07-08)
 
