@@ -1,6 +1,6 @@
 <template>
 <div class="fr-toggle fr-toggle--label-left">
-    <input @click="toggleFeatured" type="checkbox" class="fr-toggle__input" id="featured-toggle" :checked="featured">
+    <input ref="toggleInput" @click="toggleFeatured" type="checkbox" class="fr-toggle__input" id="featured-toggle" :checked="_featured">
     <label class="fr-toggle__label" for="featured-toggle" :data-fr-checked-label="$t('Unfeature this content')" :data-fr-unchecked-label="$t('Feature this content')"></label>
 </div>
 </template>
@@ -14,8 +14,14 @@ export default defineComponent({
         subjectType: String,
         featured: Boolean,
     },
+    data() {
+        return {
+            registration: null,
+            _featured: this.featured,
+        }
+    },
     mounted() {
-        this._featured = this.featured;
+        this.$refs.toggleInput.toggleAttribute('checked', this._featured);
     },
     methods: {
         toggleFeatured() {
