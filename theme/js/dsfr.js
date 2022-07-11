@@ -1,0 +1,3 @@
+window.dsfr = {
+    mode: 'manual',
+}
