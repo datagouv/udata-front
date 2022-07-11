@@ -9,6 +9,7 @@
 - Add missing default og:image [#127](https://github.com/etalab/udata-front/pull/127)
 - Fix 500 on favicon in admin [#126](https://github.com/etalab/udata-front/pull/126)
 - Update search results [#110](https://github.com/etalab/udata-front/pull/110)
+- Add quality score [#135](https://github.com/etalab/udata-front/pull/135)
 
 ## 2.0.5 (2022-06-14)
 
