@@ -132,5 +132,20 @@
   "Updated on {date}": "Mis à jour le {date}",
   "{n} favorites": "{n} favoris | {n} favori | {n} favoris",
   "The identity of this public service is certified by {certifier}": "L'identité de ce service public est certifiée par {certifier}",
-  "{n} reuses": "{n} réutilisations | {n} réutilisation | {n} réutilisations"
+  "{n} reuses": "{n} réutilisations | {n} réutilisation | {n} réutilisations",
+  "Metadata quality:": "",
+  "Data description filled": "",
+  "Data description empty": "",
+  "License filled": "",
+  "No license set": "",
+  "Update frequency followed": "",
+  "Update frequency not followed": "",
+  "Update frequency not set": "",
+  "File formats are open": "",
+  "File formats are closed": "",
+  "Temporal coverage filled": "",
+  "Temporal coverage not set": "",
+  "Spatial coverage filled": "",
+  "Spatial coverage not set": "",
+  "Learn more about this indicator": ""
 }
