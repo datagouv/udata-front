@@ -20,6 +20,13 @@ const axios = require('axios').default;
 // eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
   on('task', {
+    /**
+     * This task use the sitemap to get pages.
+     * It limits the number of datasets, reuses and organisations visited to 200
+     * This logic should be removed when we use fixtures for testing
+     * instead of the development instance.
+     * @returns {Promise<Array<string>>}
+     */
     sitemapLocations() {
       console.log('Starting script');
       return getLocations(`${config.baseUrl}/sitemap.xml`).then(locations =>
@@ -40,6 +47,11 @@ module.exports = (on, config) => {
   })
 }
 
+/**
+ * Loads Sitemap and extracts urls
+ * @param {string} url 
+ * @returns {Promise<Array<string>>}
+ */
 const getLocations = (url) => {
   console.log(`Getting locations from ${url}`);
   return axios.get(url, {
