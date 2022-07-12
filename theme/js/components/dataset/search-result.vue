@@ -63,7 +63,7 @@
                   <QualityItem
                     :passed="quality.update_frequency && !!quality.update_fulfilled_in_time"
                     :messagePassed='$t("Update frequency followed")'
-                    :messageFailed='quality.update_fulfilled_in_time ? $t("Update frequency not followed") : $t("Update frequency not set")'
+                    :messageFailed='quality.update_frequency ? $t("Update frequency not followed") : $t("Update frequency not set")'
                     class="fr-my-1w"
                   />
                   <QualityItem
