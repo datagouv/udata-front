@@ -133,19 +133,21 @@
           <div v-if="loading">
             <Loader />
           </div>
-          <ul v-else-if="results.length" class="fr-mt-1w border-default-grey border-top">
-            <li v-for="(result, key) in results" :key="result.id">
-              <Dataset v-bind="result" :style="zIndex(key)" />
-            </li>
+          <div v-else-if="results.length">
+            <ul class="fr-mt-1w border-default-grey border-top relative z-2">
+              <li v-for="(result, key) in results" :key="result.id">
+                <Dataset v-bind="result" :style="zIndex(key)" />
+              </li>
+            </ul>
             <Pagination
-              v-if="totalResults > pageSize"
-              :page="currentPage"
-              :pageSize="pageSize"
-              :totalResults="totalResults"
-              :changePage="changePage"
-              class="fr-mt-2w"
-            />
-          </ul>
+                v-if="totalResults > pageSize"
+                :page="currentPage"
+                :pageSize="pageSize"
+                :totalResults="totalResults"
+                :changePage="changePage"
+                class="fr-mt-2w"
+              />
+          </div>
           <div v-else>
             <Empty
               wide
@@ -181,6 +183,7 @@ import Pagination from "../pagination/pagination.vue";
 import MultiSelect from "./multi-select.vue";
 
 export default defineComponent({
+  inheritAttrs: false,
   components: {
     MultiSelect,
     SearchInput,
