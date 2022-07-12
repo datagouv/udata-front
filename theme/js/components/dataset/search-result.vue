@@ -98,24 +98,11 @@
                   {{$t('Metadata quality:')}}
                 </span>
                 <QualityScore :score="quality.score"/>
-                &mdash;
             </Tooltip>
             <template v-if="!externalSource">
+              &mdash;
               {{ $t('Updated on {date}', {date: $filters.formatDate(last_modified)}) }}
             </template>
-            <span v-if="license" class="fr-hidden inline-sm">
-              <template v-if="!externalSource">
-                &mdash;
-              </template>
-              <span class="not-enlarged" v-if="license.url">
-                <a :href="license.url" class="text-decoration-underline text-decoration-underline--dsfr text-mention-grey">
-                  {{license.title}}
-                </a>
-              </span>
-              <template v-else>
-                {{license.title}}
-              </template>
-            </span>
           </p>
         </div>
       <ul class="fr-hidden fr-unhidden-sm fr-hidden-md fr-unhidden-lg fr-col-auto fr-tags-group fr-grid-row--bottom self-center flex-direction-column">
