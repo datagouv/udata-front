@@ -55,6 +55,12 @@
                   class="fr-my-1w"
                 />
                 <QualityItem
+                  :passed="quality.resources_documentation"
+                  :messagePassed='$t("Resources documented")'
+                  :messageFailed='$t("Resources documentation missing")'
+                  class="fr-my-1w"
+                />
+                <QualityItem
                   :passed="quality.license"
                   :messagePassed='$t("License filled")'
                   :messageFailed='$t("No license set")'
