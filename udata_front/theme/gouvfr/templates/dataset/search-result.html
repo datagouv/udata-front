@@ -58,22 +58,8 @@
             <div class="fr-mb-0 text-mention-grey">
                 {{quality_score_with_tooltip(dataset, "fr-hidden inline-sm")}}
                 {% if not external_source(dataset) %}
+                &mdash; 
                 {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
-                    {% if dataset.license %}
-                    <span class="fr-hidden inline-sm">
-                        &mdash;
-                    </span>
-                    {%  endif %}
-                {% endif %}
-                {% if dataset.license %}
-                <span class="fr-hidden inline-sm">
-                    {% if dataset.license.url %}
-                    <span class="not-enlarged">
-                    <a href="{{ dataset.license.url }}" class="text-decoration-underline text-decoration-underline--dsfr text-mention-grey">
-                        {% endif %}
-                    {{ dataset.license.title }}
-                    {% if dataset.license.url %}</a></span>{% endif %}
-                </span>
                 {% endif %}
             </div>
         </div>

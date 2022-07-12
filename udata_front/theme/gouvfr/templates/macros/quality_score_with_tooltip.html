@@ -20,7 +20,7 @@
     {{quality_item(
         dataset.quality.update_frequency and dataset.quality.update_fulfilled_in_time,
         _("Update frequency followed"),
-        _("Update frequency not followed") if dataset.quality.update_fulfilled_in_time else _("Update frequency not set"),
+        _("Update frequency not followed") if dataset.quality.update_frequency else _("Update frequency not set"),
         "fr-my-1w"
     )}}
     {{quality_item(
@@ -36,7 +36,7 @@
         "fr-my-1w"
     )}}
     {{quality_item(
-        dataset.quality.spatial_coverage,
+        dataset.quality.spatial,
         _("Spatial coverage filled"),
         _("Spatial coverage not set"),
         "fr-my-1w"
@@ -55,7 +55,6 @@
         {{_('Metadata quality:')}}
     </span>
     {{quality_score(dataset.quality.score)}}
-    &mdash;
     {% endif %}
 {% endcall %}
 {% endmacro %}
