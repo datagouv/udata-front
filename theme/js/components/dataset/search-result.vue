@@ -61,7 +61,7 @@
                     class="fr-my-1w"
                   />
                   <QualityItem
-                    :passed="quality.update_frequency && quality.update_fulfilled_in_time"
+                    :passed="quality.update_frequency && !!quality.update_fulfilled_in_time"
                     :messagePassed='$t("Update frequency followed")'
                     :messageFailed='quality.update_fulfilled_in_time ? $t("Update frequency not followed") : $t("Update frequency not set")'
                     class="fr-my-1w"
@@ -79,7 +79,7 @@
                     class="fr-my-1w"
                   />
                   <QualityItem
-                    :passed="quality.spatial_coverage"
+                    :passed="quality.spatial"
                     :messagePassed='$t("Spatial coverage filled")'
                     :messageFailed='$t("Spatial coverage not set")'
                     class="fr-my-1w"
