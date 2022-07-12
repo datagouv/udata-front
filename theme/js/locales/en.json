@@ -147,5 +147,7 @@
   "Temporal coverage not set": "Temporal coverage not set",
   "Spatial coverage filled": "Spatial coverage filled",
   "Spatial coverage not set": "Spatial coverage not set",
-  "Learn more about this indicator": "Learn more about this indicator"
+  "Learn more about this indicator": "Learn more about this indicator",
+  "Resources documented": "Resources documented",
+  "Resources documentation missing": "Resources documentation missing"
 }
