@@ -1,11 +1,10 @@
-import { ref, unref, onMounted, onUnmounted } from 'vue'
+import { ref, unref } from 'vue'
 import useKeyCodes from "./useKeyCodes";
 
 let uid = 0;
 
 export function useCollapse() {
   const {KEYCODES} = useKeyCodes();
-  let registration;
   uid += 1;
   const collapseId = `collaspe-${uid}`;
   const expanded = ref(false);
@@ -15,16 +14,6 @@ export function useCollapse() {
   const hide = () => expanded.value = false;
 
   const toggle = () => expanded.value = !expanded.value;
-
-  onMounted(() => {
-    registration = window.dsfr.register(`#${collapseId}`, window.dsfr.core.Collapse);
-    console.log(`#${collapseId} registered as collapse`);
-  });
-
-  onUnmounted(() => {
-    registration.dispose();
-    console.log(`#${collapseId} unregistered as collapse`);
-  });
 
   let registeredEventHandler = null;
 
