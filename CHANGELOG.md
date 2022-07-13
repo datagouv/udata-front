@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Fix window.dsfr.register error [#138](https://github.com/etalab/udata-front/pull/138)
+- Fix featured toggle [#137](https://github.com/etalab/udata-front/pull/137)
 
 ## 2.0.6 (2022-07-08)
 
