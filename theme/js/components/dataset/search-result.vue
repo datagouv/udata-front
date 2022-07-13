@@ -34,13 +34,13 @@
             {{ $t('Private') }}
           </span>
         </h4>
-        <p class="fr-m-0 not-enlarged" v-if="organization || owner">
+        <span class="not-enlarged" v-if="organization || owner">
           {{ $t('From') }} 
           <a :href="page" v-if="organization">
               <OrganizationNameWithCertificate :organization="organization" />
           </a>
           <template v-if="owner">{{ownerName}}</template>
-        </p>
+        </span>
         <p class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm">
           {{ $filters.excerpt(description, 160) }}
         </p>

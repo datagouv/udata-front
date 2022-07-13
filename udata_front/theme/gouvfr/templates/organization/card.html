@@ -16,18 +16,18 @@
         <ul class="fr-tags-group fr-mt-auto">
             <li class="not-enlarged">
                 <a
-                        href="{{ url_for('datasets.list', organization=organization.id) }}"
-                        class="fr-tag"
-                    >
-                    {{ ngettext('Dataset: <strong class="fr-ml-1v">%(num)d</strong>', 'Datasets: <strong class="fr-ml-1v">%(num)d</strong>', organization.metrics.datasets or 0) }}
+                    href="{{ url_for('datasets.list', organization=organization.id) }}"
+                    class="fr-tag"
+                >
+                    {{ ngettext('<strong class="fr-mr-1v">%(num)d</strong> dataset', '<strong class="fr-mr-1v">%(num)d</strong> datasets', organization.metrics.datasets or 0) }}
                 </a>
             </li>
             <li class="not-enlarged">
                 <a
-                        href="{{ url_for('organizations.show', org=organization, _anchor='organization-reuses') }}"
-                        class="fr-tag"
-                    >
-                    {{ ngettext('Reuse: <strong class="fr-ml-1v">%(num)d</strong>', 'Reuses: <strong class="fr-ml-1v">%(num)d</strong>', organization.metrics.reuses or 0) }}
+                    href="{{ url_for('organizations.show', org=organization, _anchor='organization-reuses') }}"
+                    class="fr-tag"
+                >
+                    {{ ngettext('<strong class="fr-mr-1v">%(num)d</strong> reuse', '<strong class="fr-mr-1v">%(num)d</strong> reuses', organization.metrics.reuses or 0) }}
                 </a>
             </li>
         </ul>
