@@ -1,4 +1,6 @@
 import { createApp } from "vue";
+
+import "./dsfr";
 import * as dsfr from "@gouvfr/dsfr/dist/dsfr/dsfr.module";
 
 import Threads from "./components/discussions/threads.vue";
@@ -97,5 +99,5 @@ elements.forEach((el) => {
     throw e;
   }
 });
-
+window.dsfr.start();
 console.log("JS is injected !");
