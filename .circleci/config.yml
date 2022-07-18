@@ -107,7 +107,10 @@ jobs:
 
   accessibility:
     docker:
-      - image: circleci/node:15.12-browsers
+      - image: cimg/node:16.13.0-browsers
+      - image: circleci/mongo:3.6-stretch-ram
+      - image: redis:alpine
+      - image: udata/elasticsearch:2.4.5
     environment:
        BASH_ENV: /root/.bashrc
     steps:
@@ -123,9 +126,13 @@ jobs:
             - js-cache-{{ arch }}-{{ checksum "js.deps" }}
             - js-cache-{{ arch }}-{{ .Branch }}
             - js-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
-      - run: nvm install && npm install
+      - run: npm install
       - run: npm run build
       - run: sudo npm install -g @lhci/cli@0.8.x
+      # We should change base image to prevent to repeat these steps
+      - run: sudo apt-get updata && sudo apt-get install python3-pip
+      - run: pip3 install -r requirements/udata.in
+      - run: udata generate-fixtures
       - run: lhci autorun
 
   assets:
