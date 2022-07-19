@@ -163,11 +163,10 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: Activate venv
-          command: source venv/bin/activate
-      - run:
           name: Generate udata fixtures
-          command: udata generate-fixtures
+          command: |
+            source venv/bin/activate
+            udata generate-fixtures
       - run:
           name: Install lighthouse
           command: sudo npm install -g @lhci/cli@0.8.x
@@ -176,7 +175,9 @@ jobs:
           command: cp .lighthouseci/front-plugin-udata.cfg udata.cfg
       - run:
           name: Run lighthouse
-          command: lhci autorun
+          command: |
+            source venv/bin/activate
+            lhci autorun
       - store_artifacts:
           path: reports/
           destination: reports
