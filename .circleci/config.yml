@@ -133,6 +133,9 @@ jobs:
       - run: udata generate-fixtures
       - run: cp .lighthouseci/front-plugin-udata.cfg udata.cfg
       - run: lhci autorun
+      - store_artifacts:
+          path: reports/
+          destination: reports
 
   assets:
     docker:

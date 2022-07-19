@@ -5,7 +5,8 @@ module.exports = {
         url: ['http://localhost:7000']
       },
       upload: {
-        /* Add configuration here */
+        target: 'filesystem',
+        outputDir: 'reports'
       },
     },
   };
