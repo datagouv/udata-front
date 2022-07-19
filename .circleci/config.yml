@@ -162,17 +162,9 @@ jobs:
       - browser-tools/install-chrome
       - attach_workspace:
           at: .
-      - restore_cache:
-          keys:
-          - py-cache-v16-{{ arch }}-{{ .Branch }}
-          - py-cache-v16-{{ arch }}-{{ .Environment.BASE_BRANCH }}
       - run:
-          name: Create venv and install deps
-          command: |
-            virtualenv venv
-            source venv/bin/activate
-            pip install -r requirements/udata.in
-            pip install .
+          name: Activate venv
+          command: source venv/bin/activate
       - run:
           name: Generate udata fixtures
           command: udata generate-fixtures
@@ -255,6 +247,7 @@ workflows:
               only: /v[0-9]+(\.[0-9]+)*/
       - accessibility:
           requires:
+            - python
             - assets
           filters:
             tags:
