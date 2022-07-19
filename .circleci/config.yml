@@ -1,5 +1,5 @@
 ---
-version: 2
+version: 2.1
 
 orbs:
   browser-tools: circleci/browser-tools@1.2.3
@@ -137,6 +137,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install python3-pip
       - run: pip3 install -r requirements/udata.in
       - run: udata generate-fixtures
+      - run: echo -e "PLUGINS = ['front']\nTHEME = 'gouvfr'" > udata.cfg
       - run: lhci autorun
 
   assets:
