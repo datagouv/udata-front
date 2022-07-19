@@ -114,8 +114,6 @@ jobs:
       - image: circleci/mongo:3.6-stretch-ram
       - image: redis:alpine
       - image: udata/elasticsearch:2.4.5
-    environment:
-       BASH_ENV: /root/.bashrc
     steps:
       - checkout
       - browser-tools/install-chrome
@@ -125,19 +123,16 @@ jobs:
       - run:
           name: Get the base reference branch
           command: export BASE_BRANCH=$(base_branch)
-      - restore_cache:
-          keys:
-            - js-cache-{{ arch }}-{{ checksum "js.deps" }}
-            - js-cache-{{ arch }}-{{ .Branch }}
-            - js-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
+      # Todo: deal with cache cleverly
       - run: npm install
       - run: npm run build
       - run: sudo npm install -g @lhci/cli@0.8.x
       # We should change base image to prevent to repeat these steps
       - run: sudo apt-get update && sudo apt-get install python3-pip
       - run: pip3 install -r requirements/udata.in
+      - run: pip3 install .
       - run: udata generate-fixtures
-      - run: echo -e "PLUGINS = ['front']\nTHEME = 'gouvfr'" > udata.cfg
+      - run: cp .lighthouseci/front-plugin-udata.cfg udata.cfg
       - run: lhci autorun
 
   assets:
