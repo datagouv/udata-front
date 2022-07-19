@@ -162,13 +162,29 @@ jobs:
       - browser-tools/install-chrome
       - attach_workspace:
           at: .
-      - run: sudo npm install -g @lhci/cli@0.8.x
-      # Todo: deal with cache cleverly
-      # Could we minimize these steps?
-      - run: pip install -r requirements/udata.in && pip install .
-      - run: udata generate-fixtures
-      - run: cp .lighthouseci/front-plugin-udata.cfg udata.cfg
-      - run: lhci autorun
+      - restore_cache:
+          keys:
+          - py-cache-v16-{{ arch }}-{{ .Branch }}
+          - py-cache-v16-{{ arch }}-{{ .Environment.BASE_BRANCH }}
+      - run:
+          name: Create venv and install deps
+          command: |
+            virtualenv venv
+            source venv/bin/activate
+            pip install -r requirements/udata.in
+            pip install .
+      - run:
+          name: Generate udata fixtures
+          command: udata generate-fixtures
+      - run:
+          name: Install lighthouse
+          command: sudo npm install -g @lhci/cli@0.8.x
+      - run:
+          name: Prepare udata.cfg file with udata-front plugin
+          command: cp .lighthouseci/front-plugin-udata.cfg udata.cfg
+      - run:
+          name: Run lighthouse
+          command: lhci autorun
       - store_artifacts:
           path: reports/
           destination: reports
