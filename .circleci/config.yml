@@ -107,36 +107,6 @@ jobs:
           paths:
           - venv
 
-  accessibility:
-    docker:
-      - image: cimg/node:16.13.0-browsers
-      - image: circleci/mongo:3.6-stretch-ram
-      - image: redis:alpine
-      - image: udata/elasticsearch:2.4.5
-    steps:
-      - checkout
-      - browser-tools/install-chrome
-      - run:
-          name: Compute JS dependencies key
-          command: cat .nvmrc package.json > js.deps
-      - run:
-          name: Get the base reference branch
-          command: export BASE_BRANCH=$(base_branch)
-      # Todo: deal with cache cleverly
-      - run: npm install
-      - run: npm run build
-      - run: sudo npm install -g @lhci/cli@0.8.x
-      # We should change base image to prevent to repeat these steps
-      - run: sudo apt-get update && sudo apt-get install python3-pip
-      - run: pip3 install -r requirements/udata.in
-      - run: pip3 install .
-      - run: udata generate-fixtures
-      - run: cp .lighthouseci/front-plugin-udata.cfg udata.cfg
-      - run: lhci autorun
-      - store_artifacts:
-          path: reports/
-          destination: reports
-
   assets:
     docker:
       # TODO make an image based on 2-alpine w/ nvm and phantom deps
@@ -180,6 +150,28 @@ jobs:
           root: .
           paths:
             - udata_front/theme/gouvfr/static
+
+
+  accessibility:
+    docker:
+      - image: cimg/python:3.7.13-browsers
+      - image: circleci/mongo:3.6-stretch-ram
+      - image: redis:alpine
+    steps:
+      - checkout
+      - browser-tools/install-chrome
+      - attach_workspace:
+          at: .
+      - run: sudo npm install -g @lhci/cli@0.8.x
+      # Todo: deal with cache cleverly
+      # Could we minimize these steps?
+      - run: pip install -r requirements/udata.in && pip install .
+      - run: udata generate-fixtures
+      - run: cp .lighthouseci/front-plugin-udata.cfg udata.cfg
+      - run: lhci autorun
+      - store_artifacts:
+          path: reports/
+          destination: reports
 
   dist:
     docker:
@@ -246,6 +238,8 @@ workflows:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
       - accessibility:
+          requires:
+            - assets
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
