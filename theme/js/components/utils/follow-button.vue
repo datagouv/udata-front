@@ -22,7 +22,7 @@ The `url` prop is the API URL.
   >
     <span
         v-html="icon"
-        class="magic row-inline"
+        class="magic fr-grid-row"
         :class="{ active: animating }"
         :style="{ color: _following ? 'inherit' : 'transparent' }"
       ></span>
@@ -33,10 +33,11 @@ The `url` prop is the API URL.
 </template>
 
 <script>
+import {defineComponent} from "vue";
 import config from "../../config";
-import icon from "svg/actions/star.svg";
+import icon from "bundle-text:svg/actions/star.svg";
 
-export default {
+export default defineComponent({
   props: {
     followers: Number,
     url: String,
@@ -61,7 +62,7 @@ export default {
     };
   },
   methods: {
-    toggleFollow: function () {
+    toggleFollow() {
       this.$auth();
 
       this.loading = true;
@@ -86,5 +87,5 @@ export default {
         .finally(() => (this.loading = false));
     },
   },
-};
+});
 </script>

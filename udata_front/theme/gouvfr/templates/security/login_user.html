@@ -4,12 +4,15 @@
 {% set read_only_mode = config.READ_ONLY_MODE %}
 
 {% block content %}
-<section class="fr-py-9v py-lg-lg bg-grey-50">
+<section class="fr-py-3w fr-py-md-9v bg-grey-50">
     <div class="fr-container">
         <div class="fr-grid-row">
             <div class="text-align-center form-container fr-col-12 fr-col-md-6 fr-col-offset-md-3">
                 <form class="form" method="post" action="{{ url_for('security.login') }}">
                     <h1 class="fr-h4 fr-mb-0">{{ _('Log in') }}</h1>
+                        <p class="fr-mt-2w fr-mb-1w fr-text--xs text-align-left">
+                            {{ _("Fields preceded by a star (<span class='required-field-star'>*</span>) are required.") }}
+                        </p>
                         {{ forms.render_fields(login_user_form, submit=_('Log in')) }}
                         <div class="fr-mt-3w">
                             <p class="fr-text--sm fr-mb-3v">
@@ -37,8 +40,8 @@
                     {{ _('Don\'t have an account?')}}
                 </h2>
                 <a
-                   href="{{ url_for('security.register', next=next_url) }}"
-                   class="fr-btn"
+                    href="{{ url_for('security.register', next=next_url) }}"
+                    class="fr-btn"
                 >
                     {{ _('Create an account') }}
                 </a>

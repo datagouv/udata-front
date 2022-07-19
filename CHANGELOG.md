@@ -2,8 +2,43 @@
 
 ## Current (in progress)
 
+- Fix window.dsfr.register error [#138](https://github.com/etalab/udata-front/pull/138)
+- Fix featured toggle [#137](https://github.com/etalab/udata-front/pull/137)
+- Iterate on search results and cards [#136](https://github.com/etalab/udata-front/pull/136)
+
+## 2.0.6 (2022-07-08)
+
+- Fix RGAA criterion 7.5 [#118](https://github.com/etalab/udata-front/pull/118)
+- Remove map related stuff [#124](https://github.com/etalab/udata-front/pull/124)
+- Fix clear button now shown on multiselect [#125](https://github.com/etalab/udata-front/pull/125)
+- Add aria-current to breadcumbs [#121](https://github.com/etalab/udata-front/pull/121)
+- Add missing default og:image [#127](https://github.com/etalab/udata-front/pull/127)
+- Fix 500 on favicon in admin [#126](https://github.com/etalab/udata-front/pull/126)
+- Update search results [#110](https://github.com/etalab/udata-front/pull/110) [#134](https://github.com/etalab/udata-front/pull/134)
+- Fix test error with long reuse title [#133](https://github.com/etalab/udata-front/pull/133)
+- Removed manifest logic [#129](https://github.com/etalab/udata-front/pull/129)
+
+## 2.0.5 (2022-06-14)
+
+- Add new menu items and change edito pages slug [#113](https://github.com/etalab/udata-front/pull/113) [#120](https://github.com/etalab/udata-front/pull/120)
+- Replace news by release notes in footer [#117](https://github.com/etalab/udata-front/pull/117)
+- Use DSFR container and remove custom ones [#111](https://github.com/etalab/udata-front/pull/111)
+
+## 2.0.4 (2022-06-09)
+
+- Add accessibility compliance status in footer [#114](https://github.com/etalab/udata-front/pull/114)
+- Fix SVG display issue [#116](https://github.com/etalab/udata-front/pull/116)
+
+## 2.0.3 (2022-06-03)
+
+- Update search pages [#95](https://github.com/etalab/udata-front/pull/95)
+- Add support for HTML in posts [#106](https://github.com/etalab/udata-front/pull/106)
 - Fix RGAA criterion 1.1 [#104](https://github.com/etalab/udata-front/pull/104)
 - Fix RGAA criterion 10.4 [#103](https://github.com/etalab/udata-front/pull/103)
+- Add geographical page on home venti button [#109](https://github.com/etalab/udata-front/pull/109)
+- Fix RGAA criterion 11.10 [#102](https://github.com/etalab/udata-front/pull/102)
+- Update DSFR to 1.5.1 [#107](https://github.com/etalab/udata-front/pull/107)
+  -  :warning: SVG in JS must use `bundle-text:` prefix now
 
 ## 2.0.2 (2022-04-11)
 

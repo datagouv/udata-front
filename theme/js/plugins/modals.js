@@ -21,7 +21,7 @@ Note that you can define variables in the `props` part of the Vue template defin
     </div>
 
     <footer class="modal-footer">
-      <button class="fr-btn fr-fi-close-line" @click.prevent="$emit('close')"> {{$t('Close')}} </button>
+      <button class="fr-btn fr-icon-close-line" @click.prevent="$emit('close')"> {{$t('Close')}} </button>
     </footer>
   </div>
 </template>
@@ -62,8 +62,8 @@ You should also add a `<modals-container></modals-container>` element that will 
 ```
 */
 
-import Preview from "../components/dataset/preview";
-import Schema from "../components/dataset/schema-modal";
+import Preview from "../components/dataset/preview.vue";
+import Schema from "../components/dataset/schema-modal.vue";
 
 const modals = { preview: Preview, schema: Schema };
 

@@ -18,31 +18,33 @@
 
 {% block breadcrumb %}
 <li><a href="{{ url_for('organizations.list') }}">{{ _('Organizations') }}</a></li>
-<li class="active">{{ org.name }}</li>
+<li class="active" aria-current="page">{{ org.name }}</li>
 {% endblock %}
 
 {% block main_content %}
-<header class="container">
+<header class="fr-container">
     {% if org.deleted %}
     <div class="well-grey-100 well fr-mb-3v">
         {{ _('This organization has been deleted. This will be permanent in the next 24 hours') }}
     </div>
     {% endif %}
-    <div class="row align-items-start">
-        <div class="col-auto logo logo--80">
-            <img src="{{org.logo(80)|placeholder('organization') }}" alt="" />
-            <div class="logo-badge logo-badge--bottom-right">
-                {{ badge_if_certified(org) }}
+    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
+        <div class="fr-col-auto">
+            <div class="logo logo--80">
+                <img src="{{org.logo(80)|placeholder('organization') }}" alt="" />
+                <div class="logo-badge logo-badge--bottom-right">
+                    {{ badge_if_certified(org) }}
+                </div>
             </div>
         </div>
-        <div class="col">
-            <div class="row-inline no-wrap align-items-center">
+        <div class="fr-col">
+            <div class="fr-grid-row no-wrap fr-grid-row--middle">
                 <h1 class="fr-my-0 fr-h1">
                     {{ org.name }}
                 </h1>
             </div>
             <div class="fr-mt-1w">
-                <ul class="row-inline align-items-center f-bold">
+                <ul class="fr-grid-row fr-grid-row--middle fr-text--bold">
                     {% if total_datasets > 0 %}
                     <li>
                         <a href="#organization-datasets">
@@ -60,17 +62,17 @@
                 </ul>
             </div>
         </div>
-        <div class="col-auto fr-mt-1v row-inline align-items-end flex-direction-column">
+        <div class="fr-col-auto fr-mt-1v fr-grid-row fr-grid-row--bottom flex-direction-column">
             {{ follow_btn(org) }}
             {% if can_edit %}
                 <a
-                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-fi-edit-line fr-btn--icon-left fr-displayed-sm"
+                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-edit-line fr-btn--icon-left fr-hidden fr-unhidden-sm"
                     href="{{ url_for('admin.index', path='organization/{id}/'.format(id=org.id)) }}"
                 >
                     {{ _('Modify organization') }}
                 </a>
                 <a
-                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-fi-edit-line fr-hidden-sm"
+                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-edit-line fr-hidden-sm"
                     href="{{ url_for('admin.index', path='organization/{id}/'.format(id=org.id)) }}"
                 >
                     {{ _('Modify organization') }}
@@ -80,7 +82,7 @@
     </div>
 </header>
 <section class="bg-contrast-grey fr-py-5w fr-mt-6w fr-mb-9v">
-    <div class="container vuejs">
+    <div class="fr-container vuejs">
         <h2 id="description" class="fr-h2 fr-mb-0">{{ _('Description') }}</h2>
         <read-more>
             {{ org.description|markdown }}
@@ -89,12 +91,10 @@
 </section>
 {# TODO: proper <select> also needed in discussions and footer, then sort from URL param #}
 {% if datasets and datasets|length > 0 %}
-<section id="organization-datasets" class="fr-py-9v container">
+<section id="organization-datasets" class="fr-py-9v fr-container">
     <h2>{{ _('Datasets') }}<sup>{{ total_datasets }}</sup></h2>
     {% for dataset in datasets %}
-        <a href="{{ url_for('datasets.show', dataset=dataset) }}" title="{{ dataset.title }}"
-            class="unstyled block w-100">{% include theme('dataset/search-result.html') %}
-        </a>
+        {% include theme('dataset/search-result.html') %}
     {% endfor %}
     <div class="fr-my-2w">
         {{ paginator(datasets, arg_name='datasets_page', url='#organization-datasets') }}
@@ -102,7 +102,7 @@
     <div class="text-align-center">
         <a
             href="{{ url_for('datasets.list', organization=org.id) }}"
-            class="fr-btn fr-btn--secondary fr-fi-eye-line fr-btn--icon-left"
+            class="fr-btn fr-btn--secondary fr-icon-eye-line fr-btn--icon-left"
         >
             {{ _('See %(count)s datasets', count=total_datasets ) }}
         </a>
@@ -110,7 +110,7 @@
 </section>
 {% endif %}
 {% if reuses and reuses|length > 0 %}
-<section id="organization-reuses" class="fr-py-9v container">
+<section id="organization-reuses" class="fr-py-9v fr-container">
     <h2>{{ _('Reuses') }}<sup>{{ total_reuses }}</sup></h2>
     <ul class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
         {% for reuse in reuses %}
@@ -122,30 +122,30 @@
     {{ paginator(reuses, arg_name='reuses_page', url='#organization-reuses') }}
 </section>
 {% endif %}
-<section class="fr-py-9v container">
+<section class="fr-py-9v fr-container">
     <h2>{{ _('Members') }}<sup>{{ org.members|length or 0 }}</sup></h2>
-    <div class="row">
+    <div class="fr-grid-row">
         {% for member in org.members %}
         {% set user = member.user %}
         {% set role = member.role %}
         <div
-            class="col-4 col-md-12 pl-md-0 border-md-0 pb-sm {% if not loop.index0 % 3 == 0 %}border-left pl-lg{% endif %}"
+            class="fr-col-md-4 fr-col-12 fr-pl-0 border-md-0 fr-pb-3v {% if not loop.index0 % 3 == 0 %}border-left fr-pl-md-3w{% endif %}"
         >
             {% include theme('user/card.html') %}
         </div>
         {% endfor %}
     </div>
 </section>
-<section class="fr-py-9v container">
-    <div class="row">
-        <div class="col-6 col-md-12">
+<section class="fr-py-9v fr-container">
+    <div class="fr-grid-row fr-grid-row--gutters">
+        <div class="fr-col-md-6 fr-col-12">
             <h3>{{ _('Technical details') }}</h3>
             <dl class="text-grey-380 fs-sm">
                 <div>
                     <dt class="f-light">ID</dt>
                     <dd class="f-bold fr-m-0">{{ org.id }}</dd>
                 </div>
-                <div class="my-sm">
+                <div class="fr-my-3v">
                     <dt class="f-light">{{ _('Creation date') }}</dt>
                     <dd class="f-bold fr-m-0">{{ org.created_at|dateformat(format='long') }}</dd>
                 </div>
@@ -155,13 +155,13 @@
                 </div>
             </dl>
         </div>
-        <div class="col-6 col-md-12 my-md-lg">
+        <div class="fr-col-md-6 fr-col-12 fr-my-3w fr-my-md-0">
             <h3>{{ _('Actions') }}</h3>
             <ul class="nav-list fr-ml-n3v">
                 {% if can_edit and not read_only_mode %}
                 <li class="fr-my-2w">
                     <a
-                        class="nav-link nav-link--no-icon text-decoration-none fr-link fr-link--icon-left fr-fi-arrow-right-s-line"
+                        class="nav-link nav-link--no-icon fr-raw-link text-decoration-none fr-link fr-link--icon-left fr-icon-arrow-right-s-line"
                         href="{{ url_for('admin.index', path='organization/{id}/'.format(id=org.id)) }}"
                     >
                         <span class="text-decoration-underline">{{ _('Modify information') }}</span>
@@ -171,7 +171,7 @@
                 <li class="fr-my-2w">
                     <a
                         href="{{ url_for('organizations.datasets_csv', org=org) }}"
-                        class="nav-link nav-link--no-icon text-decoration-none fr-link fr-link--icon-left fr-fi-arrow-right-s-line"
+                        class="nav-link nav-link--no-icon fr-raw-link text-decoration-none fr-link fr-link--icon-left fr-icon-arrow-right-s-line"
                     >
                         <span class="text-decoration-underline">{{ _('Download list of datasets as csv file') }}</span>
                     </a>
