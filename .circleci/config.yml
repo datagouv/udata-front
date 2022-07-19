@@ -165,7 +165,7 @@ jobs:
       - run:
           name: Generate udata fixtures
           command: |
-            source venv/bin/activate
+            pip install -e .
             udata generate-fixtures
       - run:
           name: Install lighthouse
@@ -175,9 +175,7 @@ jobs:
           command: cp .lighthouseci/front-plugin-udata.cfg udata.cfg
       - run:
           name: Run lighthouse
-          command: |
-            source venv/bin/activate
-            lhci autorun
+          command: lhci autorun
       - store_artifacts:
           path: reports/
           destination: reports
@@ -248,7 +246,7 @@ workflows:
               only: /v[0-9]+(\.[0-9]+)*/
       - accessibility:
           requires:
-            - python
+            - deps
             - assets
           filters:
             tags:
