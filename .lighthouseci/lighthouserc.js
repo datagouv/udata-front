@@ -1,7 +1,7 @@
 module.exports = {
     ci: {
       collect: {
-        startServerCommand: 'udata serve',
+        startServerCommand: 'npm run serve',
         url: ['http://localhost:7000']
       },
       upload: {

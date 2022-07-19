@@ -1,6 +1,9 @@
 ---
 version: 2
 
+orbs:
+  browser-tools: circleci/browser-tools@1.2.3
+
 jobs:
   deps:
     docker:
@@ -115,6 +118,7 @@ jobs:
        BASH_ENV: /root/.bashrc
     steps:
       - checkout
+      - browser-tools/install-chrome
       - run:
           name: Compute JS dependencies key
           command: cat .nvmrc package.json > js.deps
