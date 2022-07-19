@@ -70,7 +70,7 @@ jobs:
   python:
     docker:
       - image: udata/circleci:2-alpine
-      - image: circleci/mongo:3.6-stretch-ram
+      - image: mongo:3.6
       - image: redis:alpine
     environment:
        BASH_ENV: /root/.bashrc
@@ -155,7 +155,7 @@ jobs:
   accessibility:
     docker:
       - image: cimg/python:3.7.13-browsers
-      - image: circleci/mongo:3.6-stretch-ram
+      - image: mongo:3.6
       - image: redis:alpine
     steps:
       - checkout
