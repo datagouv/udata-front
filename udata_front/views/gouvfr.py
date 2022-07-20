@@ -111,17 +111,40 @@ def get_object(model, id_or_slug):
     return obj
 
 
+def get_objects_from_tag(model, tag) -> list:
+    objects = getattr(model, "objects").filter(tags=tag)
+    return [r for r in objects]
+
+
 @blueprint.route('/pages/<path:slug>/')
 def show_page(slug):
     content, gh_url, extension = get_page_content(slug)
     page = frontmatter.loads(content)
-    reuses = [get_object(Reuse, r) for r in page.get('reuses') or []]
-    datasets = [get_object(Dataset, d) for d in page.get('datasets') or []]
-    reuses = [r for r in reuses if r is not None]
-    datasets = [d for d in datasets if d is not None]
+
+    data = {}
+    models = {"reuses": Reuse, "datasets": Dataset}
+
+    for data_type, model in models.items():
+        data[data_type] = []
+        for dataset_or_reuse in page.get(data_type) or []:
+            if dataset_or_reuse is None:
+                continue
+            dataset_or_reuse = dataset_or_reuse.strip()
+            if dataset_or_reuse[:4] == "tag#":
+                data[data_type] += get_objects_from_tag(model, dataset_or_reuse[4:])
+            else:
+                res = get_object(model, dataset_or_reuse)
+                if res:
+                    data[data_type].append(res)
+        data[data_type] = [r for r in data[data_type] if r is not None]
+
     return theme.render(
-        'page.html',
-        page=page, reuses=reuses, datasets=datasets, gh_url=gh_url, extension=extension
+        "page.html",
+        page=page,
+        reuses=data["reuses"],
+        datasets=data["datasets"],
+        gh_url=gh_url,
+        extension=extension,
     )
 
 
