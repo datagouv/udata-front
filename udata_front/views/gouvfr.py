@@ -49,14 +49,17 @@ def redirect_topics(topic):
     return redirect(url_for('topics.display', topic=topic))
 
 
-def get_pages_gh_urls(slug):
-    repo = current_app.config.get('PAGES_GH_REPO_NAME')
+def get_pages_gh_urls(slug, locale:str = None):
+    repo = current_app.config.get("PAGES_GH_REPO_NAME")
     if not repo:
         abort(404)
-    branch = current_app.config.get('PAGES_REPO_BRANCH', 'master')
-    raw_url = f'https://raw.githubusercontent.com/{repo}/{branch}/pages/{slug}'
-    gh_url = f'https://github.com/{repo}/blob/{branch}/pages/{slug}'
-
+    branch = current_app.config.get("PAGES_REPO_BRANCH", "master")
+    if locale:
+        raw_url = f"https://raw.githubusercontent.com/{repo}/{branch}/pages/{locale}/{slug}"
+        gh_url = f"https://github.com/{repo}/blob/{branch}/pages/{slug}"
+    else:
+        raw_url = f"https://raw.githubusercontent.com/{repo}/{branch}/pages/{slug}"
+        gh_url = f"https://github.com/{repo}/blob/{branch}/pages/{slug}"
     return raw_url, gh_url
 
 
