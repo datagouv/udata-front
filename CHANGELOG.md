@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 2.0.7 (2022-07-20)
 
 - Fix window.dsfr.register error [#138](https://github.com/etalab/udata-front/pull/138)
