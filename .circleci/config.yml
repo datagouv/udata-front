@@ -168,6 +168,9 @@ jobs:
             pip install -e .
             udata generate-fixtures
       - run:
+          name: Install lighthouse
+          command: sudo npm install -g @lhci/cli@0.8.x
+      - run:
           name: Prepare udata.cfg file with udata-front plugin
           command: cp .lighthouseci/front-plugin-udata.cfg udata.cfg
       - run:
