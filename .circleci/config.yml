@@ -1,5 +1,8 @@
 ---
-version: 2
+version: 2.1
+
+orbs:
+  browser-tools: circleci/browser-tools@1.2.3
 
 jobs:
   deps:
@@ -67,7 +70,7 @@ jobs:
   python:
     docker:
       - image: udata/circleci:2-alpine
-      - image: circleci/mongo:3.6-stretch-ram
+      - image: mongo:3.6
       - image: redis:alpine
     environment:
        BASH_ENV: /root/.bashrc
@@ -148,6 +151,35 @@ jobs:
           paths:
             - udata_front/theme/gouvfr/static
 
+
+  lighthouse:
+    docker:
+      - image: cimg/python:3.7.13-browsers
+      - image: mongo:3.6
+      - image: redis:alpine
+    steps:
+      - checkout
+      - browser-tools/install-chrome
+      - attach_workspace:
+          at: .
+      - run:
+          name: Generate udata fixtures
+          command: |
+            pip install -e .
+            udata generate-fixtures
+      - run:
+          name: Install lighthouse
+          command: sudo npm install -g @lhci/cli@0.8.x
+      - run:
+          name: Prepare udata.cfg file with udata-front plugin
+          command: cp .lighthouseci/front-plugin-udata.cfg udata.cfg
+      - run:
+          name: Run lighthouse
+          command: npm run lighthouse
+      - store_artifacts:
+          path: reports/
+          destination: reports
+
   dist:
     docker:
       - image: udata/circleci:2-alpine
@@ -209,6 +241,13 @@ workflows:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
       - assets:
+          filters:
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+      - lighthouse:
+          requires:
+            - deps
+            - assets
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/

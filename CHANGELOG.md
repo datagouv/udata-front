@@ -9,6 +9,7 @@
 - Fix window.dsfr.register error [#138](https://github.com/etalab/udata-front/pull/138)
 - Fix featured toggle [#137](https://github.com/etalab/udata-front/pull/137)
 - Iterate on search results and cards [#136](https://github.com/etalab/udata-front/pull/136)
+- Add lighthouse in CircleCI [#108](https://github.com/etalab/udata-front/pull/108)
 
 ## 2.0.6 (2022-07-08)
 
