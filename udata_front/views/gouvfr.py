@@ -49,7 +49,7 @@ def redirect_topics(topic):
     return redirect(url_for('topics.display', topic=topic))
 
 
-def get_pages_gh_urls(slug, locale:str = None):
+def get_pages_gh_urls(slug, locale: str = None):
     repo = current_app.config.get("PAGES_GH_REPO_NAME")
     if not repo:
         abort(404)
