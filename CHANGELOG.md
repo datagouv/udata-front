@@ -2,6 +2,7 @@
 
 ## Current (in progress)
 
+- Allow to use tag#tagname in the lists of datasets and reuses of the markdown documentation [#140](https://github.com/etalab/udata-front/pull/140)
 - Fix window.dsfr.register error [#138](https://github.com/etalab/udata-front/pull/138)
 - Fix featured toggle [#137](https://github.com/etalab/udata-front/pull/137)
 - Iterate on search results and cards [#136](https://github.com/etalab/udata-front/pull/136)

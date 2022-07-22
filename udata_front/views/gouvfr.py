@@ -100,29 +100,19 @@ def get_page_content(slug):
     return content, gh_url, extension
 
 
-def get_object(model, id_or_slug):
-    objects = getattr(model, 'objects')
-    obj = objects.filter(slug=id_or_slug).first()
-    if not obj:
-        try:
-            obj = objects.filter(id=id_or_slug).first()
-        except ValidationError:
-            pass
-    return obj
+def get_objects(page, datasets: bool = True, reuses: bool = True):
+    """
+    Returns dataset / reuses objects from a frontmatter page
+    """
+    models = {}
 
-
-def get_objects_from_tag(model, tag) -> list:
-    objects = getattr(model, "objects").filter(tags=tag)
-    return [r for r in objects]
-
-
-@blueprint.route('/pages/<path:slug>/')
-def show_page(slug):
-    content, gh_url, extension = get_page_content(slug)
-    page = frontmatter.loads(content)
+    if datasets:
+        models["datasets"] = Dataset
+    
+    if reuses:
+        models["reuses"] = Reuse
 
     data = {}
-    models = {"reuses": Reuse, "datasets": Dataset}
 
     for data_type, model in models.items():
         data[data_type] = []
@@ -137,6 +127,30 @@ def show_page(slug):
                 if res:
                     data[data_type].append(res)
         data[data_type] = [r for r in data[data_type] if r is not None]
+    
+    return data
+
+
+def get_object(model, id_or_slug):
+    objects = getattr(model, 'objects')
+    obj = objects.filter(slug=id_or_slug).first()
+    if not obj:
+        try:
+            obj = objects.filter(id=id_or_slug).first()
+        except ValidationError:
+            pass
+    return obj
+
+
+def get_objects_from_tag(model, tag) -> list:
+    return  getattr(model, "objects").filter(tags=tag).visible()
+
+
+@blueprint.route('/pages/<path:slug>/')
+def show_page(slug):
+    content, gh_url, extension = get_page_content(slug)
+    page = frontmatter.loads(content)
+    data = get_objects(page)
 
     return theme.render(
         "page.html",
