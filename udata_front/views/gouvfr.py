@@ -108,7 +108,7 @@ def get_objects(page, datasets: bool = True, reuses: bool = True):
 
     if datasets:
         models["datasets"] = Dataset
-    
+
     if reuses:
         models["reuses"] = Reuse
 
@@ -127,7 +127,7 @@ def get_objects(page, datasets: bool = True, reuses: bool = True):
                 if res:
                     data[data_type].append(res)
         data[data_type] = [r for r in data[data_type] if r is not None]
-    
+
     return data
 
 
@@ -143,7 +143,7 @@ def get_object(model, id_or_slug):
 
 
 def get_objects_from_tag(model, tag) -> list:
-    return  getattr(model, "objects").filter(tags=tag).visible()
+    return getattr(model, "objects").filter(tags=tag).visible()
 
 
 @blueprint.route('/pages/<path:slug>/')
