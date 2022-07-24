@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "udata-front"
+version = "2.0.8"
+description = "udata customizations for data.gouv.fr"
+authors = ["Etalab <pypi@data.gouv.fr>"]
+keywords = ["udata", "opendata", "portal", "etalab"]
+
+[tool.poetry.dependencies]
+python = ">=3.7,<4"
+udata = { git = "https://github.com/opendatateam/udata.git" }
+feedparser = "6.0.8"
+python-frontmatter = "1.0.0"
+sentry-sdk = {version = "1.1.0", extras = ["flask"]}
+
+[tool.poetry.dev-dependencies]
+flake8 = "3.7.7"
+invoke = "1.2.0"
+pytest-cov = "2.6.1"
+mock = "3.0.5"
+pytest = "4.6.3"
+pytest-flask = "0.15.0"
+pytest-mock = "2.0.0"
+requests-mock = "1.7.0"
+feedgen = "0.7.0"
+readme-renderer = {version = "24.0", extras = ["md"]}
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
