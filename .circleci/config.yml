@@ -138,13 +138,7 @@ workflows:
   version: 2
   build:
     jobs:
-      - deps:
-          filters:
-            tags:
-              only: /v[0-9]+(\.[0-9]+)*/
       - python:
-          requires:
-            - deps
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
@@ -154,7 +148,6 @@ workflows:
               only: /v[0-9]+(\.[0-9]+)*/
       - lighthouse:
           requires:
-            - deps
             - assets
           filters:
             tags:
