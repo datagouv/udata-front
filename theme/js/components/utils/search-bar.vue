@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="searchWithoutAutocomplete">
-    <div class="fr-search-bar" role="search">
+    <div class="fr-search-bar" role="search" :aria-label="$t('Search resources')">
       <label class="fr-label" :for="eventName">
         {{ $t('Search resources') }}
       </label>

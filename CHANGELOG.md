@@ -10,6 +10,7 @@
 - Fix featured toggle [#137](https://github.com/etalab/udata-front/pull/137)
 - Iterate on search results and cards [#136](https://github.com/etalab/udata-front/pull/136)
 - Add lighthouse in CircleCI [#108](https://github.com/etalab/udata-front/pull/108)
+- Fix RGAA criterion 8.2 [#130](https://github.com/etalab/udata-front/pull/130)
 
 ## 2.0.6 (2022-07-08)
 

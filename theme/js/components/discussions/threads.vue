@@ -73,7 +73,6 @@ Discussions allow users to interact with others.
           ></create-thread>
           <ul class="fr-mb-5v">
             <li
-              :id="'discussion-' + discussion.id"
               v-for="discussion in discussions"
             >
               <thread v-bind="discussion" />
