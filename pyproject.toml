@@ -1,13 +1,12 @@
 [tool.poetry]
 name = "udata-front"
-version = "2.0.8"
+version = "2.0.9-alpha.0"
 description = "udata customizations for data.gouv.fr"
 authors = ["Etalab <pypi@data.gouv.fr>"]
 keywords = ["udata", "opendata", "portal", "etalab"]
 
 [tool.poetry.dependencies]
 python = ">=3.7,<4"
-flask-themes2 = "0.1.4"
 udata = { git = "https://github.com/opendatateam/udata.git" }
 feedparser = "6.0.8"
 python-frontmatter = "1.0.0"
