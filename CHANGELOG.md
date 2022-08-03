@@ -2,7 +2,8 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Update Venti buttons [#146](https://github.com/etalab/udata-front/pull/146)
+- :warning: @blue-470 and @blue-500 are removed
 
 ## 2.0.7 (2022-07-20)
 
