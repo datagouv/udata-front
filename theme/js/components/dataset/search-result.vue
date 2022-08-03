@@ -106,7 +106,9 @@
               <QualityScore :score="quality.score"/>
           </Tooltip>
           <template v-if="!externalSource">
-            &mdash;
+            <span class="fr-hidden inline-sm">
+              &mdash;
+            </span>
             {{ $t('Updated on {date}', {date: $filters.formatDate(last_modified)}) }}
           </template>
         </p>
