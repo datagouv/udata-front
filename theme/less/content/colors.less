@@ -99,6 +99,7 @@ Similar to the contextual text color classes, easily set the background of an el
 @background-contrast-grey: var(--background-contrast-grey);
 @background-contrast-success: var(--background-contrast-success);
 @background-contrast-warning: var(--background-contrast-warning);
+@background-contrast-info: var(--background-contrast-info);
 @background-alt-blue-cumulus: var(--background-alt-blue-cumulus);
 @background-alt-blue-cumulus-hover: var(--background-alt-blue-cumulus-hover);
 @background-alt-blue-cumulus-active: var(--background-alt-blue-cumulus-active);
@@ -118,6 +119,7 @@ Similar to the contextual text color classes, easily set the background of an el
 @text-default-error: var(--text-default-error);
 @text-default-success: var(--text-default-success);
 @text-default-warning: var(--text-default-warning);
+@text-default-info: var(--text-default-info);
 
 @contrast-white: var(--text-default-grey);
 @contrast-blue-100: var(--text-default-grey);
@@ -161,6 +163,10 @@ each(@colors, {
     background-color: @background-contrast-warning;
 }
 
+.bg-contrast-info {
+    background-color: @background-contrast-info;
+}
+
 .bg-alt-blue-cumulus {
     background-color: @background-alt-blue-cumulus;
 }
@@ -179,6 +185,10 @@ each(@colors, {
 
 .text-default-warning {
     color: @text-default-warning !important;
+}
+
+.text-default-info {
+    color: @text-default-info !important;
 }
 
 .text-title-grey {
