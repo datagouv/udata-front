@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 2.0.8 (2022-08-09)
 
 - Add lighthouse in CircleCI [#108](https://github.com/etalab/udata-front/pull/108)
