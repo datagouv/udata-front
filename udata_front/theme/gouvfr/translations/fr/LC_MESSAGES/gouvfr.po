@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: udata-front\n"
 "Report-Msgid-Bugs-To: data.gouv@data.gouv.fr\n"
 "POT-Creation-Date: 2022-08-09 10:08+0200\n"
-"PO-Revision-Date: 2022-08-09 08:40\n"
+"PO-Revision-Date: 2022-08-09 09:27\n"
 "Last-Translator: Data.gouv.fr Team <data.gouv@data.gouv.fr>\n"
 "Language: fr\n"
 "Language-Team: French\n"
@@ -843,12 +843,13 @@ msgstr[1] "%(num)d abonnés"
 
 #: udata_front/theme/gouvfr/templates/dataset/list.html:13
 msgid "Discover the new metadata quality score."
-msgstr ""
+msgstr "Découvrez le nouveau score de qualité des métadonnées."
 
 #: udata_front/theme/gouvfr/templates/dataset/list.html:16
 msgid "<a class='text-default-info fr-mr-2w' href='{eval_url}'>Give us your feedback.</a>\n"
 "            <a class='text-default-info' href='{guide_url}'>Learn more.</a>"
-msgstr ""
+msgstr "<a class='text-default-info fr-mr-2w' href='{eval_url}'>Donnez-nous votre avis.</a>\n"
+"            <a class='text-default-info' href='{guide_url}'>En savoir plus.</a>"
 
 #: udata_front/theme/gouvfr/templates/dataset/list.html:34
 #, python-format
@@ -893,7 +894,7 @@ msgstr "Rechercher dans les réutilisations"
 
 #: udata_front/theme/gouvfr/templates/dataset/list.html:73
 msgid "Search for dataset"
-msgstr ""
+msgstr "Rechercher un jeu de données"
 
 #: udata_front/theme/gouvfr/templates/dataset/list.html:75
 #: udata_front/theme/gouvfr/templates/dataset/list.html:80
@@ -1087,71 +1088,71 @@ msgstr "Dernière page"
 #: udata_front/theme/gouvfr/templates/macros/quality_score_with_tooltip.html:9
 #: udata_front/theme/gouvfr/templates/macros/quality_score_with_tooltip.html:63
 msgid "Metadata quality:"
-msgstr ""
+msgstr "Qualité des métadonnées :"
 
 #: udata_front/theme/gouvfr/templates/macros/quality_score_with_tooltip.html:12
 msgid "Data description filled"
-msgstr ""
+msgstr "Description des données renseignée"
 
 #: udata_front/theme/gouvfr/templates/macros/quality_score_with_tooltip.html:13
 msgid "Data description empty"
-msgstr ""
+msgstr "Description des données non renseignée"
 
 #: udata_front/theme/gouvfr/templates/macros/quality_score_with_tooltip.html:18
 msgid "Resources documented"
-msgstr ""
+msgstr "Ressources documentées"
 
 #: udata_front/theme/gouvfr/templates/macros/quality_score_with_tooltip.html:19
 msgid "Resources documentation missing"
-msgstr ""
+msgstr "Documentation des ressources manquante"
 
 #: udata_front/theme/gouvfr/templates/macros/quality_score_with_tooltip.html:24
 msgid "License filled"
-msgstr ""
+msgstr "Licence renseignée"
 
 #: udata_front/theme/gouvfr/templates/macros/quality_score_with_tooltip.html:25
 msgid "No license set"
-msgstr ""
+msgstr "Licence non renseignée"
 
 #: udata_front/theme/gouvfr/templates/macros/quality_score_with_tooltip.html:30
 msgid "Update frequency followed"
-msgstr ""
+msgstr "Fréquence de mise à jour respectée"
 
 #: udata_front/theme/gouvfr/templates/macros/quality_score_with_tooltip.html:31
 msgid "Update frequency not followed"
-msgstr ""
+msgstr "Fréquence de mise à jour non respectée"
 
 #: udata_front/theme/gouvfr/templates/macros/quality_score_with_tooltip.html:31
 msgid "Update frequency not set"
-msgstr ""
+msgstr "Fréquence de mise à jour non renseignée"
 
 #: udata_front/theme/gouvfr/templates/macros/quality_score_with_tooltip.html:36
 msgid "File formats are open"
-msgstr ""
+msgstr "Formats de fichiers standards"
 
 #: udata_front/theme/gouvfr/templates/macros/quality_score_with_tooltip.html:37
 msgid "File formats are closed"
-msgstr ""
+msgstr "Formats de fichiers non standards"
 
 #: udata_front/theme/gouvfr/templates/macros/quality_score_with_tooltip.html:42
 msgid "Temporal coverage filled"
-msgstr ""
+msgstr "Couverture temporelle renseignée"
 
 #: udata_front/theme/gouvfr/templates/macros/quality_score_with_tooltip.html:43
 msgid "Temporal coverage not set"
-msgstr ""
+msgstr "Couverture temporelle non renseignée"
 
 #: udata_front/theme/gouvfr/templates/macros/quality_score_with_tooltip.html:48
 msgid "Spatial coverage filled"
-msgstr ""
+msgstr "Couverture spatiale renseignée"
 
 #: udata_front/theme/gouvfr/templates/macros/quality_score_with_tooltip.html:49
 msgid "Spatial coverage not set"
-msgstr ""
+msgstr "Couverture spatiale non renseignée"
 
 #: udata_front/theme/gouvfr/templates/macros/quality_score_with_tooltip.html:57
 msgid "Learn more about this indicator"
-msgstr ""
+msgstr "En savoir plus sur cet indicateur"
 
 #: udata_front/theme/gouvfr/templates/macros/search.html:17
 msgid "Sort by"
@@ -1495,7 +1496,7 @@ msgstr "Rechercher parmi les %(count)s organisations sur %(site)s"
 
 #: udata_front/theme/gouvfr/templates/organization/list.html:39
 msgid "Search an organization"
-msgstr ""
+msgstr "Rechercher une organisation"
 
 #: udata_front/theme/gouvfr/templates/participez/participez.html:11
 msgid "Go to documentation"
@@ -1698,7 +1699,7 @@ msgstr "Rechercher dans les jeux de données"
 
 #: udata_front/theme/gouvfr/templates/reuse/list.html:62
 msgid "Search a reuse"
-msgstr ""
+msgstr "Rechercher une réutilisation"
 
 #: udata_front/theme/gouvfr/templates/reuse/list.html:86
 msgid "All"
