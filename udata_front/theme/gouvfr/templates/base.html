@@ -7,6 +7,7 @@
 {% if login_required %}
     {% set messages = messages + [_('You must be connected to do this action.')] %}
 {% endif %}
+{% block message %}{% endblock %}
 {% if messages %}
     <div class="fr-container fr-py-3w">
         {% for message in messages %}

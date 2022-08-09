@@ -1,6 +1,7 @@
 {% cache cache_duration, 'dataset-search-result', dataset.id|string, g.lang_code %}
 {% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate %}
-<article class="fr-pt-5v fr-pb-6v fr-px-1w border-bottom border-default-grey fr-enlarge-link">
+{% from theme('macros/quality_score_with_tooltip.html') import quality_score_with_tooltip %}
+<article class="fr-pt-5v fr-pb-6v fr-px-1w border-bottom border-default-grey fr-enlarge-link" style="{{z_index}}">
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
         <div class="fr-col-auto">
             <div class="logo">
@@ -54,26 +55,15 @@
             <p class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm">
                 {{ dataset.description|mdstrip(300) }}
             </p>
-            <p class="fr-mb-0 text-mention-grey">
+            <div class="fr-mb-0 text-mention-grey">
+                {{quality_score_with_tooltip(dataset, "fr-hidden inline-sm")}}
                 {% if not external_source(dataset) %}
-                {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
-                    {% if dataset.license %}
-                    <span class="fr-hidden inline-sm">
-                        &mdash;
-                    </span>
-                    {%  endif %}
-                {% endif %}
-                {% if dataset.license %}
                 <span class="fr-hidden inline-sm">
-                    {% if dataset.license.url %}
-                    <span class="not-enlarged">
-                    <a href="{{ dataset.license.url }}" class="text-decoration-underline text-decoration-underline--dsfr text-mention-grey">
-                        {% endif %}
-                    {{ dataset.license.title }}
-                    {% if dataset.license.url %}</a></span>{% endif %}
+                    &mdash;
                 </span>
+                {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
                 {% endif %}
-            </p>
+            </div>
         </div>
         <ul class="fr-hidden fr-unhidden-sm fr-col-auto fr-tags-group flex-direction-column fr-grid-row--bottom self-center">
             <li>
