@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 2.0.8 (2022-08-09)
 
 - Add lighthouse in CircleCI [#108](https://github.com/etalab/udata-front/pull/108)
 - Fix RGAA criterion 8.2 [#130](https://github.com/etalab/udata-front/pull/130)
