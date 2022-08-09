@@ -63,3 +63,6 @@ stylemark/
 
 cypress/videos
 cypress/screenshots
+
+.lighthouseci/*.json
+.lighthouseci/*.html
