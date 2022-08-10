@@ -37,6 +37,7 @@ a.fr-tag, button.fr-tag {
 
     &[aria-pressed="true"] {
         --background-action-high-blue-france: @blue-400;
+        --background-action-high-blue-france-hover: @blue-400-hover;
         &::after {
             --text-action-high-blue-france: @blue-400;
         }
@@ -44,6 +45,9 @@ a.fr-tag, button.fr-tag {
 
     &[aria-selected="true"] {
         &:extend(button.fr-tag[aria-pressed="true"]);
+        &:hover {
+            &:extend(button.fr-tag[aria-pressed="true"]:hover);
+        }
         &::after {
             &:extend(button.fr-tag[aria-pressed="true"]::after);
         }
