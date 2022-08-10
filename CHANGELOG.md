@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 2.0.9 (2022-08-10)
 
 - Fix selected tag with wrong color [#149](https://github.com/etalab/udata-front/pull/149)
