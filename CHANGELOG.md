@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix dataset search result link to organization [#150](https://github.com/etalab/udata-front/pull/150)
 
 ## 2.0.9 (2022-08-10)
 
