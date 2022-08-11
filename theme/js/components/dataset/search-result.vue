@@ -36,7 +36,7 @@
         </h4>
         <span class="not-enlarged" v-if="organization || owner">
           {{ $t('From') }} 
-          <a :href="page" v-if="organization">
+          <a :href="organization.page" v-if="organization">
               <OrganizationNameWithCertificate :organization="organization" />
           </a>
           <template v-if="owner">{{ownerName}}</template>
