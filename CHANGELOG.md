@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 2.0.10 (2022-08-11)
 
 - Fix dataset search result link to organization [#150](https://github.com/etalab/udata-front/pull/150)
 
