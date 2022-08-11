@@ -2,15 +2,32 @@
 name = "udata-front"
 version = "2.0.9-alpha.0"
 description = "udata customizations for data.gouv.fr"
+readme="README.md"
 authors = ["Etalab <pypi@data.gouv.fr>"]
+repository="https://github.com/etalab/udata-front"
+license = "LGPL"
 keywords = ["udata", "opendata", "portal", "etalab"]
+classifiers=[
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python",
+    "Environment :: Web Environment",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Topic :: System :: Software Distribution",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)"
+]
 
 [tool.poetry.dependencies]
 python = ">=3.7,<4"
-udata = { git = "https://github.com/opendatateam/udata.git" }
 feedparser = "6.0.8"
 python-frontmatter = "1.0.0"
 sentry-sdk = {version = "1.1.0", extras = ["flask"]}
+udata = { git = "https://github.com/opendatateam/udata.git", rev = "poetrySwitch" }
+Flask-Themes2 = "0.1.5"
 
 [tool.poetry.dev-dependencies]
 flake8 = "3.7.7"
@@ -23,6 +40,24 @@ pytest-mock = "2.0.0"
 requests-mock = "1.7.0"
 feedgen = "0.7.0"
 readme-renderer = {version = "24.0", extras = ["md"]}
+
+[tool.poetry.plugins."udata.themes"]
+"gouvfr" = "udata_front.theme.gouvfr"
+
+[tool.poetry.plugins."udata.models"]
+"front" = "udata_front.models"
+
+[tool.poetry.plugins."udata.front"]
+"front" = "udata_front.frontend"
+
+[tool.poetry.plugins."udata.apis"]
+"front_oembed" = "udata_front.views.oembed"
+
+[tool.poetry.plugins."udata.harvesters"]
+"maaf" = "udata_front.harvesters.maaf:MaafBackend"
+
+[tool.poetry.plugins."udata.tasks"]
+"front" = "udata_front.tasks"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
