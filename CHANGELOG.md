@@ -3,6 +3,8 @@
 ## Current (in progress)
 
 - Fix discussions text wrap [#145](https://github.com/etalab/udata-front/pull/145)
+- Update Venti buttons [#146](https://github.com/etalab/udata-front/pull/146)
+- :warning: @blue-470 and @blue-500 are removed
 
 ## 2.0.10 (2022-08-11)
 
