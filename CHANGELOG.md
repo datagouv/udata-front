@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix discussions text wrap [#145](https://github.com/etalab/udata-front/pull/145)
 
 ## 2.0.10 (2022-08-11)
 
