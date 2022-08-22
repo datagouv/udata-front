@@ -80,7 +80,7 @@
                             <li>
                                 <a
                                     href="https://numerique.gouv.fr"
-                                    title="{{ _('DINUM website') }}"
+                                    title="{{ _('DINUM website: numerique.gouv.fr') }}"
                                     class="fr-text--bold fr-footer__top-link w-100"
                                 >
                                     numerique.gouv.fr
@@ -91,14 +91,16 @@
                             <li>
                                 <a
                                     href="https://github.com/opendatateam/udata/"
-                                    title="{{ _('Open-source engine') }}"
+                                    title="{{ _('Open-source engine: udata') }}"
                                     class="fr-footer__top-link"
                                 >
                                     udata
                                 </a>
                                 <a
                                     href="https://pypi.org/project/udata/{{ package_version('udata') }}/"
-                                    title="{{ _('Deployed version') }}"
+                                    title="{{ _('Udata deployed version: {version}').format(
+                                        version=package_version('udata')
+                                    ) }}"
                                     class="fr-footer__top-link"
                                 >
                                     {{ package_version('udata') }}
@@ -107,13 +109,15 @@
                             <li>
                                 <a
                                     href="https://github.com/etalab/udata-front/"
-                                    title="{{ _('Data.gouv.fr extension') }}"
+                                    title="{{ _('Data.gouv.fr extension: udata-front') }}"
                                     class="fr-footer__top-link"
                                 >
                                     udata-front
                                 </a>
                                 <a href="https://pypi.org/project/udata-front/{{ package_version('udata-front') }}/"
-                                    title="{{ _('Deployed version') }}"
+                                    title="{{ _('Udata-front deployed version: {version}').format(
+                                        version=package_version('udata-front')
+                                    ) }}"
                                     class="fr-footer__top-link"
                                 >
                                     {{ package_version('udata-front') }}

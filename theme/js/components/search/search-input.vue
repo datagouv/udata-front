@@ -25,7 +25,7 @@ If the submitUrl prop is passed, it will redirect on Submit.
       :placeholder="placeholder || $t('Search...')"
       data-cy="search-input"
     />
-    <button class="fr-btn" :title="$t('Search')" type="submit">
+    <button class="fr-btn" type="submit">
       {{ $t('Search') }}
     </button>
   </section>
