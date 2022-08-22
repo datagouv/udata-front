@@ -62,12 +62,14 @@ Similar to the contextual text color classes, easily set the background of an el
 
 */
 
-// This one is missing from DSFR >1.4.
+// This ones are missing from DSFR >1.6.
 :root {
     --grey-850-200: #cecece;
+    --success-625-425: #27A658;
 }
 :root[data-fr-theme=dark] {
     --grey-850-200: #3a3a3a;
+    --success-625-425: #18753c;
 }
 
 @white: var(--grey-1000-50);
@@ -92,6 +94,7 @@ Similar to the contextual text color classes, easily set the background of an el
 @background-contrast-grey: var(--background-contrast-grey);
 @background-contrast-success: var(--background-contrast-success);
 @background-contrast-warning: var(--background-contrast-warning);
+@background-contrast-info: var(--background-contrast-info);
 @background-alt-blue-cumulus: var(--background-alt-blue-cumulus);
 @background-alt-blue-cumulus-hover: var(--background-alt-blue-cumulus-hover);
 @background-alt-blue-cumulus-active: var(--background-alt-blue-cumulus-active);
@@ -102,6 +105,8 @@ Similar to the contextual text color classes, easily set the background of an el
 @background-action-high-error: var(--background-action-high-error);
 @background-action-high-error-hover: var(--background-action-high-error-hover);
 @background-action-high-error-active: var(--background-action-high-error-active);
+@background-success-625-425: var(--success-625-425);
+
 @border-default-grey: var(--border-default-grey);
 @border-plain-success: var(--border-plain-success);
 
@@ -109,6 +114,7 @@ Similar to the contextual text color classes, easily set the background of an el
 @text-default-error: var(--text-default-error);
 @text-default-success: var(--text-default-success);
 @text-default-warning: var(--text-default-warning);
+@text-default-info: var(--text-default-info);
 
 @contrast-white: var(--text-default-grey);
 @contrast-blue-100: var(--text-default-grey);
@@ -150,6 +156,10 @@ each(@colors, {
     background-color: @background-contrast-warning;
 }
 
+.bg-contrast-info {
+    background-color: @background-contrast-info;
+}
+
 .bg-alt-blue-cumulus {
     background-color: @background-alt-blue-cumulus;
 }
@@ -168,6 +178,10 @@ each(@colors, {
 
 .text-default-warning {
     color: @text-default-warning !important;
+}
+
+.text-default-info {
+    color: @text-default-info !important;
 }
 
 .text-title-grey {

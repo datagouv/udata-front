@@ -1,0 +1,15 @@
+{% macro quality_score(score) %}
+{% set quality_max_score = 1 %}
+{% set high = quality_max_score * 2/3 %}
+<meter
+    class="quality-score"
+    min="0"
+    low="0"
+    high="{{high}}"
+    max="{{quality_max_score}}"
+    optimum="{{quality_max_score}}"
+    value="{{score}}"
+>
+    {{score}}/{{quality_max_score}}
+</meter>
+{% endmacro %}
