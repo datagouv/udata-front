@@ -5,6 +5,7 @@
 - Fix discussions text wrap [#145](https://github.com/etalab/udata-front/pull/145)
 - Update Venti buttons [#146](https://github.com/etalab/udata-front/pull/146)
 - :warning: @blue-470 and @blue-500 are removed
+- Updated `SearchView` to match changes in udata apiV2 migration to Marshmallow [#2755](https://github.com/opendatateam/udata/pull/2755)
 
 ## 2.0.10 (2022-08-11)
 
