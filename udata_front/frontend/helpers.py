@@ -7,7 +7,6 @@ from urllib.parse import urlsplit, urlunsplit
 
 from babel.numbers import format_decimal
 from flask import g, url_for, request, current_app, json
-from flask_restplus import marshal
 from jinja2 import Markup, contextfilter
 from werkzeug import url_decode, url_encode
 
