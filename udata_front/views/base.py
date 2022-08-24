@@ -1,10 +1,10 @@
 from typing import Optional
 from flask import request, redirect, abort, g
 from flask.views import MethodView
+from webargs import fields
 from webargs.flaskparser import parser
 
 from udata import search, auth
-from udata.utils import not_none_dict
 from udata_front import theme
 
 
