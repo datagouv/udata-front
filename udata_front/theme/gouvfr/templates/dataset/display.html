@@ -5,6 +5,7 @@
 {% from theme('macros/breadcrumb.html') import breadcrumb with context %}
 {% from theme('macros/banner_info.html') import banner_info %}
 {% from theme('macros/banner_warning.html') import banner_warning %}
+{% from theme('macros/quality_score_with_tooltip.html') import quality_score_with_tooltip %}
 
 ## FIXME: remove inspire:indentifier robots condition when geo.data.gouv.fr is shutdown
 {% set meta = {
@@ -82,7 +83,8 @@
                 {{ dataset.title }}
                 {% if dataset.acronym %}<small>{{ dataset.acronym }}</small>{% endif %}
             </h1>
-            <p class="fr-my-0">
+            <div class="fr-my-1w">
+                {{quality_score_with_tooltip(dataset, 'inline')}}
                 {% if not external_source %}
                 {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
                     {% if dataset.license %}
@@ -94,7 +96,7 @@
                 {{ dataset.license.title }}
                 {% if dataset.license.url %}</a>{% endif %}
                 {% endif %}
-            </p>
+            </div>
         </div>
         <div class="fr-col-auto fr-mt-1v fr-grid-row fr-grid-row--bottom flex-direction-column">
             {{ follow_btn(dataset) }}
