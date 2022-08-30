@@ -146,7 +146,10 @@ def group_resources_by_type(resources):
 
 @Dataset.on_update.connect
 def clear_cache_on_updated_dataset(dataset):
-    user = current_user.slug or 'anonymous'
+    try:
+        user = current_user.slug
+    except AttributeError:
+        user = 'anonymous'
 
     for lang_code in current_app.config['LANGUAGES'].keys():
 
