@@ -11,7 +11,7 @@
         :id="eventName"
         v-model="searchValue"
       />
-      <button class="fr-btn" :title="$t('Search')" type="submit">
+      <button class="fr-btn" type="submit">
         {{ $t('Search') }}
       </button>
     </div>

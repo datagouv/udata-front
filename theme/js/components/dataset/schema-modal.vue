@@ -64,7 +64,7 @@
 
       <h3>{{$t('About schemas')}}</h3>
       <p>
-        {{$t('Data schemas allow to describe data models : what are the fields, how is data represented, what are the possible values. Discover how schemas improve data quality and use cases on ')}} <a href="https://schema.data.gouv.fr" rel="noopener noreferrer" target="_blank" title="Site web schema.data.gouv.fr">schema.data.gouv.fr</a>.
+        {{$t('Data schemas allow to describe data models : what are the fields, how is data represented, what are the possible values. Discover how schemas improve data quality and use cases on ')}} <a href="https://schema.data.gouv.fr" rel="noopener noreferrer" target="_blank">schema.data.gouv.fr</a>.
       </p>
     </div>
 
