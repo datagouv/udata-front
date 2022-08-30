@@ -149,9 +149,15 @@ def clear_cache_on_updated_dataset(dataset):
     user = current_user.slug or 'anonymous'
 
     for lang_code in current_app.config['LANGUAGES'].keys():
-        head_cache_key = make_template_fragment_key("dataset-extra-head", vary_on=[str(dataset.id), lang_code])
+
+        head_cache_key = make_template_fragment_key(
+            "dataset-extra-head", vary_on=[str(dataset.id), lang_code])
         cache.delete(head_cache_key)
-        breadcrumb_cache_key = make_template_fragment_key("dataset-breadcrumb", vary_on=[str(dataset.id), lang_code])
+
+        breadcrumb_cache_key = make_template_fragment_key(
+            "dataset-breadcrumb", vary_on=[str(dataset.id), lang_code])
         cache.delete(breadcrumb_cache_key)
-        content_cache_key = make_template_fragment_key("dataset-content", vary_on=[str(dataset.id), "1", lang_code, user])
+
+        content_cache_key = make_template_fragment_key(
+            "dataset-content", vary_on=[str(dataset.id), "1", lang_code, user])
         cache.delete(content_cache_key)
