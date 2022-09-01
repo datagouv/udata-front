@@ -162,5 +162,5 @@ def clear_cache_on_updated_dataset(dataset):
         cache.delete(breadcrumb_cache_key)
 
         content_cache_key = make_template_fragment_key(
-            "dataset-content", vary_on=[str(dataset.id), "1", lang_code, user])
+            "dataset-content", vary_on=[str(dataset.id), lang_code, user])
         cache.delete(content_cache_key)

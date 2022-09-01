@@ -1,8 +1,10 @@
 import itertools
 
-from flask import g, abort, redirect, url_for, request
+from flask import g, abort, redirect, url_for, request, current_app
+from flask_caching import make_template_fragment_key
 from flask_security import current_user
 
+from udata.app import cache
 from udata.frontend import csv
 from udata_front.views.base import DetailView, SearchView
 from udata.i18n import I18nBlueprint
@@ -139,3 +141,21 @@ def datasets_resources_csv(org):
 def sitemap_urls():
     for org in Organization.objects.visible().only('id', 'slug'):
         yield 'organizations.show_redirect', {'org': org}, None, 'weekly', 0.7
+
+
+@Organization.on_update.connect
+def clear_cache_on_updated_organization(org):
+    try:
+        user = current_user.slug
+    except AttributeError:
+        user = 'anonymous'
+
+    for lang_code in current_app.config['LANGUAGES'].keys():
+
+        breadcrumb_cache_key = make_template_fragment_key(
+            "org-breadcrumb", vary_on=[str(org.id), lang_code])
+        cache.delete(breadcrumb_cache_key)
+
+        content_cache_key = make_template_fragment_key(
+            "org-content", vary_on=[str(org.id), lang_code, user])
+        cache.delete(content_cache_key)
