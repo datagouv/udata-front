@@ -1,7 +1,7 @@
 {% cache cache_duration, 'dataset-search-result', dataset.id|string, g.lang_code %}
 {% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate %}
 {% from theme('macros/quality_score_with_tooltip.html') import quality_score_with_tooltip %}
-<article class="fr-pt-5v fr-pb-6v fr-px-1w border-bottom border-default-grey fr-enlarge-link" style="z-index: {{loop.length - loop.index0}}">
+<article class="fr-pt-5v fr-pb-6v fr-px-1w border-bottom border-default-grey fr-enlarge-link" style="z-index: {{loop.length - loop.index0 + 1}}">
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
         <div class="fr-col-auto">
             <div class="logo">
