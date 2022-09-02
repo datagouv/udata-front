@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 2.0.11 (2022-09-02)
 
 - Fix discussions text wrap [#145](https://github.com/etalab/udata-front/pull/145)
