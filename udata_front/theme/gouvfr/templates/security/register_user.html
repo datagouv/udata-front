@@ -26,7 +26,11 @@
                             </label>
                         </div>
                         <div class="vuejs">
-                            <capcha></capcha>
+                            <capcha captcha-style-name="captchaFR"></capcha>
+                            <label class="fr-label fr-mt-1w">
+                                {{ _("Retype the characters from the picture:") }}
+                            </label>
+                            <input id="captchaFormulaireExtInput" type="text"/>
                         </div>
                         <div class="fr-grid-row fr-grid-row--center">
                             <button type="submit" class="fr-btn">{{ _('Sign up') }}</button>

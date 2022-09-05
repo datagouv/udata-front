@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
-from flask import current_app
+from flask import current_app, make_response, request
+from werkzeug.datastructures import MIMEAccept
 
 import logging
 import requests
@@ -20,6 +21,7 @@ captchetat_parser.add_argument('cs', type=str, location='args')
 class CaptchEtatAPI(API):
     
     token_cache_key = 'captchetat-bearer-token'
+    default_mediatype = 'application/octet-stream'
 
     def bearer_token(self):
         '''Get CaptchEtat bearer token from cache or get a new one from captchEtat Oauth server'''
@@ -52,4 +54,15 @@ class CaptchEtatAPI(API):
         headers = {'Authorization': 'Bearer ' + self.bearer_token()}
         captchetat_url = current_app.config.get('CAPTCHETAT_BASE_URL') + "/simple-captcha-endpoint"
         req = requests.get(captchetat_url, headers=headers, params=args)
-        return req.text
+        if args['get'] == "sound":
+            accept = request.accept_mimetypes.copy()
+            accept.append(("audio/*", 1))
+            request.accept_mimetypes = MIMEAccept(accept)
+        return req.content
+
+    @apiv2.representation('image/*')
+    @apiv2.representation('audio/*')
+    def image(data, code, headers):
+        resp = make_response(bytes(data), code)
+        resp.headers.extend(headers)
+        return resp

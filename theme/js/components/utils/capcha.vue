@@ -1,20 +1,37 @@
 <template>
-  <div>capcha</div>
+  <div id="BDC_CaptchaComponent" v-html="captchaHtml"></div>
 </template>
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { fetchHtml } from '../../api/captcha';
+import { fetchHtml, fetchScript } from '../../api/captcha';
 
 export default defineComponent({
-  setup() {
+  props: {
+    captchaStyleName:  {
+      type: /** @type import('vue').PropType<import('../../api/captcha').CaptchaStyle>} **/ (String),
+      required: true,
+    }
+  },
+  setup(props) {
     const { locale } = useI18n();
+    const captchaHtml = ref(null);
     const displayHtml = () => {
-      console.log(locale)
-      fetchHtml('captchaFR').then(html => console.log(html))
+      fetchHtml(props.captchaStyleName)
+        .then(html => captchaHtml.value = html)
+        .then(() =>  {
+          const input = document.querySelector('#BDC_VCID_' + props.captchaStyleName)
+          if(input instanceof HTMLInputElement) {
+            fetchScript(props.captchaStyleName, input.value)
+          }
+        })
+    }
+    const getInstance = () => {
+      return window.botdetect.getInstanceByStyleName(props.captchaStyleName)
     }
     displayHtml()
     return {
+      captchaHtml,
       locale
     }
   },
