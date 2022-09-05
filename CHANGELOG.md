@@ -9,7 +9,7 @@
 - Fix RGAA criterion 8.2 [#147](https://github.com/etalab/udata-front/pull/147)
 - Cache behavior changes [#154](https://github.com/etalab/udata-front/pull/154):
   - Organization and Reuse display page are now cached.
-  - After updating a dataset, organization or reuse object, the corresponding detail page cache is cleared.
+  - Cache keys now embed the `last_modified` object attribute. This automatically invalidates the cache when modifying the object.
 
 ## 2.0.10 (2022-08-11)
 
