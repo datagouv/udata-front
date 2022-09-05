@@ -17,14 +17,14 @@
 {% set bundle = 'organization' %}
 
 {% block breadcrumb %}
-{% cache cache_duration, 'org-breadcrumb', org.id|string, g.lang_code %}
+{% cache cache_duration, 'org-breadcrumb', org.id|string, g.lang_code, org.last_modified|string %}
 <li><a href="{{ url_for('organizations.list') }}">{{ _('Organizations') }}</a></li>
 <li class="active" aria-current="page">{{ org.name }}</li>
 {% endcache %}
 {% endblock %}
 
 {% block main_content %}
-{% cache cache_duration, 'org-content', org.id|string, g.lang_code, current_user.slug or 'anonymous' %}
+{% cache cache_duration, 'org-content', org.id|string, g.lang_code, current_user.slug or 'anonymous', org.last_modified|string %}
 <header class="fr-container">
     {% if org.deleted %}
     <div class="well-grey-100 well fr-mb-3v">

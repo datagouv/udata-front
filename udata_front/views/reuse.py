@@ -1,9 +1,6 @@
-from flask import abort, request, url_for, current_app
-from flask_caching import make_template_fragment_key
-from flask_security import current_user
+from flask import abort, request, url_for
 from werkzeug.contrib.atom import AtomFeed
 
-from udata.app import cache
 from udata_front.views.base import SearchView, DetailView
 from udata.i18n import I18nBlueprint, lazy_gettext as _
 from udata.models import Follow
@@ -113,25 +110,3 @@ class ReuseDetailView(ReuseView, DetailView):
 def sitemap_urls():
     for reuse in Reuse.objects.visible().only('id', 'slug'):
         yield 'reuses.show_redirect', {'reuse': reuse}, None, 'weekly', 0.8
-
-
-@Reuse.on_update.connect
-def clear_cache_on_updated_reuse(reuse):
-    try:
-        user = current_user.slug
-    except AttributeError:
-        user = 'anonymous'
-
-    for lang_code in current_app.config['LANGUAGES'].keys():
-
-        head_cache_key = make_template_fragment_key(
-            "reuse-extra-head", vary_on=[str(reuse.id), lang_code])
-        cache.delete(head_cache_key)
-
-        breadcrumb_cache_key = make_template_fragment_key(
-            "reuse-breadcrumb", vary_on=[str(reuse.id), lang_code])
-        cache.delete(breadcrumb_cache_key)
-
-        content_cache_key = make_template_fragment_key(
-            "reuse-content", vary_on=[str(reuse.id), lang_code, user])
-        cache.delete(content_cache_key)

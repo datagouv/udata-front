@@ -1,11 +1,8 @@
 from collections import defaultdict, OrderedDict
 
-from flask import abort, request, url_for, redirect, current_app
-from flask_caching import make_template_fragment_key
+from flask import abort, request, url_for, redirect
 from werkzeug.contrib.atom import AtomFeed
 
-from udata.app import cache
-from udata.auth import current_user
 from udata.models import Reuse, Follow
 from udata.core.dataset.models import Dataset, RESOURCE_TYPES, get_resource
 from udata.core.dataset.search import DatasetSearch
@@ -142,25 +139,3 @@ def group_resources_by_type(resources):
         if groups[rtype]:
             ordered[(rtype, str(rtype_label))] = groups[rtype]
     return ordered
-
-
-@Dataset.on_update.connect
-def clear_cache_on_updated_dataset(dataset):
-    try:
-        user = current_user.slug
-    except AttributeError:
-        user = 'anonymous'
-
-    for lang_code in current_app.config['LANGUAGES'].keys():
-
-        head_cache_key = make_template_fragment_key(
-            "dataset-extra-head", vary_on=[str(dataset.id), lang_code])
-        cache.delete(head_cache_key)
-
-        breadcrumb_cache_key = make_template_fragment_key(
-            "dataset-breadcrumb", vary_on=[str(dataset.id), lang_code])
-        cache.delete(breadcrumb_cache_key)
-
-        content_cache_key = make_template_fragment_key(
-            "dataset-content", vary_on=[str(dataset.id), lang_code, user])
-        cache.delete(content_cache_key)
