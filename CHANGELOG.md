@@ -6,6 +6,7 @@
 - Update Venti buttons [#146](https://github.com/etalab/udata-front/pull/146)
 - :warning: @blue-470 and @blue-500 are removed
 - Fix z-index value in dataset search-result template [#153](https://github.com/etalab/udata-front/pull/153)
+- Fix i18n errors for `/es` [#156](https://github.com/etalab/udata-front/pull/156)
 
 ## 2.0.10 (2022-08-11)
 
