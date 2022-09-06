@@ -96,7 +96,7 @@
   "Search resources": "Search resources",
   "Search": "Search",
   "No resources match your search.": "No resources match your search.",
-  "Search X in Y": "Search “{query}” in {type}",
+  "Search {query} in {type}": "Search “{query}” in {type}",
   "datasets": "datasets",
   "organizations": "organizations",
   "Start typing to search in X": "Start typing to search in {type}",
