@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Create new search results component [#157](https://github.com/etalab/udata-front/pull/157)
 
 ## 2.0.11 (2022-09-02)
 
