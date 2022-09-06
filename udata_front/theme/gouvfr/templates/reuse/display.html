@@ -260,16 +260,9 @@
                 <sup>{{ visible_datasets|length }}</sup>
             </h2>
         </div>
-    <ul class="fr-grid-row fr-grid-row--gutters">
-        {% for dataset in visible_datasets %}
-        <li class="fr-col-12">
-            {# FIXME: remove with loop when upgrading jinja. See https://github.com/pallets/jinja/pull/1242 #}
-            {% with loop_ = loop %}
-            {% include theme('dataset/search-result.html') %}
-            {% endwith %}        
-        </li>
-        {% endfor %}
-    </ul>
+        {% with datasets = visible_datasets %}
+        {% include theme('dataset/search-results.html') %}
+        {% endwith %}
     </section>
     <section class="community_container fr-pb-7w" id="community">
         <div class="fr-container vuejs">

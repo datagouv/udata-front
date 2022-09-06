@@ -29,16 +29,7 @@
     <div class="fr-container">
         <div class="fr-grid-row">
             <div class="fr-col-md-8 fr-col-lg-9 smaller">
-
-                <ul class="search-results">
-                    {% for dataset in datasets %}
-                        {# FIXME: remove with loop when upgrading jinja. See https://github.com/pallets/jinja/pull/1242 #}
-                        {% with loop_ = loop %}
-                        {% include theme('dataset/search-result.html') %}
-                        {% endwith %}
-                    {% endfor %}
-                </ul>
-
+                {% include theme('dataset/search-results.html') %}
                 <div class="clearfix"></div>
                 {{ paginator(datasets) }}
             </div>
