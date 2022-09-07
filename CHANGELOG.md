@@ -4,12 +4,33 @@
 
 - Nothing yet
 
+## 2.0.11 (2022-09-02)
+
+- Fix discussions text wrap [#145](https://github.com/etalab/udata-front/pull/145)
+- Update Venti buttons [#146](https://github.com/etalab/udata-front/pull/146)
+- :warning: @blue-470 and @blue-500 are removed
+- Fix z-index value in dataset search-result template [#153](https://github.com/etalab/udata-front/pull/153) [#155](https://github.com/etalab/udata-front/pull/155)
+- Fix RGAA criterion 8.2 [#147](https://github.com/etalab/udata-front/pull/147)
+
+## 2.0.10 (2022-08-11)
+
+- Fix dataset search result link to organization [#150](https://github.com/etalab/udata-front/pull/150)
+
+## 2.0.9 (2022-08-10)
+
+- Fix selected tag with wrong color [#149](https://github.com/etalab/udata-front/pull/149)
+
+## 2.0.8 (2022-08-09)
+
+- Add lighthouse in CircleCI [#108](https://github.com/etalab/udata-front/pull/108)
+- Fix RGAA criterion 8.2 [#130](https://github.com/etalab/udata-front/pull/130)
+- Add quality score [#135](https://github.com/etalab/udata-front/pull/135)
+
 ## 2.0.7 (2022-07-20)
 
 - Fix window.dsfr.register error [#138](https://github.com/etalab/udata-front/pull/138)
 - Fix featured toggle [#137](https://github.com/etalab/udata-front/pull/137)
 - Iterate on search results and cards [#136](https://github.com/etalab/udata-front/pull/136)
-- Add lighthouse in CircleCI [#108](https://github.com/etalab/udata-front/pull/108)
 
 ## 2.0.6 (2022-07-08)
 

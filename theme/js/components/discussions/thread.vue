@@ -31,7 +31,7 @@
               <div class="fr-text--sm text-mention-grey fr-mb-0">
                 {{ $filters.formatDate(comment.posted_on) }}
               </div>
-              <div class="white-space-pre-wrap">
+              <div class="white-space-pre-wrap overflow-wrap-anywhere">
                 <p class="fr-mt-3v fr-mb-0">{{ comment.content }}</p>
               </div>
             </div>
@@ -77,8 +77,10 @@ import ThreadReply from "./thread-reply.vue";
 import Avatar from "./avatar.vue";
 import Author from "./author.vue";
 import config from "../../config";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
+  inheritAttrs: false,
   components: {
     "thread-reply": ThreadReply,
     Avatar,
@@ -115,7 +117,7 @@ export default {
       return (link ? "#" : "") + "discussion-" + id;
     },
     discussionExternalUrl(id) {
-      hash = this.discussionUrl(id, true)
+      let hash = this.discussionUrl(id, true)
       return window.location.origin + window.location.pathname + hash
     },
     replyToThread (values) {
@@ -132,5 +134,5 @@ export default {
       this.showForm = true;
     },
   }
-};
+});
 </script>

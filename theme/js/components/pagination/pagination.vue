@@ -55,7 +55,7 @@ export default {
     <ul class="fr-pagination__list">
       <li>
         <a
-          :href="page === 1 ? null :'#'"
+          :href="page === 1 ? undefined :'#'"
           class="fr-pagination__link fr-pagination__link--first"
           @click.prevent="_onClick(1)"
         >
@@ -64,7 +64,7 @@ export default {
       </li>
       <li>
         <a
-          :href="page === 1 ? null : '#'"
+          :href="page === 1 ? undefined : '#'"
           class="fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label"
           @click.prevent="previousPage"
         >
@@ -73,8 +73,8 @@ export default {
       </li>
       <li>
         <a
-          :aria-current="page === 1 ? 'page' : null"
-          :href="page === 1 ? null : '#'"
+          :aria-current="page === 1 ? 'page' : undefined"
+          :href="page === 1 ? undefined : '#'"
           class="fr-pagination__link"
           :class="{'fr-hidden fr-unhidden-sm': page > 1}"
           :title="$t('Page', {nb: 1})"
@@ -87,8 +87,8 @@ export default {
         <a
           class="fr-pagination__link"
           :class="{'fr-hidden fr-unhidden-lg': index < page - 1 || index > page + 1}"
-          :aria-current="page === index ? 'page' : null"
-          :href="page === index ? null : '#'"
+          :aria-current="page === index ? 'page' : undefined"
+          :href="page === index ? undefined : '#'"
           :title="$t('Page', {nb: index})"
           @click.prevent="_onClick(index)"
           v-if="index"
@@ -102,8 +102,8 @@ export default {
       <li>
         <a
           class="fr-pagination__link"
-          :aria-current="page === pageCount ? 'page' : null"
-          :href="page === pageCount ? null : '#'"
+          :aria-current="page === pageCount ? 'page' : undefined"
+          :href="page === pageCount ? undefined : '#'"
           :title="$t('Page', {nb: pageCount})"
           @click.prevent="_onClick(pageCount)"
         >
@@ -113,7 +113,7 @@ export default {
       <li>
         <a
           class="fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label"
-          :href="page === pageCount ? null : '#'"
+          :href="page === pageCount ? undefined : '#'"
           @click.prevent="nextPage"
         >
           {{ $t('Next page') }}
@@ -122,7 +122,7 @@ export default {
       <li>
         <a
           class="fr-pagination__link fr-pagination__link--last"
-          :href="page === pageCount ? null : '#'"
+          :href="page === pageCount ? undefined : '#'"
           @click.prevent="_onClick(pageCount)"
         >
           {{ $t('Last page') }}
@@ -137,10 +137,22 @@ import getVisiblePages from "../vanilla/pagination";
 
 export default {
   props: {
-    page: Number,
-    changePage: Function,
-    pageSize: Number,
-    totalResults: Number,
+    page: {
+      type: Number,
+      default: 0,
+    },
+    changePage: {
+      type: Function,
+      required: true,
+    },
+    pageSize: {
+      type: Number,
+      default: 20,
+    },
+    totalResults: {
+      type: Number,
+      required: true,
+    },
   },
   data() {
     return {
@@ -156,6 +168,9 @@ export default {
     },
   },
   methods: {
+    /**
+    * @param {number} index
+    */
     _onClick(index) {
       if (index !== this.page) {
         return this.changePage(index);

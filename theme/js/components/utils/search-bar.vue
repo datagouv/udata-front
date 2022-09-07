@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="searchWithoutAutocomplete">
-    <div class="fr-search-bar" role="search">
+    <div class="fr-search-bar" role="search" :aria-label="$t('Search resources')">
       <label class="fr-label" :for="eventName">
         {{ $t('Search resources') }}
       </label>
@@ -11,7 +11,7 @@
         :id="eventName"
         v-model="searchValue"
       />
-      <button class="fr-btn" :title="$t('Search')" type="submit">
+      <button class="fr-btn" type="submit">
         {{ $t('Search') }}
       </button>
     </div>

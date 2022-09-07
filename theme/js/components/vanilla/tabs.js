@@ -38,14 +38,12 @@ export default (() => {
           );
           if (previouslyActive) {
             previouslyActive.setAttribute("aria-selected", "false");
-            previouslyActive.setAttribute("aria-pressed", "false");
             document
               .getElementById(previouslyActive.getAttribute("aria-controls"))
               .classList.remove("fr-unhidden");
           }
 
           el.target.setAttribute("aria-selected", "true");
-          el.target.setAttribute("aria-pressed", "true");
           document
             .getElementById(el.target.getAttribute("aria-controls"))
             .classList.add("fr-unhidden");

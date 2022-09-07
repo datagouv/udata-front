@@ -32,7 +32,10 @@
 
                 <ul class="search-results">
                     {% for dataset in datasets %}
+                        {# FIXME: remove with loop when upgrading jinja. See https://github.com/pallets/jinja/pull/1242 #}
+                        {% with loop_ = loop %}
                         {% include theme('dataset/search-result.html') %}
+                        {% endwith %}
                     {% endfor %}
                 </ul>
 
