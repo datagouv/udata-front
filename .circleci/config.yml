@@ -16,19 +16,19 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - py3-cache-v1-{{ arch }}-{{ checksum "poetry.lock" }}
-          - py3-cache-v1-{{ arch }}-{{ .Branch }}
+          - py3-cache-v2-{{ arch }}-{{ checksum "poetry.lock" }}
+          - py3-cache-v2-{{ arch }}-{{ .Branch }}
       - run:
           name: Install python dependencies
           command: |
             poetry self update
             poetry install --without dev
       - save_cache:
-          key: py3-cache-v1-{{ arch }}-{{ checksum "poetry.lock" }}
+          key: py3-cache-v2-{{ arch }}-{{ checksum "poetry.lock" }}
           paths:
             - /home/circleci/.cache/pypoetry/virtualenvs
       - save_cache:
-          key: py3-cache-v1-{{ arch }}-{{ .Branch }}
+          key: py3-cache-v2-{{ arch }}-{{ .Branch }}
           paths:
             - /home/circleci/.cache/pypoetry/virtualenvs
       - run:
