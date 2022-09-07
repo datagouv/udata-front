@@ -7,7 +7,7 @@ orbs:
 jobs:
   python:
     docker:
-      - image: cimg/python:3.7.13
+      - image: cimg/python:3.7
       - image: mongo:3.6
       - image: redis:alpine
     environment:
@@ -88,7 +88,7 @@ jobs:
 
   lighthouse:
     docker:
-      - image: cimg/python:3.7.13-browsers
+      - image: cimg/python:3.7-browsers
       - image: mongo:3.6
       - image: redis:alpine
     steps:
@@ -116,7 +116,7 @@ jobs:
 
   dist:
     docker:
-      - image: cimg/python:3.7.13
+      - image: cimg/python:3.7
     environment:
        BASH_ENV: /root/.bashrc
     steps:
@@ -136,7 +136,7 @@ jobs:
 
   publish:
     docker:
-      - image: cimg/python:3.7.13
+      - image: cimg/python:3.7
     steps:
       - attach_workspace:
           at: .

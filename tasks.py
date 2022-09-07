@@ -16,7 +16,7 @@ LANGUAGES = ['fr']
 
 TO_CLEAN = ['build', 'dist', '**/*.pyc', 'reports']
 
-# EXTRACT_I18N_KEYWORDS = "_ gettext ngettext ugettext ungettext gettext_lay ugettext_lazy"
+EXTRACT_I18N_KEYWORDS = "_ gettext ngettext ugettext ungettext gettext_lay ugettext_lazy"
 EXTRACT_I18N_MAPPING_FILE = "babel.cfg"
 EXTRACT_I18N_ADD_COMMENTS = "TRANSLATORS:"
 EXTRACT_I18N_OUTPUT_FILE = "udata_front/theme/gouvfr/translations/gouvfr.pot"
@@ -149,15 +149,15 @@ def i18n(ctx, update=False):
     info('Extract python translations')
     with ctx.cd(ROOT):
         ctx.run(
-            f"pybabel extract . --mapping-file={EXTRACT_I18N_MAPPING_FILE} --output-file={EXTRACT_I18N_OUTPUT_FILE} --add-comments={EXTRACT_I18N_ADD_COMMENTS} --width={EXTRACT_I18N_WIDTH}")
+            f"pybabel extract --keywords=\"{EXTRACT_I18N_KEYWORDS}\" --mapping-file={EXTRACT_I18N_MAPPING_FILE} --output-file={EXTRACT_I18N_OUTPUT_FILE} --add-comments={EXTRACT_I18N_ADD_COMMENTS} --width={EXTRACT_I18N_WIDTH} .")
         set_po_metadata(os.path.join(I18N_ROOT, 'gouvfr.pot'), 'en')
         for lang in LANGUAGES:
             pofile = os.path.join(I18N_ROOT, lang, 'LC_MESSAGES', 'gouvfr.po')
             if not os.path.exists(pofile):
-                ctx.run(f"pybabel init --locale={lang} --domain{INIT_I18N_DOMAIN} --input-file={INIT_I18N_INPUT_FILE} --output-dir={INIT_I18N_OUTPUT_FILE}")
+                ctx.run(f"pybabel init --locale={lang} --domain={INIT_I18N_DOMAIN} --input-file={INIT_I18N_INPUT_FILE} --output-dir={INIT_I18N_OUTPUT_FILE}")
                 set_po_metadata(pofile, lang)
             elif update:
-                ctx.run(f"pybabel update --locale={lang} --domain{UPDATE_I18N_DOMAIN} --input-file={UPDATE_I18N_INPUT_FILE} --output-dir={UPDATE_I18N_OUTPUT_FILE} --ignore-obsolete --previous")
+                ctx.run(f"pybabel update --locale={lang} --domain={UPDATE_I18N_DOMAIN} --input-file={UPDATE_I18N_INPUT_FILE} --output-dir={UPDATE_I18N_OUTPUT_FILE} --ignore-obsolete --previous")
                 set_po_metadata(pofile, lang)
 
     # Front translations

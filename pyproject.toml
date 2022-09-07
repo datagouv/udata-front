@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "udata-front"
-version = "2.0.9-alpha.0"
+version = "2.0.9.dev"
 description = "udata customizations for data.gouv.fr"
 readme="README.md"
 authors = ["Etalab <pypi@data.gouv.fr>"]
@@ -26,7 +26,7 @@ python = ">=3.7,<4"
 feedparser = "6.0.8"
 python-frontmatter = "1.0.0"
 sentry-sdk = {version = "1.1.0", extras = ["flask"]}
-udata = { git = "https://github.com/opendatateam/udata.git", rev = "poetrySwitch" }
+udata = { git = "https://github.com/opendatateam/udata.git" }
 Flask-Themes2 = "0.1.5"
 
 [tool.poetry.dev-dependencies]
@@ -40,6 +40,7 @@ pytest-mock = "2.0.0"
 requests-mock = "1.7.0"
 feedgen = "0.7.0"
 readme-renderer = {version = "24.0", extras = ["md"]}
+udata = { path = "../udata", develop = true }
 
 [tool.poetry.plugins."udata.themes"]
 "gouvfr" = "udata_front.theme.gouvfr"
