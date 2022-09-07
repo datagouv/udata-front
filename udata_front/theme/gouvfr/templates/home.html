@@ -17,7 +17,7 @@
             <div class="fr-col-12 fr-col-lg-5">
                 <h1 class="fr-mt-0 fr-mb-2w">{{ _('Open platform for French public data') }}</h1>
                 <div>
-                    <h4>{{ _('Featured topics') }}</h4>
+                    <h2 class="fr-text--md fr-my-0">{{ _('Featured topics') }}</h2>
                     <a href="{{ url_for('gouvfr.show_page', slug='donnees-geographiques') }}"
                         class="btn-venti fr-my-2w bg-blue-450">
                         Données à composante
@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="fr-col-12 fr-col-offset-lg-1 fr-col-lg-6">
-                <h4>{{ _('News') }}</h4>
+                <h2 class="fr-text--md fr-my-0">{{ _('News') }}</h2>
                 {% if last_post %}
                 {% set post = last_post %}
                 <div class="fr-grid-row justify-center fr-mb-2w">
