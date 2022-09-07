@@ -21,7 +21,7 @@ jobs:
       - run:
           name: Install python dependencies
           command: |
-            poetry install --without dev
+            poetry install --no-dev
       - save_cache:
           key: py3-cache-v1-{{ arch }}-{{ checksum "poetry.lock" }}
           paths:
