@@ -19,9 +19,12 @@ jobs:
           - py3-cache-v2-{{ arch }}-{{ checksum "poetry.lock" }}
           - py3-cache-v2-{{ arch }}-{{ .Branch }}
       - run:
-          name: Install python dependencies
+          name: Update poetry
           command: |
             poetry self update
+      - run:
+          name: Install python dependencies
+          command: |
             poetry install --without dev
       - save_cache:
           key: py3-cache-v2-{{ arch }}-{{ checksum "poetry.lock" }}
