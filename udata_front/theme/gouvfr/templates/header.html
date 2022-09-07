@@ -101,7 +101,6 @@
                                 <li>
                                     <a
                                         href="{{ url_for('security.login', next=next_url) }}"
-                                        title="{{ _('Log in') }}"
                                         class="fr-link fr-icon-lock-line"
                                     >
                                         {{ _('Log in') }}
@@ -111,7 +110,6 @@
                                 <li>
                                     <a
                                         href="{{ url_for('security.register', next=next_url) }}"
-                                        title="{{ _('Sign up') }}"
                                         class="fr-link fr-icon-account-line"
                                     >
                                         {{ _("Sign up") }}
@@ -125,7 +123,7 @@
                         <div class="fr-container fr-container-lg--fluid relative">
                             <button class="fr-btn--close fr-btn" aria-controls="modal-search">{{ _('Close') }}</button>
                             <form action="/datasets">
-                                <div class="fr-search-bar vuejs" id="search" role="search">
+                                <div class="fr-search-bar vuejs" id="search" role="search" aria-label="{{  _('Search for data') }}">
                                     <label class="fr-label" for="search-input" id="search-label">
                                         {{  _('Search for data') }}
                                     </label>
@@ -164,7 +162,7 @@
                         {% set active = is_current_endpoint(request, item) %}
                         <li class="fr-nav__item">
                             {% if item.items %}
-                            {% set id = item.label %}
+                            {% set id = item.label|replace(" ", '') %}
                             {% set active = is_parent_of_current_endpoint(request, item.items) %}
                             <button class="fr-nav__btn" aria-expanded="false" aria-controls="{{ id }}" {% if active %}aria-current="true"{% endif %}>{{item.label}}</button>
                             <div class="fr-collapse fr-menu" id="{{ id }}">
