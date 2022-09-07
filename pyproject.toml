@@ -30,7 +30,11 @@ udata = { git = "https://github.com/opendatateam/udata.git" }
 Flask-Themes2 = "0.1.5"
 
 [tool.poetry.dev-dependencies]
+udata = { path = "../udata", develop = true }
+
+[tool.poetry.group.test.dependencies]
 flake8 = "3.7.7"
+feedgen = "0.7.0"
 invoke = "1.2.0"
 pytest-cov = "2.6.1"
 mock = "3.0.5"
@@ -38,9 +42,6 @@ pytest = "4.6.3"
 pytest-flask = "0.15.0"
 pytest-mock = "2.0.0"
 requests-mock = "1.7.0"
-feedgen = "0.7.0"
-readme-renderer = {version = "24.0", extras = ["md"]}
-udata = { path = "../udata", develop = true }
 
 [tool.poetry.plugins."udata.themes"]
 "gouvfr" = "udata_front.theme.gouvfr"
