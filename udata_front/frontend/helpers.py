@@ -351,9 +351,8 @@ def i18n_alternate_links():
             params.update(request.view_args)
 
         for lang in current_app.config['LANGUAGES']:
-            if lang != current_lang:
-                url = url_for(request.endpoint, lang_code=lang, **params)
-                links.append(LINK_PATTERN.format(url=url, lang=lang))
+            url = url_for(request.endpoint, lang_code=lang, **params, _external=True)
+            links.append(LINK_PATTERN.format(url=url, lang=lang))
         return Markup(''.join(links))
     except Exception:
         # Never fails
