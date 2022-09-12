@@ -142,6 +142,7 @@ jobs:
       - run:
           name: Build a distributable package
           command: |
+            poetry self update
             poetry build
       - store_artifacts:
           path: dist
