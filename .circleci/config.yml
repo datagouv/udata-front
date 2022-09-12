@@ -28,10 +28,10 @@ jobs:
             # Build a wheel release
             if [[ $CIRCLE_TAG ]]; then
                 # This is a tagged release
-                poetry update udata@latest --lock
+                sed -i "" "s/udata = { path = \"..\/udata\", develop = true }/udata = \">4\"/" pyproject.toml
             else
                 # This is a simple development build
-                sed -i "" "s/udata = { path = '..\/udata', develop = true }/udata = { git = 'https:\/\/github.com\/opendatateam\/udata.git' }/" pyproject.toml
+                sed -i "" "s/udata = { path = \"..\/udata\", develop = true }/udata = { git = \"https:\/\/github.com\/opendatateam\/udata.git\" }/" pyproject.toml
             fi
             poetry install
       - save_cache:
