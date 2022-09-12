@@ -28,10 +28,10 @@ jobs:
             # Build a wheel release
             if [[ $CIRCLE_TAG ]]; then
                 # This is a tagged release
-                poetry update --lock udata@latest
+                poetry update udata@latest --lock
             else
                 # This is a simple development build
-                poetry update --lock "https://github.com/opendatateam/udata.git"
+                poetry update "https://github.com/opendatateam/udata.git" --lock
             fi
             poetry install
       - save_cache:
