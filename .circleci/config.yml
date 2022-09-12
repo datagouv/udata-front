@@ -31,7 +31,7 @@ jobs:
                 poetry update udata@latest --lock
             else
                 # This is a simple development build
-                poetry update "https://github.com/opendatateam/udata.git" --lock
+                sed -i "s/udata = { path = "../udata", develop = true }/udata = { git = "https://github.com/opendatateam/udata.git" }/" pyproject.toml
             fi
             poetry install
       - save_cache:
