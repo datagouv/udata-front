@@ -33,6 +33,7 @@ jobs:
                 # This is a simple development build
                 sed -i "s/udata = { path = \"..\/udata\", develop = true }/udata = { git = \"https:\/\/github.com\/opendatateam\/udata.git\" }/" pyproject.toml
             fi
+            cat pyproject.toml
             poetry install
       - save_cache:
           key: py3-cache-v3-{{ arch }}-{{ checksum "poetry.lock" }}
