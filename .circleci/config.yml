@@ -32,6 +32,7 @@ jobs:
             else
                 # This is a simple development build
                 pwd
+                ls
                 sed -i "" "s/udata = { path = \"..\/udata\", develop = true }/udata = { git = \"https:\/\/github.com\/opendatateam\/udata.git\" }/" pyproject.toml
             fi
             poetry install
