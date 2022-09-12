@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix i18n errors for `/es` [#156](https://github.com/etalab/udata-front/pull/156)
 
 ## 2.0.11 (2022-09-02)
 
