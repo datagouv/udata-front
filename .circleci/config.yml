@@ -25,7 +25,15 @@ jobs:
       - run:
           name: Install python dependencies
           command: |
-            poetry install --without dev
+            # Build a wheel release
+            if [[ $CIRCLE_TAG ]]; then
+                # This is a tagged release
+                poetry add udata@latest
+            else
+                # This is a simple development build
+                poetry add "https://github.com/opendatateam/udata.git"
+            fi
+            poetry install
       - save_cache:
           key: py3-cache-v3-{{ arch }}-{{ checksum "poetry.lock" }}
           paths:
@@ -103,7 +111,8 @@ jobs:
       - run:
           name: Generate udata fixtures
           command: |
-            pip install -e .
+            poetry add "https://github.com/opendatateam/udata.git"
+            poetry install
             udata generate-fixtures
       - run:
           name: Install lighthouse

@@ -28,11 +28,9 @@ python-frontmatter = "1.0.0"
 sentry-sdk = {version = "1.1.0", extras = ["flask"]}
 udata = ">=4"
 Flask-Themes2 = "0.1.5"
-
-[tool.poetry.group.dev.dependencies]
 udata = { path = "../udata", develop = true }
 
-[tool.poetry.group.test.dependencies]
+[tool.poetry.group.dev.dependencies]
 flake8 = "3.7.7"
 feedgen = "0.7.0"
 invoke = "1.2.0"
