@@ -29,7 +29,7 @@ sentry-sdk = {version = "1.1.0", extras = ["flask"]}
 Flask-Themes2 = "0.1.5"
 udata = { path = "../udata", develop = true }
 
-[tool.poetry.group.dev.dependencies]
+[tool.poetry.dev-dependencies]
 flake8 = "3.7.7"
 feedgen = "0.7.0"
 invoke = "1.2.0"

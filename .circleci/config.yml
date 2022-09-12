@@ -16,12 +16,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - py3-cache-v3-{{ arch }}-{{ checksum "poetry.lock" }}
-          - py3-cache-v3-{{ arch }}-{{ .Branch }}
-      - run:
-          name: Update poetry
-          command: |
-            poetry self update
+          - py3-cache-v4-{{ arch }}-{{ checksum "poetry.lock" }}
+          - py3-cache-v4-{{ arch }}-{{ .Branch }}
       - run:
           name: Install python dependencies
           command: |
@@ -36,11 +32,11 @@ jobs:
             poetry lock
             poetry install
       - save_cache:
-          key: py3-cache-v3-{{ arch }}-{{ checksum "poetry.lock" }}
+          key: py3-cache-v4-{{ arch }}-{{ checksum "poetry.lock" }}
           paths:
             - /home/circleci/.cache/pypoetry/virtualenvs
       - save_cache:
-          key: py3-cache-v3-{{ arch }}-{{ .Branch }}
+          key: py3-cache-v4-{{ arch }}-{{ .Branch }}
           paths:
             - /home/circleci/.cache/pypoetry/virtualenvs
       - run:
@@ -112,7 +108,6 @@ jobs:
       - run:
           name: Generate udata fixtures
           command: |
-            poetry self update
             sed -i "s/udata = { path = \"..\/udata\", develop = true }/udata = { git = \"https:\/\/github.com\/opendatateam\/udata.git\", branch = \"poetrySwitch\" }/" pyproject.toml
             poetry lock
             poetry install
@@ -142,7 +137,6 @@ jobs:
       - run:
           name: Build a distributable package
           command: |
-            poetry self update
             poetry build
       - store_artifacts:
           path: dist
