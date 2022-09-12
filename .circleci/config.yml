@@ -31,6 +31,7 @@ jobs:
                 sed -i "" "s/udata = { path = \"..\/udata\", develop = true }/udata = \">4\"/" pyproject.toml
             else
                 # This is a simple development build
+                pwd
                 sed -i "" "s/udata = { path = \"..\/udata\", develop = true }/udata = { git = \"https:\/\/github.com\/opendatateam\/udata.git\" }/" pyproject.toml
             fi
             poetry install
