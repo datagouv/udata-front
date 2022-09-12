@@ -28,10 +28,10 @@ jobs:
             # Build a wheel release
             if [[ $CIRCLE_TAG ]]; then
                 # This is a tagged release
-                poetry add udata@latest
+                poetry update udata@latest
             else
                 # This is a simple development build
-                poetry add "https://github.com/opendatateam/udata.git"
+                poetry update "https://github.com/opendatateam/udata.git"
             fi
             poetry install
       - save_cache:
@@ -111,7 +111,7 @@ jobs:
       - run:
           name: Generate udata fixtures
           command: |
-            poetry add "https://github.com/opendatateam/udata.git"
+            poetry update "https://github.com/opendatateam/udata.git"
             poetry install
             udata generate-fixtures
       - run:
