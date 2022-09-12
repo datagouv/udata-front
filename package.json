@@ -16,7 +16,7 @@
     "clean": "rimraf .parcel-cache",
     "start": "npm run dev",
     "watch": "parcel theme/js/index.js theme/less/index.less --dist-dir udata_front/theme/gouvfr/static/ --hmr-port=1235",
-    "serve": "udata serve"
+    "serve": "poetry run udata serve"
   },
   "dependencies": {
     "@meforma/vue-toaster": "^1.3.0",
