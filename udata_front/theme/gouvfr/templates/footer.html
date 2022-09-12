@@ -27,7 +27,7 @@
                     </div>
                     <div class="fr-col-12 fr-col-sm-3">
                         <h3 class="fr-footer__top-cat">{{ _('Social networks') }}</h3>
-                        <ul class="fr-footer__top-list socials fr-grid-row">
+                        <ul class="fr-footer__top-list fr-grid-row">
                             <li>
                                 <a class="fr-footer__top-link fr-raw-link" href="https://twitter.com/datagouvfr" title="Twitter">
                                     {% include theme('svg/socials/twitter.svg') %}
@@ -44,7 +44,7 @@
                                 </a>
                             </li>
                         </ul>
-                        <ul class="fr-footer__top-list fr-grid-row">
+                        <ul class="fr-grid-row">
                             <li>
                                 <a
                                     href="{{ url_for('datasets.recent_feed') }}"
@@ -64,9 +64,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </div>
-                    <div class="fr-col-12 fr-col-sm-3">
-                        <div class="fr-footer__top-cat etalab-logo">
+                        <div class="etalab-logo">
                             <a
                                 href="http://www.etalab.gouv.fr"
                                 title="{{ _('Go to Etalab’s blog') }}"
@@ -75,52 +73,54 @@
                                 {% include theme('svg/logo-etalab.svg') %}
                             </a>
                         </div>
-                        <ul class="fr-text--sm fr-my-0">
-                            <li>{{ _('A DINUM department') }}</li>
+                        <ul class="fr-text--sm fr-my-0 fr-footer__top-lis">
                             <li>
                                 <a
                                     href="https://numerique.gouv.fr"
                                     title="{{ _('DINUM website: numerique.gouv.fr') }}"
-                                    class="fr-text--bold fr-footer__top-link w-100"
+                                    class="fr-footer__top-link"
                                 >
-                                    numerique.gouv.fr
+                                {{ _('A DINUM department') }}
                                 </a>
                             </li>
                         </ul>
-                        <ul class="fr-mt-2w text-grey-380">
+                    </div>
+                    <div class="fr-col-12 fr-col-sm-3">
+                        <h3 class="fr-footer__top-cat">{{ _('Technical informations') }}</h3>
+                        <ul class="fr-footer__top-list">
                             <li>
                                 <a
                                     href="https://github.com/opendatateam/udata/"
-                                    title="{{ _('Open-source engine: udata') }}"
                                     class="fr-footer__top-link"
                                 >
-                                    udata
+                                    {{ _('Open-source engine: udata') }}
                                 </a>
+                            </li>
+                            <li>
                                 <a
                                     href="https://pypi.org/project/udata/{{ package_version('udata') }}/"
-                                    title="{{ _('udata deployed version: {version}').format(
-                                        version=package_version('udata')
-                                    ) }}"
                                     class="fr-footer__top-link"
                                 >
-                                    {{ package_version('udata') }}
+                                    {{ _('udata deployed version: {version}').format(
+                                        version=package_version('udata')
+                                    ) }}
                                 </a>
                             </li>
                             <li>
                                 <a
                                     href="https://github.com/etalab/udata-front/"
-                                    title="{{ _('data.gouv.fr extension: udata-front') }}"
                                     class="fr-footer__top-link"
                                 >
-                                    udata-front
+                                    {{ _('data.gouv.fr extension: udata-front') }}
                                 </a>
+                            </li>
+                            <li>
                                 <a href="https://pypi.org/project/udata-front/{{ package_version('udata-front') }}/"
-                                    title="{{ _('udata-front deployed version: {version}').format(
-                                        version=package_version('udata-front')
-                                    ) }}"
                                     class="fr-footer__top-link"
                                 >
-                                    {{ package_version('udata-front') }}
+                                    {{ _('udata-front deployed version: {version}').format(
+                                        version=package_version('udata-front')
+                                    ) }}
                                 </a>
                             </li>
                         </ul>
