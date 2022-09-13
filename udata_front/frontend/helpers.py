@@ -342,8 +342,6 @@ def i18n_alternate_links():
         LINK_PATTERN = (
             '<link rel="alternate" href="{url}" hreflang="{lang}" />')
         links = []
-        current_lang = get_current_locale().language
-
         params = {}
         if request.args:
             params.update(request.args)
