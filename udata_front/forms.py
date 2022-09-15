@@ -1,7 +1,6 @@
 import requests
 
 from flask import current_app
-from wtforms.validators import ValidationError
 from udata.auth.forms import ExtendedRegisterForm
 from udata.forms import fields
 from udata.forms import validators

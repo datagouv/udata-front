@@ -78,9 +78,9 @@ def init_app(app):
         from flask_debugtoolbar import DebugToolbarExtension
         DebugToolbarExtension(app)
 
-    ## SECURITY TEST
+    # Security override init
     from udata.auth import init_security
     from udata_front.forms import ExtendedAgainRegisterForm
 
-    init_security(app, confirm_register_form=ExtendedAgainRegisterForm, register_form=ExtendedAgainRegisterForm)
-
+    init_security(
+        app, confirm_register_form=ExtendedAgainRegisterForm, register_form=ExtendedAgainRegisterForm)
