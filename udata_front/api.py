@@ -1,4 +1,3 @@
-from datetime import datetime, timedelta
 from flask import current_app, make_response, request
 from werkzeug.datastructures import MIMEAccept
 
@@ -19,7 +18,7 @@ captchetat_parser.add_argument('t', type=str, location='args')
 captchetat_parser.add_argument('cs', type=str, location='args')
 @ns.route('/', endpoint='captchetat')
 class CaptchEtatAPI(API):
-    
+
     token_cache_key = 'captchetat-bearer-token'
     default_mediatype = 'application/octet-stream'
 
@@ -31,7 +30,7 @@ class CaptchEtatAPI(API):
         if(previous_value):
             return previous_value
         log.info(f'New access token requested from {url}')
-        try: 
+        try:
             oauth = requests.post(url, data={
                 'grant_type': 'client_credentials',
                 'scope': 'WRITE',
@@ -41,7 +40,7 @@ class CaptchEtatAPI(API):
             body = oauth.json()
             access_token = body.get('access_token', "")
             cache.set(self.token_cache_key, access_token, timeout=body.get('expires_in', 0))
-        except requests.exceptions.RequestException as e:
+        except requests.exceptions.RequestException:
             log.exception(f'Error while getting access token from {url}')
         else:
             return access_token
