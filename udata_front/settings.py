@@ -33,3 +33,14 @@ GUIDES_USER_ACCOUNT_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/creer-comp
 GUIDES_ORGANIZATION_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/creer-rejoindre-organisation/'
 GUIDES_DATASET_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/publier-jeu-de-donnees/'
 GUIDES_REUSE_URL = 'https://guides.etalab.gouv.fr/reutilisation/publier-reutilisation/'
+
+# CAPTCHEtat
+CAPTCHETAT_BASE_URL = 'https://sandbox-api.piste.gouv.fr/piste/captcha'
+CAPTCHETAT_OAUTH_BASE_URL = 'https://sandbox-oauth.piste.gouv.fr'
+CAPTCHETAT_OAUTH_TOKEN_URL = f'{CAPTCHETAT_OAUTH_BASE_URL}/api/oauth/token'
+CAPTCHETAT_GET_CAPTCHA_URL = f'{CAPTCHETAT_BASE_URL}/simple-captcha-endpoint'
+CAPTCHETAT_VALIDATION_URL = f'{CAPTCHETAT_BASE_URL}/valider-captcha'
+CAPTCHETAT_CLIENT_ID = '565d420d-1321-467b-93f4-f86f702c08ca'
+CAPTCHETAT_CLIENT_SECRET = '04260b77-195c-471c-b4f6-539098cc4817'
+TOKEN_CACHE_KEY = 'captchetat-bearer-token'
+TOKEN_DEFAULT_MEDIATYPE = 'application/octet-stream'

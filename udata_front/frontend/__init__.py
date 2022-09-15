@@ -77,3 +77,10 @@ def init_app(app):
     if app.config.get('DEBUG_TOOLBAR'):
         from flask_debugtoolbar import DebugToolbarExtension
         DebugToolbarExtension(app)
+
+    ## SECURITY TEST
+    from udata.auth import init_security
+    from udata_front.forms import ExtendedAgainRegisterForm
+
+    init_security(app, confirm_register_form=ExtendedAgainRegisterForm, register_form=ExtendedAgainRegisterForm)
+

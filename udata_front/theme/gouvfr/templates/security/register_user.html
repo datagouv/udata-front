@@ -16,7 +16,7 @@
                         <p class="fr-mt-2w fr-mb-1w fr-text--xs text-align-left">
                             {{ _("Fields preceded by a star (<span class='required-field-star'>*</span>) are required.") }}
                         </p>
-                        {{ forms.render_fields(register_user_form, exclude=[register_user_form.submit]) }}
+                        {{ forms.render_fields(register_user_form, exclude=[register_user_form.submit, register_user_form.captcha_code, register_user_form.captcha_id]) }}
                         {% block extra_tos %}
                         {% endblock %}
                         <div class="fr-checkbox-group">
