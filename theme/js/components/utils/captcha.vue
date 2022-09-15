@@ -8,7 +8,7 @@ import { useI18n } from 'vue-i18n';
 import { fetchHtml, fetchScript } from '../../api/captcha';
 
 /**
- * @typedef capchaInstance
+ * @typedef captchaInstance
  * @property {string} captchaId
  * @property {string} captchaStyleName
  */
@@ -37,7 +37,7 @@ export default defineComponent({
         })
     }
 
-    /** @type {import("vue").ComputedRef<undefined | capchaInstance>} */
+    /** @type {import("vue").ComputedRef<undefined | captchaInstance>} */
     const instance = computed(() => {
       return window.botdetect?.getInstanceByStyleName(props.captchaStyleName)
     })
