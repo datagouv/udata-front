@@ -80,7 +80,7 @@ def init_app(app):
 
     # Security override init
     from udata.auth import init_security
-    from udata_front.forms import ExtendedAgainRegisterForm
+    from udata_front.forms import ExtendedRegisterForm
 
     init_security(
-        app, confirm_register_form=ExtendedAgainRegisterForm, register_form=ExtendedAgainRegisterForm)
+        app, confirm_register_form=ExtendedRegisterForm, register_form=ExtendedRegisterForm)
