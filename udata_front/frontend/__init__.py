@@ -79,8 +79,9 @@ def init_app(app):
         DebugToolbarExtension(app)
 
     # Security override init
-    from udata.auth import init_security
+    from udata.auth import security
     from udata_front.forms import ExtendedRegisterForm
 
-    init_security(
-        app, confirm_register_form=ExtendedRegisterForm, register_form=ExtendedRegisterForm)
+    with app.app_context():
+        security._state.register_form = ExtendedRegisterForm
+        security._state.confirm_register_form = ExtendedRegisterForm
