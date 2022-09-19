@@ -1,4 +1,4 @@
-from flask import current_app, make_response, request
+from flask import current_app, json, make_response, request
 from werkzeug.datastructures import MIMEAccept
 
 import logging
@@ -52,10 +52,12 @@ class CaptchEtatAPI(API):
         headers = {'Authorization': 'Bearer ' + bearer_token()}
         captchetat_url = current_app.config.get('CAPTCHETAT_GET_CAPTCHA_URL')
         req = requests.get(captchetat_url, headers=headers, params=args)
+        accept = request.accept_mimetypes.copy()
         if args['get'] == "sound":
-            accept = request.accept_mimetypes.copy()
             accept.append(("audio/*", 1))
-            request.accept_mimetypes = MIMEAccept(accept)
+        if args['get'] == "p":
+            return json.loads(req.content)
+        request.accept_mimetypes = MIMEAccept(accept)
         return req.content
 
     @apiv2.representation('image/*')
