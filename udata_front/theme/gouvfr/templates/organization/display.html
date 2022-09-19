@@ -24,7 +24,7 @@
 {% endblock %}
 
 {% block main_content %}
-{% cache cache_duration, 'org-content', org.id|string, g.lang_code, current_user.slug or 'anonymous', org.last_modified|string %}
+{% cache cache_duration, 'org-content', org.id|string, datasets.page|string, reuses.page|string, g.lang_code, current_user.slug or 'anonymous', org.last_modified|string %}
 <header class="fr-container">
     {% if org.deleted %}
     <div class="well-grey-100 well fr-mb-3v">
