@@ -16,8 +16,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - py3-cache-v4-{{ arch }}-{{ checksum "poetry.lock" }}
-          - py3-cache-v4-{{ arch }}-{{ .Branch }}
+          - py3-cache-v5-{{ arch }}-{{ checksum "poetry.lock" }}
+          - py3-cache-v5-{{ arch }}-{{ .Branch }}
       - run:
           name: Upgrade poetry
           command: poetry self update
@@ -31,11 +31,11 @@ jobs:
             fi
             poetry install
       - save_cache:
-          key: py3-cache-v4-{{ arch }}-{{ checksum "poetry.lock" }}
+          key: py3-cache-v5-{{ arch }}-{{ checksum "poetry.lock" }}
           paths:
             - /home/circleci/.cache/pypoetry/virtualenvs
       - save_cache:
-          key: py3-cache-v4-{{ arch }}-{{ .Branch }}
+          key: py3-cache-v5-{{ arch }}-{{ .Branch }}
           paths:
             - /home/circleci/.cache/pypoetry/virtualenvs
       - run:
