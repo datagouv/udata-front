@@ -19,17 +19,16 @@ jobs:
           - py3-cache-v4-{{ arch }}-{{ checksum "poetry.lock" }}
           - py3-cache-v4-{{ arch }}-{{ .Branch }}
       - run:
+          name: Upgrade poetry
+          command: poetry self update
+      - run:
           name: Install python dependencies
           command: |
             # Build a wheel release
             if [[ $CIRCLE_TAG ]]; then
                 # This is a tagged release
-                sed -i "s/udata = { path = \"..\/udata\", develop = true }/udata = \">4\"/" pyproject.toml
-            else
-                # This is a simple development build
-                sed -i "s/udata = { path = \"..\/udata\", develop = true }/udata = { git = \"https:\/\/github.com\/opendatateam\/udata.git\", branch = \"poetrySwitch\" }/" pyproject.toml
+                sed -i "s/udata = { git = \"https:\/\/github.com\/opendatateam\/udata.git\" }/udata = \">4\"/" pyproject.toml
             fi
-            poetry lock
             poetry install
       - save_cache:
           key: py3-cache-v4-{{ arch }}-{{ checksum "poetry.lock" }}
@@ -106,10 +105,11 @@ jobs:
       - attach_workspace:
           at: .
       - run:
+          name: Upgrade poetry
+          command: poetry self update
+      - run:
           name: Generate udata fixtures
           command: |
-            sed -i "s/udata = { path = \"..\/udata\", develop = true }/udata = { git = \"https:\/\/github.com\/opendatateam\/udata.git\", branch = \"poetrySwitch\" }/" pyproject.toml
-            poetry lock
             poetry install
             poetry run udata generate-fixtures
       - run:
@@ -135,10 +135,11 @@ jobs:
       - attach_workspace:
           at: .
       - run:
+          name: Upgrade poetry
+          command: poetry self update
+      - run:
           name: Build a distributable package
           command: |
-            sed -i "s/udata = { path = \"..\/udata\", develop = true }/udata = { git = \"https:\/\/github.com\/opendatateam\/udata.git\", branch = \"poetrySwitch\" }/" pyproject.toml
-            poetry lock
             poetry build
       - store_artifacts:
           path: dist
@@ -153,6 +154,9 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - run:
+          name: Upgrade poetry
+          command: poetry self update
       - deploy:
           name: Publish on PyPI
           command: |

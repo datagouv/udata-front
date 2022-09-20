@@ -27,7 +27,9 @@ feedparser = "6.0.8"
 python-frontmatter = "1.0.0"
 sentry-sdk = {version = "1.1.0", extras = ["flask"]}
 Flask-Themes2 = "0.1.5"
-udata = { path = "../udata", develop = true }
+
+[tool.poetry.group.udata.dependencies]
+udata = { git = "https://github.com/opendatateam/udata.git", branch = "poetrySwitch" }
 
 [tool.poetry.dev-dependencies]
 flake8 = "3.7.7"
