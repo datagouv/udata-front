@@ -4,6 +4,7 @@
 
 - Fix i18n errors for `/es` [#156](https://github.com/etalab/udata-front/pull/156)
 - Update API card [#160](https://github.com/etalab/udata-front/pull/160)
+- Create new search results component [#157](https://github.com/etalab/udata-front/pull/157)
 
 ## 2.0.11 (2022-09-02)
 

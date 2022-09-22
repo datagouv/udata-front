@@ -93,16 +93,7 @@
             </form>
         </div>
         {% if datasets %}
-        <ul class="search-results fr-mt-3v">
-            {% for dataset in datasets %}
-            <li>
-                {# FIXME: remove with loop when upgrading jinja. See https://github.com/pallets/jinja/pull/1242 #}
-                {% with loop_ = loop %}
-                {% include theme('dataset/search-result.html') %}
-                {% endwith %}
-            </li>
-            {% endfor %}
-        </ul>
+        {% include theme('dataset/search-results.html') %}
         {{ paginator(datasets) }}
         {% endif %}
     </noscript>

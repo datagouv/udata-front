@@ -96,12 +96,7 @@
 {% if datasets and datasets|length > 0 %}
 <section id="organization-datasets" class="fr-py-9v fr-container">
     <h2>{{ _('Datasets') }}<sup>{{ total_datasets }}</sup></h2>
-    {% for dataset in datasets %}
-        {# FIXME: remove with loop when upgrading jinja. See https://github.com/pallets/jinja/pull/1242 #}
-        {% with loop_ = loop %}
-        {% include theme('dataset/search-result.html') %}
-        {% endwith %}
-    {% endfor %}
+    {% include theme('dataset/search-results.html') %}
     <div class="fr-my-2w">
         {{ paginator(datasets, arg_name='datasets_page', url='#organization-datasets') }}
     </div>
