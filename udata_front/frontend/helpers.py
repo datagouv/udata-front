@@ -16,7 +16,7 @@ from . import front
 from udata.core.dataset.apiv2 import dataset_fields
 from udata.core.dataset.models import Dataset
 from udata.models import db
-from udata.i18n import format_date, _, pgettext, get_current_locale
+from udata.i18n import format_date, _, pgettext
 from udata.search.result import SearchResult
 from udata.utils import camel_to_lodash
 from udata_front.theme import theme_static_with_version
