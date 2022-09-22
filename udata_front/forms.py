@@ -36,7 +36,7 @@ class ExtendedRegisterForm(RegisterForm):
             })
             if resp.text == 'true':
                 return True
-            self.captcha_code.process_errors.append(_('Invalid Captcha'))
+            self.captcha_code.errors.append(_('Invalid Captcha'))
             return False
         except requests.exceptions.RequestException:
             return False
