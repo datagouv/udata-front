@@ -36,11 +36,11 @@ class ApiTest(WebTestMixin):
     def test_capchetat_get_image(self, rmock, style):
         '''It should return image from the service.'''
         rmock.post(self.oauth_url, json={"access_token": "some_token", "expires_in": 3600})
-        content=bytes(10)
+        content=bytes("some string", 'UTF-8')
         rmock.get(f"{self.url}?get=image&c={style}&t={self.captcha_id}", content=content)
-        response = self.get(url_for('apiv2.captchetat', get='image', c=style, t=self.captcha_id), content_type="image/*")
+        response = self.get(url_for('apiv2.captchetat', get='image', c=style, t=self.captcha_id))
         self.assert200(response)
-        #assert content in bytes(response.data)
+        assert content in bytes(response.data)
 
     @pytest.mark.options(CAPTCHETAT_OAUTH_TOKEN_URL=oauth_url)
     @pytest.mark.options(CAPTCHETAT_GET_CAPTCHA_URL=url)
