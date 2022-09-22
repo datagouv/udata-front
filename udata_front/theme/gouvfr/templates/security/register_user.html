@@ -28,9 +28,9 @@
                         <div class="vuejs">
                             <captcha captcha-style-name="captchaFR"></captcha>
                             <label class="fr-label fr-mt-1w">
-                                {{ _("Retype the characters from the picture:") }}
+                                {{ _("Retype the characters from the picture") }} <span class='required-field-star'>*</span>
                             </label>
-                            <input id="captchaFormulaireExtInput" name="captcha_code" type="text"/>
+                            <input id="captchaFormulaireExtInput" name="captcha_code" type="text" required="required"/>
                             {% for error in register_user_form.captcha_code.errors %}
                             <p class="fr-error-text fr-mt-1v">{{ error }}</p>
                             {% endfor %}
