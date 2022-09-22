@@ -5,17 +5,17 @@ from udata.tests import WebTestMixin
 
 import logging
 import pytest
-import unittest
 
 log = logging.getLogger(__name__)
+
 
 class ApiTest(WebTestMixin):
     settings = GouvFrSettings
     modules: List[str] = []
     styles = ["captchaFR", "captchaEN"]
     captcha_id = "0d9285701cae44279ea2c8893ddd4eaf"
-    url="https://example.com/captchetat"
-    oauth_url="https://example.com/oauth"
+    url = "https://example.com/captchetat"
+    oauth_url = "https://example.com/oauth"
 
     @pytest.mark.options(CAPTCHETAT_OAUTH_TOKEN_URL=oauth_url)
     @pytest.mark.options(CAPTCHETAT_GET_CAPTCHA_URL=url)
@@ -23,7 +23,10 @@ class ApiTest(WebTestMixin):
     def test_capchetat_get_html(self, rmock, style):
         '''It should return HTML from the service.'''
         rmock.post(self.oauth_url, json={"access_token": "some_token", "expires_in": 3600})
-        rmock.get(self.url + "?get=html&c=" + style, text=f"some HTML with {style} and {self.captcha_id}")
+        rmock.get(
+            self.url + "?get=html&c=" + style,
+            text=f"some HTML with {style} and {self.captcha_id}"
+        )
         response = self.get(url_for('apiv2.captchetat', get='html', c=style))
         self.assert200(response)
         snippet = response.data.decode('utf8')
@@ -36,7 +39,7 @@ class ApiTest(WebTestMixin):
     def test_capchetat_get_image(self, rmock, style):
         '''It should return image from the service.'''
         rmock.post(self.oauth_url, json={"access_token": "some_token", "expires_in": 3600})
-        content=bytes("some string", 'UTF-8')
+        content = bytes("some string", 'UTF-8')
         rmock.get(f"{self.url}?get=image&c={style}&t={self.captcha_id}", content=content)
         response = self.get(url_for('apiv2.captchetat', get='image', c=style, t=self.captcha_id))
         self.assert200(response)
@@ -48,9 +51,12 @@ class ApiTest(WebTestMixin):
     def test_capchetat_get_sound(self, rmock, style):
         '''It should return sound from the service.'''
         rmock.post(self.oauth_url, json={"access_token": "some_token", "expires_in": 3600})
-        content=bytes(10)
+        content = bytes(10)
         rmock.get(f"{self.url}?get=sound&c={style}&t={self.captcha_id}", content=content)
-        response = self.get(url_for('apiv2.captchetat', get='sound', c=style, t=self.captcha_id), content_type="audio/*")
+        response = self.get(
+            url_for('apiv2.captchetat', get='sound', c=style, t=self.captcha_id),
+            content_type="audio/*"
+        )
         self.assert200(response)
         assert response.content_type == "audio/*"
 
@@ -74,7 +80,10 @@ class ApiTest(WebTestMixin):
     def test_capchetat_get_script_include(self, rmock, style):
         '''It should return script from the service.'''
         rmock.post(self.oauth_url, json={"access_token": "some_token", "expires_in": 3600})
-        rmock.get(self.url + "?get=script-include&c=" + style, text=f"some script with {style} and {self.captcha_id}")
+        rmock.get(
+            self.url + "?get=script-include&c=" + style,
+            text=f"some script with {style} and {self.captcha_id}"
+        )
         response = self.get(url_for('apiv2.captchetat', get='script-include', c=style))
         self.assert200(response)
         snippet = response.data.decode('utf8')
