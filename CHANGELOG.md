@@ -2,7 +2,15 @@
 
 ## Current (in progress)
 
+- Fix i18n errors for `/es` [#156](https://github.com/etalab/udata-front/pull/156)
+
+## 2.0.11 (2022-09-02)
+
 - Fix discussions text wrap [#145](https://github.com/etalab/udata-front/pull/145)
+- Update Venti buttons [#146](https://github.com/etalab/udata-front/pull/146)
+- :warning: @blue-470 and @blue-500 are removed
+- Fix z-index value in dataset search-result template [#153](https://github.com/etalab/udata-front/pull/153) [#155](https://github.com/etalab/udata-front/pull/155)
+- Fix RGAA criterion 8.2 [#147](https://github.com/etalab/udata-front/pull/147)
 
 ## 2.0.10 (2022-08-11)
 

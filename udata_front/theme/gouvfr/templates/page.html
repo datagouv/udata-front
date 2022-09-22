@@ -25,7 +25,10 @@
     <div class="fr-grid-row fr-grid-row--gutters">
         <div class="fr-col-12">
             {% for dataset in datasets %}
+                {# FIXME: remove with loop when upgrading jinja. See https://github.com/pallets/jinja/pull/1242 #}
+                {% with loop_ = loop %}
                 {% include theme('dataset/search-result.html') %}
+                {% endwith %}
             {% endfor %}
         </div>
     </div>

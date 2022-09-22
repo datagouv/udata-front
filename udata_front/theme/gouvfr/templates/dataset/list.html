@@ -82,7 +82,7 @@
                         id="search-datasets"
                         value="{{datasets.query._query}}"
                     />
-                    <button class="fr-btn" title="{{_('Search')}}" type="submit">
+                    <button class="fr-btn" type="submit">
                         {{ _('Search') }}
                     </button>
                 </div>
@@ -96,7 +96,8 @@
         <ul class="search-results fr-mt-3v">
             {% for dataset in datasets %}
             <li>
-                {% with z_index = "z-index: {index:d}".format(index=(datasets.page_size - loop.index0)) %}
+                {# FIXME: remove with loop when upgrading jinja. See https://github.com/pallets/jinja/pull/1242 #}
+                {% with loop_ = loop %}
                 {% include theme('dataset/search-result.html') %}
                 {% endwith %}
             </li>
