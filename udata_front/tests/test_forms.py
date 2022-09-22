@@ -1,9 +1,10 @@
 from typing import List
-from udata_front.forms import ExtendedRegisterForm;
+from udata_front.forms import ExtendedRegisterForm
 from udata_front.tests import GouvFrSettings
 from udata_front.tests.frontend import GouvfrFrontTestCase
 
 import pytest
+
 
 class ExtendedRegisterFormTest(GouvfrFrontTestCase):
     settings = GouvFrSettings
@@ -22,7 +23,7 @@ class ExtendedRegisterFormTest(GouvfrFrontTestCase):
             'password_confirm': 'passpass',
         })
         result = form.validate()
-        assert result == False
+        assert result is False
         assert 'first_name' in form.errors
         assert 'last_name' in form.errors
         assert 'captcha_code' in form.errors
@@ -37,10 +38,9 @@ class ExtendedRegisterFormTest(GouvfrFrontTestCase):
             'last_name': 'azeaze https://etalab.studio',
         })
         result = form.validate()
-        assert result == False
+        assert result is False
         assert 'first_name' in form.errors
         assert 'last_name' in form.errors
-
 
     @pytest.mark.options(CAPTCHETAT_OAUTH_TOKEN_URL=oauth_url)
     @pytest.mark.options(CAPTCHETAT_VALIDATION_URL=url)
@@ -58,7 +58,7 @@ class ExtendedRegisterFormTest(GouvfrFrontTestCase):
             'captcha_code': 'azerty'
         })
         result = form.validate()
-        assert result == False
+        assert result is False
         assert 'captcha_code' in form.errors
 
     @pytest.mark.options(CAPTCHETAT_OAUTH_TOKEN_URL=oauth_url)
@@ -77,4 +77,4 @@ class ExtendedRegisterFormTest(GouvfrFrontTestCase):
             'captcha_code': 'azerty'
         })
         result = form.validate()
-        assert result == True
+        assert result is True
