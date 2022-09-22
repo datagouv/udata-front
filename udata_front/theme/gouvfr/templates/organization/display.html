@@ -17,11 +17,14 @@
 {% set bundle = 'organization' %}
 
 {% block breadcrumb %}
+{% cache cache_duration, 'org-breadcrumb', org.id|string, g.lang_code, org.last_modified|string %}
 <li><a href="{{ url_for('organizations.list') }}">{{ _('Organizations') }}</a></li>
 <li class="active" aria-current="page">{{ org.name }}</li>
+{% endcache %}
 {% endblock %}
 
 {% block main_content %}
+{% cache cache_duration, 'org-content', org.id|string, datasets.page|string, reuses.page|string, g.lang_code, current_user.slug or 'anonymous', org.last_modified|string %}
 <header class="fr-container">
     {% if org.deleted %}
     <div class="well-grey-100 well fr-mb-3v">
@@ -93,12 +96,7 @@
 {% if datasets and datasets|length > 0 %}
 <section id="organization-datasets" class="fr-py-9v fr-container">
     <h2>{{ _('Datasets') }}<sup>{{ total_datasets }}</sup></h2>
-    {% for dataset in datasets %}
-        {# FIXME: remove with loop when upgrading jinja. See https://github.com/pallets/jinja/pull/1242 #}
-        {% with loop_ = loop %}
-        {% include theme('dataset/search-result.html') %}
-        {% endwith %}
-    {% endfor %}
+    {% include theme('dataset/search-results.html') %}
     <div class="fr-my-2w">
         {{ paginator(datasets, arg_name='datasets_page', url='#organization-datasets') }}
     </div>
@@ -200,4 +198,5 @@
         </div>
     </div>
 </section>
+{% endcache %}
 {% endblock %}

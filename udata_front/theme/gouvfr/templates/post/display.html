@@ -62,16 +62,9 @@
 {% if post.datasets %}
 <div class="fr-container fr-mt-2w">
     <h2>{{ _('Datasets') }} <sup>{{ post.datasets|length }}</sup></h2>
-    <div class="fr-grid-row">
-        <div class="fr-col-12">
-            {% for dataset in post.datasets %}
-                {# FIXME: remove with loop when upgrading jinja. See https://github.com/pallets/jinja/pull/1242 #}
-                {% with loop_ = loop %}
-                {% include theme('dataset/search-result.html') %}
-                {% endwith %}
-            {% endfor %}
-        </div>
-    </div>
+    {% with datasets = post.datasets %}
+        {% include theme('dataset/search-results.html') %}
+    {% endwith %}
 </div>
 {% endif %}
 

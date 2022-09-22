@@ -22,14 +22,7 @@
 
     <div class="tab-pane active" id="datasets">
         {% if datasets %}
-        <ul class="search-results">
-            {% for dataset in datasets %}
-                {# FIXME: remove with loop when upgrading jinja. See https://github.com/pallets/jinja/pull/1242 #}
-                {% with loop_ = loop %}
-                {% include theme('dataset/search-result.html') %}
-                {% endwith %}
-            {% endfor %}
-        </ul>
+            {% include theme('dataset/search-results.html') %}
             {% if datasets.has_next %}
             <p class="text-center">
                 <a class="btn btn-grey btn-sm" href="{{ url_for('datasets.list', **request.args) }}">
