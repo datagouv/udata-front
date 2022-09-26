@@ -8,11 +8,11 @@ describe("Testing search bar", () => {
       cy.get("#" + val).as('popup');
     });
   });
-  it("Show you a search bar", () => {
+  it("shows you a search bar", () => {
     cy.get('@input').should("be.visible");
   });
 
-  it("Open popup as you type", () => {
+  it("opens popup as you type", () => {
     cy.get('@input')
       .type("some string")
       .get('@popup')
