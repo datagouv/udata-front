@@ -7,7 +7,7 @@ orbs:
 jobs:
   deps:
     docker:
-      - image: udata/circleci:2-alpine
+      - image: cimg/python:3.7
     steps:
       - checkout
       # needed to commit changed *.pip files if needed
@@ -69,7 +69,7 @@ jobs:
 
   python:
     docker:
-      - image: udata/circleci:2-alpine
+      - image: cimg/python:3.7
       - image: mongo:3.6
       - image: redis:alpine
     environment:
@@ -154,7 +154,7 @@ jobs:
 
   lighthouse:
     docker:
-      - image: cimg/python:3.7.13-browsers
+      - image: cimg/python:3.7-browsers
       - image: mongo:3.6
       - image: redis:alpine
     steps:
@@ -182,7 +182,7 @@ jobs:
 
   dist:
     docker:
-      - image: udata/circleci:2-alpine
+      - image: cimg/python:3.7
     environment:
        BASH_ENV: /root/.bashrc
     steps:
@@ -215,7 +215,7 @@ jobs:
 
   publish:
     docker:
-      - image: udata/circleci:2-alpine
+      - image: cimg/python:3.7
     steps:
       - attach_workspace:
           at: .

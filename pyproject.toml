@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=65.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "udata-front"
+version = "2.0.9.dev"
+description = "udata customizations for data.gouv.fr"
+readme = "README.md"
+authors = [
+    {name = "Etalab", email = "pypi@data.gouv.fr"},
+]
+license = {text = "LGPL"}
+keywords = ["udata", "opendata", "portal", "etalab"]
+classifiers = [
+ "Development Status :: 3 - Alpha",
+ "Programming Language :: Python",
+ "Environment :: Web Environment",
+ "Operating System :: OS Independent",
+ "Intended Audience :: Developers",
+ "Topic :: System :: Software Distribution",
+ "Programming Language :: Python",
+ "Programming Language :: Python :: 3",
+ "Programming Language :: Python :: 3.7",
+ "Topic :: Software Development :: Libraries :: Python Modules",
+ "License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)"
+]
+
+[project.urls]
+repository = "https://github.com/etalab/udata-front"
+
+[project.entry-points."udata.themes"]
+gouvfr = "udata_front.theme.gouvfr"
+
+[project.entry-points."udata.models"]
+front = "udata_front.models"
+
+[project.entry-points."udata.front"]
+front = "udata_front.frontend"
+
+[project.entry-points."udata.apis"]
+front_oembed = "udata_front.views.oembed"
+
+[project.entry-points."udata.harvesters"]
+maaf = "udata_front.harvesters.maaf:MaafBackend"
+
+[project.entry-points."udata.tasks"]
+front = "udata_front.tasks"
+
+[tool.setuptools]
+packages = ["udata_front"]

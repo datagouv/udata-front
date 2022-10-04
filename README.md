@@ -107,7 +107,7 @@ Install `udata-front` in development mode:
 ```shell
 cd udata-front
 pre-commit install
-pip install -e . -r requirements/test.pip -r requirements/develop.pip
+pip install -e . -r requirements/develop.pip
 ```
 
 > NB: the `udata.(in|pip)` files are used by the CI to stay in sync with `udata` requirements. You shouldn't need to tinker with them on your local environment, but they might be updated by the CI when you make a Pull Request.
