@@ -1,12 +1,6 @@
--c install.pip
+-c test.pip
 
 flake8==3.7.7
 invoke==1.2.0
 pytest-cov==2.6.1
 readme-renderer[md]==24.0
-mock==3.0.5
-pytest==4.6.3
-pytest-flask==0.15.0
-pytest-mock==2.0.0
-requests-mock==1.7.0
-feedgen==0.7.0
