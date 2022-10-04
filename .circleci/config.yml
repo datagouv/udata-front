@@ -165,6 +165,11 @@ jobs:
       - run:
           name: Generate udata fixtures
           command: |
+            pip install --force-reinstall --no-deps -r requirements/udata.in
+            pip install -r requirements/udata.pip \
+                        -r requirements/install.pip \
+                        -r requirements/test.pip \
+                        -r requirements/develop.pip
             pip install -e .
             udata generate-fixtures
       - run:
