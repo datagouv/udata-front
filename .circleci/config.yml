@@ -42,10 +42,9 @@ jobs:
           name: Compile python dependencies against udata
           command: |
             source venv/bin/activate
-            pip-compile requirements/udata.in --output-file=requirements/udata.pip
-            pip-compile requirements/install.in --output-file=requirements/install.pip
-            pip-compile requirements/test.in --output-file=requirements/test.pip
-            pip-compile requirements/develop.in --output-file=requirements/develop.pip
+            pip-compile --extra udata -o requirements/udata.pip pyproject.toml
+            pip-compile -o requirements/install.pip pyproject.toml
+            pip-compile --extra dev -o requirements/develop.pip pyproject.toml
       - run:
           name: Commit any change in compiled *.pip
           command: |
@@ -85,7 +84,6 @@ jobs:
             pip install --force-reinstall --no-deps -r requirements/udata.in
             pip install -r requirements/udata.pip \
                         -r requirements/install.pip \
-                        -r requirements/test.pip \
                         -r requirements/develop.pip
             pip install -e .
       - save_cache:
@@ -168,7 +166,6 @@ jobs:
             pip install --force-reinstall --no-deps -r requirements/udata.in
             pip install -r requirements/udata.pip \
                         -r requirements/install.pip \
-                        -r requirements/test.pip \
                         -r requirements/develop.pip
             pip install -e .
             udata generate-fixtures

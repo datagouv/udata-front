@@ -25,6 +25,25 @@ classifiers = [
  "Topic :: Software Development :: Libraries :: Python Modules",
  "License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)"
 ]
+dependencies = [
+ "feedparser==6.0.8",
+ "python-frontmatter==1.0.0",
+ "sentry-sdk[flask]==1.1.0",
+ "udata@git+https://github.com/opendatateam/udata.git"
+]
+
+[project.optional-dependencies]
+dev = [
+ "flake8==3.7.7",
+ "invoke==1.2.0",
+ "pytest-cov==2.6.1",
+ "mock==3.0.5",
+ "pytest==4.6.3",
+ "pytest-flask==0.15.0",
+ "pytest-mock==2.0.0",
+ "requests-mock==1.7.0",
+ "feedgen==0.7.0"
+]
 
 [project.urls]
 repository = "https://github.com/etalab/udata-front"
