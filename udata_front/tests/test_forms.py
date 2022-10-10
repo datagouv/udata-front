@@ -64,7 +64,7 @@ class ExtendedRegisterFormTest(GouvfrFrontTestCase):
     @pytest.mark.options(CAPTCHETAT_OAUTH_TOKEN_URL=oauth_url)
     @pytest.mark.options(CAPTCHETAT_VALIDATION_URL=url)
     def test_register_form_validated(self):
-        '''It should return False with an invalid captcha.'''
+        '''It should return True with a valid captcha.'''
         self.rmock.post(self.oauth_url, json={"access_token": "some_token", "expires_in": 3600})
         self.rmock.post(self.url, text="true")
         form = ExtendedRegisterForm.from_json({
