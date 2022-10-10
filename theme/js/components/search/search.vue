@@ -167,10 +167,9 @@
 </template>
 
 <script>
-import { defineComponent, ref, Ref, onMounted, computed, watch, PropType } from "vue";
+import { defineComponent, ref, onMounted, computed } from "vue";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
-import { CancelTokenSource } from "axios";
 import { generateCancelToken, apiv2 } from "../../plugins/api";
 import {useToast} from "../../composables/useToast";
 import useSearchUrl from "../../composables/useSearchUrl";
@@ -181,6 +180,8 @@ import SchemaFilter from "./schema-filter.vue";
 import Empty from "./empty.vue";
 import Pagination from "../pagination/pagination.vue";
 import MultiSelect from "./multi-select.vue";
+import { search_autocomplete_debounce } from "../../config";
+import { debounce } from "../../composables/useDebouncedRef";
 
 export default defineComponent({
   inheritAttrs: false,
@@ -199,7 +200,7 @@ export default defineComponent({
       default: false,
     },
     sorts: {
-      /** @type {PropType<Array<{label: string, order: string, value: string}>>} */
+      /** @type {import("vue").PropType<Array<{label: string, order: string, value: string}>>} */
       type: Array,
       default: [],
     }
@@ -212,7 +213,7 @@ export default defineComponent({
      */
     const url = new URL(window.location.href);
     const params = new URLSearchParams(url.search);
-    
+
     /**
      * Search query
      */
@@ -230,13 +231,13 @@ export default defineComponent({
 
     /**
      * Search results
-     * @type {Ref<Array>}
+     * @type {import("vue").Ref<Array>}
      */
     const results = ref([]);
 
     /**
-     * 
-     * @param {number} key 
+     *
+     * @param {number} key
      */
     const zIndex = (key) => {
       return {zIndex: results.value.length - key}
@@ -269,25 +270,25 @@ export default defineComponent({
 
     /**
      * Current request if any to be cancelled if a new one comes
-     * @type {Ref<CancelTokenSource | null>}
+     * @type {import("vue").Ref<import("axios").CancelTokenSource | null>}
      */
     const currentRequest = ref(null);
 
     /**
      * Vue ref to results HTML
-     * @type {Ref<HTMLElement | null>}
+     * @type {import("vue").Ref<HTMLElement | null>}
      */
     const resultsRef = ref(null);
 
     /**
      * Vue ref to results HTML
-     * @type {Ref<HTMLElement | null>}
+     * @type {import("vue").Ref<HTMLElement | null>}
      */
     const searchRef = ref(null);
 
     /**
-     * 
-     * @param {Array} data 
+     *
+     * @param {Array} data
      */
     const formatResults = (data) => {
       results.value = data.map(result => {
@@ -297,10 +298,22 @@ export default defineComponent({
       return results;
     };
 
+    const updateUrl = () => {
+      // Update URL to match current search params value for deep linking
+      let url = new URL(window.location.href);
+      url.search = new URLSearchParams(searchParameters.value).toString();
+      window.history.pushState(null, "", url);
+      /** @type NodeListOf<HTMLAnchorElement> */
+      let linksWithQuery = document.querySelectorAll('[data-q]');
+      for (let link of linksWithQuery) {
+        link.href = reuseUrl.value;
+      }
+    };
+
     /**
      * Search new dataset results
      */
-    const search = () => {
+    const search = debounce(() => {
       loading.value = true;
       if (currentRequest.value) currentRequest.value.cancel();
       currentRequest.value = generateCancelToken();
@@ -308,7 +321,7 @@ export default defineComponent({
         .get("/datasets/search/", {
           cancelToken: currentRequest.value.token,
           params: {
-            ...paramUrl.value,
+            ...searchParameters.value,
             page_size: pageSize,
           },
         })
@@ -317,6 +330,7 @@ export default defineComponent({
           formatResults(result.data);
           totalResults.value = result.total;
           loading.value = false;
+          updateUrl();
         })
         .catch((error) => {
           if (!axios.isCancel(error)) {
@@ -324,7 +338,7 @@ export default defineComponent({
             loading.value = false;
           }
         });
-    }
+    }, search_autocomplete_debounce);
 
     /**
      * Called when user type in search field
@@ -335,9 +349,9 @@ export default defineComponent({
       currentPage.value = 1;
       search();
     };
-    
+
     /**
-     * Called on every facet selector change, updates the `facets.xxx` object then searches with new values 
+     * Called on every facet selector change, updates the `facets.xxx` object then searches with new values
      */
     const handleFacetChange = (facet) => {
       return (values) => {
@@ -376,7 +390,7 @@ export default defineComponent({
       search();
       scrollToTop();
     };
-    
+
     const scrollToTop = () => {
       if (searchRef.value) {
         searchRef.value.scrollIntoView({ behavior: "smooth" });
@@ -396,7 +410,7 @@ export default defineComponent({
 
     /**
      * Is any filter active ?
-     */ 
+     */
     const isFiltered = computed(() => {
       return Object.keys(facets.value).some(
         (key) => facets.value[key]?.length > 0
@@ -408,7 +422,7 @@ export default defineComponent({
         label: sort.label,
       })));
 
-    const paramUrl = computed(() => {
+    const searchParameters = computed(() => {
       /**
        *  @type Record<string, string>
        */
@@ -440,7 +454,7 @@ export default defineComponent({
       params.delete('sort');
     }
     /**
-     * @type {Ref<{organization: ?string, tag: ?string, license: ?string, format: ?string, geozone: ?string, granularity: ?string, schema: ?string}>}
+     * @type {import("vue").Ref<{organization: ?string, tag: ?string, license: ?string, format: ?string, geozone: ?string, granularity: ?string, schema: ?string}>}
      */
     facets.value = Object.fromEntries(params);
     if (props.disableFirstSearch) {
@@ -448,18 +462,6 @@ export default defineComponent({
     } else {
       search();
     }
-
-    watch(paramUrl, (val) => {
-      // Update URL to match current search params value for deep linking
-      let url = new URL(window.location.href);
-      url.search = new URLSearchParams(val).toString();
-      history.pushState(null, "", url);
-      /** @type NodeListOf<HTMLAnchorElement> */
-      let linksWithQuery = document.querySelectorAll('[data-q]');
-      for (let link of linksWithQuery) {
-        link.href = reuseUrl.value;
-      }
-    }, {deep: true});
 
     onMounted(() => {
       if (props.disableFirstSearch && resultsRef.value) {
