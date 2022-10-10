@@ -286,7 +286,22 @@
                                 {% endfor %}
                             </dl>
                         </details>
-                {% endif %}
+                    {% endif %}
+                    {% if dataset.harvest %}
+                        <details>
+                            <summary class="subtitle fr-mb-0">{{ _('Harvest') }}</summary>
+                            <dl class="fr-my-0 fr-grid-row fr-grid-row--gutters">
+                                {% for harvest_extra_name, harvest_extra_value in dataset.harvest._data.items() %}
+                                {% if harvest_extra_value != None %}
+                                <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
+                                    <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ harvest_extra_name }}</dt>
+                                    <dd class="fr-text--sm fr-ml-0 fr-mb-2w">{{ harvest_extra_value }}</dd>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </dl>
+                        </details>
+                    {% endif %}
                 </div>
                 <div id="tab-actions-panel" class="fr-tabs__panel" role="tabpanel"
                     aria-labelledby="tab-actions" tabindex="0">
