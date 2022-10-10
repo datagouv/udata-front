@@ -100,7 +100,7 @@
                 </div>
               </template>
               <span class="fr-icon-info-line" aria-hidden="true"></span>
-              <span class="fr-reset-link fr-mx-1v">
+              <span class="fr-mx-1v">
                 {{$t('Metadata quality:')}}
               </span>
               <QualityScore :score="quality.score"/>
