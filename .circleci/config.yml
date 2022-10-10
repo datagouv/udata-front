@@ -33,16 +33,15 @@ jobs:
           command: |
             if [[ $CIRCLE_TAG ]]; then
               # upgrade udata to latest pypi release
-              echo "udata" > requirements/udata.in
-              echo "tagged release, using udata as content of udata.in"
+              sed -i "s/udata@git+https:\/\/github.com\/opendatateam\/udata.git/udata = \">4\"/" pyproject.toml
+              echo "tagged release, using latest udata as content of pyproject.toml"
             else
-              echo "not a tagged release, using checked-in udata.in"
+              echo "not a tagged release, using checked-in udata"
             fi
       - run:
           name: Compile python dependencies against udata
           command: |
             source venv/bin/activate
-            pip-compile --extra udata -o requirements/udata.pip pyproject.toml
             pip-compile -o requirements/install.pip pyproject.toml
             pip-compile --extra dev -o requirements/develop.pip pyproject.toml
       - run:
@@ -56,7 +55,7 @@ jobs:
               git config --global user.email "robot@data.gouv.fr"
               git config --global user.name "Circle CI"
               ( \
-                git ls-files -m|grep -E "(install|test|develop|udata).pip" \
+                git ls-files -m|grep -E "(install|develop).pip" \
                 && git commit requirements/*.pip -m "[auto] update deps" \
                 && git push origin ${CIRCLE_BRANCH} \
               ) || true
@@ -81,9 +80,7 @@ jobs:
           name: Install python dependencies
           command: |
             source venv/bin/activate
-            pip install --force-reinstall --no-deps -r requirements/udata.in
-            pip install -r requirements/udata.pip \
-                        -r requirements/install.pip \
+            pip install -r requirements/install.pip \
                         -r requirements/develop.pip
             pip install -e .
       - save_cache:
@@ -163,9 +160,7 @@ jobs:
       - run:
           name: Generate udata fixtures
           command: |
-            pip install --force-reinstall --no-deps -r requirements/udata.in
-            pip install -r requirements/udata.pip \
-                        -r requirements/install.pip \
+            pip install -r requirements/install.pip \
                         -r requirements/develop.pip
             pip install -e .
             udata generate-fixtures
