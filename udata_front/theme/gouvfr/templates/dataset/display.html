@@ -212,20 +212,20 @@
                             <h2 class="subtitle">{{ _('Informations') }}</h2>
                             <dl class="fr-my-1w">
                                 {% if dataset.license %}
-                                <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('License') }}</dt>
-                                <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
+                                <dt class="fr-text--sm fr-my-0 text-mention-grey">{{ _('License') }}</dt>
+                                <dd class="fr-text--sm fr-ml-0 fr-mt-0 fr-mb-2w">
                                     {% if dataset.license.url %}<a href="{{ dataset.license.url }}">{% endif %}
                                     {{ dataset.license.title }}
                                     {% if dataset.license.url %}</a>{% endif %}
                                 </dd>
                                 {% endif %}
-                                <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('ID') }}</dt>
-                                <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
+                                <dt class="fr-text--sm fr-my-0 text-mention-grey">{{ _('ID') }}</dt>
+                                <dd class="fr-text--sm fr-ml-0 fr-mt-0 fr-mb-2w">
                                     {{dataset.id}}
                                 </dd>
                                 {% if external_source %}
-                                <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Remote source') }}</dt>
-                                <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
+                                <dt class="fr-text--sm fr-my-0 text-mention-grey">{{ _('Remote source') }}</dt>
+                                <dd class="fr-text--sm fr-ml-0 fr-mt-0 fr-mb-2w">
                                     <a rel="nofollow" href="{{ external_source }}">{{ _('Remote source') }}</a>
                                 </dd>
                                 {% endif%}
@@ -235,21 +235,21 @@
                             <h2 class="subtitle">{{ _('Temporality') }}</h2>
                             <dl class="fr-my-1w">
                                 {% if dataset.temporal_coverage %}
-                                <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Temporal coverage') }}</dt>
-                                <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
+                                <dt class="fr-text--sm fr-my-0 text-mention-grey">{{ _('Temporal coverage') }}</dt>
+                                <dd class="fr-text--sm fr-ml-0 fr-mt-0 fr-mb-2w">
                                     {{ dataset.temporal_coverage|daterange(details=True) }}
                                 </dd>
                                 {% endif %}
                                 {% if dataset.frequency %}
-                                <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Frequency') }}</dt>
-                                <dd class="fr-text--sm fr-ml-0 fr-mb-2w">{{ dataset.frequency_label }}</dd>
+                                <dt class="fr-text--sm fr-my-0 text-mention-grey">{{ _('Frequency') }}</dt>
+                                <dd class="fr-text--sm fr-ml-0 fr-mt-0 fr-mb-2w">{{ dataset.frequency_label }}</dd>
                                 {% endif %}
-                                <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Creation date') }}</dt>
-                                <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
+                                <dt class="fr-text--sm fr-my-0 text-mention-grey">{{ _('Creation date') }}</dt>
+                                <dd class="fr-text--sm fr-ml-0 fr-mt-0 fr-mb-2w">
                                     {{ dataset.created_at|dateformat(format='long') }}
                                 </dd>
-                                <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Latest resource update') }}</dt>
-                                <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
+                                <dt class="fr-text--sm fr-my-0 text-mention-grey">{{ _('Latest resource update') }}</dt>
+                                <dd class="fr-text--sm fr-ml-0 fr-mt-0 fr-mb-2w">
                                     {{ dataset.last_update|dateformat(format='long') }}
                                 </dd>
                             </dl>
@@ -259,12 +259,12 @@
                             <h2 class="subtitle">{{ _('Geographic dimensions') }}</h2>
                             <dl class="fr-my-1w">
                                 {% if dataset.spatial.granularity %}
-                                <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Territorial coverage granularity') }}</dt>
-                                <dd class="fr-text--sm fr-ml-0 fr-mb-2w">{{ dataset.spatial.granularity_label }}</dd>
+                                <dt class="fr-text--sm fr-my-0 text-mention-grey">{{ _('Territorial coverage granularity') }}</dt>
+                                <dd class="fr-text--sm fr-ml-0 fr-mt-0 fr-mb-2w">{{ dataset.spatial.granularity_label }}</dd>
                                 {% endif %}
                                 {% if dataset.spatial.zones %}
-                                <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Territorial coverage') }}</dt>
-                                <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
+                                <dt class="fr-text--sm fr-my-0 text-mention-grey">{{ _('Territorial coverage') }}</dt>
+                                <dd class="fr-text--sm fr-ml-0 fr-mt-0 fr-mb-2w">
                                     {% for zone in dataset.spatial.zones %}
                                     {{zone.name}}{% if not loop.last %},{% endif %}
                                     {% endfor %}
@@ -280,8 +280,8 @@
                             <dl class="fr-my-0 fr-grid-row fr-grid-row--gutters">
                                 {% for extra_name, extra_value in dataset.extras.items() %}
                                 <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
-                                    <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ extra_name }}</dt>
-                                    <dd class="fr-text--sm fr-ml-0 fr-mb-2w">{{ extra_value }}</dd>
+                                    <dt class="fr-text--sm fr-my-0 text-mention-grey">{{ extra_name }}</dt>
+                                    <dd class="fr-text--sm fr-ml-0 fr-mt-0 fr-mb-2w">{{ extra_value }}</dd>
                                 </div>
                                 {% endfor %}
                             </dl>
