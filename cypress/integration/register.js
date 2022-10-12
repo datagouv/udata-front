@@ -2,7 +2,7 @@ describe("Testing registration page", () => {
   beforeEach(() => {
     cy.visit("/register");
     cy.on('uncaught:exception', (e) => {
-      // We don't want cypress to fail on an aborted requested
+      // We don't want cypress to fail on an aborted request
       if (e.message.includes('Request aborted')) {
         return false
       }
