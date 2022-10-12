@@ -20,7 +20,7 @@ captchetat_parser.add_argument('cs', type=str, location='args', help='captcha st
 
 def bearer_token():
     '''Get CaptchEtat bearer token from cache or get a new one from CaptchEtat Oauth server'''
-    token_cache_key = current_app.config.get('TOKEN_CACHE_KEY')
+    token_cache_key = current_app.config.get('CAPTCHETAT_TOKEN_CACHE_KEY')
     url = current_app.config.get('CAPTCHETAT_OAUTH_TOKEN_URL')
     previous_value = cache.get(token_cache_key)
     if previous_value:
