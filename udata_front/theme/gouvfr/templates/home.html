@@ -18,6 +18,11 @@
                 <h1 class="fr-mt-0 fr-mb-2w">{{ _('Open platform for French public data') }}</h1>
                 <div>
                     <h4>{{ _('Featured topics') }}</h4>
+                    <a href="{{ url_for('gouvfr.show_page', slug='donnees-energie') }}"
+                        class="btn-venti fr-my-2w bg-orange-100">
+                        Données relatives aux
+                        <strong>Énergies</strong>
+                    </a>
                     <a href="{{ url_for('gouvfr.show_page', slug='donnees-geographiques') }}"
                         class="btn-venti fr-my-2w bg-blue-450">
                         Données à composante
@@ -27,11 +32,6 @@
                         class="btn-venti bg-green-400">
                         Données relatives au
                         <strong>Logement et à l'Urbanisme</strong>
-                    </a>
-                    <a href="{{ url_for('gouvfr.show_page', slug='donnees-securite') }}"
-                        class="btn-venti fr-my-2w bg-blue-400">
-                        Données relatives à la
-                        <strong>Sécurité</strong>
                     </a>
                     <div class="fr-grid-row justify-center fr-mt-2w">
                         <a

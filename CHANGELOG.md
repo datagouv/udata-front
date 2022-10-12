@@ -6,6 +6,7 @@
 - Update API card [#160](https://github.com/etalab/udata-front/pull/160)
 - Create new search results component [#157](https://github.com/etalab/udata-front/pull/157)
 - Remove quality score banner [#163](https://github.com/etalab/udata-front/pull/163)
+- Add energy on home venti button [#164](https://github.com/etalab/udata-front/pull/164)
 
 ## 2.0.11 (2022-09-02)
 
