@@ -25,7 +25,7 @@ def bearer_token():
     previous_value = cache.get(token_cache_key)
     if previous_value:
         return previous_value
-    log.info(f'New access token requested from {url}')
+    log.debug(f'New access token requested from {url}')
     try:
         oauth = requests.post(url, data={
             'grant_type': 'client_credentials',
