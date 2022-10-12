@@ -62,7 +62,7 @@ class CaptchEtatAPI(API):
 
     @apiv2.representation('image/*')
     @apiv2.representation('audio/*')
-    def image(data, code, headers):
+    def media(data, code, headers):
         resp = make_response(bytes(data), code)
         resp.headers.extend(headers)
         return resp
