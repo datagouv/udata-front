@@ -7,6 +7,7 @@
 - Create new search results component [#157](https://github.com/etalab/udata-front/pull/157)
 - Remove quality score banner [#163](https://github.com/etalab/udata-front/pull/163)
 - Add energy on home venti button [#164](https://github.com/etalab/udata-front/pull/164)
+- Switch from `Flask-restplus` to its fork `Flask-rest-x` [#165](https://github.com/etalab/udata-front/pull/165)
 
 ## 2.0.11 (2022-09-02)
 
