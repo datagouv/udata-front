@@ -1,10 +1,9 @@
 <template>
   <div id="BDC_CaptchaComponent" v-html="captchaHtml"></div>
-  <input type="hidden" name="captcha_id" v-model="id"/>
+  <input type="hidden" name="captcha_id" v-model="id" ref="input"/>
 </template>
 <script>
-import { computed, defineComponent, ref } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { computed, defineComponent, onMounted, ref } from 'vue';
 import { fetchHtml, fetchScript } from '../../api/captcha';
 
 /**
@@ -26,6 +25,9 @@ export default defineComponent({
     /** @type {import("vue").Ref<undefined | string>} */
     const id = ref();
 
+    /** @type {import("vue").Ref<undefined | HTMLInputElement>} */
+    const input = ref();
+
     const displayHtml = () => {
       fetchHtml(props.captchaStyleName)
         .then(html => captchaHtml.value = html)
@@ -35,23 +37,33 @@ export default defineComponent({
             fetchScript(props.captchaStyleName, input.value).then(() => id.value = captchaId.value)
           }
         })
-    }
+    };
 
     /** @type {import("vue").ComputedRef<undefined | captchaInstance>} */
     const instance = computed(() => {
       return window.botdetect?.getInstanceByStyleName(props.captchaStyleName)
-    })
+    });
 
     /** @type {import("vue").ComputedRef<undefined | string>} */
     const captchaId = computed(() => {
       return instance.value?.captchaId
-    })
+    });
 
-    displayHtml()
+    displayHtml();
+
+    onMounted(() => {
+      if(input.value instanceof HTMLInputElement) {
+        let button = input.value.form?.querySelector('[type="submit"]');
+        if(button instanceof HTMLButtonElement) {
+          button.disabled = false;
+        }
+      }
+    });
 
     return {
       captchaHtml,
-      id
+      id,
+      input,
     }
   },
 });

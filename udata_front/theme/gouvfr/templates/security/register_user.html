@@ -1,4 +1,5 @@
 {% extends theme('base.html') %}
+{% from theme('macros/banner_warning.html') import banner_warning %}
 {% import theme('macros/forms.html') as forms with context %}
 
 {% block content %}
@@ -17,6 +18,12 @@
                             {{ _("Fields preceded by a star (<span class='required-field-star'>*</span>) are required.") }}
                         </p>
                         {% if config.CAPTCHETAT_BASE_URL %}
+                            <noscript>
+                            {{ banner_warning(
+                                "fr-icon-alert-line",
+                                _("Javascript is required to sign up.")
+                            )}}
+                            </noscript>
                             {{ forms.render_fields(register_user_form, exclude=[register_user_form.submit, register_user_form.captcha_code, register_user_form.captcha_id]) }}
                         {% else %}
                             {{ forms.render_fields(register_user_form, exclude=[register_user_form.submit]) }}
@@ -42,7 +49,13 @@
                             </div>
                         {% endif %}
                         <div class="fr-mt-1w fr-grid-row fr-grid-row--center">
-                            <button type="submit" class="fr-btn">{{ _('Sign up') }}</button>
+                            <button
+                                type="submit"
+                                class="fr-btn"
+                                {% if config.CAPTCHETAT_BASE_URL %}disabled="disabled"{% endif %}
+                            >
+                                {{ _('Sign up') }}
+                            </button>
                         </div>
                 </form>
             </div>
