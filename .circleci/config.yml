@@ -29,16 +29,6 @@ jobs:
             source venv/bin/activate
             pip install pip-tools
       - run:
-          name: Upgrade udata to latest pypi release if tagged release
-          command: |
-            if [[ $CIRCLE_TAG ]]; then
-              # upgrade udata to latest pypi release
-              sed -i "s/udata@git+https:\/\/github.com\/opendatateam\/udata.git/udata = \">4\"/" pyproject.toml
-              echo "tagged release, using latest udata as content of pyproject.toml"
-            else
-              echo "not a tagged release, using checked-in udata"
-            fi
-      - run:
           name: Compile python dependencies against udata
           command: |
             source venv/bin/activate
@@ -82,7 +72,7 @@ jobs:
             source venv/bin/activate
             pip install -r requirements/install.pip \
                         -r requirements/develop.pip
-            pip install -e .
+            pip install .
       - save_cache:
           key: py-cache-v16-{{ arch }}-{{ .Branch }}
           paths:
@@ -162,7 +152,7 @@ jobs:
           command: |
             pip install -r requirements/install.pip \
                         -r requirements/develop.pip
-            pip install -e .
+            pip install .
             udata generate-fixtures
       - run:
           name: Install lighthouse

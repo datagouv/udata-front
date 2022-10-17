@@ -45,7 +45,6 @@ blinker==1.4
     #   flask-navigation
     #   flask-principal
     #   flask-sitemap
-    #   sentry-sdk
     #   udata
 celery==4.3.0
     # via
@@ -56,7 +55,6 @@ celerybeat-mongo==0.2.0
 certifi==2021.5.30
     # via
     #   requests
-    #   sentry-sdk
     #   udata
 cffi==1.14.6
     # via
@@ -118,7 +116,6 @@ flask==1.1.4
     #   flask-themes2
     #   flask-wtf
     #   pytest-flask
-    #   sentry-sdk
     #   udata
 flask-babelex==0.9.3
     # via
@@ -310,8 +307,6 @@ requests==2.24.0
     #   udata
 requests-mock==1.7.0
     # via udata-front (pyproject.toml)
-sentry-sdk[flask]==1.1.0
-    # via udata-front (pyproject.toml)
 sgmllib3k==1.0.0
     # via feedparser
 simplejson==3.17.0
@@ -348,7 +343,7 @@ text-unidecode==1.3
     #   udata
 tlds==2021080800
     # via udata
-udata @ git+https://github.com/opendatateam/udata.git
+udata==4.1.3.dev23673
     # via udata-front (pyproject.toml)
 udata-event-service==0.0.8
     # via udata
@@ -369,7 +364,6 @@ urlextract==0.14.0
 urllib3==1.25.11
     # via
     #   requests
-    #   sentry-sdk
     #   udata
 vine==1.3.0
     # via
