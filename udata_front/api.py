@@ -38,6 +38,7 @@ def bearer_token():
         cache.set(token_cache_key, access_token, timeout=body.get('expires_in', 0))
     except requests.exceptions.RequestException:
         log.exception(f'Error while getting access token from {url}')
+        return ""
     else:
         return access_token
 
