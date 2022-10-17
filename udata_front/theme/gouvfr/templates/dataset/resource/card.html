@@ -1,4 +1,4 @@
-{% from theme('macros/description_list/description_list.html') import description_list %}
+{% from theme('macros/description_list.html') import dl, dd, dt %}
 {% set resource_format = resource.format|trim|lower %}
 {% set available = resource.extras['check:status']
     and resource.extras['check:status'] >= 200 and resource.extras['check:status'] < 400 %}
@@ -79,11 +79,11 @@
         </div>
         {% endif %}
         <div class="fr-grid-row fr-grid-row--gutters">
-            {% call description_list() %}
-                <dt class="fr-text--sm fr-my-0 fr-text--bold">{{ _('URL') }}</dt>
-                <dd class="fr-text--sm fr-ml-0 fr-mt-0 fr-mb-2w text-overflow-ellipsis text-mention-grey">
+            {% call dl() %}
+                {% call dt() %}{{ _('URL') }}{% endcall %}
+                {% call dd() %}
                     <a class="unstyled" href="{{resource.url}}">{{resource.url}}</a>
-                </dd>
+                {% endcall %}
             {% endcall %}
         </div>
         <dl>

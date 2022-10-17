@@ -1,0 +1,18 @@
+{% macro dl() %}
+    <dl class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4 fr-my-1w">
+        {{ caller() }}
+    </dl>
+{% endmacro %}
+
+{% macro dt() %}
+    <dt class="fr-text--sm fr-my-0 fr-text--bold">
+        {{ caller() }}
+    </dt>
+{% endmacro %}
+
+
+{% macro dd() %}
+    <dd class="fr-text--sm fr-ml-0 fr-mt-0 fr-mb-2w text-overflow-ellipsis text-mention-grey">
+        {{ caller() }}
+    </dd>
+{% endmacro %}
