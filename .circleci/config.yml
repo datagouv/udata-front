@@ -33,7 +33,7 @@ jobs:
           command: |
             source venv/bin/activate
             pip-compile -o requirements/install.pip pyproject.toml
-            pip-compile --extra dev -o requirements/develop.pip pyproject.toml
+            pip-compile --extra=dev --output-file=requirements/develop.pip --unsafe-package=udata pyproject.toml
       - run:
           name: Commit any change in compiled *.pip
           command: |
