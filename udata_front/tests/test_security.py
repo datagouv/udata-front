@@ -5,6 +5,7 @@ from udata.tests import WebTestMixin
 
 import pytest
 
+
 class SecurityTest(WebTestMixin):
     '''Ensure themed views render'''
     settings = GouvFrSettings
