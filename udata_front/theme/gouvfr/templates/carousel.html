@@ -14,7 +14,7 @@
                         <div class="slide-logo pull-left">{{ reuse|owner_avatar(40) }}</div>
                         <span class="author">{{ reuse|owner_name}}</span>
                         <h4 class="title">
-                            <a href="{{ url_for('reuses.show', reuse=reuse) }}" title="{{ reuse.title }}" data-content-target>
+                            <a href="{{ url_for('reuses.show', reuse=reuse) }}" data-content-target>
                             {{ reuse.title }}
                             </a>
                         </h4>

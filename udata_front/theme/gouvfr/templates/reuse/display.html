@@ -22,17 +22,23 @@
 {% set visible_datasets = reuse.datasets|visibles %}
 
 {% block extra_head %}
+{% cache cache_duration, 'reuse-extra-head', reuse.id|string, g.lang_code, reuse.last_modified|string %}
 <link rel="canonical" href="{{ url_for('reuses.show', reuse=reuse) }}" />
 <link rel="alternate" type="application/json+oembed" href="{{ url_for('api.oembed', url=reuse.external_url) }}"
     title="{{ reuse.title | urlencode }}" />
+{% endcache %}
 {% endblock %}
 
 {% block breadcrumb %}
+{% cache cache_duration, 'reuse-breadcrumb', reuse.id|string, g.lang_code, reuse.last_modified|string %}
 <li><a href="{{ url_for('reuses.list') }}">{{ _('Reuses') }}</a></li>
 <li class="active" aria-current="page">{{ reuse.title }}</li>
+{% endcache %}
 {% endblock %}
 
 {% block content %}
+{% cache cache_duration, 'reuse-content', reuse.id|string, g.lang_code, current_user.slug or 'anonymous', reuse.last_modified|string %}
+
 {{ breadcrumb(self,
     breadcrum_class=breadcrum_class,
     toolbar_class=toolbar_class
@@ -260,13 +266,9 @@
                 <sup>{{ visible_datasets|length }}</sup>
             </h2>
         </div>
-    <ul class="fr-grid-row fr-grid-row--gutters">
-        {% for dataset in visible_datasets %}
-        <li class="fr-col-12">
-            {% include theme('dataset/search-result.html') %}
-        </li>
-        {% endfor %}
-    </ul>
+        {% with datasets = visible_datasets %}
+        {% include theme('dataset/search-results.html') %}
+        {% endwith %}
     </section>
     <section class="community_container fr-pb-7w" id="community">
         <div class="fr-container vuejs">
@@ -292,4 +294,5 @@
         </ul>
     </section>
 </section>
+{% endcache %}
 {% endblock %}

@@ -3,7 +3,7 @@
     <div class="fr-grid-row fr-grid-row--middle">
       <div aria-hidden="true" class="fr-col-auto fr-mr-2w" v-html="icon">
       </div>
-      <i18n-t keypath="Search X in Y" class="fr-col" tag="div" scope="global" v-if="query">
+      <i18n-t keypath="Search {query} in {type}" class="fr-col" tag="div" scope="global" v-if="query">
         <template #query>
           <em>{{query}}</em>
         </template>

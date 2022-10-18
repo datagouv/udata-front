@@ -2,7 +2,22 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix i18n errors for `/es` [#156](https://github.com/etalab/udata-front/pull/156)
+- Update API card [#160](https://github.com/etalab/udata-front/pull/160)
+- Create new search results component [#157](https://github.com/etalab/udata-front/pull/157)
+- Remove quality score banner [#163](https://github.com/etalab/udata-front/pull/163)
+- Add energy on home venti button [#164](https://github.com/etalab/udata-front/pull/164)
+- Cache behavior changes [#154](https://github.com/etalab/udata-front/pull/154):
+  - Organization and Reuse display page are now cached.
+  - Cache keys now embed the `last_modified` object attribute. This automatically invalidates the cache when modifying the object.
+
+## 2.0.11 (2022-09-02)
+
+- Fix discussions text wrap [#145](https://github.com/etalab/udata-front/pull/145)
+- Update Venti buttons [#146](https://github.com/etalab/udata-front/pull/146)
+- :warning: @blue-470 and @blue-500 are removed
+- Fix z-index value in dataset search-result template [#153](https://github.com/etalab/udata-front/pull/153) [#155](https://github.com/etalab/udata-front/pull/155)
+- Fix RGAA criterion 8.2 [#147](https://github.com/etalab/udata-front/pull/147)
 
 ## 2.0.10 (2022-08-11)
 
