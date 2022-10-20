@@ -1,19 +1,24 @@
 <template>
-  <article class="border-bottom">
+  <article>
     <header
-      class="fr-py-2w fr-grid-row fr-grid-row--gutters fr-grid-row--middle no-wrap wrap-md justify-between"
+      class="fr-py-2w fr-grid-row fr-grid-row--middle no-wrap wrap-md justify-between border-bottom border-default-grey"
       :id="'resource-' + resource.id + '-header'"
     >
       <div class="fr-col-auto fr-grid-row fr-grid-row--top no-wrap">
         <div class="fr-col-auto fr-mx-2w fr-icon-svg fr-icon--sm" v-html="resourceImage"></div>
         <div class="fr-col-auto">
-          <h4
-            class="fr-mb-1v"
-            :id="'resource-' + resource.id + '-title'"
-          >
-            {{ resource.title || $t('Nameless resource') }}
-          </h4>
-          <div class="fr-text--sm fr-mb-0 text-grey-380">
+          <div class="fr-grid-row fr-grid-row--middle fr-mb-1v">
+            <h4
+              class="fr-mb-0"
+              :id="'resource-' + resource.id + '-title'"
+            >
+              {{ resource.title || $t('Nameless resource') }}
+            </h4>
+            <p v-if="showSchema" class="fr-ml-1w fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
+                {{resource.schema.name}}
+            </p>
+          </div>
+          <div class="fr-text--sm fr-my-0 text-grey-380">
             <template v-if="resource.owner">
               {{ $t('From') }} {{owner}} —
             </template>
@@ -29,31 +34,31 @@
           </div>
         </div>
       </div>
-      <div class="fr-col-auto fr-ml-6w fr-ml-md-0">
+      <div class="fr-col-auto fr-ml-auto">
         <ul class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
-          <li class="text-default-error fr-mr-5w" v-if="unavailable">
+          <li class="text-default-error fr-ml-3v" v-if="unavailable">
             {{$t('Unavailable')}}
           </li>
-          <li class="fr-col-auto fr-mr-5w" v-if="showSchemaButton">
-            <schema-button :resource="resource"/>
-          </li>
-          <li class="fr-col-auto fr-mr-3v" v-if="canEdit">
+          <li class="fr-col-auto fr-ml-3v" v-if="canEdit">
             <EditButton
               :dataset-id="datasetId"
               :resource-id="resource.id"
               :is-community-resource="isCommunityResource"
             />
           </li>
-          <li class="fr-col-auto fr-mr-3v" v-if="resource.preview_url">
+          <li class="fr-col-auto fr-ml-3v">
             <button
-              :title="$t('Preview')"
-              @click.prevent="showModal('preview', {url: resource.preview_url, title: resource.title}, true)"
-              class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-icon-svg"
-              v-html="preview"
+              @click="expand"
+              role="button"
+              :aria-expanded="expanded"
+              :aria-controls="'resource-' + resource.id"
+              class="fr-btn fr-btn--sm"
+              :class="{'fr-btn--tertiary fr-icon-close-line': expanded, 'fr-btn--icon-left fr-icon-eye-line': !expanded}"
             >
+              {{expanded ? $t('Close details') : $t('See data')}}
             </button>
           </li>
-          <li class="fr-col-auto" v-if="resource.format === 'url'">
+          <li class="fr-col-auto fr-ml-3v" v-if="resource.format === 'url'">
             <a
               :href="resource.latest"
               :title="$t('Resource link')"
@@ -63,7 +68,7 @@
             >
             </a>
           </li>
-          <li class="fr-col-auto" v-else>
+          <li class="fr-col-auto fr-ml-3v" v-else>
             <a
               :href="resource.latest"
               :title="$t('Download resource')"
@@ -72,29 +77,17 @@
             >
             </a>
           </li>
-          <li class="fr-col-auto fr-ml-7v">
-            <button
-              @click.prevent="expand"
-              role="button"
-              :aria-expanded="expanded"
-              :title="$t('See more details')"
-              :aria-controls="'resource-' + resource.id"
-              class="accordion-button rounded-circle fr-icon-arrow-right-s-line fr-p-1w"
-            >
-            </button>
-          </li>
         </ul>
       </div>
     </header>
     <section
-      class="accordion-content fr-pt-5v fr-pb-4w fr-pl-6w"
-      :class="{active: expanded}"
-      :style="{height: expanded ? 'auto' : 0}"
+      class="accordion-content fr-px-3w border-default-grey"
+      :class="{'border-bottom': expanded}"
       :aria-labelledby="'resource-' + resource.id + '-title'"
-      :hidden="!expanded"
       :id="'resource-' + resource.id"
+      ref="content"
     >
-      <div class=" fr-mt-0 markdown" v-if="resource.description" v-html="filters.markdown(resource.description)">
+      <div class="fr-mt-0 markdown" v-if="resource.description" v-html="filters.markdown(resource.description)">
       </div>
       <dl>
         <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
@@ -157,6 +150,7 @@ import useOwnerName from "../../../composables/useOwnerName";
 import useResourceImage from "../../../composables/useResourceImage";
 import EditButton from "./edit-button.vue";
 import preview from 'bundle-text:svg/preview.svg';
+import { toggleAccordion } from "../../vanilla/accordion";
 
 export default defineComponent({
   components: {EditButton, SchemaButton},
@@ -188,23 +182,31 @@ export default defineComponent({
     const resourceImage = useResourceImage(props.resource);
     const filters = inject('$filters');
     const showModal = inject('$showModal');
+    /** @type {import("vue").Ref<HTMLElement | undefined>} */
+    const content = ref();
     const expanded = ref(false);
-    const expand = () => expanded.value = !expanded.value;
+    const expand = () => {
+      expanded.value = !expanded.value;
+      if(content.value) {
+        toggleAccordion(content.value, expanded.value, 24);
+      }
+    }
     const availabilityChecked = computed(() => props.resource.extras && props.resource.extras['check:status']);
     const lastUpdate = computed(() => props.resource.published > props.resource.last_modified ? props.resource.published : props.resource.last_modified);
     const unavailable = computed(() => availabilityChecked.value && availabilityChecked.value >= 400);
-    const showSchemaButton = computed(() => props.resource.schema && props.resource.schema.name);
+    const showSchema = computed(() => props.resource.schema && props.resource.schema.name);
     return {
       owner,
       resourceImage,
       filters,
       showModal,
+      content,
       expanded,
       expand,
       availabilityChecked,
       lastUpdate,
       unavailable,
-      showSchemaButton,
+      showSchema,
       preview,
     }
   },

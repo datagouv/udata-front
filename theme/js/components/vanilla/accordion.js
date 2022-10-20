@@ -45,31 +45,37 @@ export default (() => {
         else ev.target.setAttribute("aria-expanded", "true");
 
         const target = document.querySelector(ev.target.getAttribute("href"));
-        const divStyler = styler(target);
-
-        if (target) {
-          target.classList.toggle("active");
-
-          if (target.classList.contains("active")) {
-            tween({
-              from: { height: 0 },
-              to: { height: target.scrollHeight },
-              duration: 300,
-              ease: easing.anticipate,
-            }).start({
-              update: divStyler.set,
-              complete: () => divStyler.set({ height: "auto" }),
-            });
-          } else {
-            tween({
-              from: { height: target.scrollHeight },
-              to: { height: 0 },
-              duration: 300,
-              ease: easing.anticipate,
-            }).start(divStyler.set);
-          }
-        }
+        target.classList.toggle("active");
+        toggleAccordion(target, target.classList.contains("active"));
       });
     });
   });
 })();
+
+/**
+ * @param {HTMLElement} target
+ * @param {boolean} opened
+ */
+export function toggleAccordion (target, opened, padding = 0) {
+  if (target) {
+    const divStyler = styler(target);
+    if (opened) {
+      tween({
+        from: { height: 0, padding: 0 },
+        to: { height: target.scrollHeight + 2 * padding, padding: padding },
+        duration: 300,
+        ease: easing.anticipate,
+      }).start({
+        update: divStyler.set,
+        complete: () => divStyler.set({ height: "auto" }),
+      });
+    } else {
+      tween({
+        from: { height: target.scrollHeight, padding: padding },
+        to: { height: 0, padding: 0 },
+        duration: 300,
+        ease: easing.anticipate,
+      }).start(divStyler.set);
+    }
+  }
+}
