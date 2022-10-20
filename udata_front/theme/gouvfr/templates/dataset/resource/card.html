@@ -4,13 +4,13 @@
     and resource.extras['check:status'] >= 200 and resource.extras['check:status'] < 400 %}
 {% set unavailable = resource.extras['check:status'] and resource.extras['check:status'] >= 400 %}
 {% set last_update = resource.published if resource.published > resource.modified else resource.modified %}
-<article class="border-bottom">
+<article>
     <header
-        class="fr-py-2w fr-grid-row fr-grid-row--gutters fr-grid-row--middle no-wrap wrap-md justify-between"
+        class="fr-py-2w fr-grid-row fr-grid-row--middle no-wrap wrap-md justify-between border-bottom border-default-grey"
         id="resource-{{resource.id}}-header"
     >
         <div class="fr-col-auto fr-grid-row fr-grid-row--top no-wrap">
-            <div class="fr-col-auto fr-mx-2w fr-icon-svg fr-icon--sm">
+            <div class="fr-col-auto fr-mx-3v fr-icon-svg fr-icon--sm">
                 {% include theme(resource_image(resource)) %}
             </div>
             <div class="fr-col-auto">
@@ -69,7 +69,7 @@
         </div>
     </header>
     <section
-        class="accordion-content active fr-pt-5v fr-pb-4w fr-pl-6w"
+        class="accordion-content active fr-p-3w border-bottom border-default-grey"
         aria-labelledby="resource-{{resource.id}}-title"
         id="resource-{{resource.id}}"
     >
@@ -118,5 +118,10 @@
                 {% endif %}
             {% endcall %}
         </div>
+        {% if resource.schema %}
+            <p class="fr-ml-1w fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
+                {{resource.schema.name}}
+            </p>
+        {% endif %}
     </section>
 </article>
