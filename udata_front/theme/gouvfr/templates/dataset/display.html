@@ -108,11 +108,11 @@
                     {{ _('Modify dataset') }}
                 </a>
                 <a
-                class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-edit-line fr-hidden-sm"
-                href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
-            >
-                {{ _('Modify dataset') }}
-            </a>
+                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-edit-line fr-hidden-sm"
+                    href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
+                >
+                    {{ _('Modify dataset') }}
+                </a>
             {% endif %}
             {% if sysadmin %}
             <div class="fr-mt-0 vuejs">

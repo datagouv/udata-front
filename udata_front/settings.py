@@ -6,6 +6,7 @@ Default settings for udata-front
 RESOURCES_SCHEMAGOUVFR_ENABLED = True
 SCHEMA_GOUVFR_VALIDATA_URL = 'https://validata.etalab.studio'
 SCHEMA_CATALOG_URL = 'https://schema.data.gouv.fr/schemas/schemas.json'
+SCHEMA_DOCUMENTATION_URL = 'https://schema.data.gouv.fr/'
 
 # Dataset settings
 # Default page size for resources on dataset page

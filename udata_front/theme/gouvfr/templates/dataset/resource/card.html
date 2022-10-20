@@ -119,9 +119,18 @@
             {% endcall %}
         </div>
         {% if resource.schema %}
-            <p class="fr-ml-1w fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
+            <h5 class="fr-h5 fr-mt-1w fr-mb-5v">{{_('Schema')}}</h5>
+            <p class="fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
                 {{resource.schema.name}}
             </p>
+            <div>
+                <a
+                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-btn--icon-left fr-icon-book-2-line"
+                    href="{{'{url}{name}'.format(url=config.SCHEMA_DOCUMENTATION_URL, name=resource.schema.name)}}"
+                >
+                    {{ _('See schema documentation') }}
+                </a>
+            </div>
         {% endif %}
     </section>
 </article>
