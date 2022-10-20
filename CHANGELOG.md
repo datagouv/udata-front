@@ -14,6 +14,7 @@
 - Cache behavior changes [#154](https://github.com/etalab/udata-front/pull/154):
   - Organization and Reuse display page are now cached.
   - Cache keys now embed the `last_modified` object attribute. This automatically invalidates the cache when modifying the object.
+- Switch from `Flask-restplus` to its fork `Flask-rest-x` [#165](https://github.com/etalab/udata-front/pull/165)
 
 ## 2.0.11 (2022-09-02)
 
