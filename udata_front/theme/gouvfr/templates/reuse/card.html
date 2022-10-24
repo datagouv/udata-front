@@ -3,14 +3,14 @@
 <article class="fr-card fr-card--no-icon fr-enlarge-link">
     <div class="fr-card__body">
         <div class="fr-card__content fr-p-2w">
-            <h4 class="fr-card__title fr-text--md fr-mt-1w">
+            <h3 class="fr-card__title fr-text--md fr-mt-1w">
                 <a
                     href="{{ url_for('reuses.show', reuse=reuse, _external=True) }}"
                 >
                 {{ reuse.title|mdstrip(55) }}
                 {% if reuse.private %}<span class="fr-badge fr-ml-1w">{{ _('Private') }}</span>{% endif %}
                 </a>
-            </h4>
+            </h3>
             <p class="fr-card__detail fr-m-0">
                 {{ reuse.type_label }}
             </p>

@@ -2,11 +2,20 @@
 
 ## Current (in progress)
 
+- Switch from `Flask-restplus` to its fork `Flask-rest-x` [#165](https://github.com/etalab/udata-front/pull/165)
+- Add CaptchEtat integration [#159](https://github.com/etalab/udata-front/pull/159)
+  - new environment variables : CAPTCHETAT_BASE_URL, CAPTCHETAT_OAUTH_BASE_URL, CAPTCHETAT_CLIENT_ID and CAPTCHETAT_CLIENT_SECRET
+
+## 2.0.12 (2022-10-19)
+
 - Fix i18n errors for `/es` [#156](https://github.com/etalab/udata-front/pull/156)
 - Update API card [#160](https://github.com/etalab/udata-front/pull/160)
 - Create new search results component [#157](https://github.com/etalab/udata-front/pull/157)
-- Add CaptchEtat integration [#159](https://github.com/etalab/udata-front/pull/159)
-  - new environment variables : CAPTCHETAT_BASE_URL, CAPTCHETAT_OAUTH_BASE_URL, CAPTCHETAT_CLIENT_ID and CAPTCHETAT_CLIENT_SECRET
+- Remove quality score banner [#163](https://github.com/etalab/udata-front/pull/163)
+- Add energy on home venti button [#164](https://github.com/etalab/udata-front/pull/164)
+- Cache behavior changes [#154](https://github.com/etalab/udata-front/pull/154):
+  - Organization and Reuse display page are now cached.
+  - Cache keys now embed the `last_modified` object attribute. This automatically invalidates the cache when modifying the object.
 
 ## 2.0.11 (2022-09-02)
 
@@ -15,9 +24,6 @@
 - :warning: @blue-470 and @blue-500 are removed
 - Fix z-index value in dataset search-result template [#153](https://github.com/etalab/udata-front/pull/153) [#155](https://github.com/etalab/udata-front/pull/155)
 - Fix RGAA criterion 8.2 [#147](https://github.com/etalab/udata-front/pull/147)
-- Cache behavior changes [#154](https://github.com/etalab/udata-front/pull/154):
-  - Organization and Reuse display page are now cached.
-  - Cache keys now embed the `last_modified` object attribute. This automatically invalidates the cache when modifying the object.
 
 ## 2.0.10 (2022-08-11)
 
