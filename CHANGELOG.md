@@ -2,7 +2,18 @@
 
 ## Current (in progress)
 
+- Switch from `Flask-restplus` to its fork `Flask-rest-x` [#165](https://github.com/etalab/udata-front/pull/165)
+
+## 2.0.12 (2022-10-19)
+
 - Fix i18n errors for `/es` [#156](https://github.com/etalab/udata-front/pull/156)
+- Update API card [#160](https://github.com/etalab/udata-front/pull/160)
+- Create new search results component [#157](https://github.com/etalab/udata-front/pull/157)
+- Remove quality score banner [#163](https://github.com/etalab/udata-front/pull/163)
+- Add energy on home venti button [#164](https://github.com/etalab/udata-front/pull/164)
+- Cache behavior changes [#154](https://github.com/etalab/udata-front/pull/154):
+  - Organization and Reuse display page are now cached.
+  - Cache keys now embed the `last_modified` object attribute. This automatically invalidates the cache when modifying the object.
 
 ## 2.0.11 (2022-09-02)
 
