@@ -35,8 +35,13 @@ GUIDES_DATASET_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/publier-jeu-de-
 GUIDES_REUSE_URL = 'https://guides.etalab.gouv.fr/reutilisation/publier-reutilisation/'
 
 # CAPTCHEtat
-CAPTCHETAT_BASE_URL = 'https://sandbox-api.piste.gouv.fr/piste/captcha'
-CAPTCHETAT_OAUTH_BASE_URL = 'https://sandbox-oauth.piste.gouv.fr'
+
+# You can activate CaptchEtat, a captcha.com integration by providing
+# CAPTCHETAT_BASE_URL, CAPTCHETAT_OAUTH_BASE_URL, CAPTCHETAT_CLIENT_ID and CAPTCHETAT_CLIENT_SECRET
+CAPTCHETAT_BASE_URL = None
+CAPTCHETAT_OAUTH_BASE_URL = None
+CAPTCHETAT_CLIENT_ID = None
+CAPTCHETAT_CLIENT_SECRET = None
 CAPTCHETAT_OAUTH_TOKEN_URL = f'{CAPTCHETAT_OAUTH_BASE_URL}/api/oauth/token'
 CAPTCHETAT_GET_CAPTCHA_URL = f'{CAPTCHETAT_BASE_URL}/simple-captcha-endpoint'
 CAPTCHETAT_VALIDATION_URL = f'{CAPTCHETAT_BASE_URL}/valider-captcha'
