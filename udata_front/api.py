@@ -62,7 +62,9 @@ class CaptchEtatAPI(API):
             if token:
                 headers = {'Authorization': 'Bearer ' + token}
             captchetat_url = current_app.config.get('CAPTCHETAT_BASE_URL')
-            req = requests.get(f'{captchetat_url}/simple-captcha-endpoint', headers=headers, params=args)
+            req = requests.get(f'{captchetat_url}/simple-captcha-endpoint',
+                               headers=headers,
+                               params=args)
         except requests.exceptions.RequestException:
             abort(500, description='Catptcha internal error')
         accept = request.accept_mimetypes.copy()

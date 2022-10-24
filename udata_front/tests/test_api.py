@@ -46,7 +46,8 @@ class ApiTest(WebTestMixin):
         '''It should return image from the service.'''
         rmock.post(self.oauth_token_url(), json={"access_token": "some_token", "expires_in": 3600})
         content = bytes("some string", 'UTF-8')
-        rmock.get(f"{self.captchetat_url()}?get=image&c={style}&t={self.captcha_id}", content=content)
+        rmock.get(f"{self.captchetat_url()}?get=image&c={style}&t={self.captcha_id}",
+                  content=content)
         response = self.get(url_for('apiv2.captchetat', get='image', c=style, t=self.captcha_id))
         self.assert200(response)
         assert content in bytes(response.data)
@@ -58,7 +59,8 @@ class ApiTest(WebTestMixin):
         '''It should return sound from the service.'''
         rmock.post(self.oauth_token_url(), json={"access_token": "some_token", "expires_in": 3600})
         content = bytes(10)
-        rmock.get(f"{self.captchetat_url()}?get=sound&c={style}&t={self.captcha_id}", content=content)
+        rmock.get(f"{self.captchetat_url()}?get=sound&c={style}&t={self.captcha_id}",
+                  content=content)
         response = self.get(
             url_for('apiv2.captchetat', get='sound', c=style, t=self.captcha_id),
             content_type="audio/*"

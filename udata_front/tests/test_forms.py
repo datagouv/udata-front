@@ -52,7 +52,8 @@ class ExtendedRegisterFormTest(GouvfrFrontTestCase):
     @pytest.mark.options(CAPTCHETAT_BASE_URL=url)
     def test_register_form_invalid_captcha(self):
         '''It should return False with an invalid captcha.'''
-        self.rmock.post(self.oauth_token_url(), json={"access_token": "some_token", "expires_in": 3600})
+        self.rmock.post(self.oauth_token_url(),
+                        json={"access_token": "some_token", "expires_in": 3600})
         self.rmock.post(self.captchetat_url(), text="false")
         form = ExtendedRegisterForm.from_json({
             'email': 'a@a.fr',
@@ -71,7 +72,8 @@ class ExtendedRegisterFormTest(GouvfrFrontTestCase):
     @pytest.mark.options(CAPTCHETAT_BASE_URL=url)
     def test_register_form_validated(self):
         '''It should return True with a valid captcha.'''
-        self.rmock.post(self.oauth_token_url(), json={"access_token": "some_token", "expires_in": 3600})
+        self.rmock.post(self.oauth_token_url(),
+                        json={"access_token": "some_token", "expires_in": 3600})
         self.rmock.post(self.captchetat_url(), text="true")
         form = ExtendedRegisterForm.from_json({
             'email': 'a@a.fr',
