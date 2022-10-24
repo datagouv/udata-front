@@ -1,4 +1,4 @@
-from flask import current_app, json, make_response, request
+from flask import current_app, json, make_response, request, abort
 from werkzeug.datastructures import MIMEAccept
 
 import logging
@@ -38,12 +38,13 @@ def bearer_token():
             'client_id': current_app.config.get('CAPTCHETAT_CLIENT_ID'),
             'client_secret': current_app.config.get('CAPTCHETAT_CLIENT_SECRET')
         })
+        oauth.raise_for_status()
         body = oauth.json()
-        access_token = body.get('access_token', "")
-        cache.set(token_cache_key, access_token, timeout=body.get('expires_in', 0))
+        access_token = body.get('access_token')
+        if access_token:
+            cache.set(token_cache_key, access_token, timeout=body.get('expires_in', 0))
     except requests.exceptions.RequestException:
         log.exception(f'Error while getting access token from {url}')
-        return ""
     else:
         return access_token
 
@@ -55,9 +56,14 @@ class CaptchEtatAPI(API):
     def get(self):
         '''CaptchEtat endpoint for captcha generation and validation'''
         args = captchetat_parser.parse_args()
-        headers = {'Authorization': 'Bearer ' + bearer_token()}
-        captchetat_url = current_app.config.get('CAPTCHETAT_GET_CAPTCHA_URL')
-        req = requests.get(captchetat_url, headers=headers, params=args)
+        try:
+            token = bearer_token()
+            if token:
+                headers = {'Authorization': 'Bearer ' + token}
+            captchetat_url = current_app.config.get('CAPTCHETAT_GET_CAPTCHA_URL')
+            req = requests.get(captchetat_url, headers=headers, params=args)
+        except requests.exceptions.RequestException:
+            abort(500, description='Catptcha internal error')
         accept = request.accept_mimetypes.copy()
         if args['get'] == "sound":
             accept.append(("audio/*", 1))
