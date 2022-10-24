@@ -87,25 +87,15 @@
                                 </a>
                             </li>
                         </ul>
-                        <ul class="fr-mt-2w text-grey-380">
+                        <ul class="fr-mt-3v text-grey-380 fr-footer__top-list">
                             <li>
                                 <a
                                     href="https://github.com/opendatateam/udata/"
-                                    title="{{ _('Open-source engine: udata') }}"
                                     class="fr-footer__top-link"
                                 >
-                                    udata
-                                </a>
-                                <a
-                                    href="https://pypi.org/project/udata/{{ package_version('udata') }}/"
-                                    title="{{ _('udata deployed version: {version}').format(
+                                    {{_('Open-source engine: udata ({version})'.format(
                                         version=package_version('udata')
-                                    ) }}"
-                                    class="fr-footer__top-link"
-                                >
-                                    {{ _('udata version: {version}').format(
-                                        version=package_version('udata')
-                                    ) }}
+                                    ))}}
                                 </a>
                             </li>
                             <li>
@@ -114,17 +104,9 @@
                                     title="{{ _('data.gouv.fr extension: udata-front') }}"
                                     class="fr-footer__top-link"
                                 >
-                                    {{ _('udata theme extension: udata-front') }}
-                                </a>
-                                <a href="https://pypi.org/project/udata-front/{{ package_version('udata-front') }}/"
-                                    title="{{ _('udata-front deployed version: {version}').format(
+                                    {{ _('udata theme extension: udata-front ({version})'.format(
                                         version=package_version('udata-front')
-                                    ) }}"
-                                    class="fr-footer__top-link"
-                                >
-                                    {{ _('udata-front version: {version}').format(
-                                        version=package_version('udata-front')
-                                    ) }}
+                                    )) }}
                                 </a>
                             </li>
                         </ul>
