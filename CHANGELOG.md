@@ -5,6 +5,8 @@
 - Fix i18n errors for `/es` [#156](https://github.com/etalab/udata-front/pull/156)
 - Update API card [#160](https://github.com/etalab/udata-front/pull/160)
 - Create new search results component [#157](https://github.com/etalab/udata-front/pull/157)
+- Add CaptchEtat integration [#159](https://github.com/etalab/udata-front/pull/159)
+  - new environment variables : CAPTCHETAT_BASE_URL, CAPTCHETAT_OAUTH_BASE_URL, CAPTCHETAT_CLIENT_ID and CAPTCHETAT_CLIENT_SECRET
 
 ## 2.0.11 (2022-09-02)
 
