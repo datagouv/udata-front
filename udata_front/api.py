@@ -26,13 +26,13 @@ captchetat_parser.add_argument('cs', type=str, location='args',
 def bearer_token():
     '''Get CaptchEtat bearer token from cache or get a new one from CaptchEtat Oauth server'''
     token_cache_key = current_app.config.get('CAPTCHETAT_TOKEN_CACHE_KEY')
-    url = current_app.config.get('CAPTCHETAT_OAUTH_TOKEN_URL')
+    url = current_app.config.get('CAPTCHETAT_OAUTH_BASE_URL')
     previous_value = cache.get(token_cache_key)
     if previous_value:
         return previous_value
     log.debug(f'New access token requested from {url}')
     try:
-        oauth = requests.post(url, data={
+        oauth = requests.post(f'{url}/api/oauth/token', data={
             'grant_type': 'client_credentials',
             'scope': 'WRITE',
             'client_id': current_app.config.get('CAPTCHETAT_CLIENT_ID'),
@@ -58,10 +58,11 @@ class CaptchEtatAPI(API):
         args = captchetat_parser.parse_args()
         try:
             token = bearer_token()
+            headers = {}
             if token:
                 headers = {'Authorization': 'Bearer ' + token}
-            captchetat_url = current_app.config.get('CAPTCHETAT_GET_CAPTCHA_URL')
-            req = requests.get(captchetat_url, headers=headers, params=args)
+            captchetat_url = current_app.config.get('CAPTCHETAT_BASE_URL')
+            req = requests.get(f'{captchetat_url}/simple-captcha-endpoint', headers=headers, params=args)
         except requests.exceptions.RequestException:
             abort(500, description='Catptcha internal error')
         accept = request.accept_mimetypes.copy()

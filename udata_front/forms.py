@@ -28,9 +28,9 @@ class ExtendedRegisterForm(RegisterForm):
             return False
 
         headers = {'Authorization': 'Bearer ' + bearer_token()}
-        captchetat_url = current_app.config.get('CAPTCHETAT_VALIDATION_URL')
+        captchetat_url = current_app.config.get('CAPTCHETAT_BASE_URL')
         try:
-            resp = requests.post(captchetat_url, headers=headers, json={
+            resp = requests.post(f'{captchetat_url}/valider-captcha', headers=headers, json={
                 'id': self.captcha_id.data,
                 'code': self.captcha_code.data
             })
