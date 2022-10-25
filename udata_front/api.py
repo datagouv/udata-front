@@ -22,6 +22,7 @@ captchetat_parser.add_argument('t', type=str, location='args',
 captchetat_parser.add_argument('cs', type=str, location='args',
                                help='captcha style, this is a technical argument auto-generated')
 
+CAPTCHETAT_ERROR = "CaptchEtat request didn't failed but didn't contain any access_token"
 
 def bearer_token():
     '''Get CaptchEtat bearer token from cache or get a new one from CaptchEtat Oauth server'''
@@ -41,8 +42,9 @@ def bearer_token():
         oauth.raise_for_status()
         body = oauth.json()
         access_token = body.get('access_token')
-        if access_token:
-            cache.set(token_cache_key, access_token, timeout=body.get('expires_in', 0))
+        if not access_token:
+            raise requests.exceptions.RequestException(CAPTCHETAT_ERROR)
+        cache.set(token_cache_key, access_token, timeout=body.get('expires_in', 0))
     except requests.exceptions.RequestException as request_exception:
         log.exception(f'Error while getting access token from {url}')
         raise request_exception

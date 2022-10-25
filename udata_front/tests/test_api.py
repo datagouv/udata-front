@@ -26,6 +26,24 @@ class ApiTest(WebTestMixin):
     @pytest.mark.options(CAPTCHETAT_OAUTH_BASE_URL=oauth_url)
     @pytest.mark.options(CAPTCHETAT_BASE_URL=url)
     @pytest.mark.parametrize("style", styles)
+    def test_capchetat_fail_with_oauth_error(self, rmock, style):
+        '''It should failed if there is an oauth error.'''
+        rmock.post(self.oauth_token_url(), status_code=500)
+        response = self.get(url_for('apiv2.captchetat', get='html', c=style))
+        self.assert500(response)
+
+    @pytest.mark.options(CAPTCHETAT_OAUTH_BASE_URL=oauth_url)
+    @pytest.mark.options(CAPTCHETAT_BASE_URL=url)
+    @pytest.mark.parametrize("style", styles)
+    def test_capchetat_fail_without_access_token_during_oauth(self, rmock, style):
+        '''It should failed if there is no access_token in oauth response.'''
+        rmock.post(self.oauth_token_url(), json={})
+        response = self.get(url_for('apiv2.captchetat', get='html', c=style))
+        self.assert500(response)
+
+    @pytest.mark.options(CAPTCHETAT_OAUTH_BASE_URL=oauth_url)
+    @pytest.mark.options(CAPTCHETAT_BASE_URL=url)
+    @pytest.mark.parametrize("style", styles)
     def test_capchetat_get_html(self, rmock, style):
         '''It should return HTML from the service.'''
         rmock.post(self.oauth_token_url(), json={"access_token": "some_token", "expires_in": 3600})
