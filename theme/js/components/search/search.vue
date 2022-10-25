@@ -154,10 +154,8 @@
               :queryString="queryString"
               :cta="$t('Reset filters')"
               :copy="$t('No dataset matching your query')"
-              :copyAfter="
-                $t('You can try to reset the filters to expand your search.')
-              "
-              :onClick="() => resetForm()"
+              :copyAfter="$t('You can try to reset the filters to expand your search.')"
+              :onClick="() => reloadForm()"
             />
           </div>
         </transition>
@@ -298,11 +296,17 @@ export default defineComponent({
       return results;
     };
 
-    const updateUrl = () => {
+    const SAVE_TO_HISTORY = true;
+    const DONT_SAVE_TO_HISTORY = false;
+
+    const updateUrl = (save = SAVE_TO_HISTORY) => {
       // Update URL to match current search params value for deep linking
       let url = new URL(window.location.href);
       url.search = new URLSearchParams(searchParameters.value).toString();
-      window.history.pushState(null, "", url);
+      console.log(save);
+      if (save) {
+        window.history.pushState(null, "", url);
+      }
       /** @type NodeListOf<HTMLAnchorElement> */
       let linksWithQuery = document.querySelectorAll('[data-q]');
       for (let link of linksWithQuery) {
@@ -313,7 +317,7 @@ export default defineComponent({
     /**
      * Search new dataset results
      */
-    const search = debounce(() => {
+    const search = debounce((saveToHistory = SAVE_TO_HISTORY) => {
       loading.value = true;
       if (currentRequest.value) currentRequest.value.cancel();
       currentRequest.value = generateCancelToken();
@@ -330,7 +334,7 @@ export default defineComponent({
           formatResults(result.data);
           totalResults.value = result.total;
           loading.value = false;
-          updateUrl();
+          updateUrl(saveToHistory);
         })
         .catch((error) => {
           if (!axios.isCancel(error)) {
@@ -397,15 +401,20 @@ export default defineComponent({
       }
     };
 
-    const resetFilters = () => {
-      facets.value = {};
-      currentPage.value = 1;
-      search();
+    const reloadFilters = ({page = 1, sort = '', ...params} = {}, saveToHistory = SAVE_TO_HISTORY) => {
+      facets.value = params;
+      currentPage.value = page;
+      searchSort.value = sort;
+      search(saveToHistory);
     };
 
-    const resetForm = () => {
-      queryString.value = "";
-      resetFilters();
+    const resetFilters = () => {
+      reloadFilters({});
+    };
+
+    const reloadForm = ({q = '', ...params} = {}, saveToHistory = SAVE_TO_HISTORY) => {
+      queryString.value = q;
+      reloadFilters(params, saveToHistory);
     };
 
     /**
@@ -475,6 +484,15 @@ export default defineComponent({
         }
         loading.value = false;
       }
+      addEventListener('popstate', () => {
+        // Update URL to match current search params value for deep linking
+        const url = new URL(window.location.href);
+        const params = {};
+        for (const [key, value] of url.searchParams) {
+          params[key] = value;
+        }
+        reloadForm(params, DONT_SAVE_TO_HISTORY);
+      });
     });
 
     return {
@@ -483,7 +501,7 @@ export default defineComponent({
       handleSearchChange,
       handleFacetChange,
       changePage,
-      resetForm,
+      reloadForm,
       resetFilters,
       facets,
       results,
