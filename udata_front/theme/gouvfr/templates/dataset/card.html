@@ -1,44 +1,56 @@
 {% cache cache_duration, 'dataset-card', dataset.id|string, g.lang_code %}
 {% from theme('macros/certified.html') import badge_if_certified with context %}
 
-<a
-    href="{{ url_for('datasets.show', dataset=dataset, _external=True) }}"
-    class="fr-raw-link unstyled w-100 fr-mb-1v"
->
-    <article class="dataset-card">
-        {% if dataset.organization %}
-        <div class="card-logo">
-            <img src="{{ dataset.organization.logo(100, external=True)|placeholder('organization', external=True) }}"
-                alt="{{ dataset.organization.name }}" />
-            <div class="logo-badge">
-                {% if dataset.private %}
-                {% include theme('svg/private.svg') %}
-                {% else %}
-                {{ badge_if_certified(dataset.organization) }}
-                {% endif %}
-            </div>
+<article class="dataset-card fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-enlarge-link">
+    <div class="logo fr-col-auto">
+    {% if dataset.organization %}
+        <img
+            src="{{ dataset.organization.logo(60, external=True)|placeholder('organization', external=True) }}"
+            width="60"
+            height="60"
+            loading="lazy"
+            alt="{{ dataset.organization.name }}"
+        />
+        <div class="logo-badge">
+            {% if dataset.private %}
+            {% include theme('svg/private.svg') %}
+            {% else %}
+            {{ badge_if_certified(dataset.organization) }}
+            {% endif %}
         </div>
-        {% elif dataset.owner %}
-        <div class="card-logo">
-            <img src="{{ dataset.owner|avatar_url(100) }}" alt="{{ dataset.owner.fullname }}" />
-        </div>
-        {% else %}
-        <div class="card-logo">
-            <img src="{{ ''|placeholder('organization', external=True) }}" alt="" />
-        </div>
-        {% endif %}
-        <div class="card-data">
-            <h3 class="card-body h4">
+    {% elif dataset.owner %}
+        <img
+            src="{{ dataset.owner|avatar_url(60) }}"
+            width="60"
+            height="60"
+            loading="lazy"
+            alt="{{ dataset.owner.fullname }}"
+        />
+    {% else %}
+        <img
+            src="{{ ''|placeholder('organization', external=True) }}"
+            width="60"
+            height="60"
+            loading="lazy"
+            alt=""
+        />
+    {% endif %}
+    </div>
+    <div class="fr-col card-data">
+        <h3 class="card-body h4">
+            <a
+                href="{{ url_for('datasets.show', dataset=dataset, _external=True) }}"
+                class="fr-raw-link unstyled w-100 fr-mb-1v"
+            >
                 {{ dataset.full_title }}
-            </h3>
-            <div class="card-footer">
-                <ul class="card-features fs-xs">
-                    <li>{{ dataset.resources | length  }} {{ _('resources') }}</li>
-                    <li>{{ dataset.metrics.reuses or 0 }} {{ _('reuses') }}</li>
-                </ul>
-            </div>
+            </a>
+        </h3>
+        <div class="card-footer">
+            <ul class="card-features fs-xs">
+                <li>{{ dataset.resources | length  }} {{ _('resources') }}</li>
+                <li>{{ dataset.metrics.reuses or 0 }} {{ _('reuses') }}</li>
+            </ul>
         </div>
-    </article>
-</a>
-
+    </div>
+</article>
 {% endcache %}

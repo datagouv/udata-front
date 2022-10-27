@@ -2,7 +2,7 @@ import pytest
 
 from datetime import date
 
-from flask import url_for, render_template_string, g, Blueprint
+from flask import url_for, render_template_string, g, Blueprint, request
 
 from udata.i18n import I18nBlueprint
 from udata.models import db
@@ -253,11 +253,13 @@ class FrontEndRootTest:
         }
 
         response = client.get(url_for('test.i18n', key='value', param='other'))
+        base = request.url_root
         link = ('<link rel="alternate" '
-                'href="/{lang}/i18n/value/?param=other" '
+                'href="{base}{lang}/i18n/value/?param=other" '
                 'hreflang="{lang}" />')
-        assert response.data.decode('utf8') == ''.join([link.format(lang='fr'),
-                                                        link.format(lang='de')])
+        assert response.data.decode('utf8') == ''.join([link.format(base=base, lang='en'),
+                                                        link.format(base=base, lang='fr'),
+                                                        link.format(base=base, lang='de')])
 
     def test_i18n_alternate_links_outside_i18n_blueprint(self, app, client):
         test = Blueprint('test', __name__)

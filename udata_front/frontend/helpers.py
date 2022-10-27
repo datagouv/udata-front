@@ -7,7 +7,7 @@ from urllib.parse import urlsplit, urlunsplit
 
 from babel.numbers import format_decimal
 from flask import g, url_for, request, current_app, json
-from flask_restplus import marshal
+from flask_restx import marshal
 from jinja2 import Markup, contextfilter
 from werkzeug import url_decode, url_encode
 
@@ -16,7 +16,7 @@ from . import front
 from udata.core.dataset.apiv2 import dataset_fields
 from udata.core.dataset.models import Dataset
 from udata.models import db
-from udata.i18n import format_date, _, pgettext, get_current_locale
+from udata.i18n import format_date, _, pgettext
 from udata.search.result import SearchResult
 from udata.utils import camel_to_lodash
 from udata_front.theme import theme_static_with_version
@@ -342,8 +342,6 @@ def i18n_alternate_links():
         LINK_PATTERN = (
             '<link rel="alternate" href="{url}" hreflang="{lang}" />')
         links = []
-        current_lang = get_current_locale().language
-
         params = {}
         if request.args:
             params.update(request.args)
@@ -351,9 +349,8 @@ def i18n_alternate_links():
             params.update(request.view_args)
 
         for lang in current_app.config['LANGUAGES']:
-            if lang != current_lang:
-                url = url_for(request.endpoint, lang_code=lang, **params)
-                links.append(LINK_PATTERN.format(url=url, lang=lang))
+            url = url_for(request.endpoint, lang_code=lang, **params, _external=True)
+            links.append(LINK_PATTERN.format(url=url, lang=lang))
         return Markup(''.join(links))
     except Exception:
         # Never fails

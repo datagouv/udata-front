@@ -29,7 +29,7 @@ describe('Pagination Unit Test', function () {
       expect(pagination).to.be.an('array').that.include(null);
       expect(pagination).to.be.an('array').that.does.not.include(PAGE_COUNT_WITH_ELLIPSIS_ON_ONE_SIDE - 1);
     })
-    it('add null on both sides if page 2 and the second last page are not in array', function () {
+    it('adds null on both sides if page 2 and the second last page are not in array', function () {
       const pagination = getVisiblePages(6, PAGE_COUNT_WITH_ELLIPSIS_ON_BOTH_SIDES);
       expect(pagination).to.be.an('array').that.include(null);
       expect(pagination).to.be.an('array').that.does.not.include(2);

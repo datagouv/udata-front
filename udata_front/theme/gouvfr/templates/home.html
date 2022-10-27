@@ -17,7 +17,12 @@
             <div class="fr-col-12 fr-col-lg-5">
                 <h1 class="fr-mt-0 fr-mb-2w">{{ _('Open platform for French public data') }}</h1>
                 <div>
-                    <h4>{{ _('Featured topics') }}</h4>
+                    <h2 class="fr-text--md fr-my-0">{{ _('Featured topics') }}</h2>
+                    <a href="{{ url_for('gouvfr.show_page', slug='donnees-energie') }}"
+                        class="btn-venti fr-my-2w bg-orange-100">
+                        Données relatives aux
+                        <strong>Énergies</strong>
+                    </a>
                     <a href="{{ url_for('gouvfr.show_page', slug='donnees-geographiques') }}"
                         class="btn-venti fr-my-2w bg-blue-450">
                         Données à composante
@@ -27,11 +32,6 @@
                         class="btn-venti bg-green-400">
                         Données relatives au
                         <strong>Logement et à l'Urbanisme</strong>
-                    </a>
-                    <a href="{{ url_for('gouvfr.show_page', slug='donnees-securite') }}"
-                        class="btn-venti fr-my-2w bg-blue-400">
-                        Données relatives à la
-                        <strong>Sécurité</strong>
                     </a>
                     <div class="fr-grid-row justify-center fr-mt-2w">
                         <a
@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="fr-col-12 fr-col-offset-lg-1 fr-col-lg-6">
-                <h4>{{ _('News') }}</h4>
+                <h2 class="fr-text--md fr-my-0">{{ _('News') }}</h2>
                 {% if last_post %}
                 {% set post = last_post %}
                 <div class="fr-grid-row justify-center fr-mb-2w">
@@ -131,14 +131,14 @@
                         href="{{ url_for('datasets.list') }}"
                         class="fr-link fr-icon-arrow-right-s-line fr-link--icon-right"
                     >
-                        {{ _('See more') }}
+                        {{ _('See more datasets') }}
                     </a>
                 </div>
             </div>
         </div>
         {% for tab_id, label, datasets, kwargs in dataset_tabs  %}
         <div class="fr-hidden {% if loop.first %}fr-unhidden{% endif %}" role="tabpanel" id={{tab_id}}>
-            <div class="fr-grid-row fr-pt-md-9v fr-pt-2w">
+            <div class="fr-grid-row fr-grid-row--gutters fr-pt-md-9v fr-pt-2w">
                 {% for dataset in datasets %}
                 <div class="fr-col-12 fr-col-lg-4">{% include theme('dataset/card.html') %}
                 </div>
@@ -190,7 +190,7 @@
                     title="{{ _('Latest reuses') }}"
                     class="fr-link fr-icon-arrow-right-s-line fr-link--icon-right"
                 >
-                    {{ _('See more') }}
+                    {{ _('See more reuses') }}
                 </a>
                 </div>
             </div>

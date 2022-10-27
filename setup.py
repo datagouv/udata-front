@@ -49,6 +49,7 @@ setup(
         'udata.front': 'front = udata_front.frontend',
         'udata.apis': [
             'front_oembed = udata_front.views.oembed',
+            'front_api = udata_front.api',
         ],
         'udata.harvesters': [
             'maaf = udata_front.harvesters.maaf:MaafBackend',
