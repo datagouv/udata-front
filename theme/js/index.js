@@ -12,6 +12,7 @@ import ReadMore from "./components/utils/read-more.vue";
 import RequestMembership from "./components/organization/request-membership.vue";
 import Resources from "./components/dataset/resource/resources.vue";
 import SearchBar from "./components/utils/search-bar.vue";
+import Captcha from "./components/utils/captcha.vue";
 
 import Tabs from "./components/vanilla/tabs";
 import Accordion from "./components/vanilla/accordion";
@@ -70,6 +71,7 @@ const configAndMountApp = (el) => {
   app.component("request-membership", RequestMembership);
   app.component("dataset-resources", Resources);
   app.component("search-bar", SearchBar);
+  app.component("captcha", Captcha);
 
   // unset delimiters used in html templates to prevent injections using {{ }}
   app.config.compilerOptions.delimiters = [];

@@ -33,3 +33,13 @@ GUIDES_USER_ACCOUNT_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/creer-comp
 GUIDES_ORGANIZATION_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/creer-rejoindre-organisation/'
 GUIDES_DATASET_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/publier-jeu-de-donnees/'
 GUIDES_REUSE_URL = 'https://guides.etalab.gouv.fr/reutilisation/publier-reutilisation/'
+
+# CAPTCHEtat
+
+# You can activate CaptchEtat, a captcha.com integration by providing
+# CAPTCHETAT_BASE_URL, CAPTCHETAT_OAUTH_BASE_URL, CAPTCHETAT_CLIENT_ID and CAPTCHETAT_CLIENT_SECRET
+CAPTCHETAT_BASE_URL = None
+CAPTCHETAT_OAUTH_BASE_URL = None
+CAPTCHETAT_CLIENT_ID = None
+CAPTCHETAT_CLIENT_SECRET = None
+CAPTCHETAT_TOKEN_CACHE_KEY = 'captchetat-bearer-token'
