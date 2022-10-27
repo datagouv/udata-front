@@ -5,24 +5,6 @@
 
 {% set toolbar_class='search-toolbar' %}
 
-{% block message %}
-<div class="bg-contrast-info fr-hidden fr-unhidden-sm text-default-info fr-p-3v fr-mb-1w">
-    <div class="fr-container fr-grid-row justify-between fr-text--bold">
-        <div>
-            <span class="fr-icon-info-fill fr-mr-1w" aria-hidden="true"></span>
-            {{_("Discover the new metadata quality score.")}}
-        </div>
-        <div>
-            {{_("<a class='text-default-info fr-mr-2w' href='{eval_url}'>Give us your feedback.</a>
-            <a class='text-default-info' href='{guide_url}'>Learn more.</a>").format(
-                eval_url='https://app.evalandgo.com/form/372035/s/?id=JTk5cSU5NWwlOUMlQTk%3D&a=JTk3cCU5M2glOTklQUU%3D',
-                guide_url='https://www.data.gouv.fr/fr/posts/un-nouveau-score-de-qualite-des-metadonnees-sur-les-jeux-de-donnees/'
-                )}}
-        </div>
-    </div>
-</div>
-{% endblock %}
-
 {% block breadcrumb %}
 <li class="active" aria-current="page">
     {{ _('Datasets') }}

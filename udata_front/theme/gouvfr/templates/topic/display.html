@@ -5,13 +5,10 @@
 
 <section class="default">
     <div class="fr-container">
-
         <div class="fr-grid-row">
             {# Last reuses #}
             <div class="fr-col-xs-12">
-
                 <h3><a href="{{ url_for('topics.reuses', topic=topic) }}">{{ _('Latest reuses') }}</a></h3>
-
                 <ul class="card-list card-list--columned">
                     {% for reuse in recent_reuses %}
                     {% set features = ['preview'] %}
@@ -65,7 +62,7 @@
                         <p class="text-center">
                             <a href="{{ url_for('topics.datasets', topic=topic) }}" class="btn btn-default btn-more">
                                 <span class="fa fa-fw fa-list" ></span>
-                                {{ _('See more') }}
+                                {{ _('See more datasets') }}
                             </a>
                         </p>
                     </div>
