@@ -24,6 +24,7 @@ captchetat_parser.add_argument('cs', type=str, location='args',
 
 CAPTCHETAT_ERROR = "CaptchEtat request didn't failed but didn't contain any access_token"
 
+
 def bearer_token():
     '''Get CaptchEtat bearer token from cache or get a new one from CaptchEtat Oauth server'''
     token_cache_key = current_app.config.get('CAPTCHETAT_TOKEN_CACHE_KEY')
