@@ -211,7 +211,7 @@ def owner_name_acronym(obj):
 
 @front.app_template_global()
 def external_source(dataset):
-    return dataset.extras['remote_url'] if 'remote_url' in dataset.extras else None
+    return dataset.harvest.remote_url if dataset.harvest else None
 
 
 @front.app_template_global()
