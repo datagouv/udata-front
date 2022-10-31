@@ -2,7 +2,7 @@
   <article>
     <header
       class="fr-py-2w fr-grid-row fr-grid-row--middle no-wrap wrap-md justify-between border-bottom border-default-grey"
-      :id="'resource-' + resource.id + '-header'"
+      :id="resourceHeaderId"
     >
       <div class="fr-col-auto fr-grid-row fr-grid-row--top no-wrap">
         <div class="fr-col-auto fr-mx-2w fr-icon-svg fr-icon--sm" v-html="resourceImage"></div>
@@ -10,7 +10,7 @@
           <div class="fr-grid-row fr-grid-row--middle fr-mb-1v">
             <h4
               class="fr-mb-0"
-              :id="'resource-' + resource.id + '-title'"
+              :id="resourceTitleId"
             >
               {{ resource.title || $t('Nameless resource') }}
             </h4>
@@ -51,7 +51,7 @@
               @click="expand"
               role="button"
               :aria-expanded="expanded"
-              :aria-controls="'resource-' + resource.id"
+              :aria-controls="resourceContentId"
               class="fr-btn fr-btn--sm"
               :class="{'fr-btn--tertiary fr-icon-close-line': expanded, 'fr-btn--icon-left fr-icon-eye-line': !expanded}"
             >
@@ -83,90 +83,106 @@
     <section
       class="accordion-content fr-px-3w border-default-grey"
       :class="{'border-bottom': expanded}"
-      :aria-labelledby="'resource-' + resource.id + '-title'"
-      :id="'resource-' + resource.id"
+      :aria-labelledby="resourceTitleId"
+      :id="resourceContentId"
       ref="content"
     >
-      <div class="fr-mt-0 markdown" v-if="resource.description" v-html="filters.markdown(resource.description)">
-      </div>
-      <div class="fr-grid-row fr-grid-row--gutters">
-        <DescriptionList>
-          <DescriptionTerm>{{ $t('URL') }}</DescriptionTerm>
-          <DescriptionDetails :withEllipsis="false" class="fr-grid-row fr-grid-row--middle">
-            <div class="fr-col text-overflow-ellipsis">
-              {{resource.url}}
-            </div>
-            <div class="fr-col-auto">
-              <CopyButton :text="resource.url"/>
-            </div>
-          </DescriptionDetails>
-          <DescriptionTerm>{{ $t('Permalink') }}</DescriptionTerm>
-          <DescriptionDetails :withEllipsis="false" class="fr-grid-row fr-grid-row--middle">
-            <div class="fr-col text-overflow-ellipsis">
-              {{resource.latest}}
-            </div>
-            <div class="fr-col-auto">
-              <CopyButton :text="resource.latest"/>
-            </div>
-          </DescriptionDetails>
-          <template v-if="resource.checksum">
-            <DescriptionTerm>{{resource.checksum.type}}</DescriptionTerm>
-            <DescriptionDetails :withEllipsis="false" class="fr-grid-row fr-grid-row--middle">
-              <div class="fr-col text-overflow-ellipsis">
-                {{resource.checksum.value}}
-              </div>
-              <div class="fr-col-auto">
-                <CopyButton :text="resource.checksum.value"/>
-              </div>
-            </DescriptionDetails>
-          </template>
-          <DescriptionTerm>{{ $t('MIME Type') }}</DescriptionTerm>
-          <DescriptionDetails>
-            {{resource.mime}}
-          </DescriptionDetails>
-        </DescriptionList>
-        <DescriptionList>
-          <DescriptionTerm>{{ $t('Created on') }}</DescriptionTerm>
-          <DescriptionDetails>
-            {{filters.formatDate(resource.created_at)}}
-          </DescriptionDetails>
-          <DescriptionTerm>{{ $t('Modified on') }}</DescriptionTerm>
-          <DescriptionDetails>
-            {{filters.formatDate(resource.last_modified)}}
-          </DescriptionDetails>
-        </DescriptionList>
-        <DescriptionList>
-          <template v-if="resource.filesize">
-            <DescriptionTerm>{{ $t('Size') }}</DescriptionTerm>
-            <DescriptionDetails>
-              {{ filters.filesize(resource.filesize) }}
-            </DescriptionDetails>
-          </template>
-        </DescriptionList>
-      </div>
-      <template v-if="resource.schema">
-        <h5 class="fr-h5 fr-mt-1w fr-mb-5v">{{$t('Schema')}}</h5>
-        <p class="fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left fr-mb-2w">
-          {{resource.schema.name}}
-        </p>
-        <div v-if="loading">
-          <SchemaLoader/>
+      <div class="fr-tabs">
+        <ul class="fr-tabs__list" role="tablist" :aria-label="$t('Resource menu')">
+          <li role="presentation" v-if="resource.preview_url">
+              <button :id="resourcePreviewButtonId" class="fr-tabs__tab" tabindex="0" role="tab" aria-selected="true" :aria-controls="resourcePreviewTabId">{{$t('Preview')}}</button>
+          </li>
+          <li role="presentation">
+              <button :id="resourceInformationsButtonId" class="fr-tabs__tab" :tabindex="resourceInformationsTabIndex" role="tab" :aria-selected="resourceInformationsSelectedTab" :aria-controls="resourceInformationsTabId">{{$t('Informations')}}</button>
+          </li>
+        </ul>
+        <div v-if="resource.preview_url" :id="resourcePreviewTabId" class="fr-tabs__panel fr-tabs__panel--selected" role="tabpanel" :aria-labelledby="resourcePreviewButtonId" tabindex="0">
+          <iframe :src="resource.preview_url" width="100%" height="600" frameborder="0" :title="$t('Preview of resource X', {title: resource.title})"></iframe>
         </div>
-        <div v-else>
-          <a
-            class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-ml-3v fr-btn--icon-left fr-icon-checkbox-line"
-            :href="validationUrl"
-          >
-            {{ $t('See validation report') }}
-          </a>
-          <a
-            class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-book-2-line"
-            :href="documentationUrl"
-          >
-            {{ $t('See schema documentation') }}
-          </a>
+        <div :id="resourceInformationsTabId" class="fr-tabs__panel" role="tabpanel" :aria-labelledby="resourceInformationsButtonId" tabindex="0">
+          <div class="fr-mt-0 markdown" v-if="resource.description" v-html="filters.markdown(resource.description)">
+          </div>
+          <div class="fr-grid-row fr-grid-row--gutters">
+            <DescriptionList>
+              <DescriptionTerm>{{ $t('URL') }}</DescriptionTerm>
+              <DescriptionDetails :withEllipsis="false" class="fr-grid-row fr-grid-row--middle">
+                <div class="fr-col text-overflow-ellipsis">
+                  {{resource.url}}
+                </div>
+                <div class="fr-col-auto">
+                  <CopyButton :text="resource.url"/>
+                </div>
+              </DescriptionDetails>
+              <DescriptionTerm>{{ $t('Permalink') }}</DescriptionTerm>
+              <DescriptionDetails :withEllipsis="false" class="fr-grid-row fr-grid-row--middle">
+                <div class="fr-col text-overflow-ellipsis">
+                  {{resource.latest}}
+                </div>
+                <div class="fr-col-auto">
+                  <CopyButton :text="resource.latest"/>
+                </div>
+              </DescriptionDetails>
+              <template v-if="resource.checksum">
+                <DescriptionTerm>{{resource.checksum.type}}</DescriptionTerm>
+                <DescriptionDetails :withEllipsis="false" class="fr-grid-row fr-grid-row--middle">
+                  <div class="fr-col text-overflow-ellipsis">
+                    {{resource.checksum.value}}
+                  </div>
+                  <div class="fr-col-auto">
+                    <CopyButton :text="resource.checksum.value"/>
+                  </div>
+                </DescriptionDetails>
+              </template>
+              <DescriptionTerm>{{ $t('MIME Type') }}</DescriptionTerm>
+              <DescriptionDetails>
+                {{resource.mime}}
+              </DescriptionDetails>
+            </DescriptionList>
+            <DescriptionList>
+              <DescriptionTerm>{{ $t('Created on') }}</DescriptionTerm>
+              <DescriptionDetails>
+                {{filters.formatDate(resource.created_at)}}
+              </DescriptionDetails>
+              <DescriptionTerm>{{ $t('Modified on') }}</DescriptionTerm>
+              <DescriptionDetails>
+                {{filters.formatDate(resource.last_modified)}}
+              </DescriptionDetails>
+            </DescriptionList>
+            <DescriptionList>
+              <template v-if="resource.filesize">
+                <DescriptionTerm>{{ $t('Size') }}</DescriptionTerm>
+                <DescriptionDetails>
+                  {{ filters.filesize(resource.filesize) }}
+                </DescriptionDetails>
+              </template>
+            </DescriptionList>
+          </div>
+          <template v-if="resource.schema">
+            <h5 class="fr-h5 fr-mt-1w fr-mb-5v">{{$t('Schema')}}</h5>
+            <p class="fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left fr-mb-2w">
+              {{resource.schema.name}}
+            </p>
+            <div v-if="loading">
+              <SchemaLoader/>
+            </div>
+            <div v-else>
+              <a
+                v-if="authorizeValidation"
+                class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v fr-btn--icon-left fr-icon-checkbox-line"
+                :href="validationUrl"
+              >
+                {{ $t('See validation report') }}
+              </a>
+              <a
+                class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-book-2-line"
+                :href="documentationUrl"
+              >
+                {{ $t('See schema documentation') }}
+              </a>
+            </div>
+          </template>
         </div>
-      </template>
+      </div>
     </section>
   </article>
 </template>
@@ -214,7 +230,6 @@ export default defineComponent({
     const owner = useOwnerName(props.resource);
     const resourceImage = useResourceImage(props.resource);
     const filters = inject('$filters');
-    const showModal = inject('$showModal');
     /** @type {import("vue").Ref<HTMLElement | undefined>} */
     const content = ref();
     const expanded = ref(false);
@@ -228,11 +243,20 @@ export default defineComponent({
     const lastUpdate = computed(() => props.resource.published > props.resource.last_modified ? props.resource.published : props.resource.last_modified);
     const unavailable = computed(() => availabilityChecked.value && availabilityChecked.value >= 400);
     const { authorizeValidation, documentationUrl, loading, validationUrl} = useSchema(props.resource);
+    const resourceContentId = computed(() => 'resource-' + props.resource.id);
+    const resourceHeaderId = computed(() => 'resource-' + props.resource.id + '-header');
+    const resourceInformationsButtonId = computed(() => 'resource-' + props.resource.id + '-informations-button');
+    const resourceInformationsTabId = computed(() => 'resource-' + props.resource.id + '-informations-tab');
+    const resourcePreviewButtonId = computed(() => 'resource-' + props.resource.id + '-preview-button');
+    const resourcePreviewTabId = computed(() => 'resource-' + props.resource.id + '-preview-tab');
+    const resourceTitleId = computed(() => 'resource-' + props.resource.id + '-title');
+    const resourceInformationsSelectedTab = computed(() => !props.resource.preview_url);
+    const resourceInformationsTabIndex = computed(() => props.resource.preview_url? -1 : 0);
+
     return {
       owner,
       resourceImage,
       filters,
-      showModal,
       content,
       expanded,
       expand,
@@ -244,6 +268,15 @@ export default defineComponent({
       documentationUrl,
       loading,
       validationUrl,
+      resourceContentId,
+      resourceHeaderId,
+      resourceInformationsButtonId,
+      resourceInformationsTabId,
+      resourcePreviewButtonId,
+      resourcePreviewTabId,
+      resourceTitleId,
+      resourceInformationsSelectedTab,
+      resourceInformationsTabIndex,
     }
   },
 });
