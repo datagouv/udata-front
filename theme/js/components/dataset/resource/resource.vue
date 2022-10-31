@@ -14,7 +14,7 @@
             >
               {{ resource.title || $t('Nameless resource') }}
             </h4>
-            <p v-if="showSchema" class="fr-ml-1w fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
+            <p v-if="resource.schema" class="fr-ml-1w fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
                 {{resource.schema.name}}
             </p>
           </div>
@@ -144,13 +144,36 @@
           </template>
         </DescriptionList>
       </div>
+      <template v-if="resource.schema">
+        <h5 class="fr-h5 fr-mt-1w fr-mb-5v">{{$t('Schema')}}</h5>
+        <p class="fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left fr-mb-2w">
+          {{resource.schema.name}}
+        </p>
+        <div v-if="loading">
+          <SchemaLoader/>
+        </div>
+        <div v-else>
+          <a
+            class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-book-2-line"
+            :href="documentationUrl"
+          >
+            {{ $t('See schema documentation') }}
+          </a>
+          <a
+            class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-ml-3v fr-btn--icon-left fr-icon-checkbox-line"
+            :href="validationUrl"
+          >
+            {{ $t('See validation report') }}
+          </a>
+        </div>
+      </template>
     </section>
   </article>
 </template>
 
 <script>
 import { inject, defineComponent, ref, computed } from "vue";
-import SchemaButton from "./schema-button.vue";
+import SchemaLoader from "./schema-loader.vue";
 import useOwnerName from "../../../composables/useOwnerName";
 import useResourceImage from "../../../composables/useResourceImage";
 import CopyButton from "../../utils/copy-button.vue";
@@ -160,9 +183,10 @@ import { toggleAccordion } from "../../vanilla/accordion";
 import DescriptionDetails from "../../utils/description-list/description-details.vue";
 import DescriptionList from "../../utils/description-list/description-list.vue";
 import DescriptionTerm from "../../utils/description-list/description-term.vue";
+import useSchema from "../../../composables/useSchema";
 
 export default defineComponent({
-  components: {DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, SchemaButton},
+  components: {DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, SchemaLoader},
   inheritAttrs: false,
   props: {
     datasetId: {
@@ -203,7 +227,7 @@ export default defineComponent({
     const availabilityChecked = computed(() => props.resource.extras && props.resource.extras['check:status']);
     const lastUpdate = computed(() => props.resource.published > props.resource.last_modified ? props.resource.published : props.resource.last_modified);
     const unavailable = computed(() => availabilityChecked.value && availabilityChecked.value >= 400);
-    const showSchema = computed(() => props.resource.schema && props.resource.schema.name);
+    const { authorizeValidation, documentationUrl, loading, validationUrl} = useSchema(props.resource);
     return {
       owner,
       resourceImage,
@@ -215,8 +239,11 @@ export default defineComponent({
       availabilityChecked,
       lastUpdate,
       unavailable,
-      showSchema,
       preview,
+      authorizeValidation,
+      documentationUrl,
+      loading,
+      validationUrl,
     }
   },
 });
