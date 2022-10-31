@@ -89,56 +89,61 @@
     >
       <div class="fr-mt-0 markdown" v-if="resource.description" v-html="filters.markdown(resource.description)">
       </div>
-      <dl>
-        <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('URL') }}</dt>
-          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10 text-overflow-ellipsis">
-            <a :href="resource.url">{{resource.url}}</a>
-          </dd>
-        </div>
-        <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Permalink') }}</dt>
-          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10 text-overflow-ellipsis">
-            <a :href="resource.latest">{{resource.latest}}</a>
-          </dd>
-        </div>
-        <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Type') }}</dt>
-          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
-            {{ typeLabel }}
-          </dd>
-        </div>
-        <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('MIME Type') }}</dt>
-          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
+      <div class="fr-grid-row fr-grid-row--gutters">
+        <DescriptionList>
+          <DescriptionTerm>{{ $t('URL') }}</DescriptionTerm>
+          <DescriptionDetails :withEllipsis="false" class="fr-grid-row fr-grid-row--middle">
+            <div class="fr-col text-overflow-ellipsis">
+              {{resource.url}}
+            </div>
+            <div class="fr-col-auto">
+              <CopyButton :text="resource.url"/>
+            </div>
+          </DescriptionDetails>
+          <DescriptionTerm>{{ $t('Permalink') }}</DescriptionTerm>
+          <DescriptionDetails :withEllipsis="false" class="fr-grid-row fr-grid-row--middle">
+            <div class="fr-col text-overflow-ellipsis">
+              {{resource.latest}}
+            </div>
+            <div class="fr-col-auto">
+              <CopyButton :text="resource.latest"/>
+            </div>
+          </DescriptionDetails>
+          <template v-if="resource.checksum">
+            <DescriptionTerm>{{resource.checksum.type}}</DescriptionTerm>
+            <DescriptionDetails :withEllipsis="false" class="fr-grid-row fr-grid-row--middle">
+              <div class="fr-col text-overflow-ellipsis">
+                {{resource.checksum.value}}
+              </div>
+              <div class="fr-col-auto">
+                <CopyButton :text="resource.checksum.value"/>
+              </div>
+            </DescriptionDetails>
+          </template>
+          <DescriptionTerm>{{ $t('MIME Type') }}</DescriptionTerm>
+          <DescriptionDetails>
             {{resource.mime}}
-          </dd>
-        </div>
-        <div v-if="resource.checksum" class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{resource.checksum.type}}</dt>
-          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
-            {{resource.checksum.value}}
-          </dd>
-        </div>
-        <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Created on') }}</dt>
-          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
+          </DescriptionDetails>
+        </DescriptionList>
+        <DescriptionList>
+          <DescriptionTerm>{{ $t('Created on') }}</DescriptionTerm>
+          <DescriptionDetails>
             {{filters.formatDate(resource.created_at)}}
-          </dd>
-        </div>
-        <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Modified on') }}</dt>
-          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
+          </DescriptionDetails>
+          <DescriptionTerm>{{ $t('Modified on') }}</DescriptionTerm>
+          <DescriptionDetails>
             {{filters.formatDate(resource.last_modified)}}
-          </dd>
-        </div>
-        <div class="fr-grid-row fr-grid-row--gutters">
-          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Published on') }}</dt>
-          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
-            {{filters.formatDate(resource.published)}}
-          </dd>
-        </div>
-      </dl>
+          </DescriptionDetails>
+        </DescriptionList>
+        <DescriptionList>
+          <template v-if="resource.filesize">
+            <DescriptionTerm>{{ $t('Size') }}</DescriptionTerm>
+            <DescriptionDetails>
+              {{ filters.filesize(resource.filesize) }}
+            </DescriptionDetails>
+          </template>
+        </DescriptionList>
+      </div>
     </section>
   </article>
 </template>
@@ -148,12 +153,16 @@ import { inject, defineComponent, ref, computed } from "vue";
 import SchemaButton from "./schema-button.vue";
 import useOwnerName from "../../../composables/useOwnerName";
 import useResourceImage from "../../../composables/useResourceImage";
+import CopyButton from "../../utils/copy-button.vue";
 import EditButton from "./edit-button.vue";
 import preview from 'bundle-text:svg/preview.svg';
 import { toggleAccordion } from "../../vanilla/accordion";
+import DescriptionDetails from "../../utils/description-list/description-details.vue";
+import DescriptionList from "../../utils/description-list/description-list.vue";
+import DescriptionTerm from "../../utils/description-list/description-term.vue";
 
 export default defineComponent({
-  components: {EditButton, SchemaButton},
+  components: {DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, SchemaButton},
   inheritAttrs: false,
   props: {
     datasetId: {

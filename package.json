@@ -78,5 +78,6 @@
     "svg": "./udata_front/theme/gouvfr/templates/svg",
     "vue": "vue/dist/vue.cjs.js"
   },
+  "browserslist": "> 0.1% in FR, last 15 versions, Firefox ESR, not dead",
   "license": "MIT"
 }
