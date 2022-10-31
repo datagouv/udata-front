@@ -154,16 +154,16 @@
         </div>
         <div v-else>
           <a
-            class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-book-2-line"
-            :href="documentationUrl"
-          >
-            {{ $t('See schema documentation') }}
-          </a>
-          <a
             class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-ml-3v fr-btn--icon-left fr-icon-checkbox-line"
             :href="validationUrl"
           >
             {{ $t('See validation report') }}
+          </a>
+          <a
+            class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-book-2-line"
+            :href="documentationUrl"
+          >
+            {{ $t('See schema documentation') }}
           </a>
         </div>
       </template>
