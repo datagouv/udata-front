@@ -14,7 +14,7 @@
             >
               {{ resource.title || $t('Nameless resource') }}
             </h4>
-            <p v-if="resource.schema" class="fr-ml-1w fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
+            <p v-if="resource.schema?.name" class="fr-ml-1w fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
                 {{resource.schema.name}}
             </p>
           </div>
