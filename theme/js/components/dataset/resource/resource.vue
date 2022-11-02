@@ -81,13 +81,13 @@
       </div>
     </header>
     <section
-      class="accordion-content fr-px-3w border-default-grey"
+      class="accordion-content fr-p-0 border-default-grey"
       :class="{'border-bottom': expanded}"
       :aria-labelledby="resourceTitleId"
       :id="resourceContentId"
       ref="content"
     >
-      <div class="fr-tabs">
+      <div class="fr-tabs fr-tabs--no-border fr-my-5v">
         <ul class="fr-tabs__list" role="tablist" :aria-label="$t('Resource menu')">
           <li role="presentation">
             <button :id="resourcePreviewButtonId" class="fr-tabs__tab" tabindex="0" role="tab" aria-selected="true" :aria-controls="resourcePreviewTabId">{{$t('Preview')}}</button>
@@ -96,7 +96,7 @@
             <button :id="resourceInformationsButtonId" class="fr-tabs__tab" :tabindex="resourceInformationsTabIndex" role="tab" :aria-selected="resourceInformationsSelectedTab" :aria-controls="resourceInformationsTabId">{{$t('Informations')}}</button>
           </li>
         </ul>
-        <div :id="resourcePreviewTabId" class="fr-tabs__panel fr-tabs__panel--selected" role="tabpanel" :aria-labelledby="resourcePreviewButtonId" tabindex="0">
+        <div :id="resourcePreviewTabId" class="fr-tabs__panel fr-p-0 fr-tabs__panel--selected" role="tabpanel" :aria-labelledby="resourcePreviewButtonId" tabindex="0">
           <iframe v-if="resource.preview_url" :src="resource.preview_url" width="100%" height="600" frameborder="0" :title="$t('Preview of resource X', {title: resource.title})"></iframe>
           <Preview :resource="resource"/>
         </div>
@@ -158,7 +158,7 @@
               </template>
             </DescriptionList>
           </div>
-          <template v-if="resource.schema">
+          <template v-if="resource.schema.name">
             <h5 class="fr-h5 fr-mt-1w fr-mb-5v">{{$t('Schema')}}</h5>
             <p class="fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left fr-mb-2w">
               {{resource.schema.name}}
