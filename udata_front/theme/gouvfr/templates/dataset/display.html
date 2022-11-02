@@ -379,7 +379,6 @@
         {% set count_resources = dataset.resources | length %}
         <h2 id="resources" class="fr-h2">{{ _('Files') }} <sup class="resources-count">{{count_resources}}</sup></h2>
         <div class="ressources-files fr-my-4w vuejs">
-            <modals-container></modals-container>
             {% if count_resources > config.RESOURCES_MIN_COUNT_TO_SHOW_SEARCH %}
                 <search-bar event-name="resources.search"></search-bar>
             {% endif %}
@@ -451,7 +450,6 @@
         )}}
         {% endif %}
         <div class="resource-list vuejs">
-            <modals-container></modals-container>
             <dataset-resources
                 dataset-id="{{ dataset.id }}"
                 type="community"
