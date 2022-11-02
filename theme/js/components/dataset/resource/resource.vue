@@ -89,15 +89,16 @@
     >
       <div class="fr-tabs">
         <ul class="fr-tabs__list" role="tablist" :aria-label="$t('Resource menu')">
-          <li role="presentation" v-if="resource.preview_url">
-              <button :id="resourcePreviewButtonId" class="fr-tabs__tab" tabindex="0" role="tab" aria-selected="true" :aria-controls="resourcePreviewTabId">{{$t('Preview')}}</button>
+          <li role="presentation">
+            <button :id="resourcePreviewButtonId" class="fr-tabs__tab" tabindex="0" role="tab" aria-selected="true" :aria-controls="resourcePreviewTabId">{{$t('Preview')}}</button>
           </li>
           <li role="presentation">
-              <button :id="resourceInformationsButtonId" class="fr-tabs__tab" :tabindex="resourceInformationsTabIndex" role="tab" :aria-selected="resourceInformationsSelectedTab" :aria-controls="resourceInformationsTabId">{{$t('Informations')}}</button>
+            <button :id="resourceInformationsButtonId" class="fr-tabs__tab" :tabindex="resourceInformationsTabIndex" role="tab" :aria-selected="resourceInformationsSelectedTab" :aria-controls="resourceInformationsTabId">{{$t('Informations')}}</button>
           </li>
         </ul>
-        <div v-if="resource.preview_url" :id="resourcePreviewTabId" class="fr-tabs__panel fr-tabs__panel--selected" role="tabpanel" :aria-labelledby="resourcePreviewButtonId" tabindex="0">
-          <iframe :src="resource.preview_url" width="100%" height="600" frameborder="0" :title="$t('Preview of resource X', {title: resource.title})"></iframe>
+        <div :id="resourcePreviewTabId" class="fr-tabs__panel fr-tabs__panel--selected" role="tabpanel" :aria-labelledby="resourcePreviewButtonId" tabindex="0">
+          <iframe v-if="resource.preview_url" :src="resource.preview_url" width="100%" height="600" frameborder="0" :title="$t('Preview of resource X', {title: resource.title})"></iframe>
+          <Preview :resource="resource"/>
         </div>
         <div :id="resourceInformationsTabId" class="fr-tabs__panel" role="tabpanel" :aria-labelledby="resourceInformationsButtonId" tabindex="0">
           <div class="fr-mt-0 markdown" v-if="resource.description" v-html="filters.markdown(resource.description)">
@@ -194,7 +195,7 @@ import useOwnerName from "../../../composables/useOwnerName";
 import useResourceImage from "../../../composables/useResourceImage";
 import CopyButton from "../../utils/copy-button.vue";
 import EditButton from "./edit-button.vue";
-import preview from 'bundle-text:svg/preview.svg';
+import Preview from './preview.vue';
 import { toggleAccordion } from "../../vanilla/accordion";
 import DescriptionDetails from "../../utils/description-list/description-details.vue";
 import DescriptionList from "../../utils/description-list/description-list.vue";
@@ -202,7 +203,7 @@ import DescriptionTerm from "../../utils/description-list/description-term.vue";
 import useSchema from "../../../composables/useSchema";
 
 export default defineComponent({
-  components: {DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, SchemaLoader},
+  components: {DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, SchemaLoader, Preview},
   inheritAttrs: false,
   props: {
     datasetId: {
@@ -263,7 +264,6 @@ export default defineComponent({
       availabilityChecked,
       lastUpdate,
       unavailable,
-      preview,
       authorizeValidation,
       documentationUrl,
       loading,
@@ -277,6 +277,7 @@ export default defineComponent({
       resourceTitleId,
       resourceInformationsSelectedTab,
       resourceInformationsTabIndex,
+      Preview,
     }
   },
 });
