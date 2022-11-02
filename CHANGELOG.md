@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 2.0.13 (2022-11-02)
 
 - Switch from `Flask-restplus` to its fork `Flask-rest-x` [#165](https://github.com/etalab/udata-front/pull/165)
 - Add CaptchEtat integration [#159](https://github.com/etalab/udata-front/pull/159)
