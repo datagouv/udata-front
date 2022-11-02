@@ -5,6 +5,7 @@
 - Switch from `Flask-restplus` to its fork `Flask-rest-x` [#165](https://github.com/etalab/udata-front/pull/165)
 - Add CaptchEtat integration [#159](https://github.com/etalab/udata-front/pull/159)
   - new environment variables : CAPTCHETAT_BASE_URL, CAPTCHETAT_OAUTH_BASE_URL, CAPTCHETAT_CLIENT_ID and CAPTCHETAT_CLIENT_SECRET
+- Fix lighthouse reported errors [#158](https://github.com/etalab/udata-front/pull/158)
 
 ## 2.0.12 (2022-10-19)
 
