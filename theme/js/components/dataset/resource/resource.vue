@@ -98,7 +98,8 @@
         </ul>
         <div :id="resourcePreviewTabId" class="fr-tabs__panel fr-p-0 fr-tabs__panel--selected" role="tabpanel" :aria-labelledby="resourcePreviewButtonId" tabindex="0">
           <iframe v-if="resource.preview_url" :src="resource.preview_url" width="100%" height="600" frameborder="0" :title="$t('Preview of resource X', {title: resource.title})"></iframe>
-          <Preview :resource="resource"/>
+          <!-- POC composant sans import / export <component :is="test" :resource="resource"/> -->
+          <component :is="Preview" :resource="resource"/>
         </div>
         <div :id="resourceInformationsTabId" class="fr-tabs__panel" role="tabpanel" :aria-labelledby="resourceInformationsButtonId" tabindex="0">
           <div class="fr-mt-0 markdown" v-if="resource.description" v-html="filters.markdown(resource.description)">
@@ -253,6 +254,7 @@ export default defineComponent({
     const resourceTitleId = computed(() => 'resource-' + props.resource.id + '-title');
     const resourceInformationsSelectedTab = computed(() => !props.resource.preview_url);
     const resourceInformationsTabIndex = computed(() => props.resource.preview_url? -1 : 0);
+    const test = defineComponent({template: `<h1>Hello</h1>`});
 
     return {
       owner,
@@ -277,6 +279,7 @@ export default defineComponent({
       resourceTitleId,
       resourceInformationsSelectedTab,
       resourceInformationsTabIndex,
+      test,
       Preview,
     }
   },
