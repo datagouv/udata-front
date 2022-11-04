@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Display and use new harvest metadata [#168](https://github.com/etalab/udata-front/pull/168)
 
 ## 2.0.13 (2022-11-02)
 
