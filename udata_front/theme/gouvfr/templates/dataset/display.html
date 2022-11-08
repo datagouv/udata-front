@@ -220,10 +220,10 @@
                                 <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
                                     {{dataset.id}}
                                 </dd>
-                                {% if external_source %}
+                                {% if external_source(dataset) %}
                                 <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Remote source') }}</dt>
                                 <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
-                                    <a rel="nofollow" href="{{ external_source }}">{{ _('Remote source') }}</a>
+                                    <a rel="nofollow" href="{{ external_source(dataset) }}">{{ _('Remote source') }}</a>
                                 </dd>
                                 {% endif%}
                             </dl>
