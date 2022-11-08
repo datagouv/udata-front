@@ -97,8 +97,7 @@
           </li>
         </ul>
         <div :id="resourcePreviewTabId" class="fr-tabs__panel fr-p-0 fr-tabs__panel--selected" role="tabpanel" :aria-labelledby="resourcePreviewButtonId" tabindex="0">
-          <component v-for="ex in explore" :is="ex" :resource="resource"/>
-          <component :is="Preview" :resource="resource"/>
+          <component v-for="ex in explore" :is="ex.component" :resource="resource"/>
           <a
             v-if="resource.preview_url"
             :href="resource.preview_url"
@@ -203,7 +202,6 @@ import useOwnerName from "../../../composables/useOwnerName";
 import useResourceImage from "../../../composables/useResourceImage";
 import CopyButton from "../../utils/copy-button.vue";
 import EditButton from "./edit-button.vue";
-import Preview from './preview.vue';
 import { toggleAccordion } from "../../vanilla/accordion";
 import DescriptionDetails from "../../utils/description-list/description-details.vue";
 import DescriptionList from "../../utils/description-list/description-list.vue";
@@ -212,7 +210,7 @@ import useSchema from "../../../composables/useSchema";
 import { getRegisteredComponentsForHook } from "udata-front";
 
 export default defineComponent({
-  components: {DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, SchemaLoader, Preview},
+  components: {DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, SchemaLoader},
   inheritAttrs: false,
   props: {
     datasetId: {
@@ -263,6 +261,7 @@ export default defineComponent({
     const resourceInformationsSelectedTab = computed(() => !props.resource.preview_url);
     const resourceInformationsTabIndex = computed(() => props.resource.preview_url? -1 : 0);
     const explore = getRegisteredComponentsForHook("explore");
+    console.log(explore);
 
     return {
       owner,
@@ -288,7 +287,6 @@ export default defineComponent({
       resourceInformationsSelectedTab,
       resourceInformationsTabIndex,
       explore,
-      Preview,
     }
   },
 });

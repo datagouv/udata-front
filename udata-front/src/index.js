@@ -22,7 +22,7 @@
 */
 
 /** @type {UdataFrontNamespace} */
-const udata_front = {
+const udata_front = globalThis.udata_front ?? {
   hooks: [],
   components: {},
 }
@@ -82,7 +82,7 @@ export function getRegisteredComponents() {
  *  @returns {Array<Component>} all components for this hook
 */
 export function getRegisteredComponentsForHook(name) {
-  return udata_front.components[name];
+  return udata_front.components[name] ?? [];
 }
 
 /** @returns {Hooks} */
@@ -91,3 +91,5 @@ export function getRegisteredHooks() {
 }
 
 globalThis.udata_front = udata_front;
+
+console.log(globalThis.udata_front);
