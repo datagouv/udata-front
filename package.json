@@ -59,7 +59,8 @@
     "process": "^0.11.10",
     "rimraf": "^3.0.2",
     "stylemark": "^3.1.7",
-    "vue-i18n-extract": "^2.0.4"
+    "vue-i18n-extract": "^2.0.4",
+    "udata-front": "file:udata-front"
   },
   "staticFiles": {
     "staticPath": [

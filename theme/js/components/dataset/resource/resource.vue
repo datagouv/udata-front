@@ -98,7 +98,7 @@
         </ul>
         <div :id="resourcePreviewTabId" class="fr-tabs__panel fr-p-0 fr-tabs__panel--selected" role="tabpanel" :aria-labelledby="resourcePreviewButtonId" tabindex="0">
           <iframe v-if="resource.preview_url" :src="resource.preview_url" width="100%" height="600" frameborder="0" :title="$t('Preview of resource X', {title: resource.title})"></iframe>
-          <!-- POC composant sans import / export <component :is="test" :resource="resource"/> -->
+          <component v-for="ex in explore" :is="ex" :resource="resource"/>
           <component :is="Preview" :resource="resource"/>
         </div>
         <div :id="resourceInformationsTabId" class="fr-tabs__panel" role="tabpanel" :aria-labelledby="resourceInformationsButtonId" tabindex="0">
@@ -202,6 +202,7 @@ import DescriptionDetails from "../../utils/description-list/description-details
 import DescriptionList from "../../utils/description-list/description-list.vue";
 import DescriptionTerm from "../../utils/description-list/description-term.vue";
 import useSchema from "../../../composables/useSchema";
+import { getRegisteredComponentsForHook } from "udata-front";
 
 export default defineComponent({
   components: {DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, SchemaLoader, Preview},
@@ -254,7 +255,7 @@ export default defineComponent({
     const resourceTitleId = computed(() => 'resource-' + props.resource.id + '-title');
     const resourceInformationsSelectedTab = computed(() => !props.resource.preview_url);
     const resourceInformationsTabIndex = computed(() => props.resource.preview_url? -1 : 0);
-    const test = defineComponent({template: `<h1>Hello</h1>`});
+    const explore = getRegisteredComponentsForHook("explore");
 
     return {
       owner,
@@ -279,7 +280,7 @@ export default defineComponent({
       resourceTitleId,
       resourceInformationsSelectedTab,
       resourceInformationsTabIndex,
-      test,
+      explore,
       Preview,
     }
   },
