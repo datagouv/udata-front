@@ -303,7 +303,6 @@ export default defineComponent({
       // Update URL to match current search params value for deep linking
       let url = new URL(window.location.href);
       url.search = new URLSearchParams(searchParameters.value).toString();
-      console.log(save);
       if (save) {
         window.history.pushState(null, "", url);
       }
