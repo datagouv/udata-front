@@ -97,9 +97,16 @@
           </li>
         </ul>
         <div :id="resourcePreviewTabId" class="fr-tabs__panel fr-p-0 fr-tabs__panel--selected" role="tabpanel" :aria-labelledby="resourcePreviewButtonId" tabindex="0">
-          <iframe v-if="resource.preview_url" :src="resource.preview_url" width="100%" height="600" frameborder="0" :title="$t('Preview of resource X', {title: resource.title})"></iframe>
           <component v-for="ex in explore" :is="ex" :resource="resource"/>
           <component :is="Preview" :resource="resource"/>
+          <a
+            v-if="resource.preview_url"
+            :href="resource.preview_url"
+            class="fr-btn"
+            :title="$t('Preview of resource X', {title: resource.title})"
+          >
+            {{$t('Preview')}}
+          </a>
         </div>
         <div :id="resourceInformationsTabId" class="fr-tabs__panel" role="tabpanel" :aria-labelledby="resourceInformationsButtonId" tabindex="0">
           <div class="fr-mt-0 markdown" v-if="resource.description" v-html="filters.markdown(resource.description)">
