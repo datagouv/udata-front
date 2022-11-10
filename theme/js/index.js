@@ -30,17 +30,6 @@ import filters from "./plugins/filters";
 
 import InitSentry from "./sentry";
 
-/**
- * @interface Ref
- * @template T
- * @property {T} value
- */
-
-/**
- * @typedef {Object} Ref
- * @property value - The referenced value
-*/
-
 const configAndMountApp = (el) => {
   const app = createApp({});
 

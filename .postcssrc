@@ -1,6 +1,6 @@
 {
   "modules": false,
   "plugins": {
-    "postcss-normalize": {},
+    "postcss-normalize": {}
   }
 }

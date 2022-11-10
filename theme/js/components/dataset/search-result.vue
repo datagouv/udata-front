@@ -35,7 +35,7 @@
           </span>
         </h4>
         <span class="not-enlarged" v-if="organization || owner">
-          {{ $t('From') }} 
+          {{ $t('From') }}
           <a :href="organization.page" v-if="organization">
               <OrganizationNameWithCertificate :organization="organization" />
           </a>
@@ -138,8 +138,8 @@
 </template>
 
 <script>
-import { defineComponent, computed, ComputedRef } from "vue";
-import lock from "bundle-text:svg/private.svg";
+import { defineComponent, computed } from "vue";
+import lock from "svg/private.svg";
 import useLicense from "../../composables/useLicense";
 import useOwnerName from "../../composables/useOwnerName";
 import useExternalSource from "../../composables/useExternalSource";
@@ -200,7 +200,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    /** @type {ComputedRef<import("../../composables/useOwnerName").Owned>} */
+    /** @type {import("vue").ComputedRef<import("../../composables/useOwnerName").Owned>} */
     const owned = computed(() => {
       let owned = {};
       if(props.organization) {

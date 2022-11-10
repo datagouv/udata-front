@@ -167,10 +167,9 @@
 </template>
 
 <script>
-import { defineComponent, ref, Ref, onMounted, computed, watch, PropType } from "vue";
+import { defineComponent, ref, onMounted, computed, watch } from "vue";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
-import { CancelTokenSource } from "axios";
 import { generateCancelToken, apiv2 } from "../../plugins/api";
 import {useToast} from "../../composables/useToast";
 import useSearchUrl from "../../composables/useSearchUrl";
@@ -199,7 +198,7 @@ export default defineComponent({
       default: false,
     },
     sorts: {
-      /** @type {PropType<Array<{label: string, order: string, value: string}>>} */
+      /** @type {import("vue").PropType<Array<{label: string, order: string, value: string}>>} */
       type: Array,
       default: [],
     }
@@ -212,7 +211,7 @@ export default defineComponent({
      */
     const url = new URL(window.location.href);
     const params = new URLSearchParams(url.search);
-    
+
     /**
      * Search query
      */
@@ -230,13 +229,13 @@ export default defineComponent({
 
     /**
      * Search results
-     * @type {Ref<Array>}
+     * @type {import("vue").Ref<Array>}
      */
     const results = ref([]);
 
     /**
-     * 
-     * @param {number} key 
+     *
+     * @param {number} key
      */
     const zIndex = (key) => {
       return {zIndex: results.value.length - key}
@@ -269,25 +268,25 @@ export default defineComponent({
 
     /**
      * Current request if any to be cancelled if a new one comes
-     * @type {Ref<CancelTokenSource | null>}
+     * @type {import("vue").Ref<import("axios").CancelTokenSource | null>}
      */
     const currentRequest = ref(null);
 
     /**
      * Vue ref to results HTML
-     * @type {Ref<HTMLElement | null>}
+     * @type {import("vue").Ref<HTMLElement | null>}
      */
     const resultsRef = ref(null);
 
     /**
      * Vue ref to results HTML
-     * @type {Ref<HTMLElement | null>}
+     * @type {import("vue").Ref<HTMLElement | null>}
      */
     const searchRef = ref(null);
 
     /**
-     * 
-     * @param {Array} data 
+     *
+     * @param {Array} data
      */
     const formatResults = (data) => {
       results.value = data.map(result => {
@@ -335,9 +334,9 @@ export default defineComponent({
       currentPage.value = 1;
       search();
     };
-    
+
     /**
-     * Called on every facet selector change, updates the `facets.xxx` object then searches with new values 
+     * Called on every facet selector change, updates the `facets.xxx` object then searches with new values
      */
     const handleFacetChange = (facet) => {
       return (values) => {
@@ -376,7 +375,7 @@ export default defineComponent({
       search();
       scrollToTop();
     };
-    
+
     const scrollToTop = () => {
       if (searchRef.value) {
         searchRef.value.scrollIntoView({ behavior: "smooth" });
@@ -396,7 +395,7 @@ export default defineComponent({
 
     /**
      * Is any filter active ?
-     */ 
+     */
     const isFiltered = computed(() => {
       return Object.keys(facets.value).some(
         (key) => facets.value[key]?.length > 0
