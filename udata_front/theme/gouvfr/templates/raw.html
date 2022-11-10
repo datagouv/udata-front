@@ -11,8 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block extra_css %}{% endblock %}
     {% block theme_css %}
-    <link href="{{ theme_static('less/index.css') }}" rel="stylesheet">
-    <link href="{{ theme_static('js/index.css') }}" rel="stylesheet">
+    <link href="{{ theme_static('assets/style.css') }}" rel="stylesheet">
+    <link href="{{ theme_static('assets/index.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="{{ theme_static('img/favicon.png') }}">
     {% endblock %}
     {# ATOM Feeds #}
@@ -34,8 +34,14 @@
     <div id="app">
         {% block body %}{% endblock %}
     </div>
-
-    <script src="{{ theme_static('js/index.js') }}"></script>
+    <script type="importmap">
+    {
+        "imports": {
+        "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+        }
+    }
+    </script>
+    <script type="module" src="{{ theme_static('js/index.js') }}"></script>
     {% block extra_js %}{% endblock %}
 
     {{ hook('footer.snippets') }}
