@@ -57,12 +57,10 @@
             </p>
             <div class="fr-mb-0 text-mention-grey">
                 {{quality_score_with_tooltip(dataset, "fr-hidden inline-sm")}}
-                {% if not external_source(dataset) %}
                 <span class="fr-hidden inline-sm">
                     &mdash;
                 </span>
                 {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
-                {% endif %}
             </div>
         </div>
         <ul class="fr-hidden fr-unhidden-sm fr-col-auto fr-tags-group flex-direction-column fr-grid-row--bottom self-center">
