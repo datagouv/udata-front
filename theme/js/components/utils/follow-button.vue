@@ -20,12 +20,13 @@ The `url` prop is the API URL.
     v-show="!readOnlyEnabled"
     :aria-label="label"
   >
-    <span
-        v-html="icon"
+      <span
         class="magic fr-grid-row"
         :class="{ active: animating }"
         :style="{ color: _following ? 'inherit' : 'transparent' }"
-      ></span>
+      >
+        <img :src="icon" alt="" />
+      </span>
       <span class="fr-ml-1w">
         {{ _followers }} {{ $t("favourites", _followers) }}
       </span>

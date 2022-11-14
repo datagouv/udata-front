@@ -139,7 +139,6 @@
 
 <script>
 import { defineComponent, computed } from "vue";
-import lock from "svg/private.svg";
 import useLicense from "../../composables/useLicense";
 import useOwnerName from "../../composables/useOwnerName";
 import useExternalSource from "../../composables/useExternalSource";
@@ -217,7 +216,6 @@ export default defineComponent({
     return {
       externalSource,
       license,
-      lock,
       ownerName,
     };
   }

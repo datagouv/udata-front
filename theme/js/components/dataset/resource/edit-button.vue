@@ -2,9 +2,9 @@
   <a
     :href="adminUrl"
     :title="$t('Edit resource')"
-    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-icon-svg"
-    v-html="edit"
-    >
+    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-icon-svg fr-icon--sm"
+  >
+    <img :src="edit" alt="" />
   </a>
 </template>
 

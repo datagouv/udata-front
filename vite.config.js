@@ -8,6 +8,7 @@ export default defineConfig({
   resolve: {
     alias: [
       {find: "svg", replacement: "./udata_front/theme/gouvfr/templates/svg"},
+      {find: "vue", replacement: "./node_modules/vue/dist/vue.esm-bundler.js"},
     ],
   },
   plugins: [
@@ -17,18 +18,13 @@ export default defineConfig({
     target: "es2015",
     rollupOptions: {
       input: ["theme/js/index.js", "theme/less/style.less"],
-      // make sure to externalize deps that shouldn't be bundled
-      // into your library
-      external: ['vue'],
       output: {
         dir: "./udata_front/theme/gouvfr/static/",
         entryFileNames: `js/[name].js`,
         chunkFileNames: `js/[name].js`,
         assetFileNames: `assets/[name].[ext]`,
-        // Provide global variables to use in the UMD build
-        // for externalized deps
-        globals: {
-          vue: 'Vue'
+        manualChunks: {
+          vue: ['vue']
         }
       }
     }

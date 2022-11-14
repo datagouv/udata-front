@@ -5,7 +5,9 @@
       :id="resourceHeaderId"
     >
       <div class="fr-col-auto fr-grid-row fr-grid-row--top no-wrap">
-        <div class="fr-col-auto fr-mx-2w fr-icon-svg fr-icon--sm" v-html="resourceImage"></div>
+        <div class="fr-col-auto fr-mx-2w fr-icon-svg fr-icon--sm">
+          <img :src="resourceImage" alt="" />
+        </div>
         <div class="fr-col-auto">
           <div class="fr-grid-row fr-grid-row--middle fr-mb-1v">
             <h4

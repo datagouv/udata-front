@@ -32,12 +32,10 @@ If the submitUrl prop is passed, it will redirect on Submit.
 </template>
 
 <script>
-import Icon from "svg/search.svg";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   created() {
-    this.icon = Icon;
     this.queryString = this.value;
   },
   watch: {

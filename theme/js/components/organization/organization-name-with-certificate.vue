@@ -2,10 +2,10 @@
   {{ organization.name }}
   <span
     v-if="organizationCertified"
-    v-html="certified"
     class="fr-icon-svg fr-icon--sm"
     :title="$t('The identity of this public service is certified by {certifier}', { certifier: title })"
   >
+    <img :src="certified" alt="" />
   </span>
 </template>
 
