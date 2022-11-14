@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 3.0.0 (2022-11-14)
 
 - :warning: **Breaking change** Use and display harvest metadata introduced in udata 5 [#168](https://github.com/etalab/udata-front/pull/168)
 - Improve search history [#162](https://github.com/etalab/udata-front/pull/162)
