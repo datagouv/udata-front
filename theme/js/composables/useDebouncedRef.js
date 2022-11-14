@@ -1,6 +1,13 @@
 import {customRef, ref} from 'vue'
 
-const debounce = (fn, delay = 0, immediate = false) => {
+/**
+ *
+ * @param {Function} fn
+ * @param {number} delay
+ * @param {boolean} immediate
+ * @returns {(...args: any[]) => void} debounced function
+ */
+export const debounce = (fn, delay = 0, immediate = false) => {
   let timeout;
   return (...args) => {
     if (immediate && !timeout) {
@@ -14,6 +21,11 @@ const debounce = (fn, delay = 0, immediate = false) => {
   }
 }
 
+/**
+ * @param {any} initialValue
+ * @param {number | undefined} delay
+ * @param {boolean | undefined} immediate
+ */
 export default function useDebouncedRef (initialValue, delay, immediate) {
   const state = ref(initialValue);
   return customRef((track, trigger) => ({
