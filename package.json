@@ -29,6 +29,7 @@
     "axios": "^0.26.1",
     "clipboard": "^2.0.8",
     "dayjs": "^1.9.6",
+    "es-module-shims": "^1.6.2",
     "less": "^3.13.1",
     "mitt": "^3.0.0",
     "parcel-reporter-copystatic": "^1.1.0",
@@ -48,6 +49,7 @@
     "@parcel/transformer-inline-string": "^2.6.0",
     "@parcel/transformer-less": "^2.6.0",
     "@parcel/transformer-vue": "^2.6.0",
+    "@vitejs/plugin-legacy": "^2.3.1",
     "@vitejs/plugin-vue": "^3.2.0",
     "@vue/compiler-sfc": "^3.2.11",
     "axe-core": "^4.3.3",
@@ -62,7 +64,9 @@
     "postcss-normalize": "^10.0.1",
     "process": "^0.11.10",
     "rimraf": "^3.0.2",
+    "rollup-plugin-copy": "^3.4.0",
     "stylemark": "^3.1.7",
+    "terser": "^5.15.1",
     "udata-front": "file:udata-front",
     "vite": "^3.2.3",
     "vue-i18n-extract": "^2.0.4"
@@ -83,6 +87,5 @@
     "svg": "./udata_front/theme/gouvfr/templates/svg",
     "vue": "vue/dist/vue.esm-bundler.js"
   },
-  "browserslist": "> 0.1% in FR, last 15 versions, Firefox ESR, not dead",
   "license": "MIT"
 }
