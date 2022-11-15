@@ -141,5 +141,8 @@
   "Copy": "",
   "{count} columns": "",
   "{count} rows": "",
-  "Explore data": ""
+  "Explore data": "",
+  "Error getting {type}.": "",
+  "Error getting search results.": "",
+  "An error occurred while featuring this subject.": ""
 }

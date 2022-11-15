@@ -141,5 +141,8 @@
   "Copy": "Copy",
   "{count} columns": "{count} columns | {count} column |{count} columns",
   "{count} rows": "{count} rows | {count} row | {count} rows",
-  "Explore data": "Explore data"
+  "Explore data": "Explore data",
+  "Error getting {type}.": "Error getting {type}.",
+  "Error getting search results.": "Error getting search results.",
+  "An error occurred while featuring this subject.": "An error occurred while featuring this subject."
 }
