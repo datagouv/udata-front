@@ -154,10 +154,3 @@ def oauth_authorize_theme_content(ctx):
 def oauth_error_theme_content(ctx):
     request = ctx['request']
     return theme.render('api/oauth_error.html', error=request.args.get('error'))
-
-
-# TODO : better this, redirect is not the best. How to serve it instead ?!
-@blueprint.route('/_stylemark/<path:filename>/')
-def stylemark(filename):
-    return redirect(theme_static_with_version(None,
-                                              filename="stylemark/index.html"))
