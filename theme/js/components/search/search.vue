@@ -412,7 +412,7 @@ export default defineComponent({
        *  @type Record<string, string>
        */
       let params = {};
-      for (key in facets.value) {
+      for (let key in facets.value) {
         if(facets.value[key]) {
           params[key] = facets.value[key];
         }
@@ -439,7 +439,7 @@ export default defineComponent({
       params.delete('sort');
     }
     /**
-     * @type {Ref<{organization: ?string, tag: ?string, license: ?string, format: ?string, geozone: ?string, granularity: ?string, schema: ?string}>}
+     * @type {import("vue").Ref<{organization: ?string, tag: ?string, license: ?string, format: ?string, geozone: ?string, granularity: ?string, schema: ?string}>}
      */
     facets.value = Object.fromEntries(params);
     if (props.disableFirstSearch) {
