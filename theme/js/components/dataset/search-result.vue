@@ -18,6 +18,7 @@
           <Placeholder
             v-else
             type="dataset"
+            :size="60"
           />
         </div>
       </div>
