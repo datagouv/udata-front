@@ -4,7 +4,7 @@
   "description": "Open Data Portal - French customization",
   "author": "Etalab",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite build --watch",
     "build": "vite build",
     "test": "cypress run",
     "lighthouse": "lhci autorun",
