@@ -198,6 +198,9 @@ export const values = [
   return { ...acc, [propertyName]: el.getAttribute("content") };
 }, {});
 
+/** @type {Array<string> | false} */
+export const explorable_resources = _jsonMeta("explorable-resources");
+
 export default {
   user,
   debug,

@@ -91,23 +91,22 @@
     >
       <div class="fr-tabs fr-tabs--no-border fr-my-5v">
         <ul class="fr-tabs__list" role="tablist" :aria-label="$t('Resource menu')">
-          <li role="presentation">
+          <li role="presentation" v-if="hasExplore">
             <button :id="resourcePreviewButtonId" class="fr-tabs__tab" tabindex="0" role="tab" aria-selected="true" :aria-controls="resourcePreviewTabId">{{$t('Preview')}}</button>
           </li>
           <li role="presentation">
             <button :id="resourceInformationsButtonId" class="fr-tabs__tab" :tabindex="resourceInformationsTabIndex" role="tab" :aria-selected="resourceInformationsSelectedTab" :aria-controls="resourceInformationsTabId">{{$t('Informations')}}</button>
           </li>
         </ul>
-        <div :id="resourcePreviewTabId" class="fr-tabs__panel fr-p-0 fr-tabs__panel--selected" role="tabpanel" :aria-labelledby="resourcePreviewButtonId" tabindex="0">
+        <div
+          :id="resourcePreviewTabId"
+          class="fr-tabs__panel fr-p-0 fr-tabs__panel--selected"
+          role="tabpanel"
+          :aria-labelledby="resourcePreviewButtonId"
+          tabindex="0"
+          v-if="hasExplore"
+        >
           <component v-for="ex in explore" :is="ex.component" :resource="resource"/>
-          <a
-            v-if="resource.preview_url"
-            :href="resource.preview_url"
-            class="fr-btn"
-            :title="$t('Preview of resource X', {title: resource.title})"
-          >
-            {{$t('Preview')}}
-          </a>
         </div>
         <div :id="resourceInformationsTabId" class="fr-tabs__panel" role="tabpanel" :aria-labelledby="resourceInformationsButtonId" tabindex="0">
           <div class="fr-mt-0 markdown" v-if="resource.description" v-html="filters.markdown(resource.description)">
@@ -191,6 +190,14 @@
               </a>
             </div>
           </template>
+          <div class="text-align-right" v-if="!hasExplore && resource.preview_url">
+            <a
+              :href="resource.preview_url"
+              class="fr-btn fr-btn--icon-left fr-icon-test-tube-line"
+            >
+              {{ $t("Explore data") }}
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -210,6 +217,7 @@ import DescriptionList from "../../utils/description-list/description-list.vue";
 import DescriptionTerm from "../../utils/description-list/description-term.vue";
 import useSchema from "../../../composables/useSchema";
 import { getRegisteredComponentsForHook } from "udata-front";
+import { explorable_resources } from "../../../config";
 
 export default defineComponent({
   components: {DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, SchemaLoader},
@@ -253,6 +261,8 @@ export default defineComponent({
     const lastUpdate = computed(() => props.resource.published > props.resource.last_modified ? props.resource.published : props.resource.last_modified);
     const unavailable = computed(() => availabilityChecked.value && availabilityChecked.value >= 400);
     const { authorizeValidation, documentationUrl, loading, validationUrl} = useSchema(props.resource);
+    const explore = getRegisteredComponentsForHook("explore");
+    const hasExplore = computed(() => explore.length > 0 && explorable_resources && explorable_resources.includes(props.resource.id));
     const resourceContentId = computed(() => 'resource-' + props.resource.id);
     const resourceHeaderId = computed(() => 'resource-' + props.resource.id + '-header');
     const resourceInformationsButtonId = computed(() => 'resource-' + props.resource.id + '-informations-button');
@@ -260,10 +270,8 @@ export default defineComponent({
     const resourcePreviewButtonId = computed(() => 'resource-' + props.resource.id + '-preview-button');
     const resourcePreviewTabId = computed(() => 'resource-' + props.resource.id + '-preview-tab');
     const resourceTitleId = computed(() => 'resource-' + props.resource.id + '-title');
-    const resourceInformationsSelectedTab = computed(() => !props.resource.preview_url);
-    const resourceInformationsTabIndex = computed(() => props.resource.preview_url? -1 : 0);
-    const explore = getRegisteredComponentsForHook("explore");
-    console.log(explore);
+    const resourceInformationsSelectedTab = computed(() => !hasExplore.value);
+    const resourceInformationsTabIndex = computed(() => hasExplore.value? -1 : 0);
 
     return {
       owner,
@@ -289,6 +297,7 @@ export default defineComponent({
       resourceInformationsSelectedTab,
       resourceInformationsTabIndex,
       explore,
+      hasExplore,
     }
   },
 });
