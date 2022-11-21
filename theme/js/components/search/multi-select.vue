@@ -70,7 +70,7 @@ Callback:
 
 <script>
 import {defineComponent, ref, computed, onMounted, onUpdated, reactive, unref, watch} from "vue";
-import Select from "@conciergerie.dev/select-a11y/dist/module";
+import Select from "@conciergerie.dev/select-a11y";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
 import {api, generateCancelToken} from "../../plugins/api";
@@ -178,8 +178,8 @@ export default defineComponent({
     const currentRequest = ref(null);
 
     /**
-     * Select instance
-     * @type {import("vue").Ref<Select | null>}
+     * SelectA11y instance
+     * @type {import("vue").Ref<import("@conciergerie.dev/select-a11y").Select | null>}
      */
     const selectA11y = ref(null);
 
@@ -408,7 +408,7 @@ export default defineComponent({
 
     watch(() => props.values, () => {
       let value = unref(normalizeValues(props.values));
-      selectA11y.value.selectOption(value);
+      selectA11y.value?.selectOptionSilently(value);
     });
 
     const fillOptionsAndValues = suggestAndMapToOption()

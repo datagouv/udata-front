@@ -106,12 +106,10 @@
               </span>
               <QualityScore :score="quality.score"/>
           </Tooltip>
-          <template v-if="!externalSource">
-            <span class="fr-hidden inline-sm">
-              &mdash;
-            </span>
-            {{ $t('Updated on {date}', {date: $filters.formatDate(last_modified)}) }}
-          </template>
+          <span class="fr-hidden inline-sm">
+            &mdash;
+          </span>
+          {{ $t('Updated on {date}', {date: $filters.formatDate(last_update)}) }}
         </p>
       </div>
       <ul class="fr-hidden fr-unhidden-sm fr-hidden-md fr-unhidden-lg fr-col-auto fr-tags-group fr-grid-row--bottom self-center flex-direction-column">
@@ -142,7 +140,6 @@
 import { defineComponent, computed } from "vue";
 import useLicense from "../../composables/useLicense";
 import useOwnerName from "../../composables/useOwnerName";
-import useExternalSource from "../../composables/useExternalSource";
 import Avatar from "../discussions/avatar.vue";
 import OrganizationNameWithCertificate from "../organization/organization-name-with-certificate.vue";
 import Placeholder from "../utils/placeholder.vue";
@@ -166,10 +163,7 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    extras: {
-      type: Object,
-    },
-    last_modified: {
+    last_update: {
       type: Date,
       required: true,
     },
@@ -213,9 +207,7 @@ export default defineComponent({
     });
     const ownerName = useOwnerName(owned);
     const license = useLicense(props.license);
-    const externalSource = useExternalSource(props.extras);
     return {
-      externalSource,
       license,
       ownerName,
     };

@@ -154,10 +154,8 @@
               :queryString="queryString"
               :cta="$t('Reset filters')"
               :copy="$t('No dataset matching your query')"
-              :copyAfter="
-                $t('You can try to reset the filters to expand your search.')
-              "
-              :onClick="() => resetForm()"
+              :copyAfter="$t('You can try to reset the filters to expand your search.')"
+              :onClick="() => reloadForm()"
             />
           </div>
         </transition>
@@ -167,7 +165,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, onMounted, computed, watch } from "vue";
+import { defineComponent, ref, onMounted, computed } from "vue";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
 import { generateCancelToken, apiv2 } from "../../plugins/api";
@@ -180,6 +178,8 @@ import SchemaFilter from "./schema-filter.vue";
 import Empty from "./empty.vue";
 import Pagination from "../pagination/pagination.vue";
 import MultiSelect from "./multi-select.vue";
+import { search_autocomplete_debounce } from "../../config";
+import { debounce } from "../../composables/useDebouncedRef";
 
 export default defineComponent({
   inheritAttrs: false,
@@ -296,10 +296,27 @@ export default defineComponent({
       return results;
     };
 
+    const SAVE_TO_HISTORY = true;
+    const DONT_SAVE_TO_HISTORY = false;
+
+    const updateUrl = (save = SAVE_TO_HISTORY) => {
+      // Update URL to match current search params value for deep linking
+      let url = new URL(window.location.href);
+      url.search = new URLSearchParams(searchParameters.value).toString();
+      if (save) {
+        window.history.pushState(null, "", url);
+      }
+      /** @type NodeListOf<HTMLAnchorElement> */
+      let linksWithQuery = document.querySelectorAll('[data-q]');
+      for (let link of linksWithQuery) {
+        link.href = reuseUrl.value;
+      }
+    };
+
     /**
      * Search new dataset results
      */
-    const search = () => {
+    const search = debounce((saveToHistory = SAVE_TO_HISTORY) => {
       loading.value = true;
       if (currentRequest.value) currentRequest.value.cancel();
       currentRequest.value = generateCancelToken();
@@ -307,7 +324,7 @@ export default defineComponent({
         .get("/datasets/search/", {
           cancelToken: currentRequest.value.token,
           params: {
-            ...paramUrl.value,
+            ...searchParameters.value,
             page_size: pageSize,
           },
         })
@@ -316,6 +333,7 @@ export default defineComponent({
           formatResults(result.data);
           totalResults.value = result.total;
           loading.value = false;
+          updateUrl(saveToHistory);
         })
         .catch((error) => {
           if (!axios.isCancel(error)) {
@@ -323,7 +341,7 @@ export default defineComponent({
             loading.value = false;
           }
         });
-    }
+    }, search_autocomplete_debounce);
 
     /**
      * Called when user type in search field
@@ -382,15 +400,20 @@ export default defineComponent({
       }
     };
 
-    const resetFilters = () => {
-      facets.value = {};
-      currentPage.value = 1;
-      search();
+    const reloadFilters = ({page = 1, sort = '', ...params} = {}, saveToHistory = SAVE_TO_HISTORY) => {
+      facets.value = params;
+      currentPage.value = page;
+      searchSort.value = sort;
+      search(saveToHistory);
     };
 
-    const resetForm = () => {
-      queryString.value = "";
-      resetFilters();
+    const resetFilters = () => {
+      reloadFilters({});
+    };
+
+    const reloadForm = ({q = '', ...params} = {}, saveToHistory = SAVE_TO_HISTORY) => {
+      queryString.value = q;
+      reloadFilters(params, saveToHistory);
     };
 
     /**
@@ -407,7 +430,7 @@ export default defineComponent({
         label: sort.label,
       })));
 
-    const paramUrl = computed(() => {
+    const searchParameters = computed(() => {
       /**
        *  @type Record<string, string>
        */
@@ -448,18 +471,6 @@ export default defineComponent({
       search();
     }
 
-    watch(paramUrl, (val) => {
-      // Update URL to match current search params value for deep linking
-      let url = new URL(window.location.href);
-      url.search = new URLSearchParams(val).toString();
-      history.pushState(null, "", url);
-      /** @type NodeListOf<HTMLAnchorElement> */
-      let linksWithQuery = document.querySelectorAll('[data-q]');
-      for (let link of linksWithQuery) {
-        link.href = reuseUrl.value;
-      }
-    }, {deep: true});
-
     onMounted(() => {
       if (props.disableFirstSearch && resultsRef.value) {
         let total = resultsRef.value.dataset.totalResults;
@@ -472,6 +483,15 @@ export default defineComponent({
         }
         loading.value = false;
       }
+      addEventListener('popstate', () => {
+        // Update URL to match current search params value for deep linking
+        const url = new URL(window.location.href);
+        const params = {};
+        for (const [key, value] of url.searchParams) {
+          params[key] = value;
+        }
+        reloadForm(params, DONT_SAVE_TO_HISTORY);
+      });
     });
 
     return {
@@ -480,7 +500,7 @@ export default defineComponent({
       handleSearchChange,
       handleFacetChange,
       changePage,
-      resetForm,
+      reloadForm,
       resetFilters,
       facets,
       results,

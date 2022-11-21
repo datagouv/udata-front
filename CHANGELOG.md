@@ -2,9 +2,19 @@
 
 ## Current (in progress)
 
+- Nothing yet
+
+## 3.0.0 (2022-11-14)
+
+- :warning: **Breaking change** Use and display harvest metadata introduced in udata 5 [#168](https://github.com/etalab/udata-front/pull/168)
+- Improve search history [#162](https://github.com/etalab/udata-front/pull/162)
+
+## 2.0.13 (2022-11-02)
+
 - Switch from `Flask-restplus` to its fork `Flask-rest-x` [#165](https://github.com/etalab/udata-front/pull/165)
 - Add CaptchEtat integration [#159](https://github.com/etalab/udata-front/pull/159)
   - new environment variables : CAPTCHETAT_BASE_URL, CAPTCHETAT_OAUTH_BASE_URL, CAPTCHETAT_CLIENT_ID and CAPTCHETAT_CLIENT_SECRET
+- Fix lighthouse reported errors [#158](https://github.com/etalab/udata-front/pull/158)
 
 ## 2.0.12 (2022-10-19)
 
