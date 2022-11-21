@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add resource exploration preview [#169](https://github.com/etalab/udata-front/pull/169)
 
 ## 3.0.0 (2022-11-14)
 
