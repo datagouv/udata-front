@@ -1,5 +1,15 @@
 <template>
-  <article class="fr-my-2w fr-p-2w border border-default-grey fr-enlarge-link" :style="style">
+  <article class="fr-my-3w fr-p-3w border border-default-grey fr-enlarge-link" :style="style">
+    <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mb-1v" v-if="private || archived">
+      <p class="fr-badge fr-badge--mention-grey fr-mr-1w" v-if="private">
+        <span class="fr-icon-lock-line" aria-hidden="true"></span>
+        {{ $t('Private') }}
+      </p>
+      <p class="fr-badge fr-badge--mention-grey" v-if="archived">
+        <span class="fr-icon-archive-line" aria-hidden="true"></span>
+        {{ $t('Archived') }}
+      </p>
+    </div>
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
       <div class="fr-col-auto">
         <div class="logo">
@@ -22,16 +32,6 @@
         </div>
       </div>
       <div class="fr-col">
-        <div class="fr-grid-row fr-grid-row--middle fr-mb-1v" v-if="private || archived">
-          <p class="fr-badge fr-badge--mention-grey fr-mr-1w" v-if="private">
-            <span class="fr-icon-lock-line" aria-hidden="true"></span>
-            {{ $t('Private') }}
-          </p>
-          <p class="fr-badge fr-badge--mention-grey" v-if="archived">
-            <span class="fr-icon-archive-line" aria-hidden="true"></span>
-            {{ $t('Archived') }}
-          </p>
-        </div>
         <h4 class="fr-mb-1v">
           <a :href="page" class="text-grey-500">
             {{ title }}
