@@ -1,7 +1,7 @@
 {% cache cache_duration, 'dataset-search-result', dataset.id|string, g.lang_code %}
 {% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate %}
 {% from theme('macros/quality_score_with_tooltip.html') import quality_score_with_tooltip %}
-<article class="fr-my-2w fr-p-2w border border-default-grey fr-enlarge-link" style="z-index: {{loop.length - loop.index0 + 1}}">
+<article class="fr-pt-5v fr-pb-6v fr-px-1w border-bottom border-default-grey fr-enlarge-link" style="z-index: {{loop.length - loop.index0 + 1}}">
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
         <div class="fr-col-auto">
             <div class="logo">
@@ -33,27 +33,12 @@
             </div>
         </div>
         <div class="fr-col">
-            {% if dataset.private or dataset.archived %}
-            <div class="fr-grid-row fr-grid-row--middle fr-mb-1v">
-                {% if dataset.private %}
-                <p class="fr-badge fr-badge--mention-grey fr-mr-1w">
-                    <span class="fr-icon-lock-line" aria-hidden="true"></span>
-                    {{ _('Private') }}
-                </p>
-                {% endif %}
-                {% if dataset.archived %}
-                <p class="fr-badge fr-badge--mention-grey">
-                    <span class="fr-icon-archive-line" aria-hidden="true"></span>
-                    {{ _('Archived') }}
-                </p>
-                {% endif %}
-            </div>
-            {% endif %}
             <h4 class="fr-mb-1v">
                 <a href="{{ url_for('datasets.show', dataset=dataset) }}" class="text-grey-500">
                     {{ dataset.full_title }}
                     {% if dataset.acronym %}<small>{{ dataset.acronym }}</small>{% endif %}
                 </a>
+                {% if dataset.private %}<span class="badge grey-300 fr-ml-1w">{{ _('Private') }}</span>{% endif %}
             </h4>
             {% if dataset.organization or dataset.owner %}
             <span class="not-enlarged">
