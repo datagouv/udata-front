@@ -12,19 +12,28 @@
  * * @property {string} [name] - Component name, logged before the component is used
  */
 
+/**
+ * @typedef {object} Translation
+ * @property {object} messages - Messages to add to vue-i18n
+ * @property {string} [module] - Udata module registering this translation
+ */
+
 /** @typedef {Object<string, Array<Component>>} Components - see {@link Component} */
 /** @typedef {Array<Hook>} Hooks - see {@link Hook} */
+/** @typedef {Array<Translation>} Translations - see {@link Translation} */
 
 /**
  * @typedef {object} UdataFrontNamespace
  * @property {Hooks} hooks - Hooks defined for this udata-front instance (see {@link Hook})
  * @property {Components} components - Key-value pair matching components (see {@link Component}) with hooks (see {@link Hook})
+ * @property {Translations} translations - Translations to add to vue-i18n (see {@link Translation})
 */
 
 /** @type {UdataFrontNamespace} */
 const udata_front = globalThis.udata_front ?? {
   hooks: [],
   components: {},
+  translations: [],
 }
 
 /**
@@ -72,6 +81,23 @@ export function registerHook(name, module) {
   return hook;
 }
 
+/**
+ * @callback RegisterTranslation
+ * @param {object} messages - Name of the {@link Hook}
+ * @param {string} [module] - Udata module, logged when the hook is called
+ * @returns {Translation}
+ */
+
+/** @type {RegisterTranslation} */
+export function registerTranslation(messages, module) {
+  const translation = {
+    messages,
+    module,
+  };
+  udata_front.translations.push(translation);
+  return translation;
+}
+
 /** @returns {Components} */
 export function getRegisteredComponents() {
   return udata_front.components;
@@ -90,6 +116,9 @@ export function getRegisteredHooks() {
   return udata_front.hooks;
 }
 
-globalThis.udata_front = udata_front;
+/** @returns {Translations} */
+export function getRegisteredTranslations() {
+  return udata_front.translations;
+}
 
-console.log(globalThis.udata_front);
+globalThis.udata_front = udata_front;
