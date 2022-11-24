@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add archived and private badges to dataset search results and update card style [#170](https://github.com/etalab/udata-front/pull/170)
 
 ## 3.0.0 (2022-11-14)
 
