@@ -106,7 +106,7 @@
           tabindex="0"
           v-if="hasExplore"
         >
-          <component v-for="ex in explore" :is="ex.component" :resource="resource"/>
+          <component v-if="expanded" v-for="ex in explore" :is="ex.component" :resource="resource"/>
         </div>
         <div :id="resourceInformationsTabId" class="fr-tabs__panel" role="tabpanel" :aria-labelledby="resourceInformationsButtonId" tabindex="0">
           <div class="fr-mt-0 markdown" v-if="resource.description" v-html="filters.markdown(resource.description)">
