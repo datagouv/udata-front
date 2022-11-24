@@ -9,7 +9,7 @@
     "test": "cypress run",
     "lighthouse": "lhci autorun",
     "postinstall": "patch-package",
-    "i18n:report": "vue-i18n-extract report --vueFiles 'theme/**/*.?(js|vue)' --languageFiles 'theme/js/locales/**/*' --separator '^'",
+    "i18n:report": "vue-i18n-extract report",
     "i18n:extract": "npm run i18n:report -- --add",
     "start": "npm run dev",
     "serve": "udata serve"
