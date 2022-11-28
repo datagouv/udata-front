@@ -2,6 +2,9 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import copy from 'rollup-plugin-copy'
 import legacy from '@vitejs/plugin-legacy'
+import { resolve, dirname } from 'node:path'
+import { fileURLToPath } from 'url'
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,6 +16,11 @@ export default defineConfig({
   },
   plugins: [
     vue(),
+    VueI18nPlugin({
+      compositionOnly: false,
+      /* options */
+      include: resolve(dirname(fileURLToPath(import.meta.url)), 'theme/js/locales/**'),
+    }),
     legacy({
       targets: "> 0.1%, last 15 versions, Firefox ESR, not dead",
       externalSystemJS: true,

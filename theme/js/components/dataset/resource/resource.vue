@@ -216,7 +216,7 @@ import DescriptionDetails from "../../utils/description-list/description-details
 import DescriptionList from "../../utils/description-list/description-list.vue";
 import DescriptionTerm from "../../utils/description-list/description-term.vue";
 import useSchema from "../../../composables/useSchema";
-import { getRegisteredComponentsForHook } from "udata-front";
+import useComponentsForHook from "../../../composables/useComponentsForHook";
 import { explorable_resources } from "../../../config";
 
 export default defineComponent({
@@ -247,6 +247,7 @@ export default defineComponent({
   setup(props) {
     const owner = useOwnerName(props.resource);
     const resourceImage = useResourceImage(props.resource);
+    const { getComponentsForHook } = useComponentsForHook();
     const filters = inject('$filters');
     /** @type {import("vue").Ref<HTMLElement | undefined>} */
     const content = ref();
@@ -261,7 +262,7 @@ export default defineComponent({
     const lastUpdate = computed(() => props.resource.published > props.resource.last_modified ? props.resource.published : props.resource.last_modified);
     const unavailable = computed(() => availabilityChecked.value && availabilityChecked.value >= 400);
     const { authorizeValidation, documentationUrl, loading, validationUrl} = useSchema(props.resource);
-    const explore = getRegisteredComponentsForHook("explore");
+    const explore = getComponentsForHook("explore");
     const hasExplore = computed(() => explore.length > 0 && explorable_resources && explorable_resources.includes(props.resource.id));
     const resourceContentId = computed(() => 'resource-' + props.resource.id);
     const resourceHeaderId = computed(() => 'resource-' + props.resource.id + '-header');
