@@ -58,8 +58,6 @@ nosetests.xml
 .noseids
 
 udata.cfg
-stylemark/
-.parcel-cache
 
 cypress/videos
 cypress/screenshots
