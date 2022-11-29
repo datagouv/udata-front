@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix text for datasets button in org page [#172](https://github.com/etalab/udata-front/pull/172)
 
 ## 3.0.0 (2022-11-14)
 
