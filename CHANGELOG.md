@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix banner links underlined twice [#171](https://github.com/etalab/udata-front/pull/171)
 
 ## 3.0.0 (2022-11-14)
 
