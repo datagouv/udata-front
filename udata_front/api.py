@@ -78,14 +78,13 @@ class CaptchEtatAPI(API):
             return json.loads(req.content)
         request.accept_mimetypes = MIMEAccept(accept)
 
-        values_gen = request.accept_mimetypes.values()
-        result_image = next((True for value in values_gen if 'image/' in value), False)
-        values_gen = request.accept_mimetypes.values()
-        result_sound = next((True for value in values_gen if 'audio/' in value), False)
+        values_gen = list(request.accept_mimetypes.values())
+        result_image = any('image/' in value for value in values_gen)
+        result_sound = any('audio/' in value for value in values_gen)
 
         if result_image or result_sound:
             resp = make_response(bytes(req.content))
-            resp.headers["Content-Type"] = "image/*" if result_image else "audio/*"
+            resp.headers['Content-Type'] = 'image/*' if result_image else 'audio/*'
             return resp
 
         return req.content

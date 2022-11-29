@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix Api Representation for media after CaptchEtat integration [#173](https://github.com/etalab/udata-front/pull/173)
 
 ## 3.0.0 (2022-11-14)
 
