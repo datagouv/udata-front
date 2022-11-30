@@ -29,7 +29,7 @@ export default function useSchema(resource) {
 
   const authorizeValidation = computed(() => !!schema.value && schema.value.schema_type === 'tableschema');
 
-  const documentationUrl = computed(() => `https://schema.data.gouv.fr/${resource.schema.name}/latest.html`);
+  const documentationUrl = computed(() => `${config.schema_documentation_url}${resource.schema.name}/`);
 
   const validationUrl = computed(() => {
     if(!authorizeValidation) {
