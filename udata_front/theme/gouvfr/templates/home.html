@@ -82,8 +82,8 @@
             <div class="fr-grid-row justify-between fr-mt-md-9v fr-mt-2w">
                 {% for (label, metric) in metrics %}
                 <div class="filet fr-my-1v fr-my-md-0">
-                    <div class="fs-hg f-bold text-grey-400">{{ current_site.metrics[metric]|format_number }}</div>
-                    <span class="text-grey-400">{{ label }}</span>
+                    <p class="fr-m-0 fr-h1 text-grey-400">{{ current_site.metrics[metric]|format_number }}</p>
+                    <p class="fr-m-0 text-grey-400">{{ label }}</p>
                 </div>
                 {% endfor %}
             </div>
