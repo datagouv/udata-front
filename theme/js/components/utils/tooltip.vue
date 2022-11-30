@@ -1,10 +1,10 @@
 <template>
-    <span class="tooltip__wrapper text-grey-500">
+    <div class="tooltip__wrapper fr-grid-row fr-grid-row--middle text-grey-500">
         <slot></slot>
         <div class="tooltip">
             <slot name="tooltip"></slot>
         </div>
-    </span>
+      </div>
 </template>
 
 <script>

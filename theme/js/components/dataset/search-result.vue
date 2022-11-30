@@ -22,30 +22,30 @@
         </div>
       </div>
       <div class="fr-col">
-        <h4 class="fr-mb-1v">
+        <h4 class="fr-mb-1v fr-grid-row">
           <a :href="page" class="text-grey-500">
             {{ title }}
             <small v-if="acronym">{{ acronym }}</small>
           </a>
-          <span
-            v-if="private"
-            class="badge grey-300 fr-ml-1w"
+          <p
+            v-if="true"
+            class="fr-my-0 badge grey-300 fr-ml-1w"
           >
             {{ $t('Private') }}
-          </span>
+        </p>
         </h4>
-        <span class="not-enlarged" v-if="organization || owner">
-          {{ $t('From') }} 
+        <p class="fr-m-0 not-enlarged" v-if="organization || owner">
+          {{ $t('From') }}
           <a :href="organization.page" v-if="organization">
               <OrganizationNameWithCertificate :organization="organization" />
           </a>
           <template v-if="owner">{{ownerName}}</template>
-        </span>
+        </p>
         <p class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm">
           {{ $filters.excerpt(description, 160) }}
         </p>
-        <p class="fr-mb-0 text-mention-grey">
-          <Tooltip class="fr-hidden inline-sm">
+        <p class="fr-mb-0 fr-grid-row fr-grid-row--middle text-mention-grey">
+          <Tooltip class="fr-hidden fr-grid-row fr-grid-row--middle fr-unhidden-sm">
               <template #tooltip>
                 <h5 class="fr-text--sm fr-my-0">{{$t("Metadata quality:")}}</h5>
                 <QualityItem
@@ -100,12 +100,12 @@
                 </div>
               </template>
               <span class="fr-icon-info-line" aria-hidden="true"></span>
-              <span class="fr-mx-1v">
+              <p class="fr-m-0 fr-mx-1v">
                 {{$t('Metadata quality:')}}
-              </span>
+              </p>
               <QualityScore :score="quality.score"/>
           </Tooltip>
-          <span class="fr-hidden inline-sm">
+          <span class="fr-hidden inline-sm fr-mx-1v">
             &mdash;
           </span>
           {{ $t('Updated on {date}', {date: $filters.formatDate(last_update)}) }}
@@ -113,22 +113,22 @@
       </div>
       <ul class="fr-hidden fr-unhidden-sm fr-hidden-md fr-unhidden-lg fr-col-auto fr-tags-group fr-grid-row--bottom self-center flex-direction-column">
         <li>
-          <span class="fr-tag">
+          <p class="fr-tag">
             <i18n-t keypath="{n} reuses" :plural="metrics.reuses || 0" scope="global">
               <template #n>
                 <strong class="fr-mr-1v">{{metrics.reuses || 0}}</strong>
               </template>
             </i18n-t>
-            </span>
+          </p>
         </li>
         <li>
-          <span class="fr-tag">
+          <p class="fr-tag">
             <i18n-t keypath="{n} favorites" :plural="metrics.followers || 0" scope="global">
               <template #n>
                 <strong class="fr-mr-1v">{{metrics.followers}}</strong>
               </template>
             </i18n-t>
-          </span>
+          </p>
         </li>
       </ul>
     </div>

@@ -26,10 +26,10 @@
         <textarea v-model="comment" required class="fr-input" id="textarea"></textarea>
       </div>
       <footer class="fr-grid-row justify-between fr-grid-row--middle">
-        <span class="text-mention-grey fr-text--sm fr-mb-0">
+        <p class="text-mention-grey fr-text--sm fr-m-0">
           {{ $t("Reply as") }}
           <Author :author="user" />
-        </span>
+        </p>
         <input
           type="submit"
           :value="$t('Submit')"

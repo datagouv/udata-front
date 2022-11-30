@@ -48,33 +48,33 @@
 <section
     class="content fr-container fr-mb-6w">
     {% if dataset.private %}
-    <span class="fr-tag"
+    <p class="fr-tag"
         title="{{ _('This dataset is private and will not be visible by other users') }}">{{ _('Private') }}
-    </span>
+    </p>
     {% endif %}
     {% if dataset.deleted %}
-    <span class="fr-tag"
+    <p class="fr-tag"
         title="{{ _('This dataset has been deleted. This will be permanent in the next 24 hours') }}">{{ _('Deleted') }}
-    </span>
+    </p>
     {% endif %}
     {% if dataset.archived %}
     {% set title = _('This dataset has been archived automatically because it has been deleted from the remote platform.')
         if dataset.harvest and dataset.harvest.archived == 'not-on-remote' else
         _('This dataset has been archived.') %}
-    <span class="fr-tag" title="{{ title }}">
+    <p class="fr-tag" title="{{ title }}">
         {{ _('Archived') }}
-    </span>
+    </p>
     {% endif %}
     {# FIXME: remove when geo.data.gouv.fr is shutdown #}
     {% if 'geop:dataset_id' in dataset.extras %}
-    <div class="well well-warning fr-py-3v fr-my-3w">
+    <p class="well well-warning fr-py-3v fr-my-3w">
         ⚠️ {{ _("This dataset is handled by the <a href='{geo_link}'>geo.data.gouv.fr</a> platform.
         This platform is not actively maintained and as a result, you may find some bogus data or metadata.
         More information about <a href='{blog_link}'>the shutdown of geo.data.gouv.fr is available here.</a>").format(
             geo_link='https://geo.data.gouv.fr',
             blog_link='https://www.data.gouv.fr/fr/posts/extinction-de-geo-data-gouv-fr/'
         )}}
-    </div>
+    </p>
     {% endif %}
     <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
         <div class="fr-col">
@@ -82,8 +82,8 @@
                 {{ dataset.title }}
                 {% if dataset.acronym %}<small>{{ dataset.acronym }}</small>{% endif %}
             </h1>
-            <div class="fr-my-1w">
-                {{quality_score_with_tooltip(dataset, 'inline')}}
+            <div class="fr-my-1w fr-grid-row">
+                {{quality_score_with_tooltip(dataset)}}
                 {{ _('Updated on %(date)s', date=dataset.last_update|dateformat(format='long')) }}
                     {% if dataset.license %}
                     &mdash;

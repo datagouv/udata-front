@@ -41,7 +41,7 @@
                 {% if dataset.private %}<span class="badge grey-300 fr-ml-1w">{{ _('Private') }}</span>{% endif %}
             </h4>
             {% if dataset.organization or dataset.owner %}
-            <span class="not-enlarged">
+            <p class="fr-m-0 not-enlarged">
                 {{ _('From') }}
                 {% if dataset.organization %}
                 <a href="{{ url_for('organizations.show', org=dataset.organization) }}">
@@ -50,17 +50,19 @@
                 {% elif dataset.owner %}
                 {{owner_name(dataset)}}
                 {% endif %}
-            </span>
+            </p>
             {% endif %}
             <p class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm">
                 {{ dataset.description|mdstrip(300) }}
             </p>
-            <div class="fr-mb-0 text-mention-grey">
-                {{quality_score_with_tooltip(dataset, "fr-hidden inline-sm")}}
+            <div class="fr-mb-0 text-mention-grey fr-grid-row">
+                {{quality_score_with_tooltip(dataset, "fr-hidden fr-unhidden-sm")}}
+                <p class="fr-m-0">
                 <span class="fr-hidden inline-sm">
                     &mdash;
                 </span>
                 {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
+                </p>
             </div>
         </div>
         <ul class="fr-hidden fr-unhidden-sm fr-col-auto fr-tags-group flex-direction-column fr-grid-row--bottom self-center">

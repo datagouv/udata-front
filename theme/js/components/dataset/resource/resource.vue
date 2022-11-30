@@ -13,7 +13,7 @@
           >
             {{ resource.title || $t('Nameless resource') }}
           </h4>
-          <div class="fr-text--sm fr-mb-0 text-grey-380">
+          <p class="fr-text--sm fr-m-0 text-grey-380">
             <template v-if="resource.owner">
               {{ $t('From') }} {{owner}} —
             </template>
@@ -26,7 +26,7 @@
               <template v-if="resource.filesize">({{ filters.filesize(resource.filesize) }})</template> —
             </template>
             {{ $t('X downloads', resource.metrics.views || 0) }}
-          </div>
+          </p>
         </div>
       </div>
       <div class="fr-col-auto fr-ml-6w fr-ml-md-0">
