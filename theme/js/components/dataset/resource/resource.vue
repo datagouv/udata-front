@@ -167,7 +167,7 @@
             </DescriptionList>
           </div>
           <template v-if="resource.schema.name">
-            <h5 class="fr-h5 fr-mt-1w fr-mb-5v">{{$t('Schema')}}</h5>
+            <h5 class="fr-h6 fr-mt-1w fr-mb-5v">{{$t('Schema')}}</h5>
             <p class="fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left fr-mb-2w">
               {{resource.schema.name}}
             </p>
