@@ -116,18 +116,18 @@
               <DescriptionTerm>{{ $t('URL') }}</DescriptionTerm>
               <DescriptionDetails :withEllipsis="false" class="fr-grid-row fr-grid-row--middle">
                 <div class="fr-col text-overflow-ellipsis">
-                  {{resource.url}}
+                  <a :href="resource.url">{{resource.url}}</a>
                 </div>
-                <div class="fr-col-auto">
+                <div class="fr-ml-1w fr-col-auto">
                   <CopyButton :text="resource.url"/>
                 </div>
               </DescriptionDetails>
               <DescriptionTerm>{{ $t('Permalink') }}</DescriptionTerm>
               <DescriptionDetails :withEllipsis="false" class="fr-grid-row fr-grid-row--middle">
                 <div class="fr-col text-overflow-ellipsis">
-                  {{resource.latest}}
+                  <a :href="resource.latest">{{resource.latest}}</a>
                 </div>
-                <div class="fr-col-auto">
+                <div class="fr-ml-1w fr-col-auto">
                   <CopyButton :text="resource.latest"/>
                 </div>
               </DescriptionDetails>
