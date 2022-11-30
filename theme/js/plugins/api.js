@@ -14,11 +14,6 @@ export const apiv2 = axios.create({
   baseURL: config.api_2_root,
 });
 
-export const csvapi = axios.create({
-  /** TODO: use config to get this url */
-  baseURL: "https://csvapi.etalab.studio",
-});
-
 export const install = (app) => {
   app.config.globalProperties.$api = api;
   app.config.globalProperties.$apiv2 = apiv2;
