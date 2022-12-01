@@ -127,16 +127,14 @@
     {% endif %}
     {{ hook('dataset.display.transport-banner') }}
     {% if dataset.owner %}
-    <div class="fr-grid-row">
-        <div class="well well-grey-100 fr-col fr-py-3v">
-            {% trans
-                    date=dataset.created_at|dateformat(format='long'),
-                    update=dataset.last_modified|dateformat(format='long'),
-                    author=dataset.owner.fullname
-                %}This dataset has been published on the initiative and under the responsibility of
-            {{author}}<br />Published on {{date}} and updated on {{update}}{% endtrans %}
-        </div>
-    </div>
+    <p class="well well-grey-100 fr-col fr-py-3v fr-my-0">
+        {% trans
+                date=dataset.created_at|dateformat(format='long'),
+                update=dataset.last_modified|dateformat(format='long'),
+                author=dataset.owner.fullname
+            %}This dataset has been published on the initiative and under the responsibility of
+        {{author}}<br />Published on {{date}} and updated on {{update}}{% endtrans %}
+        </p>
     {% endif %}
     <div class="fr-grid-row fr-grid-row--gutters fr-mt-4w">
         <div class="fr-col-12 fr-col-md-8">
