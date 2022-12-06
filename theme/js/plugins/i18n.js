@@ -5,7 +5,7 @@ import config from "../config";
 import { createI18n } from "vue-i18n";
 
 import messages from '@intlify/unplugin-vue-i18n/messages';
-import { getRegisteredTranslations } from "udata-front";
+import { getRegisteredTranslations } from "@etalab/udata-front-plugins-helper";
 
 const i18n = createI18n({
   legacy: false,
