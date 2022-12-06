@@ -1,6 +1,6 @@
 <template>
   <article class="fr-my-3w fr-p-3w border border-default-grey fr-enlarge-link" :style="style">
-    <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mb-1v" v-if="private || archived">
+    <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v" v-if="private || archived">
       <p class="fr-badge fr-badge--mention-grey fr-mr-1w" v-if="private">
         <span class="fr-icon-lock-line" aria-hidden="true"></span>
         {{ $t('Private') }}
