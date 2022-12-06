@@ -1,5 +1,4 @@
-from flask import current_app, json, make_response, request, abort
-from werkzeug.datastructures import MIMEAccept
+from flask import current_app, json, make_response, abort
 
 import logging
 import requests
