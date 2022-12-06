@@ -1,7 +1,7 @@
 {
-  "name": "udata-front",
+  "name": "@etalab/udata-front-plugins-helper",
   "version": "1.0.0",
-  "description": "Open Data Portal - Front-end library",
+  "description": "Ready-made helper for plugins to integrate them in udata-front.",
   "author": "Etalab",
   "main": "dist/index.js",
   "files": [
@@ -11,7 +11,8 @@
   "scripts": {
     "build": "tsc",
     "preversion": "npm run build",
-    "postversion": "git push --follow-tags"
+    "postversion": "git push --follow-tags",
+    "publish-next": "npm publish --tag next"
   },
   "devDependencies": {
     "typescript": "^4.6.2",
