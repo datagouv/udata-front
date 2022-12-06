@@ -71,20 +71,12 @@ class CaptchEtatAPI(API):
                                params=args)
         except requests.exceptions.RequestException:
             abort(500, description='Catptcha internal error')
-        accept = request.accept_mimetypes.copy()
-        if args['get'] == "sound":
-            accept.append(("audio/*", 1))
+
+        if args['get'] in ['image', 'sound']:
+            resp = make_response(bytes(req.content))
+            resp.headers['Content-Type'] = 'image/*' if args['get'] == 'image' else 'audio/*'
+            return resp
         if args['get'] == "p":
             return json.loads(req.content)
-        request.accept_mimetypes = MIMEAccept(accept)
-
-        values_gen = list(request.accept_mimetypes.values())
-        result_image = any('image/' in value for value in values_gen)
-        result_sound = any('audio/' in value for value in values_gen)
-
-        if result_image or result_sound:
-            resp = make_response(bytes(req.content))
-            resp.headers['Content-Type'] = 'image/*' if result_image else 'audio/*'
-            return resp
 
         return req.content
