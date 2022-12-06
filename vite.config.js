@@ -40,11 +40,12 @@ export default defineConfig({
         "theme/less/style.less",
         "node_modules/es-module-shims/dist/es-module-shims.js",
         "node_modules/vue/dist/vue.esm-browser.prod.js",
+        "node_modules/vue-content-loader/dist/vue-content-loader.es.js",
       ],
       preserveEntrySignatures: 'exports-only',
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: ['vue'],
+      external: ['vue', 'vue-content-loader'],
       output: {
         dir: "./udata_front/theme/gouvfr/static/",
         entryFileNames: `js/[name].js`,
@@ -53,7 +54,8 @@ export default defineConfig({
         // Provide global variables to use in the UMD build
         // for externalized deps
         globals: {
-          vue: 'Vue'
+          vue: 'Vue',
+          "vue-content-loader": "ContentLoader"
         }
       }
     }

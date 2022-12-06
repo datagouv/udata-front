@@ -37,7 +37,8 @@
     <script type="importmap">
     {
         "imports": {
-            "vue": "{{ theme_static('js/vue.esm-browser.prod.js') }}"
+            "vue": "{{ theme_static('js/vue.esm-browser.prod.js') }}",
+            "vue-content-loader": "{{ theme_static('js/vue-content-loader.es.js') }}"
         }
     }
     </script>
@@ -47,12 +48,14 @@
     <script type="systemjs-importmap">
     {
         "imports": {
-            "vue": "{{ theme_static('js/vue.esm-browser.prod-legacy.js') }}"
+            "vue": "{{ theme_static('js/vue.esm-browser.prod-legacy.js') }}",
+            "vue-content-loader": "{{ theme_static('js/vue-content-loader.es-legacy.js') }}"
         }
     }
     </script>
     <script nomodule src="{{ theme_static('js/s.min.js') }}"></script>
     <script nomodule src="{{ theme_static('js/vue.esm-browser.prod-legacy.js') }}"></script>
+    <script nomodule src="{{ theme_static('js/vue-content-loader.es-legacy.js') }}"></script>
     <script nomodule src="{{ theme_static('js/_commonjsHelpers-legacy.js') }}"></script>
     <script nomodule src="{{ theme_static('js/polyfills-legacy.js') }}"></script>
     <script nomodule src="{{ theme_static('js/index-legacy.js') }}"></script>
