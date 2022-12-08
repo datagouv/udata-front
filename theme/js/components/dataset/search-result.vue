@@ -1,5 +1,15 @@
 <template>
-  <article class="fr-pt-5v fr-pb-6v fr-px-1w border-bottom border-default-grey fr-enlarge-link" :style="style">
+  <article class="fr-my-3w fr-p-3w border border-default-grey fr-enlarge-link" :style="style">
+    <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v" v-if="private || archived">
+      <p class="fr-badge fr-badge--mention-grey fr-mr-1w" v-if="private">
+        <span class="fr-icon-lock-line" aria-hidden="true"></span>
+        {{ $t('Private') }}
+      </p>
+      <p class="fr-badge fr-badge--mention-grey" v-if="archived">
+        <span class="fr-icon-archive-line" aria-hidden="true"></span>
+        {{ $t('Archived') }}
+      </p>
+    </div>
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
       <div class="fr-col-auto">
         <div class="logo">
@@ -28,12 +38,6 @@
             {{ title }}
             <small v-if="acronym">{{ acronym }}</small>
           </a>
-          <span
-            v-if="private"
-            class="badge grey-300 fr-ml-1w"
-          >
-            {{ $t('Private') }}
-          </span>
         </h4>
         <span class="not-enlarged" v-if="organization || owner">
           {{ $t('From') }}
@@ -159,6 +163,10 @@ export default defineComponent({
   inheritAttrs: false,
   props: {
     acronym: String,
+    archived: {
+      type: Boolean,
+      default: false,
+    },
     description: {
       type: String,
       required: true,
@@ -178,7 +186,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    private: Boolean,
+    private: {
+      type: Boolean,
+      default: false,
+    },
     quality: {
       type: Object,
       required: true,

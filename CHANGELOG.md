@@ -8,6 +8,7 @@
 > and to display them in places chosen by the current theme
 
 - Add resource exploration preview [#169](https://github.com/etalab/udata-front/pull/169)
+- Add archived and private badges to dataset search results and update card style [#170](https://github.com/etalab/udata-front/pull/170)
 
 ## 3.0.0 (2022-11-14)
 
