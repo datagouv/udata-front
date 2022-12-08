@@ -73,7 +73,7 @@ class CaptchEtatAPI(API):
 
         if args['get'] in ['image', 'sound']:
             resp = make_response(bytes(req.content))
-            resp.headers['Content-Type'] = 'image/*' if args['get'] == 'image' else 'audio/*'
+            resp.headers['Content-Type'] = 'image/*' if args['get'] == 'image' else 'audio/x-wav'
             return resp
         if args['get'] == "p":
             return json.loads(req.content)
