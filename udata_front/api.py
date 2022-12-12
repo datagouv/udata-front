@@ -1,5 +1,4 @@
-from flask import current_app, json, make_response, request, abort
-from werkzeug.datastructures import MIMEAccept
+from flask import current_app, json, make_response, abort
 
 import logging
 import requests
@@ -71,17 +70,12 @@ class CaptchEtatAPI(API):
                                params=args)
         except requests.exceptions.RequestException:
             abort(500, description='Catptcha internal error')
-        accept = request.accept_mimetypes.copy()
-        if args['get'] == "sound":
-            accept.append(("audio/*", 1))
+
+        if args['get'] in ['image', 'sound']:
+            resp = make_response(bytes(req.content))
+            resp.headers['Content-Type'] = 'image/*' if args['get'] == 'image' else 'audio/x-wav'
+            return resp
         if args['get'] == "p":
             return json.loads(req.content)
-        request.accept_mimetypes = MIMEAccept(accept)
-        return req.content
 
-    @apiv2.representation('image/*')
-    @apiv2.representation('audio/*')
-    def media(data, code, headers):
-        resp = make_response(bytes(data), code)
-        resp.headers.extend(headers)
-        return resp
+        return req.content

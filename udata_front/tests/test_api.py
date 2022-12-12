@@ -84,7 +84,7 @@ class ApiTest(WebTestMixin):
             content_type="audio/*"
         )
         self.assert200(response)
-        assert response.content_type == "audio/*"
+        assert response.content_type == "audio/x-wav"
 
     @pytest.mark.options(CAPTCHETAT_OAUTH_BASE_URL=oauth_url)
     @pytest.mark.options(CAPTCHETAT_BASE_URL=url)
