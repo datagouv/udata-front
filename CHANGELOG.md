@@ -2,6 +2,7 @@
 
 ## Current (in progress)
 
+- Add archived and private badges to dataset search results and update card style [#170](https://github.com/etalab/udata-front/pull/170)
 - Fix banner links underlined twice [#171](https://github.com/etalab/udata-front/pull/171)
 
 ## 3.0.0 (2022-11-14)
