@@ -101,7 +101,11 @@
 
 {% if previous_post or next_post %}
 <section class="fr-container fr-my-7w fr-py-3w border-top">
-    <div class="fr-grid-row fr-grid-row--gutters justify-between">
+    <nav
+        role="navigation"
+        aria-label="{{_("Navigate in the page collection")}}"
+        class="fr-grid-row fr-grid-row--gutters justify-between"
+    >
         <div class="fr-col-12 fr-col-md-3 text-align-center-md">
             {% if previous_post %}
             <a
