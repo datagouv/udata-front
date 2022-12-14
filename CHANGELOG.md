@@ -6,6 +6,7 @@
 - Add archived and private badges to dataset search results and update card style [#170](https://github.com/etalab/udata-front/pull/170)
 - Fix banner links underlined twice [#171](https://github.com/etalab/udata-front/pull/171)
 - Fix margins for dataset cards [#176](https://github.com/etalab/udata-front/pull/176)
+- Fix RGAA criterion 9.2 [#178](https://github.com/etalab/udata-front/pull/178)
 
 ## 3.0.0 (2022-11-14)
 
