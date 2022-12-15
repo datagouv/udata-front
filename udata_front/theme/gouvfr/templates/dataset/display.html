@@ -37,13 +37,32 @@
 {% endcache %}
 {% endblock %}
 
+{% block toolbar %}
+{% cache cache_duration, 'dataset-breadcrumb', dataset.id|string, g.lang_code, dataset.last_modified|string %}
+{{ follow_btn(dataset) }}
+{% if can_edit %}
+    <div class="fr-col-auto fr-ml-3v">
+        <a
+            class="fr-btn fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-edit-line fr-btn--icon-left fr-hidden fr-unhidden-sm"
+            href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
+        >
+            {{ _('Edit') }}
+        </a>
+        <a
+        class="fr-btn fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-edit-line fr-hidden-sm"
+        href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
+        >
+            {{ _('Edit') }}
+        </a>
+    </div>
+{% endif %}
+{% endcache %}
+{% endblock %}
+
 {% block content %}
 {% cache cache_duration, 'dataset-content', dataset.id|string, reuses.page|string, g.lang_code, current_user.slug or 'anonymous', dataset.last_modified|string %}
 
-{{ breadcrumb(self,
-    breadcrum_class=breadcrum_class,
-    toolbar_class=toolbar_class
-) }}
+{{ breadcrumb(self) }}
 
 <section
     class="content fr-container fr-mb-6w">
@@ -96,21 +115,6 @@
             </div>
         </div>
         <div class="fr-col-auto fr-mt-1v fr-grid-row fr-grid-row--bottom flex-direction-column">
-            {{ follow_btn(dataset) }}
-            {% if can_edit %}
-                <a
-                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-edit-line fr-btn--icon-left fr-hidden fr-unhidden-sm"
-                    href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
-                >
-                    {{ _('Modify dataset') }}
-                </a>
-                <a
-                class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-edit-line fr-hidden-sm"
-                href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
-            >
-                {{ _('Modify dataset') }}
-            </a>
-            {% endif %}
             {% if sysadmin %}
             <div class="fr-mt-0 vuejs">
                 <featured-button subject-id="{{ dataset.id }}" subject-type="dataset" :featured="{{ dataset.featured|tojson|safe }}"></featured-button>

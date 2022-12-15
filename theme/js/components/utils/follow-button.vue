@@ -16,9 +16,8 @@ The `url` prop is the API URL.
   <button
     @click.prevent="toggleFollow"
     type="button"
-    class="fr-btn fr-btn--secondary follow-button"
-    v-show="!readOnlyEnabled"
-    :aria-label="label"
+    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 follow-button"
+    :disabled="readOnlyEnabled"
   >
     <span
         v-html="icon"
@@ -27,7 +26,8 @@ The `url` prop is the API URL.
         :style="{ color: _following ? 'inherit' : 'transparent' }"
       ></span>
       <span class="fr-ml-1w">
-        {{ _followers }} {{ $t("favourites", _followers) }}
+        <template v-if="_following">{{ $t("Remove from favourites") }}</template>
+        <template v-else>{{ $t("Add to favourites") }}</template>
       </span>
   </button>
 </template>
@@ -43,19 +43,12 @@ export default defineComponent({
     url: String,
     following: Boolean,
   },
-  computed: {
-    label() {
-      let action = this._following ? this.$t('remove from favorites') : this.$t('add to favorites');
-      return this._followers + ' ' + this.$t('favourites', this._followers) + ', ' + action;
-    }
-  },
   created() {
     this.icon = icon;
   },
   data() {
     return {
       loading: false,
-      _followers: this.followers || 0,
       _following: this.following,
       animating: false,
       readOnlyEnabled: config.read_only_enabled,
@@ -64,27 +57,19 @@ export default defineComponent({
   methods: {
     toggleFollow() {
       this.$auth();
-
-      this.loading = true;
-
       let request;
 
       if (!this._following) request = this.$api.post(this.url);
       else request = this.$api.delete(this.url);
 
       request
-        .then((resp) => resp.data)
-        .then((data) => {
-          this._followers = data.followers;
+        .then(() => {
           this._following = !this._following;
-
-          // Trigger sparkles animation
           if (this._following) {
             this.animating = true;
             setTimeout(() => (this.animating = false), 1300);
           }
-        })
-        .finally(() => (this.loading = false));
+        });
     },
   },
 });

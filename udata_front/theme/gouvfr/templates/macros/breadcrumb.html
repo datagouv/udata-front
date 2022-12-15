@@ -1,32 +1,25 @@
-{% macro breadcrumb(tpl,
-    toolbar_class='',
-    breadcrum_class=''
-) %}
+{% macro breadcrumb(tpl) %}
 {% if tpl.breadcrumb and tpl.breadcrumb() or tpl.breadcrumb_bar and tpl.breadcrumb_bar() %}
-<section class="breadcrumb-bar fr-py-2w {{ breadcrum_class }}">
+<section class="breadcrumb-bar fr-py-2w">
     <div class="fr-container">
-        <div class="fr-grid-row">
-            {% if tpl.breadcrumb_bar and tpl.breadcrumb_bar() %}
-            <div class="left-bar fr-col-12 col-lg-9">
-                {{ tpl.breadcrumb_bar() }}
-            </div>
-            {% elif tpl.breadcrumb and tpl.breadcrumb() %}
-            <ol class="breadcrumbs fr-col-12 col-lg-9">
-                <li>
-                    <a href="{{ url_for('site.home') }}">
-                        {{ _('Home') }}
-                    </a>
-                </li>
-                {{ tpl.breadcrumb() }}
-            </ol>
-            {% endif %}
-            <div class="fr-col-12 fr-col-md-4 col-lg-3 toolbar">
-                {% if tpl.toolbar_container and tpl.toolbar_container() %}
-                    {{ tpl.toolbar_container() }}
-                {% elif tpl.toolbar and tpl.toolbar() %}
-                    <div class="btn-toolbar {{ toolbar_class }}" role="toolbar">
+        <div class="fr-grid-row fr-grid-row--top">
+            <nav rol="navigation" aria-label="{{_("You're here:")}}" class="fr-col-12 fr-col-md-6">
+                {% if tpl.breadcrumb and tpl.breadcrumb() %}
+                <ol class="breadcrumbs">
+                    <li>
+                        <a href="{{ url_for('site.home') }}">
+                            {{ _('Home') }}
+                        </a>
+                    </li>
+                    {{ tpl.breadcrumb() }}
+                </ol>
+                {% endif %}
+            </nav>
+            <div class="fr-col-12 fr-col-md-6">
+                {% if tpl.toolbar and tpl.toolbar() %}
+                <div class="fr-grid-row fr-grid-row--right">
                     {{ tpl.toolbar() }}
-                    </div>
+                </div>
                 {% endif %}
             </div>
         </div>
