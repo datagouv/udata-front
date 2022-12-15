@@ -148,5 +148,8 @@
   "Spatial coverage not set": "Spatial coverage not set",
   "Learn more about this indicator": "Learn more about this indicator",
   "Resources documented": "Resources documented",
-  "Resources documentation missing": "Resources documentation missing"
+  "Resources documentation missing": "Resources documentation missing",
+  "Error getting {type}.": "Error getting {type}.",
+  "Error getting search results.": "Error getting search results.",
+  "An error occurred while featuring this subject.": "An error occurred while featuring this subject."
 }
