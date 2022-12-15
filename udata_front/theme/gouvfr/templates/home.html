@@ -106,7 +106,7 @@
         {# Dataset tabs #}
         <div class="fr-grid-row fr-grid-row--gutters justify-between">
             <div class="fr-col-auto">
-                <h2>{{ _('Datasets') }}</h2>
+                <h2 class="fr-m-0">{{ _('Datasets') }}</h2>
             </div>
             <div class="fr-col-auto fr-grid-row fr-grid-row--gutters">
                 <div class="fr-col-auto">
@@ -138,7 +138,7 @@
         </div>
         {% for tab_id, label, datasets, kwargs in dataset_tabs  %}
         <div class="fr-hidden {% if loop.first %}fr-unhidden{% endif %}" role="tabpanel" id={{tab_id}}>
-            <div class="fr-grid-row fr-grid-row--gutters fr-pt-md-9v fr-pt-2w">
+            <div class="fr-grid-row fr-grid-row--gutters fr-pt-1w">
                 {% for dataset in datasets %}
                 <div class="fr-col-12 fr-col-lg-4">{% include theme('dataset/card.html') %}
                 </div>
@@ -164,7 +164,7 @@
     <div class="fr-container">
         <div class="fr-grid-row fr-grid-row--gutters justify-between">
             <div class="fr-col-auto">
-                <h2>{{ _('Data reuses') }}</h2>
+                <h2 class="fr-m-0">{{ _('Data reuses') }}</h2>
             </div>
             <div class="fr-col-auto fr-grid-row fr-grid-row--gutters">
                 <div class="fr-col-auto">
@@ -199,7 +199,7 @@
     <div class="fr-container">
         {% for tab_id, label, reuses, kwargs in reuses_tabs  %}
         <div class="fr-hidden {% if loop.first %}fr-unhidden{% endif %}" role="tabpanel" id="{{tab_id}}">
-            <div class="fr-grid-row fr-grid-row--gutters fr-pt-2w fr-pt-md-9v">
+            <div class="fr-grid-row fr-grid-row--gutters fr-pt-1w">
                 {% for reuse in reuses %}
                 <div class="fr-col-md-4 fr-col-sm-6 fr-col-12 fr-mb-3v">
                     {% include theme('reuse/card.html') %}

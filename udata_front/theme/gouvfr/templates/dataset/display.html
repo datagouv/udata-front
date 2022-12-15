@@ -21,7 +21,6 @@
 {% set community_subtitle = _('Explore with %(certifier)s', certifier=config.SITE_TITLE ) %}
 {% set read_only_mode = config.READ_ONLY_MODE %}
 {# Harvesting source #}
-{% set external_source = dataset.extras['remote_url'] %}
 
 {% block extra_head %}
 {% cache cache_duration, 'dataset-extra-head', dataset.id|string, g.lang_code, dataset.last_modified|string %}
@@ -60,7 +59,7 @@
     {% endif %}
     {% if dataset.archived %}
     {% set title = _('This dataset has been archived automatically because it has been deleted from the remote platform.')
-        if dataset.extras.get('harvest:archived') == 'not-on-remote' else
+        if dataset.harvest and dataset.harvest.archived == 'not-on-remote' else
         _('This dataset has been archived.') %}
     <span class="fr-tag" title="{{ title }}">
         {{ _('Archived') }}
@@ -85,12 +84,10 @@
             </h1>
             <div class="fr-my-1w">
                 {{quality_score_with_tooltip(dataset, 'inline')}}
-                {% if not external_source %}
-                {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
+                {{ _('Updated on %(date)s', date=dataset.last_update|dateformat(format='long')) }}
                     {% if dataset.license %}
                     &mdash;
                     {%  endif %}
-                {% endif %}
                 {% if dataset.license %}
                 {% if dataset.license.url %}<a href="{{ dataset.license.url }}">{% endif %}
                 {{ dataset.license.title }}
@@ -121,11 +118,11 @@
             {% endif %}
         </div>
     </div>
-    {% if external_source %}
+    {% if external_source(dataset) %}
         {{ banner_info(
             "fr-icon-external-link-line",
             _("This dataset come from an external portal.&nbsp;<a href='{external_source}'>View the original source.</a>")
-            .format(external_source=external_source)
+            .format(external_source=external_source(dataset))
         )}}
     {% endif %}
     {{ hook('dataset.display.transport-banner') }}
@@ -223,10 +220,10 @@
                                 <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
                                     {{dataset.id}}
                                 </dd>
-                                {% if external_source %}
+                                {% if external_source(dataset) %}
                                 <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Remote source') }}</dt>
                                 <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
-                                    <a rel="nofollow" href="{{ external_source }}">{{ _('Remote source') }}</a>
+                                    <a rel="nofollow" href="{{ external_source(dataset) }}">{{ _('Remote source') }}</a>
                                 </dd>
                                 {% endif%}
                             </dl>
@@ -286,7 +283,22 @@
                                 {% endfor %}
                             </dl>
                         </details>
-                {% endif %}
+                    {% endif %}
+                    {% if dataset.harvest %}
+                        <details>
+                            <summary class="subtitle fr-mb-0">{{ _('Harvest') }}</summary>
+                            <dl class="fr-my-0 fr-grid-row fr-grid-row--gutters">
+                                {% for harvest_extra_name, harvest_extra_value in dataset.harvest._data.items() %}
+                                {% if harvest_extra_value != None %}
+                                <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
+                                    <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ harvest_extra_name }}</dt>
+                                    <dd class="fr-text--sm fr-ml-0 fr-mb-2w">{{ harvest_extra_value }}</dd>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </dl>
+                        </details>
+                    {% endif %}
                 </div>
                 <div id="tab-actions-panel" class="fr-tabs__panel" role="tabpanel"
                     aria-labelledby="tab-actions" tabindex="0">

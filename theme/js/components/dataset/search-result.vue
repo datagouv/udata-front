@@ -1,5 +1,15 @@
 <template>
-  <article class="fr-pt-5v fr-pb-6v fr-px-1w border-bottom border-default-grey fr-enlarge-link" :style="style">
+  <article class="fr-my-3w fr-p-3w border border-default-grey fr-enlarge-link" :style="style">
+    <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v" v-if="private || archived">
+      <p class="fr-badge fr-badge--mention-grey fr-mr-1w" v-if="private">
+        <span class="fr-icon-lock-line" aria-hidden="true"></span>
+        {{ $t('Private') }}
+      </p>
+      <p class="fr-badge fr-badge--mention-grey" v-if="archived">
+        <span class="fr-icon-archive-line" aria-hidden="true"></span>
+        {{ $t('Archived') }}
+      </p>
+    </div>
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
       <div class="fr-col-auto">
         <div class="logo">
@@ -27,15 +37,9 @@
             {{ title }}
             <small v-if="acronym">{{ acronym }}</small>
           </a>
-          <span
-            v-if="private"
-            class="badge grey-300 fr-ml-1w"
-          >
-            {{ $t('Private') }}
-          </span>
         </h4>
         <span class="not-enlarged" v-if="organization || owner">
-          {{ $t('From') }} 
+          {{ $t('From') }}
           <a :href="organization.page" v-if="organization">
               <OrganizationNameWithCertificate :organization="organization" />
           </a>
@@ -105,12 +109,10 @@
               </span>
               <QualityScore :score="quality.score"/>
           </Tooltip>
-          <template v-if="!externalSource">
-            <span class="fr-hidden inline-sm">
-              &mdash;
-            </span>
-            {{ $t('Updated on {date}', {date: $filters.formatDate(last_modified)}) }}
-          </template>
+          <span class="fr-hidden inline-sm">
+            &mdash;
+          </span>
+          {{ $t('Updated on {date}', {date: $filters.formatDate(last_update)}) }}
         </p>
       </div>
       <ul class="fr-hidden fr-unhidden-sm fr-hidden-md fr-unhidden-lg fr-col-auto fr-tags-group fr-grid-row--bottom self-center flex-direction-column">
@@ -139,10 +141,8 @@
 
 <script>
 import { defineComponent, computed, ComputedRef } from "vue";
-import lock from "bundle-text:svg/private.svg";
 import useLicense from "../../composables/useLicense";
 import useOwnerName from "../../composables/useOwnerName";
-import useExternalSource from "../../composables/useExternalSource";
 import Avatar from "../discussions/avatar.vue";
 import OrganizationNameWithCertificate from "../organization/organization-name-with-certificate.vue";
 import Placeholder from "../utils/placeholder.vue";
@@ -162,14 +162,15 @@ export default defineComponent({
   inheritAttrs: false,
   props: {
     acronym: String,
+    archived: {
+      type: Boolean,
+      default: false,
+    },
     description: {
       type: String,
       required: true,
     },
-    extras: {
-      type: Object,
-    },
-    last_modified: {
+    last_update: {
       type: Date,
       required: true,
     },
@@ -184,7 +185,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    private: Boolean,
+    private: {
+      type: Boolean,
+      default: false,
+    },
     quality: {
       type: Object,
       required: true,
@@ -213,11 +217,8 @@ export default defineComponent({
     });
     const ownerName = useOwnerName(owned);
     const license = useLicense(props.license);
-    const externalSource = useExternalSource(props.extras);
     return {
-      externalSource,
       license,
-      lock,
       ownerName,
     };
   }

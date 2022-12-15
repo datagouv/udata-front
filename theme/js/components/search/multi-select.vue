@@ -69,11 +69,10 @@ Callback:
 </template>
 
 <script>
-import {defineComponent, ref, Ref, computed, onMounted, onUpdated, reactive, PropType, unref, watch} from "vue";
-import Select from "@conciergerie.dev/select-a11y/dist/module";
+import {defineComponent, ref, computed, onMounted, onUpdated, reactive, unref, watch} from "vue";
+import Select from "@conciergerie.dev/select-a11y";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
-import { CancelTokenSource } from "axios";
 import {api, generateCancelToken} from "../../plugins/api";
 import useUid from "../../composables/useUid";
 import { useToast } from "../../composables/useToast";
@@ -90,7 +89,7 @@ export default defineComponent({
     suggestUrl: String,
     listUrl: String,
     entityUrl: String,
-    /** @type {PropType<Promise<Option[]>>} */
+    /** @type {import("vue").PropType<Promise<Option[]>>} */
     initialOptions: Promise,
     values: [Array, String],
     onChange: {
@@ -126,15 +125,15 @@ export default defineComponent({
     const toast = useToast();
     const { id } = useUid('multiselect');
 
-    /** 
+    /**
     * Select template Ref
-    * @type {Ref<HTMLSelectElement|null>}
+    * @type {import("vue").Ref<HTMLSelectElement|null>}
     */
     const select = ref(null);
 
     /**
      * Container Template Ref
-     * @type {Ref<HTMLElement|null>}
+     * @type {import("vue").Ref<HTMLElement|null>}
      */
     const container = ref(null);
 
@@ -155,7 +154,7 @@ export default defineComponent({
 
     /**
      * Current options
-     * @type {Ref<Option[]>}
+     * @type {import("vue").Ref<Option[]>}
      */
     const options = ref([]);
 
@@ -166,7 +165,7 @@ export default defineComponent({
 
     /**
      * Current selected value(s)
-     * @type {Ref<string | null>}
+     * @type {import("vue").Ref<string | null>}
      */
     const selected = ref(null);
 
@@ -174,13 +173,13 @@ export default defineComponent({
 
     /**
      * Current request if any to be cancelled if a new one comes
-     * @type {Ref<CancelTokenSource | null>}
+     * @type {import("vue").Ref<import("axios").CancelTokenSource | null>}
      */
     const currentRequest = ref(null);
 
     /**
-     * Select instance
-     * @type {Select | null}
+     * SelectA11y instance
+     * @type {import("vue").Ref<import("@conciergerie.dev/select-a11y").Select | null>}
      */
     const selectA11y = ref(null);
 
@@ -229,7 +228,7 @@ export default defineComponent({
      * Get options from suggest API
      * It uses list API if no query is provided
      * Fallback to an empty array without props.listUrl
-     * @param {string} q 
+     * @param {string} q
      * @returns {Promise<Array<Option>>}
      */
     const suggest = (q) => {
@@ -265,7 +264,7 @@ export default defineComponent({
      * Get options from suggest API
      * It uses list API if no query is provided
      * Fallback to an empty array without query and props.listUrl
-     * @param {Array} suggestions 
+     * @param {Array} suggestions
      * @returns {Array<Option>}
      */
     const addAllOptionAndMapToOption = (suggestions) => {
@@ -289,13 +288,13 @@ export default defineComponent({
 
     /**
      * Normalize provided values to array
-     * @param {string | Array | undefined} values 
-     * @returns {Ref<string>}
+     * @param {string | Array | undefined} values
+     * @returns {import("vue").Ref<string>}
      */
     const normalizeValues = (values) => {
       /**
        * Selected value
-       * @type {Ref<string>}
+       * @type {import("vue").Ref<string>}
        */
       const selected = ref('');
       if (typeof values === "string") {
@@ -380,7 +379,7 @@ export default defineComponent({
         selectA11y.classList.add("fr-select");
       }
     };
-    
+
     const registerSelectEvents = () => {
       if(!container.value) {
         return;
@@ -409,9 +408,9 @@ export default defineComponent({
 
     watch(() => props.values, () => {
       let value = unref(normalizeValues(props.values));
-      selectA11y.value.selectOption(value);
+      selectA11y.value?.selectOptionSilently(value);
     });
-    
+
     const fillOptionsAndValues = suggestAndMapToOption()
     .then(setOptions)
     .then(fillSelectedFromValues);

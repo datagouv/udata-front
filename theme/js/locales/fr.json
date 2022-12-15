@@ -149,7 +149,7 @@
   "Learn more about this indicator": "En savoir plus sur cet indicateur",
   "Resources documented": "Ressources documentées",
   "Resources documentation missing": "Documentation des ressources manquante",
-  "Error getting {type}.": "Error getting {type}.",
-  "Error getting search results.": "Error getting search results.",
-  "An error occurred while featuring this subject.": "An error occurred while featuring this subject."
+  "Error getting {type}.": "",
+  "Error getting search results.": "",
+  "An error occurred while featuring this subject.": ""
 }
