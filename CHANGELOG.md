@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 3.0.1 (2022-12-15)
 
 - Fix Api Representation for media after CaptchEtat integration [#173](https://github.com/etalab/udata-front/pull/173)
 - Add archived and private badges to dataset search results and update card style [#170](https://github.com/etalab/udata-front/pull/170)
