@@ -105,7 +105,7 @@
             href="{{ url_for('datasets.list', organization=org.id) }}"
             class="fr-btn fr-btn--secondary fr-icon-eye-line fr-btn--icon-left"
         >
-            {{ _('See %(count)s datasets', count=total_datasets ) }}
+            {{ ngettext('See the dataset', 'See %(num)d datasets', total_datasets) }}
         </a>
     </div>
 </section>
