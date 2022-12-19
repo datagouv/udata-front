@@ -8,7 +8,15 @@
 > and to display them in places chosen by the current theme
 
 - Add resource exploration preview [#169](https://github.com/etalab/udata-front/pull/169)
+
+## 3.0.1 (2022-12-15)
+
+- Fix Api Representation for media after CaptchEtat integration [#173](https://github.com/etalab/udata-front/pull/173)
 - Add archived and private badges to dataset search results and update card style [#170](https://github.com/etalab/udata-front/pull/170)
+- Fix banner links underlined twice [#171](https://github.com/etalab/udata-front/pull/171)
+- Fix margins for dataset cards [#176](https://github.com/etalab/udata-front/pull/176)
+- Fix text for datasets button in org page [#172](https://github.com/etalab/udata-front/pull/172)
+- Add Portuguese translations [#167](https://github.com/etalab/udata-front/pull/167)
 
 ## 3.0.0 (2022-11-14)
 
