@@ -220,6 +220,7 @@ export default {
   admin_root,
   auth_url,
   schema_catalog_url,
+  schema_documentation_url,
   schema_validata_url,
   sentry,
   check_urls,
