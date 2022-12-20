@@ -1,11 +1,11 @@
 <template>
-  <article>
+  <article :class="{'drop-shadow': expanded}">
     <header
-      class="fr-py-2w fr-grid-row fr-grid-row--middle no-wrap wrap-md justify-between border-bottom border-default-grey"
+      class="fr-p-2w fr-grid-row fr-grid-row--middle no-wrap wrap-md justify-between border-bottom border-default-grey"
       :id="resourceHeaderId"
     >
       <div class="fr-col-auto fr-grid-row fr-grid-row--top no-wrap">
-        <div class="fr-col-auto fr-mx-2w fr-icon-svg fr-icon--sm">
+        <div class="fr-col-auto fr-mr-2w fr-icon-svg fr-icon--sm">
           <img :src="resourceImage" alt="" />
         </div>
         <div class="fr-col-auto">
@@ -100,7 +100,7 @@
         </ul>
         <div
           :id="resourcePreviewTabId"
-          class="fr-tabs__panel fr-p-0 fr-tabs__panel--selected"
+          class="fr-tabs__panel fr-p-0-5v fr-tabs__panel--selected fr-tabs__panel--no-padding"
           role="tabpanel"
           :aria-labelledby="resourcePreviewButtonId"
           tabindex="0"
@@ -272,7 +272,7 @@ export default defineComponent({
     const resourcePreviewTabId = computed(() => 'resource-' + props.resource.id + '-preview-tab');
     const resourceTitleId = computed(() => 'resource-' + props.resource.id + '-title');
     const resourceInformationsSelectedTab = computed(() => !hasExplore.value);
-    const resourceInformationsTabIndex = computed(() => hasExplore.value? -1 : 0);
+    const resourceInformationsTabIndex = computed(() => hasExplore.value ? -1 : 0);
 
     return {
       owner,
