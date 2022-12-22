@@ -2,6 +2,7 @@
 {% from theme('macros/quality_score.html') import quality_score %}
 {% from theme('macros/tooltip.html') import tooltip %}
 {% macro quality_score_with_tooltip(dataset, class) %}
+
 {# call() allows us to include content in our tooltip macro, like a <slot> in Vue #}
 {# We use a if/else syntax to mimic the named slot functionality #}
 {% call(slot) tooltip(class) %}

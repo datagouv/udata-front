@@ -5,7 +5,7 @@
 {% from theme('macros/breadcrumb.html') import breadcrumb with context %}
 {% from theme('macros/banner_info.html') import banner_info %}
 {% from theme('macros/banner_warning.html') import banner_warning %}
-{% from theme('macros/quality_score_with_tooltip.html') import quality_score_with_tooltip %}
+{% from theme('macros/quality_score_without_tooltip.html') import quality_score_without_tooltip %}
 
 ## FIXME: remove inspire:indentifier robots condition when geo.data.gouv.fr is shutdown
 {% set meta = {
@@ -64,9 +64,8 @@
 
 {{ breadcrumb(self) }}
 
-<section
-    class="content fr-container fr-mb-6w">
-    {% if dataset.private %}
+<div class="content fr-container fr-mb-6w">
+    <!--{% if dataset.private %}
     <span class="fr-tag"
         title="{{ _('This dataset is private and will not be visible by other users') }}">{{ _('Private') }}
     </span>
@@ -84,312 +83,205 @@
         {{ _('Archived') }}
     </span>
     {% endif %}
-    {# FIXME: remove when geo.data.gouv.fr is shutdown #}
-    {% if 'geop:dataset_id' in dataset.extras %}
-    <div class="well well-warning fr-py-3v fr-my-3w">
-        ⚠️ {{ _("This dataset is handled by the <a href='{geo_link}'>geo.data.gouv.fr</a> platform.
-        This platform is not actively maintained and as a result, you may find some bogus data or metadata.
-        More information about <a href='{blog_link}'>the shutdown of geo.data.gouv.fr is available here.</a>").format(
-            geo_link='https://geo.data.gouv.fr',
-            blog_link='https://www.data.gouv.fr/fr/posts/extinction-de-geo-data-gouv-fr/'
-        )}}
+    <div class="fr-my-1w">
+        {{ _('Updated on %(date)s', date=dataset.last_update|dateformat(format='long')) }}
+            {% if dataset.license %}
+            &mdash;
+            {%  endif %}
+        {% if dataset.license %}
+        {% if dataset.license.url %}<a href="{{ dataset.license.url }}">{% endif %}
+        {{ dataset.license.title }}
+        {% if dataset.license.url %}</a>{% endif %}
+        {% endif %}
+    </div>
+    <div>
+        {% if sysadmin %}
+        <div class="fr-m-0 vuejs">
+            <featured-button subject-id="{{ dataset.id }}" subject-type="dataset" :featured="{{ dataset.featured|tojson|safe }}"></featured-button>
+        </div>
+        {% endif %}
+    </div>
+    {% if dataset.tags %}
+    <ul class="fr-tags-group fr-mb-3v">
+        {% for tag in dataset.tags %}
+        <li>
+            <a
+                href="{{ url_for('datasets.list', tag=tag) }}"
+                title="{{ tag }}"
+                class="fr-tag"
+            >
+                {{ tag|truncate(35, True) }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <h2 class="subtitle subtitle--uppercase">{{ _('Informations') }}</h2>
+    <dl class="fr-my-1w">
+        <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('ID') }}</dt>
+        <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
+            {{dataset.id}}
+        </dd>
+        {% if external_source(dataset) %}
+        <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Remote source') }}</dt>
+        <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
+            <a rel="nofollow" href="{{ external_source(dataset) }}">{{ _('Remote source') }}</a>
+        </dd>
+        {% endif%}
+    </dl>
+    <h2 class="subtitle subtitle--uppercase">{{ _('Temporality') }}</h2>
+    <dl class="fr-my-1w">
+        {% if dataset.temporal_coverage %}
+        <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Temporal coverage') }}</dt>
+        <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
+            {{ dataset.temporal_coverage|daterange(details=True) }}
+        </dd>
+        {% endif %}
+        {% if dataset.frequency %}
+        <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Frequency') }}</dt>
+        <dd class="fr-text--sm fr-ml-0 fr-mb-2w">{{ dataset.frequency_label }}</dd>
+        {% endif %}
+        <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Creation date') }}</dt>
+        <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
+            {{ dataset.created_at|dateformat(format='long') }}
+        </dd>
+    </dl>
+    {% if dataset.spatial %}
+    <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
+        <h2 class="subtitle subtitle--uppercase">{{ _('Geographic dimensions') }}</h2>
+        <dl class="fr-my-1w">
+            {% if dataset.spatial.granularity %}
+            <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Territorial coverage granularity') }}</dt>
+            <dd class="fr-text--sm fr-ml-0 fr-mb-2w">{{ dataset.spatial.granularity_label }}</dd>
+            {% endif %}
+            {% if dataset.spatial.zones %}
+            <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Territorial coverage') }}</dt>
+            <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
+                {% for zone in dataset.spatial.zones %}
+                {{zone.name}}{% if not loop.last %},{% endif %}
+                {% endfor %}
+            </dd>
+            {% endif %}
+        </dl>
     </div>
     {% endif %}
-    <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-        <div class="fr-col">
-            <h1 class="fr-mb-0 fr-h1">
-                {{ dataset.title }}
-                {% if dataset.acronym %}<small>{{ dataset.acronym }}</small>{% endif %}
-            </h1>
-            <div class="fr-my-1w">
-                {{quality_score_with_tooltip(dataset, 'inline')}}
-                {{ _('Updated on %(date)s', date=dataset.last_update|dateformat(format='long')) }}
-                    {% if dataset.license %}
-                    &mdash;
-                    {%  endif %}
-                {% if dataset.license %}
+    {% if dataset.extras %}
+        <details>
+            <summary class="subtitle fr-mb-0">{{ _('Extras') }}</summary>
+            <dl class="fr-my-0 fr-grid-row fr-grid-row--gutters">
+                {% for extra_name, extra_value in dataset.extras.items() %}
+                <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
+                    <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ extra_name }}</dt>
+                    <dd class="fr-text--sm fr-ml-0 fr-mb-2w">{{ extra_value }}</dd>
+                </div>
+                {% endfor %}
+            </dl>
+        </details>
+    {% endif %}
+    {% if dataset.harvest %}
+        <details>
+            <summary class="subtitle fr-mb-0">{{ _('Harvest') }}</summary>
+            <dl class="fr-my-0 fr-grid-row fr-grid-row--gutters">
+                {% for harvest_extra_name, harvest_extra_value in dataset.harvest._data.items() %}
+                {% if harvest_extra_value != None %}
+                <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
+                    <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ harvest_extra_name }}</dt>
+                    <dd class="fr-text--sm fr-ml-0 fr-mb-2w">{{ harvest_extra_value }}</dd>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </dl>
+        </details>
+    {% endif %}
+    <h2 class="subtitle subtitle--uppercase">{{ _('Embed') }}</h2>
+    {{integrate_btn(dataset)}}
+    <h2 class="subtitle fr-mt-3w">{{ _('Permalink') }}</h2>
+    <div class="embed-wrapper">
+        <input
+            readonly
+            id="permalink"
+            onClick="this.select();"
+            value="{{ dataset.external_url }}"
+        />
+        <label
+            for="permalink"
+            class="icon-copy"
+            id="permalink-copy"
+            data-clipboard-target="#permalink"
+        >
+            <span class="visually-hidden">{{ _('Copy this') }}</span>
+            {% include theme('svg/copy.svg') %}
+        </label>
+    </div>
+-->
+    <h1 class="fr-mb-0 fr-h3">
+        {{ dataset.title }}
+        {% if dataset.acronym %}<small>{{ dataset.acronym }}</small>{% endif %}
+    </h1>
+    <div class="fr-grid-row fr-grid-row--gutters fr-mt-3w">
+        <section class="fr-col-12 fr-col-md-8 vuejs">
+            <h2 id="description" class="subtitle fr-mb-1w">{{ _('Description') }}</h2>
+            <read-more>
+                {{ dataset.description|markdown }}
+            </read-more>
+        </section>
+        <section class="fr-col-12 fr-col-md-4">
+            {% if dataset.organization %}
+                <h2 id="producer" class="subtitle fr-mb-1w">{{ _('Producer') }}</h2>
+                {% with organization=dataset.organization, producer_type='organization' %}
+                {% include theme('organization/producer-name-with-logo.html') %}
+                {% endwith %}
+            {% elif dataset.owner %}
+                <h2 id="author" class="subtitle fr-mb-1w">{{ _('Author') }}</h2>
+                {% with organization=dataset.owner, producer_type='owner' %}
+                {% include theme('organization/producer-name-with-logo.html') %}
+                {% endwith %}
+                <p class="well well-grey-100 fr-py-3v fr-m-0">
+                    {% trans
+                            date=dataset.created_at|dateformat(format='long'),
+                            update=dataset.last_modified|dateformat(format='long'),
+                            author=dataset.owner.fullname
+                        %}This dataset has been published on the initiative and under the responsibility of
+                    {{author}}<br />Published on {{date}} and updated on {{update}}{% endtrans %}
+                </p>
+            {% endif %}
+            {% if external_source(dataset) %}
+            {{ banner_info(
+                "fr-icon-external-link-line",
+                _("This dataset come from an external portal.&nbsp;<a href='{external_source}'>View the original source.</a>")
+                .format(external_source=external_source(dataset))
+            )}}
+            {% endif %}
+            {# FIXME: remove when geo.data.gouv.fr is shutdown #}
+            {% if 'geop:dataset_id' in dataset.extras %}
+            <p class="well well-warning fr-py-3v fr-my-5v">
+                ⚠️ {{ _("This dataset is handled by the <a href='{geo_link}'>geo.data.gouv.fr</a> platform.
+                This platform is not actively maintained and as a result, you may find some bogus data or metadata.
+                More information about <a href='{blog_link}'>the shutdown of geo.data.gouv.fr is available here.</a>").format(
+                    geo_link='https://geo.data.gouv.fr',
+                    blog_link='https://www.data.gouv.fr/fr/posts/extinction-de-geo-data-gouv-fr/'
+                )}}
+            </p>
+            {% endif %}
+            {{ hook('dataset.display.transport-banner') }}
+            <h2 class="subtitle fr-mt-5v fr-mb-1v">{{ _('Latest update') }}</h2>
+            <p class="fr-text--sm fr-mt-0 fr-mb-5v">
+                {{ dataset.last_update|dateformat(format='long') }}
+            </p>
+            {% if dataset.license %}
+            <h2 class="subtitle fr-mt-5v fr-mb-1v">{{ _('License') }}</h2>
+            <p class="fr-text--sm fr-mt-0 fr-mb-5v">
+                <code class="bg-alt-grey fr-px-1v text-grey-380">
                 {% if dataset.license.url %}<a href="{{ dataset.license.url }}">{% endif %}
                 {{ dataset.license.title }}
                 {% if dataset.license.url %}</a>{% endif %}
-                {% endif %}
-            </div>
-        </div>
-        <div class="fr-col-auto fr-mt-1v fr-grid-row fr-grid-row--bottom flex-direction-column">
-            {% if sysadmin %}
-            <div class="fr-mt-0 vuejs">
-                <featured-button subject-id="{{ dataset.id }}" subject-type="dataset" :featured="{{ dataset.featured|tojson|safe }}"></featured-button>
-            </div>
+                </code>
+            </p>
             {% endif %}
-        </div>
+            {{quality_score_without_tooltip(dataset)}}
+        </section>
     </div>
-    {% if external_source(dataset) %}
-        {{ banner_info(
-            "fr-icon-external-link-line",
-            _("This dataset come from an external portal.&nbsp;<a href='{external_source}'>View the original source.</a>")
-            .format(external_source=external_source(dataset))
-        )}}
-    {% endif %}
-    {{ hook('dataset.display.transport-banner') }}
-    {% if dataset.owner %}
-    <div class="fr-grid-row">
-        <div class="well well-grey-100 fr-col fr-py-3v">
-            {% trans
-                    date=dataset.created_at|dateformat(format='long'),
-                    update=dataset.last_modified|dateformat(format='long'),
-                    author=dataset.owner.fullname
-                %}This dataset has been published on the initiative and under the responsibility of
-            {{author}}<br />Published on {{date}} and updated on {{update}}{% endtrans %}
-        </div>
-    </div>
-    {% endif %}
-    <div class="fr-grid-row fr-grid-row--gutters fr-mt-4w">
-        <div class="fr-col-12 fr-col-md-8">
-            <div class="fr-tabs">
-                <ul class="fr-tabs__list" role="tablist" aria-label="{{ _('Dataset informations') }}">
-                    <li role="presentation">
-                        <button id="tab-producer" class="fr-tabs__tab"
-                                tabindex="0" role="tab" aria-selected="true" aria-controls="tab-producer-panel">
-                            {% if dataset.organization %}
-                                {{ _('Producer') }}
-                            {% elif dataset.owner %}
-                                {{ _('Author') }}
-                            {% endif %}
-                        </button>
-                    </li>
-                    <li role="presentation">
-                        <button id="tab-metadata" class="fr-tabs__tab"
-                                tabindex="-1" role="tab" aria-selected="false" aria-controls="tab-metadata-panel">
-                            {{ _('Metadata') }}
-                        </button>
-                    </li>
-                    <li role="presentation">
-                        <button id="tab-actions" class="fr-tabs__tab"
-                                tabindex="-1" role="tab" aria-selected="false" aria-controls="tab-actions-panel">
-                            {{ _('Actions') }}
-                        </button>
-                    </li>
-                </ul>
-                <div
-                    id="tab-producer-panel"
-                    class="fr-tabs__panel fr-tabs__panel--selected"
-                    role="tabpanel"
-                    aria-labelledby="tab-producer"
-                    tabindex="0"
-                >
-                    {% if dataset.organization %}
-                    {% with organization=dataset.organization, producer_type='organization' %}
-                    {% include theme('organization/producer-summary.html') %}
-                    {% endwith %}
-                    {% elif dataset.owner %}
-                    {% with organization=dataset.owner, producer_type='owner' %}
-                    {% include theme('organization/producer-summary.html') %}
-                    {% endwith %}
-                    {% endif %}
-                </div>
-                <div
-                    id="tab-metadata-panel"
-                    class="fr-tabs__panel"
-                    role="tabpanel"
-                    aria-labelledby="tab-metadata"
-                    tabindex="0"
-                >
-                    {% if dataset.tags %}
-                    <ul class="fr-tags-group fr-mb-3v">
-                        {% for tag in dataset.tags %}
-                        <li>
-                            <a
-                                href="{{ url_for('datasets.list', tag=tag) }}"
-                                title="{{ tag }}"
-                                class="fr-tag"
-                            >
-                                {{ tag|truncate(35, True) }}
-                            </a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                    <div class="fr-grid-row fr-grid-row--gutters">
-                        <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
-                            <h2 class="subtitle">{{ _('Informations') }}</h2>
-                            <dl class="fr-my-1w">
-                                {% if dataset.license %}
-                                <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('License') }}</dt>
-                                <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
-                                    {% if dataset.license.url %}<a href="{{ dataset.license.url }}">{% endif %}
-                                    {{ dataset.license.title }}
-                                    {% if dataset.license.url %}</a>{% endif %}
-                                </dd>
-                                {% endif %}
-                                <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('ID') }}</dt>
-                                <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
-                                    {{dataset.id}}
-                                </dd>
-                                {% if external_source(dataset) %}
-                                <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Remote source') }}</dt>
-                                <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
-                                    <a rel="nofollow" href="{{ external_source(dataset) }}">{{ _('Remote source') }}</a>
-                                </dd>
-                                {% endif%}
-                            </dl>
-                        </div>
-                        <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
-                            <h2 class="subtitle">{{ _('Temporality') }}</h2>
-                            <dl class="fr-my-1w">
-                                {% if dataset.temporal_coverage %}
-                                <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Temporal coverage') }}</dt>
-                                <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
-                                    {{ dataset.temporal_coverage|daterange(details=True) }}
-                                </dd>
-                                {% endif %}
-                                {% if dataset.frequency %}
-                                <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Frequency') }}</dt>
-                                <dd class="fr-text--sm fr-ml-0 fr-mb-2w">{{ dataset.frequency_label }}</dd>
-                                {% endif %}
-                                <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Creation date') }}</dt>
-                                <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
-                                    {{ dataset.created_at|dateformat(format='long') }}
-                                </dd>
-                                <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Latest resource update') }}</dt>
-                                <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
-                                    {{ dataset.last_update|dateformat(format='long') }}
-                                </dd>
-                            </dl>
-                        </div>
-                        {% if dataset.spatial %}
-                        <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
-                            <h2 class="subtitle">{{ _('Geographic dimensions') }}</h2>
-                            <dl class="fr-my-1w">
-                                {% if dataset.spatial.granularity %}
-                                <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Territorial coverage granularity') }}</dt>
-                                <dd class="fr-text--sm fr-ml-0 fr-mb-2w">{{ dataset.spatial.granularity_label }}</dd>
-                                {% endif %}
-                                {% if dataset.spatial.zones %}
-                                <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Territorial coverage') }}</dt>
-                                <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
-                                    {% for zone in dataset.spatial.zones %}
-                                    {{zone.name}}{% if not loop.last %},{% endif %}
-                                    {% endfor %}
-                                </dd>
-                                {% endif %}
-                            </dl>
-                        </div>
-                        {% endif %}
-                    </div>
-                    {% if dataset.extras %}
-                        <details>
-                            <summary class="subtitle fr-mb-0">{{ _('Extras') }}</summary>
-                            <dl class="fr-my-0 fr-grid-row fr-grid-row--gutters">
-                                {% for extra_name, extra_value in dataset.extras.items() %}
-                                <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
-                                    <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ extra_name }}</dt>
-                                    <dd class="fr-text--sm fr-ml-0 fr-mb-2w">{{ extra_value }}</dd>
-                                </div>
-                                {% endfor %}
-                            </dl>
-                        </details>
-                    {% endif %}
-                    {% if dataset.harvest %}
-                        <details>
-                            <summary class="subtitle fr-mb-0">{{ _('Harvest') }}</summary>
-                            <dl class="fr-my-0 fr-grid-row fr-grid-row--gutters">
-                                {% for harvest_extra_name, harvest_extra_value in dataset.harvest._data.items() %}
-                                {% if harvest_extra_value != None %}
-                                <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
-                                    <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ harvest_extra_name }}</dt>
-                                    <dd class="fr-text--sm fr-ml-0 fr-mb-2w">{{ harvest_extra_value }}</dd>
-                                </div>
-                                {% endif %}
-                                {% endfor %}
-                            </dl>
-                        </details>
-                    {% endif %}
-                </div>
-                <div id="tab-actions-panel" class="fr-tabs__panel" role="tabpanel"
-                    aria-labelledby="tab-actions" tabindex="0">
-                    <div class="fr-grid-row fr-grid-row--gutters">
-                        <div class="fr-col-12 fr-col-sm-6 vuejs">
-                            <h2 class="subtitle">{{ _('Participate') }}</h2>
-                            <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-arrow-right-s-line fr-btn--icon-right"
-                                href="{{ url_for('admin.index', path='reuse/new/', **{'dataset_id': dataset.id}) }}">
-                                {{ _('Add a reuse') }}
-                            </a>
-                            <a
-                                class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-arrow-right-s-line fr-btn--icon-right fr-mt-3v"
-                                href="#"
-                                @click.prevent="$bus.emit('discussions.startThread')"
-                            >
-                                {{ _('Contact the producer') }}
-                            </a>
-                        </div>
-                        <div class="fr-col-12 fr-col-sm-6">
-                            <h2 class="subtitle">{{ _('Embed') }}</h2>
-                            {{integrate_btn(dataset)}}
-                            <h2 class="subtitle fr-mt-3w">{{ _('Permalink') }}</h2>
-                            <div class="embed-wrapper">
-                                <input
-                                    readonly
-                                    id="permalink"
-                                    onClick="this.select();"
-                                    value="{{ dataset.external_url }}"
-                                />
-                                <label
-                                    for="permalink"
-                                    class="icon-copy"
-                                    id="permalink-copy"
-                                    data-clipboard-target="#permalink"
-                                >
-                                    <span class="visually-hidden">{{ _('Copy this') }}</span>
-                                    {% include theme('svg/copy.svg') %}
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="fr-col-12 fr-col-md-4 fr-mt-5w">
-            <nav class="fr-summary" role="navigation" aria-labelledby="fr-summary-title">
-                <div class="fr-summary__title" id="fr-summary-title">{{ _('Summary') }}</div>
-                <ol class="fr-summary__list">
-                    <li>
-                        <a class="fr-summary__link" href="#description">
-                            {{ _('Description') }}
-                        </a>
-                    </li>
-                    <li>
-                        <a class="fr-summary__link" href="#resources">
-                            {{ _('Files') }} <sup class="sup">{{dataset.resources | length}}</sup>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="fr-summary__link" href="#community-resources">
-                            {{ _('Community resources') }}
-                            <sup class="sup">{{ dataset.community_resources|length }}</sup>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="fr-summary__link" href="#community-reuses">
-                            {{ _('Reuses') }}  <sup class="sup">{{ total_reuses }}</sup>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="fr-summary__link" href="#community-discussions">
-                            {{ _('Discussions') }} <sup class="sup discussions-count">0</sup>
-                        </a>
-                    </li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-</section>
-<section class="bg-contrast-grey fr-py-5w">
-    <div class="fr-container vuejs">
-        <h2 id="description" class="fr-h2 fr-mb-0">{{ _('Description') }}</h2>
-        <read-more>
-            {{ dataset.description|markdown }}
-        </read-more>
-    </div>
-</section>
+</div>
 <section class="ressources fr-py-10w">
     <div class="fr-container">
         {% set count_resources = dataset.resources | length %}
