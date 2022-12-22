@@ -1,7 +1,7 @@
 <template>
   <article :class="{'drop-shadow': expanded}">
     <header
-      class="fr-p-2w fr-grid-row fr-grid-row--middle no-wrap wrap-md justify-between border-bottom border-default-grey"
+      class="fr-p-5v fr-grid-row fr-grid-row--middle no-wrap wrap-md justify-between border-bottom border-default-grey"
       :id="resourceHeaderId"
     >
       <div class="fr-col-auto fr-grid-row fr-grid-row--top no-wrap">
