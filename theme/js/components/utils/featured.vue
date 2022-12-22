@@ -1,7 +1,21 @@
 <template>
-<div class="fr-toggle fr-toggle--label-left fr-p-0">
-    <input ref="toggleInput" @click="toggleFeatured" type="checkbox" class="fr-toggle__input" id="featured-toggle" :checked="isFeatured">
-    <label class="fr-toggle__label" for="featured-toggle" :data-fr-checked-label="t('Unfeature this content')" :data-fr-unchecked-label="t('Feature this content')"></label>
+<div class="fr-toggle fr-toggle--label-left">
+    <input
+      ref="toggleInput"
+      @click="toggleFeatured"
+      type="checkbox"
+      class="fr-toggle__input"
+      id="featured-toggle"
+      :checked="isFeatured"
+    >
+    <label
+      class="fr-toggle__label"
+      for="featured-toggle"
+      :data-fr-checked-label="t('Featured')"
+      :data-fr-unchecked-label="t('Standard')"
+    >
+    {{ t('Feature this content') }}
+    </label>
 </div>
 </template>
 

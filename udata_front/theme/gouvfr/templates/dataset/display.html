@@ -83,24 +83,6 @@
         {{ _('Archived') }}
     </span>
     {% endif %}
-    <div class="fr-my-1w">
-        {{ _('Updated on %(date)s', date=dataset.last_update|dateformat(format='long')) }}
-            {% if dataset.license %}
-            &mdash;
-            {%  endif %}
-        {% if dataset.license %}
-        {% if dataset.license.url %}<a href="{{ dataset.license.url }}">{% endif %}
-        {{ dataset.license.title }}
-        {% if dataset.license.url %}</a>{% endif %}
-        {% endif %}
-    </div>
-    <div>
-        {% if sysadmin %}
-        <div class="fr-m-0 vuejs">
-            <featured-button subject-id="{{ dataset.id }}" subject-type="dataset" :featured="{{ dataset.featured|tojson|safe }}"></featured-button>
-        </div>
-        {% endif %}
-    </div>
     {% if dataset.tags %}
     <ul class="fr-tags-group fr-mb-3v">
         {% for tag in dataset.tags %}
@@ -218,14 +200,19 @@
         {{ dataset.title }}
         {% if dataset.acronym %}<small>{{ dataset.acronym }}</small>{% endif %}
     </h1>
-    <div class="fr-grid-row fr-grid-row--gutters fr-mt-3w">
-        <section class="fr-col-12 fr-col-md-8 vuejs">
+    <div class="fr-grid-row fr-grid-row--gutters fr-mt-3w vuejs">
+        <section class="fr-col-12 fr-col-md-8">
             <h2 id="description" class="subtitle fr-mb-1w">{{ _('Description') }}</h2>
             <read-more>
                 {{ dataset.description|markdown }}
             </read-more>
         </section>
         <section class="fr-col-12 fr-col-md-4">
+            {% if sysadmin %}
+            <div class="fr-m-0">
+                <featured-button subject-id="{{ dataset.id }}" subject-type="dataset" :featured="{{ dataset.featured|tojson|safe }}"></featured-button>
+            </div>
+            {% endif %}
             {% if dataset.organization %}
                 <h2 id="producer" class="subtitle fr-mb-1w">{{ _('Producer') }}</h2>
                 {% with organization=dataset.organization, producer_type='organization' %}
