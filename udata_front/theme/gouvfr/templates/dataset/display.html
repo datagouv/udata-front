@@ -1,4 +1,5 @@
 {% extends theme('layouts/1-column.html') %}
+{% from theme('macros/dataset_informations.html') import information_col, information_section %}
 {% from theme('macros/follow.html') import follow_btn with context %}
 {% from theme('macros/integrate.html') import integrate_btn with context %}
 {% from theme('macros/paginator.html') import paginator with context %}
@@ -85,33 +86,13 @@
     {% endif %}
     <h2 class="subtitle subtitle--uppercase">{{ _('Informations') }}</h2>
     <dl class="fr-my-1w">
-        <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('ID') }}</dt>
-        <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
-            {{dataset.id}}
-        </dd>
+
         {% if external_source(dataset) %}
         <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Remote source') }}</dt>
         <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
             <a rel="nofollow" href="{{ external_source(dataset) }}">{{ _('Remote source') }}</a>
         </dd>
         {% endif%}
-    </dl>
-    <h2 class="subtitle subtitle--uppercase">{{ _('Temporality') }}</h2>
-    <dl class="fr-my-1w">
-        {% if dataset.temporal_coverage %}
-        <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Temporal coverage') }}</dt>
-        <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
-            {{ dataset.temporal_coverage|daterange(details=True) }}
-        </dd>
-        {% endif %}
-        {% if dataset.frequency %}
-        <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Frequency') }}</dt>
-        <dd class="fr-text--sm fr-ml-0 fr-mb-2w">{{ dataset.frequency_label }}</dd>
-        {% endif %}
-        <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Creation date') }}</dt>
-        <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
-            {{ dataset.created_at|dateformat(format='long') }}
-        </dd>
     </dl>
     {% if dataset.spatial %}
     <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
@@ -343,9 +324,8 @@
         aria-labelledby="informations-tab"
         tabindex="0"
     >
-        <section class="fr-container">
-            <!-- données de test -->
-            <h2 class="subtitle subtitle--uppercase fr-mb-3v">{{_('Informations')}}</h2>
+        <div class="fr-container">
+        {% call() information_section(_('Informations')) %}
             <h3 class="subtitle fr-mb-1v">{{_('Tags')}}</h3>
             {% if dataset.tags %}
             <ul class="fr-tags-group fr-mb-3v">
@@ -362,7 +342,60 @@
                 {% endfor %}
             </ul>
             {% endif %}
-        </section>
+            <div class="fr-grid-row fr-grid-row--gutters">
+                {% if dataset.license %}
+                    {% call() information_col(_('License')) %}
+                        <code class="bg-alt-grey fr-px-1v text-grey-380">
+                            {% if dataset.license.url %}<a href="{{ dataset.license.url }}">{% endif %}
+                            {{ dataset.license.title }}
+                            {% if dataset.license.url %}</a>{% endif %}
+                        </code>
+                    {% endcall %}
+                {% endif %}
+                {% call() information_col(_('ID')) %}
+                    {{dataset.id}}
+                {% endcall %}
+                {% if external_source(dataset) %}
+                {% call() information_col(_('Remote source'), 'text-overflow-ellipsis') %}
+                    <a rel="nofollow" href="{{ external_source(dataset) }}">{{external_source(dataset)}}</a>
+                {% endcall %}
+                {% endif %}
+            </div>
+        {% endcall %}
+        {% call() information_section(_('Temporality')) %}
+            <div class="fr-grid-row fr-grid-row--gutters">
+                {% call() information_col(_('Creation')) %}
+                    {{dataset.created_at|dateformat(format='long')}}
+                {% endcall %}
+                {% if dataset.frequency %}
+                    {% call() information_col(_('Frequency')) %}
+                        {{dataset.frequency_label}}
+                    {% endcall %}
+                {% endif %}
+                {% if temporal_coverage %}
+                    {% call() information_col(_('Temporal coverage')) %}
+                        {{dataset.temporal_coverage|daterange(details=True)}}
+                    {% endcall %}
+                {% endif %}
+            </div>
+        {% endcall %}
+        {% if dataset.spatial %}
+            {% call() information_section(_('Spatial coverage')) %}
+                {% if dataset.spatial.zones %}
+                    {% call() information_col(_('Territorial coverage')) %}
+                        {% for zone in dataset.spatial.zones %}
+                        {{zone.name}}{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                    {% endcall %}
+                {% endif %}
+                {% if dataset.spatial.granularity %}
+                    {% call() information_col(_('Territorial coverage granularity')) %}
+                        {{dataset.spatial.granularity_label}}
+                    {% endcall %}
+                {% endif %}
+            {% endcall %}
+        {% endif %}
+        </div>
     </div>
 </div>
 <section class="ressources fr-py-10w">
