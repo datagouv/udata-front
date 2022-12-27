@@ -14,7 +14,7 @@ Discussions allow users to interact with others.
   <section class="discussions-wrapper" ref="top" key="top">
     <div class="fr-grid-row">
       <div class="fr-col">
-        <h2 id="community-discussions" class="fr-h2">{{ title }} <sup>{{totalResults}}</sup></h2>
+        <h2 id="community-discussions" class="subtitle subtitle--uppercase">{{ $t("{n} discussions", totalResults) }}</h2>
         <slot></slot>
       </div>
       <div class="fr-col-12 fr-col-sm-6 fr-col-md-5 fr-col-lg-4 fr-grid-row fr-grid-row--bottom flex-direction-column justify-between" v-if="!threadFromURL">
@@ -113,8 +113,6 @@ const sorts = [
   },
 ];
 
-const defaultTitle = i18n.global.t("Discussions");
-
 export default defineComponent({
   components: {
     ThreadsCreateButton,
@@ -140,10 +138,6 @@ export default defineComponent({
     description: String,
     subjectId: String,
     subjectClass: String,
-    title: {
-      type: String,
-      default: defaultTitle,
-    }
   },
   watch: {
     // Update DOM counter on results count change
