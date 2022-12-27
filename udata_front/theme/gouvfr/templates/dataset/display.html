@@ -83,21 +83,6 @@
         {{ _('Archived') }}
     </span>
     {% endif %}
-    {% if dataset.tags %}
-    <ul class="fr-tags-group fr-mb-3v">
-        {% for tag in dataset.tags %}
-        <li>
-            <a
-                href="{{ url_for('datasets.list', tag=tag) }}"
-                title="{{ tag }}"
-                class="fr-tag"
-            >
-                {{ tag|truncate(35, True) }}
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
     <h2 class="subtitle subtitle--uppercase">{{ _('Informations') }}</h2>
     <dl class="fr-my-1w">
         <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('ID') }}</dt>
@@ -294,6 +279,18 @@
                     <sup>{{ dataset.community_resources|length }}</sup>
                 </button>
             </li>
+            <li role="presentation">
+                <button
+                    id="informations-tab"
+                    class="fr-tabs__tab"
+                    tabindex="-1"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="informations"
+                >
+                    {{ _("Informations") }}
+                </button>
+            </li>
         </ul>
     </div>
     <div id="tabpanel-404-panel" class="fr-tabs__panel fr-tabs__panel--selected" role="tabpanel" aria-labelledby="tabpanel-404" tabindex="0">
@@ -338,6 +335,34 @@
                 </noscript>
             </div>
         </div>
+    </div>
+    <div
+        id="informations"
+        class="fr-tabs__panel"
+        role="tabpanel"
+        aria-labelledby="informations-tab"
+        tabindex="0"
+    >
+        <section class="fr-container">
+            <!-- données de test -->
+            <h2 class="subtitle subtitle--uppercase fr-mb-3v">{{_('Informations')}}</h2>
+            <h3 class="subtitle fr-mb-1v">{{_('Tags')}}</h3>
+            {% if dataset.tags %}
+            <ul class="fr-tags-group fr-mb-3v">
+                {% for tag in dataset.tags %}
+                <li>
+                    <a
+                        href="{{ url_for('datasets.list', tag=tag) }}"
+                        title="{{ tag }}"
+                        class="fr-tag fr-tag--sm"
+                    >
+                        {{ tag|truncate(35, True) }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </section>
     </div>
 </div>
 <section class="ressources fr-py-10w">
