@@ -1,7 +1,7 @@
 <template>
-  <h3 v-if="showTitle" class="fr-mt-4w fr-mb-1w fr-text--sm fr-text--bold text-transform-uppercase" ref="top">
+  <h2 v-if="showTitle" class="fr-mt-4w fr-mb-1w subtitle subtitle--uppercase" ref="top">
       {{ typeLabel }} <sup v-if="showTotal">{{ totalResults }}</sup>
-  </h3>
+  </h2>
   <section class="resources-wrapper" key="top">
     <transition mode="out-in">
       <div v-if="loading" key="loader">

@@ -77,3 +77,34 @@ You can use tabs from DSFR. It uses DSFR colors and conventions. It allows you t
     --background-action-low-blue-france-active: @background-action-low-blue-cumulus-active;
     z-index: 1;
 }
+
+.fr-tabs--full-page {
+    .fr-tabs__panel {
+        padding: 0;
+        padding-top: 2.5rem;
+        padding-bottom: 7.5rem;
+    }
+    .fr-tabs__panel--direction-start {
+        transform: translate(-200%);
+    }
+    .fr-tabs__panel--selected {
+        transform: translate(-100%);
+    }
+    .fr-tabs__panel--direction-end {
+        transform: translate(0%);
+    }
+    &::after {
+        box-shadow: none;
+        .border-top;
+        .border-default-grey;
+    }
+}
+
+.fr-tabs__tab sup {
+    .sup;
+    place-self: baseline;
+    margin-left: 0.125rem;
+    &::before, &::after {
+        color: inherit;
+    }
+}

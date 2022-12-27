@@ -64,7 +64,7 @@
 
 {{ breadcrumb(self) }}
 
-<div class="content fr-container fr-mb-6w">
+<div class="content fr-container fr-mb-10v">
     <!--{% if dataset.private %}
     <span class="fr-tag"
         title="{{ _('This dataset is private and will not be visible by other users') }}">{{ _('Private') }}
@@ -269,6 +269,77 @@
         </section>
     </div>
 </div>
+<div class="fr-tabs fr-tabs--full-page">
+    <div class="fr-container">
+        <ul class="fr-tabs__list" role="tablist" aria-label="{{ _('In-page navigation') }}">
+            <li role="presentation">
+                <button id="tabpanel-404" class="fr-tabs__tab" tabindex="0" role="tab" aria-selected="true" aria-controls="tabpanel-404-panel">Label Tab 1</button>
+            </li>
+            <li role="presentation">
+                <button id="tabpanel-405" class="fr-tabs__tab" tabindex="-1" role="tab" aria-selected="false" aria-controls="tabpanel-405-panel">Label Tab 2</button>
+            </li>
+            <li role="presentation">
+                <button id="tabpanel-406" class="fr-tabs__tab" tabindex="-1" role="tab" aria-selected="false" aria-controls="tabpanel-406-panel">Label Tab 2</button>
+            </li>
+            <li role="presentation">
+                <button
+                    id="community-resources-tab"
+                    class="fr-tabs__tab"
+                    tabindex="-1"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="community-resources"
+                >
+                    {{ _('Community resources') }}
+                    <sup>{{ dataset.community_resources|length }}</sup>
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div id="tabpanel-404-panel" class="fr-tabs__panel fr-tabs__panel--selected" role="tabpanel" aria-labelledby="tabpanel-404" tabindex="0">
+        <!-- données de test -->
+        <p>Contenu 1</p>
+    </div>
+    <div id="tabpanel-405-panel" class="fr-tabs__panel" role="tabpanel" aria-labelledby="tabpanel-405" tabindex="0">
+        <!-- données de test -->
+        <p>Contenu 2</p>
+    </div>
+    <div id="tabpanel-406-panel" class="fr-tabs__panel" role="tabpanel" aria-labelledby="tabpanel-406" tabindex="0">
+        <!-- données de test -->
+        <p>Contenu 3</p>
+    </div>
+    <div
+        id="community-resources"
+        class="fr-tabs__panel"
+        role="tabpanel"
+        aria-labelledby="community-resources-tab"
+        tabindex="0"
+    >
+        <div class="fr-container">
+            {% if dataset.community_resources|length %}
+            {{ banner_warning(
+                "fr-icon-alert-line",
+                _("These resources are published by the community and the producer isn't responsible for them.")
+            )}}
+            {% endif %}
+            <div class="resource-list vuejs">
+                <dataset-resources
+                    dataset-id="{{ dataset.id }}"
+                    type="community"
+                    type-label="{{ _('Community resources') }}"
+                    :can-edit-resources='{{ dataset.community_resources|permissions|tojson|safe }}'
+                    :show-title="false"
+                >
+                </dataset-resources>
+                <noscript>
+                    {% for resource in dataset.community_resources %}
+                    {% include theme('dataset/resource/card.html') %}
+                    {% endfor %}
+                </noscript>
+            </div>
+        </div>
+    </div>
+</div>
 <section class="ressources fr-py-10w">
     <div class="fr-container">
         {% set count_resources = dataset.resources | length %}
@@ -330,38 +401,6 @@
                 </div>
             {% endif %}
         </div>
-
-        <div class="fr-grid-row fr-mb-4w">
-            <p class="fr-col-md-6 fr-col-12">
-                {{ _('You have built a more comprehensive database than those presented here? This is the time to share it!') }}
-            </p>
-        </div>
-        {% if dataset.community_resources|length %}
-            <h3 class="fr-mb-3v fr-text--sm fr-text--bold text-transform-uppercase">
-            {{ _('Data') }}
-        </h3>
-        {{ banner_warning(
-            "fr-icon-alert-line",
-            _("These resources are published by the community and the producer isn't responsible for them.")
-        )}}
-        {% endif %}
-        <div class="resource-list vuejs">
-            <modals-container></modals-container>
-            <dataset-resources
-                dataset-id="{{ dataset.id }}"
-                type="community"
-                type-label="{{ _('Community resources') }}"
-                :can-edit-resources='{{ dataset.community_resources|permissions|tojson|safe }}'
-                :show-title="false"
-            >
-            </dataset-resources>
-            <noscript>
-                {% for resource in dataset.community_resources %}
-                {% include theme('dataset/resource/card.html') %}
-                {% endfor %}
-            </noscript>
-        </div>
-
         {% block reuses_section %}
         <div class="fr-grid-row fr-mt-12w">
             <h2 id="community-reuses" class="fr-h2 fr-col">{{ _('Reuses') }} <sup>{{ total_reuses }}</sup></h2>
