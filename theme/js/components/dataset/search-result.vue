@@ -28,6 +28,7 @@
           <Placeholder
             v-else
             type="dataset"
+            :size="60"
           />
         </div>
       </div>
@@ -140,7 +141,7 @@
 </template>
 
 <script>
-import { defineComponent, computed, ComputedRef } from "vue";
+import { defineComponent, computed } from "vue";
 import useLicense from "../../composables/useLicense";
 import useOwnerName from "../../composables/useOwnerName";
 import Avatar from "../discussions/avatar.vue";
@@ -204,7 +205,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    /** @type {ComputedRef<import("../../composables/useOwnerName").Owned>} */
+    /** @type {import("vue").ComputedRef<import("../../composables/useOwnerName").Owned>} */
     const owned = computed(() => {
       let owned = {};
       if(props.organization) {

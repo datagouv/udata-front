@@ -47,7 +47,7 @@ Type | Parameter | Emitted
 
 */
 
-import mitt, {Emitter as EmitterMitt} from "mitt";
+import mitt from "mitt";
 
 export const DISCUSSIONS_START_THREAD = "discussions.startThread";
 export const RESOURCES_SEARCH = "resources.search";
@@ -64,7 +64,7 @@ export const RESOURCES_SEARCH_RESULTS_TOTAL = "resources.search.results.total";
  */
 
 /**
- * @type {EmitterMitt<Events>} Emitter of
+ * @type {import("mitt").Emitter<Events>} Emitter of
  */
 export const bus = mitt();
 

@@ -112,6 +112,11 @@ export const auth_url = _meta("auth-url");
 export const schema_catalog_url = _meta("schema-catalog-url");
 
 /**
+ * The schema documentation URL
+ */
+export const schema_documentation_url = _meta("schema-documentation-url");
+
+/**
  * The schema validata URL
  */
 export const schema_validata_url = _meta("schema-validata-url");
@@ -198,6 +203,9 @@ export const values = [
   return { ...acc, [propertyName]: el.getAttribute("content") };
 }, {});
 
+/** @type {Array<string> | false} */
+export const explorable_resources = _jsonMeta("explorable-resources");
+
 export default {
   user,
   debug,
@@ -212,6 +220,7 @@ export default {
   admin_root,
   auth_url,
   schema_catalog_url,
+  schema_documentation_url,
   schema_validata_url,
   sentry,
   check_urls,

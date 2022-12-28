@@ -435,7 +435,7 @@ export default defineComponent({
        *  @type Record<string, string>
        */
       let params = {};
-      for (key in facets.value) {
+      for (let key in facets.value) {
         if(facets.value[key]) {
           params[key] = facets.value[key];
         }

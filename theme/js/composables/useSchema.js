@@ -1,5 +1,5 @@
 import {useI18n} from 'vue-i18n'
-import {ref, Ref, computed, ComputedRef} from "vue";
+import {ref, computed} from "vue";
 import getCatalog from "../api/schemas";
 import config from "../config";
 import {useToast} from "./useToast";
@@ -7,14 +7,14 @@ import {useToast} from "./useToast";
 /**
  *
  * @param {import("../api/resources").ResourceModel} resource
- * @returns {{documentationUrl: ComputedRef<string>, authorizeValidation: ComputedRef<boolean>, validationUrl: ComputedRef<?string>, loading: Ref<boolean>}}
+ * @returns {{documentationUrl: import("vue").ComputedRef<string>, authorizeValidation: import("vue").ComputedRef<boolean>, validationUrl: import("vue").ComputedRef<?string>, loading: import("vue").Ref<boolean>}}
  */
 export default function useSchema(resource) {
   const { t } = useI18n();
   const toast = useToast();
-  /** @type {Ref<boolean>} */
+  /** @type {import("vue").Ref<boolean>} */
   const loading = ref(true);
-  /** @type {Ref<Array<import("../api/schemas").Schema>>} */
+  /** @type {import("vue").Ref<Array<import("../api/schemas").Schema>>} */
   const schemas = ref([]);
   getCatalog()
     .then(catalog => schemas.value = catalog)
@@ -24,12 +24,12 @@ export default function useSchema(resource) {
       );
     }).finally(() => loading.value = false);
 
-  /** @type {ComputedRef<import("../api/schemas").Schema | undefined>} */
+  /** @type {import("vue").ComputedRef<import("../api/schemas").Schema | undefined>} */
   const schema = computed(() => schemas.value.find(schema => schema.name === resource.schema.name));
 
   const authorizeValidation = computed(() => !!schema.value && schema.value.schema_type === 'tableschema');
 
-  const documentationUrl = computed(() => `https://schema.data.gouv.fr/${resource.schema.name}/latest.html`);
+  const documentationUrl = computed(() => `${config.schema_documentation_url}${resource.schema.name}/`);
 
   const validationUrl = computed(() => {
     if(!authorizeValidation) {
