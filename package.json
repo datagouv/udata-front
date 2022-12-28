@@ -4,18 +4,14 @@
   "description": "Open Data Portal - French customization",
   "author": "Etalab",
   "scripts": {
-    "dev": "npm run clean && npm run watch",
-    "build": "npm run clean && npm run build:stylemark && npm run build:app",
-    "build:app": "parcel build theme/less/index.less theme/js/index.js --dist-dir udata_front/theme/gouvfr/static/",
-    "build:stylemark": "npm run build:app -- --no-optimize",
+    "dev": "vite build --watch",
+    "build": "vite build",
     "test": "cypress run",
     "lighthouse": "lhci autorun",
     "postinstall": "patch-package",
-    "i18n:report": "vue-i18n-extract report --vueFiles 'theme/**/*.?(js|vue)' --languageFiles 'theme/js/locales/**/*' --separator '^'",
+    "i18n:report": "vue-i18n-extract report",
     "i18n:extract": "npm run i18n:report -- --add",
-    "clean": "rimraf .parcel-cache",
     "start": "npm run dev",
-    "watch": "parcel theme/js/index.js theme/less/index.less --dist-dir udata_front/theme/gouvfr/static/ --hmr-port=1235",
     "serve": "udata serve"
   },
   "dependencies": {
@@ -26,26 +22,25 @@
     "axios": "^0.26.1",
     "clipboard": "^2.0.8",
     "dayjs": "^1.9.6",
+    "es-module-shims": "^1.6.2",
     "less": "^3.13.1",
     "mitt": "^3.0.0",
-    "parcel-reporter-copystatic": "^1.1.0",
-    "parcel-reporter-stylemark": "^1.1.0",
     "popmotion": "^8.7",
     "prettier": "^2.2.1",
     "remove-markdown": "^0.3.0",
-    "vue": "^3.2.11",
+    "vue": "^3.2.25",
     "vue-content-loader": "^2.0.0",
-    "vue-final-modal": "^3.4.1",
     "vue-i18n": "^9.0.0-rc.2",
     "yargs": "^15.4.1"
   },
   "devDependencies": {
     "@conciergerie.dev/select-a11y": "^3.1.0",
+    "@etalab/udata-front-plugins-helper": "^1.0.1-0",
     "@gouvfr/dsfr": "^1.5.1",
+    "@intlify/unplugin-vue-i18n": "^0.8.0",
     "@lhci/cli": "^0.8.2",
-    "@parcel/transformer-inline-string": "^2.6.0",
-    "@parcel/transformer-less": "^2.6.0",
-    "@parcel/transformer-vue": "^2.6.0",
+    "@vitejs/plugin-legacy": "^2.3.1",
+    "@vitejs/plugin-vue": "^3.2.0",
     "@vue/compiler-sfc": "^3.2.11",
     "axe-core": "^4.3.3",
     "browserslist": "^4.0.0",
@@ -53,30 +48,14 @@
     "cypress": "^9.5.3",
     "cypress-axe": "^0.14.0",
     "markdown-it": "^12.3.2",
-    "parcel": "^2.6.0",
     "patch-package": "^6.4.7",
     "postcss": "^8.4.12",
     "postcss-normalize": "^10.0.1",
     "process": "^0.11.10",
-    "rimraf": "^3.0.2",
-    "stylemark": "^3.1.7",
-    "vue-i18n-extract": "^2.0.4"
-  },
-  "staticFiles": {
-    "staticPath": [
-      {
-        "staticPath": "theme/img",
-        "staticOutDir": "udata_front/theme/gouvfr/static/img/"
-      }
-    ]
-  },
-  "stylemarkPath": {
-    "input": "theme/",
-    "output": "udata_front/theme/gouvfr/static/stylemark/"
-  },
-  "alias": {
-    "svg": "./udata_front/theme/gouvfr/templates/svg",
-    "vue": "vue/dist/vue.cjs.js"
+    "rollup-plugin-copy": "^3.4.0",
+    "terser": "^5.15.1",
+    "vite": "^3.2.3",
+    "vue-i18n-extract": "^2.0.7"
   },
   "license": "MIT"
 }

@@ -292,6 +292,9 @@ each(@font-sizes, {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    a {
+        outline-offset: -1px;
+    }
 }
 
 each(@breakpoints, .(@bk, @_k, @_i) {

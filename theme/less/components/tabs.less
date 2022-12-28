@@ -108,3 +108,13 @@ You can use tabs from DSFR. It uses DSFR colors and conventions. It allows you t
         color: inherit;
     }
 }
+
+.fr-tabs--no-border {
+    &::after {
+        margin: -1px;
+    }
+}
+
+.fr-tabs__panel--no-padding:focus, .fr-tabs__panel--no-padding:focus-visible {
+    outline-offset: -2px;
+}

@@ -1,0 +1,22 @@
+{
+  "name": "@etalab/udata-front-plugins-helper",
+  "version": "1.0.1-3",
+  "description": "Ready-made helper for plugins to integrate them in udata-front.",
+  "author": "Etalab",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "preversion": "npm run build",
+    "update-version": "npm version --no-git-tag-version",
+    "publish-next": "npm publish --tag next --access public"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.2",
+    "vue": "^3.2.25"
+  },
+  "license": "MIT"
+}
