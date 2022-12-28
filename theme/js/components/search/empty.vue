@@ -7,7 +7,9 @@ Nothing to see here ! Well actually it's a small component that says this.
     class="search-empty bg-grey-50 fr-p-3w fr-my-2w fr-pb-7w"
     :class="{ 'fr-grid-row': wide }"
   >
-    <div :class="{ 'fr-pr-3w': wide }" v-html="Empty" />
+    <div :class="{ 'fr-pr-3w': wide }">
+      <img :src="Empty" alt="" />
+    </div>
     <div :class="{ 'fr-mt-3w': !wide }">
       <h4>
         {{ $t("There are no results for your search") }}
@@ -24,7 +26,7 @@ Nothing to see here ! Well actually it's a small component that says this.
 </template>
 
 <script>
-import Empty from "bundle-text:svg/search/empty.svg";
+import Empty from "svg/search/empty.svg";
 
 export default {
   props: {

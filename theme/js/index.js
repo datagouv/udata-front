@@ -19,29 +19,16 @@ import Accordion from "./components/vanilla/accordion";
 import Clipboard from "./components/vanilla/clipboard";
 import SortSearch from "./components/vanilla/sort-search";
 
-import VueFinalModal from "vue-final-modal";
 import Toaster from "@meforma/vue-toaster";
 
 import Api from "./plugins/api";
 import EventBus from "./plugins/eventbus";
 import Auth from "./plugins/auth";
-import Modals from "./plugins/modals";
 import i18n from "./plugins/i18n";
 import bodyClass from "./plugins/bodyClass";
 import filters from "./plugins/filters";
 
 import InitSentry from "./sentry";
-
-/**
- * @interface Ref
- * @template T
- * @property {T} value
- */
-
-/**
- * @typedef {Object} Ref
- * @property value - The referenced value
-*/
 
 const configAndMountApp = (el) => {
   const app = createApp({});
@@ -52,8 +39,6 @@ const configAndMountApp = (el) => {
   app.use(Api);
   app.use(EventBus);
   app.use(Auth);
-  app.use(VueFinalModal());
-  app.use(Modals); //Has to be loaded after VueFinalModal
   app.use(i18n);
   app.use(bodyClass);
   app.use(filters);

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, Ref } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useToast } from "../../composables/useToast";
 import { api } from "../../plugins/api";
@@ -30,7 +30,7 @@ export default defineComponent({
         const {t} = useI18n();
         const toast = useToast();
         const isFeatured = ref(props.featured);
-        /** @type {Ref<HTMLElement | null>} */
+        /** @type {import("vue").Ref<HTMLElement | null>} */
         const toggleInput = ref(null);
 
         const toggleFeatured = () => {
