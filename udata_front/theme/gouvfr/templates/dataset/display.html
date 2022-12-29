@@ -372,9 +372,15 @@
                     {% endcall %}
                 {% endif %}
             </div>
+            <div class="fr-grid-row fr-grid-row--gutters">
+                {% call() information_col(_('Latest update')) %}
+                    {{ dataset.last_update|dateformat(format='long') }}
+                {% endcall %}
+            </div>
         {% endcall %}
         {% if dataset.spatial %}
             {% call() information_section(_('Spatial coverage')) %}
+            <div class="fr-grid-row fr-grid-row--gutters">
                 {% if dataset.spatial.zones %}
                     {% call() information_col(_('Territorial coverage')) %}
                         {% for zone in dataset.spatial.zones %}
@@ -387,6 +393,7 @@
                         {{dataset.spatial.granularity_label}}
                     {% endcall %}
                 {% endif %}
+            </div>
             {% endcall %}
         {% endif %}
         </div>
