@@ -84,35 +84,6 @@
         {{ _('Archived') }}
     </span>
     {% endif %}
-    <h2 class="subtitle subtitle--uppercase">{{ _('Informations') }}</h2>
-    <dl class="fr-my-1w">
-
-        {% if external_source(dataset) %}
-        <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Remote source') }}</dt>
-        <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
-            <a rel="nofollow" href="{{ external_source(dataset) }}">{{ _('Remote source') }}</a>
-        </dd>
-        {% endif%}
-    </dl>
-    {% if dataset.spatial %}
-    <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
-        <h2 class="subtitle subtitle--uppercase">{{ _('Geographic dimensions') }}</h2>
-        <dl class="fr-my-1w">
-            {% if dataset.spatial.granularity %}
-            <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Territorial coverage granularity') }}</dt>
-            <dd class="fr-text--sm fr-ml-0 fr-mb-2w">{{ dataset.spatial.granularity_label }}</dd>
-            {% endif %}
-            {% if dataset.spatial.zones %}
-            <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Territorial coverage') }}</dt>
-            <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
-                {% for zone in dataset.spatial.zones %}
-                {{zone.name}}{% if not loop.last %},{% endif %}
-                {% endfor %}
-            </dd>
-            {% endif %}
-        </dl>
-    </div>
-    {% endif %}
     {% if dataset.extras %}
         <details>
             <summary class="subtitle fr-mb-0">{{ _('Extras') }}</summary>
@@ -189,7 +160,7 @@
                 {% with organization=dataset.owner, producer_type='owner' %}
                 {% include theme('organization/producer-name-with-logo.html') %}
                 {% endwith %}
-                <p class="well well-grey-100 fr-py-3v fr-m-0">
+                <p class="well well-grey-100 fr-py-3v fr-my-5v">
                     {% trans
                             date=dataset.created_at|dateformat(format='long'),
                             update=dataset.last_modified|dateformat(format='long'),
