@@ -79,18 +79,18 @@ You can use tabs from DSFR. It uses DSFR colors and conventions. It allows you t
 }
 
 .fr-tabs--full-page {
-    .fr-tabs__panel {
+    & > .fr-tabs__panel {
         padding: 0;
         padding-top: 2.5rem;
         padding-bottom: 7.5rem;
     }
-    .fr-tabs__panel--direction-start {
+    & > .fr-tabs__panel--direction-start {
         transform: translate(-200%);
     }
-    .fr-tabs__panel--selected {
+    & > .fr-tabs__panel--selected {
         transform: translate(-100%);
     }
-    .fr-tabs__panel--direction-end {
+    & > .fr-tabs__panel--direction-end {
         transform: translate(0%);
     }
     &::after {

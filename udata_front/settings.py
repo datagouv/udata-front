@@ -12,7 +12,7 @@ SCHEMA_DOCUMENTATION_URL = 'https://schema.data.gouv.fr/'
 # Default page size for resources on dataset page
 RESOURCES_DEFAULT_PAGE_SIZE = 6
 
-# Default page size for resources on dataset page
+# Number of resources to show resource search on dataset page
 RESOURCES_MIN_COUNT_TO_SHOW_SEARCH = 12
 
 # Frontend banner parameters

@@ -166,6 +166,11 @@ export const resources_default_page_size = _jsonMeta(
 );
 
 /**
+ * Minimum number of resources to show a search bar in dataset view
+ */
+export const resources_min_count_to_show_search = _jsonMeta("resources-min-count-to-show-search");
+
+/**
  * Markdown configuration.
  */
 export const markdown = _jsonMeta("markdown-config");

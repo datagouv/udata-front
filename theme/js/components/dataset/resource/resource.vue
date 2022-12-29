@@ -38,15 +38,8 @@
       </div>
       <div class="fr-col-auto fr-ml-auto">
         <ul class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
-          <li class="text-default-error fr-ml-3v" v-if="unavailable">
+          <li class="text-default-error" v-if="unavailable">
             {{$t('Unavailable')}}
-          </li>
-          <li class="fr-col-auto fr-ml-3v" v-if="canEdit">
-            <EditButton
-              :dataset-id="datasetId"
-              :resource-id="resource.id"
-              :is-community-resource="isCommunityResource"
-            />
           </li>
           <li class="fr-col-auto fr-ml-3v">
             <button
@@ -54,8 +47,8 @@
               role="button"
               :aria-expanded="expanded"
               :aria-controls="resourceContentId"
-              class="fr-btn fr-btn--sm"
-              :class="{'fr-btn--tertiary fr-icon-close-line': expanded, 'fr-btn--icon-left fr-icon-eye-line': !expanded}"
+              class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left"
+              :class="{'fr-icon-arrow-up-s-line': expanded, 'fr-icon-arrow-down-s-line': !expanded}"
             >
               {{expanded ? $t('Close details') : $t('See data')}}
             </button>
@@ -66,7 +59,7 @@
               :title="$t('Resource link')"
               rel="nofollow"
               target="_blank"
-              class="fr-btn fr-btn--sm fr-icon-external-link-line"
+              class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-external-link-line fr-icon--sm"
             >
             </a>
           </li>
@@ -75,9 +68,16 @@
               :href="resource.latest"
               :title="$t('Download resource')"
               download
-              class="fr-btn fr-btn--sm fr-icon-download-line"
+              class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-download-line fr-icon--sm"
             >
             </a>
+          </li>
+          <li class="fr-col-auto fr-ml-3v" v-if="canEdit">
+            <EditButton
+              :dataset-id="datasetId"
+              :resource-id="resource.id"
+              :is-community-resource="isCommunityResource"
+            />
           </li>
         </ul>
       </div>

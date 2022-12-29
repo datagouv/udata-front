@@ -2,6 +2,9 @@
   <h2 v-if="showTitle" :class="{'fr-mt-4w': !firstGroup}" class="fr-mb-1w subtitle subtitle--uppercase" ref="top">
       {{ typeLabel }} <sup v-if="showTotal">{{ totalResults }}</sup>
   </h2>
+  <template v-if="showSearch">
+    <SearchBar eventName="resources.search"></SearchBar>
+  </template>
   <section class="resources-wrapper" key="top">
     <transition mode="out-in">
       <div v-if="loading" key="loader">
@@ -35,10 +38,11 @@
 
 <script>
 import {useI18n} from 'vue-i18n'
-import {onMounted, ref, watch, defineComponent} from 'vue';
+import {onMounted, ref, computed, watch, defineComponent} from 'vue';
 import Loader from "../loader.vue";
 import Pagination from "../../pagination/pagination.vue";
 import Resource from "./resource.vue";
+import SearchBar from "../../utils/search-bar.vue";
 import config from "../../../config";
 import {useToast} from "../../../composables/useToast";
 import {fetchDatasetCommunityResources, fetchDatasetResources} from "../../../api/resources";
@@ -55,6 +59,7 @@ export default defineComponent({
     Loader,
     Pagination,
     Resource,
+    SearchBar,
   },
   props: {
     canEdit: {
@@ -96,6 +101,8 @@ export default defineComponent({
     const currentPage = ref(1);
     const resources = ref([]);
     const pageSize = config.resources_default_page_size;
+    const showSearch = computed(() => isCommunityResources.value && firstResults.value > config.resources_min_count_to_show_search);
+    const firstResults = ref(0);
     const totalResults = ref(0);
     const loading = ref(true);
     const top = ref(null);
@@ -123,6 +130,7 @@ export default defineComponent({
             resources.value = data.data;
             totalResults.value = data.total;
           }
+          return data.total || 0;
         })
         .catch(() => {
           toast.error(
@@ -147,7 +155,7 @@ export default defineComponent({
       return props.canEditResources[resource.id];
     }
 
-    onMounted(() => loadPage(currentPage.value));
+    onMounted(() => loadPage(currentPage.value).then(results => firstResults.value = results));
 
     if(!isCommunityResources.value) {
       bus.on(RESOURCES_SEARCH, value => {
@@ -171,6 +179,7 @@ export default defineComponent({
       getCanEdit,
       isCommunityResources,
       top,
+      showSearch,
     }
   }
 });

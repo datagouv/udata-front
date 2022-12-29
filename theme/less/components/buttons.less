@@ -41,7 +41,7 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
 
 ```button-icons-dsfr.html
 <a
-    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-edit-line"
+    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-pencil-line"
     href="#"
 >
     Modify information
@@ -79,6 +79,10 @@ These are now removed, see tags instead.
     --background-action-high-blue-france-hover: @blue-400-hover;
     --background-action-high-blue-france-active: @blue-400-active;
     border-radius: 3em;
+    font-size: 0.75rem;
+    line-height: 0.875rem;
+    padding: 0.5rem 0.75rem;
+    min-height: 1.875rem;
 }
 
 .fr-header__menu-links .fr-btn {
@@ -93,6 +97,15 @@ These are now removed, see tags instead.
 .fr-btn--secondary, .fr-btn--tertiary {
     --text-action-high-blue-france: @blue-400;
     --border-action-high-blue-france: @blue-400;
+}
+
+.fr-btn:not([class*="fr-btn--icon-"])[class^=fr-icon--sm],
+.fr-btn:not([class*="fr-btn--icon-"])[class*=" fr-icon--sm"] {
+    padding: 0.75rem;
+    &::before{
+        --icon-size: 1rem;
+        margin-right: 0.75rem;
+    }
 }
 
 each(@colors, {

@@ -44,13 +44,13 @@
 {% if can_edit %}
     <div class="fr-col-auto fr-ml-3v">
         <a
-            class="fr-btn fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-edit-line fr-btn--icon-left fr-hidden fr-unhidden-sm"
+            class="fr-btn fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-btn--icon-left fr-hidden fr-unhidden-sm"
             href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
         >
             {{ _('Edit') }}
         </a>
         <a
-        class="fr-btn fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-edit-line fr-hidden-sm"
+        class="fr-btn fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-hidden-sm"
         href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
         >
             {{ _('Edit') }}
@@ -279,9 +279,6 @@
     <div id="resources" class="fr-tabs__panel fr-tabs__panel--selected" role="tabpanel" aria-labelledby="tabpanel-404" tabindex="0">
         <div class="fr-container">
             <div class="ressources-files vuejs fr-mb-2w">
-                {% if count_resources > config.RESOURCES_MIN_COUNT_TO_SHOW_SEARCH %}
-                    <search-bar event-name="resources.search"></search-bar>
-                {% endif %}
                 {% set show_all_resources = request.args.get('resources') == 'all' %}
                 {% set grouped_resources = dataset.resources|group_resources_by_type %}
                 {% set nb_groups = grouped_resources.keys()|length %}
