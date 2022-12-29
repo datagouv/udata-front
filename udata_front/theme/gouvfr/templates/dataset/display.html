@@ -210,7 +210,18 @@
     <div class="fr-container">
         <ul class="fr-tabs__list" role="tablist" aria-label="{{ _('In-page navigation') }}">
             <li role="presentation">
-                <button id="tabpanel-404" class="fr-tabs__tab" tabindex="0" role="tab" aria-selected="true" aria-controls="tabpanel-404-panel">Label Tab 1</button>
+                {% set count_resources = dataset.resources | length %}
+                <button
+                    id="resources-tab"
+                    class="fr-tabs__tab"
+                    tabindex="0"
+                    role="tab"
+                    aria-selected="true"
+                    aria-controls="resources"
+                >
+                    {{ _('Files') }}
+                    <sup>{{count_resources}}</sup>
+                </button>
             </li>
             <li role="presentation">
                 <button
@@ -235,7 +246,7 @@
                     aria-controls="discussions"
                 >
                     {{_('Discussions')}}
-                    <sup>{{ dataset.discussions|length }}</sup>
+                    <sup>{{ dataset.metrics.discussions }}</sup>
                 </button>
             </li>
             <li role="presentation">
@@ -265,9 +276,48 @@
             </li>
         </ul>
     </div>
-    <div id="tabpanel-404-panel" class="fr-tabs__panel fr-tabs__panel--selected" role="tabpanel" aria-labelledby="tabpanel-404" tabindex="0">
-        <!-- données de test -->
-        <p>Contenu 1</p>
+    <div id="resources" class="fr-tabs__panel fr-tabs__panel--selected" role="tabpanel" aria-labelledby="tabpanel-404" tabindex="0">
+        <div class="fr-container">
+            <div class="ressources-files vuejs fr-mb-2w">
+                {% if count_resources > config.RESOURCES_MIN_COUNT_TO_SHOW_SEARCH %}
+                    <search-bar event-name="resources.search"></search-bar>
+                {% endif %}
+                {% set show_all_resources = request.args.get('resources') == 'all' %}
+                {% set grouped_resources = dataset.resources|group_resources_by_type %}
+                {% set nb_groups = grouped_resources.keys()|length %}
+                {% set has_multiple_groups = nb_groups > 1 %}
+                {% set resources_per_page = config.RESOURCES_DEFAULT_PAGE_SIZE %}
+                {% for (type, type_label), resources in grouped_resources.items() %}
+                    <dataset-resources
+                        dataset-id="{{ dataset.id }}"
+                        type="{{ type }}"
+                        type-label="{{ type_label }}"
+                        :can-edit="{{ can_edit.can()|tojson|safe }}"
+                        :show-total="{{ has_multiple_groups|tojson|safe }}"
+                        :first-group="{{loop.first|tojson|safe}}"
+                    >
+                    </dataset-resources>
+                    <noscript>
+                        <h2 class="fr-mt-4w fr-mb-1w subtitle subtitle--uppercase">
+                            {{ type_label }} {% if has_multiple_groups %}<sup>{{resources|length }}</sup>{% endif %}
+                        </h2>
+                        {% set max_resources_to_show = resources_per_page if not show_all_resources else resources|length %}
+                        {% for resource in resources[:max_resources_to_show] %}
+                        {% include theme('dataset/resource/card.html') %}
+                        {% endfor %}
+                        {% if resources|length > resources_per_page and not show_all_resources %}
+                            <a class="fr-btn fr-btn--secondary fr-mt-2w" href="?resources=all">
+                                {{ _('See the %(nb)d resources of type %(type)s', nb=resources|length, type=type_label) }}
+                            </a>
+                        {% endif %}
+                    </noscript>
+                {% else %}
+                    <p class="text-center">{{ _('No resources') }}</p>
+                {% endfor %}
+            </div>
+            {# Maybe put this after the real description instead of after the resource cards ? Not sure #}
+            {{ hook('dataset.display.after-description') }}
+        </div>
     </div>
     <div id="community-reuses" class="fr-tabs__panel" role="tabpanel" aria-labelledby="tabpanel-405" tabindex="0">
         <div class="fr-container">
@@ -428,49 +478,5 @@
         </div>
     </div>
 </div>
-<section class="ressources fr-py-10w">
-    <div class="fr-container">
-        {% set count_resources = dataset.resources | length %}
-        <h2 id="resources" class="fr-h2">{{ _('Files') }} <sup class="resources-count">{{count_resources}}</sup></h2>
-        <div class="ressources-files fr-my-4w vuejs">
-            {% if count_resources > config.RESOURCES_MIN_COUNT_TO_SHOW_SEARCH %}
-                <search-bar event-name="resources.search"></search-bar>
-            {% endif %}
-            {% set show_all_resources = request.args.get('resources') == 'all' %}
-            {% set grouped_resources = dataset.resources|group_resources_by_type %}
-            {% set nb_groups = grouped_resources.keys()|length %}
-            {% set has_multiple_groups = nb_groups > 1 %}
-            {% set resources_per_page = config.RESOURCES_DEFAULT_PAGE_SIZE %}
-            {% for (type, type_label), resources in grouped_resources.items() %}
-                <dataset-resources
-                    dataset-id="{{ dataset.id }}"
-                    type="{{ type }}"
-                    type-label="{{ type_label }}"
-                    :can-edit="{{ can_edit.can()|tojson|safe }}"
-                    :show-total="{{ has_multiple_groups|tojson|safe }}"
-                >
-                </dataset-resources>
-                <noscript>
-                    <h3 class="fr-mt-4w fr-mb-1w fr-text--sm fr-text--bold text-transform-uppercase">
-                        {{ type_label }} {% if has_multiple_groups %}<sup>{{resources|length }}</sup>{% endif %}
-                    </h3>
-                    {% set max_resources_to_show = resources_per_page if not show_all_resources else resources|length %}
-                    {% for resource in resources[:max_resources_to_show] %}
-                    {% include theme('dataset/resource/card.html') %}
-                    {% endfor %}
-                    {% if resources|length > resources_per_page and not show_all_resources %}
-                        <a class="fr-btn fr-btn--secondary fr-mt-2w" href="?resources=all">
-                            {{ _('See the %(nb)d resources of type %(type)s', nb=resources|length, type=type_label) }}
-                        </a>
-                    {% endif %}
-                </noscript>
-            {% else %}
-                <p class="text-center">{{ _('No resources') }}</p>
-            {% endfor %}
-        </div>
-        {# Maybe put this after the real description instead of after the resource cards ? Not sure #}
-        {{ hook('dataset.display.after-description') }}
-    </div>
-</section>
 {% endcache %}
 {% endblock %}

@@ -1,5 +1,5 @@
 <template>
-  <h2 v-if="showTitle" class="fr-mt-4w fr-mb-1w subtitle subtitle--uppercase" ref="top">
+  <h2 v-if="showTitle" :class="{'fr-mt-4w': !firstGroup}" class="fr-mb-1w subtitle subtitle--uppercase" ref="top">
       {{ typeLabel }} <sup v-if="showTotal">{{ totalResults }}</sup>
   </h2>
   <section class="resources-wrapper" key="top">
@@ -85,6 +85,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    firstGroup: {
+      type: Boolean,
+      default: true,
+    }
   },
   setup(props) {
     const { t } = useI18n();
