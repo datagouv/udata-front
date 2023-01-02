@@ -236,6 +236,7 @@ export default {
   tags,
   values,
   resources_default_page_size,
+  resources_min_count_to_show_search,
   markdown,
   read_only_enabled,
 };
