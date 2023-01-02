@@ -7,7 +7,7 @@
 > This also adds a way for udata plugin to register their own vue components
 > and to display them in places chosen by the current theme
 
-- Add resource exploration preview [#169](https://github.com/etalab/udata-front/pull/169)
+- Add resource exploration preview [#169](https://github.com/etalab/udata-front/pull/169)[#180](https://github.com/etalab/udata-front/pull/180)
 
 ## 3.0.1 (2022-12-15)
 
