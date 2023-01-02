@@ -11,7 +11,7 @@ from udata.core.site.models import current_site
 
 from udata_front.theme import render as render_template
 from udata.sitemap import sitemap
-from udata.i18n import I18nBlueprint, lazy_gettext as _
+from udata.i18n import I18nBlueprint, lazy_gettext as _, ngettext
 from udata_front.views.base import DetailView, SearchView
 
 
@@ -135,7 +135,15 @@ def group_resources_by_type(resources):
     for resource in resources:
         groups[getattr(resource, 'type')].append(resource)
     ordered = OrderedDict()
-    for rtype, rtype_label in RESOURCE_TYPES.items():
+    plurals = dict([
+        ('main', ngettext("%(num)d Main file", "%(num)d Main files", len(groups['main']))),
+        ('documentation', ngettext('%(num)d Documentation', '%(num)d Documentations', len(groups['documentation']))),
+        ('update', ngettext('%(num)d Update', '%(num)d Updates', len(groups['update']))),
+        ('api', ngettext('%(num)d API', '%(num)d APIs', len(groups['api']))),
+        ('code', ngettext('%(num)d Code repository', '%(num)d Code repositories', len(groups['code']))),
+        ('other', ngettext('%(num)d Other', '%(num)d Others', len(groups['other']))),
+    ])
+    for rtype in RESOURCE_TYPES.keys():
         if groups[rtype]:
-            ordered[(rtype, str(rtype_label))] = groups[rtype]
+            ordered[(rtype, plurals[rtype])] = groups[rtype]
     return ordered

@@ -1,6 +1,5 @@
 {
   "reuses": "primerima upotreba",
-  "favourites": "puta omilјena",
   "Admin": "Admin",
   "Reply to the discussion": "Odgovorite na diskusiju",
   "Comment": "Komentar",
@@ -44,8 +43,6 @@
   "Error while requesting membership": "Greška kod zahteva za članstvo",
   "Read more": "Čitajte više",
   "Read less": "Čitajte manje",
-  "remove from favorites": "uklonite iz omilјnenih",
-  "add to favorites": "dodajte u omilјene",
   "Page": "Strana",
   "First page": "Prva stranica",
   "Previous page": "Prethodna stranica",
@@ -66,9 +63,7 @@
   "Unavailable": "Nesostupno",
   "Close": "Zatvori",
   "Copy permalink": "Kopirajte permalink",
-  "Discussions": "Diskusije",
   "Sort discussions by": "Rasporedi diskusije po",
-  "Unfeature this content": "Prekinite istaknutost ovog sadržaja",
   "Feature this content": "Istakni ovaj sadržaj",
   "From": "From",
   "Updated on X": "Updated on {date}",
@@ -141,5 +136,11 @@
   "Archived": "Archived",
   "Error getting {type}.": "Error getting {type}.",
   "Error getting search results.": "Error getting search results.",
-  "An error occurred while featuring this subject.": "An error occurred while featuring this subject."
+  "An error occurred while featuring this subject.": "An error occurred while featuring this subject.",
+  "Add a community resource": "",
+  "{n} discussions": "",
+  "Featured": "",
+  "Standard": "",
+  "Remove from favourites": "",
+  "Add to favourites": ""
 }

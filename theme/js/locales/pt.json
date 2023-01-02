@@ -1,6 +1,5 @@
 {
   "reuses": "reutiliza",
-  "favourites": "favoritos",
   "Admin": "Administrador",
   "Reply to the discussion": "Responder à discussão",
   "Comment": "Comente",
@@ -44,8 +43,6 @@
   "Error while requesting membership": "Erro ao solicitar adesão",
   "Read more": "Consulte mais informação",
   "Read less": "Leia menos",
-  "remove from favorites": "remover dos favoritos",
-  "add to favorites": "adicionar aos favoritos",
   "Page": "Página {nb}",
   "First page": "Primeira página",
   "Previous page": "Página anterior",
@@ -66,9 +63,7 @@
   "Unavailable": "Indisponível",
   "Close": "Fechado",
   "Copy permalink": "Copiar link ",
-  "Discussions": "Discussões",
   "Sort discussions by": "Classificar discussões por",
-  "Unfeature this content": "Excluir este conteúdo",
   "Feature this content": "Apresentar este conteúdo",
   "From": "A partir de",
   "Updated on X": "Atualizado em {date}",
@@ -141,5 +136,11 @@
   "Archived": "Archived",
   "Error getting {type}.": "Error getting {type}.",
   "Error getting search results.": "Error getting search results.",
-  "An error occurred while featuring this subject.": "An error occurred while featuring this subject."
+  "An error occurred while featuring this subject.": "An error occurred while featuring this subject.",
+  "Add a community resource": "",
+  "{n} discussions": "",
+  "Featured": "",
+  "Standard": "",
+  "Remove from favourites": "",
+  "Add to favourites": ""
 }

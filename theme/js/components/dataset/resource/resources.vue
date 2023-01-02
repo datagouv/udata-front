@@ -2,7 +2,7 @@
   <div class="fr-grid-row" v-if="showTitle">
     <div class="fr-col">
         <h2 :class="{'fr-mt-4w': !firstGroup}" class="fr-mb-1w subtitle subtitle--uppercase" ref="top">
-          {{ typeLabel }} <sup v-if="showTotal">{{ totalResults }}</sup>
+          {{ typeLabel }}
         </h2>
         <slot></slot>
       </div>

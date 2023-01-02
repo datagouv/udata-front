@@ -1,6 +1,5 @@
 {
   "reuses": "reuses",
-  "favourites": "favourites",
   "Admin": "Admin",
   "Reply to the discussion": "Reply to the discussion",
   "Comment": "Comment",
@@ -44,8 +43,6 @@
   "Error while requesting membership": "Error while requesting membership",
   "Read more": "Read more",
   "Read less": "Read less",
-  "remove from favorites": "remove from favorites",
-  "add to favorites": "add to favorites",
   "Page": "Page {nb}",
   "First page": "First Page",
   "Previous page": "Previous page",
@@ -66,9 +63,7 @@
   "Unavailable": "Unavailable",
   "Close": "Close",
   "Copy permalink": "Copy permalink",
-  "Discussions": "Discussions",
   "Sort discussions by": "Sort discussions by",
-  "Unfeature this content": "Unfeature this content",
   "Feature this content": "Feature this content",
   "From": "From",
   "Updated on X": "Updated on {date}",
@@ -141,5 +136,11 @@
   "Archived": "Archived",
   "Error getting {type}.": "Error getting {type}.",
   "Error getting search results.": "Error getting search results.",
-  "An error occurred while featuring this subject.": "An error occurred while featuring this subject."
+  "An error occurred while featuring this subject.": "An error occurred while featuring this subject.",
+  "Add a community resource": "Add a community resource",
+  "{n} discussions": "{n} discussions",
+  "Featured": "Featured",
+  "Standard": "Standard",
+  "Remove from favourites": "Remove from favourites",
+  "Add to favourites": "Add to favourites"
 }

@@ -374,7 +374,7 @@
                 <dataset-resources
                     dataset-id="{{ dataset.id }}"
                     type="community"
-                    type-label="{{ _('Community resources') }}"
+                    type-label="{{ ngettext('%(num)d Community resource', '%(num)d Community resources', dataset.community_resources|length) }}"
                     :can-edit-resources='{{ dataset.community_resources|permissions|tojson|safe }}'
                     :first-group="true"
                 >
