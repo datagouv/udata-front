@@ -8,7 +8,7 @@
         <div class="fr-col-auto fr-mr-2w fr-icon-svg fr-icon--sm">
           <img :src="resourceImage" alt="" />
         </div>
-        <div class="fr-col-auto">
+        <div class="fr-col">
           <div class="fr-grid-row fr-grid-row--middle fr-mb-1v">
             <h4
               class="fr-mb-0"
