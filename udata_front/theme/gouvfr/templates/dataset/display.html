@@ -322,7 +322,7 @@
                 <h2 class="subtitle subtitle--uppercase fr-col">{{ ngettext('%(num)d Reuse', '%(num)d Reuses', total_reuses) }}</h2>
                 {% if not read_only_mode %}
                     <div class="fr-col-12 fr-col-sm-6 fr-col-md-5 fr-col-lg-4 text-align-right">
-                        <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-add-line fr-btn--icon-left"
+                        <a class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-add-line fr-btn--icon-left"
                             href="{{ url_for('admin.index', path='reuse/new/', **{'dataset_id': dataset.id}) }}">
                             {{ _('Add a reuse') }}
                         </a>
@@ -376,7 +376,7 @@
                     type="community"
                     type-label="{{ _('Community resources') }}"
                     :can-edit-resources='{{ dataset.community_resources|permissions|tojson|safe }}'
-                    :show-title="false"
+                    :first-group="true"
                 >
                 </dataset-resources>
                 <noscript>
