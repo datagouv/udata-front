@@ -1,7 +1,19 @@
 <template>
-  <h2 v-if="showTitle" :class="{'fr-mt-4w': !firstGroup}" class="fr-mb-1w subtitle subtitle--uppercase" ref="top">
-      {{ typeLabel }} <sup v-if="showTotal">{{ totalResults }}</sup>
-  </h2>
+  <div class="fr-grid-row" v-if="showTitle">
+    <div class="fr-col">
+        <h2 :class="{'fr-mt-4w': !firstGroup}" class="fr-mb-1w subtitle subtitle--uppercase" ref="top">
+          {{ typeLabel }} <sup v-if="showTotal">{{ totalResults }}</sup>
+        </h2>
+        <slot></slot>
+      </div>
+    <div class="fr-col-auto" v-if="isCommunityResources">
+      <a class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-add-line fr-btn--icon-left"
+        :href="newResourceAdminPath"
+      >
+        {{ $t('Add a community resource') }}
+      </a>
+    </div>
+  </div>
   <template v-if="showSearch">
     <SearchBar eventName="resources.search"></SearchBar>
   </template>
@@ -101,13 +113,17 @@ export default defineComponent({
     const currentPage = ref(1);
     const resources = ref([]);
     const pageSize = config.resources_default_page_size;
-    const showSearch = computed(() => isCommunityResources.value && firstResults.value > config.resources_min_count_to_show_search);
+    const newResourceAdminUrl = new URL(document.location.origin + config.admin_root + "community-resource/new/");
+    const params = new URLSearchParams({dataset_id: props.datasetId});
+    newResourceAdminUrl.search = params.toString();
+    const newResourceAdminPath = newResourceAdminUrl.toString();
     const firstResults = ref(0);
     const totalResults = ref(0);
     const loading = ref(true);
     const top = ref(null);
     const search = ref('');
     const isCommunityResources = ref(props.type === "community");
+    const showSearch = computed(() => !isCommunityResources.value && firstResults.value > config.resources_min_count_to_show_search);
     const DONT_SCROLL = false;
 
     // We can pass the second function parameter "scroll" to true if we want to scroll to the top of the resources section
@@ -180,6 +196,7 @@ export default defineComponent({
       isCommunityResources,
       top,
       showSearch,
+      newResourceAdminPath,
     }
   }
 });
