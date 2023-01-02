@@ -44,13 +44,13 @@
 {% if can_edit %}
     <div class="fr-col-auto fr-ml-3v">
         <a
-            class="fr-btn fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-btn--icon-left fr-hidden fr-unhidden-sm"
+            class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-btn--icon-left fr-hidden fr-unhidden-sm"
             href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
         >
             {{ _('Edit') }}
         </a>
         <a
-        class="fr-btn fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-hidden-sm"
+        class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-hidden-sm"
         href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
         >
             {{ _('Edit') }}

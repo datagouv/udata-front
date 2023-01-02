@@ -47,7 +47,7 @@
               role="button"
               :aria-expanded="expanded"
               :aria-controls="resourceContentId"
-              class="fr-btn fr-btn--lg fr-btn--tertiary-no-outline fr-btn--icon-left fr-btn--secondary-grey-500"
+              class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-btn--secondary-grey-500"
               :class="{'fr-icon-arrow-up-s-line': expanded, 'fr-icon-arrow-down-s-line': !expanded}"
             >
               {{expanded ? $t('Close details') : $t('See data')}}
