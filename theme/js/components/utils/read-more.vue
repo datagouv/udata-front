@@ -13,10 +13,12 @@ A very simple component that display its content up to a maximum height and then
 <template>
   <div ref="container" class="read-more" :class="{expand: expanded}" :style="{height: containerHeight + 'px'}">
     <slot></slot>
-    <a href="#" @click.prevent="toggle" v-if="readMoreRequired" class="read-more-link">
-      <template v-if="expanded"> {{ $t("Read less") }}</template>
-      <template v-else>{{ $t("Read more") }}&hellip;</template>
-    </a>
+    <div class="read-more__bottom">
+      <button role="button" class="fr-btn fr-btn--tertiary-no-outline" @click.prevent="toggle" v-if="readMoreRequired">
+        <template v-if="expanded"> {{ $t("Read less") }}</template>
+        <template v-else>{{ $t("Read more") }}</template>
+      </button>
+    </div>
   </div>
 </template>
 
