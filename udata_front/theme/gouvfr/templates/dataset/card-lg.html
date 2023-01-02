@@ -1,4 +1,4 @@
-{% cache cache_duration, 'dataset-search-result', dataset.id|string, g.lang_code %}
+{% cache cache_duration, 'dataset-card-lg', dataset.id|string, g.lang_code %}
 {% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate %}
 {% from theme('macros/quality_score_with_tooltip.html') import quality_score_with_tooltip %}
 <article class="fr-my-3w fr-p-3w border border-default-grey fr-enlarge-link" style="z-index: {{loop.length - loop.index0 + 1}}">

@@ -172,7 +172,7 @@ import { generateCancelToken, apiv2 } from "../../plugins/api";
 import {useToast} from "../../composables/useToast";
 import useSearchUrl from "../../composables/useSearchUrl";
 import SearchInput from "./search-input.vue";
-import Dataset from "../dataset/search-result.vue";
+import Dataset from "../dataset/card-lg.vue";
 import Loader from "../dataset/loader.vue";
 import SchemaFilter from "./schema-filter.vue";
 import Empty from "./empty.vue";
