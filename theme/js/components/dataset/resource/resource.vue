@@ -312,6 +312,8 @@ export default defineComponent({
       resourcePreviewButtonId,
       resourcePreviewTabId,
       resourceTitleId,
+      resourceStructureButtonId,
+      resourceStructureTabId,
       resourceInformationsSelectedTab,
       resourceInformationsTabIndex,
       explore,
