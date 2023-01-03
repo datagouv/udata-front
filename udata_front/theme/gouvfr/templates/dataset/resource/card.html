@@ -1,30 +1,33 @@
+{% from theme('macros/description_list.html') import dl, dd, dt, WITHOUT_ELLIPSIS %}
 {% set resource_format = resource.format|trim|lower %}
 {% set available = resource.extras['check:status']
     and resource.extras['check:status'] >= 200 and resource.extras['check:status'] < 400 %}
 {% set unavailable = resource.extras['check:status'] and resource.extras['check:status'] >= 400 %}
 {% set last_update = resource.published if resource.published > resource.modified else resource.modified %}
-<article class="border-bottom">
+<article>
     <header
-        class="fr-py-2w fr-grid-row fr-grid-row--gutters fr-grid-row--middle no-wrap wrap-md justify-between"
+        class="fr-py-2w fr-grid-row fr-grid-row--middle no-wrap wrap-md justify-between border-bottom border-default-grey"
         id="resource-{{resource.id}}-header"
     >
         <div class="fr-col-auto fr-grid-row fr-grid-row--top no-wrap">
-            <div class="fr-col-auto fr-mx-2w fr-icon-svg fr-icon--sm">
+            <div class="fr-col-auto fr-mx-3v fr-icon-svg fr-icon--sm">
                 {% include theme(resource_image(resource)) %}
             </div>
             <div class="fr-col-auto">
-                <h4
-                    class="fr-mb-1v"
-                    id="resource-{{resource.id}}-title"
-                >
-                    {{ resource.title or _('Nameless resource') }}
-                </h4>
-                <div class="fr-text--sm fr-mb-0 text-grey-380">
-                    {% if resource.owner %}
-                        {{ _('From %(owner)s', owner=resource.owner) }} —
-                    {% elif resource.organization %}
-                        {{ _("From <a href='%(link)s'>%(owner)s</a>", link=resource|owner_url, owner=resource.organization) }} —
+                <div class="fr-grid-row fr-grid-row--middle fr-mb-1w">
+                    <h4
+                        class="fr-col-auto fr-mb-0 fr-mr-1v"
+                        id="resource-{{resource.id}}-title"
+                    >
+                        {{ resource.title or _('Nameless resource') }}
+                    </h4>
+                    {% if resource.schema %}
+                        <p class="fr-ml-1w fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
+                            {{resource.schema.name}}
+                        </p>
                     {% endif %}
+                </div>
+                <div class="fr-text--sm fr-my-0 text-grey-380">
                     {{_('Updated on %(date)s', date=last_update|dateformat(format='long'))}} —
                     {{ resource_format }}
                     {% if resource.filesize %}
@@ -35,23 +38,12 @@
                 </div>
             </div>
         </div>
-        <div class="fr-col-auto">
+        <div class="fr-col-auto fr-ml-auto">
             <ul class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
                 {% if unavailable %}
                 <li class="text-default-error fr-mr-5w" v-if="unavailable">
                     {{ _('Unavailable') }}
                 </li>
-                {% endif %}
-                {% if can_edit %}
-                    <li class="fr-col-auto fr-mr-3v">
-                        <a
-                            href="{{ url_for('admin.index', path='dataset/{id}/resource/{resource_id}'.format(id=dataset.id, resource_id=resource.id)) }}"
-                            title="{{ _('Edit resource') }}"
-                            class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-icon-svg"
-                        >
-                            {% include theme('svg/edit.svg') %}
-                        </a>
-                    </li>
                 {% endif %}
                 {% if resource.format == 'url' %}
                     <li class="fr-col-auto">
@@ -77,7 +69,7 @@
         </div>
     </header>
     <section
-        class="accordion-content active fr-pt-5v fr-pb-4w fr-pl-6w"
+        class="fr-p-3w border-bottom border-default-grey"
         aria-labelledby="resource-{{resource.id}}-title"
         id="resource-{{resource.id}}"
     >
@@ -86,57 +78,59 @@
             {{ resource.description|markdown }}
         </div>
         {% endif %}
-        <dl>
-            <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-                <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ _('URL') }}</dt>
-                <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10 text-overflow-ellipsis">
-                    <a href="{{resource.url}}">{{resource.url}}</a>
-                </dd>
-            </div>
-            <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-                <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ _('Permalink') }}</dt>
-                <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10 text-overflow-ellipsis">
-                    <a href="{{resource.json_ld.url}}">{{resource.json_ld.url}}</a>
-                </dd>
-            </div>
-            <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-                <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ _('Type') }}</dt>
-                <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
-                    {{type_label}}
-                </dd>
-            </div>
-            <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-                <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ _('MIME Type') }}</dt>
-                <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
-                    {{resource.mime}}
-                </dd>
-            </div>
-            {% if resource.checksum %}
-                <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-                    <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{resource.checksum.type}}</dt>
-                    <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
+        <div class="fr-grid-row fr-grid-row--gutters">
+            {% call dl() %}
+                {% call dt() %}{{ _('URL') }}{% endcall %}
+                {% call dd() %}
+                    <a class="unstyled" href="{{resource.url}}">{{resource.url}}</a>
+                {% endcall %}
+                {% call dt() %}{{ _('Permalink') }}{% endcall %}
+                {% call dd() %}
+                    <a class="unstyled" href="{{resource.json_ld.url}}">{{resource.json_ld.url}}</a>
+                {% endcall %}
+                {% if resource.checksum %}
+                    {% call dt() %}{{resource.checksum.type}}{% endcall %}
+                    {% call dd(WITHOUT_ELLIPSIS) %}
                         {{resource.checksum.value}}
-                    </dd>
-                </div>
-            {% endif %}
-            <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-                <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ _('Created on') }}</dt>
-                <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
+                    {% endcall %}
+                {% endif %}
+                {% call dt() %}{{ _('MIME Type') }}{% endcall %}
+                {% call dd() %}
+                    {{resource.mime}}
+                {% endcall %}
+            {% endcall %}
+            {% call dl() %}
+                {% call dt() %}{{ _('Created on') }}{% endcall %}
+                {% call dd() %}
                     {{resource.created_at|dateformat(format='long')}}
-                </dd>
-            </div>
-            <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-                <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ _('Modified on') }}</dt>
-                <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
+                {% endcall %}
+                {% call dt() %}{{ _('Modified on') }}{% endcall %}
+                {% call dd() %}
                     {{resource.modified|dateformat(format='long')}}
-                </dd>
+                {% endcall %}
+            {% endcall %}
+            {% call dl() %}
+                {% if resource.filesize %}
+                    {% call dt() %}{{ _('Size') }}{% endcall %}
+                    {% call dd() %}
+                        {{resource.filesize | filesize}}
+                    {% endcall %}
+                {% endif %}
+            {% endcall %}
+        </div>
+        {% if resource.schema %}
+            <h5 class="fr-h6 fr-mt-1w fr-mb-5v">{{_('Schema')}}</h5>
+            <p class="fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
+                {{resource.schema.name}}
+            </p>
+            <div>
+                <a
+                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-btn--icon-left fr-icon-book-2-line"
+                    href="{{'{url}{name}'.format(url=config.SCHEMA_DOCUMENTATION_URL, name=resource.schema.name)}}"
+                >
+                    {{ _('See schema documentation') }}
+                </a>
             </div>
-            <div class="fr-grid-row fr-grid-row--gutters">
-                <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ _('Published on') }}</dt>
-                <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
-                    {{resource.published|dateformat(format='long')}}
-                </dd>
-            </div>
-        </dl>
+        {% endif %}
     </section>
 </article>

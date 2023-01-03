@@ -1,19 +1,26 @@
 <template>
-  <article class="border-bottom">
+  <article :class="{'drop-shadow': expanded}">
     <header
-      class="fr-py-2w fr-grid-row fr-grid-row--gutters fr-grid-row--middle no-wrap wrap-md justify-between"
-      :id="'resource-' + resource.id + '-header'"
+      class="fr-p-5v fr-grid-row fr-grid-row--middle no-wrap wrap-md justify-between border-bottom border-default-grey"
+      :id="resourceHeaderId"
     >
-      <div class="fr-col-auto fr-grid-row fr-grid-row--top no-wrap">
-        <div class="fr-col-auto fr-mx-2w fr-icon-svg fr-icon--sm" v-html="resourceImage"></div>
-        <div class="fr-col-auto">
-          <h4
-            class="fr-mb-1v"
-            :id="'resource-' + resource.id + '-title'"
-          >
-            {{ resource.title || $t('Nameless resource') }}
-          </h4>
-          <div class="fr-text--sm fr-mb-0 text-grey-380">
+      <div class="fr-col-12 fr-col-md fr-grid-row fr-grid-row--top no-wrap">
+        <div class="fr-col-auto fr-mr-2w fr-icon-svg fr-icon--sm">
+          <img :src="resourceImage" alt="" />
+        </div>
+        <div class="fr-col">
+          <div class="fr-grid-row fr-grid-row--middle fr-mb-1v">
+            <h4
+              class="fr-mb-0"
+              :id="resourceTitleId"
+            >
+              {{ resource.title || $t('Nameless resource') }}
+            </h4>
+            <p v-if="resource.schema?.name" class="fr-ml-1w fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
+                {{resource.schema.name}}
+            </p>
+          </div>
+          <div class="fr-text--sm fr-my-0 text-grey-380">
             <template v-if="resource.owner">
               {{ $t('From') }} {{owner}} —
             </template>
@@ -29,31 +36,31 @@
           </div>
         </div>
       </div>
-      <div class="fr-col-auto fr-ml-6w fr-ml-md-0">
+      <div class="fr-col-auto fr-ml-auto">
         <ul class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
-          <li class="text-default-error fr-mr-5w" v-if="unavailable">
+          <li class="text-default-error fr-ml-3v" v-if="unavailable">
             {{$t('Unavailable')}}
           </li>
-          <li class="fr-col-auto fr-mr-5w" v-if="showSchemaButton">
-            <schema-button :resource="resource"/>
-          </li>
-          <li class="fr-col-auto fr-mr-3v" v-if="canEdit">
+          <li class="fr-col-auto fr-ml-3v" v-if="canEdit">
             <EditButton
               :dataset-id="datasetId"
               :resource-id="resource.id"
               :is-community-resource="isCommunityResource"
             />
           </li>
-          <li class="fr-col-auto fr-mr-3v" v-if="resource.preview_url">
+          <li class="fr-col-auto fr-ml-3v">
             <button
-              :title="$t('Preview')"
-              @click.prevent="showModal('preview', {url: resource.preview_url, title: resource.title}, true)"
-              class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--sm fr-icon-svg"
-              v-html="preview"
+              @click="expand"
+              role="button"
+              :aria-expanded="expanded"
+              :aria-controls="resourceContentId"
+              class="fr-btn fr-btn--sm"
+              :class="{'fr-btn--tertiary fr-icon-close-line': expanded, 'fr-btn--icon-left fr-icon-eye-line': !expanded}"
             >
+              {{expanded ? $t('Close details') : $t('See data')}}
             </button>
           </li>
-          <li class="fr-col-auto" v-if="resource.format === 'url'">
+          <li class="fr-col-auto fr-ml-3v" v-if="resource.format === 'url'">
             <a
               :href="resource.latest"
               :title="$t('Resource link')"
@@ -63,7 +70,7 @@
             >
             </a>
           </li>
-          <li class="fr-col-auto" v-else>
+          <li class="fr-col-auto fr-ml-3v" v-else>
             <a
               :href="resource.latest"
               :title="$t('Download resource')"
@@ -72,94 +79,148 @@
             >
             </a>
           </li>
-          <li class="fr-col-auto fr-ml-7v">
-            <button
-              @click.prevent="expand"
-              role="button"
-              :aria-expanded="expanded"
-              :title="$t('See more details')"
-              :aria-controls="'resource-' + resource.id"
-              class="accordion-button rounded-circle fr-icon-arrow-right-s-line fr-p-1w"
-            >
-            </button>
-          </li>
         </ul>
       </div>
     </header>
     <section
-      class="accordion-content fr-pt-5v fr-pb-4w fr-pl-6w"
-      :class="{active: expanded}"
-      :style="{height: expanded ? 'auto' : 0}"
-      :aria-labelledby="'resource-' + resource.id + '-title'"
-      :hidden="!expanded"
-      :id="'resource-' + resource.id"
+      class="accordion-content fr-p-0 border-default-grey"
+      :class="{'border-bottom': expanded}"
+      :aria-labelledby="resourceTitleId"
+      :id="resourceContentId"
+      ref="content"
     >
-      <div class=" fr-mt-0 markdown" v-if="resource.description" v-html="filters.markdown(resource.description)">
+      <div class="fr-tabs fr-tabs--no-border fr-my-5v">
+        <ul class="fr-tabs__list" role="tablist" :aria-label="$t('Resource menu')">
+          <li role="presentation" v-if="hasExplore">
+            <button :id="resourcePreviewButtonId" class="fr-tabs__tab" tabindex="0" role="tab" aria-selected="true" :aria-controls="resourcePreviewTabId">{{$t('Preview')}}</button>
+          </li>
+          <li role="presentation">
+            <button :id="resourceInformationsButtonId" class="fr-tabs__tab" :tabindex="resourceInformationsTabIndex" role="tab" :aria-selected="resourceInformationsSelectedTab" :aria-controls="resourceInformationsTabId">{{$t('Informations')}}</button>
+          </li>
+        </ul>
+        <div
+          :id="resourcePreviewTabId"
+          class="fr-tabs__panel fr-p-0-5v fr-tabs__panel--selected fr-tabs__panel--no-padding"
+          role="tabpanel"
+          :aria-labelledby="resourcePreviewButtonId"
+          tabindex="0"
+          v-if="hasExplore"
+        >
+          <component v-if="expanded" v-for="ex in explore" :is="ex.component" :resource="resource"/>
+        </div>
+        <div :id="resourceInformationsTabId" class="fr-tabs__panel" role="tabpanel" :aria-labelledby="resourceInformationsButtonId" tabindex="0">
+          <div class="fr-mt-0 markdown" v-if="resource.description" v-html="filters.markdown(resource.description)">
+          </div>
+          <div class="fr-grid-row fr-grid-row--gutters">
+            <DescriptionList>
+              <DescriptionTerm>{{ $t('URL') }}</DescriptionTerm>
+              <DescriptionDetails :withEllipsis="false" class="fr-grid-row fr-grid-row--middle">
+                <div class="fr-col text-overflow-ellipsis">
+                  <a :href="resource.url">{{resource.url}}</a>
+                </div>
+                <div class="fr-ml-1w fr-col-auto">
+                  <CopyButton :text="resource.url"/>
+                </div>
+              </DescriptionDetails>
+              <DescriptionTerm>{{ $t('Permalink') }}</DescriptionTerm>
+              <DescriptionDetails :withEllipsis="false" class="fr-grid-row fr-grid-row--middle">
+                <div class="fr-col text-overflow-ellipsis">
+                  <a :href="resource.latest">{{resource.latest}}</a>
+                </div>
+                <div class="fr-ml-1w fr-col-auto">
+                  <CopyButton :text="resource.latest"/>
+                </div>
+              </DescriptionDetails>
+              <template v-if="resource.checksum">
+                <DescriptionTerm>{{resource.checksum.type}}</DescriptionTerm>
+                <DescriptionDetails :withEllipsis="false" class="fr-grid-row fr-grid-row--middle">
+                  <div class="fr-col text-overflow-ellipsis">
+                    {{resource.checksum.value}}
+                  </div>
+                  <div class="fr-col-auto">
+                    <CopyButton :text="resource.checksum.value"/>
+                  </div>
+                </DescriptionDetails>
+              </template>
+              <DescriptionTerm>{{ $t('MIME Type') }}</DescriptionTerm>
+              <DescriptionDetails>
+                {{resource.mime}}
+              </DescriptionDetails>
+            </DescriptionList>
+            <DescriptionList>
+              <DescriptionTerm>{{ $t('Created on') }}</DescriptionTerm>
+              <DescriptionDetails>
+                {{filters.formatDate(resource.created_at)}}
+              </DescriptionDetails>
+              <DescriptionTerm>{{ $t('Modified on') }}</DescriptionTerm>
+              <DescriptionDetails>
+                {{filters.formatDate(resource.last_modified)}}
+              </DescriptionDetails>
+            </DescriptionList>
+            <DescriptionList>
+              <template v-if="resource.filesize">
+                <DescriptionTerm>{{ $t('Size') }}</DescriptionTerm>
+                <DescriptionDetails>
+                  {{ filters.filesize(resource.filesize) }}
+                </DescriptionDetails>
+              </template>
+            </DescriptionList>
+          </div>
+          <template v-if="resource.schema.name">
+            <h5 class="fr-h6 fr-mt-1w fr-mb-5v">{{$t('Schema')}}</h5>
+            <p class="fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left fr-mb-2w">
+              {{resource.schema.name}}
+            </p>
+            <div v-if="loading">
+              <SchemaLoader/>
+            </div>
+            <div v-else>
+              <a
+                v-if="authorizeValidation"
+                class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v fr-btn--icon-left fr-icon-checkbox-line"
+                :href="validationUrl"
+              >
+                {{ $t('See validation report') }}
+              </a>
+              <a
+                class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-book-2-line"
+                :href="documentationUrl"
+              >
+                {{ $t('See schema documentation') }}
+              </a>
+            </div>
+          </template>
+          <div class="text-align-right" v-if="!hasExplore && resource.preview_url">
+            <a
+              :href="resource.preview_url"
+              class="fr-btn fr-btn--icon-left fr-icon-test-tube-line"
+            >
+              {{ $t("Explore data") }}
+            </a>
+          </div>
+        </div>
       </div>
-      <dl>
-        <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('URL') }}</dt>
-          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10 text-overflow-ellipsis">
-            <a :href="resource.url">{{resource.url}}</a>
-          </dd>
-        </div>
-        <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Permalink') }}</dt>
-          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10 text-overflow-ellipsis">
-            <a :href="resource.latest">{{resource.latest}}</a>
-          </dd>
-        </div>
-        <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Type') }}</dt>
-          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
-            {{ typeLabel }}
-          </dd>
-        </div>
-        <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('MIME Type') }}</dt>
-          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
-            {{resource.mime}}
-          </dd>
-        </div>
-        <div v-if="resource.checksum" class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{resource.checksum.type}}</dt>
-          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
-            {{resource.checksum.value}}
-          </dd>
-        </div>
-        <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Created on') }}</dt>
-          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
-            {{filters.formatDate(resource.created_at)}}
-          </dd>
-        </div>
-        <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Modified on') }}</dt>
-          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
-            {{filters.formatDate(resource.last_modified)}}
-          </dd>
-        </div>
-        <div class="fr-grid-row fr-grid-row--gutters">
-          <dt class="fr-col-4 fr-col-md-3 fr-col-lg-2">{{ $t('Published on') }}</dt>
-          <dd class="fr-ml-0 fr-col-8 fr-col-md-9 fr-col-lg-10">
-            {{filters.formatDate(resource.published)}}
-          </dd>
-        </div>
-      </dl>
     </section>
   </article>
 </template>
 
 <script>
 import { inject, defineComponent, ref, computed } from "vue";
-import SchemaButton from "./schema-button.vue";
+import SchemaLoader from "./schema-loader.vue";
 import useOwnerName from "../../../composables/useOwnerName";
 import useResourceImage from "../../../composables/useResourceImage";
+import CopyButton from "../../utils/copy-button.vue";
 import EditButton from "./edit-button.vue";
-import preview from 'bundle-text:svg/preview.svg';
+import { toggleAccordion } from "../../vanilla/accordion";
+import DescriptionDetails from "../../utils/description-list/description-details.vue";
+import DescriptionList from "../../utils/description-list/description-list.vue";
+import DescriptionTerm from "../../utils/description-list/description-term.vue";
+import useSchema from "../../../composables/useSchema";
+import useComponentsForHook from "../../../composables/useComponentsForHook";
+import { explorable_resources } from "../../../config";
 
 export default defineComponent({
-  components: {EditButton, SchemaButton},
+  components: {DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, SchemaLoader},
   inheritAttrs: false,
   props: {
     datasetId: {
@@ -186,26 +247,58 @@ export default defineComponent({
   setup(props) {
     const owner = useOwnerName(props.resource);
     const resourceImage = useResourceImage(props.resource);
+    const { getComponentsForHook } = useComponentsForHook();
     const filters = inject('$filters');
-    const showModal = inject('$showModal');
+    /** @type {import("vue").Ref<HTMLElement | undefined>} */
+    const content = ref();
     const expanded = ref(false);
-    const expand = () => expanded.value = !expanded.value;
+    const expand = () => {
+      expanded.value = !expanded.value;
+      if(content.value) {
+        toggleAccordion(content.value, expanded.value, 24);
+      }
+    }
     const availabilityChecked = computed(() => props.resource.extras && props.resource.extras['check:status']);
     const lastUpdate = computed(() => props.resource.published > props.resource.last_modified ? props.resource.published : props.resource.last_modified);
     const unavailable = computed(() => availabilityChecked.value && availabilityChecked.value >= 400);
-    const showSchemaButton = computed(() => props.resource.schema && props.resource.schema.name);
+    const { authorizeValidation, documentationUrl, loading, validationUrl} = useSchema(props.resource);
+    const explore = getComponentsForHook("explore");
+    const hasExplore = computed(() => explore.length > 0 && explorable_resources && explorable_resources.includes(props.resource.id));
+    const resourceContentId = computed(() => 'resource-' + props.resource.id);
+    const resourceHeaderId = computed(() => 'resource-' + props.resource.id + '-header');
+    const resourceInformationsButtonId = computed(() => 'resource-' + props.resource.id + '-informations-button');
+    const resourceInformationsTabId = computed(() => 'resource-' + props.resource.id + '-informations-tab');
+    const resourcePreviewButtonId = computed(() => 'resource-' + props.resource.id + '-preview-button');
+    const resourcePreviewTabId = computed(() => 'resource-' + props.resource.id + '-preview-tab');
+    const resourceTitleId = computed(() => 'resource-' + props.resource.id + '-title');
+    const resourceInformationsSelectedTab = computed(() => !hasExplore.value);
+    const resourceInformationsTabIndex = computed(() => hasExplore.value ? -1 : 0);
+
     return {
       owner,
       resourceImage,
       filters,
-      showModal,
+      content,
       expanded,
       expand,
       availabilityChecked,
       lastUpdate,
       unavailable,
-      showSchemaButton,
-      preview,
+      authorizeValidation,
+      documentationUrl,
+      loading,
+      validationUrl,
+      resourceContentId,
+      resourceHeaderId,
+      resourceInformationsButtonId,
+      resourceInformationsTabId,
+      resourcePreviewButtonId,
+      resourcePreviewTabId,
+      resourceTitleId,
+      resourceInformationsSelectedTab,
+      resourceInformationsTabIndex,
+      explore,
+      hasExplore,
     }
   },
 });

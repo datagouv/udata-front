@@ -69,8 +69,8 @@
 
 <script>
 import config from "../../config";
-import Author from "./author";
-import ThreadsCreateButton from "./threads-create-button";
+import Author from "./author.vue";
+import ThreadsCreateButton from "./threads-create-button.vue";
 
 export default {
   components: {
