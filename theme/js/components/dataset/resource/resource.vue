@@ -109,8 +109,6 @@
           <component v-if="expanded" v-for="ex in explore" :is="ex.component" :resource="resource"/>
         </div>
         <div :id="resourceInformationsTabId" class="fr-tabs__panel" role="tabpanel" :aria-labelledby="resourceInformationsButtonId" tabindex="0">
-          <div class="fr-mt-0 markdown" v-if="resource.description" v-html="filters.markdown(resource.description)">
-          </div>
           <div class="fr-grid-row fr-grid-row--gutters">
             <DescriptionList>
               <DescriptionTerm>{{ $t('URL') }}</DescriptionTerm>
@@ -142,10 +140,12 @@
                   </div>
                 </DescriptionDetails>
               </template>
-              <DescriptionTerm>{{ $t('MIME Type') }}</DescriptionTerm>
-              <DescriptionDetails>
-                {{resource.mime}}
-              </DescriptionDetails>
+              <template v-if="resource.mime">
+                <DescriptionTerm>{{ $t('MIME Type') }}</DescriptionTerm>
+                <DescriptionDetails>
+                  {{resource.mime}}
+                </DescriptionDetails>
+              </template>
             </DescriptionList>
             <DescriptionList>
               <DescriptionTerm>{{ $t('Created on') }}</DescriptionTerm>
@@ -190,6 +190,11 @@
               </a>
             </div>
           </template>
+          <h5 class="fr-text--sm fr-my-0 fr-text--bold">
+            {{ $t("File description") }}
+          </h5>
+          <div class="fr-mt-0 markdown" v-if="resource.description" v-html="filters.markdown(resource.description)">
+          </div>
           <div class="text-align-right" v-if="!hasExplore && resource.preview_url">
             <a
               :href="resource.preview_url"
