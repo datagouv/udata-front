@@ -7,11 +7,23 @@
 </div>
 {% endmacro %}
 
-{% macro information_section(title) %}
+{% macro information_section(title = "") %}
 <section class="fr-pb-3w fr-mb-3w border-bottom border-default-grey">
-    <h2 class="subtitle subtitle--uppercase">{{title }}</h2>
+    {% if title %}
+    <h2 class="subtitle subtitle--uppercase">{{ title }}</h2>
+    {% endif %}
     <div class="fr-text--sm fr-m-0">
         {{caller()}}
     </div>
 </section>
+{% endmacro %}
+
+{% macro information_accordion(title) %}
+<section class="fr-pb-3w fr-mb-3w border-bottom border-default-grey fr-grid-row fr-grid-row--middle">
+    <div class="fr-col">
+        <h2 class="subtitle subtitle--uppercase fr-m-0">{{ title }}</h2>
+    </div>
+    <div class="fr-col-auto">{{caller("button")}}</div>
+</section>
+{{caller()}}
 {% endmacro %}

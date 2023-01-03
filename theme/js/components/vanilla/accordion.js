@@ -9,20 +9,18 @@ Because accordion are not only seen in the subway, you can use this tidbit to cr
 
 The button needs to have :
 - `data-accordion-button` attribute
-- `aria-controls` and `href` set to a valid `#id` on the page
+- `aria-controls` set to a valid `#id` on the page
 - `aria-label` to explain what the button does if there's not enough text in the button itself (like an icon)
-- `aria-expanded` set to either `true` (if the accordion is visible by default) or `false`
+- `aria-expanded` (if the accordion is visible by default)
 
 The accordion panel needs to have :
 
-- `data-accordion-button` attribute
-- `aria-expanded="true"` if the accordion is visible by default
 - `aria-labelledby` set to the button's `#id`
 - A valid `#id` corresponding to the button's `aria-controls`
 
 
 ```accordion.html
-<button data-accordion-button aria-controls="toggle-me" aria-expanded="true">Toggle the thingies</button>
+<button data-accordion-button aria-controls="toggle-me" id="resource-header" aria-expanded="true">Toggle the thingies</button>
 <section class="accordion-content active" aria-labelledby="resource-header" id="toggle-me">Nice collapsible section (visible by default, click the button to hide)</h1>
 ```
 */
@@ -45,7 +43,7 @@ export default (() => {
           const target = document.querySelector("#" + button.getAttribute("aria-controls"));
           if (target) {
             target.classList.toggle("active");
-            toggleAccordion(target, button.getAttribute("aria-expanded") === "true");
+            toggleAccordion(target, button.hasAttribute("aria-expanded"));
           }
         }
       });

@@ -1,5 +1,5 @@
 {% extends theme('layouts/1-column.html') %}
-{% from theme('macros/dataset_informations.html') import information_col, information_section %}
+{% from theme('macros/dataset_informations.html') import information_col, information_section, information_accordion %}
 {% from theme('macros/follow.html') import follow_btn with context %}
 {% from theme('macros/integrate.html') import integrate_btn with context %}
 {% from theme('macros/paginator.html') import paginator with context %}
@@ -84,36 +84,9 @@
         {{ _('Archived') }}
     </span>
     {% endif %}
-    {% if dataset.extras %}
-        <details>
-            <summary class="subtitle fr-mb-0">{{ _('Extras') }}</summary>
-            <dl class="fr-my-0 fr-grid-row fr-grid-row--gutters">
-                {% for extra_name, extra_value in dataset.extras.items() %}
-                <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
-                    <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ extra_name }}</dt>
-                    <dd class="fr-text--sm fr-ml-0 fr-mb-2w">{{ extra_value }}</dd>
-                </div>
-                {% endfor %}
-            </dl>
-        </details>
-    {% endif %}
-    {% if dataset.harvest %}
-        <details>
-            <summary class="subtitle fr-mb-0">{{ _('Harvest') }}</summary>
-            <dl class="fr-my-0 fr-grid-row fr-grid-row--gutters">
-                {% for harvest_extra_name, harvest_extra_value in dataset.harvest._data.items() %}
-                {% if harvest_extra_value != None %}
-                <div class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-4">
-                    <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ harvest_extra_name }}</dt>
-                    <dd class="fr-text--sm fr-ml-0 fr-mb-2w">{{ harvest_extra_value }}</dd>
-                </div>
-                {% endif %}
-                {% endfor %}
-            </dl>
-        </details>
-    {% endif %}
+
     <h2 class="subtitle subtitle--uppercase">{{ _('Embed') }}</h2>
-    {{integrate_btn(dataset)}}
+
     <h2 class="subtitle fr-mt-3w">{{ _('Permalink') }}</h2>
     <div class="embed-wrapper">
         <input
@@ -471,6 +444,66 @@
                 {% endif %}
             </div>
             {% endcall %}
+        {% endif %}
+        {% call() information_section(_('Actions')) %}
+            <h3 class="subtitle fr-mb-1v">{{_('Embed')}}</h3>
+            {{integrate_btn(dataset)}}
+        {% endcall %}
+
+        {% if dataset.extras %}
+        {% call(slot) information_accordion(_('Extras')) %}
+            {% if slot == "button" %}
+                <button
+                    data-accordion-button
+                    role="button"
+                    id="extras-accordion-button"
+                    aria-controls="extras-accordion"
+                    class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-btn--secondary-grey-500 accordion-button"
+                    >
+                    {{ _('See extras') }}
+                </button>
+            {% else %}
+                <div class="accordion-content" id="extras-accordion" aria-labelledby="extras-accordion-button">
+                    {% call() information_section() %}
+                        <div class="fr-grid-row fr-grid-row--gutters">
+                        {% for extra_name, extra_value in dataset.extras.items() %}
+                            {% call() information_col(extra_name) %}
+                                {{extra_value}}
+                            {% endcall %}
+                        {% endfor %}
+                        </div>
+                    {% endcall %}
+                </div>
+            {% endif %}
+        {% endcall %}
+        {% endif %}
+
+        {% if dataset.harvest %}
+        {% call(slot) information_accordion(_('Harvest')) %}
+            {% if slot == "button" %}
+                <button
+                    data-accordion-button
+                    role="button"
+                    id="harvest-extras-accordion-button"
+                    aria-controls="harvest-extras-accordion"
+                    class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-btn--secondary-grey-500 accordion-button"
+                    >
+                    {{ _('See harvest extras') }}
+                </button>
+            {% else %}
+                <div class="accordion-content" id="harvest-extras-accordion" aria-labelledby="harvest-extras-accordion-button">
+                    {% call() information_section() %}
+                        <div class="fr-grid-row fr-grid-row--gutters">
+                        {% for harvest_extra_name, harvest_extra_value in dataset.harvest._data.items() %}
+                            {% call() information_col(harvest_extra_name) %}
+                                {{harvest_extra_value}}
+                            {% endcall %}
+                        {% endfor %}
+                        </div>
+                    {% endcall %}
+                </div>
+            {% endif %}
+        {% endcall %}
         {% endif %}
         </div>
     </div>
