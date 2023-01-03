@@ -50,7 +50,12 @@
               class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-btn--secondary-grey-500"
               :class="{'fr-icon-arrow-up-s-line': expanded, 'fr-icon-arrow-down-s-line': !expanded}"
             >
-              {{expanded ? $t('Close details') : $t('See data')}}
+              <template v-if="expanded">
+                {{ $t('Close details') }}
+              </template>
+              <template v-else>
+                {{hasExplore ? $t('See data') : $t('See metadata')}}
+              </template>
             </button>
           </li>
           <li class="fr-col-auto fr-ml-3v" v-if="resource.format === 'url'">
@@ -83,7 +88,7 @@
       </div>
     </header>
     <section
-      class="accordion-content fr-p-0 border-default-grey"
+      class="accordion-content border-default-grey"
       :class="{'border-bottom': expanded}"
       :aria-labelledby="resourceTitleId"
       :id="resourceContentId"
@@ -91,9 +96,14 @@
     >
       <div class="fr-tabs fr-tabs--no-border fr-my-5v">
         <ul class="fr-tabs__list" role="tablist" :aria-label="$t('Resource menu')">
-          <li role="presentation" v-if="hasExplore">
-            <button :id="resourcePreviewButtonId" class="fr-tabs__tab" tabindex="0" role="tab" aria-selected="true" :aria-controls="resourcePreviewTabId">{{$t('Preview')}}</button>
-          </li>
+          <template v-if="hasExplore">
+            <li role="presentation">
+              <button :id="resourcePreviewButtonId" class="fr-tabs__tab" tabindex="0" role="tab" aria-selected="true" :aria-controls="resourcePreviewTabId">{{$t('Preview')}}</button>
+            </li>
+            <li role="presentation">
+              <button :id="resourceStructureButtonId" class="fr-tabs__tab" tabindex="0" role="tab" aria-selected="false" :aria-controls="resourceStructureTabId">{{$t('Data structure')}}</button>
+            </li>
+          </template>
           <li role="presentation">
             <button :id="resourceInformationsButtonId" class="fr-tabs__tab" :tabindex="resourceInformationsTabIndex" role="tab" :aria-selected="resourceInformationsSelectedTab" :aria-controls="resourceInformationsTabId">{{$t('Informations')}}</button>
           </li>
@@ -260,7 +270,7 @@ export default defineComponent({
     const expand = () => {
       expanded.value = !expanded.value;
       if(content.value) {
-        toggleAccordion(content.value, expanded.value, 24);
+        toggleAccordion(content.value, expanded.value);
       }
     }
     const availabilityChecked = computed(() => props.resource.extras && props.resource.extras['check:status']);
@@ -273,6 +283,8 @@ export default defineComponent({
     const resourceHeaderId = computed(() => 'resource-' + props.resource.id + '-header');
     const resourceInformationsButtonId = computed(() => 'resource-' + props.resource.id + '-informations-button');
     const resourceInformationsTabId = computed(() => 'resource-' + props.resource.id + '-informations-tab');
+    const resourceStructureButtonId = computed(() => 'resource-' + props.resource.id + '-structure-button');
+    const resourceStructureTabId = computed(() => 'resource-' + props.resource.id + '-structure-tab');
     const resourcePreviewButtonId = computed(() => 'resource-' + props.resource.id + '-preview-button');
     const resourcePreviewTabId = computed(() => 'resource-' + props.resource.id + '-preview-tab');
     const resourceTitleId = computed(() => 'resource-' + props.resource.id + '-title');
