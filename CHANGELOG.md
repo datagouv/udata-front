@@ -8,6 +8,7 @@
 > and to display them in places chosen by the current theme
 
 - Add resource exploration preview [#169](https://github.com/etalab/udata-front/pull/169)[#180](https://github.com/etalab/udata-front/pull/180)
+- Fix RGAA criterion 9.2 [#178](https://github.com/etalab/udata-front/pull/178)
 
 ## 3.0.1 (2022-12-15)
 

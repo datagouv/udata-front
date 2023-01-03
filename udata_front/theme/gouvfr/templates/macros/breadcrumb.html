@@ -5,7 +5,7 @@
 {% if tpl.breadcrumb and tpl.breadcrumb() or tpl.breadcrumb_bar and tpl.breadcrumb_bar() %}
 <section class="breadcrumb-bar fr-py-2w {{ breadcrum_class }}">
     <div class="fr-container">
-        <div class="fr-grid-row">
+        <nav rol="navigation" aria-label="{{_("You're here:")}}" class="fr-grid-row">
             {% if tpl.breadcrumb_bar and tpl.breadcrumb_bar() %}
             <div class="left-bar fr-col-12 col-lg-9">
                 {{ tpl.breadcrumb_bar() }}
