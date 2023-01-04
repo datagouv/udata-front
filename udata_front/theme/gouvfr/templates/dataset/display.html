@@ -66,46 +66,6 @@
 {{ breadcrumb(self) }}
 
 <div class="content fr-container fr-mb-10v">
-    <!--{% if dataset.private %}
-    <span class="fr-tag"
-        title="{{ _('This dataset is private and will not be visible by other users') }}">{{ _('Private') }}
-    </span>
-    {% endif %}
-    {% if dataset.deleted %}
-    <span class="fr-tag"
-        title="{{ _('This dataset has been deleted. This will be permanent in the next 24 hours') }}">{{ _('Deleted') }}
-    </span>
-    {% endif %}
-    {% if dataset.archived %}
-    {% set title = _('This dataset has been archived automatically because it has been deleted from the remote platform.')
-        if dataset.harvest and dataset.harvest.archived == 'not-on-remote' else
-        _('This dataset has been archived.') %}
-    <span class="fr-tag" title="{{ title }}">
-        {{ _('Archived') }}
-    </span>
-    {% endif %}
-
-    <h2 class="subtitle subtitle--uppercase">{{ _('Embed') }}</h2>
-
-    <h2 class="subtitle fr-mt-3w">{{ _('Permalink') }}</h2>
-    <div class="embed-wrapper">
-        <input
-            readonly
-            id="permalink"
-            onClick="this.select();"
-            value="{{ dataset.external_url }}"
-        />
-        <label
-            for="permalink"
-            class="icon-copy"
-            id="permalink-copy"
-            data-clipboard-target="#permalink"
-        >
-            <span class="visually-hidden">{{ _('Copy this') }}</span>
-            {% include theme('svg/copy.svg') %}
-        </label>
-    </div>
--->
     <h1 class="fr-mb-0 fr-h3">
         {{ dataset.title }}
         {% if dataset.acronym %}<small>{{ dataset.acronym }}</small>{% endif %}
@@ -487,7 +447,7 @@
                     id="harvest-extras-accordion-button"
                     aria-controls="harvest-extras-accordion"
                     class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-btn--secondary-grey-500 accordion-button"
-                    >
+                >
                     {{ _('See harvest extras') }}
                 </button>
             {% else %}
