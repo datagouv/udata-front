@@ -76,6 +76,14 @@
                     &mdash;
                 </span>
                 {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
+                {% if dataset.license %}
+                &mdash;
+                <code class="bg-alt-grey fr-px-1v text-grey-380">
+                {% if dataset.license.url %}<a href="{{ dataset.license.url }}">{% endif %}
+                {{ dataset.license.title }}
+                {% if dataset.license.url %}</a>{% endif %}
+                </code>
+                {% endif %}
             </div>
         </div>
         <ul class="fr-hidden fr-unhidden-sm fr-col-auto fr-tags-group flex-direction-column fr-grid-row--bottom self-center">
