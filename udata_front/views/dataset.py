@@ -137,10 +137,18 @@ def group_resources_by_type(resources):
     ordered = OrderedDict()
     plurals = dict([
         ('main', ngettext("%(num)d Main file", "%(num)d Main files", len(groups['main']))),
-        ('documentation', ngettext('%(num)d Documentation', '%(num)d Documentations', len(groups['documentation']))),
+        ('documentation', ngettext(
+            '%(num)d Documentation',
+            '%(num)d Documentations',
+            len(groups['documentation'])
+        )),
         ('update', ngettext('%(num)d Update', '%(num)d Updates', len(groups['update']))),
         ('api', ngettext('%(num)d API', '%(num)d APIs', len(groups['api']))),
-        ('code', ngettext('%(num)d Code repository', '%(num)d Code repositories', len(groups['code']))),
+        ('code', ngettext(
+            '%(num)d Code repository',
+            '%(num)d Code repositories',
+            len(groups['code'])
+        )),
         ('other', ngettext('%(num)d Other', '%(num)d Others', len(groups['other']))),
     ])
     for rtype in RESOURCE_TYPES.keys():
