@@ -34,7 +34,20 @@
     <div id="app">
         {% block body %}{% endblock %}
     </div>
+    <script>
+    window.esmsInitOptions = {
+        onerror: (e) => { console.error(e) },
+    }
+    </script>
     <script type="importmap">
+    {
+        "imports": {
+            "vue": "{{ theme_static('js/vue.esm-browser.prod.js') }}",
+            "vue-content-loader": "{{ theme_static('js/vue-content-loader.es.js') }}"
+        }
+    }
+    </script>
+    <script type="importmap-shim">
     {
         "imports": {
             "vue": "{{ theme_static('js/vue.esm-browser.prod.js') }}",
