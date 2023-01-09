@@ -108,16 +108,26 @@
             <button :id="resourceInformationsButtonId" class="fr-tabs__tab" :tabindex="resourceInformationsTabIndex" role="tab" :aria-selected="resourceInformationsSelectedTab" :aria-controls="resourceInformationsTabId">{{$t('Informations')}}</button>
           </li>
         </ul>
-        <div
-          :id="resourcePreviewTabId"
-          class="fr-tabs__panel fr-p-0-5v fr-tabs__panel--selected fr-tabs__panel--no-padding"
-          role="tabpanel"
-          :aria-labelledby="resourcePreviewButtonId"
-          tabindex="0"
-          v-if="hasExplore"
-        >
-          <component v-if="expanded" v-for="ex in explore" :is="ex.component" :resource="resource"/>
-        </div>
+        <template v-if="hasExplore">
+          <div
+            :id="resourcePreviewTabId"
+            class="fr-tabs__panel fr-p-0-5v fr-tabs__panel--selected fr-tabs__panel--no-padding"
+            role="tabpanel"
+            :aria-labelledby="resourcePreviewButtonId"
+            tabindex="0"
+          >
+            <component v-if="expanded" v-for="ex in explore" :is="ex.component" :resource="resource"/>
+          </div>
+          <div
+            :id="resourceStructureTabId"
+            class="fr-tabs__panel fr-p-0-5v fr-tabs__panel--selected fr-tabs__panel--no-padding"
+            role="tabpanel"
+            :aria-labelledby="resourceStructureButtonId"
+            tabindex="0"
+          >
+            <component v-if="expanded" v-for="dataStructure in structure" :is="dataStructure.component" :resource="resource"/>
+          </div>
+        </template>
         <div :id="resourceInformationsTabId" class="fr-tabs__panel" role="tabpanel" :aria-labelledby="resourceInformationsButtonId" tabindex="0">
           <div class="fr-grid-row fr-grid-row--gutters">
             <DescriptionList>
@@ -278,6 +288,7 @@ export default defineComponent({
     const unavailable = computed(() => availabilityChecked.value && availabilityChecked.value >= 400);
     const { authorizeValidation, documentationUrl, loading, validationUrl} = useSchema(props.resource);
     const explore = getComponentsForHook("explore");
+    const structure = getComponentsForHook("data-structure");
     const hasExplore = computed(() => explore.length > 0 && explorable_resources && explorable_resources.includes(props.resource.id));
     const resourceContentId = computed(() => 'resource-' + props.resource.id);
     const resourceHeaderId = computed(() => 'resource-' + props.resource.id + '-header');
@@ -318,6 +329,7 @@ export default defineComponent({
       resourceInformationsTabIndex,
       explore,
       hasExplore,
+      structure,
     }
   },
 });
