@@ -211,7 +211,7 @@
     </div>
     <div id="resources" class="fr-tabs__panel fr-tabs__panel--selected" role="tabpanel" aria-labelledby="tabpanel-404" tabindex="0">
         <div class="fr-container">
-            <div class="ressources-files vuejs fr-mb-2w">
+            <div class="ressources-files vuejs fr-mb-5v">
                 {% set show_all_resources = request.args.get('resources') == 'all' %}
                 {% set grouped_resources = dataset.resources|group_resources_by_type %}
                 {% set nb_groups = grouped_resources.keys()|length %}

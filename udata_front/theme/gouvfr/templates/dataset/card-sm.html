@@ -1,6 +1,6 @@
 {% cache cache_duration, 'dataset-card-sm', dataset.id|string, g.lang_code %}
 {% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate %}
-<article class="fr-my-3w fr-p-3w border border-default-grey fr-enlarge-link">
+<article class="fr-my-3v fr-p-3w border border-default-grey fr-enlarge-link">
     {% if dataset.private or dataset.archived %}
     <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v">
         {% if dataset.private %}
@@ -55,7 +55,7 @@
                 </a>
             </h4>
             {% if dataset.organization or dataset.owner %}
-            <span class="not-enlarged">
+            <p class="not-enlarged fr-my-1v">
                 {{ _('From') }}
                 {% if dataset.organization %}
                 <a href="{{ url_for('organizations.show', org=dataset.organization) }}">
@@ -64,19 +64,19 @@
                 {% elif dataset.owner %}
                 {{owner_name(dataset)}}
                 {% endif %}
-            </span>
+            </p>
             {% endif %}
-            <div class="fr-mb-0 text-mention-grey">
+            <p class="fr-m-0 text-mention-grey">
                 {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
                 {% if dataset.license %}
                 &mdash;
                 <code class="bg-alt-grey fr-px-1v text-grey-380">
-                {% if dataset.license.url %}<a href="{{ dataset.license.url }}">{% endif %}
+                {% if dataset.license.url %}<span class="not-enlarged"><a href="{{ dataset.license.url }}">{% endif %}
                 {{ dataset.license.title }}
-                {% if dataset.license.url %}</a>{% endif %}
+                {% if dataset.license.url %}</a></span>{% endif %}
                 </code>
                 {% endif %}
-            </div>
+            </p>
         </div>
     </div>
 </article>

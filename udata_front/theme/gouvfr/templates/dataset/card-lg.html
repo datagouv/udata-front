@@ -56,7 +56,7 @@
                 </a>
             </h4>
             {% if dataset.organization or dataset.owner %}
-            <span class="not-enlarged">
+            <p class="not-enlarged fr-m-0">
                 {{ _('From') }}
                 {% if dataset.organization %}
                 <a href="{{ url_for('organizations.show', org=dataset.organization) }}">
@@ -65,25 +65,27 @@
                 {% elif dataset.owner %}
                 {{owner_name(dataset)}}
                 {% endif %}
-            </span>
+            </p>
             {% endif %}
             <p class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm">
                 {{ dataset.description|mdstrip(300) }}
             </p>
-            <div class="fr-mb-0 text-mention-grey">
-                {{quality_score_with_tooltip(dataset, "fr-hidden inline-sm")}}
-                <span class="fr-hidden inline-sm">
+            <div class="fr-mb-0 text-mention-grey fr-grid-row">
+                {{quality_score_with_tooltip(dataset, "fr-hidden fr-unhidden-sm")}}
+                <p class="fr-m-0">
+                    <span class="fr-hidden inline-sm">
+                        &mdash;
+                    </span>
+                    {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
+                    {% if dataset.license %}
                     &mdash;
-                </span>
-                {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
-                {% if dataset.license %}
-                &mdash;
-                <code class="bg-alt-grey fr-px-1v text-grey-380">
-                {% if dataset.license.url %}<a href="{{ dataset.license.url }}">{% endif %}
-                {{ dataset.license.title }}
-                {% if dataset.license.url %}</a>{% endif %}
-                </code>
-                {% endif %}
+                    <code class="bg-alt-grey fr-px-1v text-grey-380">
+                        {% if dataset.license.url %}<a href="{{ dataset.license.url }}">{% endif %}
+                        {{ dataset.license.title }}
+                        {% if dataset.license.url %}</a>{% endif %}
+                    </code>
+                    {% endif %}
+                </p>
             </div>
         </div>
         <ul class="fr-hidden fr-unhidden-sm fr-col-auto fr-tags-group flex-direction-column fr-grid-row--bottom self-center">

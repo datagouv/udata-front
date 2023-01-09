@@ -56,7 +56,7 @@
                 </a>
             </h4>
             {% if dataset.organization or dataset.owner %}
-            <span class="not-enlarged">
+            <p class="not-enlarged fr-m-0 fr-mt-1v">
                 {{ _('From') }}
                 {% if dataset.organization %}
                 <a href="{{ url_for('organizations.show', org=dataset.organization) }}">
@@ -65,7 +65,7 @@
                 {% elif dataset.owner %}
                 {{owner_name(dataset)}}
                 {% endif %}
-            </span>
+            </p>
             {% endif %}
         </div>
     </div>
