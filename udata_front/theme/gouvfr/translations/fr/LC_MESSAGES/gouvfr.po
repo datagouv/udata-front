@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: udata-front\n"
 "Report-Msgid-Bugs-To: data.gouv@data.gouv.fr\n"
-"POT-Creation-Date: 2022-12-19 15:16+0100\n"
-"PO-Revision-Date: 2022-12-28 10:24\n"
+"POT-Creation-Date: 2023-01-09 10:06+0100\n"
+"PO-Revision-Date: 2023-01-09 10:21\n"
 "Last-Translator: Data.gouv.fr Team <data.gouv@data.gouv.fr>\n"
 "Language: fr\n"
 "Language-Team: French\n"
@@ -76,6 +76,10 @@ msgstr "dd/MM/yyyy"
 #, python-format
 msgid "%(start)s to %(end)s"
 msgstr "%(start)s à %(end)s"
+
+#: udata_front/frontend/resource_helpers.py:23
+msgid "B"
+msgstr ""
 
 #: udata_front/theme/gouvfr/__init__.py:46
 #: udata_front/theme/gouvfr/templates/dataset/display.html:457
@@ -1035,6 +1039,10 @@ msgstr "Erreur %(code)s"
 msgid "Following since %(date)s"
 msgstr "Abonné depuis %(date)s"
 
+#: udata_front/theme/gouvfr/templates/macros/breadcrumb.html:8
+msgid "You're here:"
+msgstr ""
+
 #: udata_front/theme/gouvfr/templates/macros/certified.html:3
 #, python-format
 msgid "The identity of this public service is certified by %(certifier)s"
@@ -1516,15 +1524,19 @@ msgstr "Cet article est un brouillon et ne sera pas visible par les autres utili
 msgid "This post has been deleted. This will be permanent in the next 24 hours"
 msgstr "Cet article a été supprimé. Cel sera permanent dans les prochaines 24h."
 
-#: udata_front/theme/gouvfr/templates/post/display.html:111
+#: udata_front/theme/gouvfr/templates/post/display.html:106
+msgid "Navigate in the post collection"
+msgstr ""
+
+#: udata_front/theme/gouvfr/templates/post/display.html:115
 msgid "Previous post"
 msgstr "Article précédent"
 
-#: udata_front/theme/gouvfr/templates/post/display.html:117
+#: udata_front/theme/gouvfr/templates/post/display.html:121
 msgid "All posts"
 msgstr "Tous les articles"
 
-#: udata_front/theme/gouvfr/templates/post/display.html:126
+#: udata_front/theme/gouvfr/templates/post/display.html:130
 msgid "Next post"
 msgstr "Article suivant"
 
