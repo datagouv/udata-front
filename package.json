@@ -22,7 +22,7 @@
     "axios": "^0.26.1",
     "clipboard": "^2.0.8",
     "dayjs": "^1.9.6",
-    "es-module-shims": "^1.6.2",
+    "es-module-shims": "^1.6.3",
     "less": "^3.13.1",
     "mitt": "^3.0.0",
     "popmotion": "^8.7",

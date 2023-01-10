@@ -34,7 +34,15 @@
     <div id="app">
         {% block body %}{% endblock %}
     </div>
-    <script type="importmap">
+    <script>
+    window.esmsInitOptions = {
+        shimMode: true,
+        onerror: (e) => { console.log(e) },
+        onimport: (url, options, parentUrl) => {console.log(url)}
+    }
+    </script>
+
+    <script type="importmap-shim">
     {
         "imports": {
             "vue": "{{ theme_static('js/vue.esm-browser.prod.js') }}",
@@ -42,8 +50,11 @@
         }
     }
     </script>
+    <script type="module-shim" src="{{ theme_static('js/vue.esm-browser.prod.js') }}"></script>
+    <script type="module-shim" src="{{ theme_static('js/vue-content-loader.es.js') }}"></script>
+    <script type="module-shim" src="{{ theme_static('js/index.js') }}"></script>
+
     <script async type="module" src="{{ theme_static('js/es-module-shims.js') }}"></script>
-    <script type="module" src="{{ theme_static('js/index.js') }}"></script>
 
     <script type="systemjs-importmap">
     {
