@@ -1,5 +1,7 @@
 from jinja2 import contextfilter
 
+from udata.i18n import lazy_gettext as _
+
 from udata_front.frontend import front
 
 
@@ -18,7 +20,7 @@ def permissions(ctx, resources):
 @front.app_template_filter()
 def filesize(value):
     '''Display a human readable filesize'''
-    suffix = 'o'
+    suffix = _('B')
     for unit in '', 'K', 'M', 'G', 'T', 'P', 'E', 'Z':
         if abs(value) < 1024.0:
             return "%3.1f%s%s" % (value, unit, suffix)
