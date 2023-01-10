@@ -1,7 +1,7 @@
 import {api, apiv2} from "../plugins/api";
 
 /**
- * @typedef {import("../composables/useOwnerName").Owned} ResourceModel
+ * @typedef {Object} ResourceRest
  * @property {Object} created_at
  * @property {Object} description
  * @property {Object} extras
@@ -15,6 +15,7 @@ import {api, apiv2} from "../plugins/api";
  * @property {string} published
  * @property {Object} schema
  * @property {string} url
+ *  @typedef {import("../composables/useOwnerName").Owned & ResourceRest} Resource
  */
 
 /**
@@ -23,7 +24,7 @@ import {api, apiv2} from "../plugins/api";
  * @param {number} page
  * @param {number} pageSize
  * @param {string} search
- * @return Promise<Array<ResourceModel>>
+ * @return {Promise<Array<Resource>>}
  */
 export const fetchDatasetResources = (datasetId, type, page, pageSize, search) => {
   return apiv2
@@ -42,7 +43,7 @@ export const fetchDatasetResources = (datasetId, type, page, pageSize, search) =
  * @param {string} datasetId
  * @param {number} page
  * @param {number} pageSize
- * @return Promise<Array<ResourceModel>>
+ * @return {Promise<Array<Resource>>}
  */
 export const fetchDatasetCommunityResources = (datasetId, page, pageSize) => {
   return api
