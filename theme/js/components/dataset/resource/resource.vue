@@ -111,7 +111,7 @@
         <template v-if="hasExplore">
           <div
             :id="resourcePreviewTabId"
-            class="fr-tabs__panel fr-p-0-5v fr-tabs__panel--selected fr-tabs__panel--no-padding"
+            class="fr-tabs__panel fr-tabs__panel--selected fr-tabs__panel--no-padding"
             role="tabpanel"
             :aria-labelledby="resourcePreviewButtonId"
             tabindex="0"
@@ -120,7 +120,7 @@
           </div>
           <div
             :id="resourceStructureTabId"
-            class="fr-tabs__panel fr-p-0-5v fr-tabs__panel--selected fr-tabs__panel--no-padding"
+            class="fr-tabs__panel fr-tabs__panel--selected"
             role="tabpanel"
             :aria-labelledby="resourceStructureButtonId"
             tabindex="0"
