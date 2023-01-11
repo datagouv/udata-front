@@ -2,6 +2,7 @@ import {api, apiv2} from "../plugins/api";
 
 /**
  * @typedef {Object} ResourceRest
+ * @property {string} id
  * @property {Object} created_at
  * @property {Object} description
  * @property {Object} extras

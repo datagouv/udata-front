@@ -1,7 +1,8 @@
 <template>
   <article :class="{'drop-shadow': expanded}">
     <header
-      class="fr-p-5v fr-grid-row fr-grid-row--middle no-wrap wrap-md justify-between border-bottom border-default-grey"
+      class="fr-p-5v fr-grid-row fr-grid-row--middle no-wrap wrap-md justify-between border-default-grey"
+      :class="{'border-bottom': !expanded}"
       :id="resourceHeaderId"
     >
       <div class="fr-col-auto fr-grid-row fr-grid-row--top no-wrap">
@@ -9,30 +10,22 @@
           <img :src="resourceImage" alt="" />
         </div>
         <div class="fr-col-auto">
-          <div class="fr-grid-row fr-grid-row--middle fr-mb-1v">
-            <h4
-              class="fr-mb-0"
+          <h4
+              class="fr-mb-1v"
               :id="resourceTitleId"
             >
               {{ resource.title || $t('Nameless resource') }}
             </h4>
-            <p v-if="resource.schema?.name" class="fr-ml-1w fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
-                {{resource.schema.name}}
+          <div class="fr-my-0 text-grey-380 fr-grid-row">
+            <p v-if="hasSchema" class="fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
+              {{resource.schema.name}}
             </p>
-          </div>
-          <div class="fr-text--sm fr-my-0 text-grey-380">
-            <template v-if="resource.owner">
-              {{ $t('From') }} {{owner}} —
-            </template>
-            <template v-else-if="resource.organization">
-              {{ $t('From') }} <a :href="resource.organization.page">{{ owner }}</a> —
-            </template>
-            {{$t('Updated on X', {date: filters.formatDate(lastUpdate)})}} —
-            <template v-if="resource.format">
+            <p class="fr-text--xs fr-m-0 dash-before dash-after">{{$t('Updated on X', {date: filters.formatDate(lastUpdate)})}}</p>
+            <p v-if="resource.format" class="fr-text--xs fr-m-0 dash-after">
               {{ resource.format?.trim()?.toLowerCase() }}
-              <template v-if="resource.filesize">({{ filters.filesize(resource.filesize) }})</template> —
-            </template>
-            {{ $t('X downloads', resource.metrics.views || 0) }}
+              <template v-if="resource.filesize">({{ filters.filesize(resource.filesize) }})</template>
+            </p>
+            <p class="fr-text--xs fr-m-0">{{ $t('X downloads', resource.metrics.views || 0) }}</p>
           </div>
         </div>
       </div>
@@ -88,13 +81,12 @@
       </div>
     </header>
     <section
-      class="accordion-content border-default-grey"
-      :class="{'border-bottom': expanded}"
+      class="accordion-content"
       :aria-labelledby="resourceTitleId"
       :id="resourceContentId"
       ref="content"
     >
-      <div class="fr-tabs fr-tabs--no-border fr-my-5v">
+      <div class="fr-tabs fr-tabs--no-border fr-mt-1v">
         <ul class="fr-tabs__list" role="tablist" :aria-label="$t('Resource menu')">
           <template v-if="hasExplore">
             <li role="presentation">
@@ -105,29 +97,75 @@
             </li>
           </template>
           <li role="presentation">
-            <button :id="resourceInformationsButtonId" class="fr-tabs__tab" :tabindex="resourceInformationsTabIndex" role="tab" :aria-selected="resourceInformationsSelectedTab" :aria-controls="resourceInformationsTabId">{{$t('Informations')}}</button>
+            <button :id="resourceInformationsButtonId" class="fr-tabs__tab" :tabindex="resourceInformationsTabIndex" role="tab" :aria-selected="resourceInformationsSelectedTab" :aria-controls="resourceInformationsTabId">{{$t('Metadata')}}</button>
           </li>
         </ul>
-        <template v-if="hasExplore">
-          <div
-            :id="resourcePreviewTabId"
-            class="fr-tabs__panel fr-tabs__panel--selected fr-tabs__panel--no-padding"
-            role="tabpanel"
-            :aria-labelledby="resourcePreviewButtonId"
-            tabindex="0"
-          >
-            <component v-if="expanded" v-for="ex in explore" :is="ex.component" :resource="resource"/>
-          </div>
-          <div
-            :id="resourceStructureTabId"
-            class="fr-tabs__panel fr-tabs__panel--selected"
-            role="tabpanel"
-            :aria-labelledby="resourceStructureButtonId"
-            tabindex="0"
-          >
-            <component v-if="expanded" v-for="dataStructure in structure" :is="dataStructure.component" :resource="resource"/>
-          </div>
-        </template>
+        <div
+          :id="resourcePreviewTabId"
+          class="fr-tabs__panel fr-tabs__panel--selected fr-tabs__panel--no-padding"
+          role="tabpanel"
+          :aria-labelledby="resourcePreviewButtonId"
+          tabindex="0"
+          v-if="hasExplore"
+        >
+          <component v-if="expanded" v-for="ex in explore" :is="ex.component" :resource="resource"/>
+        </div>
+        <div
+          :id="resourceStructureTabId"
+          class="fr-tabs__panel fr-tabs__panel--selected"
+          role="tabpanel"
+          :aria-labelledby="resourceStructureButtonId"
+          tabindex="0"
+          v-if="hasExplore || hasSchema"
+        >
+          <component v-if="expanded" v-for="dataStructure in structure" :is="dataStructure.component" :resource="resource"/>
+          <hr class="fr-my-5v fr-p-1v" v-if="hasExplore && hasSchema"/>
+          <template v-if="hasSchema">
+            <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle">
+              <div class="fr-col">
+                <h5 class="fr-h6 fr-mb-5v">{{$t('Data schema')}}</h5>
+                <ul class="fr-tags-group" v-if="hasSchemaErrors">
+                  <li v-for="schemaError in schemaReport">
+                    <p class="fr-tag fr-tag--sm">{{schemaError.name}}</p>
+                  </li>
+                </ul>
+                <template v-else>
+                  <div class="fr-grid-row fr-grid-row--middle fr-mb-1w">
+                    <p class="fr-text--xs fr-m-0">{{$t('This file is following a schema: ')}}</p>
+                    <p class="fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
+                      {{resource.schema.name}}
+                    </p>
+                  </div>
+                    <i18n-t keypath="Schemas allow to describe data models, discover how schemas improve your data quality and the available use cases on {address}" class="fr-text--xs fr-m-0" tag="p" scope="global">
+                      <template #address>
+                        <a :href="schema_documentation_url">schema.data.gouv.fr</a>
+                      </template>
+                    </i18n-t>
+                </template>
+              </div>
+              <div class="fr-col-auto">
+                <div v-if="loading">
+                  <SchemaLoader/>
+                </div>
+                <div v-else>
+                  <a
+                    v-if="authorizeValidation"
+                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v fr-btn--icon-left fr-icon-checkbox-line"
+                    :href="validationUrl"
+                  >
+                    {{ $t('See validation report') }}
+                  </a>
+                  <a
+                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-book-2-line"
+                    :href="documentationUrl"
+                  >
+                    {{ $t('See schema documentation') }}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
         <div :id="resourceInformationsTabId" class="fr-tabs__panel" role="tabpanel" :aria-labelledby="resourceInformationsButtonId" tabindex="0">
           <div class="fr-grid-row fr-grid-row--gutters">
             <DescriptionList>
@@ -186,35 +224,13 @@
               </template>
             </DescriptionList>
           </div>
-          <template v-if="resource.schema.name">
-            <h5 class="fr-h6 fr-mt-1w fr-mb-5v">{{$t('Schema')}}</h5>
-            <p class="fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left fr-mb-2w">
-              {{resource.schema.name}}
-            </p>
-            <div v-if="loading">
-              <SchemaLoader/>
-            </div>
-            <div v-else>
-              <a
-                v-if="authorizeValidation"
-                class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v fr-btn--icon-left fr-icon-checkbox-line"
-                :href="validationUrl"
-              >
-                {{ $t('See validation report') }}
-              </a>
-              <a
-                class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-book-2-line"
-                :href="documentationUrl"
-              >
-                {{ $t('See schema documentation') }}
-              </a>
+          <template v-if="resource.description">
+            <h5 class="fr-text--sm fr-my-0 fr-text--bold">
+              {{ $t("File description") }}
+            </h5>
+            <div class="fr-mt-0 markdown" v-html="filters.markdown(resource.description)">
             </div>
           </template>
-          <h5 class="fr-text--sm fr-my-0 fr-text--bold">
-            {{ $t("File description") }}
-          </h5>
-          <div class="fr-mt-0 markdown" v-if="resource.description" v-html="filters.markdown(resource.description)">
-          </div>
           <div class="text-align-right" v-if="!hasExplore && resource.preview_url">
             <a
               :href="resource.preview_url"
@@ -242,7 +258,7 @@ import DescriptionList from "../../utils/description-list/description-list.vue";
 import DescriptionTerm from "../../utils/description-list/description-term.vue";
 import useSchema from "../../../composables/useSchema";
 import useComponentsForHook from "../../../composables/useComponentsForHook";
-import { explorable_resources } from "../../../config";
+import { explorable_resources, schema_documentation_url } from "../../../config";
 
 export default defineComponent({
   components: {DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, SchemaLoader},
@@ -257,6 +273,7 @@ export default defineComponent({
       default: false,
     },
     resource: {
+      /** @type {import("vue").PropType<import("../../../api/resources").Resource>} */
       type: Object,
       required: true,
     },
@@ -286,7 +303,9 @@ export default defineComponent({
     const availabilityChecked = computed(() => props.resource.extras && props.resource.extras['check:status']);
     const lastUpdate = computed(() => props.resource.published > props.resource.last_modified ? props.resource.published : props.resource.last_modified);
     const unavailable = computed(() => availabilityChecked.value && availabilityChecked.value >= 400);
-    const { authorizeValidation, documentationUrl, loading, validationUrl} = useSchema(props.resource);
+    const { authorizeValidation, documentationUrl, loading, validationUrl, schemaReport} = useSchema(props.resource);
+    const hasSchema = computed(() => !!props.resource.schema.name);
+    const hasSchemaErrors = computed(() => !!schemaReport.value.size);
     const explore = getComponentsForHook("explore");
     const structure = getComponentsForHook("data-structure");
     const hasExplore = computed(() => explore.length > 0 && explorable_resources && explorable_resources.includes(props.resource.id));
@@ -330,6 +349,10 @@ export default defineComponent({
       explore,
       hasExplore,
       structure,
+      schemaReport,
+      hasSchema,
+      hasSchemaErrors,
+      schema_documentation_url,
     }
   },
 });
