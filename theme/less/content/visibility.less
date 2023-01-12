@@ -72,6 +72,11 @@ each(@dsfr-breakpoints, .(@bk, @_k, @_i) {
             display: inline!important;
         }
     }
+    @media @@var {
+        .flex-@{bk} {
+            display: flex!important;
+        }
+    }
 });
 
 .z-2 {
