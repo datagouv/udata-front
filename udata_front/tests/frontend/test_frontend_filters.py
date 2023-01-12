@@ -232,11 +232,6 @@ class FrontEndRootTest:
         with pytest.raises(ValueError):
             render_template_string('{{"value"|daterange}}')
 
-    def test_ficon(self):
-        '''Should render a font-awesome icon class'''
-        assert render_template_string('{{ficon("icon")}}') == 'fa fa-icon'
-        assert render_template_string('{{ficon("fa-icon")}}') == 'fa fa-icon'
-
     def test_i18n_alternate_links(self, app, client):
         test = I18nBlueprint('test', __name__)
 

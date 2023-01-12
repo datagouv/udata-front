@@ -319,15 +319,6 @@ def daterange(value, details=False):
 
 @front.app_template_filter()
 @front.app_template_global()
-def ficon(value):
-    '''A simple helper for font icon class'''
-    return ('fa {0}'.format(value)
-            if value.startswith('fa')
-            else 'fa fa-{0}'.format(value))
-
-
-@front.app_template_filter()
-@front.app_template_global()
 def i18n_alternate_links():
     """Render the <link rel="alternate" hreflang />
 
