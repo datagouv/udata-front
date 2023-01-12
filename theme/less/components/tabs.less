@@ -76,6 +76,15 @@ You can use tabs from DSFR. It uses DSFR colors and conventions. It allows you t
     --background-action-low-blue-france-hover: @background-action-low-blue-cumulus-hover;
     --background-action-low-blue-france-active: @background-action-low-blue-cumulus-active;
     z-index: 1;
+    &:not([data-fr-js-tabs-group]) {
+        display: block;
+    }
+    & > .fr-tabs__panel:not([data-fr-js-tab-panel]) {
+        transform: translate(0%);
+        &:not(.fr-tabs__panel--selected) {
+            visibility: visible;
+        }
+    }
 }
 
 .fr-tabs--full-page {
@@ -84,13 +93,13 @@ You can use tabs from DSFR. It uses DSFR colors and conventions. It allows you t
         padding-top: 2.5rem;
         padding-bottom: 7.5rem;
     }
-    & > .fr-tabs__panel--direction-start {
+    & > .fr-tabs__panel--direction-start[data-fr-js-tab-panel] {
         transform: translate(-200%);
     }
-    & > .fr-tabs__panel--selected {
+    & > .fr-tabs__panel--selected[data-fr-js-tab-panel] {
         transform: translate(-100%);
     }
-    & > .fr-tabs__panel--direction-end {
+    & > .fr-tabs__panel--direction-end[data-fr-js-tab-panel] {
         transform: translate(0%);
     }
     &::after {
