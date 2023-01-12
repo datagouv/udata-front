@@ -156,6 +156,7 @@ def group_resources_by_type(resources):
             ordered[(rtype, plurals[rtype])] = groups[rtype]
     return ordered
 
+
 @blueprint.app_template_filter()
 def group_resources_by_schema(resources):
     """Group a list of `resources` by `schema`"""
