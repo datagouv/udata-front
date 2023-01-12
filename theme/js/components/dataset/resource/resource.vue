@@ -122,7 +122,7 @@
           <hr class="fr-my-5v fr-p-1v" v-if="hasExplore && hasSchema"/>
           <template v-if="hasSchema">
             <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle">
-              <div class="fr-col">
+              <div class="fr-col-12 fr-col-lg">
                 <h5 class="fr-h6 fr-mb-5v">{{$t('Data schema')}}</h5>
                 <ul class="fr-tags-group" v-if="hasSchemaErrors">
                   <li v-for="schemaError in schemaReport">
