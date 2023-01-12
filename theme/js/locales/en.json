@@ -138,7 +138,7 @@
   "Error getting search results.": "Error getting search results.",
   "An error occurred while featuring this subject.": "An error occurred while featuring this subject.",
   "Add a community resource": "Add a community resource",
-  "{n} discussions": "{n} discussions",
+  "{n} discussions": "{n} discussions | {n} discussion | {n} discussions",
   "Featured": "Featured",
   "Standard": "Standard",
   "Remove from favourites": "Remove from favourites",

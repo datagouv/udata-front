@@ -12,10 +12,9 @@ Discussions allow users to interact with others.
 
 <template>
   <section class="discussions-wrapper" ref="top" key="top">
-    <div class="fr-grid-row">
+    <div class="fr-grid-row" v-if="totalResults">
       <div class="fr-col">
         <h2 id="community-discussions" class="subtitle subtitle--uppercase">{{ $t("{n} discussions", totalResults) }}</h2>
-        <slot></slot>
       </div>
       <div class="fr-col-12 fr-col-sm-6 fr-col-md-5 fr-col-lg-4 fr-grid-row fr-grid-row--bottom flex-direction-column justify-between" v-if="!threadFromURL">
         <ThreadsCreateButton class="fr-col--bottom" :onClick="startThreadWithoutScroll"/>
@@ -38,6 +37,9 @@ Discussions allow users to interact with others.
         </select>
         </div>
       </div>
+    </div>
+    <div class="fr-grid-row fr-grid-row--center" v-else>
+      <ThreadsCreateButton class="fr-col--bottom" :primary="true" :onClick="startThreadWithoutScroll"/>
     </div>
     <transition mode="out-in">
       <template v-if="loading" key="loader">
@@ -169,7 +171,7 @@ export default defineComponent({
       // We can pass a second "scroll" variable to true if we want to scroll to the top of the discussions section
       // This is useful for bottom of the page navigation buttons
       if (this.$refs.top && scroll) {
-        this.$refs.top.scrollIntoView({ behavior: "smooth" });
+        setTimeout(() => this.$refs.top.scrollIntoView({ behavior: "smooth" }), 500);
       }
 
       return this.$api

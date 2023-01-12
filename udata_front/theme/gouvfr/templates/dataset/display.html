@@ -243,7 +243,20 @@
                         {% endif %}
                     </noscript>
                 {% else %}
-                    <p class="text-center">{{ _('No resources') }}</p>
+                    <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-mt-5w">
+                    {% include theme('svg/blank_state/resource.svg') %}
+                    <p class="fr-h6 fr-mt-2w fr-mb-5v text-center">
+                        {{ _('There is no resources for this dataset yet.') }}
+                    </p>
+                    <p>
+                        <a
+                            class="fr-btn"
+                            href="{{ url_for('admin.index', path='resource/new/', **{'dataset_id': dataset.id}) }}"
+                        >
+                            {{ _('Add a resource') }}
+                        </a>
+                    </p>
+                </div>
                 {% endfor %}
             </div>
             {# Maybe put this after the real description instead of after the resource cards ? Not sure #}
@@ -274,20 +287,21 @@
         </div>
     </div>
     <div id="discussions" class="fr-tabs__panel" role="tabpanel" aria-labelledby="discussions-tabs" tabindex="0">
-        <div class="fr-container">
-            <div class="vuejs">
-                <discussion-threads
-                    ref="discussions"
-                    subject-id="{{ dataset.id }}"
-                    subject-class="{{ dataset.__class__.__name__ }}"
-                >
-                    {% if dataset.organization %}
-                        <p>{{ _('Discussion between the organization and the community about this dataset.') }}</p>
-                    {% elif dataset.owner %}
-                        <p>{{ _('Discussion between the owner and the community about this dataset.') }}</p>
-                    {% endif %}
-                </discussion-threads>
-            </div>
+        <div class="fr-container vuejs">
+            {% if not dataset.metrics.discussions %}
+                <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-mt-5w" data-no-discussion>
+                    {% include theme('svg/blank_state/discussion.svg') %}
+                    <p class="fr-h6 fr-mt-2w fr-mb-5v text-center">
+                        {{ _('There is no discussions for this dataset yet.') }}
+                    </p>
+                </div>
+            {% endif %}
+            <discussion-threads
+                ref="discussions"
+                subject-id="{{ dataset.id }}"
+                subject-class="{{ dataset.__class__.__name__ }}"
+            >
+            </discussion-threads>
         </div>
     </div>
     <div
@@ -303,7 +317,6 @@
                 "fr-icon-alert-line",
                 _("These resources are published by the community and the producer isn't responsible for them.")
             )}}
-            {% endif %}
             <div class="resource-list vuejs">
                 <dataset-resources
                     dataset-id="{{ dataset.id }}"
@@ -319,6 +332,28 @@
                     {% endfor %}
                 </noscript>
             </div>
+            {% else %}
+                <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-mt-5w">
+                    {% include theme('svg/blank_state/resource.svg') %}
+                    <p class="fr-h6 fr-mt-2w fr-mb-5v text-center">
+                        {{ _('There is no community resources for this dataset yet.') }}
+                    </p>
+                    <p>
+                        <a
+                            class="fr-btn"
+                            href="{{ url_for('admin.index', path='resource/new/', **{'dataset_id': dataset.id}) }}"
+                        >
+                            {{ _('Share your resources') }}
+                        </a>
+                        <a
+                            class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-ml-1w"
+                            href="{{ url_for('admin.index', path='resource/new/', **{'dataset_id': dataset.id}) }}"
+                        >
+                            {{ _('Learn more about the community') }}
+                        </a>
+                    </p>
+                </div>
+            {% endif %}
         </div>
     </div>
     <div

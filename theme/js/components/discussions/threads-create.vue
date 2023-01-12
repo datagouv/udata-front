@@ -121,6 +121,7 @@ export default {
           vm.loading = false;
           vm.showForm = false;
           vm.title = vm.comment = "";
+          document.querySelector("[data-no-discussion]")?.remove();
         });
     },
   },
