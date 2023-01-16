@@ -244,19 +244,19 @@
                     </noscript>
                 {% else %}
                     <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-mt-5w">
-                    {% include theme('svg/blank_state/resource.svg') %}
-                    <p class="fr-h6 fr-mt-2w fr-mb-5v text-center">
-                        {{ _('There is no resources for this dataset yet.') }}
-                    </p>
-                    <p>
-                        <a
-                            class="fr-btn"
-                            href="{{ url_for('admin.index', path='resource/new/', **{'dataset_id': dataset.id}) }}"
-                        >
-                            {{ _('Add a resource') }}
-                        </a>
-                    </p>
-                </div>
+                        {% include theme('svg/blank_state/resource.svg') %}
+                        <p class="fr-h6 fr-mt-2w fr-mb-5v text-center">
+                            {{ _('There is no resources for this dataset yet.') }}
+                        </p>
+                        <p>
+                            <a
+                                class="fr-btn"
+                                href="{{ url_for('admin.index', path='resource/new/', **{'dataset_id': dataset.id}) }}"
+                            >
+                                {{ _('Add a resource') }}
+                            </a>
+                        </p>
+                    </div>
                 {% endfor %}
             </div>
             {# Maybe put this after the real description instead of after the resource cards ? Not sure #}
@@ -265,7 +265,8 @@
     </div>
     <div id="community-reuses" class="fr-tabs__panel" role="tabpanel" aria-labelledby="tabpanel-405" tabindex="0">
         <div class="fr-container">
-            <div class="fr-grid-row fr-mb-3v">
+            {% if reuses|length %}
+                <div class="fr-grid-row fr-mb-3v">
                 <h2 class="subtitle subtitle--uppercase fr-col">{{ ngettext('%(num)d Reuse', '%(num)d Reuses', total_reuses) }}</h2>
                 {% if not read_only_mode %}
                     <div class="fr-col-12 fr-col-sm-6 fr-col-md-5 fr-col-lg-4 text-align-right">
@@ -284,6 +285,29 @@
                 {% endfor %}
             </div>
             {{ paginator(reuses, arg_name='reuses_page', url='#community-reuses') }}
+            {% else %}
+                <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-mt-5w">
+                    {% include theme('svg/blank_state/reuse.svg') %}
+                    <p class="fr-h6 fr-mt-2w fr-mb-5v text-center">
+                        {{ _('There is no reuses for this dataset yet.') }}
+                    </p>
+                    <p>
+                        <a
+                            class="fr-btn"
+                            href="{{ url_for('admin.index', path='reuse/new/', **{'dataset_id': dataset.id}) }}"
+                        >
+                            {{ _('Publish a reuse') }}
+                        </a>
+                        <a
+                            class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-ml-1w"
+                            href="{{ url_for('admin.index', path='reuse/new/', **{'dataset_id': dataset.id}) }}"
+                        >
+                            {{ _("What's a reuse ?") }}
+                        </a>
+                    </p>
+                </div>
+            {% endif %}
+
         </div>
     </div>
     <div id="discussions" class="fr-tabs__panel" role="tabpanel" aria-labelledby="discussions-tabs" tabindex="0">
@@ -313,25 +337,25 @@
     >
         <div class="fr-container">
             {% if dataset.community_resources|length %}
-            {{ banner_warning(
-                "fr-icon-alert-line",
-                _("These resources are published by the community and the producer isn't responsible for them.")
-            )}}
-            <div class="resource-list vuejs">
-                <dataset-resources
-                    dataset-id="{{ dataset.id }}"
-                    type="community"
-                    type-label="{{ ngettext('%(num)d Community resource', '%(num)d Community resources', dataset.community_resources|length) }}"
-                    :can-edit-resources='{{ dataset.community_resources|permissions|tojson|safe }}'
-                    :first-group="true"
-                >
-                </dataset-resources>
-                <noscript>
-                    {% for resource in dataset.community_resources %}
-                    {% include theme('dataset/resource/card.html') %}
-                    {% endfor %}
-                </noscript>
-            </div>
+                {{ banner_warning(
+                    "fr-icon-alert-line",
+                    _("These resources are published by the community and the producer isn't responsible for them.")
+                )}}
+                <div class="resource-list vuejs">
+                    <dataset-resources
+                        dataset-id="{{ dataset.id }}"
+                        type="community"
+                        type-label="{{ ngettext('%(num)d Community resource', '%(num)d Community resources', dataset.community_resources|length) }}"
+                        :can-edit-resources='{{ dataset.community_resources|permissions|tojson|safe }}'
+                        :first-group="true"
+                    >
+                    </dataset-resources>
+                    <noscript>
+                        {% for resource in dataset.community_resources %}
+                        {% include theme('dataset/resource/card.html') %}
+                        {% endfor %}
+                    </noscript>
+                </div>
             {% else %}
                 <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-mt-5w">
                     {% include theme('svg/blank_state/resource.svg') %}
