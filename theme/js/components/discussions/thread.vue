@@ -6,14 +6,13 @@
       </div>
       <h3 class="fr-mx-3v fr-mx-md-0 fr-h6 fr-mb-0">{{ title }}</h3>
       <div class="text-align-right">
-        <a
+        <button
           :id="id + '-copy'"
-          :href="discussionUrl(id, true)"
           :data-clipboard-text="discussionExternalUrl(id)"
-          class="fr-link fr-link--icon-right fr-icon-links-fill unstyled"
+          class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-right fr-icon-links-fill"
         >
           {{$t('Copy permalink')}}
-        </a>
+      </button>
       </div>
     </header>
     <div>
@@ -113,11 +112,11 @@ export default defineComponent({
     },
   },
   methods: {
-    discussionUrl(id, link = false) {
-      return (link ? "#" : "") + "discussion-" + id;
+    discussionUrl(id) {
+      return "discussions/" + id;
     },
     discussionExternalUrl(id) {
-      let hash = this.discussionUrl(id, true)
+      let hash = "#" + this.discussionUrl(id)
       return window.location.origin + window.location.pathname + hash
     },
     replyToThread (values) {

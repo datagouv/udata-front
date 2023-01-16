@@ -152,6 +152,7 @@
                     role="tab"
                     aria-selected="true"
                     aria-controls="resources"
+                    data-update-url
                 >
                     {{ _('Files') }}
                     <sup>{{count_resources}}</sup>
@@ -165,6 +166,7 @@
                     role="tab"
                     aria-selected="false"
                     aria-controls="community-reuses"
+                    data-update-url
                 >
                     {{ _('Reuses') }}
                     <sup>{{ total_reuses }}</sup>
@@ -178,6 +180,7 @@
                     role="tab"
                     aria-selected="false"
                     aria-controls="discussions"
+                    data-update-url
                 >
                     {{_('Discussions')}}
                     <sup>{{ dataset.metrics.discussions or 0 }}</sup>
@@ -191,6 +194,7 @@
                     role="tab"
                     aria-selected="false"
                     aria-controls="community-resources"
+                    data-update-url
                 >
                     {{ _('Community resources') }}
                     <sup>{{ dataset.community_resources|length }}</sup>
@@ -204,6 +208,7 @@
                     role="tab"
                     aria-selected="false"
                     aria-controls="informations"
+                    data-update-url
                 >
                     {{ _("Informations") }}
                 </button>

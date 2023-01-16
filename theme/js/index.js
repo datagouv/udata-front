@@ -18,6 +18,7 @@ import Tabs from "./components/vanilla/tabs";
 import Accordion from "./components/vanilla/accordion";
 import Clipboard from "./components/vanilla/clipboard";
 import SortSearch from "./components/vanilla/sort-search";
+import UpdateUrl from "./components/vanilla/update-url";
 
 import Toaster from "@meforma/vue-toaster";
 

@@ -68,62 +68,81 @@
 </template>
 
 <script>
-import config from "../../config";
+import { defineComponent, inject, ref } from "vue";
+import { auth } from "../../plugins/auth";
+import { user } from "../../config";
 import Author from "./author.vue";
 import ThreadsCreateButton from "./threads-create-button.vue";
 
-export default {
+export default defineComponent({
   components: {
     ThreadsCreateButton,
-    Author
-  },
-  data() {
-    return {
-      loading: false,
-      showForm: false,
-      title: "",
-      comment: "",
-      user: config.user,
-    };
+    Author,
   },
   props: {
     showCreateButton: {
       type: Boolean,
       default: false
     },
-    subjectId: String,
-    subjectClass: String,
-    onSubmit: Function,
+    subjectId: {
+      type: String,
+      required: true,
+    },
+    subjectClass: {
+      type: String,
+      required: true,
+    },
+    onSubmit: {
+      type: Function,
+      required: true,
+    },
   },
-  methods: {
-    displayForm() {
-      this.$auth();
-      this.showForm = true;
-    },
-    hideForm() {
-      this.showForm = false;
-    },
-    submit() {
-      const vm = this;
-      this.loading = true;
+  setup(props) {
+    const loading = ref(false);
+    const showForm = ref(false);
+    const title = ref("");
+    const comment = ref("");
+
+    const displayForm = () => {
+      auth();
+      showForm.value = true;
+    };
+
+    const hideForm = () => {
+      showForm.value = false;
+    };
+
+    const submit = () => {
+      loading.value = true;
 
       const values = {
-        title: this.title,
-        comment: this.comment,
+        title: title.value,
+        comment: comment.value,
         subject: {
-          id: this.subjectId,
-          class: this.subjectClass,
+          id: props.subjectId,
+          class: props.subjectClass,
         },
       };
 
-      if (this.onSubmit)
-        this.onSubmit(values).finally(() => {
-          vm.loading = false;
-          vm.showForm = false;
-          vm.title = vm.comment = "";
+      if (props.onSubmit)
+        props.onSubmit(values).finally(() => {
+          loading.value = false;
+          showForm.value = false;
+          title.value = comment.value = "";
           document.querySelector("[data-no-discussion]")?.remove();
         });
-    },
-  },
-};
+    };
+
+    return {
+      loading,
+      showForm,
+      title,
+      comment,
+      user,
+      displayForm,
+      hideForm,
+      submit,
+    };
+  }
+});
 </script>
