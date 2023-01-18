@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 3.1.0 (2023-01-18)
 
 > **Note** <br>
