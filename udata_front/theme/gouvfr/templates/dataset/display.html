@@ -39,7 +39,7 @@
 {% endblock %}
 
 {% block toolbar %}
-{% cache cache_duration, 'dataset-breadcrumb', dataset.id|string, g.lang_code, dataset.last_modified|string %}
+{% cache cache_duration, 'dataset-toolbar', dataset.id|string, g.lang_code, dataset.last_modified|string %}
 {{ follow_btn(dataset) }}
 {{ hook('dataset.display.explore-button') }}
 {% if can_edit %}
