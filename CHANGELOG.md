@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 3.1.0 (2023-01-18)
 
 > **Note** <br>
 > This changes the build system from Parcel to Vite.
