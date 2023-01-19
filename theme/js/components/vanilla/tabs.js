@@ -24,31 +24,27 @@ Tip : if the `aria-controls` is invalid (no div with specified `id`), the tabs w
 ```
 */
 
-export default (() => {
-  document.addEventListener("DOMContentLoaded", () => {
-    const tabs = document.querySelectorAll("[data-tabs]");
-    tabs.forEach((tab) => {
-      const tabsButtons = tab.querySelectorAll("[role=tab]");
-      tabsButtons.forEach((tabButton) => {
-        tabButton.addEventListener("click", (el) => {
-          el.preventDefault();
+const tabs = document.querySelectorAll("[data-tabs]");
+tabs.forEach((tab) => {
+  const tabsButtons = tab.querySelectorAll("[role=tab]");
+  tabsButtons.forEach((tabButton) => {
+    tabButton.addEventListener("click", (el) => {
+      el.preventDefault();
 
-          const previouslyActive = Array.from(tabsButtons).find((tab) =>
-            tab.getAttribute("aria-selected") === "true"
-          );
-          if (previouslyActive) {
-            previouslyActive.setAttribute("aria-selected", "false");
-            document
-              .getElementById(previouslyActive.getAttribute("aria-controls"))
-              .classList.remove("fr-unhidden");
-          }
+      const previouslyActive = Array.from(tabsButtons).find((tab) =>
+        tab.getAttribute("aria-selected") === "true"
+      );
+      if (previouslyActive) {
+        previouslyActive.setAttribute("aria-selected", "false");
+        document
+          .getElementById(previouslyActive.getAttribute("aria-controls"))
+          .classList.remove("fr-unhidden");
+      }
 
-          el.target.setAttribute("aria-selected", "true");
-          document
-            .getElementById(el.target.getAttribute("aria-controls"))
-            .classList.add("fr-unhidden");
-        });
-      });
+      el.target.setAttribute("aria-selected", "true");
+      document
+        .getElementById(el.target.getAttribute("aria-controls"))
+        .classList.add("fr-unhidden");
     });
   });
-})();
+});
