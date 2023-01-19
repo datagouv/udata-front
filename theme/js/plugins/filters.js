@@ -6,6 +6,7 @@ import "dayjs/locale/fr";
 import "dayjs/locale/en";
 import "dayjs/locale/es";
 import LocalizedFormat from 'dayjs/plugin/localizedFormat'
+import {useI18n} from 'vue-i18n'
 
 dayjs.extend(LocalizedFormat);
 dayjs.locale(config.lang);
@@ -21,7 +22,8 @@ const excerpt = (val, length = 300) => {
 };
 
 const filesize = (val) => {
-    const suffix = 'o'
+    const { t } = useI18n();
+    const suffix = t('B')
     const units = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z']
     for (let unit of units) {
         if (Math.abs(val) < 1024.0) {

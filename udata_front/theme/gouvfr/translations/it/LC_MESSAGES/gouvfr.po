@@ -77,6 +77,10 @@ msgstr ""
 msgid "%(start)s to %(end)s"
 msgstr ""
 
+#: udata_front/frontend/resource_helpers.py:23
+msgid "B"
+msgstr ""
+
 #: udata_front/theme/gouvfr/__init__.py:46
 #: udata_front/theme/gouvfr/templates/dataset/display.html:457
 #: udata_front/views/site.py:188
@@ -1031,6 +1035,10 @@ msgstr ""
 msgid "Following since %(date)s"
 msgstr ""
 
+#: udata_front/theme/gouvfr/templates/macros/breadcrumb.html:8
+msgid "You're here:"
+msgstr ""
+
 #: udata_front/theme/gouvfr/templates/macros/certified.html:3
 #, python-format
 msgid "The identity of this public service is certified by %(certifier)s"
@@ -1512,15 +1520,19 @@ msgstr ""
 msgid "This post has been deleted. This will be permanent in the next 24 hours"
 msgstr ""
 
-#: udata_front/theme/gouvfr/templates/post/display.html:111
+#: udata_front/theme/gouvfr/templates/post/display.html:106
+msgid "Navigate in the post collection"
+msgstr ""
+
+#: udata_front/theme/gouvfr/templates/post/display.html:115
 msgid "Previous post"
 msgstr ""
 
-#: udata_front/theme/gouvfr/templates/post/display.html:117
+#: udata_front/theme/gouvfr/templates/post/display.html:121
 msgid "All posts"
 msgstr ""
 
-#: udata_front/theme/gouvfr/templates/post/display.html:126
+#: udata_front/theme/gouvfr/templates/post/display.html:130
 msgid "Next post"
 msgstr ""
 
@@ -1704,16 +1716,16 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: udata_front/theme/gouvfr/templates/security/change_password.html:10
-#: udata_front/theme/gouvfr/templates/security/change_password.html:17
-msgid "Change Password"
+#: udata_front/theme/gouvfr/templates/security/change_email.html:10
+#: udata_front/theme/gouvfr/templates/security/change_email.html:17
+msgid "Change email"
 msgstr ""
 
-#: udata_front/theme/gouvfr/templates/security/change_password.html:12
-#: udata_front/theme/gouvfr/templates/security/forgot_password.html:12
-msgid "Forgotten your password? Enter your email address below, and we'll email instructions for setting a new one."
+#: udata_front/theme/gouvfr/templates/security/change_email.html:12
+msgid "You want to change your email? Enter the new email below."
 msgstr ""
 
+#: udata_front/theme/gouvfr/templates/security/change_email.html:15
 #: udata_front/theme/gouvfr/templates/security/change_password.html:15
 #: udata_front/theme/gouvfr/templates/security/forgot_password.html:15
 #: udata_front/theme/gouvfr/templates/security/login_user.html:14
@@ -1723,11 +1735,24 @@ msgstr ""
 msgid "Fields preceded by a star (<span class='required-field-star'>*</span>) are required."
 msgstr ""
 
+#: udata_front/theme/gouvfr/templates/security/change_password.html:10
+#: udata_front/theme/gouvfr/templates/security/change_password.html:17
+msgid "Change Password"
+msgstr ""
+
+#: udata_front/theme/gouvfr/templates/security/change_password.html:12
+msgid "You want to change your password? Enter your current password and new password below."
+msgstr ""
+
 #: udata_front/theme/gouvfr/templates/security/forgot_password.html:10
 #: udata_front/theme/gouvfr/templates/security/forgot_password.html:17
 #: udata_front/theme/gouvfr/templates/security/reset_password.html:11
 #: udata_front/theme/gouvfr/templates/security/reset_password.html:15
 msgid "Reset Password"
+msgstr ""
+
+#: udata_front/theme/gouvfr/templates/security/forgot_password.html:12
+msgid "Forgotten your password? Enter your email address below, and we'll email instructions for setting a new one."
 msgstr ""
 
 #: udata_front/theme/gouvfr/templates/security/login_user.html:19

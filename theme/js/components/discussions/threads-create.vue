@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { defineComponent, inject, ref } from "vue";
+import { defineComponent, ref } from "vue";
 import { auth } from "../../plugins/auth";
 import { user } from "../../config";
 import Author from "./author.vue";
