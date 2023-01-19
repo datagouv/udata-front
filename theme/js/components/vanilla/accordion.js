@@ -30,7 +30,6 @@ The accordion panel needs to have :
 import { easing, tween, styler } from "popmotion";
 
 const togglers = document.querySelectorAll("[data-accordion-button]");
-console.log(togglers)
 togglers.forEach((toggler) => {
   toggler.addEventListener("click", (ev) => {
     ev.preventDefault();
