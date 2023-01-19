@@ -12,7 +12,6 @@ import {api, apiv2} from "../plugins/api";
  * @property {string} last_modified
  * @property {string} last_update
  * @property {string} preview_url
- * @property {string} published
  * @property {Object} schema
  * @property {string} url
  */
