@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix vanilla js scripts [#196](https://github.com/etalab/udata-front/pull/196)
 
 ## 3.1.0 (2023-01-18)
 
