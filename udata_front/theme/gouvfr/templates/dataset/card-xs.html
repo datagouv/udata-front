@@ -56,7 +56,7 @@
                 </a>
             </h4>
             {% if dataset.organization or dataset.owner %}
-            <p class="not-enlarged fr-m-0 fr-mt-1v">
+            <p class="not-enlarged fr-m-0 fr-mt-1v fr-text--sm">
                 {{ _('From') }}
                 {% if dataset.organization %}
                 <a href="{{ url_for('organizations.show', org=dataset.organization) }}">

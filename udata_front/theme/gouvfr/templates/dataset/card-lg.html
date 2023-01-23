@@ -56,7 +56,7 @@
                 </a>
             </h4>
             {% if dataset.organization or dataset.owner %}
-            <p class="not-enlarged fr-m-0">
+            <p class="not-enlarged fr-m-0 fr-text--sm">
                 {{ _('From') }}
                 {% if dataset.organization %}
                 <a href="{{ url_for('organizations.show', org=dataset.organization) }}">
@@ -76,7 +76,7 @@
                     {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
                 </p>
                 {% if dataset.license %}
-                <p class="dash-before">
+                <p class="dash-before fr-m-0">
                     <code class="bg-alt-grey fr-px-1v text-grey-380 not-enlarged">
                         {% if dataset.license.url %}<a href="{{ dataset.license.url }}">{% endif %}
                         {{ dataset.license.title }}

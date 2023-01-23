@@ -59,8 +59,10 @@
         </a>
     </div>
     {% else %}
-    <span class="fr-icon-info-line" aria-hidden="true"></span>
-    {{_('Metadata quality:')}}
+    <p class="fr-m-0 fr-grid-row fr-grid-row--middle">
+        <span class="fr-icon-info-line fr-mr-1v" aria-hidden="true"></span>
+        {{_('Metadata quality:')}}
+    </p>
     {{quality_score(dataset.quality.score)}}
     {% endif %}
 {% endcall %}

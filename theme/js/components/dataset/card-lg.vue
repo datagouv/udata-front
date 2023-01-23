@@ -39,18 +39,18 @@
             <small v-if="acronym">{{ acronym }}</small>
           </a>
         </h4>
-        <span class="not-enlarged" v-if="organization || owner">
+        <p class="not-enlarged fr-m-0 fr-text--sm" v-if="organization || owner">
           {{ $t('From') }}
           <a :href="organization.page" v-if="organization">
-              <OrganizationNameWithCertificate :organization="organization" />
+            <OrganizationNameWithCertificate :organization="organization" />
           </a>
           <template v-if="owner">{{ownerName}}</template>
-        </span>
+        </p>
         <p class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm">
           {{ $filters.excerpt(description, 160) }}
         </p>
-        <p class="fr-mb-0 text-mention-grey">
-          <Tooltip class="fr-hidden inline-sm">
+        <p class="fr-m-0 fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
+          <Tooltip class="fr-hidden fr-grid-row fr-grid-row--middle flex-sm">
               <template #tooltip>
                 <h5 class="fr-text--sm fr-my-0">{{$t("Metadata quality:")}}</h5>
                 <QualityItem
@@ -110,9 +110,9 @@
               </span>
               <QualityScore :score="quality.score"/>
           </Tooltip>
-          <span class="fr-hidden inline-sm">
+          <div class="fr-hidden fr-unhidden-sm fr-mx-1v">
             &mdash;
-          </span>
+          </div>
           {{ $t('Updated on {date}', {date: $filters.formatDate(last_update)}) }}
         </p>
       </div>
