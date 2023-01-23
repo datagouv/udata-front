@@ -29,29 +29,24 @@ The accordion panel needs to have :
 
 import { easing, tween, styler } from "popmotion";
 
-export default (() => {
-  document.addEventListener("DOMContentLoaded", () => {
-    const togglers = document.querySelectorAll("[data-accordion-button]");
+const togglers = document.querySelectorAll("[data-accordion-button]");
+togglers.forEach((toggler) => {
+  toggler.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    const button = ev.target;
+    if (button instanceof HTMLElement) {
+      // Toggling the aria-expanded attribute on the button
+      button.toggleAttribute("aria-expanded");
 
-    togglers.forEach((toggler) => {
-      toggler.addEventListener("click", (ev) => {
-        ev.preventDefault();
-        const button = ev.target;
-        if (button instanceof HTMLElement) {
-          // Toggling the aria-expanded attribute on the button
-          button.toggleAttribute("aria-expanded");
-
-          /** @type {HTMLElement | null} */
-          const target = document.querySelector("#" + button.getAttribute("aria-controls"));
-          if (target) {
-            target.classList.toggle("active");
-            toggleAccordion(target, button.getAttribute("aria-expanded") === "true");
-          }
-        }
-      });
-    });
+      /** @type {HTMLElement | null} */
+      const target = document.querySelector("#" + button.getAttribute("aria-controls"));
+      if (target) {
+        target.classList.toggle("active");
+        toggleAccordion(target, button.getAttribute("aria-expanded") === "true");
+      }
+    }
   });
-})();
+});
 
 /**
  * @param {HTMLElement} target

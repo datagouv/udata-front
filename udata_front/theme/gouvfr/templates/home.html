@@ -118,7 +118,6 @@
                             class="fr-tag"
                             {% if loop.first %}
                                 aria-selected="true"
-                            {% else %}
                             {% endif %}
                         >
                             {{ label }}
@@ -140,7 +139,8 @@
         <div class="fr-hidden {% if loop.first %}fr-unhidden{% endif %}" role="tabpanel" id={{tab_id}}>
             <div class="fr-grid-row fr-grid-row--gutters fr-pt-1w">
                 {% for dataset in datasets %}
-                <div class="fr-col-12 fr-col-lg-4">{% include theme('dataset/card-xs.html') %}
+                <div class="fr-col-12 fr-col-lg-4">
+                    {% include theme('dataset/card-xs.html') %}
                 </div>
                 {% endfor %}
             </div>

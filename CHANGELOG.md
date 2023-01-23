@@ -13,6 +13,10 @@
 
 - Add resource exploration preview [#169](https://github.com/etalab/udata-front/pull/169)
 
+## 3.1.1 (2023-01-20)
+
+- Fix vanilla js scripts [#196](https://github.com/etalab/udata-front/pull/196)
+
 ## 3.1.0 (2023-01-18)
 
 > **Note** <br>

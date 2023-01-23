@@ -14,11 +14,11 @@ import RequestMembership from "./components/organization/request-membership.vue"
 import Resources from "./components/dataset/resource/resources.vue";
 import Captcha from "./components/utils/captcha.vue";
 
-import Tabs from "./components/vanilla/tabs";
-import Accordion from "./components/vanilla/accordion";
-import Clipboard from "./components/vanilla/clipboard";
-import SortSearch from "./components/vanilla/sort-search";
-import UpdateUrl from "./components/vanilla/update-url";
+import "./components/vanilla/tabs";
+import "./components/vanilla/accordion";
+import "./components/vanilla/clipboard";
+import "./components/vanilla/sort-search";
+import "./components/vanilla/update-url";
 
 import Toaster from "@meforma/vue-toaster";
 
