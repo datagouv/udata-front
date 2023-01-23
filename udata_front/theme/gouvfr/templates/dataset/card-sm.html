@@ -23,25 +23,25 @@
             {% if dataset.organization %}
             <img
                 alt="{{ dataset.organization.name|placeholder_alt(dataset.organization.logo) }}"
-                src="{{ dataset.organization.logo(60)|placeholder('organization') }}"
-                width="60"
-                height="60"
+                src="{{ dataset.organization.logo(56)|placeholder('organization') }}"
+                width="56"
+                height="56"
                 loading="lazy"
             />
             {% elif dataset.owner %}
             <img
                 alt="{{ dataset.owner.fullname }}"
-                src="{{ dataset.owner|avatar_url(60) }}"
-                width="60"
-                height="60"
+                src="{{ dataset.owner|avatar_url(56) }}"
+                width="56"
+                height="56"
                 loading="lazy"
             />
             {% else %}
             <img
                 alt=""
                 src="{{ ''|placeholder('organization') }}"
-                width="60"
-                height="60"
+                width="56"
+                height="56"
                 loading="lazy"
             />
             {% endif %}
@@ -68,14 +68,16 @@
             {% endif %}
             <p class="fr-m-0 text-mention-grey">
                 {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
-                {% if dataset.license %}
-                &mdash;
+            </p>
+            {% if dataset.license %}
+            <p class="dash-before">
                 <code class="bg-alt-grey fr-px-1v text-grey-380">
                 {% if dataset.license.url %}<span class="not-enlarged"><a href="{{ dataset.license.url }}">{% endif %}
                 {{ dataset.license.title }}
                 {% if dataset.license.url %}</a></span>{% endif %}
                 </code>
-                {% endif %}
+            </p>
+            {% endif %}
             </p>
         </div>
     </div>

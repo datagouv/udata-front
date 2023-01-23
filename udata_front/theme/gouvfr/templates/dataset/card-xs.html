@@ -24,25 +24,25 @@
             {% if dataset.organization %}
             <img
                 alt="{{ dataset.organization.name|placeholder_alt(dataset.organization.logo) }}"
-                src="{{ dataset.organization.logo(60)|placeholder('organization') }}"
-                width="60"
-                height="60"
+                src="{{ dataset.organization.logo(56)|placeholder('organization') }}"
+                width="56"
+                height="56"
                 loading="lazy"
             />
             {% elif dataset.owner %}
             <img
                 alt="{{ dataset.owner.fullname }}"
-                src="{{ dataset.owner|avatar_url(60) }}"
-                width="60"
-                height="60"
+                src="{{ dataset.owner|avatar_url(56) }}"
+                width="56"
+                height="56"
                 loading="lazy"
             />
             {% else %}
             <img
                 alt=""
                 src="{{ ''|placeholder('organization') }}"
-                width="60"
-                height="60"
+                width="56"
+                height="56"
                 loading="lazy"
             />
             {% endif %}
