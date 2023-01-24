@@ -1,4 +1,5 @@
 {
+  "extends": "@vue/tsconfig/tsconfig.web.json",
   "include": ["src"],
   "compilerOptions": {
     "allowJs": true,
@@ -8,6 +9,7 @@
     "lib": ["dom", "esnext"],
     "declaration": true,
     "declarationMap": true,
+    "emitDeclarationOnly": true,
     "moduleResolution": "node",
     "sourceMap": true,
     "skipLibCheck": true,

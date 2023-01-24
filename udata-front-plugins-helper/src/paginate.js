@@ -55,14 +55,15 @@ function getStartPage(currentPage) {
  * Return an array of page number to show in pagination
  * @param {number} currentPage - Current page
  * @param {number} pageCount - Number of pages
- * @returns {Array<number>}
+ * @returns {Array<number| null>}
  */
 export default function getVisiblePages(currentPage, pageCount) {
   const pages = getPages(pageCount);
   const start = getStartPage(currentPage);
   if (pageCount <= 2) {
-     return [];
+    return [];
   }
+  /** @type {Array<number | null>} */
   let pagination = range(getPagesShown(pages, currentPage), start);
   if(!pagination.includes(2)) {
     pagination.unshift(null);
