@@ -9,6 +9,7 @@
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
+    "declarationDir": "types",
     "moduleResolution": "node",
     "sourceMap": true,
     "skipLibCheck": true,
