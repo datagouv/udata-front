@@ -22,6 +22,7 @@
 */
 
 /** @type {UdataFrontNamespace} */
+// @ts-expect-error.
 const udata_front = globalThis.udata_front ?? {
   components: {},
   translations: [],
