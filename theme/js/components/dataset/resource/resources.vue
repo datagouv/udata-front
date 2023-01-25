@@ -37,7 +37,7 @@
 import {useI18n} from 'vue-i18n'
 import {onMounted, ref, watch, defineComponent} from 'vue';
 import Loader from "../loader.vue";
-import Pagination from "../../pagination/pagination.vue";
+import { Pagination } from "@etalab/udata-front-plugins-helper";
 import Resource from "./resource.vue";
 import config from "../../../config";
 import {useToast} from "../../../composables/useToast";
