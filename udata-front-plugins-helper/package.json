@@ -1,12 +1,13 @@
 {
   "name": "@etalab/udata-front-plugins-helper",
-  "version": "1.0.2-3",
+  "version": "1.0.2-6",
   "description": "Ready-made helper for plugins to integrate them in udata-front.",
   "author": "Etalab",
   "main": "src/index.js",
   "types": "types/index.d.ts",
   "files": [
-    "src"
+    "src",
+    "types"
   ],
   "scripts": {
     "build": "vue-tsc",
