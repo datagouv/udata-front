@@ -49,6 +49,7 @@ pip-log.txt
 cover
 nosetests.xml
 /reports
+/*/coverage
 
 # Translations
 *.mo
