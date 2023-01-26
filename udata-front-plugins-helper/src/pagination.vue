@@ -79,6 +79,7 @@ export default {
           :class="{'fr-hidden fr-unhidden-sm': page > 1}"
           :title="$t('Page', {nb: 1})"
           @click.prevent="onClick(1)"
+          :data-page="1"
         >
           1
         </a>
@@ -91,6 +92,7 @@ export default {
           :href="page === index ? undefined : '#'"
           :title="$t('Page', {nb: index})"
           @click.prevent="onClick(index)"
+          :data-page="index"
           v-if="index"
           >
           {{ index }}
@@ -106,6 +108,7 @@ export default {
           :href="page === pageCount ? undefined : '#'"
           :title="$t('Page', {nb: pageCount})"
           @click.prevent="onClick(pageCount)"
+          :data-page="pageCount"
         >
           {{ pageCount }}
         </a>
@@ -140,7 +143,7 @@ export default defineComponent({
   props: {
     page: {
       type: Number,
-      default: 0,
+      default: 1,
     },
     changePage: {
       type: Function,

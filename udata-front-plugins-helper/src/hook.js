@@ -21,11 +21,20 @@
  * @property {Translations} translations - Translations to add to vue-i18n (see {@link Translation})
 */
 
+/** @type {UdataFrontNamespace?} */
+// @ts-expect-error
+globalThis.udata_front;
+
 /** @type {UdataFrontNamespace} */
-// @ts-expect-error.
+// @ts-expect-error
 const udata_front = globalThis.udata_front ?? {
   components: {},
   translations: [],
+}
+
+export function reset() {
+  udata_front.components = {};
+  udata_front.translations = [];
 }
 
 /**
@@ -57,7 +66,7 @@ export function registerComponent(hook, component, module, name) {
 
 /**
  * @callback RegisterTranslation
- * @param {object} messages - Name of the {@link Hook}
+ * @param {object} messages - Messages translation following vue-i18n format
  * @param {string} [module] - Udata module, logged when the hook is called
  * @returns {Translation}
  */

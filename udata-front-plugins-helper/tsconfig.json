@@ -13,5 +13,6 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "skipLibCheck": true,
+    "types": ["vitest/globals"]
   }
 }
