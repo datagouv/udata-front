@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Move Pagination to `@etalab/udata-front-plugin-helpers` and add tests [#200](https://github.com/etalab/udata-front/pull/200)
 
 ## 3.1.1 (2023-01-20)
 
