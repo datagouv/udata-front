@@ -6,7 +6,7 @@
 {% from theme('macros/breadcrumb.html') import breadcrumb with context %}
 {% from theme('macros/banner_info.html') import banner_info %}
 {% from theme('macros/banner_warning.html') import banner_warning %}
-{% from theme('macros/quality_score_without_tooltip.html') import quality_score_without_tooltip %}
+{% from theme('macros/quality_score_with_warning_below.html') import quality_score_with_warning_below %}
 
 ## FIXME: remove inspire:indentifier robots condition when geo.data.gouv.fr is shutdown
 {% set meta = {
@@ -136,7 +136,7 @@
                 </code>
             </p>
             {% endif %}
-            {{quality_score_without_tooltip(dataset)}}
+            {{quality_score_with_warning_below(dataset)}}
         </section>
     </div>
 </div>

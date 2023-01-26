@@ -1,8 +1,8 @@
 {% from theme('macros/quality_item.html') import quality_item %}
-{% from theme('macros/quality_score.html') import quality_score %}
 {% from theme('macros/tooltip.html') import tooltip %}
-{% macro quality_score_with_tooltip(dataset, class) %}
+{% macro quality_score_tooltip(dataset, class) %}
 
+{% set content =  caller()%}
 {# call() allows us to include content in our tooltip macro, like a <slot> in Vue #}
 {# We use a if/else syntax to mimic the named slot functionality #}
 {% call(slot) tooltip(class) %}
@@ -59,11 +59,7 @@
             </a>
         </div>
     {% else %}
-        <p class="fr-m-0 fr-grid-row fr-grid-row--middle">
-            <span class="fr-icon-info-line fr-mr-1v" aria-hidden="true"></span>
-            {{_('Metadata quality:')}}
-        </p>
-        {{ quality_score(dataset.quality.score) }}
+        {{ content }}
     {% endif %}
 {% endcall %}
 {% endmacro %}
