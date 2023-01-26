@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Fix vanilla js scripts [#196](https://github.com/etalab/udata-front/pull/196)
+- Remove useless published date in resource model [#198](https://github.com/etalab/udata-front/pull/198)
 
 ## 3.1.0 (2023-01-18)
 
