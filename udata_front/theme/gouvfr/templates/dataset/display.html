@@ -104,15 +104,17 @@
                 </p>
             {% endif %}
             {% if external_source(dataset) %}
-            {{ banner_info(
-                "fr-icon-external-link-line",
-                _("This dataset come from an external portal.&nbsp;<a href='{external_source}'>View the original source.</a>")
-                .format(external_source=external_source(dataset))
-            )}}
+                <div class="fr-my-5v fr-text--sm">
+                    {{ banner_info(
+                        "fr-icon-external-link-line",
+                        _("This dataset come from an external portal.&nbsp;<a href='{external_source}'>View the original source.</a>")
+                        .format(external_source=external_source(dataset))
+                    )}}
+                </div>
             {% endif %}
             {# FIXME: remove when geo.data.gouv.fr is shutdown #}
             {% if 'geop:dataset_id' in dataset.extras %}
-            <p class="well well-warning fr-py-3v fr-my-5v">
+            <p class="well well-warning fr-py-3v fr-my-5v fr-text--sm">
                 ⚠️ {{ _("This dataset is handled by the <a href='{geo_link}'>geo.data.gouv.fr</a> platform.
                 This platform is not actively maintained and as a result, you may find some bogus data or metadata.
                 More information about <a href='{blog_link}'>the shutdown of geo.data.gouv.fr is available here.</a>").format(
@@ -121,7 +123,9 @@
                 )}}
             </p>
             {% endif %}
-            {{ hook('dataset.display.transport-banner') }}
+            <div class="fr-my-5v fr-text--sm">
+                {{ hook('dataset.display.transport-banner') }}
+            </div>
             <h2 class="subtitle fr-mt-5v fr-mb-1v">{{ _('Latest update') }}</h2>
             <p class="fr-text--sm fr-mt-0 fr-mb-5v">
                 {{ dataset.last_update|dateformat(format='long') }}
