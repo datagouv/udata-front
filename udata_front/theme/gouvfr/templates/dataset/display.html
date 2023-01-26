@@ -74,11 +74,11 @@
     <div class="fr-grid-row fr-grid-row--gutters fr-mt-3w vuejs">
         <section class="fr-col-12 fr-col-md-8">
             <h2 id="description" class="subtitle fr-mb-1w">{{ _('Description') }}</h2>
-            <read-more>
+            <read-more max-height="description">
                 {{ dataset.description|markdown }}
             </read-more>
         </section>
-        <section class="fr-col-12 fr-col-md-4">
+        <section class="fr-col-12 fr-col-md-4" data-read-more-max-height="description">
             {% if sysadmin %}
             <div class="fr-m-0">
                 <featured-button subject-id="{{ dataset.id }}" subject-type="dataset" :featured="{{ dataset.featured|tojson|safe }}"></featured-button>

@@ -25,6 +25,7 @@ A very simple component that display its content up to a maximum height and then
 <script>
 import { defineComponent } from "vue";
 import { easing, tween, styler } from "popmotion";
+import { number } from "@intlify/core-base";
 
 function getHeight(elt) {
   const style = getComputedStyle(elt);
@@ -39,10 +40,27 @@ export default defineComponent({
   name: "read-more",
   data() {
     return {
-      containerHeight: DEFAULT_HEIGHT,
+      containerHeight: this.defaultHeight,
       expanded: false,
       readMoreRequired: false,
     }
+  },
+  props: {
+    maxHeight: {
+      type: String,
+      default: ""
+    }
+  },
+  computed: {
+    defaultHeight() {
+      const elementMaxHeight = document.querySelector(`[data-read-more-max-height="${this.maxHeight}"]`);
+      if(!elementMaxHeight) {
+        return DEFAULT_HEIGHT
+      }
+      return Array.from(elementMaxHeight.children)
+      .map(getHeight)
+      .reduce((total, height) => total + height, 0);
+    },
   },
   mounted() {
     this.updateReadMoreHeight();
@@ -54,7 +72,7 @@ export default defineComponent({
       const divStyler = styler(this.$refs.container);
       if (this.expanded) {
             tween({
-              from: { height: DEFAULT_HEIGHT },
+              from: { height: this.defaultHeight },
               to: { height: this.$refs.container.scrollHeight },
               duration: 300,
               ease: easing.anticipate,
@@ -65,7 +83,7 @@ export default defineComponent({
           } else {
             tween({
               from: { height: this.$refs.container.scrollHeight },
-              to: { height: DEFAULT_HEIGHT },
+              to: { height: this.defaultHeight },
               duration: 300,
               ease: easing.anticipate,
             }).start(divStyler.set);
@@ -75,7 +93,8 @@ export default defineComponent({
       let contentHeight = Array.from(this.$refs.container.children)
       .map(getHeight)
       .reduce((total, height) => total + height, 0)
-      this.containerHeight = DEFAULT_HEIGHT;
+      this.containerHeight = this.defaultHeight;
+      console.log(this.containerHeight);
       this.readMoreRequired = contentHeight > this.containerHeight;
       if(!this.readMoreRequired) {
         this.containerHeight = contentHeight;
