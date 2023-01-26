@@ -97,6 +97,7 @@ class DatasetDetailView(DatasetView, DetailView):
         context['total_reuses'] = len(reuses)
         context['can_edit'] = DatasetEditPermission(self.dataset)
         context['can_edit_resource'] = ResourceEditPermission
+
         return context
 
 
