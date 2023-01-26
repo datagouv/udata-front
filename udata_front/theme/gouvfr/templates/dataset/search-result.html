@@ -75,7 +75,11 @@
                 <span class="fr-hidden inline-sm">
                     &mdash;
                 </span>
+                {% if dataset.harvest and dataset.harvest.modified_at %}
+                {{ _('Updated on %(date)s', date=[dataset.last_modified, dataset.harvest.modified_at]|max|dateformat(format='long') }}
+                {% else %}
                 {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
+                {% endif %}
             </div>
         </div>
         <ul class="fr-hidden fr-unhidden-sm fr-col-auto fr-tags-group flex-direction-column fr-grid-row--bottom self-center">
