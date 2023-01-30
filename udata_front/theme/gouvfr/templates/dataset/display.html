@@ -244,7 +244,7 @@
                                 <dt class="fr-text--sm fr-my-0 text-mention-grey">{{ _('Creation date') }}</dt>
                                 <dd class="fr-text--sm fr-ml-0 fr-mt-0 fr-mb-2w">
                                     {% if dataset.harvest and dataset.harvest.created_at %}
-                                        {{ [dataset.created_at, dataset.harvest.created_at]|max|dateformat(format='long') }}
+                                        {{ dataset.harvest.created_at|dateformat(format='long') }}
                                     {% else %}
                                         {{ dataset.created_at|dateformat(format='long') }}
                                     {% endif %}

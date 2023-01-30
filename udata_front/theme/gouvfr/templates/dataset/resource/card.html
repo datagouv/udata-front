@@ -3,7 +3,7 @@
 {% set available = resource.extras['check:status']
     and resource.extras['check:status'] >= 200 and resource.extras['check:status'] < 400 %}
 {% set unavailable = resource.extras['check:status'] and resource.extras['check:status'] >= 400 %}
-{% set last_update = resource.harvest.modified_at if resource.harvest and if resource.harvest.modified_at > resource.modified else resource.modified %}
+{% set last_update = resource.harvest.modified_at if (resource.harvest and resource.harvest.modified_at > resource.modified) else resource.modified %}
 <article>
     <header
         class="fr-py-2w fr-grid-row fr-grid-row--middle no-wrap wrap-md justify-between border-bottom border-default-grey"
