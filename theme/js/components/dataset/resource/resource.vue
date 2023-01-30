@@ -170,7 +170,7 @@
           <div class="fr-grid-row fr-grid-row--gutters">
             <DescriptionList>
               <DescriptionTerm>{{ $t('URL') }}</DescriptionTerm>
-              <DescriptionDetails :withEllipsis="false" class="fr-grid-row fr-grid-row--middle">
+              <DescriptionDetails :withEllipsis="false">
                 <div class="fr-col text-overflow-ellipsis">
                   <a :href="resource.url">{{resource.url}}</a>
                 </div>
@@ -179,7 +179,7 @@
                 </div>
               </DescriptionDetails>
               <DescriptionTerm>{{ $t('Permalink') }}</DescriptionTerm>
-              <DescriptionDetails :withEllipsis="false" class="fr-grid-row fr-grid-row--middle">
+              <DescriptionDetails :withEllipsis="false">
                 <div class="fr-col text-overflow-ellipsis">
                   <a :href="resource.latest">{{resource.latest}}</a>
                 </div>
@@ -189,7 +189,7 @@
               </DescriptionDetails>
               <template v-if="resource.checksum">
                 <DescriptionTerm>{{resource.checksum.type}}</DescriptionTerm>
-                <DescriptionDetails :withEllipsis="false" class="fr-grid-row fr-grid-row--middle">
+                <DescriptionDetails :withEllipsis="false">
                   <div class="fr-col text-overflow-ellipsis">
                     {{resource.checksum.value}}
                   </div>
