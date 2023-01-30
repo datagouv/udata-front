@@ -11,7 +11,7 @@ Discussions allow users to interact with others.
 -->
 
 <template>
-  <section class="discussions-wrapper" ref="top" key="top">
+  <section class="discussions-wrapper" ref="top">
     <div class="fr-grid-row" v-if="totalResults">
       <div class="fr-col">
         <h2 id="community-discussions" class="subtitle subtitle--uppercase">{{ $t("{n} discussions", totalResults) }}</h2>
