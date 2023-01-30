@@ -20,13 +20,20 @@
             <p v-if="hasSchema" class="fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
               {{resource.schema.name}}
             </p>
-            <p class="fr-text--xs fr-m-0 dash-before dash-after">{{$t('Updated on X', {date: filters.formatDate(lastUpdate)})}}</p>
+            <p :class="{'dash-before': hasSchema}" class="fr-text--xs fr-m-0 dash-after">{{$t('Updated on X', {date: filters.formatDate(lastUpdate)})}}</p>
             <p v-if="resource.format" class="fr-text--xs fr-m-0 dash-after">
               {{ resource.format?.trim()?.toLowerCase() }}
               <template v-if="resource.filesize">({{ filters.filesize(resource.filesize) }})</template>
             </p>
             <p class="fr-text--xs fr-m-0">{{ $t('X downloads', resource.metrics.views || 0) }}</p>
           </div>
+          <p class="fr-mb-0 fr-mt-1v fr-text--xs text-grey-380" v-if="isCommunityResource && (resource.organization || resource.owner)">
+            {{ $t('From') }}
+            <a :href="resource.organization.page" v-if="resource.organization">
+              <OrganizationNameWithCertificate :organization="resource.organization" />
+            </a>
+            <template v-else-if="owner">{{owner}}</template>
+          </p>
         </div>
       </div>
       <div class="fr-col-auto fr-ml-auto">
@@ -256,12 +263,13 @@ import { toggleAccordion } from "../../vanilla/accordion";
 import DescriptionDetails from "../../utils/description-list/description-details.vue";
 import DescriptionList from "../../utils/description-list/description-list.vue";
 import DescriptionTerm from "../../utils/description-list/description-term.vue";
+import OrganizationNameWithCertificate from "../../organization/organization-name-with-certificate.vue";
 import useSchema from "../../../composables/useSchema";
 import useComponentsForHook from "../../../composables/useComponentsForHook";
 import { explorable_resources, schema_documentation_url } from "../../../config";
 
 export default defineComponent({
-  components: {DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, SchemaLoader},
+  components: {DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, OrganizationNameWithCertificate, SchemaLoader},
   inheritAttrs: false,
   props: {
     datasetId: {
