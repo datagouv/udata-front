@@ -341,6 +341,7 @@ export default defineComponent({
       changePage,
       changeSort,
       createNewThread,
+      top,
     };
   }
 });

@@ -94,7 +94,6 @@ export default defineComponent({
       .map(getHeight)
       .reduce((total, height) => total + height, 0)
       this.containerHeight = this.defaultHeight;
-      console.log(this.containerHeight);
       this.readMoreRequired = contentHeight > this.containerHeight;
       if(!this.readMoreRequired) {
         this.containerHeight = contentHeight;
