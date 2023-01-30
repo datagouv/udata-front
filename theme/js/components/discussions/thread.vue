@@ -4,8 +4,8 @@
       <div class="fr-col-auto text-default-warning fr-text--bold fr-pr-2w" v-if="closed">
         <span>{{ $t("Discussion closed") }}</span>
       </div>
-      <h3 class="fr-mx-3v fr-mx-md-0 fr-h6 fr-mb-0">{{ title }}</h3>
-      <div class="text-align-right">
+      <h3 class="fr-col fr-mx-3v fr-mx-md-0 fr-h6 fr-mb-0">{{ title }}</h3>
+      <div class="fr-col-auto text-align-right">
         <button
           :id="id + '-copy'"
           :data-clipboard-text="discussionExternalUrl(id)"
