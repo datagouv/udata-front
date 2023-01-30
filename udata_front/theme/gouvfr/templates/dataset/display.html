@@ -346,10 +346,12 @@
     >
         <div class="fr-container">
             {% if dataset.community_resources|length %}
-                {{ banner_warning(
-                    "fr-icon-alert-line",
-                    _("These resources are published by the community and the producer isn't responsible for them.")
-                )}}
+                <div class="fr-mb-3v">
+                    {{ banner_warning(
+                        "fr-icon-alert-line",
+                        _("These resources are published by the community and the producer isn't responsible for them.")
+                    )}}
+                </div>
                 <div class="resource-list vuejs">
                     <dataset-resources
                         dataset-id="{{ dataset.id }}"
