@@ -1,27 +1,27 @@
 <template>
-  <div class="fr-grid-row fr-mb-3v" v-if="showTitle">
-    <div class="fr-col">
-        <h2 :class="{'fr-mt-4w': !firstGroup}" class="fr-mb-0 subtitle subtitle--uppercase" ref="top">
+  <section class="resources-wrapper fr-grid-row fr-mb-3v" v-if="showTitle" ref="top">
+    <div class="fr-col-12 fr-grid-row">
+      <div class="fr-col">
+        <h2 :class="{'fr-mt-4w': !firstGroup}" class="fr-mb-0 subtitle subtitle--uppercase">
           {{ typeLabel }}
         </h2>
       </div>
-    <div class="fr-col-auto" v-if="isCommunityResources">
-      <a class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-add-line fr-btn--icon-left"
-        :href="newResourceAdminPath"
-      >
-        {{ $t('Add a community resource') }}
-      </a>
+      <div class="fr-col-auto" v-if="isCommunityResources">
+        <a class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-add-line fr-btn--icon-left"
+          :href="newResourceAdminPath"
+        >
+          {{ $t('Add a community resource') }}
+        </a>
+      </div>
     </div>
-  </div>
-  <template v-if="showSearch">
-    <SearchBar eventName="resources.search"></SearchBar>
-  </template>
-  <section class="resources-wrapper" key="top">
+    <template v-if="showSearch">
+      <SearchBar eventName="resources.search"></SearchBar>
+    </template>
     <transition mode="out-in">
       <div v-if="loading" key="loader">
         <Loader class="fr-mt-2w" />
       </div>
-      <div v-else>
+      <div class="fr-col-12" v-else>
         <Resource
           v-for="resource in resources"
           :id="'resource-' + resource.id"
@@ -119,6 +119,7 @@ export default defineComponent({
     const firstResults = ref(0);
     const totalResults = ref(0);
     const loading = ref(true);
+    /** @type {import("vue").Ref<HTMLElement | null>} */
     const top = ref(null);
     const search = ref('');
     const isCommunityResources = ref(props.type === "community");
