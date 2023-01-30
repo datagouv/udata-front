@@ -23,81 +23,99 @@ A very simple component that display its content up to a maximum height and then
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { computed, defineComponent, onMounted, ref } from "vue";
 import { easing, tween, styler } from "popmotion";
-import { number } from "@intlify/core-base";
-
-function getHeight(elt) {
-  const style = getComputedStyle(elt);
-  return parseFloat(style.getPropertyValue('height')) +
-    parseFloat(style.getPropertyValue('margin-top')) +
-    parseFloat(style.getPropertyValue('margin-bottom'));
-}
-
 const DEFAULT_HEIGHT = 284;
 
 export default defineComponent({
   name: "read-more",
-  data() {
-    return {
-      containerHeight: this.defaultHeight,
-      expanded: false,
-      readMoreRequired: false,
-    }
-  },
   props: {
     maxHeight: {
       type: String,
       default: ""
     }
   },
-  computed: {
-    defaultHeight() {
-      const elementMaxHeight = document.querySelector(`[data-read-more-max-height="${this.maxHeight}"]`);
+  setup(props) {
+    const expanded = ref(false);
+    const readMoreRequired = ref(false);
+
+    /** @type {import("vue").Ref<HTMLElement | null>} */
+    const container = ref(null);
+
+    /**
+     *
+     * @param {Element} elt
+     */
+    const getHeight = (elt) => {
+      const style = getComputedStyle(elt);
+      return parseFloat(style.getPropertyValue('height')) +
+        parseFloat(style.getPropertyValue('margin-top')) +
+        parseFloat(style.getPropertyValue('margin-bottom'));
+    }
+
+    const defaultHeight = computed(() => {
+      const elementMaxHeight = document.querySelector(`[data-read-more-max-height="${props.maxHeight}"]`);
       if(!elementMaxHeight) {
-        return DEFAULT_HEIGHT
+        return DEFAULT_HEIGHT;
       }
       return Array.from(elementMaxHeight.children)
-      .map(getHeight)
-      .reduce((total, height) => total + height, 0);
-    },
-  },
-  mounted() {
-    this.updateReadMoreHeight();
-    setTimeout(() => this.updateReadMoreHeight(), 500);
-  },
-  methods: {
-    toggle() {
-      this.expanded = !this.expanded;
-      const divStyler = styler(this.$refs.container);
-      if (this.expanded) {
-            tween({
-              from: { height: this.defaultHeight },
-              to: { height: this.$refs.container.scrollHeight },
-              duration: 300,
-              ease: easing.anticipate,
-            }).start({
-              update: divStyler.set,
-              complete: () => divStyler.set({ height: "auto" }),
-            });
-          } else {
-            tween({
-              from: { height: this.$refs.container.scrollHeight },
-              to: { height: this.defaultHeight },
-              duration: 300,
-              ease: easing.anticipate,
-            }).start(divStyler.set);
-          }
-    },
-    updateReadMoreHeight() {
-      let contentHeight = Array.from(this.$refs.container.children)
+        .map(getHeight)
+        .reduce((total, height) => total + height, 0);
+    });
+
+    const containerHeight = ref(defaultHeight.value);
+
+    const updateReadMoreHeight = () => {
+      let contentHeight = Array.from(container.value?.children || [])
       .map(getHeight)
       .reduce((total, height) => total + height, 0)
-      this.containerHeight = this.defaultHeight;
-      this.readMoreRequired = contentHeight > this.containerHeight;
-      if(!this.readMoreRequired) {
-        this.containerHeight = contentHeight;
+      containerHeight.value = defaultHeight.value;
+      readMoreRequired.value = contentHeight > containerHeight.value;
+      if(!readMoreRequired.value) {
+        containerHeight.value = contentHeight;
       }
+    }
+
+    const toggle = () => {
+      if(!container.value) {
+        return;
+      }
+      const divStyler = styler(container.value);
+      if (expanded.value) {
+        tween({
+          from: { height: container.value.scrollHeight },
+          to: { height: defaultHeight.value },
+          duration: 300,
+          ease: easing.anticipate,
+        }).start({
+          update: divStyler.set,
+          complete: () => container.value?.scrollIntoView({ behavior: "smooth" }),
+        });
+      } else {
+        tween({
+          from: { height: defaultHeight.value },
+          to: { height: container.value.scrollHeight },
+          duration: 300,
+          ease: easing.anticipate,
+        }).start({
+          update: divStyler.set,
+          complete: () => divStyler.set({ height: "auto" }),
+        });
+      }
+      expanded.value = !expanded.value;
+    };
+
+    onMounted(() => {
+      updateReadMoreHeight();
+      setTimeout(() => updateReadMoreHeight(), 500);
+    });
+
+    return {
+      containerHeight: defaultHeight,
+      expanded,
+      readMoreRequired,
+      container,
+      toggle,
     }
   }
 });
