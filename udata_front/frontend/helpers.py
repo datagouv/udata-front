@@ -6,7 +6,7 @@ from datetime import date, datetime
 from urllib.parse import urlsplit, urlunsplit
 
 from babel.numbers import format_decimal
-from flask import g, url_for, request, current_app, json
+from flask import g, url_for, request, current_app, json, Request
 from flask_restx import marshal
 from jinja2 import Markup, contextfilter
 from werkzeug import url_decode, url_encode
@@ -212,6 +212,12 @@ def owner_name_acronym(obj):
 @front.app_template_global()
 def external_source(dataset):
     return dataset.harvest.remote_url if dataset.harvest else None
+
+
+@front.app_template_global()
+def is_current_tab(request: Request, tab_arg: str) -> bool:
+    args = request.args
+    return tab_arg in args.to_dict() if args else False
 
 
 @front.app_template_global()

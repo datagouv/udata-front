@@ -154,7 +154,11 @@
                     class="fr-tabs__tab"
                     tabindex="0"
                     role="tab"
-                    aria-selected="true"
+                    {% if is_current_tab(request, "reuses_page") %}
+                        aria-selected="false"
+                    {% else %}
+                        aria-selected="true"
+                    {% endif %}
                     aria-controls="resources-panel"
                     data-update-url="resources"
                 >
@@ -168,7 +172,11 @@
                     class="fr-tabs__tab"
                     tabindex="-1"
                     role="tab"
-                    aria-selected="false"
+                    {% if is_current_tab(request, "reuses_page") %}
+                        aria-selected="true"
+                    {% else %}
+                        aria-selected="false"
+                    {% endif %}
                     aria-controls="community-reuses-panel"
                     data-update-url="community-reuses"
                 >
@@ -221,7 +229,7 @@
     </div>
     <div
         id="resources-panel"
-        class="fr-tabs__panel fr-tabs__panel--selected"
+        class="fr-tabs__panel"
         role="tabpanel"
         aria-labelledby="resources"
         tabindex="0"
