@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Use brand color for button style `tertiary-no-outline` [#199](https://github.com/etalab/udata-front/pull/199)
+- Fix setuptools version used in CI [#202](https://github.com/etalab/udata-front/pull/202)
 
 ## 3.1.1 (2023-01-20)
 
