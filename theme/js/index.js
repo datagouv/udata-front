@@ -18,7 +18,7 @@ import "./components/vanilla/tabs";
 import "./components/vanilla/accordion";
 import "./components/vanilla/clipboard";
 import "./components/vanilla/sort-search";
-import "./components/vanilla/update-url";
+import handleUpdateUrlButtons from "./components/vanilla/update-url";
 
 import Toaster from "@meforma/vue-toaster";
 
@@ -89,3 +89,4 @@ elements.forEach((el) => {
 });
 window.dsfr.start();
 console.log("JS is injected !");
+handleUpdateUrlButtons();

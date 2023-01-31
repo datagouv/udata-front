@@ -150,13 +150,13 @@
             <li role="presentation">
                 {% set count_resources = dataset.resources | length %}
                 <button
-                    id="resources-tab"
+                    id="resources"
                     class="fr-tabs__tab"
                     tabindex="0"
                     role="tab"
                     aria-selected="true"
-                    aria-controls="resources"
-                    data-update-url
+                    aria-controls="resources-panel"
+                    data-update-url="resources"
                 >
                     {{ _('Files') }}
                     <sup>{{count_resources}}</sup>
@@ -164,13 +164,13 @@
             </li>
             <li role="presentation">
                 <button
-                    id="community-reuses-tab"
+                    id="community-reuses"
                     class="fr-tabs__tab"
                     tabindex="-1"
                     role="tab"
                     aria-selected="false"
-                    aria-controls="community-reuses"
-                    data-update-url
+                    aria-controls="community-reuses-panel"
+                    data-update-url="community-reuses"
                 >
                     {{ _('Reuses') }}
                     <sup>{{ total_reuses }}</sup>
@@ -178,13 +178,13 @@
             </li>
             <li role="presentation">
                 <button
-                    id="discussions-tab"
+                    id="discussions"
                     class="fr-tabs__tab"
                     tabindex="-1"
                     role="tab"
                     aria-selected="false"
-                    aria-controls="discussions"
-                    data-update-url
+                    aria-controls="discussions-panel"
+                    data-update-url="discussions"
                 >
                     {{_('Discussions')}}
                     <sup>{{ dataset.metrics.discussions or 0 }}</sup>
@@ -192,13 +192,13 @@
             </li>
             <li role="presentation">
                 <button
-                    id="community-resources-tab"
+                    id="community-resources"
                     class="fr-tabs__tab"
                     tabindex="-1"
                     role="tab"
                     aria-selected="false"
-                    aria-controls="community-resources"
-                    data-update-url
+                    aria-controls="community-resources-panel"
+                    data-update-url="community-resources"
                 >
                     {{ _('Community resources') }}
                     <sup>{{ dataset.community_resources|length }}</sup>
@@ -206,20 +206,26 @@
             </li>
             <li role="presentation">
                 <button
-                    id="informations-tab"
+                    id="informations"
                     class="fr-tabs__tab"
                     tabindex="-1"
                     role="tab"
                     aria-selected="false"
-                    aria-controls="informations"
-                    data-update-url
+                    aria-controls="informations-panel"
+                    data-update-url="informations"
                 >
                     {{ _("Informations") }}
                 </button>
             </li>
         </ul>
     </div>
-    <div id="resources" class="fr-tabs__panel fr-tabs__panel--selected" role="tabpanel" aria-labelledby="tabpanel-404" tabindex="0">
+    <div
+        id="resources-panel"
+        class="fr-tabs__panel fr-tabs__panel--selected"
+        role="tabpanel"
+        aria-labelledby="resources"
+        tabindex="0"
+    >
         <div class="fr-container">
             <div class="ressources-files vuejs fr-mb-5v">
                 {% set show_all_resources = request.args.get('resources') == 'all' %}
@@ -272,7 +278,13 @@
             {{ hook('dataset.display.after-description') }}
         </div>
     </div>
-    <div id="community-reuses" class="fr-tabs__panel" role="tabpanel" aria-labelledby="tabpanel-405" tabindex="0">
+    <div
+        id="community-reuses-panel"
+        class="fr-tabs__panel"
+        role="tabpanel"
+        aria-labelledby="community-reuses"
+        tabindex="0"
+    >
         <div class="fr-container">
             {% if reuses|length %}
                 <div class="fr-grid-row fr-mb-3v">
@@ -319,7 +331,13 @@
 
         </div>
     </div>
-    <div id="discussions" class="fr-tabs__panel" role="tabpanel" aria-labelledby="discussions-tabs" tabindex="0">
+    <div
+        id="discussions-panel"
+        class="fr-tabs__panel"
+        role="tabpanel"
+        aria-labelledby="discussions"
+        tabindex="0"
+    >
         <div class="fr-container vuejs">
             {% if not dataset.metrics.discussions %}
                 <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-mt-5w" data-no-discussion>
@@ -338,10 +356,10 @@
         </div>
     </div>
     <div
-        id="community-resources"
+        id="community-resources-panel"
         class="fr-tabs__panel"
         role="tabpanel"
-        aria-labelledby="community-resources-tab"
+        aria-labelledby="community-resources"
         tabindex="0"
     >
         <div class="fr-container">
@@ -392,10 +410,10 @@
         </div>
     </div>
     <div
-        id="informations"
+        id="informations-panel"
         class="fr-tabs__panel"
         role="tabpanel"
-        aria-labelledby="informations-tab"
+        aria-labelledby="informations"
         tabindex="0"
     >
         <div class="fr-container">

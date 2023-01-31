@@ -18,7 +18,7 @@
       <SearchBar eventName="resources.search"></SearchBar>
     </template>
     <transition mode="out-in">
-      <div v-if="loading" key="loader">
+      <div v-if="loading">
         <Loader class="fr-mt-2w" />
       </div>
       <div class="fr-col-12" v-else>

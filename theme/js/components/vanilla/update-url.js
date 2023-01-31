@@ -1,37 +1,38 @@
-export default (() => {
-  /** @type {Map<string, HTMLElement>} */
-  const targets = new Map();
+/** @type {Map<string, HTMLElement>} */
+const targets = new Map();
 
-  function moveToHash() {
-    if(!window.location.hash) {
-      return;
-    }
-    let hash = window.location.hash.slice(1);
-    if(hash.includes("/")) {
-      hash = hash.split("/").shift() || "";
-    }
-    let button;
-    if(button = targets.get(hash)) {
-      button.click();
-    }
+function moveToHash() {
+  console.log("move to hash");
+  const hash = window.location.hash;
+  if(!hash) {
+    return;
   }
+  let target = hash.slice(1);
+  if(target.includes("/")) {
+    target = target.split("/").shift() || "";
+  }
+  let button;
+  if(button = targets.get(target)) {
+    button.click();
+  }
+}
 
-  document.addEventListener("DOMContentLoaded", () => {
-    /** @type {NodeListOf<HTMLElement>} */
-    const buttons = document.querySelectorAll("[data-update-url]");
+export default function handleUpdateUrlButtons() {
+  /** @type {NodeListOf<HTMLElement>} */
+  const buttons = document.querySelectorAll("[data-update-url]");
 
-    buttons.forEach((button) => {
-      const target = button.dataset.dataUpdateUrl || button.getAttribute("aria-controls");
-      if(target) {
-        targets.set(target, button);
-      }
-      let url = new URL(window.location.href);
-      url.hash = "#" + target;
-      button.addEventListener("click", () => window.history.pushState(null, "", url));
-    });
-    moveToHash();
+  buttons.forEach((button) => {
+    const target = button.dataset.updateUrl || button.getAttribute("aria-controls");
+    if(target) {
+      targets.set(target, button);
+    }
+    let url = new URL(window.location.href);
+    url.hash = "#" + target;
+    button.addEventListener("click", () => window.history.pushState(null, "", url));
   });
+  moveToHash();
+
   window.addEventListener("hashchange", () => {
     moveToHash();
   });
-})();
+}
