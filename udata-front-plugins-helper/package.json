@@ -1,6 +1,6 @@
 {
   "name": "@etalab/udata-front-plugins-helper",
-  "version": "1.1.0",
+  "version": "1.1.1-0",
   "description": "Ready-made helper for plugins to integrate them in udata-front.",
   "author": "Etalab",
   "main": "src/index.js",
