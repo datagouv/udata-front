@@ -4,7 +4,7 @@
 {% from theme('macros/integrate.html') import integrate_btn with context %}
 {% from theme('macros/paginator.html') import paginator with context %}
 {% from theme('macros/breadcrumb.html') import breadcrumb with context %}
-{% from theme('macros/banner_info.html') import banner_info %}
+{% from theme('macros/banner_info.html') import banner_info, banner_info_lg %}
 {% from theme('macros/banner_warning.html') import banner_warning %}
 {% from theme('macros/quality_score_with_warning_below.html') import quality_score_with_warning_below %}
 
@@ -143,6 +143,14 @@
             {{quality_score_with_warning_below(dataset)}}
         </section>
     </div>
+</div>
+<div class="fr-mb-10v">
+{{ banner_info_lg(
+    "Vous cherchez votre numéro Siret ?",
+    "L'annuaire des entreprises vous permet de facilement retrouver les numéros de SIRET depuis la base de l'INSEE.",
+    "Visiter l'annuaire des entreprises",
+    "https://annuaire-entreprises.data.gouv.fr/"
+) }}
 </div>
 <div class="fr-tabs fr-tabs--full-page">
     <div class="fr-container">

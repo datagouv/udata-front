@@ -1,8 +1,32 @@
 {% macro banner_info(icon, text) %}
-    <div class="bg-alt-blue-cumulus fr-p-3v fr-mb-1w">
+<div class="bg-alt-blue-cumulus fr-p-3v fr-mb-1w">
     <span class="fr-grid-row">
-      <span class="{{ icon }} fr-mr-1w" aria-hidden="true"></span>
-      {{ text }}
+        <span class="{{ icon }} fr-mr-1w" aria-hidden="true"></span>
+        {{ text }}
     </span>
-  </div>
+</div>
+{% endmacro %}
+
+{% macro banner_info_lg(title, text, button, link) %}
+<div class="bg-alt-blue-cumulus fr-py-6w">
+    <div class="fr-container">
+        <div class="fr-grid-row fr-grid-row--bottom">
+            <div class="fr-col-12 fr-col-md-6 text-blue-400 filet filet-currentcolor">
+                <h2 class="fr-h3 fr-mb-3v text-blue-400">{{ title }}</h2>
+                <p class="fr-text--lead fr-text--alt fr-m-0 f-italic text-blue-400">{{ text }}</p>
+            </div>
+            {% if button %}
+            <div class="fr-col-12 fr-col-md-6 text-align-center">
+                <a
+                    class="fr-btn fr-btn--icon-right fr-icon-external-link-line"
+                    href="{{ link }}"
+                    target="_blank"
+                >
+                    {{ button }}
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endmacro %}
