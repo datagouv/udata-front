@@ -36,40 +36,48 @@ The `url` prop is the API URL.
 </template>
 
 <script>
-import {defineComponent} from "vue";
+import { defineComponent, ref } from "vue";
 import config from "../../config";
+import { api } from "../../plugins/api";
+import { auth } from "../../plugins/auth";
 
 export default defineComponent({
   props: {
     followers: Number,
-    url: String,
+    url: {
+      type: String,
+      required: true,
+    },
     following: Boolean,
   },
-  data() {
-    return {
-      loading: false,
-      _following: this.following,
-      animating: false,
-      readOnlyEnabled: config.read_only_enabled,
-    };
-  },
-  methods: {
-    toggleFollow() {
-      this.$auth();
+  setup(props) {
+    const animating = ref(false);
+    const following = ref(props.following);
+    const readOnlyEnabled = config.read_only_enabled;
+
+    const toggleFollow = () => {
+      auth();
       let request;
 
-      if (!this._following) request = this.$api.post(this.url);
-      else request = this.$api.delete(this.url);
+      if (!following.value) request = api.post(props.url);
+      else request = api.delete(props.url);
 
       request
         .then(() => {
-          this._following = !this._following;
-          if (this._following) {
-            this.animating = true;
-            setTimeout(() => (this.animating = false), 1300);
+          following.value = !following.value;
+          if (following.value) {
+            animating.value = true;
+            setTimeout(() => (animating.value = false), 1300);
           }
         });
-    },
+    };
+
+    return {
+      following,
+      animating,
+      readOnlyEnabled,
+      toggleFollow,
+    };
   },
 });
 </script>
