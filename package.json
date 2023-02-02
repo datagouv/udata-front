@@ -38,7 +38,7 @@
     "@etalab/udata-front-plugins-helper": "1.1.0",
     "@gouvfr/dsfr": "^1.5.1",
     "@intlify/unplugin-vue-i18n": "^0.8.0",
-    "@lhci/cli": "^0.8.2",
+    "@lhci/cli": "^0.10.0",
     "@vitejs/plugin-legacy": "^2.3.1",
     "@vitejs/plugin-vue": "^3.2.0",
     "@vue/compiler-sfc": "^3.2.11",
