@@ -24,9 +24,11 @@ jobs:
           - py-cache-v16-{{ arch }}-{{ .Environment.BASE_BRANCH }}
       - run:
           name: Create venv and install pip-tools
+          # FIXME: For now, we fix setuptools due to https://github.com/etalab/data.gouv.fr/issues/1041
           command: |
             virtualenv venv
             source venv/bin/activate
+            pip install setuptools==66.1.1
             pip install pip-tools
       - run:
           name: Upgrade udata to latest pypi release if tagged release
