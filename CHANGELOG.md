@@ -4,6 +4,7 @@
 
 - Use brand color for button style `tertiary-no-outline` [#199](https://github.com/etalab/udata-front/pull/199)
 - Compute dates for resources and datasets depending on their harvest dict [#201](https://github.com/etalab/udata-front/pull/201)
+- Fix setuptools version used in CI [#202](https://github.com/etalab/udata-front/pull/202)
 
 ## 3.1.1 (2023-01-20)
 
