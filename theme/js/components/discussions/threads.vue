@@ -96,7 +96,7 @@ import {defineComponent} from "vue";
 import config from "../../config";
 import i18n from "../../plugins/i18n";
 
-import Pagination from "../pagination/pagination.vue";
+import { Pagination } from "@etalab/udata-front-plugins-helper";
 import CreateThread from "./threads-create.vue";
 import Thread from "./thread.vue";
 import Loader from "./loader.vue";
