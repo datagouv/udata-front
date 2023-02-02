@@ -11,6 +11,9 @@
 > This also adds a way for udata plugin to register their own vue components
 > and to display them in places chosen by the current theme
 
+- Use brand color for button style `tertiary-no-outline` [#199](https://github.com/etalab/udata-front/pull/199)
+- Fix setuptools version used in CI [#202](https://github.com/etalab/udata-front/pull/202)
+- Move Pagination to `@etalab/udata-front-plugin-helpers` and add tests [#200](https://github.com/etalab/udata-front/pull/200)
 - Add resource exploration preview [#169](https://github.com/etalab/udata-front/pull/169)
 
 ## 3.1.1 (2023-01-20)

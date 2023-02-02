@@ -57,7 +57,7 @@ export default {
         <a
           :href="page === 1 ? undefined :'#'"
           class="fr-pagination__link fr-pagination__link--first"
-          @click.prevent="_onClick(1)"
+          @click.prevent="onClick(1)"
         >
           {{ $t('First page') }}
         </a>
@@ -78,7 +78,8 @@ export default {
           class="fr-pagination__link"
           :class="{'fr-hidden fr-unhidden-sm': page > 1}"
           :title="$t('Page', {nb: 1})"
-          @click.prevent="_onClick(1)"
+          @click.prevent="onClick(1)"
+          :data-page="1"
         >
           1
         </a>
@@ -90,7 +91,8 @@ export default {
           :aria-current="page === index ? 'page' : undefined"
           :href="page === index ? undefined : '#'"
           :title="$t('Page', {nb: index})"
-          @click.prevent="_onClick(index)"
+          @click.prevent="onClick(index)"
+          :data-page="index"
           v-if="index"
           >
           {{ index }}
@@ -105,7 +107,8 @@ export default {
           :aria-current="page === pageCount ? 'page' : undefined"
           :href="page === pageCount ? undefined : '#'"
           :title="$t('Page', {nb: pageCount})"
-          @click.prevent="_onClick(pageCount)"
+          @click.prevent="onClick(pageCount)"
+          :data-page="pageCount"
         >
           {{ pageCount }}
         </a>
@@ -123,7 +126,7 @@ export default {
         <a
           class="fr-pagination__link fr-pagination__link--last"
           :href="page === pageCount ? undefined : '#'"
-          @click.prevent="_onClick(pageCount)"
+          @click.prevent="onClick(pageCount)"
         >
           {{ $t('Last page') }}
         </a>
@@ -133,13 +136,14 @@ export default {
 </template>
 
 <script>
-import getVisiblePages from "../vanilla/pagination";
+import { computed, defineComponent } from "vue";
+import getVisiblePages from "./paginate";
 
-export default {
+export default defineComponent({
   props: {
     page: {
       type: Number,
-      default: 0,
+      default: 1,
     },
     changePage: {
       type: Function,
@@ -154,40 +158,40 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      pagesAround: 3
-    }
-  },
-  computed: {
-    pageCount() {
-      return Math.ceil(this.totalResults / this.pageSize);
-    },
-    visiblePages() {
-      return getVisiblePages(this.page, this.pageCount);
-    },
-  },
-  methods: {
+  setup(props) {
+    const pageCount = computed(() => Math.ceil(props.totalResults / props.pageSize));
+    const visiblePages = computed(() => getVisiblePages(props.page, pageCount.value));
+
     /**
     * @param {number} index
     */
-    _onClick(index) {
-      if (index !== this.page) {
-        return this.changePage(index);
-      }
-    },
-    nextPage() {
-      const index = this.page + 1;
-      if (index <= this.pageCount) {
-        return this.changePage(index);
-      }
-    },
-    previousPage() {
-      const index = this.page - 1;
-      if (index > 0) {
-        return this.changePage(index);
+    const onClick = (index) => {
+      if (index !== props.page) {
+        return props.changePage(index);
       }
     }
-  },
-};
+
+    const nextPage = () => {
+      const index = props.page + 1;
+      if (index <= pageCount.value) {
+        return props.changePage(index);
+      }
+    };
+
+    const previousPage = () => {
+      const index = props.page - 1;
+      if (index > 0) {
+        return props.changePage(index);
+      }
+    }
+
+    return {
+      pageCount,
+      visiblePages,
+      onClick,
+      nextPage,
+      previousPage,
+    }
+  }
+});
 </script>

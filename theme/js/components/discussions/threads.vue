@@ -96,7 +96,7 @@ Discussions allow users to interact with others.
 <script>
 import {defineComponent, onMounted, ref, unref, watch} from "vue";
 import config from "../../config";
-import Pagination from "../pagination/pagination.vue";
+import { Pagination } from "@etalab/udata-front-plugins-helper";
 import CreateThread from "./threads-create.vue";
 import Thread from "./thread.vue";
 import Loader from "./loader.vue";
