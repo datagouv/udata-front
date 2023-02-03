@@ -121,7 +121,7 @@
     {% if external_source(dataset) %}
         {{ banner_info(
             "fr-icon-external-link-line",
-            _("This dataset come from an external portal.&nbsp;<a href='{external_source}'>View the original source.</a>")
+            _("This dataset come from an external portal.&nbsp;<a href='{external_source}' target="_blank" >View the original source.</a>")
             .format(external_source=external_source(dataset))
         )}}
     {% endif %}
