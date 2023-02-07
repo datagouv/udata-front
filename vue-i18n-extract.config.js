@@ -1,5 +1,5 @@
 module.exports = {
-  "vueFiles": "theme/**/*.?(js|vue)",
+  "vueFiles": "?(theme|udata-front-plugins-helper)/?(js|src)/**/*.?(js|vue)",
   "languageFiles": "theme/js/locales/**/*.?(json|yaml|yml|js)",
   "exclude": [],
   "output": false,

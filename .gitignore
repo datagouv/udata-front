@@ -31,6 +31,8 @@ bower
 .DS_Store
 *.min.css
 *.min.js
+*.d.ts
+*.d.ts.map
 /instance/
 /static/
 node_modules
@@ -47,6 +49,7 @@ pip-log.txt
 cover
 nosetests.xml
 /reports
+/*/coverage
 
 # Translations
 *.mo

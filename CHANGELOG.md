@@ -2,13 +2,19 @@
 
 ## Current (in progress)
 
+- Nothing yet
+
+## 3.1.2 (2023-02-06)
+
 - Use brand color for button style `tertiary-no-outline` [#199](https://github.com/etalab/udata-front/pull/199)
 - Compute dates for resources and datasets depending on their harvest dict [#201](https://github.com/etalab/udata-front/pull/201)
 - Fix setuptools version used in CI [#202](https://github.com/etalab/udata-front/pull/202)
+- Move Pagination to `@etalab/udata-front-plugin-helpers` and add tests [#200](https://github.com/etalab/udata-front/pull/200)
 
 ## 3.1.1 (2023-01-20)
 
 - Fix vanilla js scripts [#196](https://github.com/etalab/udata-front/pull/196)
+- Remove useless published date in resource model [#198](https://github.com/etalab/udata-front/pull/198)
 
 ## 3.1.0 (2023-01-18)
 
