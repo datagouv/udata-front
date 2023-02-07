@@ -259,7 +259,7 @@ export default defineComponent({
       }
     }
     const availabilityChecked = computed(() => props.resource.extras && props.resource.extras['check:status']);
-    const lastUpdate = computed(() => props.resource.last_modified);
+    const lastUpdate = computed(() => (props.resource.harvest && props.resource.harvest.modified_at && props.resource.harvest.modified_at > props.resource.last_modified) ? props.resource.harvest.modified_at : props.resource.modified );
     const unavailable = computed(() => availabilityChecked.value && availabilityChecked.value >= 400);
     const { authorizeValidation, documentationUrl, loading, validationUrl} = useSchema(props.resource);
     const explore = getComponentsForHook("explore");

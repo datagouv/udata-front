@@ -3,7 +3,8 @@
 {% set available = resource.extras['check:status']
     and resource.extras['check:status'] >= 200 and resource.extras['check:status'] < 400 %}
 {% set unavailable = resource.extras['check:status'] and resource.extras['check:status'] >= 400 %}
-{% set last_update = resource.harvest.modified_at if (resource.harvest and resource.harvest.modified_at > resource.modified) else resource.modified %}
+{% set last_update = resource.harvest.modified_at if (resource.harvest and resource.harvest.modified_at and resource.harvest.modified_at > resource.modified) else resource.modified %}
+{% set created_at = resource.harvest.created_at if (resource.harvest and resource.harvest.created_at) else resource.created_at %}
 <article>
     <header
         class="fr-py-2w fr-grid-row fr-grid-row--middle no-wrap wrap-md justify-between border-bottom border-default-grey"
@@ -102,7 +103,7 @@
             {% call dl() %}
                 {% call dt() %}{{ _('Created on') }}{% endcall %}
                 {% call dd() %}
-                    {{resource.created_at|dateformat(format='long')}}
+                    {{created_at|dateformat(format='long')}}
                 {% endcall %}
                 {% call dt() %}{{ _('Modified on') }}{% endcall %}
                 {% call dd() %}
