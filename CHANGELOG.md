@@ -5,6 +5,7 @@
 > **Warning**
 > Refactor of breadcrumb macro to be easier to use. `toolbar_class`, `breadcrum_class`, `toolbar_container` and `breadcrumb_bar` options are now removed.
 > Refactor of dataset components names to match new sizes : XS (previously card), SM, MD, LG (previously search-result).
+> `dataset.display.after-description` hook is now really after the description. Use new `dataset.display.after-files` hook for previous position. 
 
 > **Note** <br>
 > This changes the build system from Parcel to Vite.

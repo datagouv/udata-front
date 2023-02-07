@@ -145,12 +145,7 @@
     </div>
 </div>
 <div class="fr-mb-10v">
-{{ banner_info_lg(
-    "Vous cherchez votre numéro Siret ?",
-    "L'annuaire des entreprises vous permet de facilement retrouver les numéros de SIRET depuis la base de l'INSEE.",
-    "Visiter l'annuaire des entreprises",
-    "https://annuaire-entreprises.data.gouv.fr/"
-) }}
+    {{ hook('dataset.display.after-description') }}
 </div>
 <div class="fr-tabs fr-tabs--full-page">
     <div class="fr-container">
@@ -290,8 +285,7 @@
                     </div>
                 {% endfor %}
             </div>
-            {# Maybe put this after the real description instead of after the resource cards ? Not sure #}
-            {{ hook('dataset.display.after-description') }}
+            {{ hook('dataset.display.after-files') }}
         </div>
     </div>
     <div
@@ -344,7 +338,7 @@
                     </p>
                 </div>
             {% endif %}
-
+            {{ hook('dataset.display.after-reuses') }}
         </div>
     </div>
     <div
