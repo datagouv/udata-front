@@ -34,7 +34,8 @@ GUIDES_USER_ACCOUNT_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/creer-comp
 GUIDES_ORGANIZATION_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/creer-rejoindre-organisation/'
 GUIDES_DATASET_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/publier-jeu-de-donnees/'
 GUIDES_REUSE_URL = 'https://guides.etalab.gouv.fr/reutilisation/'
-GUIDES_COMMUNITY_URL = 'https://doc.data.gouv.fr/jeux-de-donnees/difference-jeu-de-donnees-et-ressource/'
+GUIDES_COMMUNITY_URL = 'https://doc.data.gouv.fr/jeux-de-donnees/difference-jeu-de-donnees-et-ressource/' #noqa
+
 # CAPTCHEtat
 
 # You can activate CaptchEtat, a captcha.com integration by providing
