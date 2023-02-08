@@ -53,7 +53,7 @@ export default defineComponent({
         parseFloat(style.getPropertyValue('margin-bottom'));
     }
 
-    const defaultHeight = computed(() => {
+    const getDefaultHeight = () => {
       const elementMaxHeight = document.querySelector(`[data-read-more-max-height="${props.maxHeight}"]`);
       if(!elementMaxHeight) {
         return DEFAULT_HEIGHT;
@@ -61,15 +61,15 @@ export default defineComponent({
       return Array.from(elementMaxHeight.children)
         .map(getHeight)
         .reduce((total, height) => total + height, 0);
-    });
+    };
 
-    const containerHeight = ref(defaultHeight.value);
+    const containerHeight = ref(DEFAULT_HEIGHT);
 
     const updateReadMoreHeight = () => {
       let contentHeight = Array.from(container.value?.children || [])
       .map(getHeight)
       .reduce((total, height) => total + height, 0)
-      containerHeight.value = defaultHeight.value;
+      containerHeight.value = getDefaultHeight();
       readMoreRequired.value = contentHeight > containerHeight.value;
       if(!readMoreRequired.value) {
         containerHeight.value = contentHeight;
@@ -84,7 +84,7 @@ export default defineComponent({
       if (expanded.value) {
         tween({
           from: { height: container.value.scrollHeight },
-          to: { height: defaultHeight.value },
+          to: { height: getDefaultHeight() },
           duration: 300,
           ease: easing.anticipate,
         }).start({
@@ -93,7 +93,7 @@ export default defineComponent({
         });
       } else {
         tween({
-          from: { height: defaultHeight.value },
+          from: { height: getDefaultHeight() },
           to: { height: container.value.scrollHeight },
           duration: 300,
           ease: easing.anticipate,
@@ -111,7 +111,7 @@ export default defineComponent({
     });
 
     return {
-      containerHeight: defaultHeight,
+      containerHeight,
       expanded,
       readMoreRequired,
       container,

@@ -67,12 +67,12 @@
 {{ breadcrumb(self) }}
 
 <div class="content fr-container fr-mb-10v">
-    <h1 class="fr-mb-0 fr-h3">
-        {{ dataset.title }}
-        {% if dataset.acronym %}<small>{{ dataset.acronym }}</small>{% endif %}
-    </h1>
-    <div class="fr-grid-row fr-grid-row--gutters fr-mt-3w vuejs">
+    <div class="fr-grid-row fr-grid-row--gutters vuejs">
         <section class="fr-col-12 fr-col-md-8">
+            <h1 class="fr-mb-5v fr-h3">
+                {{ dataset.title }}
+                {% if dataset.acronym %}<small>{{ dataset.acronym }}</small>{% endif %}
+            </h1>
             <h2 id="description" class="subtitle fr-mb-1w">{{ _('Description') }}</h2>
             <read-more max-height="description">
                 {{ dataset.description|markdown }}
@@ -85,7 +85,7 @@
             </div>
             {% endif %}
             {% if dataset.organization %}
-                <h2 id="producer" class="subtitle fr-mb-1w">{{ _('Producer') }}</h2>
+                <h2 id="producer" class="subtitle fr-mb-1v">{{ _('Producer') }}</h2>
                 {% with organization=dataset.organization, producer_type='organization' %}
                 {% include theme('organization/producer-name-with-logo.html') %}
                 {% endwith %}
@@ -94,7 +94,7 @@
                 {% with organization=dataset.owner, producer_type='owner' %}
                 {% include theme('organization/producer-name-with-logo.html') %}
                 {% endwith %}
-                <p class="well well-grey-100 fr-py-3v fr-my-5v">
+                <p class="well well-grey-100 fr-py-3v fr-my-3v">
                     {% trans
                             date=dataset.created_at|dateformat(format='long'),
                             update=dataset.last_modified|dateformat(format='long'),
@@ -104,7 +104,7 @@
                 </p>
             {% endif %}
             {% if external_source(dataset) %}
-                <div class="fr-my-5v fr-text--sm">
+                <div class="fr-my-3v fr-text--sm">
                     {{ banner_info(
                         "fr-icon-external-link-line",
                         _("This dataset come from an external portal.&nbsp;<a href='{external_source}'>View the original source.</a>")
@@ -114,7 +114,7 @@
             {% endif %}
             {# FIXME: remove when geo.data.gouv.fr is shutdown #}
             {% if 'geop:dataset_id' in dataset.extras %}
-            <p class="well well-warning fr-py-3v fr-my-5v fr-text--sm">
+            <p class="well well-warning fr-py-3v fr-my-3v fr-text--sm">
                 ⚠️ {{ _("This dataset is handled by the <a href='{geo_link}'>geo.data.gouv.fr</a> platform.
                 This platform is not actively maintained and as a result, you may find some bogus data or metadata.
                 More information about <a href='{blog_link}'>the shutdown of geo.data.gouv.fr is available here.</a>").format(
@@ -123,16 +123,16 @@
                 )}}
             </p>
             {% endif %}
-            <div class="fr-my-5v fr-text--sm">
+            <div class="fr-my-3v fr-text--sm">
                 {{ hook('dataset.display.transport-banner') }}
             </div>
-            <h2 class="subtitle fr-mt-5v fr-mb-1v">{{ _('Latest update') }}</h2>
-            <p class="fr-text--sm fr-mt-0 fr-mb-5v">
+            <h2 class="subtitle fr-mt-3v fr-mb-1v">{{ _('Latest update') }}</h2>
+            <p class="fr-text--sm fr-mt-0 fr-mb-3v">
                 {{ dataset.last_update|dateformat(format='long') }}
             </p>
             {% if dataset.license %}
-            <h2 class="subtitle fr-mt-5v fr-mb-1v">{{ _('License') }}</h2>
-            <p class="fr-text--sm fr-mt-0 fr-mb-5v">
+            <h2 class="subtitle fr-mt-3v fr-mb-1v">{{ _('License') }}</h2>
+            <p class="fr-text--sm fr-mt-0 fr-mb-3v">
                 <code class="bg-alt-grey fr-px-1v text-grey-380">
                 {% if dataset.license.url %}<a href="{{ dataset.license.url }}">{% endif %}
                 {{ dataset.license.title }}
