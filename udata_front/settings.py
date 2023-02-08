@@ -44,3 +44,6 @@ CAPTCHETAT_OAUTH_BASE_URL = None
 CAPTCHETAT_CLIENT_ID = None
 CAPTCHETAT_CLIENT_SECRET = None
 CAPTCHETAT_TOKEN_CACHE_KEY = 'captchetat-bearer-token'
+
+# Newsletter
+NEWSLETTER_SUBSCRIPTION_URL = 'https://infolettres.etalab.gouv.fr/subscribe/rn7y93le1'
