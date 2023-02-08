@@ -199,3 +199,18 @@
         </div>
     </div>
 </header>
+
+<div data-show-no-js>
+    <div class="fr-notice fr-notice--warning">
+        <div class="fr-container">
+            <div class="fr-notice__body">
+                <p class="fr-notice__title">
+                    {{
+                        _("This is a degraded experience of {site}. Please enable JavaScript and use a modern browser.")
+                            .format(site=current_site.title)
+                    }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
