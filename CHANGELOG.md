@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Show a warning notice when JavaScript is disabled or failed to execute [#206](https://github.com/etalab/udata-front/pull/206)
 
 ## 3.1.2 (2023-02-06)
 
