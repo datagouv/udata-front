@@ -304,7 +304,7 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         self.assertIn('filetype', header)
         self.assertIn('url', header)
         self.assertIn('created_at', header)
-        self.assertIn('modified', header)
+        self.assertIn('last_modified', header)
         self.assertIn('downloads', header)
 
         resource_id_index = header.index('id')
