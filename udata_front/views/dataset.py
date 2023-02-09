@@ -1,7 +1,7 @@
 from collections import defaultdict, OrderedDict
 
-from flask import abort, request, url_for, redirect
-from werkzeug.contrib.atom import AtomFeed
+from flask import abort, request, url_for, redirect, make_response
+from feedgenerator.django.utils.feedgenerator import Atom1Feed
 
 from udata.models import Reuse, Follow
 from udata.core.dataset.models import Dataset, RESOURCE_TYPES, get_resource
@@ -11,7 +11,7 @@ from udata.core.site.models import current_site
 
 from udata_front.theme import render as render_template
 from udata.sitemap import sitemap
-from udata.i18n import I18nBlueprint, lazy_gettext as _
+from udata.i18n import I18nBlueprint, gettext as _
 from udata_front.views.base import DetailView, SearchView
 
 
@@ -20,33 +20,32 @@ blueprint = I18nBlueprint('datasets', __name__, url_prefix='/datasets')
 
 @blueprint.route('/recent.atom')
 def recent_feed():
-    feed = AtomFeed(_('Last datasets'),
-                    feed_url=request.url, url=request.url_root)
+    feed = Atom1Feed(_('Last datasets'), description=None,
+                     feed_url=request.url, link=request.url_root)
     datasets = (Dataset.objects.visible().order_by('-created_at')
                 .limit(current_site.feed_size))
     for dataset in datasets:
-        author = None
+        author_name = None
+        author_uri = None
         if dataset.organization:
-            author = {
-                'name': dataset.organization.name,
-                'uri': url_for('organizations.show',
-                               org=dataset.organization.id, _external=True),
-            }
+            author_name = dataset.organization.name
+            author_uri = url_for('organizations.show',
+                                 org=dataset.organization.id, _external=True)
         elif dataset.owner:
-            author = {
-                'name': dataset.owner.fullname,
-                'uri': url_for('users.show',
-                               user=dataset.owner.id, _external=True),
-            }
-        feed.add(dataset.title,
-                 render_template('dataset/feed_item.html', dataset=dataset),
-                 content_type='html',
-                 author=author,
-                 url=url_for('datasets.show',
-                             dataset=dataset.id, _external=True),
-                 updated=dataset.last_modified,
-                 published=dataset.created_at)
-    return feed.get_response()
+            author_name = dataset.owner.fullname
+            author_uri = url_for('users.show',
+                                 user=dataset.owner.id, _external=True)
+        feed.add_item(dataset.title,
+                      description=dataset.description,
+                      content=render_template('dataset/feed_item.html', dataset=dataset),
+                      author_name=author_name,
+                      author_link=author_uri,
+                      link=url_for('datasets.show', dataset=dataset.id, _external=True),
+                      updateddate=dataset.created_at,
+                      pubdate=dataset.created_at)
+    response = make_response(feed.writeString('utf-8'))
+    response.headers['Content-Type'] = 'application/atom+xml'
+    return response
 
 
 @blueprint.route('/', endpoint='list')
