@@ -83,5 +83,6 @@ def init_app(app):
         from udata.auth import security
         from udata_front.forms import ExtendedRegisterForm
         with app.app_context():
-            security._state.register_form = ExtendedRegisterForm
-            security._state.confirm_register_form = ExtendedRegisterForm
+            # TODO: Check that this is the correct way to set it now
+            security.register_form = ExtendedRegisterForm
+            security.confirm_register_form = ExtendedRegisterForm
