@@ -193,7 +193,7 @@ class MaafBackend(BaseBackend):
                     resource.checksum = Checksum(
                         type='sha256', value=self.get(cle['url']).text)
                 if row.get('last_modified'):
-                    resource.modified = row['last_modified']
+                    resource.last_modified_internal = row['last_modified']
                 dataset.resources.append(resource)
 
         if metadata.get('author'):
