@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Make newsletter url configurable [#205](https://github.com/etalab/udata-front/pull/205)
 
 ## 3.1.2 (2023-02-06)
 
