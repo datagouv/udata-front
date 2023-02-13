@@ -5,12 +5,14 @@
 > **Warning**
 > Refactor of breadcrumb macro to be easier to use. `toolbar_class`, `breadcrum_class`, `toolbar_container` and `breadcrumb_bar` options are now removed.
 > Refactor of dataset components names to match new sizes : XS (previously card), SM, MD, LG (previously search-result).
-> `dataset.display.after-description` hook is now really after the description. Use new `dataset.display.after-files` hook for previous position. 
+> `dataset.display.after-description` hook is now really after the description. Use new `dataset.display.after-files` hook for previous position.
 
 > **Note** <br>
 > This changes the build system from Parcel to Vite.
 > This also adds a way for udata plugin to register their own vue components
 > and to display them in places chosen by the current theme
+
+## 3.1.2 (2023-02-06)
 
 - Use brand color for button style `tertiary-no-outline` [#199](https://github.com/etalab/udata-front/pull/199)
 - Fix setuptools version used in CI [#202](https://github.com/etalab/udata-front/pull/202)
@@ -20,6 +22,7 @@
 ## 3.1.1 (2023-01-20)
 
 - Fix vanilla js scripts [#196](https://github.com/etalab/udata-front/pull/196)
+- Remove useless published date in resource model [#198](https://github.com/etalab/udata-front/pull/198)
 
 ## 3.1.0 (2023-01-18)
 
