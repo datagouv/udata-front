@@ -94,8 +94,11 @@ class ReuseDetailView(ReuseView, DetailView):
         followers = (Follow.objects.followers(self.reuse)
                      .order_by('follower.fullname'))
 
-        # TODO: better related reuses
-        related_reuses = Reuse.objects.visible().order_by('-created_at').limit(4)
+        if self.reuse.organization:
+            author = self.reuse.organization.id
+        elif self.reuse.owner:
+            author = self.reuse.owner.id
+        related_reuses = Reuse.objects.visible().owned_by(author).order_by('-created_at').limit(4)
 
         context.update(
             followers=followers,
