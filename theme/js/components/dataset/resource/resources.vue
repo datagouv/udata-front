@@ -14,9 +14,9 @@
         </a>
       </div>
     </div>
-    <template v-if="showSearch">
+    <div class="fr-col-12" v-if="showSearch">
       <SearchBar eventName="resources.search"></SearchBar>
-    </template>
+    </div>
     <transition mode="out-in">
       <div v-if="loading">
         <Loader class="fr-mt-2w" />

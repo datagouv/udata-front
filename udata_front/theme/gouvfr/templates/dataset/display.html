@@ -296,6 +296,7 @@
         tabindex="0"
     >
         <div class="fr-container">
+            {{ hook('dataset.display.after-reuses') }}
             {% if reuses|length %}
                 <div class="fr-grid-row fr-mb-3v">
                 <h2 class="subtitle subtitle--uppercase fr-col">{{ ngettext('%(num)d Reuse', '%(num)d Reuses', total_reuses) }}</h2>
@@ -338,7 +339,6 @@
                     </p>
                 </div>
             {% endif %}
-            {{ hook('dataset.display.after-reuses') }}
         </div>
     </div>
     <div
