@@ -45,14 +45,8 @@
 {% if can_edit %}
     <div class="fr-col-auto fr-ml-3v">
         <a
-            class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-btn--icon-left fr-hidden flex-sm"
+            class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-btn--icon-left"
             href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
-        >
-            {{ _('Edit') }}
-        </a>
-        <a
-        class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-hidden-sm"
-        href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
         >
             {{ _('Edit') }}
         </a>
@@ -74,7 +68,7 @@
                 {% if dataset.acronym %}<small>{{ dataset.acronym }}</small>{% endif %}
             </h1>
             <h2 id="description" class="subtitle fr-mb-1w">{{ _('Description') }}</h2>
-            <read-more max-height="description">
+            <read-more max-height="description" class="fr-mb-n1w">
                 {{ dataset.description|markdown }}
             </read-more>
         </section>
