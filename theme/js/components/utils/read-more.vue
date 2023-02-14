@@ -23,7 +23,7 @@ A very simple component that display its content up to a maximum height and then
 </template>
 
 <script>
-import { computed, defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import { easing, tween, styler } from "popmotion";
 const DEFAULT_HEIGHT = 284;
 
