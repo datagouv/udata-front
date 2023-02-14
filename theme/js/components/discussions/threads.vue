@@ -12,13 +12,12 @@ Discussions allow users to interact with others.
 
 <template>
   <section class="discussions-wrapper" ref="top">
-    <div class="fr-grid-row" v-if="totalResults">
+    <div class="fr-grid-row fr-grid-row--middle" v-if="totalResults">
       <div class="fr-col">
         <h2 id="community-discussions" class="subtitle subtitle--uppercase">{{ $t("{n} discussions", totalResults) }}</h2>
       </div>
-      <div class="fr-col-12 fr-col-sm-6 fr-col-md-5 fr-col-lg-4 fr-grid-row fr-grid-row--bottom flex-direction-column justify-between" v-if="!threadFromURL">
-        <ThreadsCreateButton class="fr-col--bottom" :onClick="startThreadWithoutScroll"/>
-        <div class="fr-mt-5v">
+      <div class="fr-col-12 fr-col-md-6 fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-grid-row--right" v-if="!threadFromURL">
+        <div class="fr-col-auto">
           <select
           name="sortBy"
           id="sortBy"
@@ -35,6 +34,9 @@ Discussions allow users to interact with others.
             {{ sort.name }}
           </option>
         </select>
+        </div>
+        <div class="fr-col-auto">
+          <ThreadsCreateButton :onClick="startThreadWithoutScroll"/>
         </div>
       </div>
     </div>
