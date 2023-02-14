@@ -73,11 +73,6 @@
         aria-labelledby="resource-{{resource.id}}-title"
         id="resource-{{resource.id}}"
     >
-        {% if resource.description %}
-        <div class="fr-mt-0 markdown">
-            {{ resource.description|markdown }}
-        </div>
-        {% endif %}
         <div class="fr-grid-row fr-grid-row--gutters">
             {% call dl() %}
                 {% call dt() %}{{ _('URL') }}{% endcall %}
@@ -118,6 +113,11 @@
                 {% endif %}
             {% endcall %}
         </div>
+        {% if resource.description %}
+        <div class="fr-mt-0 markdown fr-text--sm text-mention-grey">
+            {{ resource.description|markdown }}
+        </div>
+        {% endif %}
         {% if resource.schema %}
             <h5 class="fr-h6 fr-mt-1w fr-mb-5v">{{_('Schema')}}</h5>
             <p class="fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">

@@ -235,7 +235,7 @@
             <h5 class="fr-text--sm fr-my-0 fr-text--bold">
               {{ $t("File description") }}
             </h5>
-            <div class="fr-mt-0 markdown" v-html="filters.markdown(resource.description)">
+            <div class="fr-mt-0 markdown fr-text--sm text-mention-grey" v-html="filters.markdown(resource.description)">
             </div>
           </template>
           <div class="text-align-right" v-if="!hasExplore && resource.preview_url">
