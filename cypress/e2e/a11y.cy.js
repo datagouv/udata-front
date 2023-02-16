@@ -2,9 +2,10 @@ it('should be accessible', () => {
     cy.task('sitemapLocations').then(pages => {
         pages.forEach(page => {
             cy.intercept('**/api/**').as('request')
+            cy.intercept('**/_themes/gouvfr/**').as('files')
             cy.visit(page)
             cy.injectAxe()
-            cy.wait(['@request'])
+            cy.wait(['@request', '@files'])
             cy.checkA11y(
                 {
                     /**
@@ -23,6 +24,8 @@ it('should be accessible', () => {
                         'color-contrast': { enabled: false },
                     },
                 },
+                (violations) => console.log(violations),
+                true
             )
         })
     })

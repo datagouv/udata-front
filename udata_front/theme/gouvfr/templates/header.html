@@ -4,18 +4,17 @@
 {% set read_only_mode = config['READ_ONLY_MODE'] %}
 {% set next_url = url_for(request.endpoint, **request.view_args) if not request.routing_exception else url_for('site.home') %}
 
-{% if read_only_mode %}
-{% include theme('banners/read-only.html') with context %}
-{% endif %}
-
-{% if banner_activated %}
-{% block banner %}
-{% set banner_message = config['BANNER_HTML_CONTENT_FR'] if g.lang_code == "fr" else config['BANNER_HTML_CONTENT_EN'] %}
-{% include theme('banners/generic.html') with context %}
-{% endblock %}
-{% endif %}
-
 <header role="banner" class="fr-header">
+    {% if read_only_mode %}
+        {% include theme('banners/read-only.html') with context %}
+    {% endif %}
+
+    {% if banner_activated %}
+        {% block banner %}
+            {% set banner_message = config['BANNER_HTML_CONTENT_FR'] if g.lang_code == "fr" else config['BANNER_HTML_CONTENT_EN'] %}
+            {% include theme('banners/generic.html') with context %}
+        {% endblock %}
+    {% endif %}
     <div class="fr-header__body">
         <div class="fr-container">
             <!--[if lte IE 8]>

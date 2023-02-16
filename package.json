@@ -7,6 +7,7 @@
     "dev": "vite build --watch",
     "build": "vite build",
     "test": "cypress run",
+    "cypress": "cypress open",
     "lighthouse": "lhci autorun",
     "postinstall": "patch-package",
     "i18n:report": "vue-i18n-extract report",
