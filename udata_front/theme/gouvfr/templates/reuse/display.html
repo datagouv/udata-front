@@ -49,14 +49,8 @@
 {% if can_edit %}
     <div class="fr-col-auto fr-ml-3v">
         <a
-            class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-btn--icon-left fr-hidden flex-sm"
+            class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-btn--icon-left"
             href="{{ url_for('admin.index', path='reuse/{id}/'.format(id=reuse.id)) }}"
-        >
-            {{ _('Edit') }}
-        </a>
-        <a
-        class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-hidden-sm"
-        href="{{ url_for('admin.index', path='reuse/{id}/'.format(id=reuse.id)) }}"
         >
             {{ _('Edit') }}
         </a>
@@ -73,7 +67,7 @@
 <div class="content fr-container fr-mb-5w">
     <div class="fr-grid-row fr-grid-row--gutters">
         <section class="fr-col-12 fr-col-md-8">
-            <h1 class="fr-mb-0 fr-h1">
+            <h1 class="fr-mb-5v fr-h3">
                 {{ reuse.title }}
             </h1>
             <img src="{{ reuse.image|placeholder('reuse') }}" class="mw-100" alt="" />
