@@ -39,11 +39,13 @@
             <small v-if="acronym">{{ acronym }}</small>
           </a>
         </h4>
-        <p class="not-enlarged fr-m-0 fr-text--sm" v-if="organization || owner">
+        <p class="fr-m-0 fr-text--sm" v-if="organization || owner">
           {{ $t('From') }}
-          <a :href="organization.page" v-if="organization">
-            <OrganizationNameWithCertificate :organization="organization" />
-          </a>
+          <span class="not-enlarged" v-if="organization">
+            <a :href="organization.page">
+              <OrganizationNameWithCertificate :organization="organization" />
+            </a>
+          </span>
           <template v-if="owner">{{ownerName}}</template>
         </p>
         <p class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm">
