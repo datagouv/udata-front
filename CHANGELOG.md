@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Make newsletter url configurable [#205](https://github.com/etalab/udata-front/pull/205)
+- Show a warning notice when JavaScript is disabled or failed to execute [#206](https://github.com/etalab/udata-front/pull/206)
 - Update lighthouse to fix security issues [#211](https://github.com/etalab/udata-front/pull/211)
 
 ## 3.1.2 (2023-02-06)
