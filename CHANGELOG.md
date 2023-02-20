@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Update lighthouse to fix security issues [#211](https://github.com/etalab/udata-front/pull/211)
 
 ## 3.1.2 (2023-02-06)
 
