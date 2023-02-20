@@ -2,27 +2,15 @@ const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
       console.log('Starting script');
-      return getLocations(`${config.baseUrl}/sitemap.xml`).then(locations =>
-        Promise.all(locations.map(url => getLocations(url)))
-          .then(result => result.flat())
-          .then(urls => {
-            let countDatasets = 0;
-            let countReuses = 0;
-            let countOrganizations = 0;
-            config.env.URLS = urls.filter(url =>
-              (!url.includes('/datasets/') || ++countDatasets <= 200) &&
-              (!url.includes('/reuses/') || ++countReuses <= 200) &&
-              (!url.includes('/organizations/') || ++countOrganizations <= 200)
-            );
-            return config;
-          })
-      );
+      return getLocations(`${config.baseUrl}/sitemap.xml`).then(urls => {
+        console.log(urls);
+        config.env.URLS = urls;
+        return config;
+      });
     },
-    baseUrl: "http://dev.local:7000",
+    baseUrl: "http://localhost:7000",
     numTestsKeptInMemory: 10,
   },
 

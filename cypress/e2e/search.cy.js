@@ -1,7 +1,9 @@
 describe("Testing search bar", () => {
   beforeEach(() => {
-    cy.visit("/");
-    cy.injectAxe();
+    cy.intercept('**/?(_themes)/**').as('script')
+    cy.visit("/")
+    cy.injectAxe()
+    cy.wait(['@script'])
     const input = 'input[data-cy="search-input"]';
     cy.get(input).as('input');
     cy.get('@input').invoke('attr', 'aria-controls').then(val => {
