@@ -20,14 +20,14 @@
 
 <script>
 import {reactive, watch, onUnmounted, defineComponent} from 'vue';
-import {bus} from "../../plugins/eventbus";
+import {bus, RESOURCES_SEARCH} from "../../plugins/eventbus";
 import useDebouncedRef from "../../composables/useDebouncedRef";
 import {search_autocomplete_debounce, search_autocomplete_enabled} from "../../config";
 export default defineComponent({
   props: {
     eventName: {
-      type: String,
-      default: 'search'
+      type: /** @type {import("vue").PropType<import("../../plugins/eventbus").UdataSearchEventType>} */ (String),
+      default: RESOURCES_SEARCH
     }
   },
   setup(props) {
@@ -44,12 +44,12 @@ export default defineComponent({
       }, search_autocomplete_debounce);
     };
     onUnmounted(() => clearTimeout(timeoutId));
-    bus.on(props.eventName + ".results.updated", ({type, count}) => {
+    bus.on(/** @type {import("../../plugins/eventbus").UdataSearchResultUpdatedEventType} */ (props.eventName + "ResultsUpdated"), ({type, count}) => {
       totalResults.set(type, count);
     });
     watch(totalResults, results => {
       const total = Array.from(results.values()).reduce((total, resultPerType) => total + resultPerType, 0);
-      bus.emit(props.eventName + '.results.total', total);
+      bus.emit(/** @type {import("../../plugins/eventbus").UdataSearchResultTotalEventType} */ (props.eventName + 'ResultsTotal'), total);
     });
     return {
       search,

@@ -49,18 +49,46 @@ Type | Parameter | Emitted
 
 import mitt from "mitt";
 
-export const DISCUSSIONS_START_THREAD = "discussions.startThread";
-export const RESOURCES_SEARCH = "resources.search";
-export const RESOURCES_SEARCH_RESULTS_UPDATED = "resources.search.results.updated";
-export const RESOURCES_SEARCH_RESULTS_TOTAL = "resources.search.results.total";
+export const DISCUSSIONS_START_THREAD = "discussionsStartThread";
 
+export const SEARCH_EVENT = "search";
+export const RESULTS_UPDATED_EVENT = "resultsUpdated";
+export const RESULTS_TOTAL_EVENT = "resultsTotal";
+
+export const RESOURCES_SEARCH = "resourcesSearch";
+export const RESOURCES_SEARCH_RESULTS_UPDATED = "resourcesSearchResultsUpdated";
+export const RESOURCES_SEARCH_RESULTS_TOTAL = "resourcesSearchResultsTotal";
+
+/** @type {UdataResourceSearchEventsType} */
+export const RESOURCES_SEARCH_EVENTS = {
+  [SEARCH_EVENT]: RESOURCES_SEARCH,
+  [RESULTS_UPDATED_EVENT]: RESOURCES_SEARCH_RESULTS_UPDATED,
+  [RESULTS_TOTAL_EVENT]: RESOURCES_SEARCH_RESULTS_TOTAL
+};
 
 /**
  * @typedef {DISCUSSIONS_START_THREAD | RESOURCES_SEARCH | RESOURCES_SEARCH_RESULTS_UPDATED | RESOURCES_SEARCH_RESULTS_TOTAL} UdataEventType
+ * @typedef {RESOURCES_SEARCH} UdataSearchEventType
+ * @typedef {RESOURCES_SEARCH_RESULTS_UPDATED} UdataSearchResultUpdatedEventType
+ * @typedef {RESOURCES_SEARCH_RESULTS_TOTAL} UdataSearchResultTotalEventType
+*/
+/**
+ * @template {UdataSearchEventType} X
+ * @template {UdataSearchResultUpdatedEventType} Y
+ * @template {UdataSearchResultTotalEventType} Z
+ *
+ * @typedef {{search: X, resultsUpdated: Y, resultsTotal: Z}} UdataSearchEventsType
+ */
+/**
+ * @typedef {UdataSearchEventsType<RESOURCES_SEARCH, RESOURCES_SEARCH_RESULTS_UPDATED, RESOURCES_SEARCH_RESULTS_TOTAL>} UdataResourceSearchEventsType
  */
 
 /**
- * @typedef {Record<UdataEventType, unknown>} Events
+ * @typedef {object} Events
+ * @property {unknown} discussionsStartThread - on new discussions thread
+ * @property {string} resourcesSearch - on new resource search, with the query as param
+ * @property {{type: string, count: number}} resourcesSearchResultsUpdated - on resource search result update, with the resource type and count as param
+ * @property {number} resourcesSearchResultsTotal - after all resourcesSearchResultsUpdated event, with the total count as param
  */
 
 /**

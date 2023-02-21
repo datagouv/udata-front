@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="fr-col-12" v-if="showSearch">
-      <SearchBar eventName="resources.search"></SearchBar>
+      <SearchBar :eventName="RESOURCES_SEARCH"></SearchBar>
     </div>
     <transition mode="out-in">
       <div v-if="loading">
@@ -197,6 +197,7 @@ export default defineComponent({
       top,
       showSearch,
       newResourceAdminPath,
+      RESOURCES_SEARCH,
     }
   }
 });
