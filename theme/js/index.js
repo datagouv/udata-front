@@ -87,6 +87,6 @@ elements.forEach((el) => {
     throw e;
   }
 });
-window.dsfr.start();
+globalThis.dsfr.start();
 console.log("JS is injected !");
 handleUpdateUrlButtons();
