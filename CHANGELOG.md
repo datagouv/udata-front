@@ -7,17 +7,13 @@
 > Refactor of dataset components names to match new sizes : XS (previously card), SM, MD, LG (previously search-result).
 > `dataset.display.after-description` hook is now really after the description. Use new `dataset.display.after-files` hook for previous position.
 
-> **Note** <br>
-> This changes the build system from Parcel to Vite.
-> This also adds a way for udata plugin to register their own vue components
-> and to display them in places chosen by the current theme
+- New dataset page [#181](https://github.com/etalab/udata-front/pull/181)
 
 ## 3.1.2 (2023-02-06)
 
 - Use brand color for button style `tertiary-no-outline` [#199](https://github.com/etalab/udata-front/pull/199)
 - Fix setuptools version used in CI [#202](https://github.com/etalab/udata-front/pull/202)
 - Move Pagination to `@etalab/udata-front-plugin-helpers` and add tests [#200](https://github.com/etalab/udata-front/pull/200)
-- Add resource exploration preview [#169](https://github.com/etalab/udata-front/pull/169)
 
 ## 3.1.1 (2023-01-20)
 
