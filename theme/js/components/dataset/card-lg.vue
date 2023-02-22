@@ -101,6 +101,7 @@
                   <a
                     href="https://guides.etalab.gouv.fr/qualite/documenter-les-donnees/#le-score-de-qualite-des-metadonnees"
                     target="_blank"
+                    rel="noopener"
                   >
                     {{$t("Learn more about this indicator")}}
                   </a>

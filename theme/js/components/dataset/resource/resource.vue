@@ -62,7 +62,7 @@
             <a
               :href="resource.latest"
               :title="$t('Resource link')"
-              rel="nofollow"
+              rel="nofollow noopener"
               target="_blank"
               class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-external-link-line fr-icon--sm"
             >
