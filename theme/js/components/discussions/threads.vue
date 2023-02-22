@@ -174,7 +174,7 @@ export default defineComponent({
     const top = ref(null);
 
     const loadThreadFromHash = () => {
-      const hash = window.location.hash.substring(1);
+      const hash = window.location.hash.substring(2);
       const [a, discussionId, b] = URL_REGEX.exec(hash) || [];
       loadThread(discussionId);
     };
@@ -311,7 +311,7 @@ export default defineComponent({
       bus.on(DISCUSSIONS_START_THREAD, () => startThread());
 
       // Check if URL contains a thread
-      const hash = window.location.hash.substring(1);
+      const hash = window.location.hash.substring(2);
       const [a, discussionId, b] = URL_REGEX.exec(hash) || [];
 
       window.addEventListener("hashchange", () => loadThreadFromHash());

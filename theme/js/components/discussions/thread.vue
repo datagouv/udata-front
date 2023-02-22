@@ -116,7 +116,7 @@ export default defineComponent({
       return "discussions/" + id;
     },
     discussionExternalUrl(id) {
-      let hash = "#" + this.discussionUrl(id)
+      let hash = "#/" + this.discussionUrl(id)
       return window.location.origin + window.location.pathname + hash
     },
     replyToThread (values) {

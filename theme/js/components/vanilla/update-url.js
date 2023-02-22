@@ -3,10 +3,11 @@ const targets = new Map();
 
 function moveToHash() {
   const hash = window.location.hash;
+  console.log("move to hash", hash);
   if(!hash) {
     return;
   }
-  let target = hash.slice(1);
+  let target = hash.slice(2);
   if(target.includes("/")) {
     target = target.split("/").shift() || "";
   }
@@ -25,9 +26,14 @@ export default function handleUpdateUrlButtons() {
     if(target) {
       targets.set(target, button);
     }
-    let url = new URL(window.location.href);
-    url.hash = "#" + target;
-    button.addEventListener("click", () => window.history.pushState(null, "", url));
+    button.addEventListener("click", () => {
+      let url = new URL(window.location.href);
+      const targetHash = "#/" + target;
+      if(!url.hash.includes(targetHash)) {
+        url.hash = targetHash;
+        window.history.pushState(null, "", url);
+      }
+    });
   });
   moveToHash();
 
