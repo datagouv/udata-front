@@ -14,27 +14,28 @@
                 {% include theme(resource_image(resource)) %}
             </div>
             <div class="fr-col-auto">
-                <div class="fr-grid-row fr-grid-row--middle fr-mb-1w">
-                    <h4
-                        class="fr-col-auto fr-mb-0 fr-mr-1v"
-                        id="resource-{{resource.id}}-title"
-                    >
-                        {{ resource.title or _('Nameless resource') }}
-                    </h4>
+                <h4
+                    class="fr-col-auto fr-mb-1w fr-mr-1v"
+                    id="resource-{{resource.id}}-title"
+                >
+                    {{ resource.title or _('Nameless resource') }}
+                </h4>
+                <div class="fr-my-0 text-grey-380 fr-grid-row fr-grid-row--middle">
                     {% if resource.schema %}
-                        <p class="fr-ml-1w fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
-                            {{resource.schema.name}}
-                        </p>
+                        <div class="fr-text--xs fr-m-0 dash-after">
+                            <p class="fr-tag fr-tag--sm">
+                                <strong class="fr-mr-1v">{{ _("schema:") }}</strong> {{resource.schema.name}}
+                            </p>
+                        </div>
                     {% endif %}
-                </div>
-                <div class="fr-text--sm fr-my-0 text-grey-380">
-                    {{_('Updated on %(date)s', date=last_update|dateformat(format='long'))}} —
-                    {{ resource_format }}
-                    {% if resource.filesize %}
-                        ({{ resource.filesize | filesize }})
-                    {% endif %}
-                    —
-                    {{ resource.metrics.views or 0 }} {{ _('downloads') }}
+                    <p class="fr-text--xs fr-m-0 dash-after">{{_('Updated on %(date)s', date=last_update|dateformat(format='long'))}}</p>
+                    <p class="fr-text--xs fr-m-0 dash-after">
+                        {{ resource_format }}
+                        {% if resource.filesize %}
+                            ({{ resource.filesize | filesize }})
+                        {% endif %}
+                    </p>
+                    <p class="fr-text--xs fr-m-0">{{ resource.metrics.views or 0 }} {{ _('downloads') }}</p>
                 </div>
             </div>
         </div>

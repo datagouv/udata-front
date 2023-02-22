@@ -11,14 +11,20 @@
         </div>
         <div class="fr-col-auto">
           <h4
-              class="fr-mb-1v"
-              :id="resourceTitleId"
+            class="fr-mb-1v"
+            :id="resourceTitleId"
+          >
+            {{ resource.title || $t('Nameless resource') }}
+          </h4>
+          <div class="fr-my-0 text-grey-380 fr-grid-row fr-grid-row--middle">
+            <p v-if="hasSchema" class="fr-tag fr-tag--sm z-2">
+              <strong class="fr-mr-1v">{{ $t("schema:") }}</strong>{{resource.schema.name}}
+            </p>
+            <p
+              v-if="hasSchema && hasSchemaErrors"
+              class="fr-tag fr-tag--error fr-tag--on-right fr-tag--sm fr-ml-n3v fr-pl-2w fr-icon-error-line fr-tag--icon-left"
             >
-              {{ resource.title || $t('Nameless resource') }}
-            </h4>
-          <div class="fr-my-0 text-grey-380 fr-grid-row">
-            <p v-if="hasSchema" class="fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
-              {{resource.schema.name}}
+              {{ $t("Invalid") }}
             </p>
             <p :class="{'dash-before': hasSchema}" class="fr-text--xs fr-m-0 dash-after">{{$t('Updated on X', {date: filters.formatDate(lastUpdate)})}}</p>
             <p v-if="resource.format" class="fr-text--xs fr-m-0 dash-after">
@@ -132,7 +138,7 @@
               <div class="fr-col-12 fr-col-lg">
                 <h5 class="fr-h6 fr-mb-5v">{{$t('Data schema')}}</h5>
                 <ul class="fr-tags-group" v-if="hasSchemaErrors">
-                  <li v-for="schemaError in schemaReport">
+                  <li v-for="[key, schemaError] in schemaReport">
                     <p class="fr-tag fr-tag--sm">{{schemaError.name}}</p>
                   </li>
                 </ul>
