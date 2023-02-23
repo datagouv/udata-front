@@ -116,6 +116,18 @@ You can use tabs from DSFR. It uses DSFR colors and conventions. It allows you t
     }
     & > .fr-container > .fr-tabs__list {
         max-width: calc(100% - 2rem);
+        &[role="tablist"] {
+            display: none;
+        }
+        &[role="tablist"][data-fr-js-tabs-list] {
+            display: flex;
+        }
+        &[role="navigation"] {
+            display: flex;
+        }
+        &[role="navigation"][data-fr-js-tabs-list] {
+            display: none;
+        }
         @media @dsfr-query-sm {
             max-width: calc(@breakpoint-sm - 2rem);
         }

@@ -223,6 +223,58 @@
                 </button>
             </li>
         </ul>
+        <ul class="fr-tabs__list" role="navigation" aria-label="{{ _('In-page navigation') }}">
+            <li role="presentation">
+                {% set count_resources = dataset.resources | length %}
+                <a
+                    id="resources"
+                    class="fr-tabs__tab"
+                    href="#resources-panel"
+                >
+                    {{ _('Files') }}
+                    <sup>{{count_resources}}</sup>
+                </a>
+            </li>
+            <li role="presentation">
+                <a
+                    id="community-reuses"
+                    class="fr-tabs__tab"
+                    href="#community-reuses-panel"
+                >
+                    {{ _('Reuses') }}
+                    <sup>{{ total_reuses }}</sup>
+                </a>
+            </li>
+            <li role="presentation">
+                <a
+                    id="discussions"
+                    class="fr-tabs__tab"
+                    href="#discussions-panel"
+                >
+                    {{_('Discussions')}}
+                    <sup>{{ dataset.metrics.discussions or 0 }}</sup>
+                </a>
+            </li>
+            <li role="presentation">
+                <a
+                    id="community-resources"
+                    class="fr-tabs__tab"
+                    href="#community-resources-panel"
+                >
+                    {{ _('Community resources') }}
+                    <sup>{{ dataset.community_resources|length }}</sup>
+                </a>
+            </li>
+            <li role="presentation">
+                <a
+                    id="informations"
+                    class="fr-tabs__tab"
+                    href="#informations-panel"
+                >
+                    {{ _("Informations") }}
+                </a>
+            </li>
+        </ul>
     </div>
     <div
         id="resources-panel"
