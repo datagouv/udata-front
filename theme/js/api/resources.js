@@ -15,7 +15,18 @@ import {api, apiv2} from "../plugins/api";
  * @property {string} preview_url
  * @property {Object} schema
  * @property {string} url
- *  @typedef {import("../composables/useOwnerName").Owned & ResourceRest} Resource
+ *
+ * @typedef {import("../composables/useOwnerName").Owned & ResourceRest} Resource
+ */
+
+/**
+ * @typedef {Object} ResourceApiWrapper
+ * @property {Array<Resource>} data
+ * @property {string | null} next_page
+ * @property {number} page
+ * @property {number} page_size
+ * @property {string | null} previous_page
+ * @property {number} total
  */
 
 /**
@@ -24,7 +35,7 @@ import {api, apiv2} from "../plugins/api";
  * @param {number} page
  * @param {number} pageSize
  * @param {string} search
- * @return {Promise<Array<Resource>>}
+ * @return {Promise<ResourceApiWrapper>}
  */
 export const fetchDatasetResources = (datasetId, type, page, pageSize, search) => {
   return apiv2
@@ -43,7 +54,7 @@ export const fetchDatasetResources = (datasetId, type, page, pageSize, search) =
  * @param {string} datasetId
  * @param {number} page
  * @param {number} pageSize
- * @return {Promise<Array<Resource>>}
+ * @return {Promise<ResourceApiWrapper>}
  */
 export const fetchDatasetCommunityResources = (datasetId, page, pageSize) => {
   return api

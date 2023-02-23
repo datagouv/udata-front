@@ -10,7 +10,7 @@
 
 <script>
 import {defineComponent} from "vue";
-import {DISCUSSIONS_START_THREAD} from "../../plugins/eventbus";
+import {bus, DISCUSSIONS_START_THREAD} from "../../plugins/eventbus";
 
 export default defineComponent({
   props: {
@@ -24,7 +24,7 @@ export default defineComponent({
   },
   methods: {
     click() {
-      return this.onClick? this.onClick() : this.$bus.emit(DISCUSSIONS_START_THREAD);
+      return this.onClick? this.onClick() : bus.emit(DISCUSSIONS_START_THREAD);
     }
   }
 });

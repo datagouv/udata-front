@@ -60,8 +60,7 @@ import {fetchDatasetCommunityResources, fetchDatasetResources} from "../../../ap
 import {
   bus,
   RESOURCES_SEARCH,
-  RESOURCES_SEARCH_RESULTS_TOTAL,
-  RESOURCES_SEARCH_RESULTS_UPDATED
+  SEARCH_EVENTS,
 } from "../../../plugins/eventbus";
 
 export default defineComponent({
@@ -110,6 +109,7 @@ export default defineComponent({
     const { t } = useI18n();
     const toast = useToast();
     const currentPage = ref(1);
+    /** @type {import("vue").Ref<Array<import("../../../api/resources").Resource>>} */
     const resources = ref([]);
     const pageSize = config.resources_default_page_size;
     const newResourceAdminUrl = new URL(document.location.origin + config.admin_root + "community-resource/new/");
@@ -153,6 +153,7 @@ export default defineComponent({
             t("An error occurred while fetching resources")
           );
           resources.value = [];
+          return 0;
         })
         .finally(() => {
           loading.value = false;
@@ -178,10 +179,10 @@ export default defineComponent({
         search.value = value;
         changePage(1, DONT_SCROLL);
       });
-      watch(totalResults, (count) => bus.emit(RESOURCES_SEARCH_RESULTS_UPDATED, {type: props.type, count}));
-      bus.on(RESOURCES_SEARCH_RESULTS_TOTAL, (total) => {
+      watch(totalResults, (count) => bus.emit(SEARCH_EVENTS[RESOURCES_SEARCH].resultsUpdated, {type: props.type, count}));
+      bus.on(SEARCH_EVENTS[RESOURCES_SEARCH].resultsTotal, (total) => {
         const els = document.querySelectorAll(".resources-count");
-        if (els) els.forEach((el) => (el.innerHTML = total));
+        if (els) els.forEach((el) => (el.innerHTML = total.toFixed(0)));
       });
     }
 

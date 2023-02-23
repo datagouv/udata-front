@@ -20,18 +20,19 @@
 
 <script>
 import {reactive, watch, onUnmounted, defineComponent} from 'vue';
-import {bus, RESOURCES_SEARCH} from "../../plugins/eventbus";
+import {bus, RESOURCES_SEARCH, SEARCH_EVENTS} from "../../plugins/eventbus";
 import useDebouncedRef from "../../composables/useDebouncedRef";
 import {search_autocomplete_debounce, search_autocomplete_enabled} from "../../config";
 export default defineComponent({
   props: {
     eventName: {
-      type: /** @type {import("vue").PropType<import("../../plugins/eventbus").UdataSearchEventType>} */ (String),
+      type: /** @type {import("vue").PropType<import("../../plugins/eventbus").SearchEvents>} */ (String),
       default: RESOURCES_SEARCH
     }
   },
   setup(props) {
     const searchValue = useDebouncedRef('', search_autocomplete_debounce);
+    /** @type {import("vue").UnwrapNestedRefs<Map<string, number>>} */
     const totalResults = reactive(new Map());
     const search = () => bus.emit(props.eventName, searchValue.value);
     if(search_autocomplete_enabled) {
@@ -44,12 +45,14 @@ export default defineComponent({
       }, search_autocomplete_debounce);
     };
     onUnmounted(() => clearTimeout(timeoutId));
-    bus.on(/** @type {import("../../plugins/eventbus").UdataSearchResultUpdatedEventType} */ (props.eventName + "ResultsUpdated"), ({type, count}) => {
+    const eventUpdated = SEARCH_EVENTS[props.eventName].resultsUpdated;
+    bus.on(eventUpdated, ({type, count}) => {
       totalResults.set(type, count);
     });
     watch(totalResults, results => {
+      const eventTotal = SEARCH_EVENTS[props.eventName].resultsTotal;
       const total = Array.from(results.values()).reduce((total, resultPerType) => total + resultPerType, 0);
-      bus.emit(/** @type {import("../../plugins/eventbus").UdataSearchResultTotalEventType} */ (props.eventName + 'ResultsTotal'), total);
+      bus.emit(eventTotal, total);
     });
     return {
       search,
