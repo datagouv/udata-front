@@ -61,6 +61,34 @@
 {{ breadcrumb(self) }}
 
 <div class="content fr-container fr-mb-10v">
+    {% if dataset.private or dataset.deleted or dataset.archived %}
+        <div class="fr-grid-row">
+            {% if dataset.private %}
+                <div class="fr-col-auto fr-mr-1w">
+                    <p class="fr-tag"
+                        title="{{ _('This dataset is private and will not be visible by other users') }}">{{ _('Private') }}
+                    </p>
+                </div>
+            {% endif %}
+            {% if dataset.deleted %}
+                <div class="fr-col-auto fr-mr-1w">
+                    <p class="fr-tag"
+                        title="{{ _('This dataset has been deleted. This will be permanent in the next 24 hours') }}">{{ _('Deleted') }}
+                    </p>
+                </div>
+            {% endif %}
+            {% if dataset.archived %}
+                {% set title = _('This dataset has been archived automatically because it has been deleted from the remote platform.')
+                    if dataset.harvest and dataset.harvest.archived == 'not-on-remote' else
+                    _('This dataset has been archived.') %}
+                <div class="fr-col-auto fr-mr-1w">
+                    <p class="fr-tag" title="{{ title }}">
+                        {{ _('Archived') }}
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
     <div class="fr-grid-row fr-grid-row--gutters vuejs">
         <section class="fr-col-12 fr-col-md-8">
             <h1 class="fr-mb-5v fr-h3">
