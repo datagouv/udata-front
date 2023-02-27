@@ -1,6 +1,6 @@
 <template>
-  <section class="resources-wrapper fr-grid-row fr-mb-3v" v-if="showTitle" ref="top">
-    <div class="fr-col-12 fr-grid-row">
+  <section class="fr-mb-3v" v-if="showTitle" ref="top">
+    <div class="fr-grid-row">
       <div class="fr-col">
         <h2 :class="{'fr-mt-4w': !firstGroup}" class="fr-mb-0 subtitle subtitle--uppercase">
           {{ typeLabel }}
@@ -14,14 +14,21 @@
         </a>
       </div>
     </div>
-    <div class="fr-col-12" v-if="showSearch">
-      <SearchBar :eventName="RESOURCES_SEARCH"></SearchBar>
+    <div v-if="showSearch" class="fr-mt-3v">
+      <SearchBar :eventName="RESOURCES_SEARCH" :type="type"></SearchBar>
     </div>
     <transition mode="out-in">
       <div v-if="loading">
         <Loader class="fr-mt-2w" />
       </div>
-      <div class="fr-col-12" v-else>
+      <div v-else>
+        <p
+          v-if="filteredResults"
+          class="fr-py-3v fr-my-0 fr-text--sm border-default-grey border-bottom"
+          role="status"
+        >
+          {{ $t("{count} results", totalResults) }}
+        </p>
         <Resource
           v-for="resource in resources"
           :id="'resource-' + resource.id"
@@ -60,7 +67,6 @@ import {fetchDatasetCommunityResources, fetchDatasetResources} from "../../../ap
 import {
   bus,
   RESOURCES_SEARCH,
-  SEARCH_EVENTS,
 } from "../../../plugins/eventbus";
 
 export default defineComponent({
@@ -126,6 +132,8 @@ export default defineComponent({
     const showSearch = computed(() => !isCommunityResources.value && firstResults.value > config.resources_min_count_to_show_search);
     const DONT_SCROLL = false;
 
+    const filteredResults = computed(() => firstResults.value != totalResults.value);
+
     // We can pass the second function parameter "scroll" to true if we want to scroll to the top of the resources section
     // This is useful for pagination buttons
     const loadPage = (page = 1, scroll = false) => {
@@ -175,30 +183,30 @@ export default defineComponent({
     onMounted(() => loadPage(currentPage.value).then(results => firstResults.value = results));
 
     if(!isCommunityResources.value) {
-      bus.on(RESOURCES_SEARCH, value => {
-        search.value = value;
-        changePage(1, DONT_SCROLL);
-      });
-      watch(totalResults, (count) => bus.emit(SEARCH_EVENTS[RESOURCES_SEARCH].resultsUpdated, {type: props.type, count}));
-      bus.on(SEARCH_EVENTS[RESOURCES_SEARCH].resultsTotal, (total) => {
-        const els = document.querySelectorAll(".resources-count");
-        if (els) els.forEach((el) => (el.innerHTML = total.toFixed(0)));
+      bus.on(RESOURCES_SEARCH, ({type, value}) => {
+        if(type === props.type) {
+          search.value = value;
+          changePage(1, DONT_SCROLL);
+        }
       });
     }
 
     return {
-      currentPage,
-      loading,
       changePage,
-      pageSize,
-      resources,
-      totalResults,
+      currentPage,
+      filteredResults,
+      firstResults,
       getCanEdit,
       isCommunityResources,
-      top,
-      showSearch,
+      loading,
       newResourceAdminPath,
+      pageSize,
+      resources,
       RESOURCES_SEARCH,
+      showSearch,
+      top,
+      totalResults,
+      type: props.type,
     }
   }
 });
