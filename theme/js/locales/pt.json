@@ -149,5 +149,7 @@
   "Data schema": "",
   "This file is following a schema: ": "",
   "File description": "",
-  "Schemas allow to describe data models, discover how schemas improve your data quality and the available use cases on {address}": ""
+  "Schemas allow to describe data models, discover how schemas improve your data quality and the available use cases on {address}": "",
+  "schema:": "",
+  "Invalid": ""
 }
