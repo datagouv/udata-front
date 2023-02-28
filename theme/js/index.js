@@ -4,6 +4,7 @@ import "./dsfr";
 import * as dsfr from "@gouvfr/dsfr/dist/dsfr/dsfr.module";
 
 import Threads from "./components/discussions/threads.vue";
+import ThreadsCreate from "./components/discussions/threads-create.vue";
 import MenuSearch from "./components/search/menu-search.vue";
 import Search from "./components/search/search.vue";
 import FeaturedButton from './components/utils/featured.vue';
@@ -11,13 +12,13 @@ import FollowButton from "./components/utils/follow-button.vue";
 import ReadMore from "./components/utils/read-more.vue";
 import RequestMembership from "./components/organization/request-membership.vue";
 import Resources from "./components/dataset/resource/resources.vue";
-import SearchBar from "./components/utils/search-bar.vue";
 import Captcha from "./components/utils/captcha.vue";
 
 import "./components/vanilla/tabs";
 import "./components/vanilla/accordion";
 import "./components/vanilla/clipboard";
 import "./components/vanilla/sort-search";
+import handleUpdateUrlButtons from "./components/vanilla/update-url";
 
 import Toaster from "@meforma/vue-toaster";
 
@@ -48,6 +49,7 @@ const configAndMountApp = (el) => {
   }).provide('toast', app.config.globalProperties.$toast);
 
   app.component("discussion-threads", Threads);
+  app.component("discussion-create", ThreadsCreate);
   app.component("menu-search", MenuSearch);
   app.component("search", Search);
   app.component("follow-button", FollowButton);
@@ -55,7 +57,6 @@ const configAndMountApp = (el) => {
   app.component("read-more", ReadMore);
   app.component("request-membership", RequestMembership);
   app.component("dataset-resources", Resources);
-  app.component("search-bar", SearchBar);
   app.component("captcha", Captcha);
 
   // unset delimiters used in html templates to prevent injections using {{ }}
@@ -86,5 +87,6 @@ elements.forEach((el) => {
     throw e;
   }
 });
-window.dsfr.start();
+globalThis.dsfr.start();
 console.log("JS is injected !");
+handleUpdateUrlButtons();

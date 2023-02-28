@@ -1,12 +1,12 @@
 <template>
-    <div v-if="passed">
+    <p class="fr-my-0" v-if="passed">
         <span class="fr-icon-check-line" aria-hidden="true"></span>
         {{messagePassed}}
-    </div>
-    <div v-else class="text-mention-grey">
+    </p>
+    <p class="fr-my-0 text-mention-grey" v-else>
         <span class="fr-icon-warning-line" aria-hidden="true"></span>
         {{messageFailed}}
-    </div>
+    </p>
 </template>
 
 <script>
