@@ -37,7 +37,7 @@ def recent_feed():
                       author_name=author_name,
                       author_link=author_uri,
                       link=url_for('reuses.show', reuse=reuse.id, _external=True),
-                      updateddate=reuse.created_at,
+                      updateddate=reuse.last_modified,
                       pubdate=reuse.created_at)
     response = make_response(feed.writeString('utf-8'))
     response.headers['Content-Type'] = 'application/atom+xml'
