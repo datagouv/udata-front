@@ -13,9 +13,25 @@ import config from "../config";
  * A json schema associated with a resource.
  * @typedef Schema
  * @type {object}
- *  @property {string} name - The schema name.
- *  @property {string} schema_type - The schema type.
- *  @property {Array<SchemaVersion>} versions - The schema versions.
+ * @property {string} name - The schema name.
+ * @property {string} schema_type - The schema type.
+ * @property {Array<SchemaVersion>} versions - The schema versions.
+ */
+
+/**
+ * A Validata error
+ * @typedef ValidataError
+ * @type {Object}
+ * @property {string} code - The error code
+ * @property {string} description - The error description in English
+ * @property {string} fieldName - The name of the associated schema field
+ * @property {number} fieldNumber - The number of the associated schema field
+ * @property {number} fieldPosition - The position of the associated schema field
+ * @property {string} message - A message in French explaining the error
+ * @property {string} name - The error name in French
+ * @property {string} note - Additional details regarding the description in English or French
+ * @property {number} rowNumber - Affected row number
+ * @property {number} rowPosition - Affected row position in file
  */
 
 let catalog = null;

@@ -11,15 +11,13 @@ Discussions allow users to interact with others.
 -->
 
 <template>
-  <section class="discussions-wrapper" ref="top" key="top">
-    <div class="fr-grid-row">
+  <section class="discussions-wrapper" ref="top">
+    <div class="fr-grid-row fr-grid-row--middle" v-if="totalResults">
       <div class="fr-col">
-        <h2 id="community-discussions" class="fr-h2">{{ title }} <sup>{{totalResults}}</sup></h2>
-        <slot></slot>
+        <h2 id="community-discussions" class="subtitle subtitle--uppercase">{{ $t("{n} discussions", totalResults) }}</h2>
       </div>
-      <div class="fr-col-12 fr-col-sm-6 fr-col-md-5 fr-col-lg-4 fr-grid-row fr-grid-row--bottom flex-direction-column justify-between" v-if="!threadFromURL">
-        <ThreadsCreateButton class="fr-col--bottom" :onClick="startThreadWithoutScroll"/>
-        <div class="fr-mt-5v">
+      <div class="fr-col-12 fr-col-md-6 fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-grid-row--right" v-if="!threadFromURL">
+        <div class="fr-col-auto">
           <select
           name="sortBy"
           id="sortBy"
@@ -37,7 +35,13 @@ Discussions allow users to interact with others.
           </option>
         </select>
         </div>
+        <div class="fr-col-auto">
+          <ThreadsCreateButton :onClick="startThreadWithoutScroll"/>
+        </div>
       </div>
+    </div>
+    <div class="fr-grid-row fr-grid-row--center" v-else>
+      <ThreadsCreateButton class="fr-col--bottom" :primary="true" :onClick="startThreadWithoutScroll"/>
     </div>
     <transition mode="out-in">
       <template v-if="loading" key="loader">
@@ -64,13 +68,13 @@ Discussions allow users to interact with others.
           </button>
         </div>
         <div v-else>
-          <create-thread
+          <CreateThread
             ref="createThread"
-            :onSubmit="createThread"
+            :onSubmit="createNewThread"
             :subjectId="subjectId"
             :subjectClass="subjectClass"
             v-if="!readOnlyEnabled"
-          ></create-thread>
+          ></CreateThread>
           <ul class="fr-mb-5v">
             <li
               v-for="discussion in discussions"
@@ -92,191 +96,255 @@ Discussions allow users to interact with others.
 </template>
 
 <script>
-import {defineComponent} from "vue";
+import {defineComponent, onMounted, ref, unref, watch} from "vue";
 import config from "../../config";
-import i18n from "../../plugins/i18n";
-
 import { Pagination } from "@etalab/udata-front-plugins-helper";
 import CreateThread from "./threads-create.vue";
 import Thread from "./thread.vue";
 import Loader from "./loader.vue";
 import ThreadsCreateButton from "./threads-create-button.vue";
-import {DISCUSSIONS_START_THREAD} from "../../plugins/eventbus";
-
-const URL_REGEX = /discussion-([a-f0-9]{24})-?([0-9]+)?$/i;
-
-const sorts = [
-  { name: i18n.global.t("Discussion creation"), key: "-created" },
-  {
-    name: i18n.global.t("Last reply"),
-    key: "-discussion.posted_on",
-  },
-];
-
-const defaultTitle = i18n.global.t("Discussions");
+import {DISCUSSIONS_START_THREAD, bus} from "../../plugins/eventbus";
+import { useI18n } from "vue-i18n";
+import { api } from "../../plugins/api";
+import { useToast } from "../../composables/useToast";
 
 export default defineComponent({
   components: {
     ThreadsCreateButton,
-    "create-thread": CreateThread,
+    CreateThread,
     Thread,
     Pagination,
     Loader,
   },
-  data() {
-    return {
-      discussions: [], // Store list of discussions (page)
-      threadFromURL: null, // Single thread (load from URL)
-      currentPage: 1, // Current pagination page
-      pageSize: 5,
-      totalResults: 0,
-      loading: true,
-      currentSort: sorts[0],
-      sorts,
-      readOnlyEnabled: config.read_only_enabled,
-    };
-  },
   props: {
-    description: String,
-    subjectId: String,
-    subjectClass: String,
-    title: {
+    subjectId: {
       type: String,
-      default: defaultTitle,
-    }
-  },
-  watch: {
-    // Update DOM counter on results count change
-    // Simply add .discussion-count class to any DOM element for it to be updated
-    totalResults: (count) => {
-      const els = document.querySelectorAll(".discussions-count");
-      if (els) els.forEach((el) => (el.innerHTML = count));
+      required: true,
+    },
+    subjectClass: {
+      type: String,
+      required: true,
     },
   },
-  mounted() {
-    // Listen to bus events
-    this.$bus.on(DISCUSSIONS_START_THREAD, () => this.startThread());
+  setup(props) {
+    const {t} = useI18n();
+    const toast = useToast();
 
-    // Check if URL contains a thread
-    const hash = window.location.hash.substring(1);
-    const [a, discussionId, b] = URL_REGEX.exec(hash) || [];
+    const discussions = ref([]);
 
-    // If not, we load the first page
-    if (!discussionId) return this.loadPage(this.currentPage);
+    const URL_REGEX = /discussions\/([a-f0-9]{24})-?([0-9]+)?$/i;
 
-    // If it does, it gets loaded
-    this.loadThread(discussionId);
-  },
-  methods: {
-    // Loads a full page
-    loadPage(page = 1, scroll = false) {
-      this.loading = true;
+    /**
+     * @typedef {object} Thread
+     * @property {string} id
+     * @property {Array} discussion
+     * @property {String} title
+     * @property {String} url
+     * @property {String} closed - date when the thread was closed, as string
+     * @property {import("./author.vue").User} closed_by - User who closed the thread
+     */
+
+    /** @type {import("vue").Ref<Thread | null>} */
+    const threadFromURL = ref(null);
+
+    const currentPage = ref(1);
+
+    const pageSize = 5;
+
+    const totalResults = ref(0);
+
+    const loading = ref(true);
+
+    const sorts = [
+      {
+        name: t("Discussion creation"),
+        key: "-created"
+      },
+      {
+        name: t("Last reply"),
+        key: "-discussion.posted_on",
+      },
+    ];
+
+    const currentSort = ref(sorts[0]);
+
+    const readOnlyEnabled = config.read_only_enabled;
+
+    /** @type {import("vue").Ref<HTMLElement | null>} */
+    const top = ref(null);
+
+    const loadThreadFromHash = () => {
+      const hash = window.location.hash.substring(2);
+      const [a, discussionId, b] = URL_REGEX.exec(hash) || [];
+      loadThread(discussionId);
+    };
+
+    const loadThread = (id) => {
+      if (!id) return;
+      loading.value = true;
+
+      // Scroll the discussion block into view.
+      // SetTimeout is needed (instead of $nextTick) because the DOM updates are too fast for the browser to handle
+      setTimeout(
+        () => {
+          if(top.value) {
+            top.value.scrollIntoView({ behavior: "smooth" })
+          }
+        },
+        500
+      );
+
+      return api
+        .get("/discussions/" + id)
+        .then((resp) => resp.data)
+        .then((data) => {
+          if (data) {
+            threadFromURL.value = data;
+            totalResults.value = 1;
+          }
+        })
+        .catch(() => {
+          toast.error(
+            t("An error occurred while fetching the discussion ") + id
+          );
+          loadPage(1); // In case loading a single comment didn't work, we load the first page. Better than nothing !
+        })
+        .finally(() => {
+          loading.value = false;
+        });
+    };
+
+    /**
+     *
+     * @param {import("vue").Ref<number> | number} page
+     * @param {boolean} scroll
+     */
+    const loadPage = (page = 1, scroll = false) => {
+      page = unref(page);
+      loading.value = true;
 
       // We can pass a second "scroll" variable to true if we want to scroll to the top of the discussions section
       // This is useful for bottom of the page navigation buttons
-      if (this.$refs.top && scroll) {
-        this.$refs.top.scrollIntoView({ behavior: "smooth" });
+      if (scroll) {
+        setTimeout(() => {
+          if (top.value) {
+            top.value.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 500);
       }
 
-      return this.$api
+      return api
         .get("/discussions/", {
           params: {
             page,
-            for: this.subjectId,
-            sort: this.currentSort.key,
-            page_size: this.pageSize,
+            for: props.subjectId,
+            sort: currentSort.value.key,
+            page_size: pageSize,
           },
         })
         .then((resp) => resp.data)
         .then((data) => {
           if (data.data) {
-            this.discussions = data.data;
-            this.totalResults = data.total;
+            discussions.value = data.data;
+            totalResults.value = data.total;
           }
         })
-        .catch((err) => {
-          this.$toast.error(
-            this.$t("An error occurred while fetching discussions")
+        .catch(() => {
+          toast.error(
+            t("An error occurred while fetching discussions")
           );
-          this.discussion = [];
+          discussions.value = [];
         })
         .finally(() => {
-          this.loading = false;
+          loading.value = false;
         });
-    },
-    // Loads a single thread, used to load a single thread from URL for instance
-    loadThread(id) {
-      if (!id) return;
-      this.loading = true;
+    };
 
-      // Scroll the discussion block into view.
-      // SetTimeout is needed (instead of $nextTick) because the DOM updates are too fast for the browser to handle
-      setTimeout(
-        () => this.$refs.top.scrollIntoView({ behavior: "smooth" }),
-        500
-      );
+    /** @type {import("vue").Ref<import("./threads-create.vue").default | null>} */
+    const createThread = ref(null);
 
-      return this.$api
-        .get("/discussions/" + id)
-        .then((resp) => resp.data)
-        .then((data) => {
-          if (data) {
-            this.threadFromURL = data;
-            this.totalResults = 1;
-          }
-        })
-        .catch((err) => {
-          this.$toast.error(
-            this.$t("An error occurred while fetching the discussion ") + id
-          );
-          this.loadPage(1); // In case loading a single comment didn't work, we load the first page. Better than nothing !
-        })
-        .finally(() => {
-          this.loading = false;
-        });
-    },
-    // Removes the specific discussion from URL
-    // And loads the first page
-    viewAllDiscussions() {
-      this.threadFromURL = null;
-      history.pushState(null, null, " ");
-      this.loadPage(1);
-    },
-    // Pagination handler
-    changePage(index, scroll = true) {
-      this.currentPage = index;
-      this.loadPage(index, scroll);
-    },
-    // Can be called from outside the component to start a new thread programmatically and scroll into view
-    startThread() {
-      this.startThreadWithoutScroll();
-      this.$refs.createThread.$el.scrollIntoView();
-    },
-    // Can be called from outside the component to start a new thread programmatically
-    startThreadWithoutScroll() {
-      if (!this.$refs.createThread) return;
-      this.$refs.createThread.displayForm();
-    },
-    // Callback that will be passed to the create-thread component
-    createThread(data) {
-      return this.$api
+    const startThread = () => {
+      startThreadWithoutScroll();
+      if(createThread.value) {
+        createThread.value.$el.scrollIntoView();
+      }
+    };
+
+    const startThreadWithoutScroll = () => {
+      if (!createThread.value) return;
+      createThread.value.displayForm();
+    };
+
+    const createNewThread = (data) => {
+      return api
         .post("/discussions/", data)
         .then(() => {
-          this.currentPage = 1;
-          this.loadPage(1, true);
+          currentPage.value = 1;
+          loadPage(1, true);
         })
         .catch((err) =>
-          this.$toast.error(
-            this.$t("An error occurred while creating the discussion "),
+          toast.error(
+            t("An error occurred while creating the discussion "),
             err
           )
         );
-    },
-    // Changing sort order
-    changeSort(sort) {
-      this.currentSort = sort;
-      this.loadPage(this.page);
-    },
-  },
+    };
+
+    const viewAllDiscussions = () => {
+      threadFromURL.value = null;
+      history.pushState(null, "", " ");
+      loadPage(1);
+    };
+
+    const changePage = (index, scroll = true) => {
+      currentPage.value = index;
+      loadPage(index, scroll);
+    };
+
+    const changeSort = (sort) => {
+      currentSort.value = sort;
+      loadPage(currentPage);
+    };
+
+    onMounted(() => {
+      // Listen to bus events
+      bus.on(DISCUSSIONS_START_THREAD, () => startThread());
+
+      // Check if URL contains a thread
+      const hash = window.location.hash.substring(2);
+      const [a, discussionId, b] = URL_REGEX.exec(hash) || [];
+
+      window.addEventListener("hashchange", () => loadThreadFromHash());
+
+      // If not, we load the first page
+      if (!discussionId) return loadPage(currentPage);
+
+      loadThreadFromHash();
+    });
+
+    watch(totalResults, (count) => {
+      /** @type {NodeListOf<HTMLElement>} */
+      const els = document.querySelectorAll(".discussions-count");
+      if (els) els.forEach((el) => (el.innerHTML = count.toFixed(0)));
+    });
+
+    return {
+      discussions,
+      threadFromURL,
+      currentPage,
+      pageSize,
+      totalResults,
+      loading,
+      currentSort,
+      sorts,
+      readOnlyEnabled,
+      createThread,
+      viewAllDiscussions,
+      changePage,
+      changeSort,
+      createNewThread,
+      top,
+    };
+  }
 });
 </script>

@@ -44,8 +44,6 @@
 import config from "../../config";
 import Author from "./author.vue";
 
-const log = console.log;
-
 export default {
   components: {
     Author,

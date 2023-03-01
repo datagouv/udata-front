@@ -6,7 +6,7 @@ from datetime import date, datetime
 from urllib.parse import urlsplit, urlunsplit
 
 from babel.numbers import format_decimal
-from flask import g, url_for, request, current_app, json
+from flask import g, url_for, request, current_app, json, Request
 from flask_restx import marshal
 from jinja2 import Markup, contextfilter
 from werkzeug import url_decode, url_encode
@@ -215,6 +215,12 @@ def external_source(dataset):
 
 
 @front.app_template_global()
+def is_current_tab(request: Request, tab_arg: str) -> bool:
+    args = request.args
+    return tab_arg in args.to_dict() if args else False
+
+
+@front.app_template_global()
 @front.app_template_filter()
 def isodate(value, format='short'):
     dt = date(*map(int, value.split('-')))
@@ -315,15 +321,6 @@ def daterange(value, details=False):
         end = value.end.strftime(date_format)
 
     return '{start!s}–{end!s}'.format(start=start, end=end) if end else start
-
-
-@front.app_template_filter()
-@front.app_template_global()
-def ficon(value):
-    '''A simple helper for font icon class'''
-    return ('fa {0}'.format(value)
-            if value.startswith('fa')
-            else 'fa fa-{0}'.format(value))
 
 
 @front.app_template_filter()

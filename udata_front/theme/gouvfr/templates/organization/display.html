@@ -69,13 +69,13 @@
             {{ follow_btn(org) }}
             {% if can_edit %}
                 <a
-                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-edit-line fr-btn--icon-left fr-hidden fr-unhidden-sm"
+                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-pencil-line fr-btn--icon-left fr-hidden fr-unhidden-sm"
                     href="{{ url_for('admin.index', path='organization/{id}/'.format(id=org.id)) }}"
                 >
                     {{ _('Modify organization') }}
                 </a>
                 <a
-                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-edit-line fr-hidden-sm"
+                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-pencil-line fr-hidden-sm"
                     href="{{ url_for('admin.index', path='organization/{id}/'.format(id=org.id)) }}"
                 >
                     {{ _('Modify organization') }}

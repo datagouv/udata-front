@@ -1,0 +1,75 @@
+{% cache cache_duration, 'dataset-card-xs', dataset.id|string, g.lang_code %}
+{% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate %}
+
+<article class="fr-p-3w bg-white border border-default-grey fr-enlarge-link dataset-card-xs">
+    {% if dataset.private or dataset.archived %}
+    <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v">
+        {% if dataset.private %}
+        <p class="fr-badge fr-badge--mention-grey fr-mr-1w">
+            <span class="fr-icon-lock-line" aria-hidden="true"></span>
+            {{ _('Private') }}
+        </p>
+        {% endif %}
+        {% if dataset.archived %}
+        <p class="fr-badge fr-badge--mention-grey">
+            <span class="fr-icon-archive-line" aria-hidden="true"></span>
+            {{ _('Archived') }}
+        </p>
+        {% endif %}
+    </div>
+    {% endif %}
+    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
+        <div class="fr-col-auto">
+            <div class="logo">
+            {% if dataset.organization %}
+            <img
+                alt="{{ dataset.organization.name|placeholder_alt(dataset.organization.logo) }}"
+                src="{{ dataset.organization.logo(56)|placeholder('organization') }}"
+                width="56"
+                height="56"
+                loading="lazy"
+            />
+            {% elif dataset.owner %}
+            <img
+                alt="{{ dataset.owner.fullname }}"
+                src="{{ dataset.owner|avatar_url(56) }}"
+                width="56"
+                height="56"
+                loading="lazy"
+            />
+            {% else %}
+            <img
+                alt=""
+                src="{{ ''|placeholder('organization') }}"
+                width="56"
+                height="56"
+                loading="lazy"
+            />
+            {% endif %}
+            </div>
+        </div>
+        <div class="fr-col">
+            <h4 class="fr-mb-1v">
+                <a href="{{ url_for('datasets.show', dataset=dataset) }}" class="text-grey-500">
+                    {{ dataset.full_title }}
+                    {% if dataset.acronym %}<small>{{ dataset.acronym }}</small>{% endif %}
+                </a>
+            </h4>
+            {% if dataset.organization or dataset.owner %}
+            <p class="fr-m-0 fr-mt-1v fr-text--sm">
+                {{ _('From') }}
+                {% if dataset.organization %}
+                <span class="not-enlarged">
+                    <a href="{{ url_for('organizations.show', org=dataset.organization) }}">
+                        {{organization_name_with_certificate(dataset.organization)}}
+                    </a>
+                </span>
+                {% elif dataset.owner %}
+                {{owner_name(dataset)}}
+                {% endif %}
+            </p>
+            {% endif %}
+        </div>
+    </div>
+</article>
+{% endcache %}

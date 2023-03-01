@@ -43,6 +43,12 @@ a:not([href]) {
     --text-spacing: 1em 0;
 }
 
-p {
-    line-height: inherit;
+:where(code, kbd, samp) {
+    font-family:
+        ui-monospace,
+        "Cascadia Mono", "Segoe UI Mono",
+        "Ubuntu Mono",
+        "Roboto Mono",
+        Menlo, Monaco, Consolas,
+        monospace;
 }

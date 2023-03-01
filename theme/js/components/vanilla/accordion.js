@@ -7,16 +7,13 @@ category: 5 - Interactions
 # Interaction
 Because accordion are not only seen in the subway, you can use this tidbit to create collapsible ARIA-compatible accordions.
 
-The button needs to have :
+The button must have :
 - `data-accordion-button` attribute
 - `aria-controls` and `href` set to a valid `#id` on the page
 - `aria-label` to explain what the button does if there's not enough text in the button itself (like an icon)
-- `aria-expanded` set to either `true` (if the accordion is visible by default) or `false`
+- `aria-expanded` attribute if the accordion is visible by default
 
-The accordion panel needs to have :
-
-- `data-accordion-button` attribute
-- `aria-expanded="true"` if the accordion is visible by default
+The accordion panel must have :
 - `aria-labelledby` set to the button's `#id`
 - A valid `#id` corresponding to the button's `aria-controls`
 
@@ -42,7 +39,7 @@ togglers.forEach((toggler) => {
       const target = document.querySelector("#" + button.getAttribute("aria-controls"));
       if (target) {
         target.classList.toggle("active");
-        toggleAccordion(target, button.getAttribute("aria-expanded") === "true");
+        toggleAccordion(target, button.hasAttribute("aria-expanded"));
       }
     }
   });
