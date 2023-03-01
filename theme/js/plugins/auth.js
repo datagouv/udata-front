@@ -20,12 +20,14 @@ export function get_auth_url() {
   );
 }
 
-export default function install(app) {
-  /**
-   * Expose the current user
-   */
-  app.config.globalProperties.$user = config.user;
+export function auth() {
+  if (!config.user) {
+    window.location.href = get_auth_url();
+    throw new Error('Auth required'); // This avoid calling function to continue its execution
+  }
+}
 
+export default function install(app) {
   /**
    * Checks if the current user is authenticated
    * and triggers a login if it's not the case.
@@ -35,10 +37,5 @@ export default function install(app) {
    *
    * @throws  {Error} When the user is not authenticated
    */
-  app.config.globalProperties.$auth = function () {
-    if (!this.$user) {
-      window.location = get_auth_url();
-      throw new Error('Auth required'); // This avoid calling function to continue its execution
-    }
-  };
+  app.config.globalProperties.$auth = auth;
 }

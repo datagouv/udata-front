@@ -134,7 +134,33 @@ def group_resources_by_type(resources):
     for resource in resources:
         groups[getattr(resource, 'type')].append(resource)
     ordered = OrderedDict()
-    for rtype, rtype_label in RESOURCE_TYPES.items():
+    plurals = dict([
+        ('main', ngettext("%(num)d Main file", "%(num)d Main files", len(groups['main']))),
+        ('documentation', ngettext(
+            '%(num)d Documentation',
+            '%(num)d Documentations',
+            len(groups['documentation'])
+        )),
+        ('update', ngettext('%(num)d Update', '%(num)d Updates', len(groups['update']))),
+        ('api', ngettext('%(num)d API', '%(num)d APIs', len(groups['api']))),
+        ('code', ngettext(
+            '%(num)d Code repository',
+            '%(num)d Code repositories',
+            len(groups['code'])
+        )),
+        ('other', ngettext('%(num)d Other', '%(num)d Others', len(groups['other']))),
+    ])
+    for rtype in RESOURCE_TYPES.keys():
         if groups[rtype]:
-            ordered[(rtype, str(rtype_label))] = groups[rtype]
+            ordered[(rtype, plurals[rtype])] = groups[rtype]
     return ordered
+
+
+@blueprint.app_template_filter()
+def group_resources_by_schema(resources):
+    """Group a list of `resources` by `schema`"""
+    groups = dict()
+    for resource in resources:
+        if len(resource.schema) > 0 and resource.schema['name'] not in groups:
+            groups[resource.schema['name']] = resource.schema
+    return groups

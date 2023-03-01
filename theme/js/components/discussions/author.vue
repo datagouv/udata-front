@@ -10,6 +10,12 @@
 </template>
 
 <script>
+
+/** @typedef {object} User
+ * @property {String} first_name
+ * @property {String} last_name
+ */
+
 export default {
   props: {
     author: Object,
