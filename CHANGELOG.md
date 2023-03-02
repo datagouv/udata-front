@@ -11,6 +11,7 @@
 - Show a warning notice when JavaScript is disabled or failed to execute [#206](https://github.com/etalab/udata-front/pull/206)
 - Update lighthouse to fix security issues [#211](https://github.com/etalab/udata-front/pull/211)
 - New dataset page [#181](https://github.com/etalab/udata-front/pull/181)
+- Update vue-toaster dependency to avoid reported vulnerabilities [#215](https://github.com/etalab/udata-front/pull/215)
 
 ## 3.1.2 (2023-02-06)
 
