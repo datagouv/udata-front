@@ -11,7 +11,7 @@ from udata.core.site.models import current_site
 
 from udata_front.theme import render as render_template
 from udata.sitemap import sitemap
-from udata.i18n import I18nBlueprint, gettext as _
+from udata.i18n import I18nBlueprint, gettext as _, ngettext
 from udata_front.views.base import DetailView, SearchView
 
 
