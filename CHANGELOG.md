@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 3.1.3 (2023-03-02)
 
 > **Warning**
 > Refactor of breadcrumb macro to be easier to use. `toolbar_class`, `breadcrum_class`, `toolbar_container` and `breadcrumb_bar` options are now removed.
