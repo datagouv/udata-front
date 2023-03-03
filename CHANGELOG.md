@@ -2,7 +2,10 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Upgrading packages following Flask upgrade to 2.1.2 in udata [#207](https://github.com/etalab/udata-front/pull/207)
+  - Use feedgenerator for AtomFeed instead of Werkzeug deprecated helper
+  - `contextfunction` and `contextfilter` from Jinja is deprecated and replaced by `pass_context`
+  - Move `Flask-Themes2` dep from udata to udata-front and upgrade to 1.0.0
 
 ## 3.1.3 (2023-03-02)
 
@@ -10,7 +13,6 @@
 > Refactor of breadcrumb macro to be easier to use. `toolbar_class`, `breadcrum_class`, `toolbar_container` and `breadcrumb_bar` options are now removed.
 > Refactor of dataset components names to match new sizes : XS (previously card), SM, MD, LG (previously search-result).
 > `dataset.display.after-description` hook is now really after the description. Use new `dataset.display.after-files` hook for previous position.
-
 - Make newsletter url configurable [#205](https://github.com/etalab/udata-front/pull/205)
 - Show a warning notice when JavaScript is disabled or failed to execute [#206](https://github.com/etalab/udata-front/pull/206)
 - Update lighthouse to fix security issues [#211](https://github.com/etalab/udata-front/pull/211)
