@@ -94,7 +94,7 @@ class ReuseDetailView(ReuseView, DetailView):
         followers = (Follow.objects.followers(self.reuse)
                      .order_by('follower.fullname'))
 
-        related_reuses = Reuse.objects
+        related_reuses = Reuse.objects(id__ne=self.reuse.id)
         if self.reuse.organization:
             related_reuses = related_reuses.owned_by(self.reuse.organization.id)
         elif self.reuse.owner:
