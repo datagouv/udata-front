@@ -1,0 +1,13 @@
+{% from theme('macros/quality_score_tooltip.html') import quality_score_tooltip %}
+{% from theme('macros/quality_score.html') import quality_score %}
+
+{% macro quality_score_inline(dataset, class) %}
+
+{% call quality_score_tooltip(dataset, class) %}
+    <p class="fr-m-0 fr-grid-row fr-grid-row--middle">
+        <span class="fr-icon-info-line fr-mr-1v" aria-hidden="true"></span>
+        {{_('Metadata quality:')}}
+    </p>
+    {{ quality_score(dataset.quality.score) }}
+{% endcall %}
+{% endmacro %}

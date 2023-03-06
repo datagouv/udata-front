@@ -8,7 +8,7 @@ import requests
 
 from flask import url_for
 from feedgen.feed import FeedGenerator
-from werkzeug.contrib.atom import AtomFeed
+from feedgenerator.django.utils.feedgenerator import Atom1Feed
 
 from udata.core.dataset.factories import (
     DatasetFactory, LicenseFactory, VisibleDatasetFactory
@@ -369,7 +369,7 @@ class GetBlogPostAtomTest(GetBlogPostMixin):
 
     def feed(self, feed_title, title, content, url, published=None, summary=None,
              enclosure=None, media_thumbnail=None):
-        feed = AtomFeed(feed_title, feed_url=WP_FEED_URL)
+        feed = Atom1Feed(feed_title, feed_url=WP_FEED_URL)
         tz = pytz.timezone(faker.timezone())
         published = published or faker.date_time(tzinfo=tz)
         kwargs = {
@@ -388,7 +388,7 @@ class GetBlogPostAtomTest(GetBlogPostMixin):
                 'rel': 'enclosure',
                 'length': faker.pyint(),
             }]
-        feed.add(title, content, **kwargs)
+        feed.add_item(title, content, **kwargs)
         out = feed.to_string()
         if media_thumbnail:
             el = '<media:thumbnail url="{0}" />'.format(media_thumbnail)

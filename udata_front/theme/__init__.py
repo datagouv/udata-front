@@ -9,7 +9,7 @@ from flask import g, current_app
 from flask_themes2 import (
     Themes, Theme, render_theme_template, get_theme
 )
-from jinja2 import contextfunction
+from jinja2 import pass_context
 from udata import assets
 
 
@@ -29,7 +29,7 @@ def get_current_theme():
 current = LocalProxy(get_current_theme)
 
 
-@contextfunction
+@pass_context
 def theme_static_with_version(ctx, filename, external=False):
     '''Override the default theme static to add cache burst'''
     if current_app.theme_manager.static_folder:

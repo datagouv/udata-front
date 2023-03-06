@@ -2,8 +2,6 @@
 {% from theme('macros/paginator.html') import paginator with context %}
 {% from theme('macros/sort_search.html') import sort_search %}
 
-{% set toolbar_class='search-toolbar' %}
-
 {% set meta = {
     'title': _('Organizations'),
     'description': _("%(site)s organization search", site=config['SITE_TITLE']),
@@ -58,7 +56,7 @@
             </div>
         </form>
     </div>
-    {% if organizations %}    
+    {% if organizations %}
     <ul class="search-results fr-my-3w fr-grid-row fr-grid-row--gutters">
         {% for organization in organizations %}
         <li class="fr-col-12 fr-col-sm-6 fr-col-lg-4">

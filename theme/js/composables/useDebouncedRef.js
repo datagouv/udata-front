@@ -22,11 +22,13 @@ export const debounce = (fn, delay = 0, immediate = false) => {
 }
 
 /**
- * @param {any} initialValue
- * @param {number | undefined} delay
- * @param {boolean | undefined} immediate
+ * @template T
+ * @param {T} initialValue
+ * @param {number} delay
+ * @param {boolean} immediate
+ * @returns {import("vue").Ref<import("vue").UnwrapRef<T>>}
  */
-export default function useDebouncedRef (initialValue, delay, immediate) {
+export default function useDebouncedRef (initialValue, delay = 0, immediate = false) {
   const state = ref(initialValue);
   return customRef((track, trigger) => ({
     get() {
