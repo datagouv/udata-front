@@ -42,7 +42,7 @@
 <a
     href="{{ reuse.url }}"
     rel="nofollow"
-    class="fr-btn fr-btn--sm fr-btn--icon-right fr-icon-external-link-line"
+    class="fr-btn fr-btn--sm fr-btn--icon-right fr-icon-external-link-line fr-ml-3v"
 >
     {{ _('See the reuse') }}
 </a>
@@ -70,7 +70,9 @@
             <h1 class="fr-mb-5v fr-h3">
                 {{ reuse.title }}
             </h1>
-            <img src="{{ reuse.image|placeholder('reuse') }}" class="mw-100" alt="" />
+            <div class="fr-grid-row fr-grid-row--center">
+                <img src="{{ reuse.image|placeholder('reuse') }}" class="mw-100" alt="" />
+            </div>
             <div class="fr-grid-row fr-grid-row--center">
                 <a
                     href="{{ reuse.url }}"
