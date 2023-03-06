@@ -164,6 +164,7 @@
             </discussion-threads>
         </div>
     </section>
+    {% if related_reuses %}
     <section class="fr-container fr-py-5v">
         <h2 class="subtitle subtitle--uppercase fr-mb-3v">
             {{ ngettext('%(num)d reuse from the same creator', '%(num)d reuses from the same creator', related_reuses|length) }}
@@ -176,6 +177,14 @@
             {% endfor %}
         </ul>
     </section>
+    {% else %}
+        <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-my-5w">
+            {% include theme('svg/blank_state/reuse.svg') %}
+            <p class="fr-h6 fr-mt-2w fr-mb-5v text-center">
+                {{ _('There is no other reuses from this creator.') }}
+            </p>
+        </div>
+    {% endif %}
 </div>
 {% endcache %}
 {% endblock %}
