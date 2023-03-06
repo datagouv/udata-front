@@ -97,13 +97,11 @@
             {% endif %}
             {% if reuse.organization %}
                 {% with organization=reuse.organization, producer_type='organization' %}
-                {# TODO : Replace with organization/producer-name-with-logo.html when new dataset page is merged here #}
-                {% include theme('organization/producer-summary.html') %}
+                {% include theme('organization/producer-name-with-logo.html') %}
                 {% endwith %}
             {% elif reuse.owner %}
                 {% with organization=reuse.owner, producer_type='owner' %}
-                {# TODO : Replace with organization/producer-name-with-logo.html when new dataset page is merged here #}
-                {% include theme('organization/producer-summary.html') %}
+                {% include theme('organization/producer-name-with-logo.html') %}
                 {% endwith %}
             {% endif %}
             <div class="fr-grid-row fr-grid-row--gutters">
