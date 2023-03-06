@@ -149,10 +149,13 @@
     <section class="community_container fr-py-5v border-bottom" id="community">
         <div class="fr-container vuejs">
             {% if not reuse.metrics.discussions %}
+                <h2 class="subtitle subtitle--uppercase fr-mb-3v">
+                    {{ _('Discussions') }}
+                </h2>
                 <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-mt-5w" data-no-discussion>
                     {% include theme('svg/blank_state/discussion.svg') %}
                     <p class="fr-h6 fr-mt-2w fr-mb-5v text-center">
-                        {{ _('There is no discussions for this reuse yet.') }}
+                        {{ _('There are no discussions for this reuse yet.') }}
                     </p>
                 </div>
             {% endif %}
@@ -164,27 +167,30 @@
             </discussion-threads>
         </div>
     </section>
-    {% if related_reuses %}
     <section class="fr-container fr-py-5v">
-        <h2 class="subtitle subtitle--uppercase fr-mb-3v">
-            {{ ngettext('%(num)d reuse from the same creator', '%(num)d reuses from the same creator', related_reuses|length) }}
-        </h2>
-        <ul class="fr-grid-row fr-grid-row--gutters">
-            {% for reuse in related_reuses %}
-            <li class="fr-mb-3v fr-col-lg-3 fr-col-sm-6 fr-col-12">
-                {% include theme('reuse/card.html') %}
-            </li>
-            {% endfor %}
-        </ul>
+        {% if related_reuses %}
+            <h2 class="subtitle subtitle--uppercase fr-mb-3v">
+                {{ ngettext('%(num)d reuse from the same creator', '%(num)d reuses from the same creator', related_reuses|length) }}
+            </h2>
+            <ul class="fr-grid-row fr-grid-row--gutters">
+                {% for reuse in related_reuses %}
+                <li class="fr-mb-3v fr-col-lg-3 fr-col-sm-6 fr-col-12">
+                    {% include theme('reuse/card.html') %}
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h2 class="subtitle subtitle--uppercase fr-mb-3v">
+                {{ _('Reuses from the same creator') }}
+            </h2>
+            <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-my-5w">
+                {% include theme('svg/blank_state/reuse.svg') %}
+                <p class="fr-h6 fr-mt-2w fr-mb-5v text-center">
+                    {{ _('There are no other reuses from this creator.') }}
+                </p>
+            </div>
+        {% endif %}
     </section>
-    {% else %}
-        <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-my-5w">
-            {% include theme('svg/blank_state/reuse.svg') %}
-            <p class="fr-h6 fr-mt-2w fr-mb-5v text-center">
-                {{ _('There is no other reuses from this creator.') }}
-            </p>
-        </div>
-    {% endif %}
 </div>
 {% endcache %}
 {% endblock %}
