@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 3.2.0 (2023-03-07)
 
 - Upgrading packages following Flask upgrade to 2.1.2 in udata [#207](https://github.com/etalab/udata-front/pull/207)
   - Use feedgenerator for AtomFeed instead of Werkzeug deprecated helper
