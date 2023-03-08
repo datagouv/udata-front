@@ -745,7 +745,7 @@ msgstr "Ressources communautaires"
 #: udata_front/theme/gouvfr/templates/dataset/display.html:302
 #: udata_front/theme/gouvfr/templates/dataset/display.html:504
 #: udata_front/theme/gouvfr/templates/reuse/display.html:153
-msgid "Informations"
+msgid "Information"
 msgstr "Informations"
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:341
@@ -1653,7 +1653,7 @@ msgid "Modify reuse"
 msgstr "Modifier la réutilisation"
 
 #: udata_front/theme/gouvfr/templates/reuse/display.html:108
-msgid "Reuse informations"
+msgid "Reuse information"
 msgstr "Informations sur la réutilisation"
 
 #: udata_front/theme/gouvfr/templates/reuse/display.html:112

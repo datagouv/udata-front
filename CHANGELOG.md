@@ -11,6 +11,7 @@
   - `contextfunction` and `contextfilter` from Jinja is deprecated and replaced by `pass_context`
   - Move `Flask-Themes2` dep from udata to udata-front and upgrade to 1.0.0
 - Fix `@background-contrast-blue-cumulus` LESS variable [#217](https://github.com/etalab/udata-front/pull/217)
+- Fix "informations" throughout the repo [#218](https://github.com/etalab/udata-front/pull/218)
 
 ## 3.1.3 (2023-03-02)
 
