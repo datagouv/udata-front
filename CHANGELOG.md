@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Front modifications to display resources schema url field [#220](https://github.com/etalab/udata-front/pull/220)
 
 ## 3.2.0 (2023-03-07)
 
