@@ -161,6 +161,9 @@ def group_resources_by_schema(resources):
     """Group a list of `resources` by `schema`"""
     groups = dict()
     for resource in resources:
-        if len(resource.schema) > 0 and resource.schema['name'] not in groups:
-            groups[resource.schema['name']] = resource.schema
+        try:
+            if len(resource.schema) > 0 and resource.schema['name'] not in groups:
+                groups[resource.schema['name']] = resource.schema
+        except KeyError:
+            continue
     return groups
