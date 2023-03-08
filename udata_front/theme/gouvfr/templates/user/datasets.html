@@ -2,12 +2,12 @@
 
 
 {% block breadcrumb %}
-    {{ super() }}
-    <li class="active" aria-current="page">
-        <a href="{{ url_for('users.datasets', user=user) }}">
-        {{ _('Datasets') }}
-        </a>
-    </li>
+{{ super() }}
+<li>
+	<a class="fr-breadcrumb__link" aria-current="page">
+		{{ _('Datasets') }}
+	</a>
+</li>
 {% endblock %}
 
 {% set user_tab = 'datasets' %}

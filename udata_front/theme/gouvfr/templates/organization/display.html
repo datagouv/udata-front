@@ -18,8 +18,16 @@
 
 {% block breadcrumb %}
 {% cache cache_duration, 'org-breadcrumb', org.id|string, g.lang_code, org.last_modified|string %}
-<li><a href="{{ url_for('organizations.list') }}">{{ _('Organizations') }}</a></li>
-<li class="active" aria-current="page">{{ org.name }}</li>
+<li>
+    <a class="fr-breadcrumb__link" href="{{ url_for('organizations.list') }}">
+        {{ _('Organizations') }}
+    </a>
+</li>
+<li>
+    <a class="fr-breadcrumb__link" aria-current="page">
+        {{ org.name }}
+    </a>
+</li>
 {% endcache %}
 {% endblock %}
 

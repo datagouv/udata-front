@@ -31,8 +31,16 @@
 
 {% block breadcrumb %}
 {% cache cache_duration, 'reuse-breadcrumb', reuse.id|string, g.lang_code, reuse.last_modified|string %}
-<li><a href="{{ url_for('reuses.list') }}">{{ _('Reuses') }}</a></li>
-<li class="active" aria-current="page">{{ reuse.title }}</li>
+<li>
+    <a class="fr-breadcrumb__link" href="{{ url_for('reuses.list') }}">
+        {{ _('Reuses') }}
+    </a>
+</li>
+<li>
+    <a class="fr-breadcrumb__link" aria-current="page">
+        {{ reuse.title }}
+    </a>
+</li>
 {% endcache %}
 {% endblock %}
 

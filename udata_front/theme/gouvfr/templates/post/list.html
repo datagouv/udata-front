@@ -11,12 +11,10 @@
 {% set bundle = 'search' %}
 
 {% block breadcrumb %}
-<li class="active" aria-current="page">
-    {{ _('Posts') }}
-    <span>{{ _('%(start)s to %(end)s on %(total)s',
-            start=posts.page_start,
-            end=posts.page_end,
-            total=posts.total) }}</span>
+<li>
+    <a class="fr-breadcrumb__link" aria-current="page">
+        {{ _('Posts') }}
+    </a>
 </li>
 {% endblock %}
 
@@ -25,7 +23,7 @@
     <h1 class="fr-mb-0">{{ _('Posts') }}</h1>
 </div>
 <div class="alert-info bg-blue-400 text-white fr-my-9v">
-    <div class="fr-container fr-py-2w">
+    <div class="fr-container">
         <p class="fr-m-0">{{ _('To stay up-to-date, you can subscribe to')}}
             <a href=" {{ config.NEWSLETTER_SUBSCRIPTION_URL }}"
                 class="fr-text--bold text-white">

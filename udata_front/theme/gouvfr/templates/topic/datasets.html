@@ -11,16 +11,20 @@
 
 {% block breadcrumb %}
     <li>
-        <a href="{{ url_for('topics.display', topic=topic) }}">
+        <a class="fr-breadcrumb__link" href="{{ url_for('topics.display', topic=topic) }}">
         {{ topic.name }}
         </a>
     </li>
-    <li class="active" aria-current="page">
-        {{ _('Datasets') }}
-        <small>{{ _('%(start)s to %(end)s on %(total)s',
-            start=datasets.page_start,
-            end=datasets.page_end,
-            total=datasets.total) }}</small>
+    <li>
+        <a class="fr-breadcrumb__link" aria-current="page">
+            {{ _('Datasets') }}
+            <small>
+                {{ _('%(start)s to %(end)s on %(total)s',
+                    start=datasets.page_start,
+                    end=datasets.page_end,
+                    total=datasets.total) }}
+            </small>
+        </a>
     </li>
 {% endblock %}
 

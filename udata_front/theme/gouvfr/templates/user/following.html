@@ -3,8 +3,12 @@
 {% set user_tab = 'following' %}
 
 {% block breadcrumb %}
-    {{ super() }}
-    <li class="active" aria-current="page">{{ _('Following') }}</li>
+{{ super() }}
+<li>
+    <a class="fr-breadcrumb__link" aria-current="page">
+        {{ _('Following') }}
+    </a>
+</li>
 {% endblock %}
 
 {% block user_content %}

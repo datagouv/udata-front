@@ -1,9 +1,21 @@
 {% extends theme('layouts/1-column.html') %}
 
 {% block breadcrumb %}
-    <li><a href="{{ url_for('datasets.list') }}">{{ _('Datasets') }}</a></li>
-    <li><a href="{{ url_for('datasets.show', dataset=dataset) }}">{{ dataset.name|truncate(120) }}</a></li>
-    <li class="active" aria-current="page">{{ _('Followers') }}</li>
+    <li>
+        <a class="fr-breadcrumb__link" href="{{ url_for('datasets.list') }}">
+            {{ _('Datasets') }}
+        </a>
+    </li>
+    <li>
+        <a class="fr-breadcrumb__link" href="{{ url_for('datasets.show', dataset=dataset) }}">
+            {{ dataset.name|truncate(120) }}
+        </a>
+    </li>
+    <li>
+        <a class="fr-breadcrumb__link" aria-current="page">
+            {{ _('Followers') }}
+        </a>
+    </li>
 {% endblock %}
 
 {% block main_content %}

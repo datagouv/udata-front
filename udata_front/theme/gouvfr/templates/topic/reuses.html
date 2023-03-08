@@ -11,16 +11,20 @@
 
 {% block breadcrumb %}
     <li>
-        <a href="{{ url_for('topics.display', topic=topic) }}">
+        <a class="fr-breadcrumb__link" href="{{ url_for('topics.display', topic=topic) }}">
         {{ topic.name }}
         </a>
     </li>
-    <li class="active" aria-current="page">
-        {{ _('Reuses') }}
-        <small>{{ _('%(start)s to %(end)s on %(total)s',
-            start=reuses.page_start,
-            end=reuses.page_end,
-            total=reuses.total) }}</small>
+    <li>
+        <a class="fr-breadcrumb__link" aria-current="page">
+            {{ _('Reuses') }}
+            <small>
+                {{ _('%(start)s to %(end)s on %(total)s',
+                    start=reuses.page_start,
+                    end=reuses.page_end,
+                    total=reuses.total) }}
+            </small>
+        </a>
     </li>
 {% endblock %}
 
