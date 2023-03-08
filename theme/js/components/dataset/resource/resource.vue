@@ -43,11 +43,11 @@
         </div>
       </div>
       <div class="fr-col-auto fr-ml-auto">
-        <ul class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
-          <li class="text-default-error" v-if="unavailable">
+        <div class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
+          <p class="text-default-error fr-m-0" v-if="unavailable">
             {{$t('Unavailable')}}
-          </li>
-          <li class="fr-col-auto fr-ml-3v">
+          </p>
+          <p class="fr-col-auto fr-ml-3v fr-m-0">
             <button
               @click="expand"
               role="button"
@@ -63,18 +63,18 @@
                 {{hasExplore ? $t('See data') : $t('See metadata')}}
               </template>
             </button>
-          </li>
-          <li class="fr-col-auto fr-ml-3v" v-if="resource.format === 'url'">
+          </p>
+          <p class="fr-col-auto fr-ml-3v fr-m-0" v-if="resource.format === 'url'">
             <a
               :href="resource.latest"
-              :title="$t('Resource link')"
+              :title="$t('Resource link - opens a new window')"
               rel="nofollow noopener"
               target="_blank"
               class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-external-link-line fr-icon--sm"
             >
             </a>
-          </li>
-          <li class="fr-col-auto fr-ml-3v" v-else>
+          </p>
+          <p class="fr-col-auto fr-ml-3v fr-m-0" v-else>
             <a
               :href="resource.latest"
               :title="$t('Download resource')"
@@ -82,15 +82,15 @@
               class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-download-line fr-icon--sm"
             >
             </a>
-          </li>
-          <li class="fr-col-auto fr-ml-3v" v-if="canEdit">
+          </p>
+          <p class="fr-col-auto fr-ml-3v fr-m-0" v-if="canEdit">
             <EditButton
               :dataset-id="datasetId"
               :resource-id="resource.id"
               :is-community-resource="isCommunityResource"
             />
-          </li>
-        </ul>
+          </p>
+        </div>
       </div>
     </header>
     <section
