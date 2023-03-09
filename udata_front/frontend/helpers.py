@@ -6,10 +6,11 @@ from datetime import date, datetime
 from urllib.parse import urlsplit, urlunsplit
 
 from babel.numbers import format_decimal
-from flask import g, url_for, request, current_app, json
+from flask import g, url_for, request, current_app, json, Request
 from flask_restx import marshal
-from jinja2 import Markup, contextfilter
-from werkzeug import url_decode, url_encode
+from jinja2 import pass_context
+from markupsafe import Markup
+from werkzeug.urls import url_decode, url_encode
 
 from . import front
 
@@ -99,7 +100,7 @@ def in_url(*args, **kwargs):
 
 
 @front.app_template_filter()
-@contextfilter
+@pass_context
 def placeholder(ctx, url, name='default', external=False):
     return url or theme_static_with_version(
         ctx,
@@ -119,7 +120,7 @@ def obfuscate(email):
 
 
 @front.app_template_filter()
-@contextfilter
+@pass_context
 def avatar_url(ctx, obj, size, external=False):
     if hasattr(obj, 'avatar') and obj.avatar:
         return obj.avatar(size, external=external)
@@ -131,7 +132,7 @@ def avatar_url(ctx, obj, size, external=False):
 
 
 @front.app_template_filter()
-@contextfilter
+@pass_context
 def owner_avatar_url(ctx, obj, size=32, external=False):
     if hasattr(obj, 'organization') and obj.organization:
         return (obj.organization.logo(size, external=external)
@@ -153,7 +154,7 @@ def owner_url(obj, external=False):
 
 
 @front.app_template_filter()
-@contextfilter
+@pass_context
 def avatar(ctx, user, size, classes='', external=False):
     markup = ''.join((
         '<a class="avatar {classes}" href="{url}" title="{title}">',
@@ -172,7 +173,7 @@ def avatar(ctx, user, size, classes='', external=False):
 
 
 @front.app_template_filter()
-@contextfilter
+@pass_context
 def owner_avatar(ctx, obj, size=32, classes='', external=False):
     markup = '''
         <a class="avatar {classes}" href="{url}" title="{title}">
@@ -212,6 +213,12 @@ def owner_name_acronym(obj):
 @front.app_template_global()
 def external_source(dataset):
     return dataset.harvest.remote_url if dataset.harvest else None
+
+
+@front.app_template_global()
+def is_current_tab(request: Request, tab_arg: str) -> bool:
+    args = request.args
+    return tab_arg in args.to_dict() if args else False
 
 
 @front.app_template_global()
@@ -315,15 +322,6 @@ def daterange(value, details=False):
         end = value.end.strftime(date_format)
 
     return '{start!s}–{end!s}'.format(start=start, end=end) if end else start
-
-
-@front.app_template_filter()
-@front.app_template_global()
-def ficon(value):
-    '''A simple helper for font icon class'''
-    return ('fa {0}'.format(value)
-            if value.startswith('fa')
-            else 'fa fa-{0}'.format(value))
 
 
 @front.app_template_filter()

@@ -3,7 +3,7 @@
     {# FIXME: remove with loop when upgrading jinja. See https://github.com/pallets/jinja/pull/1242 #}
     {% with loop_ = loop %}
     <li>
-        {% include theme('dataset/search-result.html') %}
+        {% include theme('dataset/card-lg.html') %}
     </li>
     {% endwith %}
 {% endfor %}

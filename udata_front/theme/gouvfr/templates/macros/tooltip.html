@@ -3,10 +3,10 @@
 {# To add different content for the <span> and the tooltip, you should check the call parameter. #}
 {# You'll receive `tooltip` for the caller inside the tooltip. #}
 {% macro tooltip(class) %}
-    <span class="tooltip__wrapper text-grey-500 {{class}}">
+    <div class="tooltip__wrapper text-grey-500 fr-grid-row fr-grid-row--middle fr-mr-1v {{class}}">
         {{caller()}}
         <div class="tooltip">
             {{caller("tooltip")}}
         </div>
-    </span>
+    </div>
 {% endmacro %}

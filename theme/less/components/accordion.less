@@ -35,15 +35,26 @@ You can use accordions from DSFR. You can find documented usage on [DSFR documen
         pointer-events: none;
     }
 
+    &:extend(.fr-icon-arrow-right-s-line);
+    &:extend([class^="fr-icon-"]);
+    &::before {
+        &:extend(.fr-icon-arrow-right-s-line::before);
+        &:extend([class^="fr-icon-"]::before);
+        transform: rotate(90deg);
+        transition: transform ease 0.3s; // Warning : if you change the timing here, change it in accordion.js as well
+    }
+
+    &[aria-expanded]::before {
+        transform: rotate(-90deg);
+    }
+
     &.trigger-once {
-        &[aria-expanded="true"] {
+        &[aria-expanded] {
             display: none;
         }
     }
 
     display: inline-block;
-    transform: rotate(90deg);
-    transition: transform ease 0.3s; // Warning : if you change the timing here, change it in accordion.js as well
 
     svg {
         width: 15px;
@@ -53,13 +64,9 @@ You can use accordions from DSFR. You can find documented usage on [DSFR documen
             fill: @grey-380;
         }
     }
-
-    &[aria-expanded="true"] {
-        transform: rotate(-90deg);
-    }
 }
 
-.accordion-content {
+[data-fr-js] .accordion-content {
     overflow: hidden;
     height: 0;
 }

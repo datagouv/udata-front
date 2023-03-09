@@ -6,7 +6,7 @@ import link from 'svg/resources/link.svg';
 import table from 'svg/resources/table.svg';
 /***
  *
- * @param {import("../api/resources").ResourceModel} resource
+ * @param {import("../api/resources").Resource} resource
  */
 export default function useResourceImage(resource) {
   switch (resource.format?.trim()?.toLowerCase()) {

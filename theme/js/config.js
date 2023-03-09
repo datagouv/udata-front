@@ -1,5 +1,5 @@
 /*
- * Parse the page html headers to extract some informations
+ * Parse the page html headers to extract some information
  * **This has been taken "as-is" from the old udata project**
  * Lots of variables here are probably useless for the front-end
  */
@@ -166,6 +166,11 @@ export const resources_default_page_size = _jsonMeta(
 );
 
 /**
+ * Minimum number of resources to show a search bar in dataset view
+ */
+export const resources_min_count_to_show_search = _jsonMeta("resources-min-count-to-show-search");
+
+/**
  * Markdown configuration.
  */
 export const markdown = _jsonMeta("markdown-config");
@@ -231,6 +236,7 @@ export default {
   tags,
   values,
   resources_default_page_size,
+  resources_min_count_to_show_search,
   markdown,
   read_only_enabled,
 };

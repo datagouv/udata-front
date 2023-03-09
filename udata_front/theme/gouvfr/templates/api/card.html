@@ -6,7 +6,7 @@
             {{ api.title }}
         </h4>
         <p class="fr-col-auto fr-m-0">
-            {{_('See on <a target="_blank" title="See {title} on api.gouv.fr" href="{url}">api.gouv.fr</a>')
+            {{_('See on <a target="_blank" rel="noopener" title="See {title} on api.gouv.fr" href="{url}">api.gouv.fr</a>')
                 .format(
                     title=api.title,
                     url="https://api.gouv.fr" + api.path
