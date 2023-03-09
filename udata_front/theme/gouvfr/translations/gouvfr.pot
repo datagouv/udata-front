@@ -6,10 +6,10 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: udata-front 3.1.4.dev0\n"
+"Project-Id-Version: udata-front 3.2.1.dev0\n"
 "Report-Msgid-Bugs-To: data.gouv@data.gouv.fr\n"
-"POT-Creation-Date: 2023-03-08 15:35+0100\n"
-"PO-Revision-Date: 2023-03-08 15:35+0100\n"
+"POT-Creation-Date: 2023-03-09 11:04+0100\n"
+"PO-Revision-Date: 2023-03-09 11:04+0100\n"
 "Last-Translator: Data.gouv.fr Team <data.gouv@data.gouv.fr>\n"
 "Language: en\n"
 "Language-Team: Data.gouv.fr Team <data.gouv@data.gouv.fr>\n"
@@ -383,7 +383,7 @@ msgstr ""
 #: udata_front/theme/gouvfr/templates/api/oauth_error.html:12
 #: udata_front/theme/gouvfr/templates/errors/base.html:15
 #: udata_front/theme/gouvfr/templates/home.html:4
-#: udata_front/theme/gouvfr/templates/macros/breadcrumb.html:13
+#: udata_front/theme/gouvfr/templates/macros/breadcrumb.html:11
 #: udata_front/theme/gouvfr/templates/macros/metadata.html:2
 msgid "Home"
 msgstr ""
@@ -762,7 +762,7 @@ msgstr ""
 #: udata_front/theme/gouvfr/templates/dataset/display.html:310
 #: udata_front/theme/gouvfr/templates/dataset/display.html:512
 #: udata_front/theme/gouvfr/templates/reuse/display.html:161
-msgid "Informations"
+msgid "Information"
 msgstr ""
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:349
@@ -1094,10 +1094,6 @@ msgstr ""
 
 #: udata_front/theme/gouvfr/templates/macros/breadcrumb.html:7
 msgid "You're here:"
-msgstr ""
-
-#: udata_front/theme/gouvfr/templates/macros/breadcrumb.html:8
-msgid "See breadcrumbs"
 msgstr ""
 
 #: udata_front/theme/gouvfr/templates/macros/certified.html:3
@@ -1683,7 +1679,7 @@ msgid "Modify reuse"
 msgstr ""
 
 #: udata_front/theme/gouvfr/templates/reuse/display.html:116
-msgid "Reuse informations"
+msgid "Reuse information"
 msgstr ""
 
 #: udata_front/theme/gouvfr/templates/reuse/display.html:120

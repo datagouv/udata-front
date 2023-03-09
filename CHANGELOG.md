@@ -2,11 +2,16 @@
 
 ## Current (in progress)
 
+- Nothing yet
+
+## 3.2.0 (2023-03-07)
+
 - Upgrading packages following Flask upgrade to 2.1.2 in udata [#207](https://github.com/etalab/udata-front/pull/207)
   - Use feedgenerator for AtomFeed instead of Werkzeug deprecated helper
   - `contextfunction` and `contextfilter` from Jinja is deprecated and replaced by `pass_context`
   - Move `Flask-Themes2` dep from udata to udata-front and upgrade to 1.0.0
 - Fix `@background-contrast-blue-cumulus` LESS variable [#217](https://github.com/etalab/udata-front/pull/217)
+- Fix "informations" throughout the repo [#218](https://github.com/etalab/udata-front/pull/218)
 - fix RGAA criterion 9.3 [#222](https://github.com/etalab/udata-front/pull/222)
 
 ## 3.1.3 (2023-03-02)

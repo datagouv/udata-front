@@ -110,7 +110,7 @@
             </li>
           </template>
           <li role="presentation">
-            <button :id="resourceInformationsButtonId" class="fr-tabs__tab" :tabindex="resourceInformationsTabIndex" role="tab" :aria-selected="resourceInformationsSelectedTab" :aria-controls="resourceInformationsTabId">{{$t('Metadata')}}</button>
+            <button :id="resourceInformationButtonId" class="fr-tabs__tab" :tabindex="resourceInformationTabIndex" role="tab" :aria-selected="resourceInformationSelectedTab" :aria-controls="resourceInformationTabId">{{$t('Metadata')}}</button>
           </li>
         </ul>
         <div
@@ -179,7 +179,7 @@
             </div>
           </template>
         </div>
-        <div :id="resourceInformationsTabId" class="fr-tabs__panel" role="tabpanel" :aria-labelledby="resourceInformationsButtonId" tabindex="0">
+        <div :id="resourceInformationTabId" class="fr-tabs__panel" role="tabpanel" :aria-labelledby="resourceInformationButtonId" tabindex="0">
           <div class="fr-grid-row fr-grid-row--gutters">
             <DescriptionList>
               <DescriptionTerm>{{ $t('URL') }}</DescriptionTerm>
@@ -325,15 +325,15 @@ export default defineComponent({
     const hasExplore = computed(() => explore.length > 0 && explorable_resources && explorable_resources.includes(props.resource.id));
     const resourceContentId = computed(() => 'resource-' + props.resource.id);
     const resourceHeaderId = computed(() => 'resource-' + props.resource.id + '-header');
-    const resourceInformationsButtonId = computed(() => 'resource-' + props.resource.id + '-informations-button');
-    const resourceInformationsTabId = computed(() => 'resource-' + props.resource.id + '-informations-tab');
+    const resourceInformationButtonId = computed(() => 'resource-' + props.resource.id + '-information-button');
+    const resourceInformationTabId = computed(() => 'resource-' + props.resource.id + '-information-tab');
     const resourceStructureButtonId = computed(() => 'resource-' + props.resource.id + '-structure-button');
     const resourceStructureTabId = computed(() => 'resource-' + props.resource.id + '-structure-tab');
     const resourcePreviewButtonId = computed(() => 'resource-' + props.resource.id + '-preview-button');
     const resourcePreviewTabId = computed(() => 'resource-' + props.resource.id + '-preview-tab');
     const resourceTitleId = computed(() => 'resource-' + props.resource.id + '-title');
-    const resourceInformationsSelectedTab = computed(() => !hasExplore.value);
-    const resourceInformationsTabIndex = computed(() => hasExplore.value ? -1 : 0);
+    const resourceInformationSelectedTab = computed(() => !hasExplore.value);
+    const resourceInformationTabIndex = computed(() => hasExplore.value ? -1 : 0);
 
     return {
       owner,
@@ -351,15 +351,15 @@ export default defineComponent({
       validationUrl,
       resourceContentId,
       resourceHeaderId,
-      resourceInformationsButtonId,
-      resourceInformationsTabId,
+      resourceInformationButtonId,
+      resourceInformationTabId,
       resourcePreviewButtonId,
       resourcePreviewTabId,
       resourceTitleId,
       resourceStructureButtonId,
       resourceStructureTabId,
-      resourceInformationsSelectedTab,
-      resourceInformationsTabIndex,
+      resourceInformationSelectedTab,
+      resourceInformationTabIndex,
       explore,
       hasExplore,
       structure,
