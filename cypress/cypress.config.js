@@ -1,9 +1,15 @@
 const { defineConfig } = require("cypress");
+const fs = require('fs')
 
 module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       console.log('Starting script');
+      const cfgFile = './cypress/udata-front-e2e.cfg';
+      if (fs.existsSync(cfgFile)) {
+        const cfg = fs.readFileSync(cfgFile, 'utf8');
+        config.env.CAPTCHETAT_CONFIGURED = cfg.includes("CAPTCHETAT_BASE_URL");
+      }
       return getLocations(`${config.baseUrl}/sitemap.xml`).then(urls => {
         console.log(urls);
         config.env.URLS = urls;

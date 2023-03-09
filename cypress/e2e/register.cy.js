@@ -16,23 +16,25 @@ describe("Testing registration page", () => {
     cy.get("form").should("be.visible");
   });
 
-  it("displays the form captcha", () => {
-    cy.get("#BDC_CaptchaComponent").should("be.visible");
-  });
+  if (config.env.CAPTCHETAT_CONFIGURED) {
+    it("displays the form captcha", () => {
+      cy.get("#BDC_CaptchaComponent").should("be.visible");
+    });
 
-  it("injects the captcha id", () => {
-    cy.get("input[name=captcha_id]").should("exist");
-  });
+    it("injects the captcha id", () => {
+      cy.get("input[name=captcha_id]").should("exist");
+    });
 
-  it("displays captcha error", () => {
-    cy.get("input[name=email]").type('something@email.com');
-    cy.get("input[name=password]").type('Aaaaaa123456$');
-    cy.get("input[name=password_confirm]").type('Aaaaaa123456$');
-    cy.get("input[name=first_name]").type('john');
-    cy.get("input[name=last_name]").type('doe');
-    cy.get("input[name=accept_conditions]").check({force: true});
+    it("displays captcha error", () => {
+      cy.get("input[name=email]").type('something@email.com');
+      cy.get("input[name=password]").type('Aaaaaa123456$');
+      cy.get("input[name=password_confirm]").type('Aaaaaa123456$');
+      cy.get("input[name=first_name]").type('john');
+      cy.get("input[name=last_name]").type('doe');
+      cy.get("input[name=accept_conditions]").check({force: true});
 
-    cy.get("form[data-cy=register]").submit();
-    cy.get(".fr-error-text").should("exist");
-  });
+      cy.get("form[data-cy=register]").submit();
+      cy.get(".fr-error-text").should("exist");
+    });
+  }
 });

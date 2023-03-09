@@ -205,13 +205,16 @@ jobs:
       - run:
           name: Prepare udata.cfg file with udata-front plugin
           command: cp cypress/udata-front-e2e.cfg.example cypress/udata-front-e2e.cfg
-      - run:
-          name: add secrets to cypress/udata-front-e2e.cfg
-          command: |
-            sed -i 's;CAPTCHETAT_CLIENT_ID =;CAPTCHETAT_CLIENT_ID = '"$CAPTCHETAT_CLIENT_ID"';g' cypress/udata-front-e2e.cfg
-            sed -i 's;CAPTCHETAT_CLIENT_SECRET =;CAPTCHETAT_CLIENT_SECRET = '"$CAPTCHETAT_CLIENT_SECRET"';g' cypress/udata-front-e2e.cfg
-            sed -i 's;CAPTCHETAT_BASE_URL =;CAPTCHETAT_BASE_URL = '"$CAPTCHETAT_BASE_URL"';g' cypress/udata-front-e2e.cfg
-            sed -i 's;CAPTCHETAT_OAUTH_BASE_URL =;CAPTCHETAT_OAUTH_BASE_URL = '"$CAPTCHETAT_OAUTH_BASE_URL"';g' cypress/udata-front-e2e.cfg
+      - when:
+          condition: ${CAPTCHETAT_BASE_URL}
+          steps:
+            - run:
+                name: add secrets to cypress/udata-front-e2e.cfg
+                command: |
+                  echo "CAPTCHETAT_CLIENT_ID = ${CAPTCHETAT_CLIENT_ID}" >> cypress/udata-front-e2e.cfg
+                  echo "CAPTCHETAT_CLIENT_SECRET = ${CAPTCHETAT_CLIENT_SECRET}" >> cypress/udata-front-e2e.cfg
+                  echo "CAPTCHETAT_BASE_URL = ${CAPTCHETAT_BASE_URL}" >> cypress/udata-front-e2e.cfg
+                  echo "CAPTCHETAT_OAUTH_BASE_URL = ${CAPTCHETAT_OAUTH_BASE_URL}" >> cypress/udata-front-e2e.cfg
       - run:
           name: "Print an env var stored in the Project"
           command: echo ${CAPTCHETAT_BASE_URL}
