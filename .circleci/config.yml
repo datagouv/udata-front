@@ -212,6 +212,9 @@ jobs:
             sed -i 's;CAPTCHETAT_CLIENT_SECRET =;CAPTCHETAT_CLIENT_SECRET = '"$CAPTCHETAT_CLIENT_SECRET"';g' cypress/udata-front-e2e.cfg
             sed -i 's;CAPTCHETAT_BASE_URL =;CAPTCHETAT_BASE_URL = '"$CAPTCHETAT_BASE_URL"';g' cypress/udata-front-e2e.cfg
             sed -i 's;CAPTCHETAT_OAUTH_BASE_URL =;CAPTCHETAT_OAUTH_BASE_URL = '"$CAPTCHETAT_OAUTH_BASE_URL"';g' cypress/udata-front-e2e.cfg
+      - run:
+          name: "Print an env var stored in the Project"
+          command: echo ${CAPTCHETAT_BASE_URL}
       - cypress/run-tests:
           start-command: npm run prepare-and-serve-e2e
           cypress-command: npm test
