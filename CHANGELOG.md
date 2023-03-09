@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Update ventti button url [#223](https://github.com/etalab/udata-front/pull/223)
 
 ## 3.2.0 (2023-03-07)
 
