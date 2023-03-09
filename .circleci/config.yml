@@ -3,6 +3,7 @@ version: 2.1
 
 orbs:
   browser-tools: circleci/browser-tools@1.2.3
+  cypress: cypress-io/cypress@3
 
 jobs:
   deps:
@@ -133,7 +134,7 @@ jobs:
             - js-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
       - run:
           name: Install NodeJS and dependencies
-          command: nvm install && npm install
+          command: nvm install && npm ci
       - save_cache:
           key: js-cache-{{ arch }}-{{ checksum "js.deps" }}-{{ checksum "patches.hash" }}
           paths:
@@ -171,7 +172,7 @@ jobs:
             - js-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
       - run:
           name: Install NodeJS and dependencies
-          command: npm install
+          command: npm ci
           working_directory: ./udata-front-plugins-helper
       - save_cache:
           key: js-cache-{{ arch }}-{{ checksum "helper-js.deps" }}
@@ -185,6 +186,35 @@ jobs:
           name: Compile and test package
           working_directory: ./udata-front-plugins-helper
           command: npm run preversion
+
+  cypress:
+    docker:
+      - image: cimg/python:3.7.13-browsers
+      - image: mongo:3.6
+      - image: redis:alpine
+    steps:
+      - checkout
+      - cypress/install
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install python deps
+          command: |
+            pip install --force-reinstall --no-deps -r requirements/udata.in
+            pip install -e .
+      - run:
+          name: Prepare udata.cfg file with udata-front plugin
+          command: cp cypress/udata-front-e2e.cfg.example cypress/udata-front-e2e.cfg
+      - run:
+          name: add secrets to cypress/udata-front-e2e.cfg
+          command: |
+            sed -i 's;CAPTCHETAT_CLIENT_ID =;CAPTCHETAT_CLIENT_ID = '"$CAPTCHETAT_CLIENT_ID"';g' cypress/udata-front-e2e.cfg
+            sed -i 's;CAPTCHETAT_CLIENT_SECRET =;CAPTCHETAT_CLIENT_SECRET = '"$CAPTCHETAT_CLIENT_SECRET"';g' cypress/udata-front-e2e.cfg
+            sed -i 's;CAPTCHETAT_BASE_URL =;CAPTCHETAT_BASE_URL = '"$CAPTCHETAT_BASE_URL"';g' cypress/udata-front-e2e.cfg
+            sed -i 's;CAPTCHETAT_OAUTH_BASE_URL =;CAPTCHETAT_OAUTH_BASE_URL = '"$CAPTCHETAT_OAUTH_BASE_URL"';g' cypress/udata-front-e2e.cfg
+      - cypress/run-tests:
+        start-command: npm run prepare-and-serve-e2e
+        cypress-command: npm test
 
   lighthouse:
     docker:
@@ -283,10 +313,16 @@ workflows:
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
-      - lighthouse:
+      - cypress:
           requires:
             - deps
             - assets
+          filters:
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+      - lighthouse:
+          requires:
+            - lighthouse
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
