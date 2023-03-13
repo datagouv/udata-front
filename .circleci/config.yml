@@ -206,6 +206,9 @@ jobs:
           name: Prepare udata.cfg file with udata-front plugin
           command: cp cypress/udata-front-e2e.cfg.example cypress/udata-front-e2e.cfg
       - run:
+          name: Generate fixtures
+          command: npm run prepare-e2e
+      - run:
           name: add secrets to cypress/udata-front-e2e.cfg
           command: |
             if [ "$CAPTCHETAT_BASE_URL" ]; then
@@ -215,7 +218,7 @@ jobs:
                 echo "CAPTCHETAT_OAUTH_BASE_URL = ${CAPTCHETAT_OAUTH_BASE_URL}" >> cypress/udata-front-e2e.cfg
             fi
       - cypress/run-tests:
-          start-command: npm run prepare-and-serve-e2e
+          start-command: npm run serve-e2e
           cypress-command: npm test
 
   lighthouse:
