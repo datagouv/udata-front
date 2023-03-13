@@ -215,7 +215,7 @@ jobs:
                 echo "CAPTCHETAT_OAUTH_BASE_URL = ${CAPTCHETAT_OAUTH_BASE_URL}" >> cypress/udata-front-e2e.cfg
             fi
       - cypress/run-tests:
-          cypress-command: npm ci
+          cypress-command: npm run ci
 
   lighthouse:
     docker:
