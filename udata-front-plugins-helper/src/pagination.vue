@@ -17,7 +17,7 @@ Simply provide necessary props :
 * total_results : total collection length
 * changePage : a function that will be called on each button click. It will be passed a single argument : the new page number
 
-Check the example below for more infos :
+Check the example below for more info :
 
 ```pagination-ex.vue
 <template>
