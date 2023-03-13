@@ -1,4 +1,4 @@
-{% extends theme("topic/display_base.html") %}
+{% extends theme('layouts/1-column.html') %}
 
 {% from theme('macros/paginator.html') import paginator with context %}
 
@@ -10,22 +10,21 @@
 } %}
 
 {% block breadcrumb %}
-    <li>
-        <a class="fr-breadcrumb__link" href="{{ url_for('topics.display', topic=topic) }}">
-        {{ topic.name }}
-        </a>
-    </li>
-    <li>
-        <a class="fr-breadcrumb__link" aria-current="page">
-            {{ _('Reuses') }}
-            <small>
-                {{ _('%(start)s to %(end)s on %(total)s',
-                    start=reuses.page_start,
-                    end=reuses.page_end,
-                    total=reuses.total) }}
-            </small>
-        </a>
-    </li>
+<li>
+    <a class="fr-breadcrumb__link">
+        {{ _('Topics') }}
+    </a>
+</li>
+<li>
+    <a class="fr-breadcrumb__link" href="{{ url_for('topics.display', topic=topic) }}">
+    {{ topic.name }}
+    </a>
+</li>
+<li>
+    <a class="fr-breadcrumb__link" aria-current="page">
+        {{ _('Reuses') }}
+    </a>
+</li>
 {% endblock %}
 
 
@@ -34,15 +33,13 @@
     <div class="fr-container">
         <div class="fr-grid-row">
             <div class="fr-col-md-8 fr-col-lg-9 smaller">
-
-                <ul class="search-results">
-                    {% for reuse in reuses %}
-                    {% include theme('reuse/search-result.html') %}
-                    {% endfor %}
-                </ul>
-
-                <div class="clearfix"></div>
-                {{ paginator(reuses) }}
+                {% if reuses %}
+                    <ul class="search-results">
+                        {% for reuse in reuses %}
+                            {% include theme('reuse/search-result.html') %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
 
         </div>

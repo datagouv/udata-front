@@ -1,8 +1,16 @@
 {% extends theme('user/base.html') %}
 
-
 {% block breadcrumb %}
-{{ super() }}
+<li>
+    <a class="fr-breadcrumb__link">
+        {{ _('Users') }}
+    </a>
+</li>
+<li>
+    <a class="fr-breadcrumb__link">
+        {{ user.fullname }}
+    </a>
+</li>
 <li>
 	<a class="fr-breadcrumb__link" aria-current="page">
 		{{ _('Datasets') }}
@@ -13,9 +21,7 @@
 {% set user_tab = 'datasets' %}
 
 {% block user_content %}
-
 {% if datasets %}
-
 	<div class="fr-grid-row">
 	    <div class="fr-col-sm-12">
 	        <ul class="card-list card-list--columned">
@@ -27,9 +33,7 @@
 	        </ul>
 	    </div>
 	</div>
-
 {% else %}
-
 	<div class="fr-grid-row">
 	    <div class="fr-col-12">
             <p class="text-center lead">
@@ -37,8 +41,5 @@
             </p>
 	    </div>
 	</div>
-
-
 {% endif %}
-
 {% endblock %}
