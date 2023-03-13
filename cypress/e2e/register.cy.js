@@ -16,7 +16,7 @@ describe("Testing registration page", () => {
     cy.get("form").should("be.visible");
   });
 
-  if (config.env.CAPTCHETAT_CONFIGURED) {
+  if (Cypress.env('CAPTCHETAT_CONFIGURED')) {
     it("displays the form captcha", () => {
       cy.get("#BDC_CaptchaComponent").should("be.visible");
     });
