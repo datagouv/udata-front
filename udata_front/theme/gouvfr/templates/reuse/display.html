@@ -130,6 +130,10 @@
                     {% endfor %}
                 </ul>
             {% endif %}
+            <h2 class="subtitle fr-mt-3v fr-mb-1v">{{ _('Creation date') }}</h2>
+            <p class="fr-text--sm fr-mt-0 fr-mb-3v">
+                {{ reuse.created_at|dateformat(format='long') }}
+            </p>
             <h2 class="subtitle fr-mt-3v fr-mb-1v">{{ _('Last update') }}</h2>
             <p class="fr-text--sm fr-mt-0 fr-mb-3v">
                 {{ reuse.last_modified|dateformat(format='long') }}
