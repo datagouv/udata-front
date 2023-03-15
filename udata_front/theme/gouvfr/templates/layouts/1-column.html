@@ -3,13 +3,12 @@
 {% set section_class = section_class|default('default') %}
 
 {% block content %}
-{{ breadcrumb(self) }}
-
-<section class="{{ section_class }}">
+<div class="{{ section_class }}">
+    {{ breadcrumb(self) }}
     <div class="{{ container_class }}">
         {% block main_content %}{% endblock %}
     </div>
-</section>
+</div>
 
 {% block extra_sections %}{% endblock %}
 {% endblock %}
