@@ -1,5 +1,5 @@
 {% extends theme('layouts/1-column.html') %}
-{% from theme('macros/dataset_informations.html') import information_col, information_section, information_accordion %}
+{% from theme('macros/dataset_information.html') import information_col, information_section, information_accordion %}
 {% from theme('macros/follow.html') import follow_btn with context %}
 {% from theme('macros/integrate.html') import integrate_btn with context %}
 {% from theme('macros/paginator.html') import paginator with context %}
@@ -239,15 +239,15 @@
             </li>
             <li role="presentation">
                 <button
-                    id="informations"
+                    id="information"
                     class="fr-tabs__tab"
                     tabindex="-1"
                     role="tab"
                     aria-selected="false"
-                    aria-controls="informations-panel"
-                    data-update-url="informations"
+                    aria-controls="information-panel"
+                    data-update-url="information"
                 >
-                    {{ _("Informations") }}
+                    {{ _("Information") }}
                 </button>
             </li>
         </ul>
@@ -295,11 +295,11 @@
             </li>
             <li role="presentation">
                 <a
-                    id="informations"
+                    id="information"
                     class="fr-tabs__tab"
-                    href="#informations-panel"
+                    href="#information-panel"
                 >
-                    {{ _("Informations") }}
+                    {{ _("Information") }}
                 </a>
             </li>
         </ul>
@@ -338,7 +338,7 @@
                         {% endfor %}
                         {% if resources|length > resources_per_page and not show_all_resources %}
                             <a class="fr-btn fr-btn--secondary fr-mt-2w" href="?resources=all">
-                                {{ _('See the %(nb)d resources of type %(type)s', nb=resources|length, type=type_label) }}
+                                {{ _('See the %(type)s', type=type_label|lower) }}
                             </a>
                         {% endif %}
                     </noscript>
@@ -346,16 +346,18 @@
                     <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-mt-5w">
                         {% include theme('svg/blank_state/resource.svg') %}
                         <p class="fr-h6 fr-mt-2w fr-mb-5v text-center">
-                            {{ _('There are no resources for this dataset yet.') }}
+                            {{ _('There are no files for this dataset yet.') }}
                         </p>
-                        <p>
-                            <a
-                                class="fr-btn"
-                                href="{{ url_for('admin.index', path='resource/new/', **{'dataset_id': dataset.id}) }}"
-                            >
-                                {{ _('Add a resource') }}
-                            </a>
-                        </p>
+                        {% if can_edit %}
+                            <p>
+                                <a
+                                    class="fr-btn"
+                                    href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
+                                >
+                                    {{ _('Add a file') }}
+                                </a>
+                            </p>
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>
@@ -478,7 +480,7 @@
                     <p>
                         <a
                             class="fr-btn"
-                            href="{{ url_for('admin.index', path='resource/new/', **{'dataset_id': dataset.id}) }}"
+                            href="{{ url_for('admin.index', path='community-resource/new/', **{'dataset_id': dataset.id}) }}"
                         >
                             {{ _('Share your resources') }}
                         </a>
@@ -494,14 +496,14 @@
         </div>
     </div>
     <div
-        id="informations-panel"
+        id="information-panel"
         class="fr-tabs__panel"
         role="tabpanel"
-        aria-labelledby="informations"
+        aria-labelledby="information"
         tabindex="0"
     >
         <div class="fr-container">
-        {% call() information_section(_('Informations')) %}
+        {% call() information_section(_('Information')) %}
             <h3 class="subtitle fr-mb-1v">{{_('Tags')}}</h3>
             {% if dataset.tags %}
             <ul class="fr-tags-group fr-mb-3v">

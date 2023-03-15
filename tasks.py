@@ -36,7 +36,7 @@ def header(text):
 
 
 def info(text, *args, **kwargs):
-    '''Display informations'''
+    '''Display information'''
     text = text.format(*args, **kwargs)
     print(' '.join((purple('>>>'), text)))
 
