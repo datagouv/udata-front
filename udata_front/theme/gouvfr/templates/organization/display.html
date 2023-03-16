@@ -4,6 +4,7 @@
 {% from theme('macros/breadcrumb.html') import breadcrumb with context %}
 {% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate %}
 {% from theme('macros/paginator.html') import paginator with context %}
+{% from theme('macros/sort_search.html') import sort_search %}
 {% from theme('macros/certified.html') import badge_if_certified with context %}
 
 {% set is_hidden = (reuses.total or 0) + (datasets.total or 0) <= 0 %}
@@ -42,7 +43,7 @@
 
 {% block main_content %}
 {% cache cache_duration, 'org-content', org.id|string, datasets.page|string, reuses.page|string, g.lang_code, current_user.slug or 'anonymous', org.last_modified|string %}
-<div class="fr-container">
+<div class="fr-container fr-mt-7w">
     {% if org.deleted %}
         <div class="fr-col-auto fr-mr-1w">
             <p
@@ -69,7 +70,11 @@
                     role="tab"
                     aria-controls="presentation-panel"
                     data-update-url="presentation"
-                    aria-selected="true"
+                    {% if is_current_tab(request, "page") or is_current_tab(request, "reuses_page") %}
+                        aria-selected="false"
+                    {% else %}
+                        aria-selected="true"
+                    {% endif %}
                 >
                     {{ _('Presentation') }}
                 </button>
@@ -80,6 +85,11 @@
                     class="fr-tabs__tab"
                     tabindex="-1"
                     role="tab"
+                    {% if is_current_tab(request, "page") %}
+                        aria-selected="true"
+                    {% else %}
+                        aria-selected="false"
+                    {% endif %}
                     aria-controls="datasets-panel"
                     data-update-url="datasets"
                 >
@@ -93,7 +103,11 @@
                     class="fr-tabs__tab"
                     tabindex="-1"
                     role="tab"
-                    aria-selected="false"
+                    {% if is_current_tab(request, "reuses_page") %}
+                        aria-selected="true"
+                    {% else %}
+                        aria-selected="false"
+                    {% endif %}
                     aria-controls="reuses-panel"
                     data-update-url="reuses"
                 >
@@ -176,18 +190,60 @@
         tabindex="0"
     >
         <div class="fr-container">
-            {% include theme('dataset/search-results.html') %}
-            <div class="fr-my-2w">
-                {{ paginator(datasets, arg_name='datasets_page', url='#organization-datasets') }}
-            </div>
-            <div class="text-align-center">
-                <a
-                    href="{{ url_for('datasets.list', organization=org.id) }}"
-                    class="fr-btn fr-btn--secondary fr-icon-eye-line fr-btn--icon-left"
+            {% if total_datasets %}
+                <Search
+                    :disable-first-search="true"
+                    data-total-results="{{total_datasets}}"
+                    data-results="{{datasets|to_api_format|to_json}}"
+                    :sorts="{{sorts|to_json}}"
                 >
-                    {{ ngettext('See the dataset', 'See %(num)d datasets', total_datasets) }}
-                </a>
-            </div>
+                </Search>
+                <noscript>
+                <div class="fr-pt-3v">
+                    <form method="GET" class="fr-grid-row">
+                        <div class="fr-search-bar w-100" role="search" aria-label="{{  _('Search for dataset') }}">
+                            <label class="fr-label" for="search-datasets">
+                                {{ _('Search...') }}
+                            </label>
+                            <input
+                                name="q"
+                                class="fr-input"
+                                placeholder="{{ _('Search...') }}"
+                                type="search"
+                                id="search-datasets"
+                                value="{{datasets.query._query}}"
+                            />
+                            <button class="fr-btn" type="submit">
+                                {{ _('Search') }}
+                            </button>
+                        </div>
+                        <div class="w-100 fr-grid-row fr-grid-row--middle fr-pt-5v justify-between">
+                            <p class="fr-col-auto fr-my-0" role="status">{{ _('%(result)s results', result=datasets.total) }}</p>
+                            {{sort_search(datasets, sorts)}}
+                        </div>
+                    </form>
+                </div>
+                {% if datasets %}
+                    {% include theme('dataset/search-results.html') %}
+                    {{ paginator(datasets, url='#/datasets-panel') }}
+                {% endif %}
+                </noscript>
+            {% else %}
+            <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-mt-5w">
+                    {% include theme('svg/blank_state/resource.svg') %}
+                    <p class="fr-h6 fr-mt-2w fr-mb-5v text-center">
+                        {{ _("This organization hasn't published any datasets yet.") }}
+                    </p>
+                    <p>
+                        <a
+                            class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-ml-1w"
+                            href="{{ config.GUIDES_DATASET_URL }}"
+                        >
+                            {{ _("What's a dataset ?") }}
+                        </a>
+                    </p>
+                </div>
+            {% endif %}
         </div>
     </div>
     <div
@@ -198,14 +254,31 @@
         tabindex="0"
     >
         <div class="fr-container">
-            <ul class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-                {% for reuse in reuses %}
-                <li class="fr-mb-3v fr-col-lg-3 fr-col-sm-6 fr-col-12">
-                    {% include theme('reuse/card.html') %}
-                </li>
-                {% endfor %}
-            </ul>
-            {{ paginator(reuses, arg_name='reuses_page', url='#organization-reuses') }}
+            {% if reuses %}
+                <ul class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
+                    {% for reuse in reuses %}
+                    <li class="fr-mb-3v fr-col-lg-3 fr-col-sm-6 fr-col-12">
+                        {% include theme('reuse/card.html') %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {{ paginator(reuses, arg_name='reuses_page', url='#/reuses') }}
+            {% else %}
+                <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-mt-5w">
+                    {% include theme('svg/blank_state/reuse.svg') %}
+                    <p class="fr-h6 fr-mt-2w fr-mb-5v text-center">
+                        {{ _("This organization hasn't published any reuses yet.") }}
+                    </p>
+                    <p>
+                        <a
+                            class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-ml-1w"
+                            href="{{ config.GUIDES_REUSE_URL }}"
+                        >
+                            {{ _("What's a reuse ?") }}
+                        </a>
+                    </p>
+                </div>
+            {% endif %}
         </div>
     </div>
     <div
