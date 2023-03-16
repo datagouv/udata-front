@@ -15,7 +15,7 @@
             <div class="fr-collapse" id="fr-sidemenu-wrapper">
               <div class="fr-sidemenu__title fr-mb-3v">{{$t('Filters')}}</div>
               <div class="fr-grid-row fr-grid-row--gutters">
-                <div class="fr-col-12">
+                <div class="fr-col-12" v-if="!organization">
                   <MultiSelect
                     :placeholder="$t('Organizations')"
                     :searchPlaceholder="$t('Search an organization...')"
@@ -197,6 +197,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    organization: {
+      type: String,
+      default: "",
+    },
     sorts: {
       /** @type {import("vue").PropType<Array<{label: string, order: string, value: string}>>} */
       type: Array,
@@ -259,7 +263,7 @@ export default defineComponent({
     /**
      * All other params are kept here as facets
      */
-    const facets = ref({});
+    const facets = ref({organization: props.organization});
 
     /**
      * Search loading state
@@ -302,7 +306,11 @@ export default defineComponent({
     const updateUrl = (save = SAVE_TO_HISTORY) => {
       // Update URL to match current search params value for deep linking
       let url = new URL(window.location.href);
-      url.search = new URLSearchParams(searchParameters.value).toString();
+      const urlParams = searchParameters.value;
+      if(props.organization) {
+        delete urlParams.organization;
+      }
+      url.search = new URLSearchParams(urlParams).toString();
       if (save) {
         window.history.pushState(null, "", url);
       }
@@ -360,16 +368,22 @@ export default defineComponent({
       return (values) => {
         // Values can either be an array of varying length, or a String.
         if (Array.isArray(values)) {
-          if (values.length > 1)
+          if (values.length > 1) {
             facets.value[facet] = values.map((obj) => obj.value);
-          else if (values.length === 1) facets.value[facet] = values[0].value;
-          else facets.value[facet] = null;
+          } else if (values.length === 1) {
+            facets.value[facet] = values[0].value;
+          } else {
+            facets.value[facet] = null;
+          }
         } else {
           if(values) {
             facets.value[facet] = values;
           } else {
             facets.value[facet] = null;
           }
+        }
+        if (props.organization) {
+          facets.value.organization = props.organization;
         }
         currentPage.value = 1;
         search();
@@ -400,8 +414,8 @@ export default defineComponent({
       }
     };
 
-    const reloadFilters = ({page = 1, sort = '', ...params} = {}, saveToHistory = SAVE_TO_HISTORY) => {
-      facets.value = params;
+    const reloadFilters = ({page = 1, sort = '', ...params}, saveToHistory = SAVE_TO_HISTORY) => {
+      facets.value = {...params, organization: props.organization || params.organization};
       currentPage.value = page;
       searchSort.value = sort;
       search(saveToHistory);
@@ -418,10 +432,11 @@ export default defineComponent({
 
     /**
      * Is any filter active ?
+     * We don't count scoped search as being filtered
      */
     const isFiltered = computed(() => {
       return Object.keys(facets.value).some(
-        (key) => facets.value[key]?.length > 0
+        (key) => facets.value[key]?.length > 0 && (props.organization ? key !== "organization" : true)
       );
     });
 
@@ -464,7 +479,7 @@ export default defineComponent({
     /**
      * @type {import("vue").Ref<{organization: ?string, tag: ?string, license: ?string, format: ?string, geozone: ?string, granularity: ?string, schema: ?string}>}
      */
-    facets.value = Object.fromEntries(params);
+    facets.value = {...Object.fromEntries(params), organization: props.organization || params.get("organization") || ""};
     if (props.disableFirstSearch) {
       loading.value = true;
     } else {
