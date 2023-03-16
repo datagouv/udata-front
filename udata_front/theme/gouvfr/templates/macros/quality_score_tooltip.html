@@ -1,0 +1,66 @@
+{% from theme('macros/quality_item.html') import quality_item %}
+{% from theme('macros/tooltip.html') import tooltip %}
+{% macro quality_score_tooltip(dataset, class) %}
+
+{% set content =  caller()%}
+{# call() allows us to include content in our tooltip macro, like a <slot> in Vue #}
+{# We use a if/else syntax to mimic the named slot functionality #}
+{% call(slot) tooltip(class) %}
+    {% if slot == "tooltip" %}
+        <h5 class="fr-text--sm fr-my-0">{{_("Metadata quality:")}}</h5>
+        {{quality_item(
+            dataset.quality.dataset_description_quality,
+            _("Data description filled"),
+            _("Data description empty"),
+            "fr-my-1w"
+        )}}
+        {{quality_item(
+            dataset.quality.resources_documentation,
+            _("Resources documented"),
+            _("Resources documentation missing"),
+            "fr-my-1w"
+        )}}
+        {{quality_item(
+            dataset.quality.license,
+            _("License filled"),
+            _("No license set"),
+            "fr-my-1w"
+        )}}
+        {{quality_item(
+            dataset.quality.update_frequency and dataset.quality.update_fulfilled_in_time,
+            _("Update frequency followed"),
+            _("Update frequency not followed") if dataset.quality.update_frequency else _("Update frequency not set"),
+            "fr-my-1w"
+        )}}
+        {{quality_item(
+            dataset.quality.has_open_format,
+            _("File formats are open"),
+            _("File formats are closed"),
+            "fr-my-1w"
+        )}}
+        {{quality_item(
+            dataset.quality.temporal_coverage,
+            _("Temporal coverage filled"),
+            _("Temporal coverage not set"),
+            "fr-my-1w"
+        )}}
+        {{quality_item(
+            dataset.quality.spatial,
+            _("Spatial coverage filled"),
+            _("Spatial coverage not set"),
+            "fr-my-1w"
+        )}}
+        <div class="fr-grid-row fr-grid-row--right not-enlarged">
+            <a
+                href="https://guides.etalab.gouv.fr/qualite/documenter-les-donnees/#le-score-de-qualite-des-metadonnees"
+                target="_blank"
+                rel="noopener"
+            >
+                {{_("Learn more about this indicator")}}
+            </a>
+        </div>
+    {% else %}
+        {{ content }}
+    {% endif %}
+{% endcall %}
+{% endmacro %}

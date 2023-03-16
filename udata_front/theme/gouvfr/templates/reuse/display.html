@@ -39,10 +39,7 @@
 {% block content %}
 {% cache cache_duration, 'reuse-content', reuse.id|string, g.lang_code, current_user.slug or 'anonymous', reuse.last_modified|string %}
 
-{{ breadcrumb(self,
-    breadcrum_class=breadcrum_class,
-    toolbar_class=toolbar_class
-) }}
+{{ breadcrumb(self) }}
 
 <section class="reuse-container">
     <header class="reuse-header fr-container">
@@ -70,13 +67,13 @@
                 {{ follow_btn(reuse) }}
                 {% if can_edit %}
                     <a
-                        class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-edit-line fr-btn--icon-left fr-hidden fr-unhidden-sm"
+                        class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-pencil-line fr-btn--icon-left fr-hidden fr-unhidden-sm"
                         href="{{ url_for('admin.index', path='reuse/{id}/'.format(id=reuse.id)) }}"
                     >
                         {{ _('Modify reuse') }}
                     </a>
                     <a
-                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-edit-line fr-hidden-sm"
+                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-pencil-line fr-hidden-sm"
                     href="{{ url_for('admin.index', path='reuse/{id}/'.format(id=reuse.id)) }}"
                 >
                     {{ _('Modify reuse') }}
@@ -108,7 +105,7 @@
         <div class="fr-grid-row fr-grid-row--gutters">
             <div class="fr-col-12 fr-col-md-8">
                 <div class="fr-tabs">
-                    <ul class="fr-tabs__list" role="tablist" aria-label="{{ _('Reuse informations') }}">
+                    <ul class="fr-tabs__list" role="tablist" aria-label="{{ _('Reuse information') }}">
                         <li role="presentation">
                             <button id="tab-producer" class="fr-tabs__tab"
                                     tabindex="0" role="tab" aria-selected="true" aria-controls="tab-producer-panel">
@@ -153,7 +150,7 @@
                         {% endif %}
                         <div class="fr-grid-row fr-grid-row--gutters">
                             <div class="fr-col-12 fr-col-sm-6">
-                                <h2 class="subtitle">{{ _('Informations') }}</h2>
+                                <h2 class="subtitle subtitle--uppercase">{{ _('Information') }}</h2>
                                 <dl class="fr-my-1w">
                                     <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Type') }}</dt>
                                         <dd class="fr-text--sm fr-ml-0 fr-mb-2w">
@@ -172,7 +169,7 @@
                                 </dl>
                             </div>
                             <div class="fr-col-12 fr-col-sm-6">
-                                <h2 class="subtitle">{{ _('Publication') }}</h2>
+                                <h2 class="subtitle subtitle--uppercase">{{ _('Publication') }}</h2>
                                 <dl class="metadata">
                                     <dt class="fr-text--sm fr-mb-0 text-mention-grey">{{ _('Creation date') }}</dt>
                                     <dd class="fr-text--sm fr-ml-0 fr-mb-2w">{{ reuse.created_at|dateformat(format='long') }}</dd>
@@ -184,7 +181,7 @@
                             aria-labelledby="tab-actions" tabindex="0">
                         <div class="fr-grid-row fr-grid-row--gutters">
                             <div class="fr-col-12 fr-col-sm-6 vuejs">
-                                <h2 class="subtitle">{{ _('Participate') }}</h2>
+                                <h2 class="subtitle subtitle--uppercase">{{ _('Participate') }}</h2>
                                 <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-arrow-right-s-line fr-btn--icon-right"
                                     href="{{ url_for('admin.index', path='reuse/new/') }}">
                                     {{ _('Add a reuse') }}
@@ -196,7 +193,7 @@
                                 </a>
                             </div>
                             <div class="fr-col-12 fr-col-sm-6">
-                                <h2 class="subtitle">{{ _('Embed') }}</h2>
+                                <h2 class="subtitle subtitle--uppercase">{{ _('Embed') }}</h2>
                                 {{integrate_btn(reuse)}}
                                 <h2 class="subtitle fr-mt-3w">{{ _('Permalink') }}</h2>
                                 <div class="embed-wrapper">

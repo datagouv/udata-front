@@ -4,7 +4,7 @@ name: Tooltip
 category: 3 - Components
 ---
 
-You can use tooltips to show more informations in context.
+You can use tooltips to show more information in context.
 
 */
 
@@ -15,20 +15,18 @@ You can use tooltips to show more informations in context.
     z-index: 3;
 }
 
-@tooltip-size: 320;
-@half: round((@tooltip-size / 2));
-@tooltip-width: unit(@tooltip-size, px);
 .tooltip {
     .fr-text--sm;
     .fr-my-0;
+    .fr-p-3v;
     background: white;
     color: @grey-500;
     border-radius: 4px;
     display: block;
     visibility: hidden;
-    padding: 10px;
     left: 0;
-    width: @tooltip-width;
+    width: 24rem;
+    max-width: calc(100vw - 2rem);
     pointer-events: none;
     position: absolute;
     z-index: 100;

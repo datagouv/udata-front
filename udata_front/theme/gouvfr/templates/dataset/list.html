@@ -3,8 +3,6 @@
 {% from theme('macros/sort_search.html') import sort_search %}
 {% from theme('macros/banner_info.html') import banner_info %}
 
-{% set toolbar_class='search-toolbar' %}
-
 {% block breadcrumb %}
 <li class="active" aria-current="page">
     {{ _('Datasets') }}
@@ -41,7 +39,7 @@
         >
             {{ _('Search reuses') }}
         </a>
-    </div>    
+    </div>
     <Search
         :disable-first-search="true"
         data-total-results="{{datasets.total}}"

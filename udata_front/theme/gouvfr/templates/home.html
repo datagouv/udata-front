@@ -28,7 +28,7 @@
                         Données à composante
                         <strong>Géographique</strong>
                     </a>
-                    <a href="{{ url_for('gouvfr.show_page', slug='donnees-logement-urbanisme') }}"
+                    <a href="{{ url_for('gouvfr.show_page', slug='donnees_logement-urbanisme') }}"
                         class="btn-venti bg-green-400">
                         Données relatives au
                         <strong>Logement et à l'Urbanisme</strong>
@@ -140,7 +140,7 @@
             <div class="fr-grid-row fr-grid-row--gutters fr-pt-1w">
                 {% for dataset in datasets %}
                 <div class="fr-col-12 fr-col-lg-4">
-                    {% include theme('dataset/card.html') %}
+                    {% include theme('dataset/card-xs.html') %}
                 </div>
                 {% endfor %}
             </div>
