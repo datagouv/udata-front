@@ -169,6 +169,7 @@
                     {{ $t('See validation report') }}
                   </a>
                   <a
+                    v-if="resource.schema?.name"
                     class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-book-2-line"
                     :href="documentationUrl"
                   >
