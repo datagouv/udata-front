@@ -51,7 +51,6 @@
   "X downloads": "{count} downloads",
   "Nameless resource": "Resurs bez imena",
   "Preview": "Pregled",
-  "Resource link": "Veza resursa",
   "Download resource": "Preuzmite resurs",
   "URL": "URL",
   "Permalink": "Trajni link",
@@ -151,5 +150,7 @@
   "File description": "File description",
   "Schemas allow to describe data models, discover how schemas improve your data quality and the available use cases on {address}": "Schemas allow to describe data models, discover how schemas improve your data quality and the available use cases on {address}",
   "schema:": "schema:",
-  "Invalid": "Invalid"
+  "Invalid": "Invalid",
+  "Learn more about this indicator - opens a new window": "",
+  "Resource link - opens a new window": ""
 }
