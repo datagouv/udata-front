@@ -73,7 +73,7 @@ class DatasetBlueprintTest(GouvfrFrontTestCase):
         self.assertEqual(json_ld_resource['dateCreated'][:16],
                          resource.created_at.isoformat()[:16])
         self.assertEqual(json_ld_resource['dateModified'][:16],
-                         resource.modified.isoformat()[:16])
+                         resource.last_modified.isoformat()[:16])
         self.assertEqual(json_ld_resource['encodingFormat'], 'png')
         self.assertEqual(json_ld_resource['contentSize'],
                          resource.filesize)
@@ -100,7 +100,7 @@ class DatasetBlueprintTest(GouvfrFrontTestCase):
         self.assertEqual(json_ld_resource['dateCreated'][:16],
                          community_resource.created_at.isoformat()[:16])
         self.assertEqual(json_ld_resource['dateModified'][:16],
-                         community_resource.modified.isoformat()[:16])
+                         community_resource.last_modified.isoformat()[:16])
         self.assertEqual(json_ld_resource['encodingFormat'],
                          community_resource.format)
         self.assertEqual(json_ld_resource['contentSize'],
