@@ -346,7 +346,7 @@
                         {% endfor %}
                         {% if resources|length > resources_per_page and not show_all_resources %}
                             <a class="fr-btn fr-btn--secondary fr-mt-2w" href="?resources=all">
-                                {{ _('See the %(nb)d resources of type %(type)s', nb=resources|length, type=type_label) }}
+                                {{ _('See the %(type)s', type=type_label|lower) }}
                             </a>
                         {% endif %}
                     </noscript>
@@ -354,16 +354,18 @@
                     <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-mt-5w">
                         {% include theme('svg/blank_state/resource.svg') %}
                         <p class="fr-h6 fr-mt-2w fr-mb-5v text-center">
-                            {{ _('There is no resources for this dataset yet.') }}
+                            {{ _('There are no files for this dataset yet.') }}
                         </p>
-                        <p>
-                            <a
-                                class="fr-btn"
-                                href="{{ url_for('admin.index', path='resource/new/', **{'dataset_id': dataset.id}) }}"
-                            >
-                                {{ _('Add a resource') }}
-                            </a>
-                        </p>
+                        {% if can_edit %}
+                            <p>
+                                <a
+                                    class="fr-btn"
+                                    href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
+                                >
+                                    {{ _('Add a file') }}
+                                </a>
+                            </p>
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>
@@ -486,7 +488,7 @@
                     <p>
                         <a
                             class="fr-btn"
-                            href="{{ url_for('admin.index', path='resource/new/', **{'dataset_id': dataset.id}) }}"
+                            href="{{ url_for('admin.index', path='community-resource/new/', **{'dataset_id': dataset.id}) }}"
                         >
                             {{ _('Share your resources') }}
                         </a>
