@@ -1,9 +1,9 @@
 import logging
 import requests
 
-from flask import request, redirect, url_for, current_app, abort
+from flask import request, redirect, url_for, current_app, abort, make_response
 from mongoengine.errors import DoesNotExist
-from werkzeug.contrib.atom import AtomFeed
+from feedgenerator.django.utils.feedgenerator import Atom1Feed
 
 from udata.app import cache
 from udata.core.activity.models import Activity
@@ -21,7 +21,7 @@ from udata.harvest.csv import HarvestSourceCsvAdapter
 from udata.harvest.models import HarvestSource
 from udata.frontend import csv
 from udata_front.views.base import DetailView
-from udata.i18n import I18nBlueprint, lazy_gettext as _
+from udata.i18n import I18nBlueprint, gettext as _
 from udata.sitemap import sitemap
 from udata.utils import multi_to_dict
 from udata_front import theme
@@ -40,11 +40,12 @@ def inject_site():
 
 @blueprint.route('/activity.atom')
 def activity_feed():
+    # TODO: doesn't seem tested. Is it used somewhere?
     activity_keys = request.args.getlist('key')
 
-    feed = AtomFeed(
+    feed = Atom1Feed(
         current_app.config.get('SITE_TITLE'), feed_url=request.url,
-        url=request.url_root)
+        link=request.url_root, description=None)
     activities = (Activity.objects.order_by('-created_at')
                                   .limit(current_site.feed_size))
 
@@ -67,19 +68,20 @@ def activity_feed():
             related_url = None
         else:
             related_url = related.url_for(_external=True)
-        feed.add(
+        feed.add_item(
             id='%s#activity=%s' % (
                 url_for('site.dashboard', _external=True), activity.id),
             title='%s by %s on %s' % (
                 activity.key, owner, related),
-            url=related_url,
-            author={
-                'name': owner,
-                'uri': owner_url,
-            },
-            updated=activity.created_at
+            description=None,
+            link=related_url,
+            author_name=owner,
+            author_link=owner_url,
+            updateddate=activity.created_at
         )
-    return feed.get_response()
+    response = make_response(feed.writeString('utf-8'))
+    response.headers['Content-Type'] = 'application/atom+xml'
+    return response
 
 
 @blueprint.route('/')
