@@ -2,7 +2,8 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Update ventti button url [#223](https://github.com/etalab/udata-front/pull/223)
+- Dataset page links fix [#219](https://github.com/etalab/udata-front/pull/219)
 
 ## 3.2.0 (2023-03-07)
 
@@ -27,6 +28,7 @@
 ## 3.1.2 (2023-02-06)
 
 - Use brand color for button style `tertiary-no-outline` [#199](https://github.com/etalab/udata-front/pull/199)
+- Use computed dates for resources and datasets [#201](https://github.com/etalab/udata-front/pull/201)
 - Fix setuptools version used in CI [#202](https://github.com/etalab/udata-front/pull/202)
 - Move Pagination to `@etalab/udata-front-plugin-helpers` and add tests [#200](https://github.com/etalab/udata-front/pull/200)
 
