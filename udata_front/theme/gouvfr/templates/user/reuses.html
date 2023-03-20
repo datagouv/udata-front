@@ -2,12 +2,21 @@
 
 
 {% block breadcrumb %}
-    {{ super() }}
-    <li class="active" aria-current="page">
-        <a href="{{ url_for('users.reuses', user=user) }}">
-        {{ _('Reuses') }}
-        </a>
-    </li>
+<li>
+    <a class="fr-breadcrumb__link">
+        {{ _('Users') }}
+    </a>
+</li>
+<li>
+    <a class="fr-breadcrumb__link">
+        {{ user.fullname }}
+    </a>
+</li>
+<li>
+	<a class="fr-breadcrumb__link" aria-current="page">
+		{{ _('Reuses') }}
+	</a>
+</li>
 {% endblock %}
 
 {% set user_tab = 'reuses' %}
