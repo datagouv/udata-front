@@ -6,6 +6,7 @@
 - Dataset page links fix [#219](https://github.com/etalab/udata-front/pull/219)
 - Fix "informations" throughout the repo [#218](https://github.com/etalab/udata-front/pull/218)
 - fix RGAA criterion 9.3 [#222](https://github.com/etalab/udata-front/pull/222)
+- New reuse page [#210](https://github.com/etalab/udata-front/pull/210)
 
 ## 3.2.0 (2023-03-07)
 
