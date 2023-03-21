@@ -1,78 +1,81 @@
-{% extends theme("topic/display_base.html") %}
+{% extends theme('layouts/1-column.html') %}
+
+{% set meta = {
+    'title': topic.name,
+    'description': topic.description|mdstrip(60)|forceescape,
+    'keywords': [_('topic')] + topic.tags,
+} %}
+
+{% set bundle = 'topic' %}
+
+{% set body_class = 'topic-display' %}
+
+{% block breadcrumb %}
+<li>
+    <a class="fr-breadcrumb__link">
+        {{ _('Topics') }}
+    </a>
+</li>
+<li>
+	<a class="fr-breadcrumb__link" aria-current="page">
+		{{ topic.name }}
+	</a>
+</li>
+{% endblock %}
 
 {% block main_content %}
 {% cache cache_duration, 'topic-content', topic.id|string, g.lang_code %}
+<div class="fr-container">
+    <h1 class="fr-mb-5v">{{ topic.name }}</h1>
+    <p>
+        {{ topic.description|markdown }}
+    </p>
+    <section>
+        <p>
+            <a href="{{ url_for('topics.reuses', topic=topic) }}">{{ _('Latest reuses') }}</a>
+        </p>
+        {% if recent_reuses %}
+            <ul>
+                {% for reuse in recent_reuses %}
+                {% set features = ['preview'] %}
+                <li>
+                    {% include theme('reuse/card.html') %}
+                </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </section>
 
-<section class="default">
-    <div class="fr-container">
-        <div class="fr-grid-row">
-            {# Last reuses #}
-            <div class="fr-col-xs-12">
-                <h3><a href="{{ url_for('topics.reuses', topic=topic) }}">{{ _('Latest reuses') }}</a></h3>
-                <ul class="card-list card-list--columned">
-                    {% for reuse in recent_reuses %}
-                    {% set features = ['preview'] %}
-                    <li class="fr-col-xs-12 fr-col-sm-4">
-                        {% include theme('reuse/card.html') %}
+    {# Datasets section #}
+    {% set dataset_tabs = (
+        ('popular-datasets', _('Featured datasets'), datasets, {}),
+        ('recent-datasets', _('Latest datasets'), recent_datasets, {'sort': '-created'}),
+    ) %}
+
+    <section>
+        {# Dataset tabs #}
+        {% if dataset_tabs %}
+            {% for tab_id, label, datasets, kwargs in dataset_tabs  %}
+            <div id="{{tab_id}}">
+                <h2 class="fr-mb-3v">{{label}}</h2>
+                <ul class="fr-grid-row fr-grid-row--gutters">
+                    {% for dataset in datasets %}
+                    <li class="fr-col-12 fr-col-md-4 fr-col-sm-6">
+                        {% include theme('dataset/card-xs.html') %}
                     </li>
                     {% endfor %}
                 </ul>
+                <p class="text-center">
+                    <a href="{{ url_for('topics.datasets', topic=topic) }}" class="btn btn-default btn-more">
+                        {{ _('See more datasets') }}
+                    </a>
+                </p>
             </div>
-            {# End last reuses #}
-        </div>
-    </div>
-</section>
-
-{# Datasets section #}
-{% set dataset_tabs = (
-    ('popular-datasets', _('Featured datasets'), datasets, {}),
-    ('recent-datasets', _('Latest datasets'), recent_datasets, {'sort': '-created'}),
-) %}
-
-<section class="default spaced">
-      <div class="fr-container">
-            {# Dataset tabs #}
-            <div class="fr-grid-row first-row">
-                <div class="fr-col-xs-12">
-                    <ul class="nav nav-pills" data-tabs="tabs">
-                        {% for tab_id, label, _, _ in dataset_tabs %}
-                        <li {% if loop.first %}class="active"{% endif %}>
-                            <a href="#{{tab_id}}" data-toggle="tab">{{ label }}</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-
-            <div class="fr-grid-row">
-                <div class="tab-content">
-
-                    {% for tab_id, label, datasets, kwargs in dataset_tabs  %}
-                    <div class="tab-pane {% if loop.first %}active{% endif %}" id="{{tab_id}}">
-                        <ul class="card-list card-list--columned">
-
-                            {% for dataset in datasets %}
-                            <li class="fr-col-12 fr-col-md-4 fr-col-sm-6">
-                                {% include theme('dataset/card-xs.html') %}
-                            </li>
-                            {% endfor %}
-
-                        </ul>
-                        <div class="clearfix"></div>
-                        <p class="text-center">
-                            <a href="{{ url_for('topics.datasets', topic=topic) }}" class="btn btn-default btn-more">
-                                <span class="fa fa-fw fa-list" ></span>
-                                {{ _('See more datasets') }}
-                            </a>
-                        </p>
-                    </div>
-                    {% endfor %}
-
-                </div>
-            </div>
-            {# end Dataset tabs #}
-      </div>
-</section>
-{# End datasets section #}
+            {% endfor %}
+        {% endif %}
+        {# end Dataset tabs #}
+    </section>
+    {# End datasets section #}
+</div>
 {% endcache %}
 {% endblock %}

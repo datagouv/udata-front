@@ -114,8 +114,8 @@ pip install -e . -r requirements/test.pip -r requirements/develop.pip
 
 ##### 🚩 Starting the python development server
 
-
 Simply run the udata project with udata-front loaded as a plugin:
+
 ```shell
 cd udata
 inv serve
@@ -126,6 +126,7 @@ inv serve
 ##### 🏗 Installing the javascript dependencies
 
 First, you need to use [Node](https://nodejs.org/) (version 14+) on your platform. You should consider [installing NVM](https://github.com/creationix/nvm#installation) which uses the existing .nvmrc.
+
 ```shell
 cd udata-front
 
@@ -157,6 +158,7 @@ You can execute `udata-front` specific tasks from the `udata-front` directory wi
 ```shell
 inv -l
 ```
+
 Example commands:
 - `i18n`: Extract translatable strings
 - `i18nc`: Compile translations
@@ -170,6 +172,12 @@ Additionally, you can run javascript-related commands through `npm run`.
 - `i18n:extract`: Same as above, but also automatically adds missing keys to translation files
 - `start`: Get to coding with live reload and things. Same as `npm run dev`
 - `test`: Runs the Cypress tests. More on that in the [Tests section](#-tests) of this README.
+
+If you encounter any merge conflic with your package-lock.json, you can fix it with NPM:
+
+```shell
+npm install --package-lock-only
+```
 
 ### 🏰 General architecture
 
