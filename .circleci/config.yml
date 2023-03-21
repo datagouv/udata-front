@@ -206,10 +206,10 @@ jobs:
           name: add secrets to cypress/udata-front-e2e.cfg
           command: |
             if [ "$CAPTCHETAT_BASE_URL" ]; then
-                echo "CAPTCHETAT_CLIENT_ID = ${CAPTCHETAT_CLIENT_ID}" >> cypress/udata-front-e2e.cfg
-                echo "CAPTCHETAT_CLIENT_SECRET = ${CAPTCHETAT_CLIENT_SECRET}" >> cypress/udata-front-e2e.cfg
-                echo "CAPTCHETAT_BASE_URL = ${CAPTCHETAT_BASE_URL}" >> cypress/udata-front-e2e.cfg
-                echo "CAPTCHETAT_OAUTH_BASE_URL = ${CAPTCHETAT_OAUTH_BASE_URL}" >> cypress/udata-front-e2e.cfg
+                echo "CAPTCHETAT_CLIENT_ID = '${CAPTCHETAT_CLIENT_ID}'" >> cypress/udata-front-e2e.cfg
+                echo "CAPTCHETAT_CLIENT_SECRET = '${CAPTCHETAT_CLIENT_SECRET}'" >> cypress/udata-front-e2e.cfg
+                echo "CAPTCHETAT_BASE_URL = '${CAPTCHETAT_BASE_URL}'" >> cypress/udata-front-e2e.cfg
+                echo "CAPTCHETAT_OAUTH_BASE_URL = '${CAPTCHETAT_OAUTH_BASE_URL}'" >> cypress/udata-front-e2e.cfg
             fi
       - cypress/run-tests:
           cypress-command: npm run ci
