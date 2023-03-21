@@ -2,7 +2,7 @@
   <form class="fr-pt-3v" @submit.prevent="search">
     <div class="fr-grid-row fr-grid-row--middle justify-between search-bar" ref="searchRef">
       <SearchInput
-        :onChange="handleSearchChange"
+        @change="handleSearchChange"
         :value="queryString"
         :placeholder="$t('Ex. 2022 presidential election')"
       />

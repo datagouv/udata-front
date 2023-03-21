@@ -20,7 +20,7 @@ You can also pass it a `value` prop that will populate the field.
       type="search"
       name="q"
       :value="queryString"
-      @input="_onChange"
+      @input="onInput"
       @keydown.delete="onDelete"
       ref="input"
       class="fr-input"
@@ -70,8 +70,9 @@ export default defineComponent({
       }
     };
 
-    const onInput = (e) => {
-      emit("change", e);
+    const onInput = (/** @type {InputEvent} **/ e) => {
+      const target = /** @type {HTMLInputElement} **/(e.target);
+      emit("change", target.value);
     };
 
     onMounted(async () => {
