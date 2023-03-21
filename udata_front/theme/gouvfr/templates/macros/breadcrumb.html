@@ -18,14 +18,14 @@
                     {{ tpl.breadcrumb() }}
                 </ol>
             </nav>
-            {% endif %}
-            {% if tpl.toolbar and tpl.toolbar() %}
+        {% endif %}
+        {% if tpl.toolbar and tpl.toolbar() %}
             <div class="fr-col-12 {% if tpl.breadcrumb and tpl.breadcrumb() %} fr-col-md-6 {% endif %}">
                 <div class="fr-grid-row fr-grid-row--right">
                     {{ tpl.toolbar() }}
                 </div>
             </div>
-            {% endif %}
+        {% endif %}
         </div>
     </div>
 </section>
