@@ -51,7 +51,6 @@
   "X downloads": "{count} transferências",
   "Nameless resource": "Recurso sem nome",
   "Preview": "Visualização",
-  "Resource link": "Link do recurso",
   "Download resource": "Baixar recurso",
   "URL": "URL",
   "Permalink": "URL stable",
@@ -151,5 +150,7 @@
   "File description": "File description",
   "Schemas allow to describe data models, discover how schemas improve your data quality and the available use cases on {address}": "Schemas allow to describe data models, discover how schemas improve your data quality and the available use cases on {address}",
   "schema:": "schema:",
-  "Invalid": "Invalid"
+  "Invalid": "Invalid",
+  "Learn more about this indicator - opens a new window": "",
+  "Resource link - opens a new window": ""
 }

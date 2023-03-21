@@ -7,7 +7,9 @@
 } %}
 
 {% block breadcrumb %}
-    <li class="active" aria-current="page">{{ _('Metrics') }}</li>
+    <li>
+        <a class="fr-breadcrumb__link" aria-current="page">{{ _('Metrics') }}</a>
+    </li>
 {% endblock %}
 
 {% block main_content %}

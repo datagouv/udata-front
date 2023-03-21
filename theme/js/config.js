@@ -1,5 +1,5 @@
 /*
- * Parse the page html headers to extract some informations
+ * Parse the page html headers to extract some information
  * **This has been taken "as-is" from the old udata project**
  * Lots of variables here are probably useless for the front-end
  */

@@ -743,7 +743,7 @@ msgstr "Resursi zajednice"
 #: udata_front/theme/gouvfr/templates/dataset/display.html:302
 #: udata_front/theme/gouvfr/templates/dataset/display.html:504
 #: udata_front/theme/gouvfr/templates/reuse/display.html:153
-msgid "Informations"
+msgid "Information"
 msgstr "Informacije"
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:341
@@ -1654,7 +1654,7 @@ msgid "Modify reuse"
 msgstr "Izmenite primer upotrebe"
 
 #: udata_front/theme/gouvfr/templates/reuse/display.html:108
-msgid "Reuse informations"
+msgid "Reuse information"
 msgstr "Informacije primera upotrebe"
 
 #: udata_front/theme/gouvfr/templates/reuse/display.html:112

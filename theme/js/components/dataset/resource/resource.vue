@@ -43,11 +43,11 @@
         </div>
       </div>
       <div class="fr-col-auto fr-ml-auto">
-        <ul class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
-          <li class="text-default-error" v-if="unavailable">
+        <div class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
+          <p class="text-default-error fr-m-0" v-if="unavailable">
             {{$t('Unavailable')}}
-          </li>
-          <li class="fr-col-auto fr-ml-3v">
+          </p>
+          <p class="fr-col-auto fr-ml-3v fr-m-0">
             <button
               @click="expand"
               role="button"
@@ -63,18 +63,18 @@
                 {{hasExplore ? $t('See data') : $t('See metadata')}}
               </template>
             </button>
-          </li>
-          <li class="fr-col-auto fr-ml-3v" v-if="resource.format === 'url'">
+          </p>
+          <p class="fr-col-auto fr-ml-3v fr-m-0" v-if="resource.format === 'url'">
             <a
               :href="resource.latest"
-              :title="$t('Resource link')"
+              :title="$t('Resource link - opens a new window')"
               rel="nofollow noopener"
               target="_blank"
               class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-external-link-line fr-icon--sm"
             >
             </a>
-          </li>
-          <li class="fr-col-auto fr-ml-3v" v-else>
+          </p>
+          <p class="fr-col-auto fr-ml-3v fr-m-0" v-else>
             <a
               :href="resource.latest"
               :title="$t('Download resource')"
@@ -82,15 +82,15 @@
               class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-download-line fr-icon--sm"
             >
             </a>
-          </li>
-          <li class="fr-col-auto fr-ml-3v" v-if="canEdit">
+          </p>
+          <p class="fr-col-auto fr-ml-3v fr-m-0" v-if="canEdit">
             <EditButton
               :dataset-id="datasetId"
               :resource-id="resource.id"
               :is-community-resource="isCommunityResource"
             />
-          </li>
-        </ul>
+          </p>
+        </div>
       </div>
     </header>
     <section
@@ -110,7 +110,7 @@
             </li>
           </template>
           <li role="presentation">
-            <button :id="resourceInformationsButtonId" class="fr-tabs__tab" :tabindex="resourceInformationsTabIndex" role="tab" :aria-selected="resourceInformationsSelectedTab" :aria-controls="resourceInformationsTabId">{{$t('Metadata')}}</button>
+            <button :id="resourceInformationButtonId" class="fr-tabs__tab" :tabindex="resourceInformationTabIndex" role="tab" :aria-selected="resourceInformationSelectedTab" :aria-controls="resourceInformationTabId">{{$t('Metadata')}}</button>
           </li>
         </ul>
         <div
@@ -179,7 +179,7 @@
             </div>
           </template>
         </div>
-        <div :id="resourceInformationsTabId" class="fr-tabs__panel" role="tabpanel" :aria-labelledby="resourceInformationsButtonId" tabindex="0">
+        <div :id="resourceInformationTabId" class="fr-tabs__panel" role="tabpanel" :aria-labelledby="resourceInformationButtonId" tabindex="0">
           <div class="fr-grid-row fr-grid-row--gutters">
             <DescriptionList>
               <DescriptionTerm>{{ $t('URL') }}</DescriptionTerm>
@@ -325,15 +325,15 @@ export default defineComponent({
     const hasExplore = computed(() => explore.length > 0 && explorable_resources && explorable_resources.includes(props.resource.id));
     const resourceContentId = computed(() => 'resource-' + props.resource.id);
     const resourceHeaderId = computed(() => 'resource-' + props.resource.id + '-header');
-    const resourceInformationsButtonId = computed(() => 'resource-' + props.resource.id + '-informations-button');
-    const resourceInformationsTabId = computed(() => 'resource-' + props.resource.id + '-informations-tab');
+    const resourceInformationButtonId = computed(() => 'resource-' + props.resource.id + '-information-button');
+    const resourceInformationTabId = computed(() => 'resource-' + props.resource.id + '-information-tab');
     const resourceStructureButtonId = computed(() => 'resource-' + props.resource.id + '-structure-button');
     const resourceStructureTabId = computed(() => 'resource-' + props.resource.id + '-structure-tab');
     const resourcePreviewButtonId = computed(() => 'resource-' + props.resource.id + '-preview-button');
     const resourcePreviewTabId = computed(() => 'resource-' + props.resource.id + '-preview-tab');
     const resourceTitleId = computed(() => 'resource-' + props.resource.id + '-title');
-    const resourceInformationsSelectedTab = computed(() => !hasExplore.value);
-    const resourceInformationsTabIndex = computed(() => hasExplore.value ? -1 : 0);
+    const resourceInformationSelectedTab = computed(() => !hasExplore.value);
+    const resourceInformationTabIndex = computed(() => hasExplore.value ? -1 : 0);
 
     return {
       owner,
@@ -351,15 +351,15 @@ export default defineComponent({
       validationUrl,
       resourceContentId,
       resourceHeaderId,
-      resourceInformationsButtonId,
-      resourceInformationsTabId,
+      resourceInformationButtonId,
+      resourceInformationTabId,
       resourcePreviewButtonId,
       resourcePreviewTabId,
       resourceTitleId,
       resourceStructureButtonId,
       resourceStructureTabId,
-      resourceInformationsSelectedTab,
-      resourceInformationsTabIndex,
+      resourceInformationSelectedTab,
+      resourceInformationTabIndex,
       explore,
       hasExplore,
       structure,

@@ -61,6 +61,7 @@ nosetests.xml
 .noseids
 
 udata.cfg
+cypress/udata-front-e2e.cfg
 
 cypress/videos
 cypress/screenshots

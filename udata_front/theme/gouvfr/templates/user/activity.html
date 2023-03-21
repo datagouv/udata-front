@@ -1,8 +1,21 @@
 {% extends theme('user/base.html') %}
 
 {% block breadcrumb %}
-    {{ super() }}
-    <li class="active" aria-current="page">{{ _('Activity') }}</li>
+<li>
+    <a class="fr-breadcrumb__link">
+        {{ _('Users') }}
+    </a>
+</li>
+<li>
+    <a class="fr-breadcrumb__link">
+        {{ user.fullname }}
+    </a>
+</li>
+<li>
+    <a class="fr-breadcrumb__link" aria-current="page">
+        {{ _('Activity') }}
+    </a>
+</li>
 {% endblock %}
 
 {% set user_tab = 'activity' %}

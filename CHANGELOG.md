@@ -2,7 +2,11 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Update ventti button url [#223](https://github.com/etalab/udata-front/pull/223)
+- Dataset page links fix [#219](https://github.com/etalab/udata-front/pull/219)
+- Fix "informations" throughout the repo [#218](https://github.com/etalab/udata-front/pull/218)
+- fix RGAA criterion 9.3 [#222](https://github.com/etalab/udata-front/pull/222)
+- New reuse page [#210](https://github.com/etalab/udata-front/pull/210)
 
 ## 3.2.0 (2023-03-07)
 
@@ -22,10 +26,12 @@
 - Show a warning notice when JavaScript is disabled or failed to execute [#206](https://github.com/etalab/udata-front/pull/206)
 - Update lighthouse to fix security issues [#211](https://github.com/etalab/udata-front/pull/211)
 - New dataset page [#181](https://github.com/etalab/udata-front/pull/181)
+- Update vue-toaster dependency to avoid reported vulnerabilities [#215](https://github.com/etalab/udata-front/pull/215)
 
 ## 3.1.2 (2023-02-06)
 
 - Use brand color for button style `tertiary-no-outline` [#199](https://github.com/etalab/udata-front/pull/199)
+- Use computed dates for resources and datasets [#201](https://github.com/etalab/udata-front/pull/201)
 - Fix setuptools version used in CI [#202](https://github.com/etalab/udata-front/pull/202)
 - Move Pagination to `@etalab/udata-front-plugin-helpers` and add tests [#200](https://github.com/etalab/udata-front/pull/200)
 

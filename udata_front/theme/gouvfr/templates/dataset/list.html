@@ -4,8 +4,10 @@
 {% from theme('macros/banner_info.html') import banner_info %}
 
 {% block breadcrumb %}
-<li class="active" aria-current="page">
-    {{ _('Datasets') }}
+<li>
+    <a class="fr-breadcrumb__link" aria-current="page">
+        {{ _('Datasets') }}
+    </a>
 </li>
 {% endblock %}
 
@@ -27,7 +29,7 @@
 
 {% block main_content %}
 <section
-    class="fr-container fr-container--search fr-py-2w vuejs"
+    class="fr-container fr-container--search vuejs"
 >
     <h1 class="fr-mb-1w">{{_('Datasets')}}</h1>
     <div class="fr-grid-row fr-grid-row--middle justify-between">
