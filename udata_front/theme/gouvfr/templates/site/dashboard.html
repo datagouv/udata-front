@@ -11,7 +11,11 @@
 {% set body_class = 'dashboard' %}
 
 {% block breadcrumb %}
-    <li class="active" aria-current="page">{{ _('Dashboard') }}</li>
+<li>
+    <a class="fr-breadcrumb__link" aria-current="page">
+        {{ _('Dashboard') }}
+    </a>
+</li>
 {% endblock %}
 
 {% block content %}

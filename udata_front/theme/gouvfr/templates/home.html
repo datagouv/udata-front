@@ -18,21 +18,29 @@
                 <h1 class="fr-mt-0 fr-mb-2w">{{ _('Open platform for French public data') }}</h1>
                 <div>
                     <h2 class="fr-text--md fr-my-0">{{ _('Featured topics') }}</h2>
-                    <a href="{{ url_for('gouvfr.show_page', slug='donnees-energie') }}"
-                        class="btn-venti fr-my-2w bg-orange-100">
-                        Données relatives aux
-                        <strong>Énergies</strong>
-                    </a>
-                    <a href="{{ url_for('gouvfr.show_page', slug='donnees-geographiques') }}"
-                        class="btn-venti fr-my-2w bg-blue-450">
-                        Données à composante
-                        <strong>Géographique</strong>
-                    </a>
-                    <a href="{{ url_for('gouvfr.show_page', slug='donnees_logement-urbanisme') }}"
-                        class="btn-venti bg-green-400">
-                        Données relatives au
-                        <strong>Logement et à l'Urbanisme</strong>
-                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{ url_for('gouvfr.show_page', slug='donnees-energie') }}"
+                                class="btn-venti fr-my-2w bg-orange-100">
+                                Données relatives aux
+                                <strong>Énergies</strong>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('gouvfr.show_page', slug='donnees-geographiques') }}"
+                                class="btn-venti fr-my-2w bg-blue-450">
+                                Données à composante
+                                <strong>Géographique</strong>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('gouvfr.show_page', slug='donnees_logement-urbanisme') }}"
+                                class="btn-venti bg-green-400">
+                                Données relatives au
+                                <strong>Logement et à l'Urbanisme</strong>
+                            </a>
+                        </li>
+                    </ul>
                     <div class="fr-grid-row justify-center fr-mt-2w">
                         <a
                             href="{{ url_for('gouvfr.show_page', slug='thematiques-a-la-une') }}"
