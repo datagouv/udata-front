@@ -1,5 +1,5 @@
 {% extends theme('layouts/1-column.html') %}
-{% from theme('macros/dataset_information.html') import information_col, information_section, information_accordion %}
+{% from theme('macros/dataset_information.html') import information_col, information_section, information_title_with_button %}
 {% from theme('macros/follow.html') import follow_btn with context %}
 {% from theme('macros/breadcrumb.html') import breadcrumb with context %}
 {% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate %}
@@ -309,32 +309,37 @@
         {% call() information_section(_('Description')) %}
             {{ org.description|markdown }}
         {% endcall %}
-        {% call() information_section(_('Members')) %}
-            {% set member = org.member(current_user) %}
-            {% if not member %}
-                {% set pending_request = org.pending_request(current_user) %}
-                {% if not pending_request and not read_only_mode %}
-                <div class="fr-my-2w vuejs">
-                    <request-membership orga='{{org.id}}'>
-                    </request-membership>
-                </div>
-                {% elif pending_request %}
-                <div class="fr-my-2w">
-                    <span class="f-light f-italic">{{ _('Pending request to join this organization') }}</span>
-                </div>
+        {% call(slot) information_title_with_button(_('Members')) %}
+            {% if slot == "button" %}
+                {% set member = org.member(current_user) %}
+                {% if not member %}
+                    {% set pending_request = org.pending_request(current_user) %}
+                    {% if not pending_request and not read_only_mode %}
+                    <div class="fr-my-2w vuejs">
+                        <request-membership orga='{{org.id}}'>
+                        </request-membership>
+                    </div>
+                    {% elif pending_request %}
+                    <div class="fr-my-2w">
+                        <span class="f-light f-italic">{{ _('Pending request to join this organization') }}</span>
+                    </div>
+                    {% endif %}
                 {% endif %}
+            {% else %}
+                {% call() information_section() %}
+                        <div class="fr-grid-row fr-mt-4w">
+                            {% for member in org.members %}
+                            {% set user = member.user %}
+                            {% set role = member.role %}
+                            <div
+                                class="fr-col-md-4 fr-col-12 fr-pl-0 border-md-0 fr-pb-3v {% if not loop.index0 % 3 == 0 %}border-left fr-pl-md-3w{% endif %}"
+                            >
+                                {% include theme('user/card.html') %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% endcall %}
             {% endif %}
-            <div class="fr-grid-row">
-                {% for member in org.members %}
-                {% set user = member.user %}
-                {% set role = member.role %}
-                <div
-                    class="fr-col-md-4 fr-col-12 fr-pl-0 border-md-0 fr-pb-3v {% if not loop.index0 % 3 == 0 %}border-left fr-pl-md-3w{% endif %}"
-                >
-                    {% include theme('user/card.html') %}
-                </div>
-                {% endfor %}
-            </div>
         {% endcall %}
         {% call() information_section(_('Technical details')) %}
             <div class="fr-grid-row fr-grid-row--gutters">
