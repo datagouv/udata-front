@@ -206,13 +206,14 @@
         tabindex="0"
     >
         <div class="fr-container vuejs">
-            {% if total_datasets %}
+            {% if organization_datasets %}
                 <Search
                     :disable-first-search="true"
                     data-total-results="{{total_datasets}}"
                     data-results="{{datasets|to_api_format|to_json}}"
                     :sorts="{{sorts|to_json}}"
                     organization="{{org.id}}"
+                    download-link="{{url_for('organizations.datasets_csv', org=org)}}"
                 >
                 </Search>
                 <noscript>

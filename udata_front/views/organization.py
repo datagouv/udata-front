@@ -88,6 +88,9 @@ class OrganizationDetailView(SearchView, OrgView, DetailView):
         if self.organization.deleted and not can_view.can():
             abort(410)
 
+        datasets = Dataset.objects(
+            organization=self.organization)
+
         reuses = Reuse.objects(
             organization=self.organization).order_by(
             '-metrics.reuses', '-metrics.followers')
@@ -97,10 +100,12 @@ class OrganizationDetailView(SearchView, OrgView, DetailView):
 
         if not can_view:
             reuses = reuses.visible()
+            datasets = datasets.visible()
 
         context.update({
             'reuses': reuses.paginate(params_reuses_page, self.reuse_page_size),
             'total_datasets': context.get("datasets").total,
+            'organization_datasets': len(datasets),
             'total_reuses': len(reuses),
             'followers': followers,
             'can_edit': can_edit,

@@ -88,14 +88,21 @@
                     :onChange="handleFacetChange('granularity')"
                   />
                 </div>
-                <div class="fr-col-12 fr-mb-3w">
+                <div class="fr-col-12 fr-mb-3w text-align-center">
                   <button
-                    class="fr-btn fr-btn--secondary fr-icon-close-circle-line fr-btn--icon-left"
+                    class="fr-btn fr-btn--secondary fr-icon-close-circle-line fr-btn--icon-left justify-center w-100"
                     @click="resetFilters"
                     v-if="isFiltered"
                   >
                     {{$t('Reset filters')}}
                   </button>
+                  <a
+                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-download-line fr-btn--icon-left justify-center w-100"
+                    :href="downloadLink"
+                    v-else-if="downloadLink"
+                  >
+                    {{$t('Download list as CSV')}}
+                  </a>
                 </div>
               </div>
             </div>
@@ -193,6 +200,10 @@ export default defineComponent({
     Pagination,
   },
   props: {
+    downloadLink: {
+      type: String,
+      default: ""
+    },
     disableFirstSearch: {
       type: Boolean,
       default: false,
