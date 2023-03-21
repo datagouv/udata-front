@@ -40,7 +40,9 @@ export default function useSchema(resource) {
     let schemaPath = {'schema_name': `schema-datagouvfr.${resource.schema.name}`};
     if(resource.schema.version) {
       const versionUrl = schema.value?.versions.find(version => version.version_name === resource.schema.version)?.schema_url;
-      schemaPath = {"schema_url": versionUrl};
+      if(versionUrl) {
+        schemaPath = {"schema_url": versionUrl};
+      }
     }
     const query = new URLSearchParams({
       'input': 'url',

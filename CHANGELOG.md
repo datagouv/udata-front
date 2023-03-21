@@ -2,6 +2,7 @@
 
 ## Current (in progress)
 
+- Front modifications to display resources schema url field [#220](https://github.com/etalab/udata-front/pull/220)
 - Update ventti button url [#223](https://github.com/etalab/udata-front/pull/223)
 - Dataset page links fix [#219](https://github.com/etalab/udata-front/pull/219)
 - Fix "informations" throughout the repo [#218](https://github.com/etalab/udata-front/pull/218)
