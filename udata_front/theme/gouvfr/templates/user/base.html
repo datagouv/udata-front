@@ -11,8 +11,16 @@
 } %}
 
 {% block breadcrumb %}
-    <li>{{ _('Users') }}</li>
-    <li><a href="{{ url_for('users.show', user=user) }}">{{ user.fullname }}</a></li>
+<li>
+    <a class="fr-breadcrumb__link">
+        {{ _('Users') }}
+    </a>
+</li>
+<li>
+    <a class="fr-breadcrumb__link" aria-current="page">
+        {{ user.fullname }}
+    </a>
+</li>
 {% endblock %}
 
 {% block toolbar %}

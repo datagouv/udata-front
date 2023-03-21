@@ -3,7 +3,6 @@ const targets = new Map();
 
 function moveToHash() {
   const hash = window.location.hash;
-  console.log("move to hash", hash);
   if(!hash) {
     return;
   }

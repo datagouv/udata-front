@@ -3,7 +3,7 @@
 {% set available = resource.extras['check:status']
     and resource.extras['check:status'] >= 200 and resource.extras['check:status'] < 400 %}
 {% set unavailable = resource.extras['check:status'] and resource.extras['check:status'] >= 400 %}
-{% set last_update = resource.modified %}
+{% set last_update = resource.last_modified %}
 <article>
     <header
         class="fr-py-2w fr-grid-row fr-grid-row--middle no-wrap wrap-md justify-between border-bottom border-default-grey"
@@ -50,7 +50,7 @@
                     <li class="fr-col-auto">
                         <a
                             href="{{ resource.latest }}"
-                            title="{{ _('Resource link') }}"
+                            title="{{ _('Resource link - opens a new window') }}"
                             rel="nofollow noopener"
                             target="_blank"
                             class="fr-btn fr-btn--sm fr-icon-external-link-line"
@@ -102,7 +102,7 @@
                 {% endcall %}
                 {% call dt() %}{{ _('Modified on') }}{% endcall %}
                 {% call dd() %}
-                    {{resource.modified|dateformat(format='long')}}
+                    {{resource.last_modified|dateformat(format='long')}}
                 {% endcall %}
             {% endcall %}
             {% call dl() %}

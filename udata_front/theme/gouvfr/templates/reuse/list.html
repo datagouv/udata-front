@@ -12,12 +12,10 @@
 {% set bundle = 'search' %}
 
 {% block breadcrumb %}
-<li class="active" aria-current="page">
-    {{ _('Reuses') }}
-    <small>{{ _('%(start)s to %(end)s on %(total)s',
-            start=reuses.page_start,
-            end=reuses.page_end,
-            total=reuses.total) }}</small>
+<li>
+    <a class="fr-breadcrumb__link" aria-current="page">
+        {{ _('Reuses') }}
+    </a>
 </li>
 {% endblock %}
 
@@ -47,7 +45,7 @@
 ] %}
 
 {% block main_content %}
-<section class="fr-container fr-py-2w">
+<section class="fr-container">
     <h1 class="fr-mb-1w">{{_('Reuses')}}</h1>
     <div class="fr-grid-row fr-grid-row--middle justify-between">
         <div>{{_('Search among %(count)s reuses on %(site)s', count=current_site.metrics['reuses']|format_number, site=current_site.title)}}</div>
