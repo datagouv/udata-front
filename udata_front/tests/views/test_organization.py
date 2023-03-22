@@ -118,9 +118,7 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
             VisibleDatasetFactory(organization=organization) for _ in range(2)]
         empty_datasets = [
             DatasetFactory(organization=organization, resources=[]) for _ in range(1)]
-        private_datasets = [
-            VisibleDatasetFactory(organization=organization, private=True)
-            for _ in range(1)]
+        [VisibleDatasetFactory(organization=organization, private=True) for _ in range(1)]
         response = self.get(url_for('organizations.show', org=organization))
 
         self.assert200(response)
@@ -130,7 +128,9 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         rendered_private_datasets = [dataset for dataset in rendered_datasets if dataset.private]
         self.assertEqual(len(rendered_private_datasets), 0)
 
-        rendered_empty_datasets = [dataset for dataset in rendered_datasets if len(dataset.resources) == 0]
+        rendered_empty_datasets = [
+            dataset for dataset in rendered_datasets if len(dataset.resources) == 0
+        ]
         self.assertEqual(len(rendered_empty_datasets), len(empty_datasets))
 
         self.assertEqual(rendered_datasets.total,
