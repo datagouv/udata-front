@@ -4,7 +4,7 @@
 
 - Front modifications to display resources schema url field [#220](https://github.com/etalab/udata-front/pull/220)
 - Update ventti button url [#223](https://github.com/etalab/udata-front/pull/223)
-- Dataset page links fix [#219](https://github.com/etalab/udata-front/pull/219)
+- Dataset page fixes [#219](https://github.com/etalab/udata-front/pull/219)[229](https://github.com/etalab/udata-front/pull/229)
 - Fix "informations" throughout the repo [#218](https://github.com/etalab/udata-front/pull/218)
 - fix RGAA criterion 9.3 [#222](https://github.com/etalab/udata-front/pull/222)
 - New reuse page [#210](https://github.com/etalab/udata-front/pull/210)
