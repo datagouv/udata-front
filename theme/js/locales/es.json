@@ -65,7 +65,6 @@
   "Sort discussions by": "Sort discussions by",
   "Feature this content": "Feature this content",
   "From": "From",
-  "Updated on X": "Updated on {date}",
   "An error occurred while fetching schemas": "An error occurred while fetching schemas",
   "Search resources": "Search resources",
   "Search": "Search",
@@ -152,5 +151,7 @@
   "schema:": "schema:",
   "Invalid": "Invalid",
   "Learn more about this indicator - opens a new window": "",
-  "Resource link - opens a new window": ""
+  "Resource link - opens a new window": "",
+  "Updated {date}": "",
+  "on {date}": ""
 }

@@ -28,7 +28,7 @@
             <div class="fr-col">
               <Author :author="comment.posted_by" :badge="false" />
               <div class="fr-text--sm text-mention-grey fr-mb-0">
-                {{ $filters.formatDate(comment.posted_on) }}
+                {{ formatDate(comment.posted_on) }}
               </div>
               <div class="white-space-pre-wrap overflow-wrap-anywhere">
                 <p class="fr-mt-3v fr-mb-0">{{ comment.content }}</p>
@@ -65,7 +65,7 @@
       <div v-if="closed" class="text-grey-380">
         {{ $t("The discussion was closed by") }} &#32;
         <strong class="fr-px-1v"><Author :author="closed_by" /></strong>
-        {{ $t("on") }} {{ $filters.formatDate(closed) }}
+        {{ $t("on") }} {{ formatDate(closed) }}
       </div>
     </footer>
   </div>
@@ -76,6 +76,7 @@ import ThreadReply from "./thread-reply.vue";
 import Avatar from "./avatar.vue";
 import Author from "./author.vue";
 import config from "../../config";
+import { formatDate } from "../../helpers";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -92,6 +93,11 @@ export default defineComponent({
     url: String,
     closed: String,
     closed_by: Object,
+  },
+  setup(props) {
+    return {
+      formatDate,
+    };
   },
   data() {
     return {

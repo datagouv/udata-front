@@ -26,10 +26,10 @@
             >
               {{ $t("Invalid") }}
             </p>
-            <p :class="{'dash-before': hasSchema}" class="fr-text--xs fr-m-0 dash-after">{{$t('Updated on X', {date: filters.formatDate(lastUpdate)})}}</p>
+            <p :class="{'dash-before': hasSchema}" class="fr-text--xs fr-m-0 dash-after">{{ $t('Updated {date}', {date: formatBasedOnDate(lastUpdate)}) }}</p>
             <p v-if="resource.format" class="fr-text--xs fr-m-0 dash-after">
               {{ resource.format?.trim()?.toLowerCase() }}
-              <template v-if="resource.filesize">({{ filters.filesize(resource.filesize) }})</template>
+              <template v-if="resource.filesize">({{ filesize(resource.filesize) }})</template>
             </p>
             <p class="fr-text--xs fr-m-0">{{ $t('X downloads', resource.metrics.views || 0) }}</p>
           </div>
@@ -222,18 +222,18 @@
             <DescriptionList>
               <DescriptionTerm>{{ $t('Created on') }}</DescriptionTerm>
               <DescriptionDetails>
-                {{filters.formatDate(resource.created_at)}}
+                {{formatDate(resource.created_at)}}
               </DescriptionDetails>
               <DescriptionTerm>{{ $t('Modified on') }}</DescriptionTerm>
               <DescriptionDetails>
-                {{filters.formatDate(resource.last_modified)}}
+                {{formatDate(resource.last_modified)}}
               </DescriptionDetails>
             </DescriptionList>
             <DescriptionList>
               <template v-if="resource.filesize">
                 <DescriptionTerm>{{ $t('Size') }}</DescriptionTerm>
                 <DescriptionDetails>
-                  {{ filters.filesize(resource.filesize) }}
+                  {{ filesize(resource.filesize) }}
                 </DescriptionDetails>
               </template>
             </DescriptionList>
@@ -242,7 +242,7 @@
             <h5 class="fr-text--sm fr-my-0 fr-text--bold">
               {{ $t("File description") }}
             </h5>
-            <div class="fr-mt-0 markdown fr-text--sm text-mention-grey" v-html="filters.markdown(resource.description)">
+            <div class="fr-mt-0 markdown fr-text--sm text-mention-grey" v-html="markdown(resource.description)">
             </div>
           </template>
           <div class="text-align-right" v-if="!hasExplore && resource.preview_url">
@@ -274,6 +274,7 @@ import OrganizationNameWithCertificate from "../../organization/organization-nam
 import useSchema from "../../../composables/useSchema";
 import useComponentsForHook from "../../../composables/useComponentsForHook";
 import { explorable_resources, schema_documentation_url } from "../../../config";
+import { filesize, formatBasedOnDate, formatDate, markdown } from "../../../helpers";
 
 export default defineComponent({
   components: {DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, OrganizationNameWithCertificate, SchemaLoader},
@@ -305,7 +306,6 @@ export default defineComponent({
     const owner = useOwnerName(props.resource);
     const resourceImage = useResourceImage(props.resource);
     const { getComponentsForHook } = useComponentsForHook();
-    const filters = inject('$filters');
     /** @type {import("vue").Ref<HTMLElement | undefined>} */
     const content = ref();
     const expanded = ref(false);
@@ -339,7 +339,10 @@ export default defineComponent({
     return {
       owner,
       resourceImage,
-      filters,
+      filesize,
+      formatBasedOnDate,
+      formatDate,
+      markdown,
       content,
       expanded,
       expand,

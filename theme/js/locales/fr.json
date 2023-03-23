@@ -65,7 +65,6 @@
   "Sort discussions by": "Trier les discussions par",
   "Feature this content": "Mettre ce contenu en avant",
   "From": "Par",
-  "Updated on X": "Mis à jour le {date}",
   "An error occurred while fetching schemas": "Une erreur est survenue lors de la récupération des schémas",
   "Search resources": "Rechercher dans les ressources",
   "Search": "Recherche",
@@ -152,5 +151,7 @@
   "schema:": "schéma :",
   "Invalid": "Invalide",
   "Learn more about this indicator - opens a new window": "",
-  "Resource link - opens a new window": ""
+  "Resource link - opens a new window": "",
+  "Updated {date}": "",
+  "on {date}": ""
 }

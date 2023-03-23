@@ -1,6 +1,6 @@
 import { getRegisteredComponentsForHook } from "@etalab/udata-front-plugins-helper";
 import { reactive, watch } from "vue";
-import { reloadLocale } from "../plugins/i18n";
+import { reloadLocale } from "../i18n";
 
 export default function useComponentsForHooks() {
   const components = reactive({});
