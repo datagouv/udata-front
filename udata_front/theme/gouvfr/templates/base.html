@@ -1,26 +1,26 @@
 {% extends theme('raw.html') %}
 
 {% block body %}
-{% include theme("header.html") with context %}
-{% set messages = get_flashed_messages() %}
-{% set login_required = request.args.get('login_required') %}
-{% if login_required %}
-    {% set messages = messages + [_('You must be connected to do this action.')] %}
-{% endif %}
-{% block message %}{% endblock %}
-{% if messages %}
-    <div class="fr-container fr-py-3w">
-        {% for message in messages %}
-        <div class="well well-secondary-grey-100">
-            {{ message }}
+    {% include theme("header.html") with context %}
+    {% set messages = get_flashed_messages() %}
+    {% set login_required = request.args.get('login_required') %}
+    {% if login_required %}
+        {% set messages = messages + [_('You must be connected to do this action.')] %}
+    {% endif %}
+    {% block message %}{% endblock %}
+    {% if messages %}
+        <div class="fr-container fr-py-3w">
+            {% for message in messages %}
+            <div class="well well-secondary-grey-100">
+                {{ message }}
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
-{% endif %}
-<main role="main">
-    {% block content %}{% endblock %}
-</main>
-{% include theme('footer.html') %}
-{{ hook('base.modals') }}
-{% block modals %}{% endblock %}
+    {% endif %}
+    <main role="main">
+        {% block content %}{% endblock %}
+    </main>
+    {% include theme('footer.html') %}
+    {{ hook('base.modals') }}
+    {% block modals %}{% endblock %}
 {% endblock %}

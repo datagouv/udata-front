@@ -4,66 +4,39 @@ name: Breadcrumbs
 category: 3 - Components
 ---
 
-Being lost on a website isn't fun for your users, thanks to `.breadcrumbs` you can avoid this issue entierly.
+Breadcrumbs allow a user to see where it is in a website.
 
 ```breadcrumbs.html
-<ul class="breadcrumbs">
-    <li><a href="#">Accueil</a></li>
-    <li><a href="#">Ministère des solidarités et de la santé</a></li>
-    <li class="active">Consulation citoyenne en ligne sur les retraites</li>
-</ul>
+<nav role="navigation" class="fr-breadcrumb" aria-label="vous êtes ici :">
+    <button class="fr-breadcrumb__button" aria-expanded="false" aria-controls="breadcrumb-1">Voir le fil d’Ariane</button>
+    <div class="fr-collapse" id="breadcrumb-1">
+        <ol class="fr-breadcrumb__list">
+            <li>
+                <a class="fr-breadcrumb__link" href="/">Accueil</a>
+            </li>
+            <li>
+                <a class="fr-breadcrumb__link" href="/segment-1/">Segment 1</a>
+            </li>
+            <li>
+                <a class="fr-breadcrumb__link" href="/segment-1/segment-2/">Segment 2</a>
+            </li>
+            <li>
+                <a class="fr-breadcrumb__link" href="/segment-1/segment-2/segment-3/">Segment 3</a>
+            </li>
+            <li>
+                <a class="fr-breadcrumb__link" href="/segment-1/segment-2/segment-3/segment-4/">Segment 4</a>
+            </li>
+            <li>
+                <a class="fr-breadcrumb__link" href="/segment-1/segment-2/segment-3/segment-4/segment-5/">Segment 5</a>
+            </li>
+            <li>
+                <a class="fr-breadcrumb__link" aria-current="page">Page Actuelle</a>
+            </li>
+        </ol>
+    </div>
+</nav>
 ```
 */
 
-.breadcrumbs {
-    padding-left: 0;
-    margin: 0;
-    font-size: @font-size-xs;
-
-    display: flex;
-
-    li {
-        position: relative;
-        display: inline-block;
-        max-width: 20em;
-        padding: 4px;
-        padding-left: 1em;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-
-        flex-shrink: 0;
-
-        color: @grey-380;
-
-        a {
-            color: inherit;
-        }
-
-        + li {
-            margin-left: 0.5em;
-        }
-
-        &:last-child {
-            font-weight: @font-weight-bold;
-            flex-shrink: 1;
-        }
-
-        &::before {
-            position: absolute;
-            top: 0.1em;
-            left: 0;
-            width: 0.5em;
-            height: 100%;
-            background-image: url(~"@{icon-chevron}");
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 75%;
-            content: "";
-        }
-
-        &:first-child::before {
-            display: none;
-        }
-    }
-}
+// tabs from dsfr
+@import (less) "@gouvfr/dsfr/dist/component/breadcrumb/breadcrumb.css";

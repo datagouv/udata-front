@@ -22,7 +22,7 @@ blueprint = I18nBlueprint('datasets', __name__, url_prefix='/datasets')
 def recent_feed():
     feed = Atom1Feed(_('Last datasets'), description=None,
                      feed_url=request.url, link=request.url_root)
-    datasets = (Dataset.objects.visible().order_by('-created_at')
+    datasets = (Dataset.objects.visible().order_by('-created_at_internal')
                 .limit(current_site.feed_size))
     for dataset in datasets:
         author_name = None
@@ -161,6 +161,7 @@ def group_resources_by_schema(resources):
     """Group a list of `resources` by `schema`"""
     groups = dict()
     for resource in resources:
-        if len(resource.schema) > 0 and resource.schema['name'] not in groups:
-            groups[resource.schema['name']] = resource.schema
+        if 'name' in resource.schema:
+            if len(resource.schema) > 0 and resource.schema['name'] not in groups:
+                groups[resource.schema['name']] = resource.schema
     return groups

@@ -20,7 +20,7 @@ import "./components/vanilla/clipboard";
 import "./components/vanilla/sort-search";
 import handleUpdateUrlButtons from "./components/vanilla/update-url";
 
-import Toaster from "@meforma/vue-toaster";
+import Toaster from "@conciergerie.dev/vue-toaster";
 
 import Api from "./plugins/api";
 import EventBus from "./plugins/eventbus";

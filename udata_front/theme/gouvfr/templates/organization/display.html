@@ -18,8 +18,16 @@
 
 {% block breadcrumb %}
 {% cache cache_duration, 'org-breadcrumb', org.id|string, g.lang_code, org.last_modified|string %}
-<li><a href="{{ url_for('organizations.list') }}">{{ _('Organizations') }}</a></li>
-<li class="active" aria-current="page">{{ org.name }}</li>
+<li>
+    <a class="fr-breadcrumb__link" href="{{ url_for('organizations.list') }}">
+        {{ _('Organizations') }}
+    </a>
+</li>
+<li>
+    <a class="fr-breadcrumb__link" aria-current="page">
+        {{ org.name }}
+    </a>
+</li>
 {% endcache %}
 {% endblock %}
 
@@ -130,7 +138,7 @@
         {% set user = member.user %}
         {% set role = member.role %}
         <div
-            class="fr-col-md-4 fr-col-12 fr-pl-0 border-md-0 fr-pb-3v {% if not loop.index0 % 3 == 0 %}border-left fr-pl-md-3w{% endif %}"
+            class="fr-col-md-4 fr-col-12 fr-pl-0 fr-pb-3v border-default-grey {% if not loop.index0 % 3 == 0 %}border-left-md fr-pl-md-3w{% endif %}"
         >
             {% include theme('user/card.html') %}
         </div>

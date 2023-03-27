@@ -18,7 +18,7 @@
           </h4>
           <div class="fr-my-0 text-grey-380 fr-grid-row fr-grid-row--middle">
             <p v-if="hasSchema" class="fr-tag fr-tag--sm z-2">
-              <strong class="fr-mr-1v">{{ $t("schema:") }}</strong>{{resource.schema.name}}
+              <strong class="fr-mr-1v">{{ $t("schema:") }}</strong>{{resource.schema.name ? resource.schema.name : resource.schema.url}}
             </p>
             <p
               v-if="hasSchema && hasSchemaErrors"
@@ -43,11 +43,11 @@
         </div>
       </div>
       <div class="fr-col-auto fr-ml-auto">
-        <ul class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
-          <li class="text-default-error" v-if="unavailable">
+        <div class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
+          <p class="text-default-error fr-m-0" v-if="unavailable">
             {{$t('Unavailable')}}
-          </li>
-          <li class="fr-col-auto fr-ml-3v">
+          </p>
+          <p class="fr-col-auto fr-ml-3v fr-m-0">
             <button
               @click="expand"
               role="button"
@@ -63,18 +63,18 @@
                 {{hasExplore ? $t('See data') : $t('See metadata')}}
               </template>
             </button>
-          </li>
-          <li class="fr-col-auto fr-ml-3v" v-if="resource.format === 'url'">
+          </p>
+          <p class="fr-col-auto fr-ml-3v fr-m-0" v-if="resource.format === 'url'">
             <a
               :href="resource.latest"
-              :title="$t('Resource link')"
+              :title="$t('Resource link - opens a new window')"
               rel="nofollow noopener"
               target="_blank"
               class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-external-link-line fr-icon--sm"
             >
             </a>
-          </li>
-          <li class="fr-col-auto fr-ml-3v" v-else>
+          </p>
+          <p class="fr-col-auto fr-ml-3v fr-m-0" v-else>
             <a
               :href="resource.latest"
               :title="$t('Download resource')"
@@ -82,15 +82,15 @@
               class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-download-line fr-icon--sm"
             >
             </a>
-          </li>
-          <li class="fr-col-auto fr-ml-3v" v-if="canEdit">
+          </p>
+          <p class="fr-col-auto fr-ml-3v fr-m-0" v-if="canEdit">
             <EditButton
               :dataset-id="datasetId"
               :resource-id="resource.id"
               :is-community-resource="isCommunityResource"
             />
-          </li>
-        </ul>
+          </p>
+        </div>
       </div>
     </header>
     <section
@@ -146,7 +146,7 @@
                   <div class="fr-grid-row fr-grid-row--middle fr-mb-1w">
                     <p class="fr-text--xs fr-m-0">{{$t('This file is following a schema: ')}}</p>
                     <p class="fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
-                      {{resource.schema.name}}
+                      {{resource.schema.name ? resource.schema.name : resource.schema.url}}
                     </p>
                   </div>
                     <i18n-t keypath="Schemas allow to describe data models, discover how schemas improve your data quality and the available use cases on {address}" class="fr-text--xs fr-m-0" tag="p" scope="global">
@@ -169,6 +169,7 @@
                     {{ $t('See validation report') }}
                   </a>
                   <a
+                    v-if="resource.schema?.name"
                     class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-book-2-line"
                     :href="documentationUrl"
                   >
@@ -318,7 +319,7 @@ export default defineComponent({
     const lastUpdate = computed(() => props.resource.last_modified);
     const unavailable = computed(() => availabilityChecked.value && availabilityChecked.value >= 400);
     const { authorizeValidation, documentationUrl, loading, validationUrl, schemaReport} = useSchema(props.resource);
-    const hasSchema = computed(() => !!props.resource.schema.name);
+    const hasSchema = computed(() => !!props.resource.schema.name || !!props.resource.schema.url);
     const hasSchemaErrors = computed(() => !!schemaReport.value.size);
     const explore = getComponentsForHook("explore");
     const structure = getComponentsForHook("data-structure");
