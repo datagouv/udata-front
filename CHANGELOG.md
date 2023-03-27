@@ -8,6 +8,7 @@
 - Fix "informations" throughout the repo [#218](https://github.com/etalab/udata-front/pull/218)
 - fix RGAA criterion 9.3 [#222](https://github.com/etalab/udata-front/pull/222)
 - New reuse page [#210](https://github.com/etalab/udata-front/pull/210)
+- Fix [dependabot/10](https://github.com/etalab/udata-front/security/dependabot/10) [#228](https://github.com/etalab/udata-front/pull/228)
 
 ## 3.2.0 (2023-03-07)
 
