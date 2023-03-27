@@ -13,7 +13,7 @@
     </div>
     <p class="fr-col fr-m-0">
         {% if producer_type == 'organization' %}
-            <a href="{{ url_for('organizations.show', org=organization) }}">
+            <a class="fr-link" href="{{ url_for('organizations.show', org=organization) }}">
                 {{organization_name_with_certificate(organization)}}
             </a>
         {% else %}
