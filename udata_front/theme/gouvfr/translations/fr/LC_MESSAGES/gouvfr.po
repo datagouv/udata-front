@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: udata-front\n"
 "Report-Msgid-Bugs-To: data.gouv@data.gouv.fr\n"
 "POT-Creation-Date: 2023-03-20 16:59+0100\n"
-"PO-Revision-Date: 2023-03-21 08:50\n"
+"PO-Revision-Date: 2023-03-27 08:40\n"
 "Last-Translator: Data.gouv.fr Team <data.gouv@data.gouv.fr>\n"
 "Language: fr\n"
 "Language-Team: French\n"
@@ -562,7 +562,7 @@ msgstr "Ajouter un client"
 
 #: udata_front/theme/gouvfr/templates/api/card.html:9
 msgid "See on <a target=\"_blank\" rel=\"noopener\" title=\"See {title} on api.gouv.fr - opens a new window\" href=\"{url}\">api.gouv.fr</a>"
-msgstr ""
+msgstr "Voir sur <a target=\"_blank\" rel=\"noopener\" title=\"Voir {title} sur api.gouv.fr - ouvre une nouvelle fenêtre\" href=\"{url}\">api.gouv.fr</a>"
 
 #: udata_front/theme/gouvfr/templates/api/card.html:18
 msgid "From {producer}"
@@ -751,15 +751,15 @@ msgstr "Informations"
 #: udata_front/theme/gouvfr/templates/dataset/display.html:349
 #, python-format
 msgid "See the %(type)s"
-msgstr ""
+msgstr "Voir %(type)s"
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:357
 msgid "There are no files for this dataset yet."
-msgstr ""
+msgstr "Il n'y a pas encore de fichier pour ce jeu de données."
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:365
 msgid "Add a file"
-msgstr ""
+msgstr "Ajouter un fichier"
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:386
 #, python-format
@@ -774,7 +774,7 @@ msgstr "Ajouter une réutilisation"
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:408
 msgid "There are no reuses for this dataset yet."
-msgstr ""
+msgstr "Il n'y a pas encore de réutilisation pour ce jeu de données."
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:415
 #: udata_front/theme/gouvfr/templates/participez/participez.html:30
@@ -787,7 +787,7 @@ msgstr "Qu'est-ce qu'une réutilisation ?"
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:440
 msgid "There are no discussions for this dataset yet."
-msgstr ""
+msgstr "Il n'y a pas encore de discussion pour ce jeu de données."
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:464
 msgid "These resources are published by the community and the producer isn't responsible for them."
@@ -802,7 +802,7 @@ msgstr[1] "%(num)d Ressources communautaires"
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:486
 msgid "There are no community resources for this dataset yet."
-msgstr ""
+msgstr "Il n'y a pas encore de ressources communautaires pour ce jeu de données."
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:493
 msgid "Share your resources"
@@ -985,7 +985,7 @@ msgstr "Indisponible"
 
 #: udata_front/theme/gouvfr/templates/dataset/resource/card.html:53
 msgid "Resource link - opens a new window"
-msgstr ""
+msgstr "Lien de la ressource - ouvre une nouvelle fenêtre"
 
 #: udata_front/theme/gouvfr/templates/dataset/resource/card.html:63
 msgid "Download resource"
@@ -1185,7 +1185,7 @@ msgstr "Couverture spatiale non renseignée"
 
 #: udata_front/theme/gouvfr/templates/macros/quality_score_tooltip.html:58
 msgid "Learn more about this indicator - opens a new window"
-msgstr ""
+msgstr "En savoir plus sur cet indicateur - ouvre une nouvelle fenêtre"
 
 #: udata_front/theme/gouvfr/templates/macros/quality_score_tooltip.html:60
 msgid "Learn more about this indicator"
@@ -1640,33 +1640,33 @@ msgstr "Type"
 
 #: udata_front/theme/gouvfr/templates/reuse/display.html:163
 msgid "Last update"
-msgstr ""
+msgstr "Dernière mise à jour"
 
 #: udata_front/theme/gouvfr/templates/reuse/display.html:173
 #, python-format
 msgid "%(num)d used dataset"
 msgid_plural "%(num)d used datasets"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)d jeu de données"
+msgstr[1] "%(num)d jeux de données"
 
 #: udata_front/theme/gouvfr/templates/reuse/display.html:188
 msgid "There are no discussions for this reuse yet."
-msgstr ""
+msgstr "Il n'y a pas encore de discussion pour cette réutilisation."
 
 #: udata_front/theme/gouvfr/templates/reuse/display.html:203
 #, python-format
 msgid "%(num)d reuse from the same creator"
 msgid_plural "%(num)d reuses from the same creator"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)d réutilisation du même créateur"
+msgstr[1] "%(num)d réutilisations du même créateur"
 
 #: udata_front/theme/gouvfr/templates/reuse/display.html:214
 msgid "Reuses from the same creator"
-msgstr ""
+msgstr "Réutilisations du même créateur"
 
 #: udata_front/theme/gouvfr/templates/reuse/display.html:219
 msgid "There are no other reuses from this creator."
-msgstr ""
+msgstr "Il n'y a pas d'autres réutilisations de ce créateur."
 
 #: udata_front/theme/gouvfr/templates/reuse/list.html:7
 #, python-format
@@ -1820,7 +1820,7 @@ msgstr "Créer un compte"
 
 #: udata_front/theme/gouvfr/templates/security/register_user.html:17
 msgid "Why create an account? - opens a new window"
-msgstr ""
+msgstr "Pourquoi créer un compte ? - ouvre une nouvelle fenêtre"
 
 #: udata_front/theme/gouvfr/templates/security/register_user.html:19
 msgid "Why create an account?"
@@ -1875,7 +1875,7 @@ msgstr "Jeux de données relatifs à la ville de %(name)s avec le code INSEE %(c
 #: udata_front/theme/gouvfr/templates/territories/home.html:27
 #: udata_front/theme/gouvfr/templates/territories/region.html:12
 msgid "Territories"
-msgstr ""
+msgstr "Territoires"
 
 #: udata_front/theme/gouvfr/templates/territories/commune.html:15
 #: udata_front/theme/gouvfr/templates/territories/departement.html:15
@@ -1918,7 +1918,7 @@ msgstr "Jeux de données relatifs à la commune %(name)s avec le code INSEE %(co
 
 #: udata_front/theme/gouvfr/templates/territories/departement.html:42
 msgid "Main towns"
-msgstr ""
+msgstr "Villes principales"
 
 #: udata_front/theme/gouvfr/templates/territories/home.html:5
 #: udata_front/theme/gouvfr/templates/territories/home.html:6
@@ -1933,11 +1933,11 @@ msgstr "Travail en cours"
 
 #: udata_front/theme/gouvfr/templates/territories/home.html:23
 msgid "The territories pages are currently being renovated to improve user experience."
-msgstr ""
+msgstr "La page des territoires est en cours de rénovation pour améliorer l'expérience utilisateur."
 
 #: udata_front/theme/gouvfr/templates/territories/home.html:29
 msgid "Sorted alphabetically:"
-msgstr ""
+msgstr "Trié par ordre alphabétique :"
 
 #: udata_front/theme/gouvfr/templates/territories/region.html:5
 #, python-format
@@ -1946,11 +1946,11 @@ msgstr "Jeux de données relatifs à la région %(name)s avec le code INSEE %(co
 
 #: udata_front/theme/gouvfr/templates/territories/region.html:41
 msgid "Previously"
-msgstr ""
+msgstr "Précédemment"
 
 #: udata_front/theme/gouvfr/templates/territories/region.html:52
 msgid "Counties"
-msgstr ""
+msgstr "Départements"
 
 #: udata_front/theme/gouvfr/templates/territories/search-result.html:22
 msgid "Administrative level"
@@ -1962,7 +1962,7 @@ msgstr "Population"
 
 #: udata_front/theme/gouvfr/templates/territories/territory.html:18
 msgid "The territories pages are no longer maintained. We are working on new territories features."
-msgstr ""
+msgstr "Les pages des territoires ne sont plus maintenues. Nous travaillons à de nouvelles fonctionnalités relatives aux territoires."
 
 #: udata_front/theme/gouvfr/templates/territories/territory.html:24
 msgid "This territory has been replaced by:"
@@ -2020,7 +2020,7 @@ msgstr "thématique"
 #: udata_front/theme/gouvfr/templates/topic/display.html:16
 #: udata_front/theme/gouvfr/templates/topic/reuses.html:15
 msgid "Topics"
-msgstr ""
+msgstr "Thématiques"
 
 #: udata_front/theme/gouvfr/templates/topic/reuses.html:6
 #, python-format
