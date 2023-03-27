@@ -3,7 +3,7 @@
     <div class="fr-grid-row fr-grid-row--middle fr-mb-3v">
       <h4 class="fr-col fr-text--bold fr-mb-0">{{ $t("Reply to the discussion") }}</h4>
       <div class="fr-col-auto">
-        <button class="fr-link--close fr-link text-grey-500 fr-mr-0" @click="$emit('close')">
+        <button class="fr-btn--close fr-btn text-grey-500 fr-mr-0" @click="$emit('close')">
           {{$t('Close')}}
         </button>
       </div>
