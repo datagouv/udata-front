@@ -75,7 +75,7 @@
             <div class="fr-mb-0 text-mention-grey fr-grid-row">
                 {{quality_score_inline(dataset, "fr-hidden fr-unhidden-sm")}}
                 <p class="fr-m-0 dash-before">
-                    {{ _('Updated on %(date)s', date=dataset.last_update|dateformat(format='long')) }}
+                    {{ _('Updated %(date)s', date=dataset.last_update|format_based_on_date) }}
                 </p>
                 {% if dataset.license %}
                 <p class="dash-before fr-m-0">

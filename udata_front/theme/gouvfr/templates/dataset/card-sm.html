@@ -70,7 +70,7 @@
             {% endif %}
             <div class="fr-grid-row">
                 <p class="fr-m-0 text-mention-grey fr-text--sm">
-                    {{ _('Updated on %(date)s', date=dataset.last_modified|dateformat(format='long')) }}
+                    {{ _('Updated %(date)s', date=dataset.last_update|format_based_on_date) }}
                 </p>
                 {% if dataset.license %}
                 <p class="dash-before fr-text--sm fr-m-0">
