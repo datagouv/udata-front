@@ -9,6 +9,7 @@
 - fix RGAA criterion 9.3 [#222](https://github.com/etalab/udata-front/pull/222)
 - New reuse page [#210](https://github.com/etalab/udata-front/pull/210)
 - Fix [dependabot/10](https://github.com/etalab/udata-front/security/dependabot/10) [#228](https://github.com/etalab/udata-front/pull/228)
+- Fix links color [#232](https://github.com/etalab/udata-front/pull/232)
 
 ## 3.2.0 (2023-03-07)
 

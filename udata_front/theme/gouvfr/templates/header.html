@@ -62,10 +62,10 @@
                 </div>
                 <div class="fr-header__tools">
                     <div class="fr-header__tools-links">
-                        <ul class="fr-links-group">
+                        <ul class="fr-btns-group">
                             {% if current_user.is_authenticated %}
                                 <li>
-                                    <div class="fr-link fr-icon-svg fr-icon--sm fr-grid-row text-grey-500">
+                                    <div class="fr-btn fr-icon-svg fr-icon--sm fr-grid-row text-grey-500">
                                         <img
                                             src="{{ current_user|avatar_url(24) }}"
                                             width="24"
@@ -80,7 +80,7 @@
                                 <li>
                                     <a
                                         href="{{ url_for('admin.index') }}"
-                                        class="fr-link fr-icon-svg fr-icon--sm"
+                                        class="fr-btn fr-icon-svg fr-icon--sm"
                                     >
                                         <span class="fr-mr-1w fr-grid-row">
                                             {% include theme('svg/administration.svg') %}
@@ -91,7 +91,7 @@
                                 <li>
                                     <a
                                         href="{{ url_for('security.logout') }}"
-                                        class="fr-link fr-icon-logout-box-r-line"
+                                        class="fr-btn fr-icon-logout-box-r-line"
                                     >
                                         {{ _('Logout') }}
                                     </a>
@@ -100,7 +100,7 @@
                                 <li>
                                     <a
                                         href="{{ url_for('security.login', next=next_url) }}"
-                                        class="fr-link fr-icon-lock-line"
+                                        class="fr-btn fr-icon-lock-line"
                                     >
                                         {{ _('Log in') }}
                                     </a>
@@ -109,7 +109,7 @@
                                 <li>
                                     <a
                                         href="{{ url_for('security.register', next=next_url) }}"
-                                        class="fr-link fr-icon-account-line"
+                                        class="fr-btn fr-icon-account-line"
                                     >
                                         {{ _("Sign up") }}
                                     </a>
