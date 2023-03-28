@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 3.2.1 (2023-03-28)
 
 - Front modifications to display resources schema url field [#220](https://github.com/etalab/udata-front/pull/220)
