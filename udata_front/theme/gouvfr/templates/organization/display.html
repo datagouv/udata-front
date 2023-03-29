@@ -317,7 +317,7 @@
                     {% set pending_request = org.pending_request(current_user) %}
                     {% if not pending_request and not read_only_mode %}
                     <div class="fr-my-2w vuejs">
-                        <request-membership orga='{{org.id}}'>
+                        <request-membership organization='{{org.id}}'>
                         </request-membership>
                     </div>
                     {% elif pending_request %}
