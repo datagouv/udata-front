@@ -24,7 +24,7 @@
                     {% if resource.schema %}
                         <div class="fr-text--xs fr-m-0 dash-after">
                             <p class="fr-tag fr-tag--sm">
-                                <strong class="fr-mr-1v">{{ _("schema:") }}</strong> {{resource.schema.name}}
+                                <strong class="fr-mr-1v">{{ _("schema:") }}</strong> {{resource.schema.name if resource.schema.name else resource.schema.url}}
                             </p>
                         </div>
                     {% endif %}
@@ -122,8 +122,9 @@
         {% if resource.schema %}
             <h5 class="fr-h6 fr-mt-1w fr-mb-5v">{{_('Schema')}}</h5>
             <p class="fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
-                {{resource.schema.name}}
+                {{resource.schema.name if resource.schema.name else resource.schema.url}}
             </p>
+            {% if resource.schema.name %}
             <div>
                 <a
                     class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-btn--icon-left fr-icon-book-2-line"
@@ -132,6 +133,7 @@
                     {{ _('See schema documentation') }}
                 </a>
             </div>
+            {% endif %}
         {% endif %}
     </section>
 </article>

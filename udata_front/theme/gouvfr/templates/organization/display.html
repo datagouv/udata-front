@@ -307,9 +307,6 @@
         tabindex="0"
     >
         <div class="fr-container">
-        {% call() information_section(_('Description')) %}
-            {{ org.description|markdown }}
-        {% endcall %}
         {% call(slot) information_title_with_button(_('Members')) %}
             {% if slot == "button" %}
                 {% set member = org.member(current_user) %}

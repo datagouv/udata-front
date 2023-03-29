@@ -2,12 +2,18 @@
 
 ## Current (in progress)
 
+- New organization page [#230](https://github.com/etalab/udata-front/pull/230)
+
+## 3.2.1 (2023-03-28)
+
+- Front modifications to display resources schema url field [#220](https://github.com/etalab/udata-front/pull/220)
 - Update ventti button url [#223](https://github.com/etalab/udata-front/pull/223)
-- Dataset page links fix [#219](https://github.com/etalab/udata-front/pull/219)
+- Dataset page fixes [#219](https://github.com/etalab/udata-front/pull/219) [#229](https://github.com/etalab/udata-front/pull/229)
 - Fix "informations" throughout the repo [#218](https://github.com/etalab/udata-front/pull/218)
 - fix RGAA criterion 9.3 [#222](https://github.com/etalab/udata-front/pull/222)
 - New reuse page [#210](https://github.com/etalab/udata-front/pull/210)
-- New organization page [#230](https://github.com/etalab/udata-front/pull/230)
+- Fix [dependabot/10](https://github.com/etalab/udata-front/security/dependabot/10) [#228](https://github.com/etalab/udata-front/pull/228)
+- Fix links color [#232](https://github.com/etalab/udata-front/pull/232)
 
 ## 3.2.0 (2023-03-07)
 

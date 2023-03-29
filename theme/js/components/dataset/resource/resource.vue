@@ -18,7 +18,7 @@
           </h4>
           <div class="fr-my-0 text-grey-380 fr-grid-row fr-grid-row--middle">
             <p v-if="hasSchema" class="fr-tag fr-tag--sm z-2">
-              <strong class="fr-mr-1v">{{ $t("schema:") }}</strong>{{resource.schema.name}}
+              <strong class="fr-mr-1v">{{ $t("schema:") }}</strong>{{resource.schema.name ? resource.schema.name : resource.schema.url}}
             </p>
             <p
               v-if="hasSchema && hasSchemaErrors"
@@ -35,7 +35,7 @@
           </div>
           <p class="fr-mb-0 fr-mt-1v fr-text--xs text-grey-380" v-if="isCommunityResource && (resource.organization || resource.owner)">
             {{ $t('From') }}
-            <a :href="resource.organization.page" v-if="resource.organization">
+            <a class="fr-link" :href="resource.organization.page" v-if="resource.organization">
               <OrganizationNameWithCertificate :organization="resource.organization" />
             </a>
             <template v-else-if="owner">{{owner}}</template>
@@ -146,7 +146,7 @@
                   <div class="fr-grid-row fr-grid-row--middle fr-mb-1w">
                     <p class="fr-text--xs fr-m-0">{{$t('This file is following a schema: ')}}</p>
                     <p class="fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
-                      {{resource.schema.name}}
+                      {{resource.schema.name ? resource.schema.name : resource.schema.url}}
                     </p>
                   </div>
                     <i18n-t keypath="Schemas allow to describe data models, discover how schemas improve your data quality and the available use cases on {address}" class="fr-text--xs fr-m-0" tag="p" scope="global">
@@ -169,6 +169,7 @@
                     {{ $t('See validation report') }}
                   </a>
                   <a
+                    v-if="resource.schema?.name"
                     class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-book-2-line"
                     :href="documentationUrl"
                   >
@@ -318,7 +319,7 @@ export default defineComponent({
     const lastUpdate = computed(() => props.resource.last_modified);
     const unavailable = computed(() => availabilityChecked.value && availabilityChecked.value >= 400);
     const { authorizeValidation, documentationUrl, loading, validationUrl, schemaReport} = useSchema(props.resource);
-    const hasSchema = computed(() => !!props.resource.schema.name);
+    const hasSchema = computed(() => !!props.resource.schema.name || !!props.resource.schema.url);
     const hasSchemaErrors = computed(() => !!schemaReport.value.size);
     const explore = getComponentsForHook("explore");
     const structure = getComponentsForHook("data-structure");

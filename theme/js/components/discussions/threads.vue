@@ -54,7 +54,7 @@ Discussions allow users to interact with others.
               {{
                 $t("You are seeing a specific discussion about this dataset")
               }}
-              <button class="fr-link--close fr-link fr-mr-0" @click.prevent="viewAllDiscussions">
+              <button class="fr-btn--close fr-btn fr-mr-0" @click.prevent="viewAllDiscussions">
                 {{$t('Close')}}
               </button>
             </div>
