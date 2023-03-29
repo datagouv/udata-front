@@ -75,14 +75,13 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         self.assertEqual(len(rendered_datasets), len(datasets))
 
     def test_render_display_with_private_assets_only_member(self):
-        '''It should render the organization page without private and empty assets'''
+        '''It should render the organization page without private assets'''
         organization = OrganizationFactory()
         datasets = [VisibleDatasetFactory(organization=organization)
                     for _ in range(2)]
         reuses = [VisibleReuseFactory(organization=organization)
                   for _ in range(2)]
         for _ in range(2):
-            DatasetFactory(organization=organization, resources=[])  # Empty asset
             VisibleDatasetFactory(organization=organization, private=True)
             ReuseFactory(organization=organization, datasets=[])  # Empty asset
             VisibleReuseFactory(organization=organization, private=True)
@@ -91,7 +90,7 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         self.assert200(response)
 
         rendered_datasets = self.get_context_variable('datasets')
-        self.assertEqual(len(rendered_datasets), len(datasets))
+        self.assertEqual(len(rendered_datasets.objects), len(datasets))
 
         rendered_reuses = self.get_context_variable('reuses')
         self.assertEqual(len(rendered_reuses), len(reuses))
@@ -113,53 +112,54 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         me = self.login()
         member = Member(user=me, role='editor')
         organization = OrganizationFactory(members=[member])
-        # We show paginated datasets on the organisation page
-        # so rendered_datasets length will be at most 4
+        # We show indexable datasets on the organisation page
+        # so private datasets are omitted
         datasets = [
             VisibleDatasetFactory(organization=organization) for _ in range(2)]
         empty_datasets = [
             DatasetFactory(organization=organization, resources=[]) for _ in range(1)]
-        private_datasets = [
-            VisibleDatasetFactory(organization=organization, private=True)
-            for _ in range(1)]
+        [VisibleDatasetFactory(organization=organization, private=True) for _ in range(1)]
         response = self.get(url_for('organizations.show', org=organization))
 
         self.assert200(response)
+
         rendered_datasets = self.get_context_variable('datasets')
-        self.assertEqual(len(rendered_datasets),
-                         len(datasets) + len(private_datasets) + len(empty_datasets))
 
         rendered_private_datasets = [dataset for dataset in rendered_datasets if dataset.private]
-        self.assertEqual(len(rendered_private_datasets), len(private_datasets))
+        self.assertEqual(len(rendered_private_datasets), 0)
 
-        total_datasets = self.get_context_variable('total_datasets')
-        self.assertEqual(total_datasets,
-                         len(datasets) + len(private_datasets) + len(empty_datasets))
+        rendered_empty_datasets = [
+            dataset for dataset in rendered_datasets if len(dataset.resources) == 0
+        ]
+        self.assertEqual(len(rendered_empty_datasets), len(empty_datasets))
+
+        self.assertEqual(rendered_datasets.total,
+                         len(datasets) + len(empty_datasets))
 
     def test_render_display_with_paginated_datasets(self):
         '''It should render the organization page with paginated datasets'''
         organization = OrganizationFactory()
-        datasets_len = OrganizationDetailView.dataset_page_size + 1
+        datasets_len = OrganizationDetailView.page_size + 1
         for _ in range(datasets_len):
             VisibleDatasetFactory(organization=organization)
         response = self.get(url_for('organizations.show', org=organization))
 
         self.assert200(response)
         rendered_datasets = self.get_context_variable('datasets')
-        self.assertEqual(len(rendered_datasets), OrganizationDetailView.dataset_page_size)
+        self.assertEqual(len(rendered_datasets.objects), OrganizationDetailView.page_size)
 
     def test_render_display_with_paginated_datasets_on_second_page(self):
         '''It should render the organization page with paginated datasets'''
         organization = OrganizationFactory()
         second_page_len = 1
-        datasets_len = OrganizationDetailView.dataset_page_size + second_page_len
+        datasets_len = OrganizationDetailView.page_size + second_page_len
         for _ in range(datasets_len):
             VisibleDatasetFactory(organization=organization)
-        response = self.get(url_for('organizations.show', org=organization, datasets_page=2))
+        response = self.get(url_for('organizations.show', org=organization, page=2))
 
         self.assert200(response)
         rendered_datasets = self.get_context_variable('datasets')
-        self.assertEqual(len(rendered_datasets), second_page_len)
+        self.assertEqual(len(rendered_datasets.objects), second_page_len)
 
     def test_render_display_with_reuses(self):
         '''It should render the organization page with some reuses'''
