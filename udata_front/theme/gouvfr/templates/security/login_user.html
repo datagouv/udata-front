@@ -13,6 +13,9 @@
                         <p class="fr-mt-2w fr-mb-1w fr-text--xs text-align-left">
                             {{ _("Fields preceded by a star (<span class='required-field-star'>*</span>) are required.") }}
                         </p>
+                        {% for error in login_user_form.form_errors %}
+                        <p class="fr-error-text fr-mt-1v">{{ error }}</p>
+                        {% endfor %}
                         {% for f in login_user_form %}
                             {% if f.type in ('CSRFTokenField', 'HiddenField') %}
                                 {{ f() }}
