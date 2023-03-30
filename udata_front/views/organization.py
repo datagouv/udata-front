@@ -67,7 +67,6 @@ class OrganizationDetailView(SearchView, OrgView, DetailView):
     model = Dataset
     search_adapter = DatasetSearch
     context_name = 'datasets'
-    page_size = 4
     reuse_page_size = 8
 
     def get_queryset(self):
