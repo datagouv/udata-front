@@ -139,20 +139,20 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
     def test_render_display_with_paginated_datasets(self):
         '''It should render the organization page with paginated datasets'''
         organization = OrganizationFactory()
-        datasets_len = OrganizationDetailView.page_size + 1
+        datasets_len = 21
         for _ in range(datasets_len):
             VisibleDatasetFactory(organization=organization)
         response = self.get(url_for('organizations.show', org=organization))
 
         self.assert200(response)
         rendered_datasets = self.get_context_variable('datasets')
-        self.assertEqual(len(rendered_datasets.objects), OrganizationDetailView.page_size)
+        self.assertEqual(len(rendered_datasets.objects), 20)
 
     def test_render_display_with_paginated_datasets_on_second_page(self):
         '''It should render the organization page with paginated datasets'''
         organization = OrganizationFactory()
         second_page_len = 1
-        datasets_len = OrganizationDetailView.page_size + second_page_len
+        datasets_len = 21
         for _ in range(datasets_len):
             VisibleDatasetFactory(organization=organization)
         response = self.get(url_for('organizations.show', org=organization, page=2))
