@@ -8,7 +8,7 @@
       <div class="fr-grid-row fr-grid-row--middle fr-py-2w fr-px-3w">
         <div class="fr-col fr-h6 fr-mb-0">{{ $t("New discussion") }}</div>
         <div>
-          <button class="fr-link--close fr-link text-grey-500 fr-mr-0" @click="hideForm">
+          <button class="fr-btn--close fr-btn text-grey-500 fr-mr-0" @click="hideForm">
             {{$t('Close')}}
           </button>
         </div>

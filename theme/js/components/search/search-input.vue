@@ -6,18 +6,21 @@ category: Search
 
 # Search input
 
-It's an input that calls the passed `onChange` function on each change.
+It's an input that calls the emit `change` on each change.
 You can also pass it a `value` prop that will populate the field.
-If the submitUrl prop is passed, it will redirect on Submit.
 -->
 
 <template>
   <section class="fr-search-bar fr-search-bar--lg w-100">
+    <label class="fr-label" :for="id">
+       {{ $t("Search") }}
+   </label>
     <input
+      :id="id"
       type="search"
       name="q"
       :value="queryString"
-      @input="_onChange"
+      @input="onInput"
       @keydown.delete="onDelete"
       ref="input"
       class="fr-input"
@@ -32,43 +35,62 @@ If the submitUrl prop is passed, it will redirect on Submit.
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, nextTick, onMounted, ref, watchEffect } from "vue";
+import useUid from "../../composables/useUid";
 
 export default defineComponent({
-  created() {
-    this.queryString = this.value;
-  },
-  watch: {
-    value: function (val) {
-      this.queryString = val;
-    },
-  },
-  async mounted() {
-    //this.$nextTick doesn't work because of browsers®
-    setTimeout(() => this.focus(), 100);
-  },
+  emits: ['change'],
   props: {
-    onChange: Function,
-    value: String,
-    placeholder: String,
-  },
-  data() {
-    return {
-      queryString: "",
-    };
-  },
-  methods: {
-    _onChange(e) {
-      if (this.onChange) this.onChange(e.target.value);
+    value: {
+      type: String,
+      required: true,
     },
-    onDelete() {
-      if (this.queryString === "") this.onChange(this.queryString);
+    placeholder: {
+      type: String,
+      required: true,
     },
-    focus() {
-      this.$refs.input.focus({
+  },
+  setup(props, {emit}) {
+    const { id } = useUid('search-input');
+
+    const queryString = ref(props.value);
+
+    /** @type {import("vue").Ref<HTMLInputElement | null>} */
+    const input = ref(null);
+
+    const focus = () => {
+      input.value?.focus({
         preventScroll: true,
       });
     }
-  },
+
+    const onDelete = () => {
+      if (queryString.value === ""){
+        emit("change", queryString.value);
+      }
+    };
+
+    const onInput = (/** @type {InputEvent} **/ e) => {
+      const target = /** @type {HTMLInputElement} **/(e.target);
+      emit("change", target.value);
+    };
+
+    onMounted(async () => {
+      await nextTick();
+      focus();
+    });
+
+    watchEffect(() => {
+      queryString.value = props.value;
+    });
+
+    return {
+      id,
+      input,
+      onDelete,
+      onInput,
+      queryString,
+    };
+  }
 });
 </script>

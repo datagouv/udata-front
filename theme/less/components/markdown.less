@@ -108,17 +108,21 @@ Content on the site can be styled with Markdown. Ready made styles are provided 
         max-width: 100%;
     }
 
-    //They are indeed supported !
+    a {
+        .fr-link;
+    }
+
+    // They are indeed supported !
     table {
         width: 100%;
         border-spacing: 0;
-        border-collapse: separate; //Needed for rounded borders
+        border-collapse: separate; // Needed for rounded borders
 
         margin: @spacing-md 0;
 
         .rounded-xxs;
 
-        //This below is way too complicated just for some borders. But it works®
+        // This below is way too complicated just for some borders. But it works®
         thead {
             background: @grey-50;
 

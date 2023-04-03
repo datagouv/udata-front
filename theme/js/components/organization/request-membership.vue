@@ -11,42 +11,50 @@ A simple request membership prompt.
 
 <template>
   <button
-    @click.prevent="JoinOrga"
-    class="nav-link nav-link--no-icon text-decoration-none fr-link fr-link--icon-left fr-icon-arrow-right-s-line"
+    @click.prevent="askToJoinOrganization"
+    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-team-line"
   >
-    <span class="text-decoration-underline">{{ $t('Ask to join the organization as a producer') }}</span>
+    {{ $t('Ask to join the organization as a producer') }}
   </button>
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
+import { useI18n } from "vue-i18n";
+import { api } from "../../plugins/api";
+import { auth } from "../../plugins/auth";
 
 export default defineComponent({
   props: {
-    orga: String,
+    organization: {
+      type: String,
+      required: true,
+    },
   },
-data() {
-    return {
-        comment: '',
-    };
-},
-  methods: {
-    JoinOrga: function () {
+  setup(props) {
+    const {t} = useI18n();
+    const comment = ref('');
 
-      this.$auth();
+    const askToJoinOrganization = () => {
+      auth();
 
-      this.comment = prompt(this.$t('You can add some details here for your membership request'));
+      comment.value = prompt(t('You can add some details here for your membership request')) || "";
 
-      this.$api.post("organizations/" + this.orga + "/membership/", {comment: this.comment})
+      api.post("organizations/" + props.organization + "/membership/", {comment: comment.value})
           .then(data => {
-            alert(this.$t('A request has been sent to the administrators'));
+            alert(t('A request has been sent to the administrators'));
             window.location.reload();
         })
         .catch(error => {
-            alert(this.$t('Error while requesting membership'));
+            alert(t('Error while requesting membership'));
             console.error(error);
         });
-      }
-  }
+    };
+
+    return {
+      askToJoinOrganization,
+      comment,
+    };
+  },
 });
 </script>
