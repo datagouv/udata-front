@@ -71,8 +71,6 @@ class OrganizationDetailView(SearchView, OrgView, DetailView):
 
     def get_queryset(self):
         parser = self.search_adapter.as_request_parser()
-        if self.page_size:
-            parser.replace_argument('page_size', type=int, location='args', default=self.page_size)
         args = not_none_dict(parser.parse_args())
         args.update(organization=self.organization.id)
         return search.query(self.search_adapter, **args)
