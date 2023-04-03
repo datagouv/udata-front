@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- New organization page [#230](https://github.com/etalab/udata-front/pull/230)
+- New organization page [#230](https://github.com/etalab/udata-front/pull/230) [#233](https://github.com/etalab/udata-front/pull/233)
 
 ## 3.2.1 (2023-03-28)
 
