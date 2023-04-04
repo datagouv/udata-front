@@ -26,7 +26,7 @@
             >
               {{ $t("Invalid") }}
             </p>
-            <p :class="{'dash-before': hasSchema}" class="fr-text--xs fr-m-0 dash-after">{{ $t('Updated {date}', {date: formatBasedOnDate(lastUpdate)}) }}</p>
+            <p :class="{'dash-before': hasSchema}" class="fr-text--xs fr-m-0 dash-after">{{ $t('Updated {date}', {date: formatRelativeIfRecentDate(lastUpdate)}) }}</p>
             <p v-if="resource.format" class="fr-text--xs fr-m-0 dash-after">
               {{ resource.format?.trim()?.toLowerCase() }}
               <template v-if="resource.filesize">({{ filesize(resource.filesize) }})</template>
@@ -274,7 +274,7 @@ import OrganizationNameWithCertificate from "../../organization/organization-nam
 import useSchema from "../../../composables/useSchema";
 import useComponentsForHook from "../../../composables/useComponentsForHook";
 import { explorable_resources, schema_documentation_url } from "../../../config";
-import { filesize, formatBasedOnDate, formatDate, markdown } from "../../../helpers";
+import { filesize, formatRelativeIfRecentDate, formatDate, markdown } from "../../../helpers";
 
 export default defineComponent({
   components: {DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, OrganizationNameWithCertificate, SchemaLoader},
@@ -340,7 +340,7 @@ export default defineComponent({
       owner,
       resourceImage,
       filesize,
-      formatBasedOnDate,
+      formatRelativeIfRecentDate,
       formatDate,
       markdown,
       content,

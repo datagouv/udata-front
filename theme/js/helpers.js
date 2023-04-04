@@ -57,7 +57,7 @@ export const formatFromNow = (date) => {
  * @param {Date | string} date
  * @returns {string}
  */
-export const formatBasedOnDate = (date) => {
+export const formatRelativeIfRecentDate = (date) => {
   const { t } = useI18n();
   const today = dayjs().startOf("date");
   const dateWithoutTime = dayjs(date).startOf("date");

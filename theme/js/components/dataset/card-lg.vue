@@ -117,7 +117,7 @@
           <div class="fr-hidden fr-unhidden-sm fr-mx-1v">
             &mdash;
           </div>
-          {{ $t('Updated {date}', {date: formatBasedOnDate(last_update)}) }}
+          {{ $t('Updated {date}', {date: formatRelativeIfRecentDate(last_update)}) }}
         </p>
       </div>
       <ul class="fr-hidden fr-unhidden-sm fr-hidden-md fr-unhidden-lg fr-col-auto fr-tags-group fr-grid-row--bottom self-center flex-direction-column">
@@ -154,7 +154,7 @@ import Placeholder from "../utils/placeholder.vue";
 import QualityScore from "./quality-score.vue";
 import Tooltip from "../utils/tooltip.vue";
 import QualityItem from "./quality-item.vue";
-import { excerpt, formatBasedOnDate } from "../../helpers";
+import { excerpt, formatRelativeIfRecentDate } from "../../helpers";
 
 export default defineComponent({
   components: {
@@ -225,7 +225,7 @@ export default defineComponent({
     const license = useLicense(props.license);
     return {
       excerpt,
-      formatBasedOnDate,
+      formatRelativeIfRecentDate,
       license,
       ownerName,
     };
