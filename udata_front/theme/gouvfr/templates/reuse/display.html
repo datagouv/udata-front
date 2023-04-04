@@ -91,11 +91,11 @@
             {% endif %}
         </div>
     {% endif %}
+    <h1 class="fr-mb-5v fr-h3">
+        {{ reuse.title }}
+    </h1>
     <div class="fr-grid-row fr-grid-row--gutters">
-        <section class="fr-col-12 fr-col-md-8">
-            <h1 class="fr-mb-5v fr-h3">
-                {{ reuse.title }}
-            </h1>
+        <div class="fr-col-12 fr-col-md-8">
             <div class="fr-grid-row fr-grid-row--center">
                 <img src="{{ reuse.image|placeholder('reuse') }}" class="mw-100" alt="" />
             </div>
@@ -114,8 +114,8 @@
                     {{ reuse.description|markdown }}
                 </read-more>
             </div>
-        </section>
-        <section class="fr-col-12 fr-col-md-4">
+        </div>
+        <div class="fr-col-12 fr-col-md-4">
             {% if sysadmin %}
             <div class="fr-mt-0 vuejs">
                 <featured-button subject-id="{{ reuse.id }}" subject-type="reuse" :featured="{{ reuse.featured|tojson|safe }}"></featured-button>
@@ -164,7 +164,7 @@
             <p class="fr-text--sm fr-mt-0 fr-mb-3v">
                 {{ reuse.last_modified|dateformat(format='long') }}
             </p>
-        </section>
+        </div>
     </div>
 </div>
 <div class="fr-container">
