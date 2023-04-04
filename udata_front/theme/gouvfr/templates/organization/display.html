@@ -1,7 +1,10 @@
 {% extends theme('layouts/1-column.html') %}
+{% from theme('macros/dataset_information.html') import information_col, information_section, information_title_with_button %}
 {% from theme('macros/follow.html') import follow_btn with context %}
 {% from theme('macros/breadcrumb.html') import breadcrumb with context %}
+{% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate %}
 {% from theme('macros/paginator.html') import paginator with context %}
+{% from theme('macros/sort_search.html') import sort_search %}
 {% from theme('macros/certified.html') import badge_if_certified with context %}
 
 {% set is_hidden = (reuses.total or 0) + (datasets.total or 0) <= 0 %}
@@ -15,6 +18,15 @@
 {% set read_only_mode = config.READ_ONLY_MODE %}
 
 {% set bundle = 'organization' %}
+
+{% set sorts = [
+    {"label": _('Newest'),"value": "created", "order": "desc"},
+    {"label": _('Oldest'),"value": "created", "order": "asc"},
+    {"label": _('Followers'),"value": "followers", "order": "desc"},
+    {"label": _('Reuses'), "value": "reuses", "order": "desc"}
+] %}
+
+{% set section_class = 'bg-alt-blue-cumulus' %}
 
 {% block breadcrumb %}
 {% cache cache_duration, 'org-breadcrumb', org.id|string, g.lang_code, org.last_modified|string %}
@@ -31,180 +43,319 @@
 {% endcache %}
 {% endblock %}
 
+{% block toolbar %}
+{% cache cache_duration, 'org-toolbar', org.id|string, g.lang_code, org.last_modified|string %}
+{{ follow_btn(org) }}
+{% if can_edit %}
+    <a
+        class="fr-ml-2w fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-pencil-line fr-btn--icon-left"
+        href="{{ url_for('admin.index', path='organization/{id}/'.format(id=org.id)) }}"
+    >
+        {{ _('Modify organization') }}
+    </a>
+{% endif %}
+{% endcache %}
+{% endblock %}
+
 {% block main_content %}
 {% cache cache_duration, 'org-content', org.id|string, datasets.page|string, reuses.page|string, g.lang_code, current_user.slug or 'anonymous', org.last_modified|string %}
-<header class="fr-container">
+<div class="fr-container fr-mt-7w">
     {% if org.deleted %}
-    <div class="well-grey-100 well fr-mb-3v">
-        {{ _('This organization has been deleted. This will be permanent in the next 24 hours') }}
-    </div>
+        <div class="fr-col-auto fr-mr-1w">
+            <p
+                class="fr-tag"
+                title="{{ _('This organization has been deleted. This will be permanent in the next 24 hours') }}"
+            >
+                {{ _('Deleted') }}
+            </p>
+        </div>
     {% endif %}
-    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
-        <div class="fr-col-auto">
-            <div class="logo logo--80">
-                <img src="{{org.logo(80)|placeholder('organization') }}" alt="" />
-                <div class="logo-badge logo-badge--bottom-right">
-                    {{ badge_if_certified(org) }}
+    <div class="logo logo--80">
+        <img src="{{org.logo(80)|placeholder('organization') }}" alt="" />
+    </div>
+    <h1 class="fr-mt-1w">{{ organization_name_with_certificate(org) }}</h1>
+</div>
+<div class="fr-tabs fr-tabs--full-page">
+    <div class="fr-container">
+        <ul class="fr-tabs__list" role="tablist" aria-label="{{ _('In-page navigation') }}">
+            <li role="presentation">
+                <button
+                    id="presentation"
+                    class="fr-tabs__tab"
+                    tabindex="0"
+                    role="tab"
+                    aria-controls="presentation-panel"
+                    data-update-url="presentation"
+                    {% if is_current_tab(request, "page") or is_current_tab(request, "reuses_page") %}
+                        aria-selected="false"
+                    {% else %}
+                        aria-selected="true"
+                    {% endif %}
+                >
+                    {{ _('Presentation') }}
+                </button>
+            </li>
+            <li role="presentation">
+                <button
+                    id="datasets"
+                    class="fr-tabs__tab"
+                    tabindex="-1"
+                    role="tab"
+                    {% if is_current_tab(request, "page") %}
+                        aria-selected="true"
+                    {% else %}
+                        aria-selected="false"
+                    {% endif %}
+                    aria-controls="datasets-panel"
+                    data-update-url="datasets"
+                >
+                    {{ _('Datasets') }}
+                    <sup>{{ total_datasets }}</sup>
+                </button>
+            </li>
+            <li role="presentation">
+                <button
+                    id="reuses"
+                    class="fr-tabs__tab"
+                    tabindex="-1"
+                    role="tab"
+                    {% if is_current_tab(request, "reuses_page") %}
+                        aria-selected="true"
+                    {% else %}
+                        aria-selected="false"
+                    {% endif %}
+                    aria-controls="reuses-panel"
+                    data-update-url="reuses"
+                >
+                    {{_('Reuses')}}
+                    <sup>{{ total_reuses }}</sup>
+                </button>
+            </li>
+            <li role="presentation">
+                <button
+                    id="information"
+                    class="fr-tabs__tab"
+                    tabindex="-1"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="information-panel"
+                    data-update-url="information"
+                >
+                    {{ _("Information") }}
+                </button>
+            </li>
+        </ul>
+        <ul class="fr-tabs__list" role="navigation" aria-label="{{ _('In-page navigation') }}">
+            <li role="presentation">
+                <a
+                    id="presentation"
+                    class="fr-tabs__tab"
+                    href="#presentation-panel"
+                >
+                    {{ _('Presentation') }}
+                </a>
+            </li>
+            <li role="presentation">
+                <a
+                    id="datasets"
+                    class="fr-tabs__tab"
+                    href="#datasets-panel"
+                >
+                    {{ _('Datasets') }}
+                    <sup>{{ total_datasets }}</sup>
+                </a>
+            </li>
+            <li role="presentation">
+                <a
+                    id="reuses"
+                    class="fr-tabs__tab"
+                    href="#reuses-panel"
+                >
+                    {{_('Reuses')}}
+                    <sup>{{ total_reuses }}</sup>
+                </a>
+            </li>
+            <li role="presentation">
+                <a
+                    id="information"
+                    class="fr-tabs__tab"
+                    href="#information-panel"
+                >
+                    {{ _("Information") }}
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div
+        id="presentation-panel"
+        class="fr-tabs__panel"
+        role="tabpanel"
+        aria-labelledby="presentation"
+        tabindex="0"
+    >
+        <div class="fr-container">
+            <h2 class="subtitle">{{ _("Description") }}</h2>
+            {{ org.description|markdown }}
+        </div>
+    </div>
+    <div
+        id="datasets-panel"
+        class="fr-tabs__panel"
+        role="tabpanel"
+        aria-labelledby="datasets"
+        tabindex="0"
+    >
+        <div class="fr-container vuejs">
+            {% if organization_datasets %}
+                <Search
+                    :disable-first-search="true"
+                    data-total-results="{{total_datasets}}"
+                    data-results="{{datasets|to_api_format|to_json}}"
+                    :sorts="{{sorts|to_json}}"
+                    organization="{{org.id}}"
+                    download-link="{{url_for('organizations.datasets_csv', org=org)}}"
+                >
+                </Search>
+                <noscript>
+                <div class="fr-pt-3v">
+                    <form method="GET" class="fr-grid-row">
+                        <div class="fr-search-bar w-100" role="search" aria-label="{{  _('Search for dataset') }}">
+                            <label class="fr-label" for="search-datasets">
+                                {{ _('Search...') }}
+                            </label>
+                            <input
+                                name="q"
+                                class="fr-input"
+                                placeholder="{{ _('Search...') }}"
+                                type="search"
+                                id="search-datasets"
+                                value="{{datasets.query._query}}"
+                            />
+                            <button class="fr-btn" type="submit">
+                                {{ _('Search') }}
+                            </button>
+                        </div>
+                        <div class="w-100 fr-grid-row fr-grid-row--middle fr-pt-5v justify-between">
+                            <p class="fr-col-auto fr-my-0" role="status">{{ _('%(result)s results', result=datasets.total) }}</p>
+                            {{sort_search(datasets, sorts)}}
+                        </div>
+                    </form>
                 </div>
-            </div>
-        </div>
-        <div class="fr-col">
-            <div class="fr-grid-row no-wrap fr-grid-row--middle">
-                <h1 class="fr-my-0 fr-h1">
-                    {{ org.name }}
-                </h1>
-            </div>
-            <div class="fr-mt-1w">
-                <ul class="fr-grid-row fr-grid-row--middle fr-text--bold">
-                    {% if total_datasets > 0 %}
-                    <li>
-                        <a href="#organization-datasets">
-                            {{ total_datasets }} {{ _('Datasets') }}
+                {% if datasets %}
+                    {% include theme('dataset/search-results.html') %}
+                    {{ paginator(datasets, url='#/datasets-panel') }}
+                {% endif %}
+                </noscript>
+            {% else %}
+            <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-mt-5w">
+                    {% include theme('svg/blank_state/resource.svg') %}
+                    <p class="fr-h6 fr-mt-2w fr-mb-5v text-center">
+                        {{ _("This organization hasn't published any datasets yet.") }}
+                    </p>
+                    <p>
+                        <a
+                            class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-ml-1w"
+                            href="{{ config.GUIDES_DATASET_URL }}"
+                        >
+                            {{ _("What's a dataset ?") }}
                         </a>
-                    </li>
-                    {% endif %}
-                    {% if total_reuses > 0 %}
-                    <li class="fr-ml-2w">
-                        <a href="#organization-reuses">
-                            {{ total_reuses }} {{ _('Reuses') }}
-                        </a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-        <div class="fr-col-auto fr-mt-1v fr-grid-row fr-grid-row--bottom flex-direction-column">
-            {{ follow_btn(org) }}
-            {% if can_edit %}
-                <a
-                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-pencil-line fr-btn--icon-left fr-hidden fr-unhidden-sm"
-                    href="{{ url_for('admin.index', path='organization/{id}/'.format(id=org.id)) }}"
-                >
-                    {{ _('Modify organization') }}
-                </a>
-                <a
-                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mt-2w fr-icon-pencil-line fr-hidden-sm"
-                    href="{{ url_for('admin.index', path='organization/{id}/'.format(id=org.id)) }}"
-                >
-                    {{ _('Modify organization') }}
-                </a>
+                    </p>
+                </div>
             {% endif %}
         </div>
     </div>
-</header>
-<section class="bg-contrast-grey fr-py-5w fr-mt-6w fr-mb-9v">
-    <div class="fr-container vuejs">
-        <h2 id="description" class="fr-h2 fr-mb-0">{{ _('Description') }}</h2>
-        <read-more>
-            {{ org.description|markdown }}
-        </read-more>
-    </div>
-</section>
-{# TODO: proper <select> also needed in discussions and footer, then sort from URL param #}
-{% if datasets and datasets|length > 0 %}
-<section id="organization-datasets" class="fr-py-9v fr-container">
-    <h2>{{ _('Datasets') }}<sup>{{ total_datasets }}</sup></h2>
-    {% include theme('dataset/search-results.html') %}
-    <div class="fr-my-2w">
-        {{ paginator(datasets, arg_name='datasets_page', url='#organization-datasets') }}
-    </div>
-    <div class="text-align-center">
-        <a
-            href="{{ url_for('datasets.list', organization=org.id) }}"
-            class="fr-btn fr-btn--secondary fr-icon-eye-line fr-btn--icon-left"
-        >
-            {{ ngettext('See the dataset', 'See %(num)d datasets', total_datasets) }}
-        </a>
-    </div>
-</section>
-{% endif %}
-{% if reuses and reuses|length > 0 %}
-<section id="organization-reuses" class="fr-py-9v fr-container">
-    <h2>{{ _('Reuses') }}<sup>{{ total_reuses }}</sup></h2>
-    <ul class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-        {% for reuse in reuses %}
-        <li class="fr-mb-3v fr-col-lg-3 fr-col-sm-6 fr-col-12">
-            {% include theme('reuse/card.html') %}
-        </li>
-        {% endfor %}
-    </ul>
-    {{ paginator(reuses, arg_name='reuses_page', url='#organization-reuses') }}
-</section>
-{% endif %}
-<section class="fr-py-9v fr-container">
-    <h2>{{ _('Members') }}<sup>{{ org.members|length or 0 }}</sup></h2>
-    <div class="fr-grid-row">
-        {% for member in org.members %}
-        {% set user = member.user %}
-        {% set role = member.role %}
-        <div
-            class="fr-col-md-4 fr-col-12 fr-pl-0 fr-pb-3v border-default-grey {% if not loop.index0 % 3 == 0 %}border-left-md fr-pl-md-3w{% endif %}"
-        >
-            {% include theme('user/card.html') %}
+    <div
+        id="reuses-panel"
+        class="fr-tabs__panel"
+        role="tabpanel"
+        aria-labelledby="reuses"
+        tabindex="0"
+    >
+        <div class="fr-container">
+            {% if reuses %}
+                <ul class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
+                    {% for reuse in reuses %}
+                    <li class="fr-mb-3v fr-col-lg-3 fr-col-sm-6 fr-col-12">
+                        {% include theme('reuse/card.html') %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {{ paginator(reuses, arg_name='reuses_page', url='#/reuses') }}
+            {% else %}
+                <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-mt-5w">
+                    {% include theme('svg/blank_state/reuse.svg') %}
+                    <p class="fr-h6 fr-mt-2w fr-mb-5v text-center">
+                        {{ _("This organization hasn't published any reuses yet.") }}
+                    </p>
+                    <p>
+                        <a
+                            class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-ml-1w"
+                            href="{{ config.GUIDES_REUSE_URL }}"
+                        >
+                            {{ _("What's a reuse ?") }}
+                        </a>
+                    </p>
+                </div>
+            {% endif %}
         </div>
-        {% endfor %}
     </div>
-</section>
-<section class="fr-py-9v fr-container">
-    <div class="fr-grid-row fr-grid-row--gutters">
-        <div class="fr-col-md-6 fr-col-12">
-            <h3>{{ _('Technical details') }}</h3>
-            <dl class="text-grey-380 fs-sm">
-                <div>
-                    <dt class="f-light">ID</dt>
-                    <dd class="f-bold fr-m-0">{{ org.id }}</dd>
-                </div>
-                <div class="fr-my-3v">
-                    <dt class="f-light">{{ _('Creation date') }}</dt>
-                    <dd class="f-bold fr-m-0">{{ org.created_at|dateformat(format='long') }}</dd>
-                </div>
-                <div>
-                    <dt class="f-light">{{ _('Modification date') }}</dt>
-                    <dd class="f-bold fr-m-0">{{ org.last_modified|dateformat(format='long') }}</dd>
-                </div>
-            </dl>
-        </div>
-        <div class="fr-col-md-6 fr-col-12 fr-my-3w fr-my-md-0">
-            <h3>{{ _('Actions') }}</h3>
-            <ul class="nav-list fr-ml-n3v">
-                {% if can_edit and not read_only_mode %}
-                <li class="fr-my-2w">
-                    <a
-                        class="nav-link nav-link--no-icon fr-raw-link text-decoration-none fr-link fr-link--icon-left fr-icon-arrow-right-s-line"
-                        href="{{ url_for('admin.index', path='organization/{id}/'.format(id=org.id)) }}"
-                    >
-                        <span class="text-decoration-underline">{{ _('Modify information') }}</span>
-                    </a>
-                </li>
-                {% endif %}
-                <li class="fr-my-2w">
-                    <a
-                        href="{{ url_for('organizations.datasets_csv', org=org) }}"
-                        class="nav-link nav-link--no-icon fr-raw-link text-decoration-none fr-link fr-link--icon-left fr-icon-arrow-right-s-line"
-                    >
-                        <span class="text-decoration-underline">{{ _('Download list of datasets as csv file') }}</span>
-                    </a>
-                </li>
-
+    <div
+        id="information-panel"
+        class="fr-tabs__panel"
+        role="tabpanel"
+        aria-labelledby="information"
+        tabindex="0"
+    >
+        <div class="fr-container">
+        {% call(slot) information_title_with_button(_('Members')) %}
+            {% if slot == "button" %}
                 {% set member = org.member(current_user) %}
                 {% if not member %}
                     {% set pending_request = org.pending_request(current_user) %}
                     {% if not pending_request and not read_only_mode %}
-                    <li class="fr-my-2w vuejs">
-                        <request-membership orga='{{org.id}}'>
+                    <div class="vuejs">
+                        <request-membership organization='{{org.id}}'>
                         </request-membership>
-                    </li>
+                    </div>
                     {% elif pending_request %}
-                    <li class="fr-my-2w">
+                    <div>
                         <span class="f-light f-italic">{{ _('Pending request to join this organization') }}</span>
-                    </li>
+                    </div>
                     {% endif %}
                 {% endif %}
-
-
-            </ul>
+            {% else %}
+                {% call() information_section() %}
+                        <div class="fr-grid-row fr-mt-3w">
+                            {% for member in org.members %}
+                            {% set user = member.user %}
+                            {% set role = member.role %}
+                            <div
+                                class="fr-col-md-4 fr-col-12 fr-pl-0 border-md-0 fr-mb-3w {% if not loop.index0 % 3 == 0 %}border-left border-default-grey fr-pl-md-3w{% endif %}"
+                            >
+                                {% include theme('user/card.html') %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% endcall %}
+            {% endif %}
+        {% endcall %}
+        {% call() information_section(_('Technical details')) %}
+            <div class="fr-grid-row fr-grid-row--gutters">
+                {% call() information_col(_('Latest update')) %}
+                    {{ org.last_modified|dateformat(format='long') }}
+                {% endcall %}
+                {% call() information_col(_('ID')) %}
+                    {{org.id}}
+                {% endcall %}
+            </div>
+            <div class="fr-grid-row fr-grid-row--gutters">
+                {% call() information_col(_('Creation date')) %}
+                    {{org.created_at|dateformat(format='long')}}
+                {% endcall %}
+            </div>
+        {% endcall %}
         </div>
     </div>
-</section>
+</div>
 {% endcache %}
 {% endblock %}

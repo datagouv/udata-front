@@ -60,7 +60,7 @@
                 {{ _('From') }}
                 {% if dataset.organization %}
                     <span class="not-enlarged">
-                        <a href="{{ url_for('organizations.show', org=dataset.organization) }}">
+                        <a class="fr-link" href="{{ url_for('organizations.show', org=dataset.organization) }}">
                             {{organization_name_with_certificate(dataset.organization)}}
                         </a>
                     </span>

@@ -150,8 +150,8 @@
   "Schemas allow to describe data models, discover how schemas improve your data quality and the available use cases on {address}": "Les schémas de données permettent de décrire des modèles de données, découvrez comment les schémas améliorent la qualité des données et quels sont les cas d'usages possibles sur {address}",
   "schema:": "schéma :",
   "Invalid": "Invalide",
-  "Learn more about this indicator - opens a new window": "",
-  "Resource link - opens a new window": "",
+  "Learn more about this indicator - opens a new window": "En savoir plus sur cet indicateur - ouvre une nouvelle fenêtre",
+  "Resource link - opens a new window": "Lien de la ressource - ouvre une nouvelle fenêtre",
   "Updated {date}": "",
   "on {date}": ""
 }

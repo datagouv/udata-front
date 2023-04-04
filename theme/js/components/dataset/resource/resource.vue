@@ -35,7 +35,7 @@
           </div>
           <p class="fr-mb-0 fr-mt-1v fr-text--xs text-grey-380" v-if="isCommunityResource && (resource.organization || resource.owner)">
             {{ $t('From') }}
-            <a :href="resource.organization.page" v-if="resource.organization">
+            <a class="fr-link" :href="resource.organization.page" v-if="resource.organization">
               <OrganizationNameWithCertificate :organization="resource.organization" />
             </a>
             <template v-else-if="owner">{{owner}}</template>

@@ -42,7 +42,7 @@
         <p class="fr-m-0 fr-text--sm" v-if="organization || owner">
           {{ $t('From') }}
           <span class="not-enlarged" v-if="organization">
-            <a :href="organization.page">
+            <a class="fr-link" :href="organization.page">
               <OrganizationNameWithCertificate :organization="organization" />
             </a>
           </span>

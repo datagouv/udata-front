@@ -150,8 +150,8 @@
   "Schemas allow to describe data models, discover how schemas improve your data quality and the available use cases on {address}": "Schemas allow to describe data models, discover how schemas improve your data quality and the available use cases on {address}",
   "schema:": "schema:",
   "Invalid": "Invalid",
-  "Learn more about this indicator - opens a new window": "",
-  "Resource link - opens a new window": "",
+  "Learn more about this indicator - opens a new window": "Learn more about this indicator - opens a new window",
+  "Resource link - opens a new window": "Resource link - opens a new window",
   "Updated {date}": "",
   "on {date}": ""
 }
