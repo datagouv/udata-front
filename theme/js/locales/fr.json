@@ -152,6 +152,6 @@
   "Invalid": "Invalide",
   "Learn more about this indicator - opens a new window": "En savoir plus sur cet indicateur - ouvre une nouvelle fenêtre",
   "Resource link - opens a new window": "Lien de la ressource - ouvre une nouvelle fenêtre",
-  "Updated {date}": "",
-  "on {date}": ""
+  "Updated {date}": "Mis à jour {date}",
+  "on {date}": "le {date}"
 }

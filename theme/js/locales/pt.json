@@ -152,6 +152,6 @@
   "Invalid": "Invalid",
   "Learn more about this indicator - opens a new window": "Learn more about this indicator - opens a new window",
   "Resource link - opens a new window": "Resource link - opens a new window",
-  "Updated {date}": "",
-  "on {date}": ""
+  "Updated {date}": "Updated {date}",
+  "on {date}": "on {date}"
 }
