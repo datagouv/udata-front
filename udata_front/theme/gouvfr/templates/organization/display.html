@@ -313,24 +313,24 @@
                 {% if not member %}
                     {% set pending_request = org.pending_request(current_user) %}
                     {% if not pending_request and not read_only_mode %}
-                    <div class="fr-my-2w vuejs">
+                    <div class="vuejs">
                         <request-membership organization='{{org.id}}'>
                         </request-membership>
                     </div>
                     {% elif pending_request %}
-                    <div class="fr-my-2w">
+                    <div>
                         <span class="f-light f-italic">{{ _('Pending request to join this organization') }}</span>
                     </div>
                     {% endif %}
                 {% endif %}
             {% else %}
                 {% call() information_section() %}
-                        <div class="fr-grid-row fr-mt-4w">
+                        <div class="fr-grid-row fr-mt-3w">
                             {% for member in org.members %}
                             {% set user = member.user %}
                             {% set role = member.role %}
                             <div
-                                class="fr-col-md-4 fr-col-12 fr-pl-0 border-md-0 fr-pb-3v {% if not loop.index0 % 3 == 0 %}border-left fr-pl-md-3w{% endif %}"
+                                class="fr-col-md-4 fr-col-12 fr-pl-0 border-md-0 fr-mb-3w {% if not loop.index0 % 3 == 0 %}border-left border-default-grey fr-pl-md-3w{% endif %}"
                             >
                                 {% include theme('user/card.html') %}
                             </div>

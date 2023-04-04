@@ -7,13 +7,14 @@
 {% elif f.type == 'SubmitField' %}
 <button type="submit" class="fr-btn">{{ submit }}</button>
 {% elif f.type == 'BooleanField' %}
-<div class="fr-checkbox-group">
-    {{ f() }}
-    <label class="fr-label" for="{{ f.id }}">
-        {{ f.label.text }}
-    </label>
-</div>
+{{ render_boolean_field(f) }}
 {% else %}
+{{ render_single_field(f) }}
+{% endif %}
+{% endfor %}
+{% endmacro %}
+
+{% macro render_single_field(f) %}
 <div class="fr-input-group field {% if f.errors %}fr-input-group--error{% endif %}">
     <label for="{{ f.id }}" class="fr-label {% if f.flags.required %}required{% endif %}">
         {{ f.label.text }}
@@ -27,6 +28,13 @@
     <p class="fr-error-text fr-mt-1v">{{ error }}</p>
     {% endfor %}
 </div>
-{% endif %}
-{% endfor %}
+{% endmacro %}
+
+{% macro render_boolean_field(f) %}
+<div class="fr-checkbox-group">
+    {{ f() }}
+    <label class="fr-label" for="{{ f.id }}">
+        {{ f.label.text }}
+    </label>
+</div>
 {% endmacro %}
