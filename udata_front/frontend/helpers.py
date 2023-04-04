@@ -325,26 +325,27 @@ def daterange(value, details=False):
 
 
 def format_from_now(value):
-  '''
-  Format date as relative from now.
-  It displays "today" or format_timedelta content, based on date.
-  '''
-  today = date.today()
-  value_without_time = value.date()
-  if(value_without_time == today):
-    return _("today")
-  return format_timedelta(value_without_time - today, add_direction=True)
+    '''
+    Format date as relative from now.
+    It displays "today" or format_timedelta content, based on date.
+    '''
+    today = date.today()
+    value_without_time = value.date()
+    if(value_without_time == today):
+        return _("today")
+    return format_timedelta(value_without_time - today, add_direction=True)
+
 
 @front.app_template_filter()
 def format_based_on_date(value):
-  '''
-  Format date relative form now if date is less than a month ago.
-  Otherwise, show a formatted date.
-  '''
-  delta = date.today() - value.date()
-  if(delta.days > 30):
-    return _("on %(date)s", date=format_date(value, "long"))
-  return format_from_now(value)
+    '''
+    Format date relative form now if date is less than a month ago.
+    Otherwise, show a formatted date.
+    '''
+    delta = date.today() - value.date()
+    if(delta.days > 30):
+        return _("on %(date)s", date=format_date(value, "long"))
+    return format_from_now(value)
 
 
 @front.app_template_filter()
