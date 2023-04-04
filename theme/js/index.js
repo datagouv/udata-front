@@ -25,9 +25,8 @@ import Toaster from "@conciergerie.dev/vue-toaster";
 import Api from "./plugins/api";
 import EventBus from "./plugins/eventbus";
 import Auth from "./plugins/auth";
-import i18n from "./plugins/i18n";
+import i18n from "./i18n";
 import bodyClass from "./plugins/bodyClass";
-import filters from "./plugins/filters";
 
 import InitSentry from "./sentry";
 
@@ -42,7 +41,6 @@ const configAndMountApp = (el) => {
   app.use(Auth);
   app.use(i18n);
   app.use(bodyClass);
-  app.use(filters);
   app.use(Toaster, {
     duration: false,
     dismissible: true,

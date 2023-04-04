@@ -49,7 +49,7 @@
           <template v-if="owner">{{ownerName}}</template>
         </p>
         <p class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm">
-          {{ $filters.excerpt(description, 160) }}
+          {{ excerpt(description, 160) }}
         </p>
         <p class="fr-m-0 fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
           <Tooltip class="fr-hidden fr-grid-row fr-grid-row--middle flex-sm">
@@ -117,7 +117,7 @@
           <div class="fr-hidden fr-unhidden-sm fr-mx-1v">
             &mdash;
           </div>
-          {{ $t('Updated on {date}', {date: $filters.formatDate(last_update)}) }}
+          {{ $t('Updated {date}', {date: formatRelativeIfRecentDate(last_update)}) }}
         </p>
       </div>
       <ul class="fr-hidden fr-unhidden-sm fr-hidden-md fr-unhidden-lg fr-col-auto fr-tags-group fr-grid-row--bottom self-center flex-direction-column">
@@ -154,6 +154,7 @@ import Placeholder from "../utils/placeholder.vue";
 import QualityScore from "./quality-score.vue";
 import Tooltip from "../utils/tooltip.vue";
 import QualityItem from "./quality-item.vue";
+import { excerpt, formatRelativeIfRecentDate } from "../../helpers";
 
 export default defineComponent({
   components: {
@@ -223,6 +224,8 @@ export default defineComponent({
     const ownerName = useOwnerName(owned);
     const license = useLicense(props.license);
     return {
+      excerpt,
+      formatRelativeIfRecentDate,
       license,
       ownerName,
     };

@@ -50,10 +50,12 @@ if (userEl instanceof HTMLElement) {
  */
 export const debug = false; //TODO : handle this, no more webpack
 
+export const defaultLang = "en";
+
 /**
  * The current language is guessed from the html lang attribute
  */
-export const lang = _attr("html", "lang") || "en";
+export const lang = _attr("html", "lang") || defaultLang;
 
 /**
  * Reuse server side site title
