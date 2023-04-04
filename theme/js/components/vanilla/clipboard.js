@@ -18,8 +18,4 @@ Just have an element with an `id` ending with `-copy` and use clipboardJS API fo
 
 import ClipboardJS from "clipboard";
 
-export default (() => {
-  document.addEventListener("DOMContentLoaded", () => {
-    new ClipboardJS('[id$="-copy"]');
-  });
-})();
+new ClipboardJS('[id$="-copy"]');

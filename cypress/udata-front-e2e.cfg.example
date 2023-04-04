@@ -1,0 +1,5 @@
+PLUGINS = ['front']
+THEME = 'gouvfr'
+
+MONGODB_HOST = 'mongodb://localhost:27017/udata-front-e2e'
+POST_DISCUSSIONS_ENABLED = True

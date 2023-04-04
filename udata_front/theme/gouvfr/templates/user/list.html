@@ -1,8 +1,6 @@
 {% extends theme("layouts/1-column.html") %}
 {% from theme('macros/paginator.html') import paginator with context %}
 
-{% set toolbar_class='search-toolbar' %}
-
 {% set meta = {
     'title': _('Users'),
     'description': _("%(site)s user search", site=config['SITE_TITLE']),
@@ -13,13 +11,11 @@
 {% set bundle = 'search' %}
 
 {% block breadcrumb %}
-    <li class="active" aria-current="page">
+<li>
+    <a class="fr-breadcrumb__link" aria-current="page">
         {{ _('Users') }}
-        <small>{{ _('%(start)s to %(end)s on %(total)s',
-            start=users.page_start,
-            end=users.page_end,
-            total=users.total) }}</small>
-    </li>
+    </a>
+</li>
 {% endblock %}
 
 {% block main_content %}

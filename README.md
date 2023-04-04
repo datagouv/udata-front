@@ -114,8 +114,8 @@ pip install -e . -r requirements/test.pip -r requirements/develop.pip
 
 ##### 🚩 Starting the python development server
 
-
 Simply run the udata project with udata-front loaded as a plugin:
+
 ```shell
 cd udata
 inv serve
@@ -126,6 +126,7 @@ inv serve
 ##### 🏗 Installing the javascript dependencies
 
 First, you need to use [Node](https://nodejs.org/) (version 14+) on your platform. You should consider [installing NVM](https://github.com/creationix/nvm#installation) which uses the existing .nvmrc.
+
 ```shell
 cd udata-front
 
@@ -146,7 +147,7 @@ npm start
 ```
 
 This will start a development server that will listen to changes and automatically rebuild the project when needed.
-Note that a webserver is started by Parcel (default port is `1234`), however we will not be using it as our CSS and JS files will be served by Jinja instead. More on that later.
+Note that a webserver is started by Vite (default port is `1234`), however we will not be using it as our CSS and JS files will be served by Jinja instead. More on that later.
 
 #### 👀 Other dev commands
 
@@ -157,6 +158,7 @@ You can execute `udata-front` specific tasks from the `udata-front` directory wi
 ```shell
 inv -l
 ```
+
 Example commands:
 - `i18n`: Extract translatable strings
 - `i18nc`: Compile translations
@@ -165,14 +167,17 @@ Example commands:
 
 Additionally, you can run javascript-related commands through `npm run`.
 
-- `build`: Builds the final CSS/JS files and the UI-Kit Documentation. You should probably use this one in production.
-- `build:app`: Builds the final CSS/JS files without the UI-Kit
-- `build:stylemark`: Builds the UI-Kit files and also the CSS/JS files but unminifed (do not use those static files in production)
+- `build`: Builds the final CSS/JS files. You should probably use this one in production.
 - `i18n:report`: Generates a report of the i18n missing and unused keys
 - `i18n:extract`: Same as above, but also automatically adds missing keys to translation files
-- `clean`: Cleans Parcel cache. Use this if you stumble upon weird bugs to start anew.
 - `start`: Get to coding with live reload and things. Same as `npm run dev`
 - `test`: Runs the Cypress tests. More on that in the [Tests section](#-tests) of this README.
+
+If you encounter any merge conflic with your package-lock.json, you can fix it with NPM:
+
+```shell
+npm install --package-lock-only
+```
 
 ### 🏰 General architecture
 
@@ -198,25 +203,21 @@ The JS assets are compiled in a single `index.js` file that includes everything 
 We are using the [DSFR](https://github.com/GouvernementFR/dsfr) to build our front-end components.
 
 In addition we have a nice litle set of CSS Utilities to quickly build custom components, inspired by bootstrap, most of its documentation
-lives in the css located in `theme/less/` and is built using [Stylemark](https://github.com/mpetrovich/stylemark), you can read the live documentation in `udata_front/theme/stylemark/` after building it using `npm run build-stylemark`.
-
-You can access the UI-kit documentation by visiting the following route : `/_stylemark/index.html`
+lives in the css located in `theme/less/`.
 
 Whenever a components needs some special styling, you can find their corresponding definitions inside `theme/less/specific/<component>`,
 it's best if we can avoid having too much specific styling, but sometimes you just really need it.
 
 ### 🛠️ Build tools
 
-This project uses [Parcel 2](https://github.com/parcel-bundler/parcel) to build and transform our source files into nice bundles for browsers.
-Its config can be found in the `.parcelrc` file, as well as the `package.json` entries.
+This project uses [Vite](https://vitejs.dev/) to build and transform our source files into nice bundles for browsers.
+Its config can be found in the `vite.config.js` file.
 
-Parcel does multiple custom things in this project :
+Vile does multiple custom things in this project :
 
 - Transform the `.js` files into modern Javascript for browsers
 - Transform the `less` files into modern CSS using `PostCSS`
-- Bundle the `svg` used in the JS files
-- Copy the static assets when they change (config is in the `package.json`'s `staticFiles` key)
-- Build the Stylemark (UI-kit) documentation on file change
+- Copy the static assets when they change (config is in the `vite.config.js`)
 
 ### 🏭 Javascript architecture
 

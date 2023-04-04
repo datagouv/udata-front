@@ -3,11 +3,11 @@
 {% from theme('macros/sort_search.html') import sort_search %}
 {% from theme('macros/banner_info.html') import banner_info %}
 
-{% set toolbar_class='search-toolbar' %}
-
 {% block breadcrumb %}
-<li class="active" aria-current="page">
-    {{ _('Datasets') }}
+<li>
+    <a class="fr-breadcrumb__link" aria-current="page">
+        {{ _('Datasets') }}
+    </a>
 </li>
 {% endblock %}
 
@@ -29,7 +29,7 @@
 
 {% block main_content %}
 <section
-    class="fr-container fr-container--search fr-py-2w vuejs"
+    class="fr-container fr-container--search vuejs"
 >
     <h1 class="fr-mb-1w">{{_('Datasets')}}</h1>
     <div class="fr-grid-row fr-grid-row--middle justify-between">
@@ -41,7 +41,7 @@
         >
             {{ _('Search reuses') }}
         </a>
-    </div>    
+    </div>
     <Search
         :disable-first-search="true"
         data-total-results="{{datasets.total}}"

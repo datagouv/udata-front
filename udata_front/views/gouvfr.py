@@ -7,7 +7,6 @@ from jinja2.exceptions import TemplateNotFound
 from mongoengine.errors import ValidationError
 
 from udata_front import theme
-from udata_front.theme import theme_static_with_version
 from udata.app import cache
 from udata.frontend import template_hook
 from udata.models import Reuse, Dataset
@@ -138,7 +137,7 @@ def has_apis(ctx):
     return dataset.extras.get(APIGOUVFR_EXTRAS_KEY, [])
 
 
-@template_hook('dataset.display.after-description', when=has_apis)
+@template_hook('dataset.display.after-files', when=has_apis)
 def dataset_apis(ctx):
     dataset = ctx['dataset']
     return theme.render('dataset-apis.html', apis=dataset.extras.get(APIGOUVFR_EXTRAS_KEY))
@@ -154,10 +153,3 @@ def oauth_authorize_theme_content(ctx):
 def oauth_error_theme_content(ctx):
     request = ctx['request']
     return theme.render('api/oauth_error.html', error=request.args.get('error'))
-
-
-# TODO : better this, redirect is not the best. How to serve it instead ?!
-@blueprint.route('/_stylemark/<path:filename>/')
-def stylemark(filename):
-    return redirect(theme_static_with_version(None,
-                                              filename="stylemark/index.html"))

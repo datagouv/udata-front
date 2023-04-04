@@ -2,10 +2,75 @@
 
 ## Current (in progress)
 
+- New organization page [#230](https://github.com/etalab/udata-front/pull/230)[#233](https://github.com/etalab/udata-front/pull/233)
+- Align reuse sidebar with image [#234](https://github.com/etalab/udata-front/pull/234)
+- Show relative date on dataset and resource cards [#231](https://github.com/etalab/udata-front/pull/231)
+- Fix RGAA criterion 8.9 [#174](https://github.com/etalab/udata-front/pull/174)
+
+## 3.2.1 (2023-03-28)
+
+- Front modifications to display resources schema url field [#220](https://github.com/etalab/udata-front/pull/220)
+- Update ventti button url [#223](https://github.com/etalab/udata-front/pull/223)
+- Dataset page fixes [#219](https://github.com/etalab/udata-front/pull/219) [#229](https://github.com/etalab/udata-front/pull/229)
+- Fix "informations" throughout the repo [#218](https://github.com/etalab/udata-front/pull/218)
+- fix RGAA criterion 9.3 [#222](https://github.com/etalab/udata-front/pull/222)
+- New reuse page [#210](https://github.com/etalab/udata-front/pull/210)
+- Fix [dependabot/10](https://github.com/etalab/udata-front/security/dependabot/10) [#228](https://github.com/etalab/udata-front/pull/228)
+- Fix links color [#232](https://github.com/etalab/udata-front/pull/232)
+
+## 3.2.0 (2023-03-07)
+
+- Upgrading packages following Flask upgrade to 2.1.2 in udata [#207](https://github.com/etalab/udata-front/pull/207)
+  - Use feedgenerator for AtomFeed instead of Werkzeug deprecated helper
+  - `contextfunction` and `contextfilter` from Jinja is deprecated and replaced by `pass_context`
+  - Move `Flask-Themes2` dep from udata to udata-front and upgrade to 1.0.0
+- Fix `@background-contrast-blue-cumulus` LESS variable [#217](https://github.com/etalab/udata-front/pull/217)
+
+## 3.1.3 (2023-03-02)
+
+> **Warning**
+> Refactor of breadcrumb macro to be easier to use. `toolbar_class`, `breadcrum_class`, `toolbar_container` and `breadcrumb_bar` options are now removed.
+> Refactor of dataset components names to match new sizes : XS (previously card), SM, MD, LG (previously search-result).
+> `dataset.display.after-description` hook is now really after the description. Use new `dataset.display.after-files` hook for previous position.
+- Make newsletter url configurable [#205](https://github.com/etalab/udata-front/pull/205)
+- Show a warning notice when JavaScript is disabled or failed to execute [#206](https://github.com/etalab/udata-front/pull/206)
+- Update lighthouse to fix security issues [#211](https://github.com/etalab/udata-front/pull/211)
+- New dataset page [#181](https://github.com/etalab/udata-front/pull/181)
+- Update vue-toaster dependency to avoid reported vulnerabilities [#215](https://github.com/etalab/udata-front/pull/215)
+
+## 3.1.2 (2023-02-06)
+
+- Use brand color for button style `tertiary-no-outline` [#199](https://github.com/etalab/udata-front/pull/199)
+- Use computed dates for resources and datasets [#201](https://github.com/etalab/udata-front/pull/201)
+- Fix setuptools version used in CI [#202](https://github.com/etalab/udata-front/pull/202)
+- Move Pagination to `@etalab/udata-front-plugin-helpers` and add tests [#200](https://github.com/etalab/udata-front/pull/200)
+
+## 3.1.1 (2023-01-20)
+
+- Fix vanilla js scripts [#196](https://github.com/etalab/udata-front/pull/196)
+- Remove useless published date in resource model [#198](https://github.com/etalab/udata-front/pull/198)
+
+## 3.1.0 (2023-01-18)
+
+> **Note** <br>
+> This changes the build system from Parcel to Vite.
+> This also adds a way for udata plugin to register their own vue components
+> and to display them in places chosen by the current theme
+
+- Add resource exploration preview [#169](https://github.com/etalab/udata-front/pull/169)[#180](https://github.com/etalab/udata-front/pull/180)[#183](https://github.com/etalab/udata-front/pull/183)
+- Fix RGAA criterion 9.2 [#178](https://github.com/etalab/udata-front/pull/178)
+- Add i18n on size suffix [#184](https://github.com/etalab/udata-front/pull/184)
+- Add theme view for mail change [#192](https://github.com/etalab/udata-front/pull/192)
+
+## 3.0.1 (2022-12-15)
+
 - Fix Api Representation for media after CaptchEtat integration [#173](https://github.com/etalab/udata-front/pull/173)
 - Add archived and private badges to dataset search results and update card style [#170](https://github.com/etalab/udata-front/pull/170)
 - Fix banner links underlined twice [#171](https://github.com/etalab/udata-front/pull/171)
-- Fix RGAA criterion 8.9 [#174](https://github.com/etalab/udata-front/pull/174)
+- Fix margins for dataset cards [#176](https://github.com/etalab/udata-front/pull/176)
+- Fix text for datasets button in org page [#172](https://github.com/etalab/udata-front/pull/172)
+- Add Portuguese translations [#167](https://github.com/etalab/udata-front/pull/167)
+- Add email address to shared data on oauth authorize page [#175](https://github.com/etalab/udata-front/pull/175)
 
 ## 3.0.0 (2022-11-14)
 

@@ -8,20 +8,31 @@
 
 {% set body_class="territory" %}
 
+{% block breadcrumb %}
+    <li>
+        <a class="fr-breadcrumb__link"  aria-current="page">
+            {{ _('Territories') }}
+        </a>
+    </li>
+{% endblock %}
+
 {% block main_content %}
 <div class="fr-container">
-    <div class="well well-grey-100 fr-my-2w">
-        {{ _("This page is no longer maintained. We are working on new territories features.") }}
+    <div class="fr-alert fr-alert--info fr-my-2w">
+        <p class="fr-alert__title">{{ _('Work in progress') }}</p>
+        <p>{{ _('The territories pages are currently being renovated to improve user experience.') }}</p>
     </div>
     <div class="fr-grid-row">
         <div class="fr-col-12">
-            <h1>{{ _('Click to navigate to the given region:') }}</h1>
-            <div id="map-nav" style="height:100vh; width:100%"></div>
-            <h3>{{ _('Or sorted alphabetically:') }}
+            <h1 class="fr-mb-5v">{{ _('Territories') }}</h1>
+            <p>
+                {{ _('Sorted alphabetically:') }}
+            </p>
+            <p>
                 {% for region in regions %}
-                <a href="{{ region.url }}">{{ region.name }}</a>{% if loop.last %}.{% else %},{% endif %}
+                    <a href="{{ region.url }}">{{ region.name }}</a>{% if loop.last %}.{% else %},{% endif %}
                 {% endfor %}
-            </h3>
+            </p>
         </div>
     </div>
 </div>

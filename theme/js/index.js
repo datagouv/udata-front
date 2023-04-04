@@ -4,6 +4,7 @@ import "./dsfr";
 import * as dsfr from "@gouvfr/dsfr/dist/dsfr/dsfr.module";
 
 import Threads from "./components/discussions/threads.vue";
+import ThreadsCreate from "./components/discussions/threads-create.vue";
 import MenuSearch from "./components/search/menu-search.vue";
 import Search from "./components/search/search.vue";
 import FeaturedButton from './components/utils/featured.vue';
@@ -11,37 +12,23 @@ import FollowButton from "./components/utils/follow-button.vue";
 import ReadMore from "./components/utils/read-more.vue";
 import RequestMembership from "./components/organization/request-membership.vue";
 import Resources from "./components/dataset/resource/resources.vue";
-import SearchBar from "./components/utils/search-bar.vue";
 import Captcha from "./components/utils/captcha.vue";
 
-import Tabs from "./components/vanilla/tabs";
-import Accordion from "./components/vanilla/accordion";
-import Clipboard from "./components/vanilla/clipboard";
-import SortSearch from "./components/vanilla/sort-search";
+import "./components/vanilla/tabs";
+import "./components/vanilla/accordion";
+import "./components/vanilla/clipboard";
+import "./components/vanilla/sort-search";
+import handleUpdateUrlButtons from "./components/vanilla/update-url";
 
-import VueFinalModal from "vue-final-modal";
-import Toaster from "@meforma/vue-toaster";
+import Toaster from "@conciergerie.dev/vue-toaster";
 
 import Api from "./plugins/api";
 import EventBus from "./plugins/eventbus";
 import Auth from "./plugins/auth";
-import Modals from "./plugins/modals";
-import i18n from "./plugins/i18n";
+import i18n from "./i18n";
 import bodyClass from "./plugins/bodyClass";
-import filters from "./plugins/filters";
 
 import InitSentry from "./sentry";
-
-/**
- * @interface Ref
- * @template T
- * @property {T} value
- */
-
-/**
- * @typedef {Object} Ref
- * @property value - The referenced value
-*/
 
 const configAndMountApp = (el) => {
   const app = createApp({});
@@ -52,17 +39,15 @@ const configAndMountApp = (el) => {
   app.use(Api);
   app.use(EventBus);
   app.use(Auth);
-  app.use(VueFinalModal());
-  app.use(Modals); //Has to be loaded after VueFinalModal
   app.use(i18n);
   app.use(bodyClass);
-  app.use(filters);
   app.use(Toaster, {
     duration: false,
     dismissible: true,
   }).provide('toast', app.config.globalProperties.$toast);
 
   app.component("discussion-threads", Threads);
+  app.component("discussion-create", ThreadsCreate);
   app.component("menu-search", MenuSearch);
   app.component("search", Search);
   app.component("follow-button", FollowButton);
@@ -70,7 +55,6 @@ const configAndMountApp = (el) => {
   app.component("read-more", ReadMore);
   app.component("request-membership", RequestMembership);
   app.component("dataset-resources", Resources);
-  app.component("search-bar", SearchBar);
   app.component("captcha", Captcha);
 
   // unset delimiters used in html templates to prevent injections using {{ }}
@@ -101,5 +85,6 @@ elements.forEach((el) => {
     throw e;
   }
 });
-window.dsfr.start();
+globalThis.dsfr.start();
 console.log("JS is injected !");
+handleUpdateUrlButtons();

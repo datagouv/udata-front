@@ -16,76 +16,68 @@ The `url` prop is the API URL.
   <button
     @click.prevent="toggleFollow"
     type="button"
-    class="fr-btn fr-btn--secondary follow-button"
-    v-show="!readOnlyEnabled"
-    :aria-label="label"
+    class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 follow-button"
+    :disabled="readOnlyEnabled"
   >
-    <span
-        v-html="icon"
+      <span
         class="magic fr-grid-row"
         :class="{ active: animating }"
-        :style="{ color: _following ? 'inherit' : 'transparent' }"
-      ></span>
+        :style="{ color: following ? 'inherit' : 'transparent' }"
+      >
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.20703 1.24224L5.42968 4.87896L1.41015 5.45318C0.699214 5.56255 0.425776 6.43755 0.945308 6.95709L3.8164 9.77349L3.13281 13.7383C3.02343 14.4493 3.78906 14.9961 4.41796 14.668L8 12.7813L11.5547 14.668C12.1836 14.9961 12.9492 14.4493 12.8398 13.7383L12.1562 9.77349L15.0273 6.95709C15.5469 6.43755 15.2734 5.56255 14.5625 5.45318L10.5703 4.87896L8.76562 1.24224C8.46484 0.613336 7.53515 0.585992 7.20703 1.24224Z" stroke="#161616"/>
+      </svg>
+      </span>
       <span class="fr-ml-1w">
-        {{ _followers }} {{ $t("favourites", _followers) }}
+        <template v-if="following">{{ $t("Remove from favourites") }}</template>
+        <template v-else>{{ $t("Add to favourites") }}</template>
       </span>
   </button>
 </template>
 
 <script>
-import {defineComponent} from "vue";
+import { defineComponent, ref } from "vue";
 import config from "../../config";
-import icon from "bundle-text:svg/actions/star.svg";
+import { api } from "../../plugins/api";
+import { auth } from "../../plugins/auth";
 
 export default defineComponent({
   props: {
     followers: Number,
-    url: String,
+    url: {
+      type: String,
+      required: true,
+    },
     following: Boolean,
   },
-  computed: {
-    label() {
-      let action = this._following ? this.$t('remove from favorites') : this.$t('add to favorites');
-      return this._followers + ' ' + this.$t('favourites', this._followers) + ', ' + action;
-    }
-  },
-  created() {
-    this.icon = icon;
-  },
-  data() {
-    return {
-      loading: false,
-      _followers: this.followers || 0,
-      _following: this.following,
-      animating: false,
-      readOnlyEnabled: config.read_only_enabled,
-    };
-  },
-  methods: {
-    toggleFollow() {
-      this.$auth();
+  setup(props) {
+    const animating = ref(false);
+    const following = ref(props.following);
+    const readOnlyEnabled = config.read_only_enabled;
 
-      this.loading = true;
-
+    const toggleFollow = () => {
+      auth();
       let request;
 
-      if (!this._following) request = this.$api.post(this.url);
-      else request = this.$api.delete(this.url);
+      if (!following.value) request = api.post(props.url);
+      else request = api.delete(props.url);
 
       request
-        .then((resp) => resp.data)
-        .then((data) => {
-          this._followers = data.followers;
-          this._following = !this._following;
-
-          // Trigger sparkles animation
-          if (this._following) {
-            this.animating = true;
-            setTimeout(() => (this.animating = false), 1300);
+        .then(() => {
+          following.value = !following.value;
+          if (following.value) {
+            animating.value = true;
+            setTimeout(() => (animating.value = false), 1300);
           }
-        })
-        .finally(() => (this.loading = false));
-    },
+        });
+    };
+
+    return {
+      following,
+      animating,
+      readOnlyEnabled,
+      toggleFollow,
+    };
   },
 });
 </script>

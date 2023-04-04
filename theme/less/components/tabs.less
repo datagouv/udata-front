@@ -19,7 +19,7 @@ This prevents messy event handling with bubbling prevention, but might cause you
 
 ## Styling
 By default, tabs have no style.
-You can either use `.fr-tag` (check out the tags documentation page for more informations), or any element you'd like.
+You can either use `.fr-tag` (check out the tags documentation page for more information), or any element you'd like.
 
 ## From DSFR
 
@@ -76,4 +76,104 @@ You can use tabs from DSFR. It uses DSFR colors and conventions. It allows you t
     --background-action-low-blue-france-hover: @background-action-low-blue-cumulus-hover;
     --background-action-low-blue-france-active: @background-action-low-blue-cumulus-active;
     z-index: 1;
+    &:not([data-fr-js-tabs-group]) {
+        display: block;
+    }
+    & > .fr-tabs__panel:not([data-fr-js-tab-panel]) {
+        transform: translate(0%);
+        &:not(.fr-tabs__panel--selected) {
+            visibility: visible;
+        }
+    }
+}
+
+.fr-tabs--full-page {
+    overflow: visible;
+    &[data-fr-js-tabs-group] {
+        overflow: hidden;
+    }
+    & > .fr-tabs__panel {
+        padding: 0;
+        padding-top: 2.5rem;
+        padding-bottom: 7.5rem;
+        background-color: @white;
+    }
+    &:not(.fr-transition-none) > .fr-tabs__panel:not(.fr-tabs__panel--selected)[data-fr-js-tab-panel] {
+        display: none;
+    }
+    & > .fr-tabs__panel--direction-start[data-fr-js-tab-panel] {
+        transform: translate(-200%);
+    }
+    & > .fr-tabs__panel--selected[data-fr-js-tab-panel] {
+        transform: translate(-100%);
+    }
+    & > .fr-tabs__panel--direction-end[data-fr-js-tab-panel] {
+        transform: translate(0%);
+    }
+    &::after {
+        box-shadow: none;
+        .border-top;
+        .border-default-grey;
+    }
+    & > .fr-container > .fr-tabs__list {
+        max-width: calc(100% - 2rem);
+        &[role="tablist"] {
+            display: none;
+        }
+        &[role="tablist"][data-fr-js-tabs-list] {
+            display: flex;
+        }
+        &[role="navigation"] {
+            display: flex;
+        }
+        &[role="navigation"][data-fr-js-tabs-list] {
+            display: none;
+        }
+        @media @dsfr-query-sm {
+            max-width: calc(@breakpoint-sm - 2rem);
+        }
+        @media @dsfr-query-md {
+            max-width: calc(@breakpoint-md - 2rem);
+        }
+        @media @dsfr-query-lg {
+            max-width: calc(@breakpoint-lg - 3rem);
+        }
+        @media @dsfr-query-xl {
+            max-width: calc(@breakpoint-xl - 3rem);
+        }
+    }
+}
+
+.fr-tabs__tab sup {
+    .sup;
+    place-self: baseline;
+    margin-left: 0.125rem;
+    &::before, &::after {
+        color: inherit;
+    }
+}
+
+.fr-tabs--no-border {
+    &::after {
+        margin: -1px;
+    }
+}
+
+.fr-tabs__panel--no-padding {
+    .fr-p-0-5v;
+    .fr-pb-5v;
+}
+
+.fr-tabs__panel--no-padding:focus, .fr-tabs__panel--no-padding:focus-visible {
+    outline-offset: -2px;
+}
+
+.fr-tabs--no-border {
+    &::after {
+        margin: -1px;
+    }
+}
+
+.fr-tabs__panel--no-padding:focus, .fr-tabs__panel--no-padding:focus-visible {
+    outline-offset: -2px;
 }

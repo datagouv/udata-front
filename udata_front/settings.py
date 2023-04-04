@@ -6,12 +6,13 @@ Default settings for udata-front
 RESOURCES_SCHEMAGOUVFR_ENABLED = True
 SCHEMA_GOUVFR_VALIDATA_URL = 'https://validata.etalab.studio'
 SCHEMA_CATALOG_URL = 'https://schema.data.gouv.fr/schemas/schemas.json'
+SCHEMA_DOCUMENTATION_URL = 'https://schema.data.gouv.fr/'
 
 # Dataset settings
 # Default page size for resources on dataset page
 RESOURCES_DEFAULT_PAGE_SIZE = 6
 
-# Default page size for resources on dataset page
+# Number of resources to show resource search on dataset page
 RESOURCES_MIN_COUNT_TO_SHOW_SEARCH = 12
 
 # Frontend banner parameters
@@ -32,7 +33,8 @@ ETALAB_GUIDES_URL = 'https://guides.etalab.gouv.fr'
 GUIDES_USER_ACCOUNT_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/creer-compte-utilisateur/'
 GUIDES_ORGANIZATION_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/creer-rejoindre-organisation/'
 GUIDES_DATASET_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/publier-jeu-de-donnees/'
-GUIDES_REUSE_URL = 'https://guides.etalab.gouv.fr/reutilisation/publier-reutilisation/'
+GUIDES_REUSE_URL = 'https://guides.etalab.gouv.fr/reutilisation/'
+GUIDES_COMMUNITY_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/animer-communaute-reutilisateurs/#valoriser-les-usages-des-donnees' # noqa
 
 # CAPTCHEtat
 
@@ -43,3 +45,6 @@ CAPTCHETAT_OAUTH_BASE_URL = None
 CAPTCHETAT_CLIENT_ID = None
 CAPTCHETAT_CLIENT_SECRET = None
 CAPTCHETAT_TOKEN_CACHE_KEY = 'captchetat-bearer-token'
+
+# Newsletter
+NEWSLETTER_SUBSCRIPTION_URL = 'https://f.info.data.gouv.fr/f/lp/infolettre-data-gouv-fr-landing-page/lk3q01y6'  # noqa

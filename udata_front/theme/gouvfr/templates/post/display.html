@@ -14,8 +14,16 @@
 {% block title %}{{ post.name }}{% endblock %}
 
 {% block breadcrumb %}
-<li><a href="{{ url_for('posts.list') }}">{{ _('News') }}</a></li>
-<li class="active" aria-current="page">{{ post.name }}</li>
+<li>
+    <a class="fr-breadcrumb__link" href="{{ url_for('posts.list') }}">
+        {{ _('News') }}
+    </a>
+</li>
+<li>
+    <a class="fr-breadcrumb__link" aria-current="page">
+        {{ post.name }}
+    </a>
+</li>
 {% endblock %}
 
 
@@ -101,33 +109,38 @@
 
 {% if previous_post or next_post %}
 <section class="fr-container fr-my-7w fr-py-3w border-top">
-    <div class="fr-grid-row fr-grid-row--gutters justify-between">
-        <div class="fr-col-12 fr-col-md-3 text-align-center-md">
-            {% if previous_post %}
-            <a
-                href="{{ previous_post.display_url }}"
-                class="fr-btn fr-btn--secondary fr-icon-arrow-left-s-line fr-btn--icon-left"
-            >
-                {{ _('Previous post') }}
-            </a>
-            {% endif %}
-        </div>
-        <div class="fr-col-12 fr-col-md-6 fr-my-md-2w text-align-center">
-            <a href="{{ url_for('posts.list') }}" class="fr-btn fr-btn--secondary">
-                {{ _('All posts') }}
-            </a>
-        </div>
-        <div class="fr-col-12 fr-col-md-3 text-align-right text-align-center-md">
-            {% if next_post %}
-            <a
-                href="{{ next_post.display_url }}"
-                class="fr-btn fr-btn--secondary fr-icon-arrow-right-s-line fr-btn--icon-right"
-            >
-                {{ _('Next post') }}
-            </a>
-            {% endif %}
-        </div>
-    </div>
+    <nav
+        role="navigation"
+        aria-label="{{_("Navigate in the post collection")}}"
+    >
+        <ul class="fr-grid-row fr-grid-row--gutters justify-between">
+            <li class="fr-col-12 fr-col-md-3 text-align-center-md">
+                {% if previous_post %}
+                <a
+                    href="{{ previous_post.display_url }}"
+                    class="fr-btn fr-btn--secondary fr-icon-arrow-left-s-line fr-btn--icon-left"
+                >
+                    {{ _('Previous post') }}
+                </a>
+                {% endif %}
+            </li>
+            <li class="fr-col-12 fr-col-md-6 fr-my-md-2w text-align-center">
+                <a href="{{ url_for('posts.list') }}" class="fr-btn fr-btn--secondary">
+                    {{ _('All posts') }}
+                </a>
+            </li>
+            <li class="fr-col-12 fr-col-md-3 text-align-right text-align-center-md">
+                {% if next_post %}
+                <a
+                    href="{{ next_post.display_url }}"
+                    class="fr-btn fr-btn--secondary fr-icon-arrow-right-s-line fr-btn--icon-right"
+                >
+                    {{ _('Next post') }}
+                </a>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
 </section>
 {% endif %}
 

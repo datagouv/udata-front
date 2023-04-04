@@ -2,7 +2,7 @@
   <form class="fr-pt-3v" @submit.prevent="search">
     <div class="fr-grid-row fr-grid-row--middle justify-between search-bar" ref="searchRef">
       <SearchInput
-        :onChange="handleSearchChange"
+        @change="handleSearchChange"
         :value="queryString"
         :placeholder="$t('Ex. 2022 presidential election')"
       />
@@ -15,7 +15,7 @@
             <div class="fr-collapse" id="fr-sidemenu-wrapper">
               <div class="fr-sidemenu__title fr-mb-3v">{{$t('Filters')}}</div>
               <div class="fr-grid-row fr-grid-row--gutters">
-                <div class="fr-col-12">
+                <div class="fr-col-12" v-if="!organization">
                   <MultiSelect
                     :placeholder="$t('Organizations')"
                     :searchPlaceholder="$t('Search an organization...')"
@@ -88,14 +88,21 @@
                     :onChange="handleFacetChange('granularity')"
                   />
                 </div>
-                <div class="fr-col-12 fr-mb-3w">
+                <div class="fr-col-12 fr-mb-3w text-align-center">
                   <button
-                    class="fr-btn fr-btn--secondary fr-icon-close-circle-line fr-btn--icon-left"
+                    class="fr-btn fr-btn--secondary fr-icon-close-circle-line fr-btn--icon-left justify-center w-100"
                     @click="resetFilters"
                     v-if="isFiltered"
                   >
                     {{$t('Reset filters')}}
                   </button>
+                  <a
+                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-download-line fr-btn--icon-left justify-center w-100"
+                    :href="downloadLink"
+                    v-else-if="downloadLink"
+                  >
+                    {{$t('Download list as CSV')}}
+                  </a>
                 </div>
               </div>
             </div>
@@ -172,11 +179,11 @@ import { generateCancelToken, apiv2 } from "../../plugins/api";
 import {useToast} from "../../composables/useToast";
 import useSearchUrl from "../../composables/useSearchUrl";
 import SearchInput from "./search-input.vue";
-import Dataset from "../dataset/search-result.vue";
+import Dataset from "../dataset/card-lg.vue";
 import Loader from "../dataset/loader.vue";
 import SchemaFilter from "./schema-filter.vue";
 import Empty from "./empty.vue";
-import Pagination from "../pagination/pagination.vue";
+import { Pagination } from "@etalab/udata-front-plugins-helper";
 import MultiSelect from "./multi-select.vue";
 import { search_autocomplete_debounce } from "../../config";
 import { debounce } from "../../composables/useDebouncedRef";
@@ -193,9 +200,17 @@ export default defineComponent({
     Pagination,
   },
   props: {
+    downloadLink: {
+      type: String,
+      default: ""
+    },
     disableFirstSearch: {
       type: Boolean,
       default: false,
+    },
+    organization: {
+      type: String,
+      default: "",
     },
     sorts: {
       /** @type {import("vue").PropType<Array<{label: string, order: string, value: string}>>} */
@@ -259,7 +274,7 @@ export default defineComponent({
     /**
      * All other params are kept here as facets
      */
-    const facets = ref({});
+    const facets = ref({organization: props.organization});
 
     /**
      * Search loading state
@@ -302,7 +317,11 @@ export default defineComponent({
     const updateUrl = (save = SAVE_TO_HISTORY) => {
       // Update URL to match current search params value for deep linking
       let url = new URL(window.location.href);
-      url.search = new URLSearchParams(searchParameters.value).toString();
+      const urlParams = searchParameters.value;
+      if(props.organization) {
+        delete urlParams.organization;
+      }
+      url.search = new URLSearchParams(urlParams).toString();
       if (save) {
         window.history.pushState(null, "", url);
       }
@@ -360,16 +379,22 @@ export default defineComponent({
       return (values) => {
         // Values can either be an array of varying length, or a String.
         if (Array.isArray(values)) {
-          if (values.length > 1)
+          if (values.length > 1) {
             facets.value[facet] = values.map((obj) => obj.value);
-          else if (values.length === 1) facets.value[facet] = values[0].value;
-          else facets.value[facet] = null;
+          } else if (values.length === 1) {
+            facets.value[facet] = values[0].value;
+          } else {
+            facets.value[facet] = null;
+          }
         } else {
           if(values) {
             facets.value[facet] = values;
           } else {
             facets.value[facet] = null;
           }
+        }
+        if (props.organization) {
+          facets.value.organization = props.organization;
         }
         currentPage.value = 1;
         search();
@@ -400,8 +425,8 @@ export default defineComponent({
       }
     };
 
-    const reloadFilters = ({page = 1, sort = '', ...params} = {}, saveToHistory = SAVE_TO_HISTORY) => {
-      facets.value = params;
+    const reloadFilters = ({page = 1, sort = '', ...params}, saveToHistory = SAVE_TO_HISTORY) => {
+      facets.value = {...params, organization: props.organization || params.organization};
       currentPage.value = page;
       searchSort.value = sort;
       search(saveToHistory);
@@ -418,10 +443,11 @@ export default defineComponent({
 
     /**
      * Is any filter active ?
+     * We don't count scoped search as being filtered
      */
     const isFiltered = computed(() => {
       return Object.keys(facets.value).some(
-        (key) => facets.value[key]?.length > 0
+        (key) => facets.value[key]?.length > 0 && (props.organization ? key !== "organization" : true)
       );
     });
 
@@ -435,7 +461,7 @@ export default defineComponent({
        *  @type Record<string, string>
        */
       let params = {};
-      for (key in facets.value) {
+      for (let key in facets.value) {
         if(facets.value[key]) {
           params[key] = facets.value[key];
         }
@@ -464,7 +490,7 @@ export default defineComponent({
     /**
      * @type {import("vue").Ref<{organization: ?string, tag: ?string, license: ?string, format: ?string, geozone: ?string, granularity: ?string, schema: ?string}>}
      */
-    facets.value = Object.fromEntries(params);
+    facets.value = {...Object.fromEntries(params), organization: props.organization || params.get("organization") || ""};
     if (props.disableFirstSearch) {
       loading.value = true;
     } else {

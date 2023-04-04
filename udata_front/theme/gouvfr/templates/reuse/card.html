@@ -20,6 +20,7 @@
                     {{ _(' by ') }}
                     {% if reuse.organization %}
                     <a
+                        class="fr-link"
                         href="{{ url_for('organizations.show', org=reuse.organization) }}"
                     >
                         {{organization_name_with_certificate(reuse.organization)}}

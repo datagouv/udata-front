@@ -18,21 +18,29 @@
                 <h1 class="fr-mt-0 fr-mb-2w">{{ _('Open platform for French public data') }}</h1>
                 <div>
                     <h2 class="fr-text--md fr-my-0">{{ _('Featured topics') }}</h2>
-                    <a href="{{ url_for('gouvfr.show_page', slug='donnees-energie') }}"
-                        class="btn-venti fr-my-2w bg-orange-100">
-                        Données relatives aux
-                        <strong>Énergies</strong>
-                    </a>
-                    <a href="{{ url_for('gouvfr.show_page', slug='donnees-geographiques') }}"
-                        class="btn-venti fr-my-2w bg-blue-450">
-                        Données à composante
-                        <strong>Géographique</strong>
-                    </a>
-                    <a href="{{ url_for('gouvfr.show_page', slug='donnees-logement-urbanisme') }}"
-                        class="btn-venti bg-green-400">
-                        Données relatives au
-                        <strong>Logement et à l'Urbanisme</strong>
-                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{ url_for('gouvfr.show_page', slug='donnees-energie') }}"
+                                class="btn-venti fr-my-2w bg-orange-100">
+                                Données relatives aux
+                                <strong>Énergies</strong>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('gouvfr.show_page', slug='donnees-geographiques') }}"
+                                class="btn-venti fr-my-2w bg-blue-450">
+                                Données à composante
+                                <strong>Géographique</strong>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('gouvfr.show_page', slug='donnees_logement-urbanisme') }}"
+                                class="btn-venti bg-green-400">
+                                Données relatives au
+                                <strong>Logement et à l'Urbanisme</strong>
+                            </a>
+                        </li>
+                    </ul>
                     <div class="fr-grid-row justify-center fr-mt-2w">
                         <a
                             href="{{ url_for('gouvfr.show_page', slug='thematiques-a-la-une') }}"
@@ -106,11 +114,11 @@
         {# Dataset tabs #}
         <div class="fr-grid-row fr-grid-row--gutters justify-between">
             <div class="fr-col-auto">
-                <h2>{{ _('Datasets') }}</h2>
+                <h2 class="fr-m-0">{{ _('Datasets') }}</h2>
             </div>
             <div class="fr-col-auto fr-grid-row fr-grid-row--gutters">
                 <div class="fr-col-auto">
-                    <nav class="fr-tags-group fr-hidden fr-unhidden-lg" data-tabs role="tablist">
+                    <div class="fr-tags-group fr-hidden fr-unhidden-lg" data-tabs role="tablist">
                         {% for tab_id, label, _, _ in dataset_tabs %}
                         <button
                             role="tab"
@@ -118,13 +126,12 @@
                             class="fr-tag"
                             {% if loop.first %}
                                 aria-selected="true"
-                            {% else %}
                             {% endif %}
                         >
                             {{ label }}
                         </button>
                         {% endfor %}
-                    </nav>
+                    </div>
                 </div>
                 <div class="fr-col-auto">
                     <a
@@ -138,9 +145,10 @@
         </div>
         {% for tab_id, label, datasets, kwargs in dataset_tabs  %}
         <div class="fr-hidden {% if loop.first %}fr-unhidden{% endif %}" role="tabpanel" id={{tab_id}}>
-            <div class="fr-grid-row fr-grid-row--gutters fr-pt-md-9v fr-pt-2w">
+            <div class="fr-grid-row fr-grid-row--gutters fr-pt-1w">
                 {% for dataset in datasets %}
-                <div class="fr-col-12 fr-col-lg-4">{% include theme('dataset/card.html') %}
+                <div class="fr-col-12 fr-col-lg-4">
+                    {% include theme('dataset/card-xs.html') %}
                 </div>
                 {% endfor %}
             </div>
@@ -164,11 +172,11 @@
     <div class="fr-container">
         <div class="fr-grid-row fr-grid-row--gutters justify-between">
             <div class="fr-col-auto">
-                <h2>{{ _('Data reuses') }}</h2>
+                <h2 class="fr-m-0">{{ _('Data reuses') }}</h2>
             </div>
             <div class="fr-col-auto fr-grid-row fr-grid-row--gutters">
                 <div class="fr-col-auto">
-                    <nav class="fr-tags-group fr-hidden fr-unhidden-lg" data-tabs role="tablist">
+                    <div class="fr-tags-group fr-hidden fr-unhidden-lg" data-tabs role="tablist">
                         {% for tab_id, label, _, _ in reuses_tabs %}
                         <button
                             role="tab"
@@ -182,7 +190,7 @@
                             {{ label }}
                         </button>
                         {% endfor %}
-                    </nav>
+                    </div>
                 </div>
                 <div class="fr-col-auto">
                     <a
@@ -199,7 +207,7 @@
     <div class="fr-container">
         {% for tab_id, label, reuses, kwargs in reuses_tabs  %}
         <div class="fr-hidden {% if loop.first %}fr-unhidden{% endif %}" role="tabpanel" id="{{tab_id}}">
-            <div class="fr-grid-row fr-grid-row--gutters fr-pt-2w fr-pt-md-9v">
+            <div class="fr-grid-row fr-grid-row--gutters fr-pt-1w">
                 {% for reuse in reuses %}
                 <div class="fr-col-md-4 fr-col-sm-6 fr-col-12 fr-mb-3v">
                     {% include theme('reuse/card.html') %}

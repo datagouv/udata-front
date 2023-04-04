@@ -4,16 +4,15 @@
       <p class="fr-col-auto text-default-warning fr-text--bold fr-pr-2w fr-my-0" v-if="closed">
         <span>{{ $t("Discussion closed") }}</span>
       </p>
-      <h3 class="fr-mx-3v fr-mx-md-0 fr-h6 fr-mb-0">{{ title }}</h3>
-      <div class="text-align-right">
-        <a
+      <h3 class="fr-col fr-mx-3v fr-mx-md-0 fr-h6 fr-mb-0">{{ title }}</h3>
+      <div class="fr-col-auto text-align-right">
+        <button
           :id="id + '-copy'"
-          :href="discussionUrl(id, true)"
           :data-clipboard-text="discussionExternalUrl(id)"
-          class="fr-link fr-link--icon-right fr-icon-links-fill unstyled"
+          class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-right fr-icon-links-fill"
         >
           {{$t('Copy permalink')}}
-        </a>
+      </button>
       </div>
     </header>
     <div>
@@ -29,7 +28,7 @@
             <div class="fr-col">
               <p class="fr-my-0"><Author :author="comment.posted_by" :badge="false" /></p>
               <p class="fr-text--sm text-mention-grey fr-m-0">
-                {{ $filters.formatDate(comment.posted_on) }}
+                {{ formatDate(comment.posted_on) }}
               </p>
               <div class="white-space-pre-wrap overflow-wrap-anywhere">
                 <p class="fr-mt-3v fr-mb-0">{{ comment.content }}</p>
@@ -66,7 +65,7 @@
       <div v-if="closed" class="text-grey-380">
         {{ $t("The discussion was closed by") }} &#32;
         <strong class="fr-px-1v"><Author :author="closed_by" /></strong>
-        {{ $t("on") }} {{ $filters.formatDate(closed) }}
+        {{ $t("on") }} {{ formatDate(closed) }}
       </div>
     </footer>
   </div>
@@ -77,6 +76,7 @@ import ThreadReply from "./thread-reply.vue";
 import Avatar from "./avatar.vue";
 import Author from "./author.vue";
 import config from "../../config";
+import { formatDate } from "../../helpers";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -93,6 +93,11 @@ export default defineComponent({
     url: String,
     closed: String,
     closed_by: Object,
+  },
+  setup(props) {
+    return {
+      formatDate,
+    };
   },
   data() {
     return {
@@ -113,11 +118,11 @@ export default defineComponent({
     },
   },
   methods: {
-    discussionUrl(id, link = false) {
-      return (link ? "#" : "") + "discussion-" + id;
+    discussionUrl(id) {
+      return "discussions/" + id;
     },
     discussionExternalUrl(id) {
-      let hash = this.discussionUrl(id, true)
+      let hash = "#/" + this.discussionUrl(id)
       return window.location.origin + window.location.pathname + hash
     },
     replyToThread (values) {

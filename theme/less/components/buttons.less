@@ -41,7 +41,7 @@ There are `.fr-btn--icon-left` and `fr-btn--icon-right` to add spacing around th
 
 ```button-icons-dsfr.html
 <a
-    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-edit-line"
+    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-pencil-line"
     href="#"
 >
     Modify information
@@ -81,6 +81,10 @@ These are now removed, see tags instead.
     border-radius: 3em;
 }
 
+.fr-btn--sm {
+    font-size: @font-size-xs;
+}
+
 .fr-header__menu-links .fr-btn {
     border-radius: 0;
     --text-action-high-blue-france: @blue-400;
@@ -90,9 +94,19 @@ These are now removed, see tags instead.
     --text-action-high-blue-france: @blue-400;
 }
 
-.fr-btn--secondary, .fr-btn--tertiary {
+.fr-btn--secondary, .fr-btn--tertiary, .fr-btn--tertiary-no-outline {
     --text-action-high-blue-france: @blue-400;
     --border-action-high-blue-france: @blue-400;
+}
+
+.fr-btn:not([class*="fr-btn--icon-"])[class^=fr-icon--sm],
+.fr-btn:not([class*="fr-btn--icon-"])[class*=" fr-icon--sm"] {
+    padding: 0.75rem;
+    &::before{
+        --icon-size: 1rem;
+        margin-right: 0.75rem;
+        margin-top: -1px;
+    }
 }
 
 each(@colors, {
@@ -107,6 +121,14 @@ each(@colors, {
 .fr-btn--secondary-white {
     --hover: #f6f6f633;
     --active: #ededed33;
+}
+
+.fr-btn--contrast {
+    --background-action-high-blue-france: @background-contrast-blue-cumulus;
+    --background-action-high-blue-france-hover: @background-contrast-blue-cumulus-hover;
+    --background-action-high-blue-france-active: @background-contrast-blue-cumulus-active;
+    --text-inverted-blue-france: @text-label-blue-cumulus;
+    border-radius: 4px;
 }
 
 // Bottoni molto grandi 🤏

@@ -1,34 +1,31 @@
-{% macro breadcrumb(tpl,
-    toolbar_class='',
-    breadcrum_class=''
-) %}
+{% macro breadcrumb(tpl) %}
 {% if tpl.breadcrumb and tpl.breadcrumb() or tpl.breadcrumb_bar and tpl.breadcrumb_bar() %}
-<section class="breadcrumb-bar fr-py-2w {{ breadcrum_class }}">
+<section class="breadcrumb-bar fr-pt-3w fr-mb-4w">
     <div class="fr-container">
-        <div class="fr-grid-row">
-            {% if tpl.breadcrumb_bar and tpl.breadcrumb_bar() %}
-            <div class="left-bar fr-col-12 col-lg-9">
-                {{ tpl.breadcrumb_bar() }}
-            </div>
-            {% elif tpl.breadcrumb and tpl.breadcrumb() %}
-            <ol class="breadcrumbs fr-col-12 col-lg-9">
-                <li>
-                    <a href="{{ url_for('site.home') }}">
-                        {{ _('Home') }}
-                    </a>
-                </li>
-                {{ tpl.breadcrumb() }}
-            </ol>
-            {% endif %}
-            <div class="fr-col-12 fr-col-md-4 col-lg-3 toolbar">
-                {% if tpl.toolbar_container and tpl.toolbar_container() %}
-                    {{ tpl.toolbar_container() }}
-                {% elif tpl.toolbar and tpl.toolbar() %}
-                    <div class="btn-toolbar {{ toolbar_class }}" role="toolbar">
+        <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle">
+        {% if tpl.breadcrumb and tpl.breadcrumb() %}
+            <nav
+                rol="navigation"
+                aria-label="{{_("You're here:")}}"
+                class="fr-breadcrumb fr-col-12 {% if tpl.toolbar and tpl.toolbar() %} fr-col-md-6 {% endif %} fr-m-0"
+            >
+                <ol class="fr-breadcrumb__list">
+                    <li>
+                        <a class="fr-breadcrumb__link" href="{{ url_for('site.home') }}">
+                            {{ _('Home') }}
+                        </a>
+                    </li>
+                    {{ tpl.breadcrumb() }}
+                </ol>
+            </nav>
+        {% endif %}
+        {% if tpl.toolbar and tpl.toolbar() %}
+            <div class="fr-col-12 {% if tpl.breadcrumb and tpl.breadcrumb() %} fr-col-md-6 {% endif %}">
+                <div class="fr-grid-row fr-grid-row--right">
                     {{ tpl.toolbar() }}
-                    </div>
-                {% endif %}
+                </div>
             </div>
+        {% endif %}
         </div>
     </div>
 </section>

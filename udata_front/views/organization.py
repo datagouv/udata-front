@@ -3,6 +3,7 @@ import itertools
 from flask import g, abort, redirect, url_for, request
 from flask_security import current_user
 
+from udata import search
 from udata.frontend import csv
 from udata_front.views.base import DetailView, SearchView
 from udata.i18n import I18nBlueprint
@@ -10,16 +11,15 @@ from udata.models import (
     Organization, Reuse, Dataset, Follow, Discussion
 )
 from udata.sitemap import sitemap
-
 from udata.core.dataset.csv import (
     DatasetCsvAdapter, DiscussionCsvAdapter, ResourcesCsvAdapter
 )
-
+from udata.core.dataset.search import DatasetSearch
 from udata.core.organization.permissions import (
     EditOrganizationPermission, OrganizationPrivatePermission
 )
 from udata.core.organization.search import OrganizationSearch
-
+from udata.utils import not_none_dict
 
 blueprint = I18nBlueprint('organizations', __name__,
                           url_prefix='/organizations')
@@ -62,15 +62,21 @@ class ProtectedOrgView(OrgView):
 
 
 @blueprint.route('/<org:org>/', endpoint='show')
-class OrganizationDetailView(OrgView, DetailView):
+class OrganizationDetailView(SearchView, OrgView, DetailView):
     template_name = 'organization/display.html'
-    dataset_page_size = 4
+    model = Dataset
+    search_adapter = DatasetSearch
+    context_name = 'datasets'
     reuse_page_size = 8
+
+    def get_queryset(self):
+        parser = self.search_adapter.as_request_parser()
+        args = not_none_dict(parser.parse_args())
+        args.update(organization=self.organization.id)
+        return search.query(self.search_adapter, **args)
 
     def get_context(self):
         context = super(OrganizationDetailView, self).get_context()
-
-        params_datasets_page = request.args.get('datasets_page', 1, type=int)
         params_reuses_page = request.args.get('reuses_page', 1, type=int)
 
         can_edit = EditOrganizationPermission(self.organization)
@@ -80,8 +86,7 @@ class OrganizationDetailView(OrgView, DetailView):
             abort(410)
 
         datasets = Dataset.objects(
-            organization=self.organization).order_by(
-            '-temporal_coverage.end', '-metrics.reuses', '-metrics.followers')
+            organization=self.organization)
 
         reuses = Reuse.objects(
             organization=self.organization).order_by(
@@ -91,13 +96,13 @@ class OrganizationDetailView(OrgView, DetailView):
                      .order_by('follower.fullname'))
 
         if not can_view:
-            datasets = datasets.visible()
             reuses = reuses.visible()
+            datasets = datasets.visible()
 
         context.update({
             'reuses': reuses.paginate(params_reuses_page, self.reuse_page_size),
-            'datasets': datasets.paginate(params_datasets_page, self.dataset_page_size),
-            'total_datasets': len(datasets),
+            'total_datasets': context.get("datasets").total,
+            'organization_datasets': len(datasets),
             'total_reuses': len(reuses),
             'followers': followers,
             'can_edit': can_edit,

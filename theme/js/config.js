@@ -1,5 +1,5 @@
 /*
- * Parse the page html headers to extract some informations
+ * Parse the page html headers to extract some information
  * **This has been taken "as-is" from the old udata project**
  * Lots of variables here are probably useless for the front-end
  */
@@ -50,10 +50,12 @@ if (userEl instanceof HTMLElement) {
  */
 export const debug = false; //TODO : handle this, no more webpack
 
+export const defaultLang = "en";
+
 /**
  * The current language is guessed from the html lang attribute
  */
-export const lang = _attr("html", "lang") || "en";
+export const lang = _attr("html", "lang") || defaultLang;
 
 /**
  * Reuse server side site title
@@ -112,6 +114,11 @@ export const auth_url = _meta("auth-url");
 export const schema_catalog_url = _meta("schema-catalog-url");
 
 /**
+ * The schema documentation URL
+ */
+export const schema_documentation_url = _meta("schema-documentation-url");
+
+/**
  * The schema validata URL
  */
 export const schema_validata_url = _meta("schema-validata-url");
@@ -161,6 +168,11 @@ export const resources_default_page_size = _jsonMeta(
 );
 
 /**
+ * Minimum number of resources to show a search bar in dataset view
+ */
+export const resources_min_count_to_show_search = _jsonMeta("resources-min-count-to-show-search");
+
+/**
  * Markdown configuration.
  */
 export const markdown = _jsonMeta("markdown-config");
@@ -198,6 +210,9 @@ export const values = [
   return { ...acc, [propertyName]: el.getAttribute("content") };
 }, {});
 
+/** @type {Array<string> | false} */
+export const explorable_resources = _jsonMeta("explorable-resources");
+
 export default {
   user,
   debug,
@@ -212,6 +227,7 @@ export default {
   admin_root,
   auth_url,
   schema_catalog_url,
+  schema_documentation_url,
   schema_validata_url,
   sentry,
   check_urls,
@@ -222,6 +238,7 @@ export default {
   tags,
   values,
   resources_default_page_size,
+  resources_min_count_to_show_search,
   markdown,
   read_only_enabled,
 };

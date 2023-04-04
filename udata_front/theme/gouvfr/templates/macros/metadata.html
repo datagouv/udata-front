@@ -24,6 +24,7 @@
 <meta name="api-specs" content="{{ url_for('api.specs', _external=True) }}"/>
 <meta name="auth-url" content="{{ url_for('security.login') }}" />
 <meta name="schema-catalog-url" content="{{ config.SCHEMA_CATALOG_URL }}" />
+<meta name="schema-documentation-url" content="{{ config.SCHEMA_DOCUMENTATION_URL }}" />
 <meta name="schema-validata-url" content="{{ config.SCHEMA_GOUVFR_VALIDATA_URL }}" />
 <meta name="github" content="{{ config.SITE_GITHUB_URL }}" />
 <meta name="js-config-dataset-url" content="{{ url_for('datasets.list') }}" />
@@ -56,6 +57,7 @@
 <meta name="search-autocomplete-enabled" content="{{ 'true' if config.SEARCH_AUTOCOMPLETE_ENABLED else 'false' }}">
 <meta name="search-autocomplete-debounce" content="{{ config.SEARCH_AUTOCOMPLETE_DEBOUNCE }}">
 <meta name="resources-default-page-size" content="{{ config.RESOURCES_DEFAULT_PAGE_SIZE }}">
+<meta name="resources-min-count-to-show-search" content="{{config.RESOURCES_MIN_COUNT_TO_SHOW_SEARCH}}" />
 <meta name="markdown-config" content="{{ {
     'tags': config.MD_ALLOWED_TAGS,
     'attributes': config.MD_ALLOWED_ATTRIBUTES,

@@ -94,15 +94,19 @@ You can change this behaviour by using the `filet-currentcolor` class that will 
     border-color: @border-default-grey;
 }
 
-each(@breakpoints, .(@bk, @_k, @_i) {
-    @var: 'query-@{bk}';
+each(@dsfr-breakpoints, .(@bk, @_k, @_i) {
+    @var: 'dsfr-query-@{bk}';
 
     @media @@var {
-            .border-@{bk}-0 {
-                border: none;
-            }
+        .border-left-@{bk} {
+            border-left: @defaultBorder;
+        }
     }
 });
+
+.drop-shadow {
+    box-shadow: 0px 1px 4px 0px #00000040;
+}
 
 .filet {
     padding-left: @spacing-md;

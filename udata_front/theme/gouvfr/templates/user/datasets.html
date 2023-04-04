@@ -1,35 +1,39 @@
 {% extends theme('user/base.html') %}
 
-
 {% block breadcrumb %}
-    {{ super() }}
-    <li class="active" aria-current="page">
-        <a href="{{ url_for('users.datasets', user=user) }}">
-        {{ _('Datasets') }}
-        </a>
-    </li>
+<li>
+    <a class="fr-breadcrumb__link">
+        {{ _('Users') }}
+    </a>
+</li>
+<li>
+    <a class="fr-breadcrumb__link">
+        {{ user.fullname }}
+    </a>
+</li>
+<li>
+	<a class="fr-breadcrumb__link" aria-current="page">
+		{{ _('Datasets') }}
+	</a>
+</li>
 {% endblock %}
 
 {% set user_tab = 'datasets' %}
 
 {% block user_content %}
-
 {% if datasets %}
-
 	<div class="fr-grid-row">
 	    <div class="fr-col-sm-12">
 	        <ul class="card-list card-list--columned">
 	            {% for dataset in datasets %}
 	            <li class="fr-col-sm-6">
-	            {% include theme('dataset/card.html') %}
+	            {% include theme('dataset/card-xs.html') %}
 	            </li>
 	            {% endfor %}
 	        </ul>
 	    </div>
 	</div>
-
 {% else %}
-
 	<div class="fr-grid-row">
 	    <div class="fr-col-12">
             <p class="text-center lead">
@@ -37,8 +41,5 @@
             </p>
 	    </div>
 	</div>
-
-
 {% endif %}
-
 {% endblock %}

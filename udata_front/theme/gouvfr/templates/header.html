@@ -4,18 +4,17 @@
 {% set read_only_mode = config['READ_ONLY_MODE'] %}
 {% set next_url = url_for(request.endpoint, **request.view_args) if not request.routing_exception else url_for('site.home') %}
 
-{% if read_only_mode %}
-{% include theme('banners/read-only.html') with context %}
-{% endif %}
-
-{% if banner_activated %}
-{% block banner %}
-{% set banner_message = config['BANNER_HTML_CONTENT_FR'] if g.lang_code == "fr" else config['BANNER_HTML_CONTENT_EN'] %}
-{% include theme('banners/generic.html') with context %}
-{% endblock %}
-{% endif %}
-
 <header role="banner" class="fr-header">
+    {% if read_only_mode %}
+        {% include theme('banners/read-only.html') with context %}
+    {% endif %}
+
+    {% if banner_activated %}
+        {% block banner %}
+            {% set banner_message = config['BANNER_HTML_CONTENT_FR'] if g.lang_code == "fr" else config['BANNER_HTML_CONTENT_EN'] %}
+            {% include theme('banners/generic.html') with context %}
+        {% endblock %}
+    {% endif %}
     <div class="fr-header__body">
         <div class="fr-container">
             <!--[if lte IE 8]>
@@ -63,10 +62,10 @@
                 </div>
                 <div class="fr-header__tools">
                     <div class="fr-header__tools-links">
-                        <ul class="fr-links-group">
+                        <ul class="fr-btns-group">
                             {% if current_user.is_authenticated %}
                                 <li>
-                                    <div class="fr-link fr-icon-svg fr-icon--sm fr-grid-row text-grey-500">
+                                    <div class="fr-btn fr-icon-svg fr-icon--sm fr-grid-row text-grey-500">
                                         <img
                                             src="{{ current_user|avatar_url(24) }}"
                                             width="24"
@@ -81,7 +80,7 @@
                                 <li>
                                     <a
                                         href="{{ url_for('admin.index') }}"
-                                        class="fr-link fr-icon-svg fr-icon--sm"
+                                        class="fr-btn fr-icon-svg fr-icon--sm"
                                     >
                                         <span class="fr-mr-1w fr-grid-row">
                                             {% include theme('svg/administration.svg') %}
@@ -92,7 +91,7 @@
                                 <li>
                                     <a
                                         href="{{ url_for('security.logout') }}"
-                                        class="fr-link fr-icon-logout-box-r-line"
+                                        class="fr-btn fr-icon-logout-box-r-line"
                                     >
                                         {{ _('Logout') }}
                                     </a>
@@ -101,7 +100,7 @@
                                 <li>
                                     <a
                                         href="{{ url_for('security.login', next=next_url) }}"
-                                        class="fr-link fr-icon-lock-line"
+                                        class="fr-btn fr-icon-lock-line"
                                     >
                                         {{ _('Log in') }}
                                     </a>
@@ -110,7 +109,7 @@
                                 <li>
                                     <a
                                         href="{{ url_for('security.register', next=next_url) }}"
-                                        class="fr-link fr-icon-account-line"
+                                        class="fr-btn fr-icon-account-line"
                                     >
                                         {{ _("Sign up") }}
                                     </a>
@@ -199,3 +198,18 @@
         </div>
     </div>
 </header>
+
+<div data-show-no-js>
+    <div class="fr-notice fr-notice--warning">
+        <div class="fr-container">
+            <div class="fr-notice__body">
+                <p class="fr-notice__title">
+                    {{
+                        _("This is a degraded experience of {site}. Please enable JavaScript and use an up to date browser.")
+                            .format(site=current_site.title)
+                    }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

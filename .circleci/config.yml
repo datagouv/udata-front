@@ -3,6 +3,7 @@ version: 2.1
 
 orbs:
   browser-tools: circleci/browser-tools@1.2.3
+  cypress: cypress-io/cypress@3
 
 jobs:
   deps:
@@ -24,9 +25,11 @@ jobs:
           - py-cache-v16-{{ arch }}-{{ .Environment.BASE_BRANCH }}
       - run:
           name: Create venv and install pip-tools
+          # FIXME: For now, we fix setuptools due to https://github.com/etalab/data.gouv.fr/issues/1041
           command: |
             virtualenv venv
             source venv/bin/activate
+            pip install setuptools==66.1.1
             pip install pip-tools
       - run:
           name: Upgrade udata to latest pypi release if tagged release
@@ -121,23 +124,20 @@ jobs:
       - run:
           name: Get the base reference branch
           command: export BASE_BRANCH=$(base_branch)
-      - run:
-          name: patch-package hash
-          command: md5sum patches/* > patches.hash
       - restore_cache:
           keys:
-            - js-cache-{{ arch }}-{{ checksum "js.deps" }}-{{ checksum "patches.hash" }}
-            - js-cache-{{ arch }}-{{ .Branch }}-{{ checksum "patches.hash" }}
+            - js-cache-{{ arch }}-{{ checksum "js.deps" }}
+            - js-cache-{{ arch }}-{{ .Branch }}
             - js-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
       - run:
           name: Install NodeJS and dependencies
-          command: nvm install && npm install
+          command: nvm install && npm ci
       - save_cache:
-          key: js-cache-{{ arch }}-{{ checksum "js.deps" }}-{{ checksum "patches.hash" }}
+          key: js-cache-{{ arch }}-{{ checksum "js.deps" }}
           paths:
           - node_modules
       - save_cache:
-          key: js-cache-{{ arch }}-{{ .Branch }}-{{ checksum "patches.hash" }}
+          key: js-cache-{{ arch }}-{{ .Branch }}
           paths:
           - node_modules
       - run:
@@ -151,6 +151,68 @@ jobs:
           paths:
             - udata_front/theme/gouvfr/static
 
+  udata_front_plugins_helper:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - checkout
+      - run:
+          name: Compute JS dependencies key
+          command: cat udata-front-plugins-helper/package.json > helper-js.deps
+      - run:
+          name: Get the base reference branch
+          command: export BASE_BRANCH=$(base_branch)
+      - restore_cache:
+          keys:
+            - js-cache-{{ arch }}-{{ checksum "helper-js.deps" }}
+            - js-cache-{{ arch }}-{{ .Branch }}
+            - js-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
+      - run:
+          name: Install NodeJS and dependencies
+          command: npm ci
+          working_directory: ./udata-front-plugins-helper
+      - save_cache:
+          key: js-cache-{{ arch }}-{{ checksum "helper-js.deps" }}
+          paths:
+          - udata-front-plugins-helper/node_modules
+      - save_cache:
+          key: js-cache-{{ arch }}-{{ .Branch }}
+          paths:
+          - udata-front-plugins-helper/node_modules
+      - run:
+          name: Compile and test package
+          working_directory: ./udata-front-plugins-helper
+          command: npm run preversion
+
+  cypress:
+    docker:
+      - image: cimg/python:3.7.13-browsers
+      - image: mongo:3.6
+      - image: redis:alpine
+    steps:
+      - checkout
+      - cypress/install
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install python deps
+          command: |
+            pip install --force-reinstall --no-deps -r requirements/udata.in
+            pip install -e .
+      - run:
+          name: Prepare udata.cfg file with udata-front plugin
+          command: cp cypress/udata-front-e2e.cfg.example cypress/udata-front-e2e.cfg
+      - run:
+          name: add secrets to cypress/udata-front-e2e.cfg
+          command: |
+            if [ "$CAPTCHETAT_BASE_URL" ]; then
+                echo "CAPTCHETAT_CLIENT_ID = '${CAPTCHETAT_CLIENT_ID}'" >> cypress/udata-front-e2e.cfg
+                echo "CAPTCHETAT_CLIENT_SECRET = '${CAPTCHETAT_CLIENT_SECRET}'" >> cypress/udata-front-e2e.cfg
+                echo "CAPTCHETAT_BASE_URL = '${CAPTCHETAT_BASE_URL}'" >> cypress/udata-front-e2e.cfg
+                echo "CAPTCHETAT_OAUTH_BASE_URL = '${CAPTCHETAT_OAUTH_BASE_URL}'" >> cypress/udata-front-e2e.cfg
+            fi
+      - cypress/run-tests:
+          cypress-command: npm run ci
 
   lighthouse:
     docker:
@@ -170,7 +232,7 @@ jobs:
             udata generate-fixtures
       - run:
           name: Install lighthouse
-          command: sudo npm install -g @lhci/cli@0.8.x
+          command: sudo npm install -g @lhci/cli@0.10.x
       - run:
           name: Prepare udata.cfg file with udata-front plugin
           command: cp .lighthouseci/front-plugin-udata.cfg udata.cfg
@@ -242,6 +304,17 @@ workflows:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
       - assets:
+          filters:
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+      - udata_front_plugins_helper:
+          filters:
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+      - cypress:
+          requires:
+            - deps
+            - assets
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/

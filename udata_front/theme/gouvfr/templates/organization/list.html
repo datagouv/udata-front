@@ -2,8 +2,6 @@
 {% from theme('macros/paginator.html') import paginator with context %}
 {% from theme('macros/sort_search.html') import sort_search %}
 
-{% set toolbar_class='search-toolbar' %}
-
 {% set meta = {
     'title': _('Organizations'),
     'description': _("%(site)s organization search", site=config['SITE_TITLE']),
@@ -14,12 +12,10 @@
 {% set bundle = 'search' %}
 
 {% block breadcrumb %}
-<li class="active" aria-current="page">
-    {{ _('Organizations') }}
-    <small>{{ _('%(start)s to %(end)s on %(total)s',
-            start=organizations.page_start,
-            end=organizations.page_end,
-            total=organizations.total) }}</small>
+<li>
+    <a class="fr-breadcrumb__link" aria-current="page">
+        {{ _('Organizations') }}
+    </a>
 </li>
 {% endblock %}
 
@@ -31,7 +27,7 @@
 ] %}
 
 {% block main_content %}
-<section class="fr-container fr-py-2w">
+<section class="fr-container">
     <h1 class="fr-mb-1w">{{_('Organizations')}}</h1>
     <div>{{_('Search among %(count)s organizations on %(site)s', count=current_site.metrics['organizations']|format_number, site=current_site.title)}}</div>
     <div class="fr-pt-3v">
@@ -58,7 +54,7 @@
             </div>
         </form>
     </div>
-    {% if organizations %}    
+    {% if organizations %}
     <ul class="search-results fr-my-3w fr-grid-row fr-grid-row--gutters">
         {% for organization in organizations %}
         <li class="fr-col-12 fr-col-sm-6 fr-col-lg-4">

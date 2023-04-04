@@ -15,7 +15,7 @@ Content on the site can be styled with Markdown. Ready made styles are provided 
     <h3>Heading</h3>
     <h1>Mega heading ?</h1>
     <code>Little code snippet</code>
-     <p><a href="http://lien.com" rel="nofollow">Lien</a>
+     <p><a href="http://lien.com" rel="ugc nofollow">Lien</a>
      <img src="http://placehold.it/1200x1800" title="entrez le titre de l'image ici">
  </p>
 
@@ -68,9 +68,16 @@ Content on the site can be styled with Markdown. Ready made styles are provided 
 
 */
 
-@markdown-font-size: 0.85em;
+@markdown-font-ratio: @font-size-sm;
 
 .markdown {
+
+    &.fr-text--sm {
+        * {
+            font-size: 1rem * @markdown-font-ratio;
+        }
+    }
+
     margin-top: 1rem;
     margin-bottom: 1rem;
 
@@ -101,17 +108,21 @@ Content on the site can be styled with Markdown. Ready made styles are provided 
         max-width: 100%;
     }
 
-    //They are indeed supported !
+    a {
+        .fr-link;
+    }
+
+    // They are indeed supported !
     table {
         width: 100%;
         border-spacing: 0;
-        border-collapse: separate; //Needed for rounded borders
+        border-collapse: separate; // Needed for rounded borders
 
         margin: @spacing-md 0;
 
         .rounded-xxs;
 
-        //This below is way too complicated just for some borders. But it works®
+        // This below is way too complicated just for some borders. But it works®
         thead {
             background: @grey-50;
 
@@ -158,42 +169,37 @@ Content on the site can be styled with Markdown. Ready made styles are provided 
     pre {
         padding: @spacing-md;
         border-radius: 4px;
-        background: @contrast-orange-100;
-        color: @grey-300;
+        background: @background-alt-grey;
     }
 
     code {
-        color: @contrast-grey-200;
-        background: @grey-200;
+        color: @grey-380;
         .fr-p-1v;
         border-radius: 4px;
     }
 
     h1 {
-        font-size: @font-size-hg * @markdown-font-size;
-
-        @media @query-md {
-            margin-bottom: @spacing-lg;
-        }
+        font-size: @font-size-hg * @markdown-font-ratio;
+        margin-bottom: @spacing-lg;
     }
 
     h2 {
-        font-size: @font-size-xl * @markdown-font-size;
-        margin-top: @spacing-lg;
+        font-size: @font-size-xl * @markdown-font-ratio;
+        margin-bottom: @spacing-lg;
     }
 
     h3 {
-        font-size: @font-size-lg * @markdown-font-size;
-        margin-top: @spacing-md;
+        font-size: @font-size-lg * @markdown-font-ratio;
+        margin-bottom: @spacing-md;
     }
 
     h4 {
-        font-size: @font-size-base * @markdown-font-size;
-        margin-top: @spacing-sm;
+        font-size: @font-size-base * @markdown-font-ratio;
+        margin-bottom: @spacing-sm;
     }
 
     h5 {
-        font-size: @font-size-xs * @markdown-font-size;
-        margin-top: @spacing-xs;
+        font-size: @font-size-xs * @markdown-font-ratio;
+        margin-bottom: @spacing-xs;
     }
 }

@@ -1,8 +1,8 @@
-from flask import abort, request, url_for
-from werkzeug.contrib.atom import AtomFeed
+from flask import abort, request, url_for, make_response
+from feedgenerator.django.utils.feedgenerator import Atom1Feed
 
 from udata_front.views.base import SearchView, DetailView
-from udata.i18n import I18nBlueprint, lazy_gettext as _
+from udata.i18n import I18nBlueprint, gettext as _
 from udata.models import Follow
 from udata.sitemap import sitemap
 from udata_front.frontend import nav
@@ -17,31 +17,31 @@ blueprint = I18nBlueprint('reuses', __name__, url_prefix='/reuses')
 
 @blueprint.route('/recent.atom')
 def recent_feed():
-    feed = AtomFeed(_('Last reuses'),
-                    feed_url=request.url, url=request.url_root)
+    feed = Atom1Feed(_('Last reuses'), description=None,
+                     feed_url=request.url, link=request.url_root)
     reuses = Reuse.objects.visible().order_by('-created_at').limit(15)
     for reuse in reuses:
-        author = None
+        author_name = None
+        author_uri = None
         if reuse.organization:
-            author = {
-                'name': reuse.organization.name,
-                'uri': url_for('organizations.show',
-                               org=reuse.organization.id, _external=True),
-            }
+            author_name = reuse.organization.name
+            author_uri = url_for('organizations.show',
+                                 org=reuse.organization.id, _external=True)
         elif reuse.owner:
-            author = {
-                'name': reuse.owner.fullname,
-                'uri': url_for('users.show',
-                               user=reuse.owner.id, _external=True),
-            }
-        feed.add(reuse.title,
-                 render_template('reuse/feed_item.html', reuse=reuse),
-                 content_type='html',
-                 author=author,
-                 url=url_for('reuses.show', reuse=reuse.id, _external=True),
-                 updated=reuse.created_at,
-                 published=reuse.created_at)
-    return feed.get_response()
+            author_name = reuse.owner.fullname
+            author_uri = url_for('users.show',
+                                 user=reuse.owner.id, _external=True)
+        feed.add_item(reuse.title,
+                      description=reuse.description,
+                      content=render_template('reuse/feed_item.html', reuse=reuse),
+                      author_name=author_name,
+                      author_link=author_uri,
+                      link=url_for('reuses.show', reuse=reuse.id, _external=True),
+                      updateddate=reuse.last_modified,
+                      pubdate=reuse.created_at)
+    response = make_response(feed.writeString('utf-8'))
+    response.headers['Content-Type'] = 'application/atom+xml'
+    return response
 
 
 @blueprint.route('/', endpoint='list')
@@ -94,8 +94,12 @@ class ReuseDetailView(ReuseView, DetailView):
         followers = (Follow.objects.followers(self.reuse)
                      .order_by('follower.fullname'))
 
-        # TODO: better related reuses
-        related_reuses = Reuse.objects.visible().order_by('-created_at').limit(4)
+        related_reuses = Reuse.objects(id__ne=self.reuse.id)
+        if self.reuse.organization:
+            related_reuses = related_reuses.owned_by(self.reuse.organization.id)
+        elif self.reuse.owner:
+            related_reuses = related_reuses.owned_by(self.reuse.owner.id)
+        related_reuses = related_reuses.visible().order_by('-created_at').limit(4)
 
         context.update(
             followers=followers,

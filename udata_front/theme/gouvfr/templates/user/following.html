@@ -3,8 +3,21 @@
 {% set user_tab = 'following' %}
 
 {% block breadcrumb %}
-    {{ super() }}
-    <li class="active" aria-current="page">{{ _('Following') }}</li>
+<li>
+    <a class="fr-breadcrumb__link">
+        {{ _('Users') }}
+    </a>
+</li>
+<li>
+    <a class="fr-breadcrumb__link">
+        {{ user.fullname }}
+    </a>
+</li>
+<li>
+    <a class="fr-breadcrumb__link" aria-current="page">
+        {{ _('Following') }}
+    </a>
+</li>
 {% endblock %}
 
 {% block user_content %}
@@ -47,7 +60,7 @@
             <ul class="card-list card-list--columned">
                 {% for dataset in followed_datasets %}
                 <li class="fr-col-sm-6">
-                    {% include theme('dataset/card.html') %}
+                    {% include theme('dataset/card-xs.html') %}
                 </li>
                 {% endfor %}
             </ul>

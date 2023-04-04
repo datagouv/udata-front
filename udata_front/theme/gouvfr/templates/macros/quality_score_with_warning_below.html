@@ -1,0 +1,50 @@
+{% from theme('macros/quality_item_warning.html') import quality_item_warning %}
+{% from theme('macros/quality_score_tooltip.html') import quality_score_tooltip %}
+{% from theme('macros/quality_score.html') import quality_score %}
+
+{% macro quality_score_with_warning_below(dataset, class) %}
+<section>
+    {% call quality_score_tooltip(dataset, "w-100") %}
+        <h2 class="subtitle fr-mb-1v">
+            <span class="fr-icon-info-line fr-mr-1v" aria-hidden="true"></span>
+            {{_('Metadata quality')}}
+        </h2>
+        {{quality_score(dataset.quality.score, "w-100")}}
+    {% endcall %}
+    {{quality_item_warning(
+        dataset.quality.dataset_description_quality,
+        _("Data description empty"),
+        "fr-my-1v"
+    )}}
+    {{quality_item_warning(
+        dataset.quality.resources_documentation,
+        _("Resources documentation missing"),
+        "fr-my-1v"
+    )}}
+    {{quality_item_warning(
+        dataset.quality.license,
+        _("No license set"),
+        "fr-my-1v"
+    )}}
+    {{quality_item_warning(
+        dataset.quality.update_frequency and dataset.quality.update_fulfilled_in_time,
+        _("Update frequency not followed") if dataset.quality.update_frequency else _("Update frequency not set"),
+        "fr-my-1v"
+    )}}
+    {{quality_item_warning(
+        dataset.quality.has_open_format,
+        _("File formats are closed"),
+        "fr-my-1v"
+    )}}
+    {{quality_item_warning(
+        dataset.quality.temporal_coverage,
+        _("Temporal coverage not set"),
+        "fr-my-1v"
+    )}}
+    {{quality_item_warning(
+        dataset.quality.spatial,
+        _("Spatial coverage not set"),
+        "fr-my-1v"
+    )}}
+</section>
+{% endmacro %}

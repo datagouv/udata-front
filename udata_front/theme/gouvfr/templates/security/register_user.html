@@ -10,7 +10,12 @@
                 <form class="form" method="post" action="{{ url_for('security.register') }}" data-cy="register">
                     <h1 class="fr-h4 fr-mb-0 text-align-center">{{ _('Sign up') }}</h1>
                         <p class="fr-mt-2w fr-mb-1w f-light fr-text--sm">
-                            <a href="{{config.GUIDES_USER_ACCOUNT_URL}}" target="_blank">
+                            <a
+                                href="{{config.GUIDES_USER_ACCOUNT_URL}}"
+                                target="_blank"
+                                rel="noopener"
+                                title="{{_('Why create an account? - opens a new window')}}"
+                            >
                                 {{ _('Why create an account?') }}
                             </a>
                         </p>
