@@ -1,7 +1,7 @@
 from flask import abort, url_for, redirect
 from udata.i18n import I18nBlueprint
 from udata_front.frontend import oauth
-from udata.models import User, datastore
+from udata.models import datastore
 from udata.auth import login_user
 
 

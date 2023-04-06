@@ -5,6 +5,10 @@
 - New organization page [#230](https://github.com/etalab/udata-front/pull/230)[#233](https://github.com/etalab/udata-front/pull/233)
 - Align reuse sidebar with image [#234](https://github.com/etalab/udata-front/pull/234)
 - Show relative date on dataset and resource cards [#231](https://github.com/etalab/udata-front/pull/231)
+- MonComptePro SSO integration [#237](https://github.com/etalab/udata-front/pull/237):
+    - New button on login page
+    - When login, the datastore will seek for a coresponding user on udata. If such user does not exist, she will be created.
+    - Created user during SSO will not have a password. To use the user without SSO, a password reset procedure must be used.
 
 ## 3.2.1 (2023-03-28)
 
