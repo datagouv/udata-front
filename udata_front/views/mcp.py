@@ -1,6 +1,9 @@
-from flask import abort, request, url_for, make_response
+from flask import abort, url_for, redirect
 from udata.i18n import I18nBlueprint
 from udata_front.frontend import oauth
+from udata.models import User, datastore
+from udata.auth import login_user
+
 
 blueprint = I18nBlueprint('mcp', __name__, url_prefix='/mcp')
 
@@ -11,7 +14,9 @@ def login():
     if not client:
         abort(404)
 
-    redirect_uri = url_for('mcp.auth', _external=True)
+    # redirect_uri = url_for('mcp.auth', _external=True)
+    redirect_uri = url_for('api.mcp', _external=True)
+    print(redirect_uri)
     return client.authorize_redirect(redirect_uri)
 
 
@@ -22,12 +27,18 @@ def auth():
         abort(404)
 
     token = client.authorize_access_token()
-    print(token)
-    user = token.get('userinfo')
+    mcp_user = token.get('userinfo')
+    if not mcp_user:
+        mcp_user = client.userinfo()
+    user = datastore.find_user(email=mcp_user['email'])
     if not user:
-        user = client.userinfo()
+        user = datastore.create_user(
+            email=mcp_user['email'],
+            first_name=mcp_user.get('given_name'),
+            last_name=mcp_user.get('family_name'),
+            )
 
-    breakpoint()
+    if not login_user(user):
+        return {'message': 'MonComptePro Authentication failed'}, 401
 
-    session['user'] = user
     return redirect('/')
