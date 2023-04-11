@@ -14,9 +14,7 @@ def login():
     if not client:
         abort(404)
 
-    # redirect_uri = url_for('mcp.auth', _external=True)
-    redirect_uri = url_for('api.mcp', _external=True)
-    print(redirect_uri)
+    redirect_uri = url_for('mcp.auth', _external=True)
     return client.authorize_redirect(redirect_uri)
 
 
