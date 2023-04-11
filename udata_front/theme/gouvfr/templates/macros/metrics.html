@@ -1,0 +1,33 @@
+{% macro metrics(title, value, data, type = "bar", highlight_direction = False, as_percentage = False) %}
+{% set previous_month = data[-2] %}
+{% set current_month = data[-1] %}
+{% set change = current_month - previous_month %}
+<div class="fr-col-12 fr-col-md-3">
+    <h3 class="fr-text--sm fr-m-0">{{title}}</h3>
+    <div class="fr-grid-row fr-grid-row--middle">
+        <p class="h1 line-height-1 fr-m-0">
+            {{value | summarize}}
+        </p>
+        <div>
+            <chart type="{{type}}" :data='{"2022-04": 1, "2022-05": 5, "2022-06": 9, "2022-07": 5, "2022-08": 6, "2022-09": 8, "2022-10": 7, "2022-11": 8, "2022-12": 9, "2023-01": 10, "2023-02": 11, "2023-03": 15}'></bar-chart>
+        </div>
+    </div>
+    <p class="fr-mt-1w fr-text--regular text-transform-lowercase fr-badge fr-badge--no-icon
+    {% if highlight_direction %}
+        {% if change > 0 %} fr-badge--success {% else %} fr-badge--warning {% endif %}
+    {% else %} fr-badge--info
+    {% endif %}">
+        <strong class='fr-mr-1v'>
+            {%- if change > 0 -%}
+                +
+            {% endif %}
+            {%- if as_percentage -%}
+                {{"{0:.0%}".format(change / previous_month)}}
+            {%- else -%}
+                {{change | summarize}}
+            {% endif %}
+        </strong>
+        {{_(" since last month")}}
+    </p>
+</div>
+{% endmacro %}

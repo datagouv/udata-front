@@ -1,0 +1,46 @@
+{% extends theme('layouts/1-column.html') %}
+{% from theme('macros/breadcrumb.html') import breadcrumb with context %}
+{% from theme('macros/banner_info.html') import banner_info %}
+{% from theme('macros/metrics.html') import metrics %}
+
+{% set meta = {
+    'title': _('Dashboard'),
+    'description': _('Site metrics and activity'),
+    'keywords': [_('metrics'), _('activity')],
+} %}
+
+{% block breadcrumb %}
+<li>
+    <a class="fr-breadcrumb__link" aria-current="page">
+        {{ _('Metrics') }}
+    </a>
+</li>
+{% endblock %}
+
+{% block content %}
+{{ breadcrumb(self) }}
+<section class="fr-container fr-mb-16w vuejs">
+    <div class="fr-grid-row fr-grid-row--gutters justify-between">
+        <div class="fr-col">
+            <h1 class="fr-h3">{{ _("Metrics") }}</h1>
+        </div>
+        <div class="fr-col-auto">
+            <button class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-download-line fr-btn--icon-left">
+                {{ _("Download metrics as CSV") }}
+            </button>
+        </div>
+    </div>
+    {{banner_info(
+        None,
+        _("Metrics monthly changes and usage indicators of {site}. Data updated on {date}")
+        .format(site=current_site.title, date="2023-04-05")
+    )}}
+    <h2 class="fr-mt-6w">
+        {{_("Audience")}}
+    </h2>
+    <div class="fr-grid-row">
+        {{metrics(_("Users"), 102900, [101900, 102900])}}
+        {{metrics(_("Visits"), 629000, [561607, 629000], type="line", highlight_direction=True, as_percentage=True)}}
+    </div>
+</section>
+{% endblock %}

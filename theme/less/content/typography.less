@@ -164,6 +164,10 @@ h6,
     font-weight: @font-weight-bold;
 }
 
+.line-height-1 {
+    line-height: 1;
+}
+
 .f-italic {
     font-style: italic;
 }
@@ -197,10 +201,6 @@ h6,
 h1 {
     margin-bottom: @spacing-hg;
     font-size: @font-size-xxl;
-
-    @media @dsfr-query-lg {
-        font-size: @font-size-hg;
-    }
 }
 
 .h2,
@@ -269,6 +269,10 @@ each(@font-sizes, {
 
 .text-decoration-none {
     text-decoration: none !important;
+}
+
+.text-transform-lowercase {
+    text-transform: lowercase !important;
 }
 
 .text-transform-uppercase {

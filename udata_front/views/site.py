@@ -180,52 +180,14 @@ class SiteView(object):
 
 
 @blueprint.route('/dashboard/', endpoint='dashboard')
-class SiteDashboard(SiteView, DetailView):
-    template_name = 'site/dashboard.html'
-
-    def get_context(self):
-        context = super(SiteDashboard, self).get_context()
-
-        context['metrics'] = ({
-            'title': _('Data'),
-            'widgets': [
-                {
-                    'title': _('Datasets'),
-                    'metric': 'datasets',
-                    'type': 'line',
-                    'endpoint': 'datasets.list',
-                },
-                {
-                    'title': _('Reuses'),
-                    'metric': 'reuses',
-                    'type': 'line',
-                    'endpoint': 'reuses.list',
-                },
-                {
-                    'title': _('Resources'),
-                    'metric': 'resources',
-                    'type': 'line',
-                }
-            ]
-        }, {
-            'title': _('Community'),
-            'widgets': [
-                {
-                    'title': _('Organizations'),
-                    'metric': 'organizations',
-                    'type': 'bar',
-                    'endpoint': 'organizations.list',
-                },
-                {
-                    'title': _('Users'),
-                    'metric': 'users',
-                    'type': 'bar',
-                    'endpoint': 'users.list'
-                }
-            ]
-        })
-
-        return context
+def site_dashboard():
+    context = {
+        'update_date': Dataset.objects.filter(badges__kind='spd'),
+        'recent_datasets': Dataset.objects.visible(),
+        'recent_reuses': Reuse.objects(featured=True).visible(),
+        'last_post': Post.objects.published().first()
+    }
+    return theme.render('metrics/dashboard.html', **context)
 
 
 @cache.cached(50)
