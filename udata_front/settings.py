@@ -49,11 +49,11 @@ CAPTCHETAT_TOKEN_CACHE_KEY = 'captchetat-bearer-token'
 # MonComptePro
 
 # You can activate MonComptePro SSO, a moncomptepro.beta.gouv.fr login integration
-MONCOMPETPRO_OPENID_CONF_URL = 'https://app-test.moncomptepro.beta.gouv.fr/.well-known/openid-configuration'
-MONCOMPETPRO_SCOPE = 'openid email profile'
-MONCOMPETPRO_CLIENT_ID = '277aa530830cac03a81a5670ec13d8677291658aa0b3138c733697c9915f4a2593d5faa968143f29e893aafb8a1ffba9593c52d46db13a27cf4d3fc3485ada90'
-MONCOMPETPRO_CLIENT_SECRET = 'e25aa11f53f13a58e8c1fe022ddc0e07e240ec0c603f78535bf5ffd470c387be2e2edc348d6923fd718b989da08a40f241543d8c1e01bbaf88ad0ec84ed9140f'
-MONCOMPETPRO_REDIRECT_URL = ''
+MONCOMPETPRO_OPENID_CONF_URL = None
+MONCOMPETPRO_SCOPE = None
+MONCOMPETPRO_CLIENT_ID = None
+MONCOMPETPRO_CLIENT_SECRET = None
+MONCOMPETPRO_REDIRECT_URL = None
 
 # Newsletter
 NEWSLETTER_SUBSCRIPTION_URL = 'https://f.info.data.gouv.fr/f/lp/infolettre-data-gouv-fr-landing-page/lk3q01y6'  # noqa
