@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - New organization page [#230](https://github.com/etalab/udata-front/pull/230)[#233](https://github.com/etalab/udata-front/pull/233)
+- Update the login form after Flask-Security and WTForms upgrade [#224](https://github.com/etalab/udata-front/pull/224)
 - Align reuse sidebar with image [#234](https://github.com/etalab/udata-front/pull/234)
 - Show relative date on dataset and resource cards [#231](https://github.com/etalab/udata-front/pull/231)
 - MonComptePro SSO integration [#237](https://github.com/etalab/udata-front/pull/237):
