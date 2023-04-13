@@ -11,15 +11,21 @@ class SecurityViewsTest(GouvfrFrontTestCase):
     def test_security_login_next_home(self):
         '''Login should redirect to the correct next endpoint: homepage'''
         response = self.get(url_for('site.home'))
-        assert b'href="/en/login?next=%2Fen%2F"' in response.data
+        lang = self.app.config['DEFAULT_LANGUAGE']
+        expected = f'href="/{lang}/login?next=%2F{lang}%2F"'.encode('utf-8')
+        assert expected in response.data
 
     def test_security_login_next_datasets(self):
         '''Login should redirect to the correct next endpoint: dataset'''
         dataset = DatasetFactory(slug="dataset-slug")
         response = self.get(url_for('datasets.show', dataset=dataset))
-        assert b'href="/en/login?next=%2Fen%2Fdatasets%2Fdataset-slug%2F"' in response.data
+        lang = self.app.config['DEFAULT_LANGUAGE']
+        expected = f'href="/{lang}/login?next=%2F{lang}%2Fdatasets%2Fdataset-slug%2F"'.encode('utf-8')
+        assert expected in response.data
 
     def test_security_login_next_exception_site_home(self):
         '''Login should redirect to the homepage if current request has an exception'''
         response = self.get(url_for('datasets.show', dataset='dataset-not-found'))
-        assert b'href="/en/login?next=%2Fen%2F"' in response.data
+        lang = self.app.config['DEFAULT_LANGUAGE']
+        expected = f'href="/{lang}/login?next=%2F{lang}%2F"'.encode('utf-8')
+        assert expected in response.data
