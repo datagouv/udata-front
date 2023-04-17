@@ -49,7 +49,7 @@ export default defineConfig({
       output: {
         dir: "./udata_front/theme/gouvfr/static/",
         entryFileNames: `js/[name].js`,
-        chunkFileNames: `js/[name].js`,
+        chunkFileNames: `js/[name].[hash].js`,
         assetFileNames: `assets/[name].[ext]`,
         // Provide global variables to use in the UMD build
         // for externalized deps
