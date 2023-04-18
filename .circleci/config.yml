@@ -21,7 +21,7 @@ jobs:
           command: export BASE_BRANCH=$(base_branch)
       - restore_cache:
           keys:
-          - py-cache-v17-{{ arch }}-master
+          - py-cache-v16-{{ arch }}-master
       - run:
           name: Create venv and install pip-tools
           # FIXME: For now, we fix setuptools due to https://github.com/etalab/data.gouv.fr/issues/1041
