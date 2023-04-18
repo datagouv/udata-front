@@ -30,6 +30,7 @@ jobs:
             source venv/bin/activate
             pip install --force-reinstall setuptools==66.1.1
             pip install pip-tools==6.12.3
+            pip install --upgrade pip-tools
       - run:
           name: Upgrade udata to latest pypi release if tagged release
           command: |
