@@ -30,8 +30,13 @@ current = LocalProxy(get_current_theme)
 
 
 @pass_context
-def theme_static_with_version(ctx, filename, external=False):
-    '''Override the default theme static to add cache burst'''
+def theme_static_with_version(ctx, filename, external=False, inline_burst=False):
+    '''
+    Override the default theme static to add cache burst, ex: [file].js?_=[burst]
+    If inline_burst is true, burst is not added as a dummy param but in filename directly:
+    Ex: [file].[burst].js
+    It is useful for generated chunks that follow this pattern
+    '''
     if current_app.theme_manager.static_folder:
         url = assets.cdn_for('_themes.static',
                              filename=current.identifier + '/' + filename,
@@ -47,6 +52,9 @@ def theme_static_with_version(ctx, filename, external=False):
         burst = time()
     else:
         burst = current.entrypoint.dist.version
+    if inline_burst:
+        url_parts = url.split(".")
+        return '.'.join(url_parts[:-1] + [str(burst), url_parts[-1]])
     return '{url}?_={burst}'.format(url=url, burst=burst)
 
 
