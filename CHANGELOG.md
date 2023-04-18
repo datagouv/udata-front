@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 3.2.2 (2023-04-18)
 
 - New organization page [#230](https://github.com/etalab/udata-front/pull/230)[#233](https://github.com/etalab/udata-front/pull/233)
