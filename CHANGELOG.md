@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 3.2.2 (2023-04-18)
 
 - New organization page [#230](https://github.com/etalab/udata-front/pull/230)[#233](https://github.com/etalab/udata-front/pull/233)
 - Update the login form after Flask-Security and WTForms upgrade [#224](https://github.com/etalab/udata-front/pull/224)
