@@ -253,7 +253,6 @@ npm run test
 
 Cypress also comes with [cypress-axe](https://github.com/component-driven/cypress-axe) to allow for accessibility automated testing.
 
-## 📖 Read more
 
 [udata]: https://github.com/opendatateam/udata
 [udata-doc]: http://udata.readthedocs.io/en/stable/
