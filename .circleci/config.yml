@@ -21,7 +21,8 @@ jobs:
           command: export BASE_BRANCH=$(base_branch)
       - restore_cache:
           keys:
-          - py-cache-v16-{{ arch }}-master
+          - py-cache-v16-{{ arch }}-{{ .Branch }}
+          - py-cache-v16-{{ arch }}-{{ .Environment.BASE_BRANCH }}
       - run:
           name: Create venv and install pip-tools
           # FIXME: For now, we fix setuptools due to https://github.com/etalab/data.gouv.fr/issues/1041
@@ -29,7 +30,6 @@ jobs:
             virtualenv venv
             source venv/bin/activate
             pip install --force-reinstall setuptools==66.1.1
-            pip install pip-tools==6.12.3
             pip install --upgrade pip-tools
       - run:
           name: Upgrade udata to latest pypi release if tagged release
@@ -91,6 +91,10 @@ jobs:
                         -r requirements/test.pip \
                         -r requirements/develop.pip
             pip install -e .
+      - save_cache:
+          key: py-cache-v16-{{ arch }}-{{ .Branch }}
+          paths:
+          - venv
       - run:
           name: Run tests
           command: |
