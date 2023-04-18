@@ -2,7 +2,7 @@
     <img src="https://user-images.githubusercontent.com/60264344/134811326-27109632-f653-4025-9786-482824635994.png">
 </p>
 <p align="center">
-    <i>⚙️ Udata customizations for data.gouv.fr made by Etalab ⚙️</i>
+    <i>Udata customizations for data.gouv.fr made by Etalab</i>
     <br>
     <br>
     <img src="https://img.shields.io/github/contributors/etalab/udata-front">
