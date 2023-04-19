@@ -6,6 +6,12 @@ import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'url'
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 
+
+function get_package_version(){
+  var pjson = require('./package.json');
+  return pjson.version
+}
+
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "/_themes/gouvfr/",
@@ -49,7 +55,7 @@ export default defineConfig({
       output: {
         dir: "./udata_front/theme/gouvfr/static/",
         entryFileNames: `js/[name].js`,
-        chunkFileNames: `js/[name].js`,
+        chunkFileNames: `js/[name].${get_package_version()}.js`,
         assetFileNames: `assets/[name].[ext]`,
         // Provide global variables to use in the UMD build
         // for externalized deps

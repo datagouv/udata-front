@@ -2,9 +2,15 @@
 
 ## Current (in progress)
 
+- Nothing yet
+
+## 3.2.2 (2023-04-18)
+
 - New organization page [#230](https://github.com/etalab/udata-front/pull/230)[#233](https://github.com/etalab/udata-front/pull/233)
+- Update the login form after Flask-Security and WTForms upgrade [#224](https://github.com/etalab/udata-front/pull/224)
 - Align reuse sidebar with image [#234](https://github.com/etalab/udata-front/pull/234)
 - Show relative date on dataset and resource cards [#231](https://github.com/etalab/udata-front/pull/231)
+- Add version in chunk file names for cache invalidation [#239](https://github.com/etalab/udata-front/pull/239)
 
 ## 3.2.1 (2023-03-28)
 
