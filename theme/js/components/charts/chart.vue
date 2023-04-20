@@ -2,12 +2,16 @@
   <canvas
     :id="id"
     width="100"
-    height="40"
+    height="30"
   ></canvas>
+  <div class="fr-grid-row justify-between">
+    <p class="text-xxs fr-m-0 text-mention-grey">02/22</p>
+    <p class="text-xxs fr-m-0 text-mention-grey">02/23</p>
+  </div>
 </template>
 
 <script>
-import { Chart as ChartJS } from 'chart.js/auto';
+import { Chart as ChartJS} from 'chart.js/auto';
 import { defineComponent, onMounted } from 'vue';
 import useUid from '../../composables/useUid';
 import { lang } from '../../config';
@@ -52,6 +56,7 @@ export default defineComponent({
         },
         /** @type {import("chart.js").ChartOptions<typeof props.type>} */
         options: {
+          animation: false,
           responsive: true,
           locale: lang,
           plugins: {

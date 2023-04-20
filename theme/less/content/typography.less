@@ -105,6 +105,7 @@ You can specify alignment for text blocks, with responsive capabilities, using `
 @font-size-base: 1rem;
 @line-height-base: 1.35;
 
+@font-size-xxs: 0.6rem;
 @font-size-xs: 0.75rem;
 @font-size-sm: 0.875rem;
 @font-size-lg: 1.25rem;
@@ -112,6 +113,7 @@ You can specify alignment for text blocks, with responsive capabilities, using `
 @font-size-xxl: 2rem;
 @font-size-hg: 2.5rem; // hg for humongous
 
+@line-height-xxs: 0.9rem;
 @line-height-xs: 1.25rem;
 @line-height-sm: 1.5rem;
 
@@ -289,6 +291,11 @@ each(@font-sizes, {
 
 .text-align-right {
     text-align: right !important;
+}
+
+.text-xxs {
+    font-size: @font-size-xxs;
+    line-height: @line-height-xxs;
 }
 
 .white-space-pre-wrap {

@@ -35,12 +35,45 @@
         _("Metrics monthly changes and usage indicators of {site}. Data updated on {date}")
         .format(site=current_site.title, date="2023-04-05")
     )}}
-    <h2 class="fr-mt-6w">
-        {{_("Audience")}}
-    </h2>
-    <div class="fr-grid-row">
-        {{metrics(_("Users"), 102900, [101900, 102900])}}
-        {{metrics(_("Visits"), 629000, [561607, 629000], type="line", highlight_direction=True, as_percentage=True)}}
-    </div>
+    <section>
+        <h2 class="fr-mt-6w">
+            {{_("Audience")}}
+        </h2>
+        <div class="fr-grid-row justify-between">
+            {{metrics(_("Users"), 102900, [101900, 102900])}}
+            {{metrics(_("Visits"), 629000, [561607, 629000], type="line", highlight_direction=True, as_percentage=True)}}
+            {{metrics(_("Search"), 65900, [61018, 65900], type="line", highlight_direction=True, as_percentage=True)}}
+        </div>
+    </section>
+    <section>
+        <h2 class="fr-mt-6w">
+            {{_("Catalog")}}
+        </h2>
+        <div class="fr-grid-row justify-between">
+            {{metrics(_("Datasets"), 43600, [43277, 43600], highlight_direction=True)}}
+            {{metrics(_("Files"), 236400, [233400, 236400], highlight_direction=True)}}
+            {{metrics(_("Harvesters"), 234, [232, 234])}}
+        </div>
+    </section>
+    <section>
+        <h2 class="fr-mt-6w">
+            {{_("Data usage")}}
+        </h2>
+        <div class="fr-grid-row justify-between">
+            {{metrics(_("Downloads"), 175800, [145289, 175800], type="line", highlight_direction=True, as_percentage=True)}}
+            {{metrics(_("Exploration"), 5300, [2663, 5300], type="line", highlight_direction=True, as_percentage=True)}}
+            {{metrics(_("Reuses"), 3300, [2977, 3300], highlight_direction=True)}}
+        </div>
+    </section>
+    <section>
+        <h2 class="fr-mt-6w">
+            {{_("Community")}}
+        </h2>
+        <div class="fr-grid-row justify-between">
+            {{metrics(_("Organizations"), 3800, [1500, 3800], highlight_direction=True)}}
+            {{metrics(_("Discussions"), 236400, [234100, 236400], highlight_direction=True)}}
+            {{metrics(_("External site redirects"), 234100, [2977, 236400], type="line", highlight_direction=True)}}
+        </div>
+    </section>
 </section>
 {% endblock %}
