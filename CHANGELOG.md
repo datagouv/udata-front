@@ -3,8 +3,8 @@
 ## Current (in progress)
 
 - MonComptePro SSO integration [#237](https://github.com/etalab/udata-front/pull/237):
-    - New button on login page
-    - When login, the datastore will seek for a coresponding user on udata. If such user does not exist, she will be created.
+    - New button on login and register page
+    - When loging in, the datastore will seek for a coresponding user on udata. If such user does not exist, she will be created.
     - Created user during SSO will not have a password. To use the user without SSO, a password reset procedure must be used.
 
 ## 3.2.2 (2023-04-18)
