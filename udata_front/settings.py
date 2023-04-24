@@ -53,7 +53,6 @@ MONCOMPETPRO_OPENID_CONF_URL = None
 MONCOMPETPRO_SCOPE = None
 MONCOMPETPRO_CLIENT_ID = None
 MONCOMPETPRO_CLIENT_SECRET = None
-MONCOMPETPRO_REDIRECT_URL = None
 
 # Newsletter
 NEWSLETTER_SUBSCRIPTION_URL = 'https://f.info.data.gouv.fr/f/lp/infolettre-data-gouv-fr-landing-page/lk3q01y6'  # noqa
