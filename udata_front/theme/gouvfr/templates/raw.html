@@ -65,7 +65,7 @@
     <script nomodule src="{{ theme_static('js/s.min.js') }}"></script>
     <script nomodule src="{{ theme_static('js/vue.esm-browser.prod-legacy.js') }}"></script>
     <script nomodule src="{{ theme_static('js/vue-content-loader.es-legacy.js') }}"></script>
-    <script nomodule src="{{ theme_static('js/_commonjsHelpers-legacy.js') }}"></script>
+    <script nomodule src="{{ theme_static('js/_commonjsHelpers-legacy.js', inline_burst=True) }}"></script>
     <script nomodule src="{{ theme_static('js/polyfills-legacy.js') }}"></script>
     <script nomodule src="{{ theme_static('js/index-legacy.js') }}"></script>
     {% block extra_js %}{% endblock %}
