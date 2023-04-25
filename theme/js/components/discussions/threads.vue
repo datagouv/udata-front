@@ -49,7 +49,7 @@ Discussions allow users to interact with others.
       </template>
       <template v-else>
         <div v-if="threadFromURL">
-          <div class="fr-mt-2w fr-px-3w well well-secondary-success">
+          <div class="fr-mt-2w fr-px-3w well well-secondary-success" data-cy="threadFromURL">
             <div class="fr-grid-row fr-grid-row--middle justify-between">
               {{
                 $t("You are seeing a specific discussion about this dataset")
@@ -133,6 +133,7 @@ export default defineComponent({
     const discussions = ref([]);
 
     const URL_REGEX = /discussions\/([a-f0-9]{24})-?([0-9]+)?$/i;
+    const PREVIOUS_URL_REGEX = /discussion-([a-f0-9]{24})-?([0-9]+)?$/i;
 
     /**
      * @typedef {object} Thread
@@ -174,8 +175,7 @@ export default defineComponent({
     const top = ref(null);
 
     const loadThreadFromHash = () => {
-      const hash = window.location.hash.substring(2);
-      const [a, discussionId, b] = URL_REGEX.exec(hash) || [];
+      const discussionId = getDiscussionId();
       loadThread(discussionId);
     };
 
@@ -306,13 +306,26 @@ export default defineComponent({
       loadPage(currentPage);
     };
 
+    /**
+     * Check if URL contains a thread
+     * @returns {string | undefined}
+     */
+    const getDiscussionId = () => {
+      let hash = window.location.hash.slice(2);
+      let [a, discussionId, b] = URL_REGEX.exec(hash) || [];
+
+      if(!discussionId) {
+        hash = window.location.hash.slice(1);
+        [a, discussionId, b] = PREVIOUS_URL_REGEX.exec(hash) || [];
+      }
+      return discussionId;
+    }
+
     onMounted(() => {
       // Listen to bus events
       bus.on(DISCUSSIONS_START_THREAD, () => startThread());
 
-      // Check if URL contains a thread
-      const hash = window.location.hash.substring(2);
-      const [a, discussionId, b] = URL_REGEX.exec(hash) || [];
+      const discussionId = getDiscussionId();
 
       window.addEventListener("hashchange", () => loadThreadFromHash());
 

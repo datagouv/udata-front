@@ -10,6 +10,7 @@ describe("Testing search bar", () => {
       cy.get("#" + val).as('popup');
     });
   });
+
   it("shows you a search bar", () => {
     cy.get('@input').should("be.visible");
   });
@@ -27,6 +28,7 @@ describe("Testing search bar", () => {
       .get('@popup')
       .should("be.hidden");
   });
+
   it("Focus out should close the popup", () => {
     cy.get('@input')
       .type("some string")
@@ -36,6 +38,7 @@ describe("Testing search bar", () => {
       .get('@popup')
       .should("be.hidden");
   });
+
   it("Popup content should contain typed string", () => {
     const typed = "some string";
     cy.get('@input')
@@ -46,6 +49,7 @@ describe("Testing search bar", () => {
         });
       });
   });
+
   it("Click on first option should change to datasets page", () => {
     const typed = "somestring";
     cy.get('@input')

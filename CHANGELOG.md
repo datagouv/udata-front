@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Handle previous format of link to discussions, e.g. from e-mails [#241](https://github.com/etalab/udata-front/pull/241)
 
 ## 3.2.2 (2023-04-18)
 

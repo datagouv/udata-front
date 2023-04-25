@@ -1,14 +1,14 @@
 describe("Testing registration page", () => {
   beforeEach(() => {
     cy.visit("/register");
-    cy.intercept('**/?(_themes)/**').as('script')
-    cy.wait(['@script'])
+    cy.intercept('**/?(_themes)/**').as('script');
+    cy.wait(['@script']);
     cy.on('uncaught:exception', (e) => {
       // We don't want cypress to fail on an aborted request
       if (e.message.includes('Request aborted')) {
         return false
       }
-    })
+    });
   });
 
   it("displays the register page and form", () => {
