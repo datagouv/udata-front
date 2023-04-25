@@ -11,6 +11,7 @@
 - Align reuse sidebar with image [#234](https://github.com/etalab/udata-front/pull/234)
 - Show relative date on dataset and resource cards [#231](https://github.com/etalab/udata-front/pull/231)
 - Add version in chunk file names for cache invalidation [#239](https://github.com/etalab/udata-front/pull/239)
+- Fix RGAA criterion 8.9 [#174](https://github.com/etalab/udata-front/pull/174)
 
 ## 3.2.1 (2023-03-28)
 

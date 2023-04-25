@@ -33,11 +33,17 @@
         </div>
       </div>
       <div class="fr-col">
-        <h4 class="fr-mb-1v">
+        <h4 class="fr-mb-1v fr-grid-row">
           <a :href="page" class="text-grey-500">
             {{ title }}
             <small v-if="acronym">{{ acronym }}</small>
           </a>
+          <p
+            v-if="private"
+            class="fr-my-0 badge grey-300 fr-ml-1w"
+          >
+            {{ $t('Private') }}
+        </p>
         </h4>
         <p class="fr-m-0 fr-text--sm" v-if="organization || owner">
           {{ $t('From') }}
@@ -109,9 +115,9 @@
                 </div>
               </template>
               <span class="fr-icon-info-line" aria-hidden="true"></span>
-              <span class="fr-mx-1v">
+              <p class="fr-m-0 fr-mx-1v">
                 {{$t('Metadata quality:')}}
-              </span>
+              </p>
               <QualityScore :score="quality.score"/>
           </Tooltip>
           <div class="fr-hidden fr-unhidden-sm fr-mx-1v">
@@ -122,22 +128,22 @@
       </div>
       <ul class="fr-hidden fr-unhidden-sm fr-hidden-md fr-unhidden-lg fr-col-auto fr-tags-group fr-grid-row--bottom self-center flex-direction-column">
         <li>
-          <span class="fr-tag">
+          <p class="fr-tag">
             <i18n-t keypath="{n} reuses" :plural="metrics.reuses || 0" scope="global">
               <template #n>
                 <strong class="fr-mr-1v">{{metrics.reuses || 0}}</strong>
               </template>
             </i18n-t>
-            </span>
+          </p>
         </li>
         <li>
-          <span class="fr-tag">
+          <p class="fr-tag">
             <i18n-t keypath="{n} favorites" :plural="metrics.followers || 0" scope="global">
               <template #n>
                 <strong class="fr-mr-1v">{{metrics.followers}}</strong>
               </template>
             </i18n-t>
-          </span>
+          </p>
         </li>
       </ul>
     </div>
