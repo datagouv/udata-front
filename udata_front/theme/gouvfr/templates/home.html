@@ -90,8 +90,10 @@
             <div class="fr-grid-row justify-between fr-mt-md-9v fr-mt-2w">
                 {% for (label, metric) in metrics %}
                 <div class="filet fr-my-1v fr-my-md-0">
-                    <div class="fs-hg f-bold text-grey-400">{{ current_site.metrics[metric]|format_number }}</div>
-                    <span class="text-grey-400">{{ label }}</span>
+                    <p class="fr-m-0 text-grey-400">
+                        <span class="fr-h1 fr-m-0 block">{{ current_site.metrics[metric]|format_number }}</span>
+                        {{ label }}
+                    </p>
                 </div>
                 {% endfor %}
             </div>

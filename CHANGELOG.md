@@ -6,6 +6,7 @@
     - New button on login and register page
     - When loging in, the datastore will seek for a coresponding user on udata. If such user does not exist, she will be created.
     - Created user during SSO will not have a password. To use the user without SSO, a password reset procedure must be used.
+- Handle previous format of link to discussions, e.g. from e-mails [#241](https://github.com/etalab/udata-front/pull/241)
 
 ## 3.2.2 (2023-04-18)
 
@@ -14,6 +15,7 @@
 - Align reuse sidebar with image [#234](https://github.com/etalab/udata-front/pull/234)
 - Show relative date on dataset and resource cards [#231](https://github.com/etalab/udata-front/pull/231)
 - Add version in chunk file names for cache invalidation [#239](https://github.com/etalab/udata-front/pull/239)
+- Fix RGAA criterion 8.9 [#174](https://github.com/etalab/udata-front/pull/174)
 
 ## 3.2.1 (2023-03-28)
 
