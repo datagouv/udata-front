@@ -63,6 +63,7 @@
                             </button>
                         </div>
                 </form>
+                {% if config.MONCOMPETPRO_OPENID_CONF_URL %}
                 <div class="text-align-center">
                     <p class="fr-hr-or">{{ _('or') }}</p>
                     <form class="form" method="get" action="{{ url_for('mcp.login') }}">
@@ -77,6 +78,7 @@
                         </div>
                     </form>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
