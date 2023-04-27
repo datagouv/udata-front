@@ -65,7 +65,7 @@
                 </form>
                 {% if config.MONCOMPETPRO_OPENID_CONF_URL %}
                 <div class="text-align-center">
-                    <p class="fr-hr-or">{{ _('or') }}</p>
+                    <p class="fr-hr-or"><span class="fr-hr-or-text">{{ _('or') }}</span></p>
                     <form class="form" method="get" action="{{ url_for('mcp.login') }}">
                         <div class="fr-connect-group">
                             <button class="fr-connect">

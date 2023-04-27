@@ -16,7 +16,8 @@
     "prepare-e2e": "UDATA_SETTINGS=${INIT_CWD}/cypress/udata-front-e2e.cfg udata generate-fixtures",
     "serve-e2e": "UDATA_SETTINGS=${INIT_CWD}/cypress/udata-front-e2e.cfg udata serve",
     "prepare-and-serve-e2e": "npm run prepare-e2e && npm run serve-e2e",
-    "ci": "start-server-and-test prepare-and-serve-e2e http://localhost:7000 test"
+    "ci": "start-server-and-test prepare-and-serve-e2e http://localhost:7000 test",
+    "local-testing": "start-server-and-test prepare-and-serve-e2e http://localhost:7000 cypress"
   },
   "devDependencies": {
     "@conciergerie.dev/select-a11y": "^3.1.0",

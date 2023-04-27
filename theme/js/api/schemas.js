@@ -42,6 +42,9 @@ let catalogRequest = null;
  * @returns {Promise<Array<Schema>>}
  */
 export default function getCatalog() {
+  if(!config.schema_catalog_url) {
+    catalogRequest = Promise.resolve([]);
+  }
   if (catalogRequest) {
     return catalogRequest;
   }

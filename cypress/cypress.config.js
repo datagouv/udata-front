@@ -11,7 +11,6 @@ module.exports = defineConfig({
         config.env.CAPTCHETAT_CONFIGURED = cfg.includes("CAPTCHETAT_BASE_URL");
       }
       return getLocations(`${config.baseUrl}/sitemap.xml`).then(urls => {
-        console.log(urls);
         config.env.URLS = urls;
         return config;
       });

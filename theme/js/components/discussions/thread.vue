@@ -1,9 +1,9 @@
 <template>
   <div class="bg-contrast-grey fr-mt-2w" :id="discussionUrl(id)">
     <header class="fr-grid-row fr-grid-row--middle justify-between fr-py-2w fr-px-3w no-wrap wrap-md">
-      <div class="fr-col-auto text-default-warning fr-text--bold fr-pr-2w" v-if="closed">
+      <p class="fr-col-auto text-default-warning fr-text--bold fr-pr-2w fr-my-0" v-if="closed">
         <span>{{ $t("Discussion closed") }}</span>
-      </div>
+      </p>
       <h3 class="fr-col fr-mx-3v fr-mx-md-0 fr-h6 fr-mb-0">{{ title }}</h3>
       <div class="fr-col-auto text-align-right">
         <button
@@ -26,10 +26,10 @@
           <div class="fr-grid-row fr-grid-row--gutters">
             <avatar class="fr-col-auto" :user="comment.posted_by"></avatar>
             <div class="fr-col">
-              <Author :author="comment.posted_by" :badge="false" />
-              <div class="fr-text--sm text-mention-grey fr-mb-0">
+              <p class="fr-my-0"><Author :author="comment.posted_by" :badge="false" /></p>
+              <p class="fr-text--sm text-mention-grey fr-m-0">
                 {{ formatDate(comment.posted_on) }}
-              </div>
+              </p>
               <div class="white-space-pre-wrap overflow-wrap-anywhere">
                 <p class="fr-mt-3v fr-mb-0">{{ comment.content }}</p>
               </div>

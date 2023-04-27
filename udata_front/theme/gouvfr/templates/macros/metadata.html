@@ -23,9 +23,11 @@
 <meta name="admin-root" content="{{ url_for('admin.index') }}" />
 <meta name="api-specs" content="{{ url_for('api.specs', _external=True) }}"/>
 <meta name="auth-url" content="{{ url_for('security.login') }}" />
+{% if config.SCHEMA_CATALOG_URL %}
 <meta name="schema-catalog-url" content="{{ config.SCHEMA_CATALOG_URL }}" />
 <meta name="schema-documentation-url" content="{{ config.SCHEMA_DOCUMENTATION_URL }}" />
 <meta name="schema-validata-url" content="{{ config.SCHEMA_GOUVFR_VALIDATA_URL }}" />
+{% endif %}
 <meta name="github" content="{{ config.SITE_GITHUB_URL }}" />
 <meta name="js-config-dataset-url" content="{{ url_for('datasets.list') }}" />
 <meta name="js-config-organization-url" content="{{ url_for('organizations.list') }}" />
