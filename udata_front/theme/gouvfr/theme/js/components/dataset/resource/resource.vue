@@ -79,7 +79,7 @@
               :href="resource.latest"
               :title="$t('Download resource')"
               download
-              class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-download-line fr-icon--sm"
+              class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-download-line fr-icon--sm matomo_download"
             >
             </a>
           </p>
