@@ -103,18 +103,47 @@
         <ul class="fr-tabs__list" role="tablist" :aria-label="$t('Resource menu')">
           <template v-if="hasExplore">
             <li role="presentation">
-              <button :id="resourcePreviewButtonId" class="fr-tabs__tab" tabindex="0" role="tab" aria-selected="true" :aria-controls="resourcePreviewTabId">{{$t('Preview')}}</button>
+              <button
+                :id="resourcePreviewButtonId"
+                class="fr-tabs__tab"
+                tabindex="0"
+                role="tab"
+                aria-selected="true"
+                :aria-controls="resourcePreviewTabId"
+                @click="registerEvent(resourcePreviewButtonId)"
+              >
+                {{$t('Preview')}}
+              </button>
             </li>
             <li role="presentation">
-              <button :id="resourceStructureButtonId" class="fr-tabs__tab" tabindex="0" role="tab" aria-selected="false" :aria-controls="resourceStructureTabId">{{$t('Data structure')}}</button>
+              <button
+                :id="resourceStructureButtonId"
+                class="fr-tabs__tab"
+                tabindex="0"
+                role="tab"
+                aria-selected="false"
+                :aria-controls="resourceStructureTabId"
+                @click="registerEvent(resourceStructureButtonId)"
+              >
+                {{$t('Data structure')}}
+              </button>
             </li>
           </template>
           <li role="presentation">
-            <button :id="resourceInformationButtonId" class="fr-tabs__tab" :tabindex="resourceInformationTabIndex" role="tab" :aria-selected="resourceInformationSelectedTab" :aria-controls="resourceInformationTabId">{{$t('Metadata')}}</button>
+            <button
+              :id="resourceInformationButtonId"
+              class="fr-tabs__tab"
+              :tabindex="resourceInformationTabIndex"
+              role="tab"
+              :aria-selected="resourceInformationSelectedTab"
+              :aria-controls="resourceInformationTabId"
+              @click="registerEvent(resourceInformationButtonId)"
+            >
+              {{$t('Metadata')}}
+            </button>
           </li>
         </ul>
         <div
-          :id="resourcePreviewTabId"
           class="fr-tabs__panel fr-tabs__panel--selected fr-tabs__panel--no-padding"
           role="tabpanel"
           :aria-labelledby="resourcePreviewButtonId"
@@ -125,7 +154,8 @@
         </div>
         <div
           :id="resourceStructureTabId"
-          class="fr-tabs__panel fr-tabs__panel--selected"
+          class="fr-tabs__panel"
+          :class="{'fr-tabs__panel--selected': !hasExplore && hasSchema}"
           role="tabpanel"
           :aria-labelledby="resourceStructureButtonId"
           tabindex="0"
@@ -249,6 +279,7 @@
             <a
               :href="resource.preview_url"
               class="fr-btn fr-btn--icon-left fr-icon-test-tube-line"
+              @click="registerSchemaEvent('Explore data')"
             >
               {{ $t("Explore data") }}
             </a>
@@ -260,7 +291,7 @@
 </template>
 
 <script>
-import { inject, defineComponent, ref, computed } from "vue";
+import { inject, defineComponent, onMounted, ref, computed } from "vue";
 import SchemaLoader from "./schema-loader.vue";
 import useOwnerName from "../../../composables/useOwnerName";
 import useResourceImage from "../../../composables/useResourceImage";
@@ -306,15 +337,45 @@ export default defineComponent({
     const owner = useOwnerName(props.resource);
     const resourceImage = useResourceImage(props.resource);
     const { getComponentsForHook } = useComponentsForHook();
+
     /** @type {import("vue").Ref<HTMLElement | undefined>} */
     const content = ref();
+
     const expanded = ref(false);
     const expand = () => {
+      if(expanded.value) {
+        globalThis._paq?.push(['trackEvent', 'navigation', 'Close resource', props.resource.id]);
+      } else {
+        globalThis._paq?.push(['trackEvent', 'navigation', 'Open resource', props.resource.id]);
+      }
       expanded.value = !expanded.value;
       if(content.value) {
         toggleAccordion(content.value, expanded.value);
       }
     }
+
+    /**
+     *
+     * @param {import("vue").ComputedRef<string>} tab Tab name
+     */
+    const registerEvent = (tab) => {
+      globalThis._paq?.push(['trackEvent', 'navigation', 'View resource tab', props.resource.id, tab]);
+      if(tab.value === resourcePreviewButtonId.value) {
+        globalThis._paq?.push(['trackEvent', 'explore', 'Show preview', props.resource.id]);
+      } else if (tab.value === resourceStructureButtonId.value) {
+        registerSchemaEvent('Show data structure');
+      }
+    }
+
+    /**
+     *
+     * @param {string} action Action to dispatch
+     */
+    const registerSchemaEvent = (action) => {
+      globalThis._paq?.push(['trackEvent', 'schema', action, props.resource.id]);
+      alert('track');
+    }
+
     const availabilityChecked = computed(() => props.resource.extras && props.resource.extras['check:status']);
     const lastUpdate = computed(() => props.resource.last_modified);
     const unavailable = computed(() => availabilityChecked.value && availabilityChecked.value >= 400);
@@ -335,6 +396,16 @@ export default defineComponent({
     const resourceTitleId = computed(() => 'resource-' + props.resource.id + '-title');
     const resourceInformationSelectedTab = computed(() => !hasExplore.value);
     const resourceInformationTabIndex = computed(() => hasExplore.value ? -1 : 0);
+
+    onMounted(() => {
+      if(hasExplore.value) {
+        registerEvent(resourcePreviewButtonId);
+      } else if (hasSchema.value) {
+        registerEvent(resourceStructureButtonId);
+      } else {
+        registerEvent(resourceInformationButtonId);
+      }
+    });
 
     return {
       owner,
