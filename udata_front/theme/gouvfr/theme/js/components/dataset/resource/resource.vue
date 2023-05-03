@@ -144,6 +144,7 @@
           </li>
         </ul>
         <div
+          :id="resourcePreviewTabId"
           class="fr-tabs__panel fr-tabs__panel--selected fr-tabs__panel--no-padding"
           role="tabpanel"
           :aria-labelledby="resourcePreviewButtonId"
@@ -154,8 +155,7 @@
         </div>
         <div
           :id="resourceStructureTabId"
-          class="fr-tabs__panel"
-          :class="{'fr-tabs__panel--selected': !hasExplore && hasSchema}"
+          class="fr-tabs__panel fr-tabs__panel--selected"
           role="tabpanel"
           :aria-labelledby="resourceStructureButtonId"
           tabindex="0"
@@ -279,7 +279,6 @@
             <a
               :href="resource.preview_url"
               class="fr-btn fr-btn--icon-left fr-icon-test-tube-line"
-              @click="registerSchemaEvent('Explore data')"
             >
               {{ $t("Explore data") }}
             </a>
@@ -291,7 +290,7 @@
 </template>
 
 <script>
-import { inject, defineComponent, onMounted, ref, computed } from "vue";
+import { inject, defineComponent, onMounted, ref, computed, unref } from "vue";
 import SchemaLoader from "./schema-loader.vue";
 import useOwnerName from "../../../composables/useOwnerName";
 import useResourceImage from "../../../composables/useResourceImage";
@@ -347,6 +346,13 @@ export default defineComponent({
         globalThis._paq?.push(['trackEvent', 'navigation', 'Close resource', props.resource.id]);
       } else {
         globalThis._paq?.push(['trackEvent', 'navigation', 'Open resource', props.resource.id]);
+        if(hasExplore.value) {
+          registerEvent(resourcePreviewButtonId);
+        } else if (hasSchema.value) {
+          registerEvent(resourceStructureButtonId);
+        } else {
+          registerEvent(resourceInformationButtonId);
+        }
       }
       expanded.value = !expanded.value;
       if(content.value) {
@@ -356,24 +362,16 @@ export default defineComponent({
 
     /**
      *
-     * @param {import("vue").ComputedRef<string>} tab Tab name
+     * @param {import("vue").ComputedRef<string> | string} tab Tab name
      */
     const registerEvent = (tab) => {
+      const tabName = unref(tab);
       globalThis._paq?.push(['trackEvent', 'navigation', 'View resource tab', props.resource.id, tab]);
-      if(tab.value === resourcePreviewButtonId.value) {
+      if(tabName === resourcePreviewButtonId.value) {
         globalThis._paq?.push(['trackEvent', 'explore', 'Show preview', props.resource.id]);
-      } else if (tab.value === resourceStructureButtonId.value) {
-        registerSchemaEvent('Show data structure');
+      } else if (tabName === resourceStructureButtonId.value) {
+        globalThis._paq?.push(['trackEvent', 'schema', 'Show data structure', props.resource.id]);
       }
-    }
-
-    /**
-     *
-     * @param {string} action Action to dispatch
-     */
-    const registerSchemaEvent = (action) => {
-      globalThis._paq?.push(['trackEvent', 'schema', action, props.resource.id]);
-      alert('track');
     }
 
     const availabilityChecked = computed(() => props.resource.extras && props.resource.extras['check:status']);
@@ -397,17 +395,8 @@ export default defineComponent({
     const resourceInformationSelectedTab = computed(() => !hasExplore.value);
     const resourceInformationTabIndex = computed(() => hasExplore.value ? -1 : 0);
 
-    onMounted(() => {
-      if(hasExplore.value) {
-        registerEvent(resourcePreviewButtonId);
-      } else if (hasSchema.value) {
-        registerEvent(resourceStructureButtonId);
-      } else {
-        registerEvent(resourceInformationButtonId);
-      }
-    });
-
     return {
+      registerEvent,
       owner,
       resourceImage,
       filesize,
