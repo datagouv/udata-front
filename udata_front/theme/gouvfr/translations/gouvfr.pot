@@ -8,8 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: udata-front 3.2.3.dev0\n"
 "Report-Msgid-Bugs-To: data.gouv@data.gouv.fr\n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2023-05-03 16:17+0200\n"
 "PO-Revision-Date: 2023-05-03 16:17+0200\n"
+=======
+"POT-Creation-Date: 2023-04-25 11:24+0200\n"
+"PO-Revision-Date: 2023-04-25 11:24+0200\n"
+>>>>>>> master
 "Last-Translator: Data.gouv.fr Team <data.gouv@data.gouv.fr>\n"
 "Language: en\n"
 "Language-Team: Data.gouv.fr Team <data.gouv@data.gouv.fr>\n"
@@ -1284,6 +1289,8 @@ msgid "Drag a file here"
 msgstr ""
 
 #: udata_front/theme/gouvfr/templates/macros/uploader.html:11
+#: udata_front/theme/gouvfr/templates/security/login_user.html:45
+#: udata_front/theme/gouvfr/templates/security/register_user.html:67
 msgid "or"
 msgstr ""
 
@@ -1880,11 +1887,21 @@ msgstr ""
 msgid "Send the instructions again"
 msgstr ""
 
-#: udata_front/theme/gouvfr/templates/security/login_user.html:51
+#: udata_front/theme/gouvfr/templates/security/login_user.html:49
+#: udata_front/theme/gouvfr/templates/security/register_user.html:71
+msgid "Log in with"
+msgstr ""
+
+#: udata_front/theme/gouvfr/templates/security/login_user.html:53
+#: udata_front/theme/gouvfr/templates/security/register_user.html:75
+msgid "What is MonComptePro ?"
+msgstr ""
+
+#: udata_front/theme/gouvfr/templates/security/login_user.html:64
 msgid "Don't have an account?"
 msgstr ""
 
-#: udata_front/theme/gouvfr/templates/security/login_user.html:57
+#: udata_front/theme/gouvfr/templates/security/login_user.html:70
 msgid "Create an account"
 msgstr ""
 
