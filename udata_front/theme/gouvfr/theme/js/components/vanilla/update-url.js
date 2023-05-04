@@ -47,6 +47,7 @@ function moveToHash() {
   } else {
     tryPreviousHashes(hash.slice(1));
   }
+  globalThis._paq?.push(['trackEvent', 'navigation', 'Move page to hash', window.location.pathname, hash]);
 }
 
 export default function handleUpdateUrlButtons() {
