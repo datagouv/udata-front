@@ -7,6 +7,7 @@
     - When loging in, the datastore will seek for a coresponding user on udata. If such user does not exist, she will be created.
     - Created user during SSO will not have a password. To use the user without SSO, a password reset procedure must be used.
 - Handle previous format of link to discussions, e.g. from e-mails [#241](https://github.com/etalab/udata-front/pull/241)
+- Fix `.fr-btn` in `.markdown` [#243](https://github.com/etalab/udata-front/pull/243)
 
 ## 3.2.2 (2023-04-18)
 
