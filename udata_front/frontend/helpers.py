@@ -17,7 +17,7 @@ from . import front
 from udata.core.dataset.apiv2 import dataset_fields
 from udata.core.dataset.models import Dataset
 from udata.models import db
-from udata.i18n import format_date, format_timedelta, _, pgettext
+from udata.i18n import get_locale, format_date, format_timedelta, _, pgettext
 from udata.search.result import SearchResult
 from udata.utils import camel_to_lodash
 from udata_front.theme import theme_static_with_version
@@ -445,3 +445,11 @@ def visibles(value):
 @front.app_template_global()
 def selected(current_value, value):
     return 'selected' if current_value == value else ''
+
+@front.app_template_global()
+def current_language_name():
+    '''A locale aware formatter.'''
+    locale = get_locale()
+    for code, name in current_app.config['LANGUAGES'].items():
+        if locale == code:
+            return name
