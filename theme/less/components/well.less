@@ -50,46 +50,6 @@ html[data-fr-js] [data-show-no-js], html[data-fr-js=true] [data-show-no-js] {
     }
 }
 
-/*
-    TODO : remove when dsfr >= 1.6
-*/
-.fr-notice {
-    position: relative;
-
-    --title-spacing: 0;
-    --text-spacing: 0;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    background-color: var(--background-contrast-grey);
-    color: var(--text-title-grey);
-}
-
-.fr-notice__body {
-    position: relative;
-    padding: 0 2.5rem 0 2.5rem;
-}
-
-.fr-notice__body::before {
-    --icon-size: 1.5rem;
-    flex: 0 0 auto;
-    display: inline-block;
-    vertical-align: calc((0.75em - var(--icon-size)) * 0.5);
-    background-color: currentColor;
-    width: var(--icon-size);
-    height: var(--icon-size);
-    -webkit-mask-size: 100% 100%;
-    mask-size: 100% 100%;
-    position: absolute;
-    left: 0;
-}
-
-.fr-notice__title {
-    position: relative;
-    font-size: 1rem;
-    line-height: 1.5rem;
-    font-weight: 700;
-}
-
 .fr-notice--warning .fr-notice__body {
     &:extend(.fr-icon-warning-line);
     &:extend([class^="fr-icon-"]);
