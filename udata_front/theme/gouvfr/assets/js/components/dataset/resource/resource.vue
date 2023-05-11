@@ -290,7 +290,7 @@
 </template>
 
 <script>
-import { inject, defineComponent, onMounted, ref, computed, unref } from "vue";
+import { defineComponent, ref, computed, unref } from "vue";
 import SchemaLoader from "./schema-loader.vue";
 import useOwnerName from "../../../composables/useOwnerName";
 import useResourceImage from "../../../composables/useResourceImage";
