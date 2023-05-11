@@ -37,7 +37,7 @@ export default defineConfig(async () => {
       VueI18nPlugin({
         compositionOnly: false,
         /* options */
-        include: resolve(dirname(fileURLToPath(import.meta.url)), `udata_front/theme/${theme}/theme/js/locales/**`),
+        include: resolve(dirname(fileURLToPath(import.meta.url)), `udata_front/theme/${theme}/assets/js/locales/**`),
       }),
       legacy({
         targets: "> 0.1%, last 15 versions, Firefox ESR, not dead",
@@ -54,8 +54,8 @@ export default defineConfig(async () => {
     build: {
       rollupOptions: {
         input: [
-          `udata_front/theme/${theme}/theme/js/index.js`,
-          `udata_front/theme/${theme}/theme/less/style.less`,
+          `udata_front/theme/${theme}/assets/js/index.js`,
+          `udata_front/theme/${theme}/assets/less/style.less`,
           "node_modules/es-module-shims/dist/es-module-shims.js",
           "node_modules/vue/dist/vue.esm-browser.prod.js",
           "node_modules/vue-content-loader/dist/vue-content-loader.es.js",
