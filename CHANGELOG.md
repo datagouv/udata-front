@@ -14,6 +14,7 @@
 - Handle previous format of link to discussions, e.g. from e-mails [#241](https://github.com/etalab/udata-front/pull/241)
 - Add `last_update` sort in datasets page [#242](https://github.com/etalab/udata-front/pull/242)
 - Fix `.fr-btn` in `.markdown` [#243](https://github.com/etalab/udata-front/pull/243)
+- Add Matomo event tracking [#246](https://github.com/etalab/udata-front/pull/246)
 
 ## 3.2.2 (2023-04-18)
 
