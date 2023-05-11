@@ -364,14 +364,9 @@ def i18n_alternate_links():
         LINK_PATTERN = (
             '<link rel="alternate" href="{url}" hreflang="{lang}" />')
         links = []
-        params = {}
-        if request.args:
-            params.update(request.args)
-        if request.view_args:
-            params.update(request.view_args)
 
         for lang in current_app.config['LANGUAGES']:
-            url = url_for(request.endpoint, lang_code=lang, **params, _external=True)
+            url = language_url(lang)
             links.append(LINK_PATTERN.format(url=url, lang=lang))
         return Markup(''.join(links))
     except Exception:
@@ -453,3 +448,13 @@ def current_language_name():
     for code, name in current_app.config['LANGUAGES'].items():
         if locale == code:
             return name
+
+@front.app_template_global()
+def language_url(lang_code):
+    '''Create an URL for the current endpoint and the given language code'''
+    params = {}
+    if request.args:
+        params.update(request.args)
+    if request.view_args:
+        params.update(request.view_args)
+    return url_for(request.endpoint, lang_code=lang_code, **params, _external=True)

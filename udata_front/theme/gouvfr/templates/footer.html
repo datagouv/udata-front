@@ -117,8 +117,8 @@
         <div class="fr-container">
             <div class="fr-footer__body">
                 <div class="fr-footer__brand fr-enlarge-link">
-                    <a href="/" title="Retour à l’accueil">
-                        <p class="fr-logo" title="république française">
+                    <a href="/" title="{{_('Retour à l’accueil')}}">
+                        <p class="fr-logo" title="{{_('république française')}}">
                             république
                             <br>française
                         </p>
@@ -142,7 +142,7 @@
                                 aria-expanded="false"
                                 title="{{ _('Select a Language') }}"
                             >
-                                {{g.lang_code|upper}} <span class="fr-hidden-lg"> - {{current_language_name()}}</span>
+                                {{g.lang_code|upper}} - {{current_language_name()}}
                             </button>
                             <div class="fr-collapse fr-translate__menu fr-menu" id="translate-in-footer">
                                 <ul class="fr-menu__list">
@@ -152,7 +152,7 @@
                                             class="fr-translate__language fr-nav__link"
                                             hreflang="{{code}}"
                                             lang="{{code}}"
-                                            href="#"
+                                            href="{{language_url(code)}}"
                                             {% if g.lang_code == code %}aria-current="true"{% endif %}
                                         >
                                             {{code|upper}} - {{name}}
