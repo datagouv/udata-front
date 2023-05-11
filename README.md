@@ -173,7 +173,7 @@ Additionally, you can run javascript-related commands through `npm run`.
 - `start`: Get to coding with live reload and things. Same as `npm run dev`
 - `test`: Runs the Cypress tests. More on that in the [Tests section](#-tests) of this README.
 
-If you encounter any merge conflic with your package-lock.json, you can fix it with NPM:
+If you encounter any merge conflict with your package-lock.json, you can fix it with NPM:
 
 ```shell
 npm install --package-lock-only
