@@ -19,6 +19,9 @@
     "ci": "start-server-and-test prepare-and-serve-e2e http://localhost:7000 test",
     "local-testing": "start-server-and-test prepare-and-serve-e2e http://localhost:7000 cypress"
   },
+  "overrides": {
+    "yaml-eslint-parser": "^1.2.0"
+  },
   "devDependencies": {
     "@conciergerie.dev/select-a11y": "^3.1.0",
     "@conciergerie.dev/vue-toaster": "^2.4.0",
@@ -38,6 +41,7 @@
     "cypress-axe": "^1.3.0",
     "dayjs": "^1.11.7",
     "es-module-shims": "^1.7.0",
+    "glob": "^10.2.2",
     "less": "^4.1.3",
     "markdown-it": "^12.3.2",
     "mitt": "^3.0.0",
