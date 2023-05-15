@@ -1,6 +1,7 @@
 {% macro metrics(title, value, data, type = "bar", highlight_direction = False, as_percentage = False) %}
-{% set previous_month = data[-2] %}
-{% set current_month = data[-1] %}
+{% set metric_values = data.values()|list %}
+{% set previous_month = metric_values[-2] %}
+{% set current_month = metric_values[-1] %}
 {% set change = current_month - previous_month %}
 <div class="fr-col-12 fr-col-md-3">
     <h3 class="fr-text--sm fr-m-0">{{title}}</h3>
@@ -9,7 +10,7 @@
             {{value | summarize}}
         </p>
         <div class="fr-ml-1w">
-            <chart type="{{type}}" :data='{"2022-04": 1, "2022-05": 5, "2022-06": 9, "2022-07": 5, "2022-08": 6, "2022-09": 8, "2022-10": 7, "2022-11": 8, "2022-12": 9, "2023-01": 10, "2023-02": 11, "2023-03": 15}'></bar-chart>
+            <chart type="{{type}}" :data='{{data|tojson}}'></bar-chart>
         </div>
     </div>
     <p class="fr-mt-1w fr-text--regular text-transform-lowercase fr-badge fr-badge--no-icon
@@ -21,7 +22,7 @@
             {%- if change > 0 -%}
                 +
             {% endif %}
-            {%- if as_percentage -%}
+            {%- if as_percentage and previous_month -%}
                 {{"{0:.0%}".format(change / previous_month)}}
             {%- else -%}
                 {{change | summarize}}

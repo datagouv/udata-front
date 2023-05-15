@@ -7,6 +7,7 @@
 {% from theme('macros/banner_info.html') import banner_info %}
 {% from theme('macros/banner_warning.html') import banner_warning %}
 {% from theme('macros/quality_score_with_warning_below.html') import quality_score_with_warning_below %}
+{% from theme('macros/metrics.html') import metrics %}
 
 ## FIXME: remove inspire:indentifier robots condition when geo.data.gouv.fr is shutdown
 {% set meta = {
@@ -679,6 +680,14 @@
             {% endif %}
         {% endcall %}
         {% endif %}
+        <section class="fr-pb-3w fr-mb-3w border-bottom border-default-grey vuejs">
+            <h2 class="subtitle subtitle--uppercase">{{ _('Metrics') }}</h2>
+            <div class="fr-grid-row justify-between">
+                {{metrics(_("Views"), visit_metrics.values()|sum, visit_metrics, type="line", highlight_direction=True, as_percentage=True)}}
+                {{metrics(_("Reuses of this dataset"), dataset.metrics.reuses, reuses_metrics, type="bar", highlight_direction=True, as_percentage=True)}}
+                {{metrics(_("Followers"), dataset.metrics.followers, followers_metrics, type="bar", highlight_direction=True, as_percentage=True)}}
+            </
+        </section>
         </div>
     </div>
 </div>

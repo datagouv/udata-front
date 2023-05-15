@@ -21,6 +21,8 @@ from udata.core.organization.permissions import (
 from udata.core.organization.search import OrganizationSearch
 from udata.utils import not_none_dict
 
+from udata_front.views.utils import get_metrics_for_model, get_stock_metrics
+
 blueprint = I18nBlueprint('organizations', __name__,
                           url_prefix='/organizations')
 
@@ -99,6 +101,14 @@ class OrganizationDetailView(SearchView, OrgView, DetailView):
             reuses = reuses.visible()
             datasets = datasets.visible()
 
+        dataset_visit_metrics, reuse_visit_metrics, outlink_metrics = get_metrics_for_model('organization', self.organization.id, ['visit_dataset', 'visit_reuse', 'outlink'])
+        dataset_metrics = get_stock_metrics(Dataset.objects(organization=self.organization), date_label='created_at_internal')
+        reuse_metrics = get_stock_metrics(Reuse.objects(organization=self.organization))
+
+        dataset_follower_metrics = get_stock_metrics(Follow.objects(following__in=Dataset.objects(organization=self.organization)), date_label='since')
+        reuse_follower_metrics = get_stock_metrics(Follow.objects(following__in=Reuse.objects(organization=self.organization)), date_label='since')
+        dataset_reuse_metrics = get_stock_metrics(Reuse.objects(datasets__in=Dataset.objects(organization=self.organization)))
+
         context.update({
             'reuses': reuses.paginate(params_reuses_page, self.reuse_page_size),
             'total_datasets': context.get("datasets").total,
@@ -107,6 +117,14 @@ class OrganizationDetailView(SearchView, OrgView, DetailView):
             'followers': followers,
             'can_edit': can_edit,
             'can_view': can_view,
+            'dataset_visit_metrics': dataset_visit_metrics,
+            'reuse_visit_metrics': reuse_visit_metrics,
+            'outlink_metrics': outlink_metrics,
+            'dataset_metrics': dataset_metrics,
+            'reuse_metrics': reuse_metrics,
+            'dataset_follower_metrics': dataset_follower_metrics,
+            'dataset_reuse_metrics': dataset_reuse_metrics,
+            'reuse_follower_metrics': reuse_follower_metrics
         })
         return context
 

@@ -6,6 +6,7 @@
 {% from theme('macros/paginator.html') import paginator with context %}
 {% from theme('macros/sort_search.html') import sort_search %}
 {% from theme('macros/certified.html') import badge_if_certified with context %}
+{% from theme('macros/metrics.html') import metrics %}
 
 {% set is_hidden = (reuses.total or 0) + (datasets.total or 0) <= 0 %}
 {% set meta = {
@@ -307,6 +308,27 @@
         tabindex="0"
     >
         <div class="fr-container">
+
+        <section class="fr-pb-15v vuejs">
+            <h2 class="subtitle subtitle--uppercase">{{ _('General statistics') }}</h2>
+            <div class="fr-grid-row justify-between">
+                {{metrics(_("Datasets"), org.metrics.datasets, dataset_metrics, type="bar", highlight_direction=True, as_percentage=True)}}
+                {{metrics(_("Reuses"), org.metrics.reuses, reuse_metrics, type="bar", highlight_direction=True, as_percentage=True)}}
+            </div>
+            <h2 class="subtitle subtitle--uppercase fr-pt-10v">{{ _('Datasets statistics') }}</h2>
+            <div class="fr-grid-row justify-between">
+                {{metrics(_("Views"), dataset_visit_metrics.values()|sum, dataset_visit_metrics, type="line", highlight_direction=True, as_percentage=True)}}
+                {{metrics(_("Reuses on datasets"), dataset_reuse_metrics.values()|sum, dataset_reuse_metrics, type="line", highlight_direction=True, as_percentage=True)}}
+                {{metrics(_("Followers"), dataset_follower_metrics.values()|sum, dataset_follower_metrics, type="bar", highlight_direction=True, as_percentage=True)}}
+            </div>
+            <h2 class="subtitle subtitle--uppercase fr-pt-10v">{{ _('Reuses statistics') }}</h2>
+            <div class="fr-grid-row justify-between">
+                {{metrics(_("Views"), reuse_visit_metrics.values()|sum, reuse_visit_metrics, type="line", highlight_direction=True, as_percentage=True)}}
+                {{metrics(_("Reuses opening"), outlink_metrics.values()|sum, outlink_metrics, type="line", highlight_direction=True, as_percentage=True)}}
+                {{metrics(_("Followers"), reuse_follower_metrics.values()|sum, reuse_follower_metrics, type="bar", highlight_direction=True, as_percentage=True)}}
+            </div>
+        </section>
+
         {% call(slot) information_title_with_button(_('Members')) %}
             {% if slot == "button" %}
                 {% set member = org.member(current_user) %}

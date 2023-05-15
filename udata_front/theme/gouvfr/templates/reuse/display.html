@@ -2,6 +2,7 @@
 {% from theme('macros/follow.html') import follow_btn with context %}
 {% from theme('macros/integrate.html') import integrate_btn with context %}
 {% from theme('macros/breadcrumb.html') import breadcrumb with context %}
+{% from theme('macros/metrics.html') import metrics %}
 
 {% set meta = {
     'title': reuse.title,
@@ -220,6 +221,16 @@
                 </p>
             </div>
         {% endif %}
+    </section>
+    <section class="fr-container fr-py-5v vuejs">
+        <h2 class="subtitle subtitle--uppercase fr-mb-3v">
+            {{_("Metrics")}}
+        </h2>
+        <div class="fr-grid-row justify-between">
+            {{metrics(_("Views"), visit_metrics.values()|sum, visit_metrics, type="line", highlight_direction=True, as_percentage=True)}}
+            {{metrics(_("External links"), outlink_metrics.values()|sum, outlink_metrics, type="line", highlight_direction=True, as_percentage=True)}}
+            {{metrics(_("Followers"), reuse.metrics.followers, followers_metrics, type="bar", highlight_direction=True, as_percentage=True)}}
+        </
     </section>
 </div>
 {% endcache %}
