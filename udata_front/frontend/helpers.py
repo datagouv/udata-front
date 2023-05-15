@@ -462,7 +462,7 @@ def language_url(lang_code):
         params.update(request.view_args)
     if (not request.endpoint or
             not current_app.url_map.is_endpoint_expecting(request.endpoint,
-                                                            'lang_code')):
+                                                          'lang_code')):
         endpoint = "site.home"
     try:
         return url_for(endpoint, lang_code=lang_code, **params, _external=True)
