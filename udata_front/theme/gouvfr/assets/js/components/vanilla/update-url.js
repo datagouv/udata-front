@@ -35,19 +35,21 @@ function tryPreviousHashes(target) {
 }
 
 /**
- * Update UI to match hash
+ * Update UI to match hash.
+ * This is done on page launch with hash and when the hash is updated with a link or manual edition.
+ * It isn't triggered on hash update from `handleUpdateUrlButtons` below.
  */
 function moveToHash() {
   const hash = window.location.hash;
   if(!hash) {
     return;
   }
+  globalThis._paq?.push(['trackEvent', 'Move page to hash', window.location.pathname, hash]);
   if(hash.startsWith("#/")) {
     moveToCurrentHash(hash.slice(2));
   } else {
     tryPreviousHashes(hash.slice(1));
   }
-  globalThis._paq?.push(['trackEvent', 'navigation', 'Move page to hash', window.location.pathname, hash]);
 }
 
 export default function handleUpdateUrlButtons() {
@@ -69,6 +71,7 @@ export default function handleUpdateUrlButtons() {
       if(!url.hash.includes(targetHash)) {
         url.hash = targetHash;
         window.history.pushState(null, "", url);
+        globalThis._paq?.push(['trackEvent', 'Move page to hash', window.location.pathname, targetHash]);
       }
     });
   });

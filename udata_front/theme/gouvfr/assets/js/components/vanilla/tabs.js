@@ -48,7 +48,7 @@ tabs.forEach((tab) => {
       document
         .getElementById(ariaControls)
         ?.classList.add("fr-unhidden");
-      globalThis._paq?.push(['trackEvent', 'navigation', 'Move to Tab', tabButton.textContent]);
+      globalThis._paq?.push(['trackEvent', 'Move page to tab', window.location.pathname, tabButton.textContent]);
     });
   });
 });

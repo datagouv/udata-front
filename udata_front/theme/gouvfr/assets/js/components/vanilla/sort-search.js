@@ -19,7 +19,7 @@ selects.forEach((select) => {
           select.disabled = true;
       }
       select.form?.submit();
-      globalThis._paq?.push(['trackEvent', 'search', 'Sort', select.value]);
+      globalThis._paq?.push(['trackEvent', 'Search', 'Sort', select.value]);
     });
   }
 });

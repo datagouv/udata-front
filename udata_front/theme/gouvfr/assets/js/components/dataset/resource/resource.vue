@@ -343,9 +343,9 @@ export default defineComponent({
     const expanded = ref(false);
     const expand = () => {
       if(expanded.value) {
-        globalThis._paq?.push(['trackEvent', 'navigation', 'Close resource', props.resource.id]);
+        globalThis._paq?.push(['trackEvent', 'Close resource', props.resource.id]);
       } else {
-        globalThis._paq?.push(['trackEvent', 'navigation', 'Open resource', props.resource.id]);
+        globalThis._paq?.push(['trackEvent', 'Open resource', props.resource.id]);
         if(hasExplore.value) {
           registerEvent(resourcePreviewButtonId);
         } else if (hasSchema.value) {
@@ -366,11 +366,11 @@ export default defineComponent({
      */
     const registerEvent = (tab) => {
       const tabName = unref(tab);
-      globalThis._paq?.push(['trackEvent', 'navigation', 'View resource tab', props.resource.id, tab]);
+      globalThis._paq?.push(['trackEvent', 'View resource tab', props.resource.id, tab]);
       if(tabName === resourcePreviewButtonId.value) {
-        globalThis._paq?.push(['trackEvent', 'explore', 'Show preview', props.resource.id]);
+        globalThis._paq?.push(['trackEvent', 'Show preview', props.resource.id]);
       } else if (tabName === resourceStructureButtonId.value) {
-        globalThis._paq?.push(['trackEvent', 'schema', 'Show data structure', props.resource.id]);
+        globalThis._paq?.push(['trackEvent', 'Show data structure', props.resource.id]);
       }
     }
 
