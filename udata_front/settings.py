@@ -48,3 +48,6 @@ CAPTCHETAT_TOKEN_CACHE_KEY = 'captchetat-bearer-token'
 
 # Newsletter
 NEWSLETTER_SUBSCRIPTION_URL = 'https://f.info.data.gouv.fr/f/lp/infolettre-data-gouv-fr-landing-page/lk3q01y6'  # noqa
+
+# Metrics API
+METRICS_API = 'http://localhost:8081'
