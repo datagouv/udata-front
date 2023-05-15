@@ -35,7 +35,7 @@ def bearer_token():
     try:
         oauth = requests.post(f'{url}/api/oauth/token', data={
             'grant_type': 'client_credentials',
-            'scope': 'WRITE',
+            'scope': 'piste.captchetat',
             'client_id': current_app.config.get('CAPTCHETAT_CLIENT_ID'),
             'client_secret': current_app.config.get('CAPTCHETAT_CLIENT_SECRET')
         })
