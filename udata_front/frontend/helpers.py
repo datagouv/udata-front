@@ -443,7 +443,7 @@ def selected(current_value, value):
 
 @front.app_template_global()
 def current_language_name():
-    '''A locale aware formatter.'''
+    '''Get the name of the current locale.'''
     locale = get_locale()
     for code, name in current_app.config['LANGUAGES'].items():
         if locale == code:
