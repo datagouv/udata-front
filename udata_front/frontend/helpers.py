@@ -441,6 +441,7 @@ def visibles(value):
 def selected(current_value, value):
     return 'selected' if current_value == value else ''
 
+
 @front.app_template_global()
 def current_language_name():
     '''Get the name of the current locale.'''
@@ -448,6 +449,7 @@ def current_language_name():
     for code, name in current_app.config['LANGUAGES'].items():
         if locale == code:
             return name
+
 
 @front.app_template_global()
 def language_url(lang_code):
