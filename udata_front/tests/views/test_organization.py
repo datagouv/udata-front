@@ -50,7 +50,7 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
 
     def test_render_display_if_deleted(self):
         '''It should not render the organization page if deleted'''
-        organization = OrganizationFactory(deleted=datetime.now())
+        organization = OrganizationFactory(deleted=datetime.utcnow())
         response = self.get(url_for('organizations.show', org=organization))
         self.assert410(response)
 
@@ -58,7 +58,7 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         '''It should render the organization page if deleted but user can'''
         self.login()
         member = Member(user=self.user, role='editor')
-        organization = OrganizationFactory(deleted=datetime.now(),
+        organization = OrganizationFactory(deleted=datetime.utcnow(),
                                            members=[member])
         response = self.get(url_for('organizations.show', org=organization))
         self.assert200(response)
