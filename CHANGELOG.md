@@ -6,7 +6,7 @@
 > This renames the `theme` root folder to `assets` and moves it inside gouvfr theme.
 > This also updates most references of `udata_front/theme/gouvfr` theme to `*` to ease the usage of other themes.
 
-- Move `theme` to `udata_front/theme/gouvfr`[#244](https://github.com/etalab/udata-front/pull/244)
+- Move `theme` to `udata_front/theme/gouvfr`[#244](https://github.com/etalab/udata-front/pull/244) [#252](https://github.com/etalab/udata-front/pull/252)
 - MonComptePro SSO integration [#237](https://github.com/etalab/udata-front/pull/237):
     - New button on login and register page
     - When loging in, the datastore will seek for a coresponding user on udata. If such user does not exist, she will be created.
