@@ -30,21 +30,25 @@ tabs.forEach((tab) => {
   tabsButtons.forEach((tabButton) => {
     tabButton.addEventListener("click", (el) => {
       el.preventDefault();
+      const target = /** @type {HTMLElement} */ (el.target);
 
       const previouslyActive = Array.from(tabsButtons).find((tab) =>
         tab.getAttribute("aria-selected") === "true"
       );
       if (previouslyActive) {
         previouslyActive.setAttribute("aria-selected", "false");
+        const previousAriaControls = previouslyActive.getAttribute("aria-controls") || "";
         document
-          .getElementById(previouslyActive.getAttribute("aria-controls"))
-          .classList.remove("fr-unhidden");
+          .getElementById(previousAriaControls)
+          ?.classList.remove("fr-unhidden");
       }
 
-      el.target.setAttribute("aria-selected", "true");
+      const ariaControls = target.getAttribute("aria-controls") || "";
+      target.setAttribute("aria-selected", "true");
       document
-        .getElementById(el.target.getAttribute("aria-controls"))
-        .classList.add("fr-unhidden");
+        .getElementById(ariaControls)
+        ?.classList.add("fr-unhidden");
+      globalThis._paq?.push(['trackEvent', 'Move page to tab', window.location.pathname, tabButton.textContent]);
     });
   });
 });
