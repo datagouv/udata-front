@@ -7,7 +7,6 @@
   "Submit": "Submit",
   "Error sending response": "Error sending response",
   "Discussion closed": "Discussion closed",
-  "messages": "messages",
   "Reply": "Reply",
   "The discussion was closed by": "The discussion was closed by",
   "on": "on",
@@ -101,7 +100,6 @@
   "Finest level of geographic detail covered by data.": "Finest level of geographic detail covered by data.",
   "Ex. 2022 presidential election": "Ex. 2022 presidential election",
   "Private": "Private",
-  "Updated on {date}": "Updated on {date}",
   "{n} favorites": "{n} favorites | {n} favorite | {n} favorites",
   "The identity of this public service is certified by {certifier}": "The identity of this public service is certified by {certifier}",
   "{n} reuses": "{n} reuses | {n} reuse | {n} reuses",
@@ -155,5 +153,6 @@
   "Updated {date}": "Updated {date}",
   "on {date}": "on {date}",
   "Download list as CSV": "Download list as CSV",
-  "today": "today"
+  "today": "today",
+  "See {n} messages": ""
 }
