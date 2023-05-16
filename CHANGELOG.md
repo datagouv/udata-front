@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 3.2.3 (2023-05-16)
 
 > **Note** <br>
 > This renames the `theme` root folder to `assets` and moves it inside gouvfr theme.
