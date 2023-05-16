@@ -85,7 +85,7 @@ def redirect_territory(level, code):
 
     Optimistically redirect to the latest valid/known INSEE code.
     """
-    territory = GeoZone.objects.valid_at(datetime.now()).filter(
+    territory = GeoZone.objects.valid_at(datetime.utcnow()).filter(
         code=code, level='fr:{level}'.format(level=level)).first()
     return redirect(url_for('territories.territory', territory=territory))
 
