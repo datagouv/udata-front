@@ -10,6 +10,14 @@
 
 {% set body_class = 'post-display' %}
 
+{% block breadcrumb %}
+<li>
+    <a class="fr-breadcrumb__link" aria-current="page">
+        {{ page.title or '' }}
+    </a>
+</li>
+{% endblock %}
+
 {% block main_content %}
 <div class="fr-container fr-py-3w" v-pre>
     {% if extension == 'md' %}
