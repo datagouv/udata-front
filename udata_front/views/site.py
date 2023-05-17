@@ -10,6 +10,7 @@ from udata.core.activity.models import Activity
 from udata.core.dataset.api import DatasetApiParser
 from udata.core.dataset.csv import ResourcesCsvAdapter
 from udata.core.dataset.models import Dataset
+from udata.core.discussions.models import Discussion
 from udata.core.organization.api import OrgApiParser
 from udata.core.organization.csv import OrganizationCsvAdapter
 from udata.core.organization.models import Organization
@@ -17,10 +18,12 @@ from udata.core.post.models import Post
 from udata.core.reuse.api import ReuseApiParser
 from udata.core.reuse.csv import ReuseCsvAdapter
 from udata.core.reuse.models import Reuse
+from udata.core.user.models import User
 from udata.harvest.csv import HarvestSourceCsvAdapter
 from udata.harvest.models import HarvestSource
 from udata.frontend import csv
 from udata_front.views.base import DetailView
+from udata_front.views.utils import get_stock_metrics
 from udata.i18n import I18nBlueprint, gettext as _
 from udata.sitemap import sitemap
 from udata.utils import multi_to_dict
@@ -185,7 +188,13 @@ def site_dashboard():
         'update_date': Dataset.objects.filter(badges__kind='spd'),
         'recent_datasets': Dataset.objects.visible(),
         'recent_reuses': Reuse.objects(featured=True).visible(),
-        'last_post': Post.objects.published().first()
+        'last_post': Post.objects.published().first(),
+        'user_metrics': get_stock_metrics(User.objects()),
+        'dataset_metrics': get_stock_metrics(Dataset.objects().visible(), date_label='created_at_internal'),
+        'harvest_metrics': get_stock_metrics(HarvestSource.objects()),
+        'reuse_metrics': get_stock_metrics(Reuse.objects().visible()),
+        'organization_metrics': get_stock_metrics(Organization.objects().visible()),
+        'discussion_metrics': get_stock_metrics(Discussion.objects(), date_label='created')
     }
     return theme.render('metrics/dashboard.html', **context)
 
