@@ -683,7 +683,9 @@
         <section class="fr-pb-3w fr-mb-3w border-bottom border-default-grey vuejs">
             <h2 class="subtitle subtitle--uppercase">{{ _('Metrics') }}</h2>
             <div class="fr-grid-row justify-between">
-                {{metrics(_("Views"), visit_metrics.values()|sum, visit_metrics, type="line", highlight_direction=True, as_percentage=True)}}
+                {% if visit_metrics %}
+                    {{metrics(_("Views"), visit_metrics.values()|sum, visit_metrics, type="line", highlight_direction=True, as_percentage=True)}}
+                {% endif %}
                 {{metrics(_("Reuses of this dataset"), dataset.metrics.reuses, reuses_metrics, type="bar", highlight_direction=True, as_percentage=True)}}
                 {{metrics(_("Followers"), dataset.metrics.followers, followers_metrics, type="bar", highlight_direction=True, as_percentage=True)}}
             </

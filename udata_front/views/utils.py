@@ -53,14 +53,15 @@ def get_metrics_for_model(
             model: str,
             id: Union[str, ObjectId],
             metrics_labels: List[str]
-        ) -> List[List[int]]:
+        ) -> List[Dict[str, int]]:
     '''
     Get distant metrics for a particular model object
     This uses @cache.cached decorator w/ short lived cache
     '''
-
-    print(repr(model), repr(id), repr(metrics_labels))
-
+    if not current_app.config["METRICS_API"]:
+        # TODO: How to best deal with no METRICS_API, prevent calling or return empty?
+        # raise ValueError("missing config METRICS_API to use this function")
+        return [{} for _ in range(len(metrics_labels))]
     reuse_metrics_api = f'{current_app.config["METRICS_API"]}/{model}s'
     try:
 
@@ -109,7 +110,6 @@ def get_stock_metrics(objects: QuerySet, date_label: str = 'created_at') -> List
     TODO: check memoization https://flask-caching.readthedocs.io/en/latest/
     > Using mutable objects (classes, etc) as part of the cache key can become tricky [...]
     '''
-    print(repr(objects))
     pipeline = [
         {
             '$match': {

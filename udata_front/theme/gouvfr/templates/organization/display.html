@@ -317,14 +317,20 @@
             </div>
             <h2 class="subtitle subtitle--uppercase fr-pt-10v">{{ _('Datasets statistics') }}</h2>
             <div class="fr-grid-row justify-between">
-                {{metrics(_("Views"), dataset_visit_metrics.values()|sum, dataset_visit_metrics, type="line", highlight_direction=True, as_percentage=True)}}
+                {% if dataset_visit_metrics %}
+                    {{metrics(_("Views"), dataset_visit_metrics.values()|sum, dataset_visit_metrics, type="line", highlight_direction=True, as_percentage=True)}}
+                {% endif %}
                 {{metrics(_("Reuses on datasets"), dataset_reuse_metrics.values()|sum, dataset_reuse_metrics, type="line", highlight_direction=True, as_percentage=True)}}
                 {{metrics(_("Followers"), dataset_follower_metrics.values()|sum, dataset_follower_metrics, type="bar", highlight_direction=True, as_percentage=True)}}
             </div>
             <h2 class="subtitle subtitle--uppercase fr-pt-10v">{{ _('Reuses statistics') }}</h2>
             <div class="fr-grid-row justify-between">
-                {{metrics(_("Views"), reuse_visit_metrics.values()|sum, reuse_visit_metrics, type="line", highlight_direction=True, as_percentage=True)}}
-                {{metrics(_("Reuses opening"), outlink_metrics.values()|sum, outlink_metrics, type="line", highlight_direction=True, as_percentage=True)}}
+                {% if reuse_visit_metrics %}
+                    {{metrics(_("Views"), reuse_visit_metrics.values()|sum, reuse_visit_metrics, type="line", highlight_direction=True, as_percentage=True)}}
+                {% endif %}
+                {% if outlink_metrics %}
+                    {{metrics(_("Reuses opening"), outlink_metrics.values()|sum, outlink_metrics, type="line", highlight_direction=True, as_percentage=True)}}
+                {% endif %}
                 {{metrics(_("Followers"), reuse_follower_metrics.values()|sum, reuse_follower_metrics, type="bar", highlight_direction=True, as_percentage=True)}}
             </div>
         </section>
