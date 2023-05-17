@@ -7,7 +7,6 @@
   "Submit": "Soumettre",
   "Error sending response": "Erreur lors de l'envoi de la réponse",
   "Discussion closed": "Discussion fermée",
-  "messages": "messages",
   "Reply": "Répondre",
   "The discussion was closed by": "La discussion a été close par",
   "on": "le",
@@ -101,7 +100,6 @@
   "Finest level of geographic detail covered by data.": "Niveau de détail géographique le plus fin que peut couvrir les données.",
   "Ex. 2022 presidential election": "Ex : élections présidentielles 2022",
   "Private": "Privé",
-  "Updated on {date}": "Mis à jour le {date}",
   "{n} favorites": "{n} favoris | {n} favori | {n} favoris",
   "The identity of this public service is certified by {certifier}": "L'identité de ce service public est certifiée par {certifier}",
   "{n} reuses": "{n} réutilisations | {n} réutilisation | {n} réutilisations",
@@ -155,5 +153,6 @@
   "Updated {date}": "Mis à jour {date}",
   "on {date}": "le {date}",
   "Download list as CSV": "Télécharger la liste au format CSV",
-  "today": "aujourd'hui"
+  "today": "aujourd'hui",
+  "See {n} messages": ""
 }
