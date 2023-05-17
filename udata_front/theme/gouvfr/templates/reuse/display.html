@@ -45,7 +45,6 @@
 {% endblock %}
 
 {% block toolbar %}
-{% cache cache_duration, 'reuse-toolbar', reuse.id|string, g.lang_code, reuse.last_modified|string %}
 {{ follow_btn(reuse) }}
 <a
     href="{{ reuse.url }}"
@@ -64,7 +63,6 @@
         </a>
     </div>
 {% endif %}
-{% endcache %}
 {% endblock %}
 
 {% block content %}
