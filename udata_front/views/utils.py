@@ -66,7 +66,8 @@ def get_metrics_for_model(
     try:
 
         res = requests.get(reuse_metrics_api, params={
-            f'{model}_id': f'eq.{id}'
+            f'{model}_id__exact': id,
+            'metric_month__sort': 'desc'
         })
         res.raise_for_status()
         monthly_metrics = compute_monthly_metrics(res.json(), metrics_labels)
