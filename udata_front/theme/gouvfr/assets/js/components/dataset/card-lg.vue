@@ -54,7 +54,7 @@
           </span>
           <template v-if="owner">{{ownerName}}</template>
         </p>
-        <p class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm">
+        <p class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm overflow-wrap-anywhere">
           {{ excerpt(description, 160) }}
         </p>
         <p class="fr-m-0 fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
