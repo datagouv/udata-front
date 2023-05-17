@@ -37,12 +37,12 @@
           </div>
         </article>
       </transition-group>
-      <div class="fr-grid-row" v-if="_collapsed">
+      <div class="fr-py-2w fr-px-3w" v-if="_collapsed">
         <button
-        class="fr-px-3w fr-col fr-link text-mention-grey fr-text--sm fr-mb-0 rounded-0"
+        class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500"
         @click.prevent="collapsed = false"
       >
-        {{ _discussion.length }} {{ $t("messages") }}
+        {{ $t("See {n} messages", _discussion.length) }}
       </button>
       </div>
     </div>

@@ -21,6 +21,7 @@
 - Add Matomo event tracking [#246](https://github.com/etalab/udata-front/pull/246)
 - New scope for Captchetat piste OAuth [#250](https://github.com/etalab/udata-front/pull/250)
 - Use `datetime.utcnow` to make sure to handle utc datetimes [#251](https://github.com/etalab/udata-front/pull/251)
+- Fix button to show closed discussion [#253](https://github.com/etalab/udata-front/pull/253)
 
 ## 3.2.2 (2023-04-18)
 
