@@ -45,7 +45,7 @@ export default defineConfig(async () => {
       }),
       copy({
         targets: [
-          { src: 'theme/img', dest: `udata_front/theme/${theme}/static/` },
+          { src: `udata_front/theme/${theme}/assets/img`, dest: `udata_front/theme/${theme}/static/` },
           { src: "node_modules/systemjs/dist/s.min.js", dest: `udata_front/theme/${theme}/static/js/` },
         ],
         hook: 'writeBundle'
