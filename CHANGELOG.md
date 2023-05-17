@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix `img` folder not copied [#255](https://github.com/etalab/udata-front/pull/255)
 
 ## 3.2.3 (2023-05-16)
 
@@ -21,7 +21,6 @@
 - Add Matomo event tracking [#246](https://github.com/etalab/udata-front/pull/246)
 - New scope for Captchetat piste OAuth [#250](https://github.com/etalab/udata-front/pull/250)
 - Use `datetime.utcnow` to make sure to handle utc datetimes [#251](https://github.com/etalab/udata-front/pull/251)
-- Fix `img` folder not copied [#255](https://github.com/etalab/udata-front/pull/255)
 
 ## 3.2.2 (2023-04-18)
 
