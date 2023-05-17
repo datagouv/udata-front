@@ -105,8 +105,8 @@ class OrganizationDetailView(SearchView, OrgView, DetailView):
         dataset_metrics = get_stock_metrics(Dataset.objects(organization=self.organization).visible(), date_label='created_at_internal')
         reuse_metrics = get_stock_metrics(Reuse.objects(organization=self.organization).visible())
 
-        dataset_follower_metrics = get_stock_metrics(Follow.objects(following__in=Dataset.objects(organization=self.organization)).visible(), date_label='since')
-        reuse_follower_metrics = get_stock_metrics(Follow.objects(following__in=Reuse.objects(organization=self.organization)).visible(), date_label='since')
+        dataset_follower_metrics = get_stock_metrics(Follow.objects(following__in=Dataset.objects(organization=self.organization)), date_label='since')
+        reuse_follower_metrics = get_stock_metrics(Follow.objects(following__in=Reuse.objects(organization=self.organization)), date_label='since')
         dataset_reuse_metrics = get_stock_metrics(Reuse.objects(datasets__in=Dataset.objects(organization=self.organization)).visible())
 
         context.update({

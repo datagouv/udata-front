@@ -99,7 +99,7 @@ class DatasetDetailView(DatasetView, DetailView):
         context['can_edit_resource'] = ResourceEditPermission
         context['visit_metrics'], = get_metrics_for_model('dataset', self.dataset.id, ['visit'])
         context['reuses_metrics'] = get_stock_metrics(Reuse.objects(datasets=self.dataset).visible())
-        context['followers_metrics'] = get_stock_metrics(Follow.objects(following=self.dataset).visible(), date_label='since')
+        context['followers_metrics'] = get_stock_metrics(Follow.objects(following=self.dataset), date_label='since')
         return context
 
 
