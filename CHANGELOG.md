@@ -3,7 +3,7 @@
 ## Current (in progress)
 
 - Fix `img` folder not copied [#255](https://github.com/etalab/udata-front/pull/255)
-- Remove cache around on dataset, reuse and organization modify button [#256](https://github.com/etalab/udata-front/pull/256)
+- Remove cache around dataset, reuse and organization modify button [#256](https://github.com/etalab/udata-front/pull/256)
 
 ## 3.2.3 (2023-05-16)
 
