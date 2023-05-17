@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix `img` folder not copied [#255](https://github.com/etalab/udata-front/pull/255)
 
 ## 3.2.3 (2023-05-16)
 
