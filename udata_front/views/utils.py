@@ -78,22 +78,7 @@ def get_metrics_for_model(
         return metrics_by_label(monthly_metrics, metrics_labels)
     except requests.exceptions.RequestException as e:
         log.exception(f'Error while getting metrics for {model}({id}): {e}')
-
-
-# @cache.memoize(METRICS_CACHE_DURATION)
-# def get_stock_metrics(objects: QuerySet, date_label: str = 'created_at') -> List[int]:
-#     monthly_metrics = OrderedDict((date_month.strftime("%Y-%m"), 0) for date_month in rrule(
-#             MONTHLY,
-#             dtstart=date.today() - timedelta(days=365),
-#             until=date.today())
-#     )
-#     objects = objects.filter(**{f'{date_label}__gte': date.today() - timedelta(days=365)})
-#     for document in objects:
-#         document_date = getattr(document, date_label).strftime("%Y-%m")
-#         if document_date in monthly_metrics:
-#             monthly_metrics[document_date] += 1
-#     print(monthly_metrics)
-#     return monthly_metrics
+        return [{} for _ in range(len(metrics_labels))]
 
 
 def compute_monthly_aggregated_metrics(aggregation_res: CommandCursor):
