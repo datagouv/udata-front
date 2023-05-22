@@ -12,6 +12,10 @@ You can use tooltips to show more information in context.
     cursor: help;
     position: relative;
     z-index: 3;
+
+    button:focus + .tooltip {
+        display: block;
+    }
 }
 
 .tooltip {
@@ -21,13 +25,11 @@ You can use tooltips to show more information in context.
     background: white;
     color: @grey-500;
     border-radius: 4px;
-    display: block;
-    visibility: hidden;
+    display: none;
     left: 0;
     top: 1.5rem;
     width: 23rem;
     max-width: calc(100vw - 2rem);
-    pointer-events: none;
     position: absolute;
     z-index: 100;
     box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.23),
@@ -55,6 +57,5 @@ You can use tooltips to show more information in context.
 }
 
 .tooltip__wrapper:hover .tooltip {
-    visibility: visible;
-    pointer-events: auto;
+    display: block;
 }

@@ -57,8 +57,9 @@
         <p class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm">
           {{ excerpt(description, 160) }}
         </p>
-        <p class="fr-m-0 fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
-          <Tooltip class="fr-hidden fr-grid-row fr-grid-row--middle flex-sm">
+        <div class="fr-m-0 fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
+          <div class="fr-grid-row fr-grid-row--middle fr-hidden flex-sm dash-after">
+            <Tooltip>
               <template #tooltip>
                 <h5 class="fr-text--sm fr-my-0">{{$t("Metadata quality:")}}</h5>
                 <QualityItem
@@ -114,17 +115,21 @@
                   </a>
                 </div>
               </template>
-              <span class="fr-icon-info-line" aria-hidden="true"></span>
-              <p class="fr-m-0 fr-mx-1v">
-                {{$t('Metadata quality:')}}
-              </p>
+              <button
+                class="fr-btn fr-btn--tertiary-no-outline fr-btn--secondary-grey-500 fr-icon-info-line"
+                :aria-labelledby="id"
+                role="button"
+              ></button>
+            </Tooltip>
+            <p class="fr-m-0 fr-mr-1v" :id="id">
+              {{$t('Metadata quality:')}}
+            </p>
+            <div class="fr-grid-row fr-grid-row--middle fr-mr-1v">
               <QualityScore :score="quality.score"/>
-          </Tooltip>
-          <div class="fr-hidden fr-unhidden-sm fr-mx-1v">
-            &mdash;
+            </div>
           </div>
-          {{ $t('Updated {date}', {date: formatRelativeIfRecentDate(last_update)}) }}
-        </p>
+          <p class=fr-m-0>{{ $t('Updated {date}', {date: formatRelativeIfRecentDate(last_update)}) }}</p>
+        </div>
       </div>
       <ul class="fr-hidden fr-unhidden-sm fr-hidden-md fr-unhidden-lg fr-col-auto fr-tags-group fr-grid-row--bottom self-center flex-direction-column">
         <li>
@@ -154,6 +159,7 @@
 import { defineComponent, computed } from "vue";
 import useLicense from "../../composables/useLicense";
 import useOwnerName from "../../composables/useOwnerName";
+import useUid from "../../composables/useUid";
 import Avatar from "../discussions/avatar.vue";
 import OrganizationNameWithCertificate from "../organization/organization-name-with-certificate.vue";
 import Placeholder from "../utils/placeholder.vue";
@@ -227,12 +233,14 @@ export default defineComponent({
       }
       return owned;
     });
+    const {id} = useUid("metadata-quality");
     const ownerName = useOwnerName(owned);
     const license = useLicense(props.license);
     return {
       excerpt,
       formatRelativeIfRecentDate,
       license,
+      id,
       ownerName,
     };
   }

@@ -1,7 +1,7 @@
 <template>
-    <div class="tooltip__wrapper fr-grid-row fr-grid-row--middle text-grey-500">
+    <div class="tooltip__wrapper text-grey-500">
         <slot></slot>
-        <div class="tooltip">
+        <div class="tooltip" role="tooltip">
             <slot name="tooltip"></slot>
         </div>
       </div>
