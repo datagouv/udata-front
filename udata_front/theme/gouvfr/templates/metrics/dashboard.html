@@ -41,8 +41,10 @@
         </h2>
         <div class="fr-grid-row justify-between">
             {{metrics(_("Users"), current_site.metrics['users'], user_metrics)}}
+            {% if visit_dataset_metrics %}
+            {{metrics(_("Dataset visits"), visit_dataset_metrics.values()|sum, visit_dataset_metrics, type="line", highlight_direction=True, as_percentage=True)}}
+            {% endif %}
             {% if TODO %}
-            {{metrics(_("Visits"), 629000, [561607, 629000], type="line", highlight_direction=True, as_percentage=True)}}
             {{metrics(_("Search"), 65900, [61018, 65900], type="line", highlight_direction=True, as_percentage=True)}}
             {% endif %}
         </div>
@@ -78,8 +80,8 @@
         <div class="fr-grid-row justify-between">
             {{metrics(_("Organizations"), current_site.metrics['organizations'], organization_metrics, highlight_direction=True)}}
             {{metrics(_("Discussions"), current_site.metrics['discussions'], discussion_metrics, highlight_direction=True)}}
-            {% if TODO %}
-            {{metrics(_("External site redirects"), 234100, [2977, 236400], type="line", highlight_direction=True)}}
+            {% if outlink_metrics %}
+            {{metrics(_("External site redirects"), outlink_metrics.values()|sum, outlink_metrics, type="line", highlight_direction=True)}}
             {% endif %}
         </div>
     </section>

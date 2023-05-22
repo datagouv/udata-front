@@ -51,7 +51,7 @@ def metrics_by_label(monthly_metrics: Dict, metrics_labels: List[str]) -> List[L
 @cache.memoize(METRICS_CACHE_DURATION)
 def get_metrics_for_model(
             model: str,
-            id: Union[str, ObjectId],
+            id: Union[str, ObjectId, None],
             metrics_labels: List[str]
         ) -> List[Dict[str, int]]:
     '''
@@ -62,13 +62,17 @@ def get_metrics_for_model(
         # TODO: How to best deal with no METRICS_API, prevent calling or return empty?
         # raise ValueError("missing config METRICS_API to use this function")
         return [{} for _ in range(len(metrics_labels))]
-    reuse_metrics_api = f'{current_app.config["METRICS_API"]}/{model}s'
+    model_metrics_api = f'{current_app.config["METRICS_API"]}/{model}'
+    if id:
+        # TODO: not clean of a hack
+        model_metrics_api += 's'
     try:
-
-        res = requests.get(reuse_metrics_api, params={
-            f'{model}_id__exact': id,
+        params = {
             'metric_month__sort': 'desc'
-        })
+        }
+        if id:
+            params[f'{model}_id__exact'] = id
+        res = requests.get(model_metrics_api, params)
         res.raise_for_status()
         monthly_metrics = compute_monthly_metrics(res.json(), metrics_labels)
         return metrics_by_label(monthly_metrics, metrics_labels)
