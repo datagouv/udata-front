@@ -1,31 +1,23 @@
-/*
----
-name: Tooltip
-category: 3 - Components
----
-
-You can use tooltips to show more information in context.
-
-*/
-
-.tooltip__wrapper {
-    cursor: help;
+.toggletip__wrapper, .tooltip__wrapper {
     position: relative;
     z-index: 3;
+}
+
+.toggletip__wrapper, .tooltip__wrapper {
+    cursor: help;
 
     button:focus + .tooltip {
         display: block;
     }
 }
 
-.tooltip {
+.toggletip, .tooltip {
     .fr-text--sm;
     .fr-my-0;
     .fr-p-3v;
     background: white;
     color: @grey-500;
     border-radius: 4px;
-    display: none;
     left: 0;
     top: 1.5rem;
     width: 23rem;
@@ -54,6 +46,10 @@ You can use tooltips to show more information in context.
     left: 0;
     position: absolute;
     width: 100%;
+}
+
+.tooltip {
+    display: none;
 }
 
 .tooltip__wrapper:hover .tooltip {

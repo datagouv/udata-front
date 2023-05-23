@@ -58,9 +58,12 @@
           {{ excerpt(description, 160) }}
         </p>
         <div class="fr-m-0 fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
-          <div class="fr-grid-row fr-grid-row--middle fr-hidden flex-sm dash-after">
-            <Tooltip>
-              <template #tooltip>
+          <div class="fr-grid-row fr-grid-row--middle fr-hidden flex-sm dash-after not-enlarged">
+            <Toggletip
+              class="fr-btn fr-btn--tertiary-no-outline fr-btn--secondary-grey-500 fr-icon-info-line"
+            >
+              {{$t('Metadata quality:')}}
+              <template #toggletip>
                 <h5 class="fr-text--sm fr-my-0">{{$t("Metadata quality:")}}</h5>
                 <QualityItem
                   :passed="quality.dataset_description_quality"
@@ -115,12 +118,7 @@
                   </a>
                 </div>
               </template>
-              <button
-                class="fr-btn fr-btn--tertiary-no-outline fr-btn--secondary-grey-500 fr-icon-info-line"
-                :aria-labelledby="id"
-                role="button"
-              ></button>
-            </Tooltip>
+            </Toggletip>
             <p class="fr-m-0 fr-mr-1v" :id="id">
               {{$t('Metadata quality:')}}
             </p>
@@ -164,7 +162,7 @@ import Avatar from "../discussions/avatar.vue";
 import OrganizationNameWithCertificate from "../organization/organization-name-with-certificate.vue";
 import Placeholder from "../utils/placeholder.vue";
 import QualityScore from "./quality-score.vue";
-import Tooltip from "../utils/tooltip.vue";
+import Toggletip from "../utils/Toggletip/Toggletip.vue";
 import QualityItem from "./quality-item.vue";
 import { excerpt, formatRelativeIfRecentDate } from "../../helpers";
 
@@ -174,7 +172,7 @@ export default defineComponent({
     OrganizationNameWithCertificate,
     Placeholder,
     QualityScore,
-    Tooltip,
+    Toggletip,
     QualityItem,
 },
   inheritAttrs: false,

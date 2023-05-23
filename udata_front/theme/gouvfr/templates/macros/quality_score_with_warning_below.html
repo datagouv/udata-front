@@ -1,18 +1,14 @@
 {% from theme('macros/quality_item_warning.html') import quality_item_warning %}
-{% from theme('macros/quality_score_tooltip.html') import quality_score_tooltip %}
+{% from theme('macros/quality_score_toggletip.html') import quality_score_toggletip %}
 {% from theme('macros/quality_score.html') import quality_score %}
 
 {% macro quality_score_with_warning_below(dataset, class) %}
 <section aria-labelledby="metadata-quality">
     <div class="fr-grid-row fr-grid-row--middle fr-ml-n1v">
-        {% call quality_score_tooltip(dataset) %}
-            <button
-                class="fr-btn fr-btn--tertiary-no-outline fr-btn--secondary-grey-500 fr-icon-info-line"
-                aria-labelledby="metadata-quality"
-                role="button"
-            ></button>
+        {% call quality_score_toggletip(dataset, "fr-btn fr-btn--tertiary-no-outline fr-btn--secondary-grey-500 fr-icon-info-line") %}
+            {{_('Metadata quality')}}
         {% endcall %}
-        <h2 class="subtitle fr-m-0" id="metadata-quality">
+        <h2 class="subtitle fr-m-0" aria-hidden="true">
             {{_('Metadata quality')}}
         </h2>
     </div>
