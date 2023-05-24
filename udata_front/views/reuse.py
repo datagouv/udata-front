@@ -102,8 +102,10 @@ class ReuseDetailView(ReuseView, DetailView):
             related_reuses = related_reuses.owned_by(self.reuse.owner.id)
         related_reuses = related_reuses.visible().order_by('-created_at').limit(4)
 
-        visit_metrics, outlink_metrics = get_metrics_for_model('reuse', self.reuse.id, ['visit', 'outlink'])
-        followers_metrics = get_stock_metrics(Follow.objects(following=self.reuse), date_label='since')
+        visit_metrics, outlink_metrics = get_metrics_for_model(
+            'reuse', self.reuse.id, ['visit', 'outlink'])
+        followers_metrics = get_stock_metrics(Follow.objects(following=self.reuse),
+                                              date_label='since')
 
         context.update(
             followers=followers,

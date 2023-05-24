@@ -101,13 +101,21 @@ class OrganizationDetailView(SearchView, OrgView, DetailView):
             reuses = reuses.visible()
             datasets = datasets.visible()
 
-        dataset_visit_metrics, reuse_visit_metrics, outlink_metrics = get_metrics_for_model('organization', self.organization.id, ['visit_dataset', 'visit_reuse', 'outlink'])
-        dataset_metrics = get_stock_metrics(Dataset.objects(organization=self.organization).visible(), date_label='created_at_internal')
+        dataset_visit_metrics, reuse_visit_metrics, outlink_metrics = get_metrics_for_model(
+            'organization', self.organization.id, ['visit_dataset', 'visit_reuse', 'outlink'])
+        dataset_metrics = get_stock_metrics(
+            Dataset.objects(organization=self.organization).visible(),
+            date_label='created_at_internal')
         reuse_metrics = get_stock_metrics(Reuse.objects(organization=self.organization).visible())
 
-        dataset_follower_metrics = get_stock_metrics(Follow.objects(following__in=Dataset.objects(organization=self.organization)), date_label='since')
-        reuse_follower_metrics = get_stock_metrics(Follow.objects(following__in=Reuse.objects(organization=self.organization)), date_label='since')
-        dataset_reuse_metrics = get_stock_metrics(Reuse.objects(datasets__in=Dataset.objects(organization=self.organization)).visible())
+        dataset_follower_metrics = get_stock_metrics(
+            Follow.objects(following__in=Dataset.objects(organization=self.organization)),
+            date_label='since')
+        reuse_follower_metrics = get_stock_metrics(
+            Follow.objects(following__in=Reuse.objects(organization=self.organization)),
+            date_label='since')
+        dataset_reuse_metrics = get_stock_metrics(
+            Reuse.objects(datasets__in=Dataset.objects(organization=self.organization)).visible())
 
         context.update({
             'reuses': reuses.paginate(params_reuses_page, self.reuse_page_size),

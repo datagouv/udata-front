@@ -22,9 +22,8 @@ from udata.core.user.models import User
 from udata.harvest.csv import HarvestSourceCsvAdapter
 from udata.harvest.models import HarvestSource
 from udata.frontend import csv
-from udata_front.views.base import DetailView
 from udata_front.views.utils import get_stock_metrics, get_metrics_for_model
-from udata.i18n import I18nBlueprint, gettext as _
+from udata.i18n import I18nBlueprint
 from udata.sitemap import sitemap
 from udata.utils import multi_to_dict
 from udata_front import theme
@@ -185,7 +184,8 @@ class SiteView(object):
 @blueprint.route('/dashboard/', endpoint='dashboard')
 def site_dashboard():
 
-    visit_dataset_metrics, outlink_metrics = get_metrics_for_model('site', None, ['visit_dataset', 'outlink'])
+    visit_dataset_metrics, outlink_metrics = get_metrics_for_model(
+        'site', None, ['visit_dataset', 'outlink'])
 
     context = {
         'update_date': Dataset.objects.filter(badges__kind='spd'),
@@ -193,7 +193,8 @@ def site_dashboard():
         'recent_reuses': Reuse.objects(featured=True).visible(),
         'last_post': Post.objects.published().first(),
         'user_metrics': get_stock_metrics(User.objects()),
-        'dataset_metrics': get_stock_metrics(Dataset.objects().visible(), date_label='created_at_internal'),
+        'dataset_metrics': get_stock_metrics(Dataset.objects().visible(),
+                                             date_label='created_at_internal'),
         'harvest_metrics': get_stock_metrics(HarvestSource.objects()),
         'reuse_metrics': get_stock_metrics(Reuse.objects().visible()),
         'organization_metrics': get_stock_metrics(Organization.objects().visible()),
