@@ -45,7 +45,6 @@
 {% endblock %}
 
 {% block toolbar %}
-{% cache cache_duration, 'org-toolbar', org.id|string, g.lang_code, org.last_modified|string %}
 {{ follow_btn(org) }}
 {% if can_edit %}
     <a
@@ -55,7 +54,6 @@
         {{ _('Modify organization') }}
     </a>
 {% endif %}
-{% endcache %}
 {% endblock %}
 
 {% block main_content %}

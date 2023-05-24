@@ -1,0 +1,143 @@
+<template>
+  <div class="bg-contrast-grey fr-mt-2w" :id="discussionUrl(id)">
+    <header class="fr-grid-row fr-grid-row--middle justify-between fr-py-2w fr-px-3w no-wrap wrap-md">
+      <p class="fr-col-auto text-default-warning fr-text--bold fr-pr-2w fr-my-0" v-if="closed">
+        <span>{{ $t("Discussion closed") }}</span>
+      </p>
+      <h3 class="fr-col fr-mx-3v fr-mx-md-0 fr-h6 fr-mb-0">{{ title }}</h3>
+      <div class="fr-col-auto text-align-right">
+        <button
+          :id="id + '-copy'"
+          :data-clipboard-text="discussionExternalUrl(id)"
+          class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-right fr-icon-links-fill"
+        >
+          {{$t('Copy permalink')}}
+      </button>
+      </div>
+    </header>
+    <div>
+      <transition-group name="list">
+        <article
+          v-for="comment in _discussion"
+          v-if="!_collapsed"
+          class="thread-comment fr-py-3w fr-px-3w fr-pr-5w"
+          :key="'comment-' + comment.id"
+        >
+          <div class="fr-grid-row fr-grid-row--gutters">
+            <avatar class="fr-col-auto" :user="comment.posted_by"></avatar>
+            <div class="fr-col">
+              <p class="fr-my-0"><Author :author="comment.posted_by" :badge="false" /></p>
+              <p class="fr-text--sm text-mention-grey fr-m-0">
+                {{ formatDate(comment.posted_on) }}
+              </p>
+              <div class="white-space-pre-wrap overflow-wrap-anywhere">
+                <p class="fr-mt-3v fr-mb-0">{{ comment.content }}</p>
+              </div>
+            </div>
+          </div>
+        </article>
+      </transition-group>
+      <div class="fr-py-2w fr-px-3w" v-if="_collapsed">
+        <button
+        class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500"
+        @click.prevent="collapsed = false"
+      >
+        {{ $t("See {n} messages", _discussion.length) }}
+      </button>
+      </div>
+    </div>
+    <footer class="fr-py-2w fr-px-3w">
+      <template v-if="!closed && !readOnlyEnabled">
+        <button
+          class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-right fr-icon-arrow-right-s-line"
+          v-if="!showForm"
+          @click.stop="displayForm"
+        >
+          {{ $t("Reply") }}
+        </button>
+        <thread-reply
+          :subjectId="id"
+          v-else
+          :onSubmit="replyToThread"
+          @close="showForm = false"
+        />
+      </template>
+      <div v-if="closed" class="text-grey-380">
+        {{ $t("The discussion was closed by") }} &#32;
+        <strong class="fr-px-1v"><Author :author="closed_by" /></strong>
+        {{ $t("on") }} {{ formatDate(closed) }}
+      </div>
+    </footer>
+  </div>
+</template>
+
+<script>
+import ThreadReply from "./thread-reply.vue";
+import Avatar from "./avatar.vue";
+import Author from "./author.vue";
+import config from "../../config";
+import { formatDate } from "../../helpers";
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  inheritAttrs: false,
+  components: {
+    "thread-reply": ThreadReply,
+    Avatar,
+    Author,
+  },
+  props: {
+    id: String,
+    discussion: Array,
+    title: String,
+    url: String,
+    closed: String,
+    closed_by: Object,
+  },
+  setup(props) {
+    return {
+      formatDate,
+    };
+  },
+  data() {
+    return {
+      showForm: false,
+      updatedDiscussion: null,
+      collapsed: true,
+      readOnlyEnabled: config.read_only_enabled,
+    };
+  },
+  computed: {
+    _discussion() {
+      // Discussion updates are saved locally only
+      // This is the logic to get either the original discussion or the updated one
+      return this.updatedDiscussion ? this.updatedDiscussion : this.discussion;
+    },
+    _collapsed() {
+      return this.closed && this.collapsed;
+    },
+  },
+  methods: {
+    discussionUrl(id) {
+      return "discussions/" + id;
+    },
+    discussionExternalUrl(id) {
+      let hash = "#/" + this.discussionUrl(id)
+      return window.location.origin + window.location.pathname + hash
+    },
+    replyToThread (values) {
+      return this.$api
+        .post("/discussions/" + this.id + "/", values)
+        .then((resp) => resp.data)
+        .then((updatedDiscussion) => {
+          this.updatedDiscussion = updatedDiscussion.discussion;
+          this.showForm = false;
+        });
+    },
+    displayForm() {
+      this.$auth();
+      this.showForm = true;
+    },
+  }
+});
+</script>

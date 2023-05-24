@@ -2,12 +2,14 @@ import inspect
 from importlib import import_module
 from flask import abort, current_app
 from flask_navigation import Navigation
+from authlib.integrations.flask_client import OAuth
 from udata import entrypoints
 # included for retro-compatibility reasons (some plugins may import from here instead of udata)
 from udata.frontend import template_hook  # noqa
 from udata.i18n import I18nBlueprint
 
 nav = Navigation()
+oauth = OAuth()
 
 front = I18nBlueprint('front', __name__)
 
@@ -33,7 +35,7 @@ def _load_views(app, module):
 
 
 VIEWS = ['gouvfr', 'dataset', 'organization', 'follower', 'post',
-         'reuse', 'site', 'territories', 'topic', 'user']
+         'reuse', 'site', 'territories', 'topic', 'user', 'mcp']
 
 
 def init_app(app):
@@ -85,3 +87,16 @@ def init_app(app):
         with app.app_context():
             security.forms['register_form'].cls = ExtendedRegisterForm
             security.forms['confirm_register_form'].cls = ExtendedRegisterForm
+
+    if app.config.get('MONCOMPETPRO_OPENID_CONF_URL'):
+        # MonComptPro SSO
+        oauth.init_app(app)
+        oauth.register(
+            name='mcp',
+            client_id=app.config.get('MONCOMPETPRO_CLIENT_ID'),
+            client_secret=app.config.get('MONCOMPETPRO_CLIENT_SECRET'),
+            server_metadata_url=app.config.get('MONCOMPETPRO_OPENID_CONF_URL'),
+            client_kwargs={
+                'scope': app.config.get('MONCOMPETPRO_SCOPE')
+            }
+        )

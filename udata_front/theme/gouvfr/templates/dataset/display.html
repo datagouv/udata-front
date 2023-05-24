@@ -48,7 +48,6 @@
 {% endblock %}
 
 {% block toolbar %}
-{% cache cache_duration, 'dataset-toolbar', dataset.id|string, g.lang_code, dataset.last_modified|string %}
 {{ follow_btn(dataset) }}
 {{ hook('dataset.display.explore-button') }}
 {% if can_edit %}
@@ -61,7 +60,6 @@
         </a>
     </div>
 {% endif %}
-{% endcache %}
 {% endblock %}
 
 {% block content %}
@@ -227,6 +225,7 @@
                     aria-selected="false"
                     aria-controls="discussions-panel"
                     data-update-url="discussions"
+                    data-previous-url="discussion-"
                 >
                     {{_('Discussions')}}
                     <sup>{{ dataset.metrics.discussions or 0 }}</sup>
