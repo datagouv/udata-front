@@ -1,20 +1,21 @@
 <template>
   <canvas
     :id="id"
-    width="100"
+    width="120"
     height="30"
   ></canvas>
   <div class="fr-grid-row justify-between">
-    <p class="text-xxs fr-m-0 text-mention-grey">02/22</p>
-    <p class="text-xxs fr-m-0 text-mention-grey">02/23</p>
+    <p class="text-xxs fr-m-0 text-mention-grey">{{ startDate }}</p>
+    <p class="text-xxs fr-m-0 text-mention-grey">{{ endDate }}</p>
   </div>
 </template>
 
 <script>
-import { Chart as ChartJS} from 'chart.js/auto';
+import { Chart as ChartJS } from 'chart.js/auto';
 import { defineComponent, onMounted } from 'vue';
 import useUid from '../../composables/useUid';
 import { lang } from '../../config';
+import { formatDate } from '../../helpers';
 
 export default defineComponent({
   props: {
@@ -29,6 +30,10 @@ export default defineComponent({
   },
   setup(props) {
     const { id } = useUid("bar-chart");
+    const dates = Object.keys(props.data);
+    const format = "MM/YY";
+    const startDate = formatDate(dates.shift() || "", format);
+    const endDate = formatDate(dates.pop() || "", format);
     onMounted(() => {
       const canvas = /** @type {HTMLCanvasElement | null} */(document.getElementById(id));
       const context = canvas?.getContext("2d");
@@ -108,6 +113,8 @@ export default defineComponent({
     });
     return {
       id,
+      startDate,
+      endDate,
     };
   },
 });
