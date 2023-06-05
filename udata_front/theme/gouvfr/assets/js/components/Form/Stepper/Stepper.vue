@@ -1,12 +1,12 @@
 <template>
   <div class="fr-stepper">
     <h2 class="fr-stepper__title">
-        <span class="fr-stepper__state">{{ $t("Step {n} of {count}", {n: currentStep, count: stepCount}) }}</span>
-        {{ currentStepName }}
+      <span class="fr-stepper__state">{{ $t("Step {n} of {count}", { n: currentStep, count: stepCount }) }}</span>
+      {{ currentStepName }}
     </h2>
     <div class="fr-stepper__steps" :data-fr-current-step="currentStep" :data-fr-steps="stepCount"></div>
     <p class="fr-stepper__details" v-if="hasNextStep">
-        <span class="fr-text--bold">{{$t("Next Step:")}}</span> {{ nextStepName }}
+      <span class="fr-text--bold">{{ $t("Next Step:") }}</span> {{ nextStepName }}
     </p>
   </div>
 </template>
