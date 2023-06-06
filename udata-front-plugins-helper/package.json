@@ -20,6 +20,8 @@
     "publish-next": "npm run publish-stable -- --tag next"
   },
   "devDependencies": {
+    "@storybook/manager-api": "^7.0.18",
+    "@storybook/theming": "^7.0.18",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vitest/coverage-c8": "^0.28.1",
     "@vue/test-utils": "^2.2.7",
