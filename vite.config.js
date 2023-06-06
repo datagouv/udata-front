@@ -4,15 +4,18 @@ import copy from 'rollup-plugin-copy';
 import legacy from '@vitejs/plugin-legacy';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'url';
-import { glob } from 'glob';
+import { globSync } from 'glob';
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite';
 import projectInformation from "./package.json";
 
-// https://vitejs.dev/config/
-export default defineConfig(async () => {
+/**
+ * Get theme folder name
+ * @returns {string}
+ */
+export function getTheme() {
   let theme = "gouvfr";
 
-  const themeInfoFiles = await glob('udata_front/theme/*/info.json');
+  const themeInfoFiles = globSync('udata_front/theme/*/info.json');
 
   if(themeInfoFiles.length === 0) {
     throw new Error("at least one udata_front theme must be installed.");
@@ -24,6 +27,12 @@ export default defineConfig(async () => {
     const info = require(`./${file}`);
     theme = info.identifier;
   }
+  return theme;
+}
+
+// https://vitejs.dev/config/
+export default defineConfig(() => {
+  let theme = getTheme();
 
   return {
     base: `/_themes/${theme}/`,
