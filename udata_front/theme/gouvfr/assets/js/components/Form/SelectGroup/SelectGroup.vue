@@ -75,6 +75,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    label: {
+      type: String,
+      required: true,
+    },
     modelValue: {
       type: String,
       default: undefined,
