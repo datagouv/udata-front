@@ -142,14 +142,14 @@ class DatasetBlueprintTest(GouvfrFrontTestCase):
 
     def test_raise_410_if_deleted(self):
         '''It should raise a 410 if the dataset is deleted'''
-        dataset = DatasetFactory(deleted=datetime.now())
+        dataset = DatasetFactory(deleted=datetime.utcnow())
         response = self.get(url_for('datasets.show', dataset=dataset))
         self.assert410(response)
 
     def test_200_if_deleted_but_authorized(self):
         '''It should not raise a 410 if the can view it'''
         self.login()
-        dataset = DatasetFactory(deleted=datetime.now(), owner=self.user)
+        dataset = DatasetFactory(deleted=datetime.utcnow(), owner=self.user)
         response = self.get(url_for('datasets.show', dataset=dataset))
         self.assert200(response)
 

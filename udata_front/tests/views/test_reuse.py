@@ -48,14 +48,14 @@ class ReuseBlueprintTest(GouvfrFrontTestCase):
 
     def test_raise_410_if_deleted(self):
         '''It should raise a 410 if the reuse is deleted'''
-        reuse = ReuseFactory(deleted=datetime.now())
+        reuse = ReuseFactory(deleted=datetime.utcnow())
         response = self.get(url_for('reuses.show', reuse=reuse))
         self.assert410(response)
 
     def test_do_not_raise_410_if_deleted_but_authorized(self):
         '''It should display a dalated reuse if authorized'''
         self.login()
-        reuse = ReuseFactory(deleted=datetime.now(), owner=self.user)
+        reuse = ReuseFactory(deleted=datetime.utcnow(), owner=self.user)
         response = self.get(url_for('reuses.show', reuse=reuse))
         self.assert200(response)
 

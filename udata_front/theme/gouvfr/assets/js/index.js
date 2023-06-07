@@ -13,6 +13,7 @@ import ReadMore from "./components/utils/read-more.vue";
 import RequestMembership from "./components/organization/request-membership.vue";
 import Resources from "./components/dataset/resource/resources.vue";
 import Captcha from "./components/utils/captcha.vue";
+import Toggletip from "./components/utils/Toggletip/Toggletip.vue";
 
 import "./components/vanilla/tabs";
 import "./components/vanilla/accordion";
@@ -56,6 +57,7 @@ const configAndMountApp = (el) => {
   app.component("request-membership", RequestMembership);
   app.component("dataset-resources", Resources);
   app.component("captcha", Captcha);
+  app.component("toggletip", Toggletip);
 
   // unset delimiters used in html templates to prevent injections using {{ }}
   app.config.compilerOptions.delimiters = [];

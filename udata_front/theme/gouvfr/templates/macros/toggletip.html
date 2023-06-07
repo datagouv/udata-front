@@ -1,0 +1,14 @@
+{# tooltip expects a call when used #}
+{# Call contents will be included in each caller() call #}
+{# To add different content for the <span> and the tooltip, you should check the call parameter. #}
+{# You'll receive `toggletip` for the caller inside the toggletip. #}
+{% macro toggletip(class) %}
+ <div class="vuejs">
+    <toggletip class="{{class}}">
+        {{caller()}}
+        <template v-slot:toggletip>
+            {{caller("toggletip")}}
+        </template>
+    </toggletip>
+</div>
+{% endmacro %}

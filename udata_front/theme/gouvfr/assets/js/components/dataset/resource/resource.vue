@@ -79,7 +79,7 @@
               :href="resource.latest"
               :title="$t('Download resource')"
               download
-              class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-download-line fr-icon--sm"
+              class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-download-line fr-icon--sm matomo_download"
             >
             </a>
           </p>
@@ -103,14 +103,44 @@
         <ul class="fr-tabs__list" role="tablist" :aria-label="$t('Resource menu')">
           <template v-if="hasExplore">
             <li role="presentation">
-              <button :id="resourcePreviewButtonId" class="fr-tabs__tab" tabindex="0" role="tab" aria-selected="true" :aria-controls="resourcePreviewTabId">{{$t('Preview')}}</button>
+              <button
+                :id="resourcePreviewButtonId"
+                class="fr-tabs__tab"
+                tabindex="0"
+                role="tab"
+                aria-selected="true"
+                :aria-controls="resourcePreviewTabId"
+                @click="registerEvent(resourcePreviewButtonId)"
+              >
+                {{$t('Preview')}}
+              </button>
             </li>
             <li role="presentation">
-              <button :id="resourceStructureButtonId" class="fr-tabs__tab" tabindex="0" role="tab" aria-selected="false" :aria-controls="resourceStructureTabId">{{$t('Data structure')}}</button>
+              <button
+                :id="resourceStructureButtonId"
+                class="fr-tabs__tab"
+                tabindex="0"
+                role="tab"
+                aria-selected="false"
+                :aria-controls="resourceStructureTabId"
+                @click="registerEvent(resourceStructureButtonId)"
+              >
+                {{$t('Data structure')}}
+              </button>
             </li>
           </template>
           <li role="presentation">
-            <button :id="resourceInformationButtonId" class="fr-tabs__tab" :tabindex="resourceInformationTabIndex" role="tab" :aria-selected="resourceInformationSelectedTab" :aria-controls="resourceInformationTabId">{{$t('Metadata')}}</button>
+            <button
+              :id="resourceInformationButtonId"
+              class="fr-tabs__tab"
+              :tabindex="resourceInformationTabIndex"
+              role="tab"
+              :aria-selected="resourceInformationSelectedTab"
+              :aria-controls="resourceInformationTabId"
+              @click="registerEvent(resourceInformationButtonId)"
+            >
+              {{$t('Metadata')}}
+            </button>
           </li>
         </ul>
         <div
@@ -260,7 +290,7 @@
 </template>
 
 <script>
-import { inject, defineComponent, ref, computed } from "vue";
+import { defineComponent, ref, computed, unref } from "vue";
 import SchemaLoader from "./schema-loader.vue";
 import useOwnerName from "../../../composables/useOwnerName";
 import useResourceImage from "../../../composables/useResourceImage";
@@ -306,15 +336,44 @@ export default defineComponent({
     const owner = useOwnerName(props.resource);
     const resourceImage = useResourceImage(props.resource);
     const { getComponentsForHook } = useComponentsForHook();
+
     /** @type {import("vue").Ref<HTMLElement | undefined>} */
     const content = ref();
+
     const expanded = ref(false);
     const expand = () => {
+      if(expanded.value) {
+        globalThis._paq?.push(['trackEvent', 'Close resource', props.resource.id]);
+      } else {
+        globalThis._paq?.push(['trackEvent', 'Open resource', props.resource.id]);
+        if(hasExplore.value) {
+          registerEvent(resourcePreviewButtonId);
+        } else if (hasSchema.value) {
+          registerEvent(resourceStructureButtonId);
+        } else {
+          registerEvent(resourceInformationButtonId);
+        }
+      }
       expanded.value = !expanded.value;
       if(content.value) {
         toggleAccordion(content.value, expanded.value);
       }
     }
+
+    /**
+     *
+     * @param {import("vue").ComputedRef<string> | string} tab Tab name
+     */
+    const registerEvent = (tab) => {
+      const tabName = unref(tab);
+      globalThis._paq?.push(['trackEvent', 'View resource tab', props.resource.id, tab]);
+      if(tabName === resourcePreviewButtonId.value) {
+        globalThis._paq?.push(['trackEvent', 'Show preview', props.resource.id]);
+      } else if (tabName === resourceStructureButtonId.value) {
+        globalThis._paq?.push(['trackEvent', 'Show data structure', props.resource.id]);
+      }
+    }
+
     const availabilityChecked = computed(() => props.resource.extras && props.resource.extras['check:status']);
     const lastUpdate = computed(() => props.resource.last_modified);
     const unavailable = computed(() => availabilityChecked.value && availabilityChecked.value >= 400);
@@ -337,6 +396,7 @@ export default defineComponent({
     const resourceInformationTabIndex = computed(() => hasExplore.value ? -1 : 0);
 
     return {
+      registerEvent,
       owner,
       resourceImage,
       filesize,

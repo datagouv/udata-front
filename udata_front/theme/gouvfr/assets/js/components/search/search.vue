@@ -97,7 +97,7 @@
                     {{$t('Reset filters')}}
                   </button>
                   <a
-                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-download-line fr-btn--icon-left justify-center w-100"
+                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-download-line fr-btn--icon-left justify-center w-100 matomo_download"
                     :href="downloadLink"
                     v-else-if="downloadLink"
                   >
