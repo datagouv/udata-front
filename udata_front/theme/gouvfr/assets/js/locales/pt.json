@@ -154,5 +154,8 @@
   "on {date}": "on {date}",
   "Download list as CSV": "Download list as CSV",
   "today": "today",
-  "See {n} messages": ""
+  "See {n} messages": "",
+  "Select an option": "",
+  "Step {n} of {count}": "",
+  "Next Step:": ""
 }
