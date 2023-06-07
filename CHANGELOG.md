@@ -8,6 +8,7 @@
 - Remove cache around dataset, reuse and organization modify button [#256](https://github.com/etalab/udata-front/pull/256)
 - Fix display temporal coverage on dataset page [#261](https://github.com/etalab/udata-front/pull/261)
 - Fix tooltip accessibility [#259](https://github.com/etalab/udata-front/pull/259)
+- Update DSFR to 1.9 [#249](https://github.com/etalab/udata-front/pull/249)
 
 ## 3.2.3 (2023-05-16)
 
