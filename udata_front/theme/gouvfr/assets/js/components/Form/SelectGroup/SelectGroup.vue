@@ -10,7 +10,6 @@
       :class="{ 'fr-select--error': hasError, 'fr-select--valid': isValid }"
       :aria-describedby="ariaDescribedBy"
       :id="id"
-      name="select-valid"
       :required="required"
       @change="change"
     >

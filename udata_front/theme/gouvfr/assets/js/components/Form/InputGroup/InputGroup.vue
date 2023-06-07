@@ -1,12 +1,100 @@
 <template>
-  <div class="fr-input-group fr-input-group--error">
-    <label class="fr-label" for="text-input-error">
-      Label champs de saisie
+  <div class="fr-input-group" :class="{ 'fr-select-group--error': hasError, 'fr-select-group--valid': isValid }">
+    <label class="fr-label" :for="id">
+      {{ label }}
+      <Required :required="required"/>
+      <span class="fr-hint-text" v-if="hintText">{{ hintText }}</span>
     </label>
-    <input class="fr-input fr-input--error" aria-describedby="text-input-error-desc-error" type="text" id="text-input-error" name="text-input-error">
-    <p id="text-input-error-desc-error" class="fr-error-text">
-      Texte d’erreur obligatoire
+    <input
+      class="fr-input"
+      :class="{ 'fr-input--error': hasError, 'fr-input--valid': isValid }"
+      :aria-describedby="ariaDescribedBy"
+      :id="id"
+      type="text"
+    />
+    <p :id="validTextId" class="fr-valid-text" v-if="isValid">
+      {{ validText }}
+    </p>
+    <p :id="validTextId" class="fr-error-text" v-else-if="hasError">
+      {{ errorText }}
     </p>
   </div>
 </template>
-<script></script>
+
+<script>
+import { computed, defineComponent } from 'vue';
+import useUid from '../../../composables/useUid';
+import Required from '../Required/Required.vue';
+
+export default defineComponent({
+  components: { Required },
+  emits: ['update:modelValue'],
+  props: {
+    errorText: {
+      type: String,
+      default: "",
+    },
+    hasError: {
+      type: Boolean,
+      default: false,
+    },
+    hintText: {
+      type: String,
+      default: "",
+    },
+    isValid: {
+      type: Boolean,
+      default: false,
+    },
+    label: {
+      type: String,
+      required: true,
+    },
+    modelValue: {
+      type: String,
+      default: undefined,
+    },
+    required: {
+      type: Boolean,
+      default: false
+    },
+    validText: {
+      type: String,
+      default: "",
+    },
+  },
+  setup(props, { emit }) {
+    const { id } = useUid("select");
+
+const errorTextId = computed(() => id + "-desc-error");
+const validTextId = computed(() => id + "-desc-valid");
+const ariaDescribedBy = computed(() => {
+  let describedBy = "";
+  if (props.isValid) {
+    describedBy += " " + validTextId;
+  }
+  else if (props.hasError) {
+    describedBy += " " + errorTextId;
+  }
+  return describedBy;
+});
+
+/**
+ *
+ * @param {Event} event
+ */
+const change = (event) => {
+  const target = /** @type {HTMLSelectElement | null} */ (event.target);
+  emit('update:modelValue', target?.value);
+}
+
+return {
+  ariaDescribedBy,
+  change,
+  errorTextId,
+  id,
+  validTextId,
+};
+  },
+});
+</script>
