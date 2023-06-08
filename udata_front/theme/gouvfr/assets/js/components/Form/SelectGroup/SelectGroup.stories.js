@@ -45,7 +45,7 @@ export const SelectWithError = {
   },
 };
 
-export const SelectInSuccess = {
+export const SelectSuccessState = {
   render: (args) => ({
     components: { SelectGroup },
     setup() {

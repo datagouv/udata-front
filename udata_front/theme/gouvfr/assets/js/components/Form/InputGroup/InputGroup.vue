@@ -1,5 +1,5 @@
 <template>
-  <div class="fr-input-group" :class="{ 'fr-select-group--error': hasError, 'fr-select-group--valid': isValid }">
+  <div class="fr-input-group" :class="inputGroupClass">
     <label class="fr-label" :for="id">
       {{ label }}
       <Required :required="required"/>
@@ -10,6 +10,7 @@
       :class="{ 'fr-input--error': hasError, 'fr-input--valid': isValid }"
       :aria-describedby="ariaDescribedBy"
       :id="id"
+      :disabled="disabled"
       type="text"
     />
     <p :id="validTextId" class="fr-valid-text" v-if="isValid">
@@ -30,6 +31,10 @@ export default defineComponent({
   components: { Required },
   emits: ['update:modelValue'],
   props: {
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
     errorText: {
       type: String,
       default: "",
@@ -79,6 +84,14 @@ const ariaDescribedBy = computed(() => {
   return describedBy;
 });
 
+const inputGroupClass = computed(() => {
+      return {
+        'fr-input-group--disabled': props.disabled,
+        'fr-input-group--error': props.hasError,
+        'fr-input-group--valid': props.isValid
+      };
+    });
+
 /**
  *
  * @param {Event} event
@@ -93,6 +106,7 @@ return {
   change,
   errorTextId,
   id,
+  inputGroupClass,
   validTextId,
 };
   },
