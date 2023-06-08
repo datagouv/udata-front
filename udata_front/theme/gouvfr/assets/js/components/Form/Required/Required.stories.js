@@ -1,7 +1,7 @@
 import Required from './Required.vue';
 
 export default {
-  title: 'Components/Required',
+  title: 'Internals/Required',
   component: Required,
 };
 
