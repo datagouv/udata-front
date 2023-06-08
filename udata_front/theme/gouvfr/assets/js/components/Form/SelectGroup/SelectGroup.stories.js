@@ -6,6 +6,7 @@ export default {
 };
 
 const args = {
+  disabled: false,
   errorText: "This field is mandatory.",
   hasError: false,
   hintText: "Select an option to fill this field.",
@@ -19,7 +20,7 @@ const args = {
   validText: "The field is valid !",
 };
 
-export const EmptySelect = {
+export const Select = {
   render: (args) => ({
     components: { SelectGroup },
     setup() {
@@ -30,7 +31,7 @@ export const EmptySelect = {
   args,
 };
 
-export const SelectInError = {
+export const SelectWithError = {
   render: (args) => ({
     components: { SelectGroup },
     setup() {
@@ -41,5 +42,33 @@ export const SelectInError = {
   args: {
     ...args,
     hasError: true,
+  },
+};
+
+export const SelectInSuccess = {
+  render: (args) => ({
+    components: { SelectGroup },
+    setup() {
+      return { args };
+    },
+    template: '<SelectGroup v-bind="args" />',
+  }),
+  args: {
+    ...args,
+    isValid: true,
+  },
+};
+
+export const DisabledSelect = {
+  render: (args) => ({
+    components: { SelectGroup },
+    setup() {
+      return { args };
+    },
+    template: '<SelectGroup v-bind="args" />',
+  }),
+  args: {
+    ...args,
+    disabled: true,
   },
 };
