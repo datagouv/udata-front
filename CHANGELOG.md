@@ -6,6 +6,8 @@
 - Fix `img` folder not copied [#255](https://github.com/etalab/udata-front/pull/255)
 - Add breadcrumbs to pages [#258](https://github.com/etalab/udata-front/pull/258)
 - Remove cache around dataset, reuse and organization modify button [#256](https://github.com/etalab/udata-front/pull/256)
+- Fix display temporal coverage on dataset page [#261](https://github.com/etalab/udata-front/pull/261)
+- Fix tooltip accessibility [#259](https://github.com/etalab/udata-front/pull/259)
 - Fix tab sequence on dataset page [#265](https://github.com/etalab/udata-front/pull/265)
 
 ## 3.2.3 (2023-05-16)
