@@ -3,7 +3,7 @@
     <h3 class="fr-accordion__title">
       <button
         class="fr-accordion__btn"
-        aria-expanded="false"
+        :aria-expanded="opened"
         :aria-controls="id"
       >
         {{ title }}
@@ -24,16 +24,23 @@ import useUid from '../../composables/useUid';
 
 export default defineComponent({
   props: {
+    id: {
+      type: String,
+    },
     title: {
       type: String,
       required: true,
+    },
+    opened: {
+      type: Boolean,
+      default: false,
     }
   },
   setup(props) {
     const { id } = useUid("accordion");
 
     return {
-      id,
+      id: props.id || id,
     }
   },
 });
