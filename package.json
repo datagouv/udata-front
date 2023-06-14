@@ -52,7 +52,7 @@
     "rollup-plugin-copy": "^3.4.0",
     "start-server-and-test": "^1.15.4",
     "terser": "^5.15.1",
-    "vite": "^4.2.1",
+    "vite": "^4.3.9",
     "vue": "^3.2.47",
     "vue-content-loader": "^2.0.1",
     "vue-i18n": "^9.2.2",
