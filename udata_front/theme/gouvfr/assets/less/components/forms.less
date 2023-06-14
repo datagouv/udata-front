@@ -92,7 +92,6 @@ form.form {
 .fr-toggle {
     --border-action-high-blue-france: @blue-400;
     >input[type="checkbox"] {
-        z-index: 200;
         &:checked {
             --background-active-blue-france: @blue-400;
             --background-active-blue-france-hover: @blue-400-hover;
@@ -109,19 +108,5 @@ form.form {
         >label::before {
             display: none;
         }
-    }
-}
-
-// define custom fr-hr-or, not available in current DSFR version
-.fr-hr-or {
-    width: 100%; 
-    text-align: center; 
-    border-bottom: 1px solid @background-contrast-grey;
-    line-height: 0.1em;
-    margin: 10px 0 20px;
-
-    .fr-hr-or-text {
-        background:#fff; 
-        padding:0 10px; 
     }
 }

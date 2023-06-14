@@ -18,6 +18,21 @@ html {
     overflow-wrap: break-word;
 }
 
+:where(nav li):before {
+    content: "";
+    float: none;
+}
+
+:where(code, kbd, samp) {
+    font-family:
+        ui-monospace,
+        "Cascadia Mono", "Segoe UI Mono",
+        "Ubuntu Mono",
+        "Roboto Mono",
+        Menlo, Monaco, Consolas,
+        monospace;
+}
+
 // end of Sanitize.css overrides
 
 ul {
@@ -41,14 +56,4 @@ a:not([href]) {
     --xl-block: 0;
     --li-bottom: 0;
     --text-spacing: 1em 0;
-}
-
-:where(code, kbd, samp) {
-    font-family:
-        ui-monospace,
-        "Cascadia Mono", "Segoe UI Mono",
-        "Ubuntu Mono",
-        "Roboto Mono",
-        Menlo, Monaco, Consolas,
-        monospace;
 }
