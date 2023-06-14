@@ -139,8 +139,9 @@ a {
 }
 
 .fr-enlarge-link .not-enlarged a {
+    background-image: var(--underline-img),var(--underline-img);
     &:hover {
-        background-image: var(--underline-img), var(--underline-img) !important;
+        &:extend([href]);
     }
     &::before {
         background: none;
