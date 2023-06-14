@@ -8,6 +8,7 @@
 - Remove cache around dataset, reuse and organization modify button [#256](https://github.com/etalab/udata-front/pull/256)
 - Fix display temporal coverage on dataset page [#261](https://github.com/etalab/udata-front/pull/261)
 - Fix tooltip accessibility [#259](https://github.com/etalab/udata-front/pull/259)
+- Fix [dependabot/17](https://github.com/etalab/udata-front/security/dependabot/17) and [dependabot/18](https://github.com/etalab/udata-front/security/dependabot/18) [#264](https://github.com/etalab/udata-front/pull/264). These aren't udata-front vulnerabilities but only impact vite dev server (unused in `gouvfr` theme).
 
 ## 3.2.3 (2023-05-16)
 
