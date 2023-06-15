@@ -12,6 +12,7 @@
 - Fix [dependabot/17](https://github.com/etalab/udata-front/security/dependabot/17) and [dependabot/18](https://github.com/etalab/udata-front/security/dependabot/18) [#264](https://github.com/etalab/udata-front/pull/264). These aren't udata-front vulnerabilities but only impact vite dev server (unused in `gouvfr` theme).
 - Update DSFR to 1.9 [#249](https://github.com/etalab/udata-front/pull/249)
 - Fix tab sequence on dataset page [#265](https://github.com/etalab/udata-front/pull/265)
+- Fix button to show closed discussion [#253](https://github.com/etalab/udata-front/pull/253)
 
 ## 3.2.3 (2023-05-16)
 
@@ -30,7 +31,6 @@
 - Add Matomo event tracking [#246](https://github.com/etalab/udata-front/pull/246)
 - New scope for Captchetat piste OAuth [#250](https://github.com/etalab/udata-front/pull/250)
 - Use `datetime.utcnow` to make sure to handle utc datetimes [#251](https://github.com/etalab/udata-front/pull/251)
-- Fix button to show closed discussion [#253](https://github.com/etalab/udata-front/pull/253)
 
 ## 3.2.2 (2023-04-18)
 
