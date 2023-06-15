@@ -18,8 +18,8 @@ export const LinkedToClosedAccordion = {
     },
     template: ` <div>
                   <Accordion :id="args.accordion" title="The accordion">Some content</Accordion>
-                  <LinkedToAccordion v-bind="args">
-                    <input class="fr-input fr-mt-2w" />
+                  <LinkedToAccordion v-bind="args" v-slot="slotProps">
+                    <input :aria-describedby="args.accordion" class="fr-input fr-mt-2w" />
                   </LinkedToAccordion>
                 </div>`,
   }),
