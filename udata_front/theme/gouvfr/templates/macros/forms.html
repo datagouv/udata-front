@@ -20,7 +20,8 @@
         {{ f.label.text }}
     </label>
     {% if f.id == "email" %}
-    <input id="{{ f.id }}" name="{{ f.id }}" type="email" {% if f.flags.required %}required{% endif %}/>
+        <p class="fr-hint-text fr-mt-n1v fr-mb-1v">{{_("Expected format : name@domain.fr")}}</p>
+        <input id="{{ f.id }}" name="{{ f.id }}" autocomplete="email" type="email" {% if f.flags.required %}required{% endif %}/>
     {% else %}
     {{ f() }}
     {% endif %}

@@ -17,7 +17,7 @@ from . import front
 from udata.core.dataset.apiv2 import dataset_fields
 from udata.core.dataset.models import Dataset
 from udata.models import db
-from udata.i18n import format_date, format_timedelta, _, pgettext
+from udata.i18n import get_locale, format_date, format_timedelta, _, pgettext
 from udata.search.result import SearchResult
 from udata.utils import camel_to_lodash
 from udata_front.theme import theme_static_with_version
@@ -364,14 +364,9 @@ def i18n_alternate_links():
         LINK_PATTERN = (
             '<link rel="alternate" href="{url}" hreflang="{lang}" />')
         links = []
-        params = {}
-        if request.args:
-            params.update(request.args)
-        if request.view_args:
-            params.update(request.view_args)
 
         for lang in current_app.config['LANGUAGES']:
-            url = url_for(request.endpoint, lang_code=lang, **params, _external=True)
+            url = language_url(lang)
             links.append(LINK_PATTERN.format(url=url, lang=lang))
         return Markup(''.join(links))
     except Exception:
@@ -445,3 +440,32 @@ def visibles(value):
 @front.app_template_global()
 def selected(current_value, value):
     return 'selected' if current_value == value else ''
+
+
+@front.app_template_global()
+def current_language_name():
+    '''Get the name of the current locale.'''
+    locale = get_locale()
+    for code, name in current_app.config['LANGUAGES'].items():
+        if locale == code:
+            return name
+
+
+@front.app_template_global()
+def language_url(lang_code):
+    '''Create an URL for the current endpoint and the given language code'''
+    params = {}
+    endpoint = request.endpoint
+    if request.args:
+        params.update(request.args)
+    if request.view_args:
+        params.update(request.view_args)
+    if (not request.endpoint or
+            not current_app.url_map.is_endpoint_expecting(request.endpoint,
+                                                          'lang_code')):
+        endpoint = "site.home"
+    try:
+        return url_for(endpoint, lang_code=lang_code, **params, _external=True)
+    except Exception:
+        # Never fails
+        return url_for("site.home", lang_code=lang_code, **params, _external=True)

@@ -9,6 +9,9 @@
 - Fix display temporal coverage on dataset page [#261](https://github.com/etalab/udata-front/pull/261)
 - Fix tooltip accessibility [#259](https://github.com/etalab/udata-front/pull/259)
 - Compute unavailability based on check:available instead of status logic [#267](https://github.com/etalab/udata-front/pull/267)
+- Fix [dependabot/17](https://github.com/etalab/udata-front/security/dependabot/17) and [dependabot/18](https://github.com/etalab/udata-front/security/dependabot/18) [#264](https://github.com/etalab/udata-front/pull/264). These aren't udata-front vulnerabilities but only impact vite dev server (unused in `gouvfr` theme).
+- Update DSFR to 1.9 [#249](https://github.com/etalab/udata-front/pull/249)
+- Fix tab sequence on dataset page [#265](https://github.com/etalab/udata-front/pull/265)
 
 ## 3.2.3 (2023-05-16)
 

@@ -17,10 +17,13 @@ Additionally, it also allows regular-non-awarded people to quickly identify publ
 @import (less) "@gouvfr/dsfr/dist/component/badge/badge.css";
 
 .fr-badge {
+    & > [class^="fr-icon-"]::before,
+    & > [class*=" fr-icon-"]::before {
+        display: inline-flex;
+        &:extend(.fr-icon--sm::before);
+    }
     & > [class^="fr-icon-"],
     & > [class*=" fr-icon-"] {
-        display: inline-flex;
-        .fr-icon--sm;
         .fr-mr-1v;
     }
 }
