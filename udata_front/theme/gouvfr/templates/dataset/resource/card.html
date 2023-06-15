@@ -1,8 +1,6 @@
 {% from theme('macros/description_list.html') import dl, dd, dt, WITHOUT_ELLIPSIS %}
 {% set resource_format = resource.format|trim|lower %}
-{% set available = resource.extras['check:status']
-    and resource.extras['check:status'] >= 200 and resource.extras['check:status'] < 400 %}
-{% set unavailable = resource.extras['check:status'] and resource.extras['check:status'] >= 400 %}
+{% set unavailable = resource.extras.get('check:available') == False %}
 {% set last_update = resource.last_modified %}
 <article>
     <header
@@ -42,7 +40,7 @@
         <div class="fr-col-auto fr-ml-auto">
             <ul class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
                 {% if unavailable %}
-                <li class="text-default-error fr-mr-5w" v-if="unavailable">
+                <li class="text-default-warning fr-mr-5w" v-if="unavailable">
                     {{ _('Unavailable') }}
                 </li>
                 {% endif %}
