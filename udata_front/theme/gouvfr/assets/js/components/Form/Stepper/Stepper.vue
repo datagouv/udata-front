@@ -1,10 +1,10 @@
 <template>
   <div class="fr-stepper">
     <h2 class="fr-stepper__title">
-      <span class="fr-stepper__state">{{ $t("Step {n} of {count}", { n: currentStep, count: stepCount }) }}</span>
+      <span class="fr-stepper__state">{{ $t("Step {n} of {count}", { n: currentStepNumber, count: stepCount }) }}</span>
       {{ currentStepName }}
     </h2>
-    <div class="fr-stepper__steps" :data-fr-current-step="currentStep" :data-fr-steps="stepCount"></div>
+    <div class="fr-stepper__steps" :data-fr-current-step="currentStepNumber" :data-fr-steps="stepCount"></div>
     <p class="fr-stepper__details" v-if="hasNextStep">
       <span class="fr-text--bold">{{ $t("Next Step:") }}</span> {{ nextStepName }}
     </p>
@@ -33,6 +33,7 @@ export default defineComponent({
   setup(props) {
     const stepCount = computed(() => props.steps.length);
     const currentStepName = computed(() => props.steps[props.currentStep]);
+    const currentStepNumber = computed(() => props.currentStep + 1);
     const hasNextStep = computed(() => props.currentStep + 1 < props.steps.length);
     const nextStepName = computed(() => {
       if (hasNextStep.value) {
@@ -42,6 +43,7 @@ export default defineComponent({
     });
     return {
       currentStepName,
+      currentStepNumber,
       hasNextStep,
       nextStepName,
       stepCount,
