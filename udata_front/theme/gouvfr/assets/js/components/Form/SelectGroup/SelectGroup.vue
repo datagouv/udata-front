@@ -47,7 +47,7 @@
 <script>
 import { computed, defineComponent } from 'vue';
 import useUid from '../../../composables/useUid';
-import Required from '../Required/Required.vue';
+import Required from '../../Ui/Required/Required.vue';
 
 /**
  * @typedef {Object} Option

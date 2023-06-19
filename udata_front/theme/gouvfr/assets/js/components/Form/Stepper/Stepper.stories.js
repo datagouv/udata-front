@@ -6,7 +6,7 @@ export default {
 };
 
 const args = {
-  steps: ["Step 1", "Second Step", "Third and last Step"],
+  steps: ["Publish data on data.gouv.fr", "Describe your dataset", "Add files", "Check information of your dataset", "Complete your publishing"],
   currentStep: 0,
 };
 
