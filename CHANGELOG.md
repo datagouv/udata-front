@@ -14,6 +14,7 @@
 - Fix tab sequence on dataset page [#265](https://github.com/etalab/udata-front/pull/265)
 - Fix button to show closed discussion [#253](https://github.com/etalab/udata-front/pull/253)
 - Replace housing venti button by agricultural topic [#268](https://github.com/etalab/udata-front/pull/268)
+- Fix header search [#269](https://github.com/etalab/udata-front/pull/269)
 
 ## 3.2.3 (2023-05-16)
 
