@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 3.2.4 (2023-06-19)
 
 - Fix word-wrap for dataset description [#254](https://github.com/etalab/udata-front/pull/254)
