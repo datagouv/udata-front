@@ -44,7 +44,7 @@
       </div>
       <div class="fr-col-auto fr-ml-auto">
         <div class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
-          <p class="text-default-error fr-m-0" v-if="unavailable">
+          <p class="text-default-warning fr-m-0" v-if="unavailable">
             {{$t('Unavailable')}}
           </p>
           <p class="fr-col-auto fr-ml-3v fr-m-0">
@@ -374,9 +374,9 @@ export default defineComponent({
       }
     }
 
-    const availabilityChecked = computed(() => props.resource.extras && props.resource.extras['check:status']);
+    const availabilityChecked = computed(() => props.resource.extras && props.resource.extras['check:available']);
     const lastUpdate = computed(() => props.resource.last_modified);
-    const unavailable = computed(() => availabilityChecked.value && availabilityChecked.value >= 400);
+    const unavailable = computed(() => availabilityChecked.value === false);
     const { authorizeValidation, documentationUrl, loading, validationUrl, schemaReport} = useSchema(props.resource);
     const hasSchema = computed(() => !!props.resource.schema.name || !!props.resource.schema.url);
     const hasSchemaErrors = computed(() => !!schemaReport.value.size);

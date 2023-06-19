@@ -1,33 +1,27 @@
-/*
----
-name: Tooltip
-category: 3 - Components
----
-
-You can use tooltips to show more information in context.
-
-*/
-
-.tooltip__wrapper {
-    cursor: help;
+.toggletip__wrapper, .tooltip__wrapper {
     position: relative;
     z-index: 3;
 }
 
-.tooltip {
+.toggletip__wrapper, .tooltip__wrapper {
+    cursor: help;
+
+    button:focus + .tooltip {
+        display: block;
+    }
+}
+
+.toggletip, .tooltip {
     .fr-text--sm;
     .fr-my-0;
     .fr-p-3v;
     background: white;
     color: @grey-500;
     border-radius: 4px;
-    display: block;
-    visibility: hidden;
     left: 0;
     top: 1.5rem;
     width: 23rem;
     max-width: calc(100vw - 2rem);
-    pointer-events: none;
     position: absolute;
     z-index: 100;
     box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.23),
@@ -54,7 +48,10 @@ You can use tooltips to show more information in context.
     width: 100%;
 }
 
+.tooltip {
+    display: none;
+}
+
 .tooltip__wrapper:hover .tooltip {
-    visibility: visible;
-    pointer-events: auto;
+    display: block;
 }

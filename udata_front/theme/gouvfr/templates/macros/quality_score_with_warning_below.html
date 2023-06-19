@@ -1,16 +1,18 @@
 {% from theme('macros/quality_item_warning.html') import quality_item_warning %}
-{% from theme('macros/quality_score_tooltip.html') import quality_score_tooltip %}
+{% from theme('macros/quality_score_toggletip.html') import quality_score_toggletip %}
 {% from theme('macros/quality_score.html') import quality_score %}
 
 {% macro quality_score_with_warning_below(dataset, class) %}
-<section>
-    {% call quality_score_tooltip(dataset, "w-100") %}
-        <h2 class="subtitle fr-mb-1v">
-            <span class="fr-icon-info-line fr-mr-1v" aria-hidden="true"></span>
+<section aria-labelledby="metadata-quality">
+    <div class="fr-grid-row fr-grid-row--middle fr-ml-n1v">
+        {% call quality_score_toggletip(dataset, "fr-btn fr-btn--tertiary-no-outline fr-btn--secondary-grey-500 fr-icon-info-line") %}
+            {{_('Metadata quality')}}
+        {% endcall %}
+        <h2 class="subtitle fr-m-0" aria-hidden="true">
             {{_('Metadata quality')}}
         </h2>
-        {{quality_score(dataset.quality.score, "w-100")}}
-    {% endcall %}
+    </div>
+    {{quality_score(dataset.quality.score, "w-100")}}
     {{quality_item_warning(
         dataset.quality.dataset_description_quality,
         _("Data description empty"),
