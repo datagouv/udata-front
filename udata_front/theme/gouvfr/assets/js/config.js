@@ -124,6 +124,16 @@ export const schema_documentation_url = _meta("schema-documentation-url");
 export const schema_validata_url = _meta("schema-validata-url");
 
 /**
+ * The demo server URL
+ */
+export const demo_server_url = _meta("demo-server-url");
+
+/**
+ * The demo server name
+ */
+export const demo_server_name = _meta("demo-server-name");
+
+/**
  * Sentry configuration (as json) if available
  */
 const sentryEl = document.querySelector("meta[name=sentry]");
@@ -219,6 +229,8 @@ export default {
   lang,
   title,
   csrf_token,
+  demo_server_url,
+  demo_server_name,
   api_root,
   api_2_root,
   api_specs,

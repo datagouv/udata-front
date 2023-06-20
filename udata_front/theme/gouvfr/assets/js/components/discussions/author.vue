@@ -10,16 +10,15 @@
 </template>
 
 <script>
+import { defineComponent } from "vue";
 
-/** @typedef {object} User
- * @property {String} first_name
- * @property {String} last_name
- */
-
-export default {
+export default defineComponent({
   props: {
-    author: Object,
+    author: {
+      /** @type {import("vue").PropType<import("../types").User>} */
+      type: Object,
+    },
     badge: Boolean
   }
-};
+});
 </script>

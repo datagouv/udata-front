@@ -1,5 +1,5 @@
 <template>
-  <div class="well" :class="wellClass">
+  <div class="well" :class="classes">
     <slot></slot>
   </div>
 </template>
@@ -7,26 +7,27 @@
 <script>
 import { computed, defineComponent } from 'vue';
 
-/**
- * @typedef {"primary" | "secondary"} WellType
- */
-
 export default defineComponent({
   props: {
     type: {
-      /** @type {import("vue").PropType<WellType>} */
-      type: /** @type {import("vue").PropType<WellType>} */(String),
+      type: /** @type {import("vue").PropType<import("../../types").WellType>} */(String),
       default: "primary"
     },
     color: {
       type: String,
       default: "grey-100",
+    },
+    weight: {
+      type: /** @type {import("vue").PropType<import("../../types").Weight>} */(String),
+      default: "semi-bold",
     }
   },
   setup(props) {
     const wellClass = computed(() => `well${props.type === "primary" ? "" : "-" + props.type}-${props.color}`);
+    const weightClass = computed(() => `fr-text--${props.weight}`);
+    const classes = computed(() => weightClass.value + " " + wellClass.value);
     return {
-      wellClass,
+      classes
     };
   },
 });

@@ -142,7 +142,7 @@ export default defineComponent({
      * @property {String} title
      * @property {String} url
      * @property {String} closed - date when the thread was closed, as string
-     * @property {import("./author.vue").User} closed_by - User who closed the thread
+     * @property {import("../types").User} closed_by - User who closed the thread
      */
 
     /** @type {import("vue").Ref<Thread | null>} */

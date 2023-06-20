@@ -157,5 +157,6 @@
   "See {n} messages": "No messages | See the message | See {n} messages",
   "Select an option": "Select an option",
   "Step {n} of {count}": "Step {n} of {count}",
-  "Next Step:": "Next Step:"
+  "Next Step:": "Next Step:",
+  "If you want to do tests, use {demo_server}.": "If you want to do tests, use {demo_server}."
 }
