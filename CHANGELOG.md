@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Hide CaptchEtat icon loader [#272](https://github.com/etalab/udata-front/pull/272)
 
 ## 3.2.4 (2023-06-19)
 
