@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix reuse page padding for discussions and reuses section [#270](https://github.com/etalab/udata-front/pull/270)
 
 ## 3.2.4 (2023-06-19)
 
