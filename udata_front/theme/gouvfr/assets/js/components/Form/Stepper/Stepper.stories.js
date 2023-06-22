@@ -20,3 +20,17 @@ export const StepperOnFirstStep = {
   }),
   args,
 };
+
+export const StepperOnSecondStep = {
+  render: (args) => ({
+    components: { Stepper },
+    setup() {
+      return { args };
+    },
+    template: '<Stepper v-bind="args" />',
+  }),
+  args: {
+    ...args,
+    currentStep: 1,
+  },
+};
