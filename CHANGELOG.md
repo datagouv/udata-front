@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix dataset oembed links [#271](https://github.com/etalab/udata-front/pull/271)
 
 ## 3.2.4 (2023-06-19)
 
