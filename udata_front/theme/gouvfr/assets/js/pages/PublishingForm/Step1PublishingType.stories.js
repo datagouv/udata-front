@@ -3,7 +3,7 @@ import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
 
 
 export default {
-  title: 'PublishingForm/Step1',
+  title: 'Pages/PublishingForm/Step1',
   component: Step1PublishingType,
 };
 
