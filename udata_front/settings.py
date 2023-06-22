@@ -32,6 +32,9 @@ PAGES_REPO_BRANCH = 'master'
 APIGOUVFR_URL = 'https://api.gouv.fr/api/v1/apis'
 APIGOUVFR_ALLOW_OPENNESS = ['open', 'semi_open']
 
+# catalogue.data.gouv.fr
+CATALOG_URL = 'https://catalogue.data.gouv.fr/'
+
 # Etalab Guides
 ETALAB_GUIDES_URL = 'https://guides.etalab.gouv.fr'
 GUIDES_USER_ACCOUNT_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/creer-compte-utilisateur/'

@@ -134,6 +134,17 @@ export const demo_server_url = _meta("demo-server-url");
 export const demo_server_name = _meta("demo-server-name");
 
 /**
+ * The API documentation external link
+ */
+
+export const api_doc_external_link = _meta("api-doc-external-link");
+
+/**
+ * The catalog service URL
+ */
+export const catalog_url = _meta("catalog-url");
+
+/**
  * Sentry configuration (as json) if available
  */
 const sentryEl = document.querySelector("meta[name=sentry]");
@@ -228,9 +239,11 @@ export default {
   debug,
   lang,
   title,
+  catalog_url,
   csrf_token,
   demo_server_url,
   demo_server_name,
+  api_doc_external_link,
   api_root,
   api_2_root,
   api_specs,

@@ -10,7 +10,7 @@ import { computed, defineComponent } from 'vue';
 export default defineComponent({
   props: {
     type: {
-      type: /** @type {import("vue").PropType<import("../../types").WellType>} */(String),
+      type: /** @type {import("vue").PropType<import("../../../types").WellType>} */(String),
       default: "primary"
     },
     color: {
@@ -18,7 +18,7 @@ export default defineComponent({
       default: "grey-100",
     },
     weight: {
-      type: /** @type {import("vue").PropType<import("../../types").Weight>} */(String),
+      type: /** @type {import("vue").PropType<import("../../../types").Weight>} */(String),
       default: "semi-bold",
     }
   },

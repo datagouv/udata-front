@@ -19,7 +19,7 @@ export default {
       ],
       control: 'select',
     }
-  }
+  },
 };
 
 const args = {

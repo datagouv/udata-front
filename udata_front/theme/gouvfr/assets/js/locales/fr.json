@@ -157,5 +157,18 @@
   "See {n} messages": "Aucun message | Voir le message | Voir {n} messages",
   "Select an option": "",
   "Step {n} of {count}": "",
-  "Next Step:": ""
+  "Next Step:": "",
+  "Publishing type": "",
+  "Publish a dataset": "",
+  "Administration or public society, everybody can publish on {site} !": "",
+  "Start publishing": "",
+  "Publish with a schema": "",
+  "Are your data following a reference schema ? Validate, correct and publish your data on {site} !": "",
+  "Use our dedicated tool": "",
+  "Are you an administration and do you want to automate your data publishing ?": "",
+  "You can automatically publish via API or by linking your open data portal to {site} with an harvester.": "",
+  "See API documentation": "",
+  "Learn more about harvesting": "",
+  "Contact us": "",
+  "If you want to do tests, use {demo_server}.": ""
 }

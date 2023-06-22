@@ -158,5 +158,17 @@
   "Select an option": "Select an option",
   "Step {n} of {count}": "Step {n} of {count}",
   "Next Step:": "Next Step:",
-  "If you want to do tests, use {demo_server}.": "If you want to do tests, use {demo_server}."
+  "If you want to do tests, use {demo_server}.": "If you want to do tests, use {demo_server}.",
+  "Publishing type": "Publishing type",
+  "Publish a dataset": "Publish a dataset",
+  "Administration or public society, everybody can publish on {site} !": "Administration or public society, everybody can publish on {site} !",
+  "Start publishing": "Start publishing",
+  "Publish with a schema": "Publish with a schema",
+  "Are your data following a reference schema ? Validate, correct and publish your data on {site} !": "Are your data following a reference schema ? Validate, correct and publish your data on {site} !",
+  "Use our dedicated tool": "Use our dedicated tool",
+  "Are you an administration and do you want to automate your data publishing ?": "Are you an administration and do you want to automate your data publishing ?",
+  "You can automatically publish via API or by linking your open data portal to {site} with an harvester.": "You can automatically publish via API or by linking your open data portal to {site} with an harvester.",
+  "See API documentation": "See API documentation",
+  "Learn more about harvesting": "Learn more about harvesting",
+  "Contact us": "Contact us"
 }

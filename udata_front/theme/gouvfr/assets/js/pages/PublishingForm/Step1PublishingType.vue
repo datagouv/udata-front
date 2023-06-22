@@ -5,7 +5,7 @@
       <h1 class="subtitle subtitle--uppercase">
         {{ $t("Publishing type") }}
       </h1>
-      <Well weight="regular">
+      <Well weight="regular" class="fr-mb-3w">
         <i18n-t
           keypath="If you want to do tests, use {demo_server}."
           scope="global"
@@ -15,19 +15,88 @@
           </template>
         </i18n-t>
       </Well>
+      <div class="fr-grid-row fr-grid-row--gutters">
+        <div class="fr-col-12 fr-col-md-6">
+          <ActionCard
+            :title="$t('Publish a dataset')"
+            :content="$t('Administration or public society, everybody can publish on {site} !', {site: title})"
+            :icon="datasetIcon"
+            actionsAlignment="end"
+            :stretchHeight="true"
+          >
+            <template #actions>
+              <button class="fr-btn">{{ $t("Start publishing") }}</button>
+            </template>
+          </ActionCard>
+        </div>
+        <div class="fr-col-12 fr-col-md-6">
+          <ActionCard
+            :title="$t('Publish with a schema')"
+            :content="$t('Are your data following a reference schema ? Validate, correct and publish your data on {site} !', {site: title})"
+            :icon="schemaIcon"
+            actionsAlignment="end"
+            :stretchHeight="true"
+          >
+            <template #actions>
+              <button class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500">
+                {{ $t("Use our dedicated tool") }}
+              </button>
+            </template>
+          </ActionCard>
+        </div>
+      </div>
     </Container>
+    <section class="fr-mt-3w" aria-labelledby="documentation-links">
+      <h2 id="documentation-links" class="fr-m-0 fr-mb-3v fr-text--md fr-text--bold">
+        {{ $t("Are you an administration and do you want to automate your data publishing ?") }}
+      </h2>
+      <p class="fr-m-0 fr-mb-3v">
+        {{ $t("You can automatically publish via API or by linking your open data portal to {site} with an harvester.", {site: title}) }}
+      </p>
+      <div class="fr-grid-row fr-grid-row--gutters">
+        <div class="fr-col-auto">
+          <p class="fr-m-0">
+            <a class="fr-link" :href="api_doc_external_link" target="_blank">{{ $t("See API documentation") }}</a>
+          </p>
+        </div>
+        <div class="fr-col-auto">
+          <p class="fr-m-0">
+            <a class="fr-link" :href="api_doc_external_link" target="_blank">{{ $t("Learn more about harvesting") }}</a>
+          </p>
+        </div>
+        <div class="fr-col-auto">
+          <p class="fr-m-0">
+            <a class="fr-link" :href="api_doc_external_link" target="_blank">{{ $t("Contact us") }}</a>
+          </p>
+        </div>
+      </div>
+    </section>
+    <section class="fr-mt-5w" aria-labelledby="cataloging-links">
+      <h2 id="cataloging-links" class="fr-m-0 fr-mb-3v fr-text--md fr-text--bold">
+        {{ $t("Are you an administration and do you want to catalog your data ?") }}
+      </h2>
+      <p class="fr-m-0 fr-mb-3v">
+        {{ $t("You can use the service for central administrations to manage and open their data catalog.", {site: title}) }}
+      </p>
+      <p class="fr-m-0">
+        <a class="fr-link" :href="catalog_url" target="_blank">{{ $t("Go to cataloging space") }}</a>
+      </p>
+    </section>
   </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
+import ActionCard from '../../components/Form/ActionCard/ActionCard.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Container from '../../components/Ui/Container/Container.vue';
 import Well from '../../components/Ui/Well/Well.vue';
-import { demo_server_name, demo_server_url } from "../../config";
+import { api_doc_external_link, catalog_url, demo_server_name, demo_server_url, title } from "../../config";
+import datasetIcon from "svg/illustrations/dataset.svg";
+import schemaIcon from "svg/illustrations/schema.svg";
 
 export default defineComponent({
-  components: { Container, Stepper, Well },
+  components: { ActionCard, Container, Stepper, Well },
   props: {
     steps: {
       type: Array,
@@ -36,10 +105,14 @@ export default defineComponent({
   },
   setup(props) {
     return {
+      api_doc_external_link,
+      catalog_url,
       demo_server_name,
       demo_server_url,
+      datasetIcon,
+      schemaIcon,
+      title,
     }
   },
-
 });
 </script>
