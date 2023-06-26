@@ -83,10 +83,11 @@ def init_app(app):
     if app.config.get('CAPTCHETAT_BASE_URL'):
         # Security override init
         from udata.auth import security
-        from udata_front.forms import ExtendedRegisterForm
+        from udata_front.forms import ExtendedRegisterForm, ExtendedForgotPasswordForm
         with app.app_context():
             security.forms['register_form'].cls = ExtendedRegisterForm
             security.forms['confirm_register_form'].cls = ExtendedRegisterForm
+            security.forms['forgot_password_form'].cls = ExtendedForgotPasswordForm
 
     if app.config.get('MONCOMPETPRO_OPENID_CONF_URL'):
         # MonComptPro SSO

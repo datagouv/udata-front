@@ -1,7 +1,7 @@
 import requests
 
 from flask import current_app
-from flask_security.forms import RegisterForm
+from flask_security.forms import RegisterForm, ForgotPasswordForm
 from udata.forms import fields
 from udata.forms import validators
 from udata.i18n import lazy_gettext as _
@@ -28,6 +28,33 @@ class ExtendedRegisterForm(RegisterForm):
             return False
 
         headers = {'Authorization': 'Bearer ' + bearer_token()}
+        captchetat_url = current_app.config.get('CAPTCHETAT_BASE_URL')
+        try:
+            resp = requests.post(f'{captchetat_url}/valider-captcha', headers=headers, json={
+                'id': self.captcha_id.data,
+                'code': self.captcha_code.data
+            })
+            if resp.text == 'true':
+                return True
+            self.captcha_code.errors.append(_('Invalid Captcha'))
+            return False
+        except requests.exceptions.RequestException:
+            return False
+
+
+class ExtendedForgotPasswordForm(ForgotPasswordForm):
+    captcha_code = fields.StringField(
+        _('captcha_input'), [validators.DataRequired()])
+
+    captcha_id = fields.StringField(
+        _('captcha_id'), [validators.DataRequired()])
+
+    def validate(self):
+        if not super().validate():
+            return False
+
+        headers = {'Authorization': 'Bearer ' + bearer_token()}
+        print(headers)
         captchetat_url = current_app.config.get('CAPTCHETAT_BASE_URL')
         try:
             resp = requests.post(f'{captchetat_url}/valider-captcha', headers=headers, json={
