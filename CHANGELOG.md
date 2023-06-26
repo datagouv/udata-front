@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Fix reuse page padding for discussions and reuses section [#270](https://github.com/etalab/udata-front/pull/270)
+- Fix dataset oembed links [#271](https://github.com/etalab/udata-front/pull/271)
 
 ## 3.2.4 (2023-06-19)
 
