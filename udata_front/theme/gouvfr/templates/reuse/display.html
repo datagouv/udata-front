@@ -175,7 +175,7 @@
         {% endwith %}
     </section>
     <section class="community_container fr-py-5v border-bottom" id="community">
-        <div class="fr-container vuejs">
+        <div class="vuejs">
             {% if not reuse.metrics.discussions %}
                 <h2 class="subtitle subtitle--uppercase fr-mb-3v">
                     {{ _('Discussions') }}
@@ -195,7 +195,7 @@
             </discussion-threads>
         </div>
     </section>
-    <section class="fr-container fr-py-5v">
+    <section class="fr-py-5v">
         {% if related_reuses %}
             <h2 class="subtitle subtitle--uppercase fr-mb-3v">
                 {{ ngettext('%(num)d reuse from the same creator', '%(num)d reuses from the same creator', related_reuses|length) }}
