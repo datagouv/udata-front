@@ -1,9 +1,9 @@
 <template>
   <div
-    class="border border-default-grey rounded-xxs fr-p-3w fr-grid-row flex-direction-column"
-    :class="{'h-100': stretchHeight}"
+    class="rounded-xxs fr-p-3w fr-grid-row flex-direction-column"
+    :class="{'h-100': stretchHeight, [type]: type, 'border border-default-grey': isDefault }"
   >
-    <div class="fr-col fr-grid-row fr-grid-row--gutters">
+    <div class="fr-col fr-grid-row fr-grid-row--gutters" :class="{'text-blue-400': isPrimary}">
       <div class="fr-col-auto">
         <img :src="icon" alt="" />
       </div>
@@ -49,12 +49,20 @@ export default defineComponent({
     title: {
       type: String,
       required: true,
+    },
+    type: {
+      type: String,
+      default: "default"
     }
   },
   setup(props) {
     const alignment = computed(() => `fr-grid-row--${getMainAxisAlignment(props.actionsAlignment)}`);
+    const type = computed(() => props.type === "primary" ? "bg-contrast-blue-cumulus" : "bg-white");
+    const isPrimary = computed(() => props.type === "primary");
     return {
       alignment,
+      isPrimary,
+      type,
     }
   }
 });

@@ -68,3 +68,5 @@ cypress/screenshots
 
 .lighthouseci/*.json
 .lighthouseci/*.html
+
+storybook-static/
