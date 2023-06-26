@@ -50,7 +50,7 @@
         </div>
         <div class="fr-col">
             <h4 class="fr-mb-1v">
-                <a href="{{ url_for('datasets.show', dataset=dataset) }}" class="text-grey-500">
+                <a href="{{ url_for('datasets.show', dataset=dataset, _external=True) }}" class="text-grey-500">
                     {{ dataset.full_title }}
                     {% if dataset.acronym %}<small>{{ dataset.acronym }}</small>{% endif %}
                 </a>
@@ -62,7 +62,7 @@
                 <span class="not-enlarged">
                     <a
                         class="fr-link"
-                        href="{{ url_for('organizations.show', org=dataset.organization) }}"
+                        href="{{ url_for('organizations.show', org=dataset.organization, _external=True) }}"
                     >{{organization_name_with_certificate(dataset.organization)}}</a>
                 </span>
                 {% elif dataset.owner %}
