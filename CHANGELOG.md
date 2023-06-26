@@ -5,6 +5,7 @@
 - Fix reuse page padding for discussions and reuses section [#270](https://github.com/etalab/udata-front/pull/270)
 - Fix dataset oembed links [#271](https://github.com/etalab/udata-front/pull/271)
 - Hide CaptchEtat icon loader [#272](https://github.com/etalab/udata-front/pull/272)
+- Add CaptchEtat on forgot password page [#273](https://github.com/etalab/udata-front/pull/273)
 
 ## 3.2.4 (2023-06-19)
 
