@@ -2,6 +2,12 @@
 
 ## Current (in progress)
 
+- Fix reuse page padding for discussions and reuses section [#270](https://github.com/etalab/udata-front/pull/270)
+- Fix dataset oembed links [#271](https://github.com/etalab/udata-front/pull/271)
+- Hide CaptchEtat icon loader [#272](https://github.com/etalab/udata-front/pull/272)
+
+## 3.2.4 (2023-06-19)
+
 - Fix word-wrap for dataset description [#254](https://github.com/etalab/udata-front/pull/254)
 - Fix `img` folder not copied [#255](https://github.com/etalab/udata-front/pull/255)
 - Add breadcrumbs to pages [#258](https://github.com/etalab/udata-front/pull/258)
