@@ -20,6 +20,9 @@ BANNER_ACTIVATED = False
 BANNER_HTML_CONTENT_EN = ''
 BANNER_HTML_CONTENT_FR = ''
 
+# Frontend data search form url
+DATA_SEARCH_FORM_URL = 'https://tally.so/r/mDKv1N'
+
 # Static pages from github repo
 PAGES_GH_REPO_NAME = 'etalab/datagouvfr-pages'
 PAGES_REPO_BRANCH = 'master'

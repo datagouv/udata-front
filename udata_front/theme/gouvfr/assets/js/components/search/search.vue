@@ -165,12 +165,12 @@
                   {{ $t("You can also give us more details with our feedback form.") }}
                 </p>
                   <template v-slot:actions>
-                    <button class="fr-btn fr-btn--secondary">
+                    <button @click="reloadForm" class="fr-btn fr-btn--secondary">
                       {{ $t("Reset filters") }}
                     </button>
-                    <button class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line fr-ml-1w">
+                    <a :href="data_search_form_url" class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line fr-ml-1w">
                       {{ $t("Tell us what you are looking for") }}
-                    </button>
+                    </a>
                   </template>
                 </ActionCard>
             </div>
@@ -186,12 +186,12 @@
                 {{ $t("You can also give us more details with our feedback form.") }}
               </p>
               <template v-slot:actions>
-                <button class="fr-btn fr-btn--secondary">
+                <button @click="reloadForm" class="fr-btn fr-btn--secondary">
                   {{ $t("Reset filters") }}
                 </button>
-                <button class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line fr-ml-1w">
+                <a :href="data_search_form_url" class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line fr-ml-1w">
                   {{ $t("Tell us what you are looking for") }}
-                </button>
+                </a>
               </template>
             </ActionCard>
           </div>
@@ -215,7 +215,7 @@ import SchemaFilter from "./schema-filter.vue";
 import { Pagination } from "@etalab/udata-front-plugins-helper";
 import MultiSelect from "./multi-select.vue";
 import ActionCard from "../Form/ActionCard/ActionCard.vue";
-import { search_autocomplete_debounce } from "../../config";
+import { data_search_form_url, search_autocomplete_debounce } from "../../config";
 import { debounce } from "../../composables/useDebouncedRef";
 import searchIcon from "svg/illustrations/search.svg";
 import search2Icon from "svg/illustrations/search2.svg";
@@ -553,6 +553,7 @@ export default defineComponent({
     });
 
     return {
+      data_search_form_url,
       isFiltered,
       search,
       handleSearchChange,

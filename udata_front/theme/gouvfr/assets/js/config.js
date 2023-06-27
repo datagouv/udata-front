@@ -124,6 +124,11 @@ export const schema_documentation_url = _meta("schema-documentation-url");
 export const schema_validata_url = _meta("schema-validata-url");
 
 /**
+ * The data search form URL
+ */
+export const data_search_form_url = _meta("data-search-form-url");
+
+/**
  * Sentry configuration (as json) if available
  */
 const sentryEl = document.querySelector("meta[name=sentry]");
@@ -219,6 +224,7 @@ export default {
   lang,
   title,
   csrf_token,
+  data_search_form_url,
   api_root,
   api_2_root,
   api_specs,
