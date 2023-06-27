@@ -8,8 +8,14 @@
         <img :src="icon" alt="" />
       </div>
       <div class="fr-col fr-grid-row flex-direction-column justify-between">
-        <div>
-          <component :is="heading" class="fr--h5 fr-m-0">{{ title }}</component>
+        <div class="fr-mb-1w">
+          <component
+            :is="heading"
+            class="fr-m-0 fr-mb-1w"
+            :class="{'fr-text--bold fr-text--md': isPrimary, 'fr--h5': isDefault}"
+          >
+            {{ title }}
+          </component>
           <slot></slot>
         </div>
         <div class="fr-grid-row" :class="alignment">

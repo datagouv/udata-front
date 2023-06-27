@@ -7,7 +7,7 @@
         :placeholder="$t('Ex. 2022 presidential election')"
       />
     </div>
-    <div class="fr-grid-row fr-mt-1w fr-mt-md-5v fr-mb-2w">
+    <div class="fr-grid-row fr-mt-1w fr-mt-md-5v">
       <div class="fr-col-12 fr-col-md-4 fr-col-lg-3">
         <nav class="fr-sidemenu" aria-labelledby="fr-sidemenu-title">
           <div class="fr-sidemenu__inner">
@@ -88,7 +88,7 @@
                     :onChange="handleFacetChange('granularity')"
                   />
                 </div>
-                <div class="fr-col-12 fr-mb-3w text-align-center">
+                <div class="fr-col-12 fr-mb-3w text-align-center" v-if="isFiltered || downloadLink">
                   <button
                     class="fr-btn fr-btn--secondary fr-icon-close-circle-line fr-btn--icon-left justify-center w-100"
                     @click="resetFilters"
@@ -160,7 +160,7 @@
                 :icon="search2Icon"
                 type="primary"
                 >
-                <p class="fr-mt-1v fr-mb-3v">
+                <p class="fr-m-0 fr-text--sm">
                   {{ $t("Try to reset filters to widen your search.") }}<br/>
                   {{ $t("You can also give us more details with our feedback form.") }}
                 </p>
