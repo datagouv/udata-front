@@ -1,16 +1,16 @@
 <template>
   <div
-    class="border border-default-grey rounded-xxs fr-p-3w fr-grid-row flex-direction-column"
-    :class="{'h-100': stretchHeight}"
+    class="rounded-xxs fr-p-3w fr-grid-row flex-direction-column"
+    :class="{'h-100': stretchHeight, [type]: type, 'border border-default-grey': isDefault }"
   >
-    <div class="fr-col fr-grid-row fr-grid-row--gutters">
+    <div class="fr-col fr-grid-row fr-grid-row--gutters" :class="{'text-blue-400': isPrimary}">
       <div class="fr-col-auto">
         <img :src="icon" alt="" />
       </div>
       <div class="fr-col fr-grid-row flex-direction-column justify-between">
         <div>
           <component :is="heading" class="fr--h5 fr-m-0">{{ title }}</component>
-          <p class="fr-my-1w">{{ content }}</p>
+          <slot></slot>
         </div>
         <div class="fr-grid-row" :class="alignment">
           <slot name="actions"></slot>
@@ -27,8 +27,8 @@ import { getMainAxisAlignment } from '../../../dsfr';
 export default defineComponent({
   props: {
     actionsAlignment: {
-      type: String,
-      default: "start",
+      type: /** @type {import("vue").PropType<import("../../../types").AxisAlignment>} */(String),
+      default: "",
     },
     content: {
       type: String,
@@ -49,12 +49,20 @@ export default defineComponent({
     title: {
       type: String,
       required: true,
+    },
+    type: {
+      type: String,
+      default: "default"
     }
   },
   setup(props) {
     const alignment = computed(() => `fr-grid-row--${getMainAxisAlignment(props.actionsAlignment)}`);
+    const type = computed(() => props.type === "primary" ? "bg-contrast-blue-cumulus" : "bg-white");
+    const isPrimary = computed(() => props.type === "primary");
     return {
       alignment,
+      isPrimary,
+      type,
     }
   }
 });

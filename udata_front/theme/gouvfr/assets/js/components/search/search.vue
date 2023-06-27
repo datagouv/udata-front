@@ -7,7 +7,7 @@
         :placeholder="$t('Ex. 2022 presidential election')"
       />
     </div>
-    <div class="fr-grid-row fr-mt-1w fr-mt-md-5v">
+    <div class="fr-grid-row fr-mt-1w fr-mt-md-5v fr-mb-2w">
       <div class="fr-col-12 fr-col-md-4 fr-col-lg-3">
         <nav class="fr-sidemenu" aria-labelledby="fr-sidemenu-title">
           <div class="fr-sidemenu__inner">
@@ -110,8 +110,8 @@
         </nav>
       </div>
       <section class="fr-col-12 fr-col-md-8 fr-col-lg-9 fr-mt-2w fr-mt-md-0 search-results" ref="resultsRef" v-bind="$attrs">
-        <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle justify-between fr-pb-1w">
-          <p class="fr-col-auto fr-my-0" v-if="totalResults" role="status">
+        <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle justify-between fr-pb-1w" v-if="totalResults">
+          <p class="fr-col-auto fr-my-0" role="status">
             {{ $t("{count} results", totalResults) }}
           </p>
           <div class="fr-col-auto fr-grid-row fr-grid-row--middle">
@@ -154,23 +154,46 @@
                 :changePage="changePage"
                 class="fr-mt-2w"
               />
+            <div v-else>
+              <ActionCard
+                :title="$t(`Didn't find what you are looking for ?`)"
+                :icon="search2Icon"
+                type="primary"
+                >
+                <p class="fr-mt-1v fr-mb-3v">
+                  {{ $t("Try to reset filters to widen your search.") }}<br/>
+                  {{ $t("You can also give us more details with our feedback form.") }}
+                </p>
+                  <template v-slot:actions>
+                    <button class="fr-btn fr-btn--secondary">
+                      {{ $t("Reset filters") }}
+                    </button>
+                    <button class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line fr-ml-1w">
+                      {{ $t("Tell us what you are looking for") }}
+                    </button>
+                  </template>
+                </ActionCard>
+            </div>
           </div>
-          <div v-else>
+          <div v-else class="fr-mt-2w">
             <ActionCard
             :title="$t('No result found for your search')"
-            :content="$t('Try to reset filters to widen your search.\n\nYou can also give us more details with our feedback form.')"
             :icon="searchIcon"
             type="primary"
             >
-            <template v-slot:actions>
-              <button class="fr-btn fr-btn--secondary">
-                {{ $t("Reset filters") }}
-              </button>
-              <button class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line">
-                {{ $t("Tell us what you are looking for") }}
-              </button>
-            </template>
-          </ActionCard>
+              <p class="fr-mt-1v fr-mb-3v">
+                {{ $t("Try to reset filters to widen your search.") }}<br/>
+                {{ $t("You can also give us more details with our feedback form.") }}
+              </p>
+              <template v-slot:actions>
+                <button class="fr-btn fr-btn--secondary">
+                  {{ $t("Reset filters") }}
+                </button>
+                <button class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line fr-ml-1w">
+                  {{ $t("Tell us what you are looking for") }}
+                </button>
+              </template>
+            </ActionCard>
           </div>
         </transition>
       </section>
@@ -195,6 +218,7 @@ import ActionCard from "../Form/ActionCard/ActionCard.vue";
 import { search_autocomplete_debounce } from "../../config";
 import { debounce } from "../../composables/useDebouncedRef";
 import searchIcon from "svg/illustrations/search.svg";
+import search2Icon from "svg/illustrations/search2.svg";
 
 export default defineComponent({
   inheritAttrs: false,
@@ -550,6 +574,7 @@ export default defineComponent({
       handleSortChange,
       zIndex,
       searchIcon,
+      search2Icon,
     };
   },
 });
