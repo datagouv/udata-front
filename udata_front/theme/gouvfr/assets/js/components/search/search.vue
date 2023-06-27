@@ -156,14 +156,21 @@
               />
           </div>
           <div v-else>
-            <Empty
-              wide
-              :queryString="queryString"
-              :cta="$t('Reset filters')"
-              :copy="$t('No dataset matching your query')"
-              :copyAfter="$t('You can try to reset the filters to expand your search.')"
-              :onClick="() => reloadForm()"
-            />
+            <ActionCard
+            :title="$t('No result found for your search')"
+            :content="$t('Try to reset filters to widen your search.\n\nYou can also give us more details with our feedback form.')"
+            :icon="searchIcon"
+            type="primary"
+            >
+            <template v-slot:actions>
+              <button class="fr-btn fr-btn--secondary">
+                {{ $t("Reset filters") }}
+              </button>
+              <button class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line">
+                {{ $t("Tell us what you are looking for") }}
+              </button>
+            </template>
+          </ActionCard>
           </div>
         </transition>
       </section>
@@ -173,20 +180,21 @@
 
 <script>
 import { defineComponent, ref, onMounted, computed } from "vue";
-import {useI18n} from 'vue-i18n';
+import { useI18n } from 'vue-i18n';
 import axios from "axios";
 import { generateCancelToken, apiv2 } from "../../plugins/api";
-import {useToast} from "../../composables/useToast";
+import { useToast } from "../../composables/useToast";
 import useSearchUrl from "../../composables/useSearchUrl";
 import SearchInput from "./search-input.vue";
 import Dataset from "../dataset/card-lg.vue";
 import Loader from "../dataset/loader.vue";
 import SchemaFilter from "./schema-filter.vue";
-import Empty from "./empty.vue";
 import { Pagination } from "@etalab/udata-front-plugins-helper";
 import MultiSelect from "./multi-select.vue";
+import ActionCard from "../Form/ActionCard/ActionCard.vue";
 import { search_autocomplete_debounce } from "../../config";
 import { debounce } from "../../composables/useDebouncedRef";
+import searchIcon from "svg/illustrations/search.svg";
 
 export default defineComponent({
   inheritAttrs: false,
@@ -195,7 +203,7 @@ export default defineComponent({
     SearchInput,
     SchemaFilter,
     Dataset,
-    Empty,
+    ActionCard,
     Loader,
     Pagination,
   },
@@ -541,6 +549,7 @@ export default defineComponent({
       searchSort,
       handleSortChange,
       zIndex,
+      searchIcon,
     };
   },
 });
