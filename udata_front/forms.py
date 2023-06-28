@@ -54,7 +54,6 @@ class ExtendedForgotPasswordForm(ForgotPasswordForm):
             return False
 
         headers = {'Authorization': 'Bearer ' + bearer_token()}
-        print(headers)
         captchetat_url = current_app.config.get('CAPTCHETAT_BASE_URL')
         try:
             resp = requests.post(f'{captchetat_url}/valider-captcha', headers=headers, json={
