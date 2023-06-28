@@ -165,7 +165,7 @@
                   {{ $t("You can also give us more details with our feedback form.") }}
                 </p>
                   <template v-slot:actions>
-                    <button @click="reloadForm" class="fr-btn fr-btn--secondary">
+                    <button @click="resetForm" class="fr-btn fr-btn--secondary">
                       {{ $t("Reset filters") }}
                     </button>
                     <a :href="data_search_form_url" class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line fr-ml-1w">
@@ -186,7 +186,7 @@
                 {{ $t("You can also give us more details with our feedback form.") }}
               </p>
               <template v-slot:actions>
-                <button @click="reloadForm" class="fr-btn fr-btn--secondary">
+                <button @click="resetForm" class="fr-btn fr-btn--secondary">
                   {{ $t("Reset filters") }}
                 </button>
                 <a :href="data_search_form_url" class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line fr-ml-1w">
@@ -468,6 +468,10 @@ export default defineComponent({
       reloadFilters({});
     };
 
+    const resetForm = () => {
+      reloadForm();
+    };
+
     const reloadForm = ({q = '', ...params} = {}, saveToHistory = SAVE_TO_HISTORY) => {
       queryString.value = q;
       reloadFilters(params, saveToHistory);
@@ -559,8 +563,8 @@ export default defineComponent({
       handleSearchChange,
       handleFacetChange,
       changePage,
-      reloadForm,
       resetFilters,
+      resetForm,
       facets,
       results,
       totalResults,
