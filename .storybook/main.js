@@ -11,9 +11,15 @@ const config = {
     directory: "../udata_front/theme/*/",
     files: "**/*.stories.@(js|jsx|ts|tsx)"
   }],
-  addons: ["@storybook/addon-links", "@storybook/addon-essentials", "@storybook/addon-interactions", {
-    name: '@storybook/addon-styling'
-  }, path.resolve('./.storybook/load-theme-preview-preset'), "@storybook/addon-mdx-gfm"],
+  addons: [
+    "@storybook/addon-links",
+    "@storybook/addon-essentials",
+    "@storybook/addon-interactions",
+    {
+      name: '@storybook/addon-styling',
+    },
+    path.resolve('./.storybook/load-theme-preview-preset')
+  ],
   framework: {
     name: "@storybook/vue3-vite",
     options: {}
