@@ -126,7 +126,7 @@ export const schema_validata_url = _meta("schema-validata-url");
 /**
  * The data search form URL
  */
-export const data_search_form_url = _meta("data-search-form-url");
+export const data_search_feedback_form_url = _meta("data-search-feedback-form-url");
 
 /**
  * Sentry configuration (as json) if available
@@ -224,7 +224,7 @@ export default {
   lang,
   title,
   csrf_token,
-  data_search_form_url,
+  data_search_feedback_form_url,
   api_root,
   api_2_root,
   api_specs,

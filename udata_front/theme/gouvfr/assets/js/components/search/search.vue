@@ -157,7 +157,7 @@
             <div v-else>
               <ActionCard
                 :title="$t(`Didn't find what you are looking for ?`)"
-                :icon="search2Icon"
+                :icon="magnifyingGlassIcon"
                 type="primary"
                 >
                 <p class="fr-m-0 fr-text--sm">
@@ -168,7 +168,7 @@
                     <button @click="resetForm" class="fr-btn fr-btn--secondary">
                       {{ $t("Reset filters") }}
                     </button>
-                    <a :href="data_search_form_url" class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line fr-ml-1w">
+                    <a :href="data_search_feedback_form_url" class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line fr-ml-1w">
                       {{ $t("Tell us what you are looking for") }}
                     </a>
                   </template>
@@ -178,7 +178,7 @@
           <div v-else class="fr-mt-2w">
             <ActionCard
             :title="$t('No result found for your search')"
-            :icon="searchIcon"
+            :icon="franceWithMagnifyingGlassIcon"
             type="primary"
             >
               <p class="fr-mt-1v fr-mb-3v">
@@ -189,7 +189,7 @@
                 <button @click="resetForm" class="fr-btn fr-btn--secondary">
                   {{ $t("Reset filters") }}
                 </button>
-                <a :href="data_search_form_url" class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line fr-ml-1w">
+                <a :href="data_search_feedback_form_url" class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line fr-ml-1w">
                   {{ $t("Tell us what you are looking for") }}
                 </a>
               </template>
@@ -215,10 +215,10 @@ import SchemaFilter from "./schema-filter.vue";
 import { Pagination } from "@etalab/udata-front-plugins-helper";
 import MultiSelect from "./multi-select.vue";
 import ActionCard from "../Form/ActionCard/ActionCard.vue";
-import { data_search_form_url, search_autocomplete_debounce } from "../../config";
+import { data_search_feedback_form_url, search_autocomplete_debounce } from "../../config";
 import { debounce } from "../../composables/useDebouncedRef";
-import searchIcon from "svg/illustrations/search.svg";
-import search2Icon from "svg/illustrations/search2.svg";
+import franceWithMagnifyingGlassIcon from "svg/illustrations/france_with_magnifying_glass.svg";
+import magnifyingGlassIcon from "svg/illustrations/magnifying_glass.svg";
 
 export default defineComponent({
   inheritAttrs: false,
@@ -557,7 +557,7 @@ export default defineComponent({
     });
 
     return {
-      data_search_form_url,
+      data_search_feedback_form_url,
       isFiltered,
       search,
       handleSearchChange,
@@ -578,8 +578,8 @@ export default defineComponent({
       searchSort,
       handleSortChange,
       zIndex,
-      searchIcon,
-      search2Icon,
+      franceWithMagnifyingGlassIcon,
+      magnifyingGlassIcon,
     };
   },
 });
