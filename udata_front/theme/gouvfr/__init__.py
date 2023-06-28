@@ -95,6 +95,7 @@ support_links = [
     nav.Item(_("Portal's API"), None, url=current_app.config.get('API_DOC_EXTERNAL_LINK', '#')),
     nav.Item(_('Open data guides'), None, url=current_app.config.get('ETALAB_GUIDES_URL', '#')),
     nav.Item(_('Contact us'), None, url='https://support.data.gouv.fr'),
+    nav.Item(_('Give us your feedback'), None, url=current_app.config.get('FEEDBACK_FORM_URL', '#')),
 ]
 
 nav.Bar('gouvfr_support', support_links)
