@@ -11,7 +11,7 @@ const args = {
   searchPlaceholder: "Type to search",
   emptyPlaceholder: "Select an option",
   allOption: "Select something",
-  initialOptions: ["Option 1", "Option 2"]
+  initialOptions: Promise.resolve(["Option 1", "Option 2"]),
 };
 
 export const SimpleMultiSelect = {

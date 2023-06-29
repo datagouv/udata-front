@@ -72,7 +72,8 @@
     "vue": "^3.2.47",
     "vue-content-loader": "^2.0.1",
     "vue-i18n": "^9.2.2",
-    "vue-i18n-extract": "^2.0.7"
+    "vue-i18n-extract": "^2.0.7",
+    "vue3-datepicker": "^0.4.0"
   },
   "license": "MIT",
   "readme": "ERROR: No README data found!",
