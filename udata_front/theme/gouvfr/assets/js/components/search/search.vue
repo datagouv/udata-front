@@ -184,7 +184,7 @@ import Loader from "../dataset/loader.vue";
 import SchemaFilter from "./schema-filter.vue";
 import Empty from "./empty.vue";
 import { Pagination } from "@etalab/udata-front-plugins-helper";
-import MultiSelect from "./multi-select.vue";
+import MultiSelect from "../MultiSelect/MultiSelect.vue";
 import { search_autocomplete_debounce } from "../../config";
 import { debounce } from "../../composables/useDebouncedRef";
 
