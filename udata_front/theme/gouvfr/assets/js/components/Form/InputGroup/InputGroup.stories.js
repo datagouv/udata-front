@@ -54,3 +54,44 @@ export const InputSuccessState = {
     isValid: true,
   },
 };
+
+const textareaArgs = {...args, type: "textarea"}
+
+export const Textarea = {
+  render: (args) => ({
+    components: { InputGroup },
+    setup() {
+      return { args };
+    },
+    template: '<InputGroup v-bind="args" />',
+  }),
+  args: textareaArgs,
+};
+
+export const TextareaHasError = {
+  render: (args) => ({
+    components: { InputGroup },
+    setup() {
+      return { args };
+    },
+    template: '<InputGroup v-bind="args" />',
+  }),
+  args: {
+    ...textareaArgs,
+    hasError: true,
+  },
+};
+
+export const TextareaSuccessState = {
+  render: (args) => ({
+    components: { InputGroup },
+    setup() {
+      return { args };
+    },
+    template: '<InputGroup v-bind="args" />',
+  }),
+  args: {
+    ...textareaArgs,
+    isValid: true,
+  },
+};

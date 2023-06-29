@@ -2,17 +2,27 @@
   <div class="fr-input-group" :class="inputGroupClass">
     <label class="fr-label" :for="id">
       {{ label }}
-      <Required :required="required"/>
+      <Required :required="required" />
       <span class="fr-hint-text" v-if="hintText">{{ hintText }}</span>
     </label>
-    <input
+    <textarea
+      v-if="isTextarea"
       class="fr-input"
       :class="{ 'fr-input--error': hasError, 'fr-input--valid': isValid }"
       :aria-describedby="ariaDescribedBy"
       :id="id"
       :disabled="disabled"
-      type="text"
-    />
+      :type="type"
+    ></textarea>
+    <input
+      v-else
+      class="fr-input"
+      :class="{ 'fr-input--error': hasError, 'fr-input--valid': isValid }"
+      :aria-describedby="ariaDescribedBy"
+      :id="id"
+      :disabled="disabled"
+      :type="type"
+     />
     <p :id="validTextId" class="fr-valid-text" v-if="isValid">
       {{ validText }}
     </p>
@@ -63,6 +73,10 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+    type: {
+      type: String,
+      default: "text"
+    },
     validText: {
       type: String,
       default: "",
@@ -71,20 +85,20 @@ export default defineComponent({
   setup(props, { emit }) {
     const { id } = useUid("select");
 
-const errorTextId = computed(() => id + "-desc-error");
-const validTextId = computed(() => id + "-desc-valid");
-const ariaDescribedBy = computed(() => {
-  let describedBy = "";
-  if (props.isValid) {
-    describedBy += " " + validTextId;
-  }
-  else if (props.hasError) {
-    describedBy += " " + errorTextId;
-  }
-  return describedBy;
-});
+    const errorTextId = computed(() => id + "-desc-error");
+    const validTextId = computed(() => id + "-desc-valid");
+    const ariaDescribedBy = computed(() => {
+      let describedBy = "";
+      if (props.isValid) {
+        describedBy += " " + validTextId;
+      }
+      else if (props.hasError) {
+        describedBy += " " + errorTextId;
+      }
+      return describedBy;
+    });
 
-const inputGroupClass = computed(() => {
+    const inputGroupClass = computed(() => {
       return {
         'fr-input-group--disabled': props.disabled,
         'fr-input-group--error': props.hasError,
@@ -92,23 +106,26 @@ const inputGroupClass = computed(() => {
       };
     });
 
-/**
- *
- * @param {Event} event
- */
-const change = (event) => {
-  const target = /** @type {HTMLSelectElement | null} */ (event.target);
-  emit('update:modelValue', target?.value);
-}
+    const isTextarea = computed(() => props.type === "textarea");
 
-return {
-  ariaDescribedBy,
-  change,
-  errorTextId,
-  id,
-  inputGroupClass,
-  validTextId,
-};
+    /**
+     *
+     * @param {Event} event
+     */
+    const change = (event) => {
+      const target = /** @type {HTMLSelectElement | null} */ (event.target);
+      emit('update:modelValue', target?.value);
+    }
+
+    return {
+      ariaDescribedBy,
+      change,
+      errorTextId,
+      id,
+      inputGroupClass,
+      isTextarea,
+      validTextId,
+    };
   },
 });
 </script>
