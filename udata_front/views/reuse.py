@@ -2,7 +2,6 @@ from flask import abort, request, url_for, make_response
 from feedgenerator.django.utils.feedgenerator import Atom1Feed
 
 from udata_front.views.base import SearchView, DetailView
-from udata_front.views.utils import get_metrics_for_model, get_stock_metrics
 from udata.i18n import I18nBlueprint, gettext as _
 from udata.models import Follow
 from udata.sitemap import sitemap
@@ -102,18 +101,10 @@ class ReuseDetailView(ReuseView, DetailView):
             related_reuses = related_reuses.owned_by(self.reuse.owner.id)
         related_reuses = related_reuses.visible().order_by('-created_at').limit(4)
 
-        visit_metrics, outlink_metrics = get_metrics_for_model(
-            'reuse', self.reuse.id, ['visit', 'outlink'])
-        followers_metrics = get_stock_metrics(Follow.objects(following=self.reuse),
-                                              date_label='since')
-
         context.update(
             followers=followers,
             related_reuses=related_reuses,
-            can_edit=ReuseEditPermission(self.reuse),
-            visit_metrics=visit_metrics,
-            outlink_metrics=outlink_metrics,
-            followers_metrics=followers_metrics
+            can_edit=ReuseEditPermission(self.reuse)
         )
 
         return context

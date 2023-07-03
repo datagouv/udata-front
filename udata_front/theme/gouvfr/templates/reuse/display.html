@@ -220,20 +220,9 @@
             </div>
         {% endif %}
     </section>
-    <section class="fr-container fr-py-5v vuejs">
-        <h2 class="subtitle subtitle--uppercase fr-mb-3v">
-            {{_("Metrics")}}
-        </h2>
-        <div class="fr-grid-row justify-between">
-            {% if visit_metrics %}
-                {{metrics(_("Views"), visit_metrics.values()|sum, visit_metrics, type="line", highlight_direction=True, as_percentage=True)}}
-            {% endif %}
-            {% if outlink_metrics %}
-                {{metrics(_("External links"), outlink_metrics.values()|sum, outlink_metrics, type="line", highlight_direction=True, as_percentage=True)}}
-            {% endif %}
-            {{metrics(_("Followers"), reuse.metrics.followers, followers_metrics, type="bar", highlight_direction=True, as_percentage=True)}}
-        </
-    </section>
+
+    {{ hook('reuse.display.metrics') }}
+
 </div>
 {% endcache %}
 {% endblock %}

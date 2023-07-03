@@ -10,7 +10,6 @@ from udata.core.activity.models import Activity
 from udata.core.dataset.api import DatasetApiParser
 from udata.core.dataset.csv import ResourcesCsvAdapter
 from udata.core.dataset.models import Dataset
-from udata.core.discussions.models import Discussion
 from udata.core.organization.api import OrgApiParser
 from udata.core.organization.csv import OrganizationCsvAdapter
 from udata.core.organization.models import Organization
@@ -18,11 +17,9 @@ from udata.core.post.models import Post
 from udata.core.reuse.api import ReuseApiParser
 from udata.core.reuse.csv import ReuseCsvAdapter
 from udata.core.reuse.models import Reuse
-from udata.core.user.models import User
 from udata.harvest.csv import HarvestSourceCsvAdapter
 from udata.harvest.models import HarvestSource
 from udata.frontend import csv
-from udata_front.views.utils import get_stock_metrics, get_metrics_for_model
 from udata.i18n import I18nBlueprint
 from udata.sitemap import sitemap
 from udata.utils import multi_to_dict
@@ -179,31 +176,6 @@ class SiteView(object):
         return current_site
 
     object = site
-
-
-@blueprint.route('/dashboard/', endpoint='dashboard')
-def site_dashboard():
-
-    visit_dataset_metrics, outlink_metrics = get_metrics_for_model(
-        'site', None, ['visit_dataset', 'outlink'])
-
-    context = {
-        'update_date': Dataset.objects.filter(badges__kind='spd'),
-        'recent_datasets': Dataset.objects.visible(),
-        'recent_reuses': Reuse.objects(featured=True).visible(),
-        'last_post': Post.objects.published().first(),
-        'user_metrics': get_stock_metrics(User.objects()),
-        'dataset_metrics': get_stock_metrics(Dataset.objects().visible(),
-                                             date_label='created_at_internal'),
-        'harvest_metrics': get_stock_metrics(HarvestSource.objects()),
-        'reuse_metrics': get_stock_metrics(Reuse.objects().visible()),
-        'organization_metrics': get_stock_metrics(Organization.objects().visible()),
-        'discussion_metrics': get_stock_metrics(Discussion.objects(), date_label='created'),
-        'visit_dataset_metrics': visit_dataset_metrics,
-        'outlink_metrics': outlink_metrics
-
-    }
-    return theme.render('metrics/dashboard.html', **context)
 
 
 @cache.cached(50)

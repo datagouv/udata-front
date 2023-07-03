@@ -10,7 +10,6 @@ from udata.core.dataset.permissions import ResourceEditPermission, DatasetEditPe
 from udata.core.site.models import current_site
 
 from udata_front.theme import render as render_template
-from udata_front.views.utils import get_metrics_for_model, get_stock_metrics
 from udata.sitemap import sitemap
 from udata.i18n import I18nBlueprint, gettext as _, ngettext
 from udata_front.views.base import DetailView, SearchView
@@ -97,11 +96,6 @@ class DatasetDetailView(DatasetView, DetailView):
         context['total_reuses'] = len(reuses)
         context['can_edit'] = DatasetEditPermission(self.dataset)
         context['can_edit_resource'] = ResourceEditPermission
-        context['visit_metrics'], = get_metrics_for_model('dataset', self.dataset.id, ['visit'])
-        context['reuses_metrics'] = get_stock_metrics(
-            Reuse.objects(datasets=self.dataset).visible())
-        context['followers_metrics'] = get_stock_metrics(Follow.objects(following=self.dataset),
-                                                         date_label='since')
         return context
 
 
