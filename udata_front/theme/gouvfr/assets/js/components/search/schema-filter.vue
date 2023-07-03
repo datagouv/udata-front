@@ -13,7 +13,7 @@
 <script>
 import { defineComponent } from "vue";
 import getCatalog from "../../api/schemas";
-import MultiSelect from "./multi-select.vue";
+import MultiSelect from "../MultiSelect/MultiSelect.vue";
 
 export default defineComponent({
     components: {

@@ -14,6 +14,22 @@
       :disabled="disabled"
       :type="type"
     ></textarea>
+    <Datepicker
+      v-else-if="isDate"
+      class="fr-input"
+      :class="{ 'fr-input--error': hasError, 'fr-input--valid': isValid }"
+      :aria-describedby="ariaDescribedBy"
+      :id="id"
+      :disabled="disabled"
+      v-model="value"
+      :locale="locale"
+      inputFormat="P"
+    />
+    <RangePicker
+      v-else-if="isRange"
+      :value="value"
+      :onChange="(range) => value = range"
+    />
     <input
       v-else
       class="fr-input"
@@ -33,12 +49,16 @@
 </template>
 
 <script>
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import useUid from '../../../composables/useUid';
+import Datepicker from "vue3-datepicker";
+import RangePicker from '../../RangePicker/RangePicker.vue';
 import Required from '../../Ui/Required/Required.vue';
+import { getDatepickerLocale } from "../../../i18n";
+import { lang } from "../../../config";
 
 export default defineComponent({
-  components: { Required },
+  components: { Datepicker, RangePicker, Required },
   emits: ['update:modelValue'],
   props: {
     disabled: {
@@ -84,6 +104,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const { id } = useUid("select");
+    const value = ref();
 
     const errorTextId = computed(() => id + "-desc-error");
     const validTextId = computed(() => id + "-desc-valid");
@@ -107,6 +128,9 @@ export default defineComponent({
     });
 
     const isTextarea = computed(() => props.type === "textarea");
+    const isDate = computed(() => props.type === "date");
+    const isRange = computed(() => props.type === "range");
+    const dateLocale = getDatepickerLocale(lang);
 
     /**
      *
@@ -123,8 +147,12 @@ export default defineComponent({
       errorTextId,
       id,
       inputGroupClass,
+      isDate,
+      isRange,
       isTextarea,
+      locale: dateLocale,
       validTextId,
+      value,
     };
   },
 });

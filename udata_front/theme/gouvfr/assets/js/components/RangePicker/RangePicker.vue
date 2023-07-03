@@ -40,16 +40,12 @@
 </template>
 
 <script>
-import config from "../../config";
+import { lang } from "../../config";
+import { getDatepickerLocale } from "../../i18n";
 import Datepicker from "vue3-datepicker";
-import { add, format } from "date-fns";
-import fr from "date-fns/locale/fr";
-import en from "date-fns/locale/en-GB";
-import es from "date-fns/locale/es";
+import { add, format } from "date-fns/esm";
 import { defineComponent, ref, watch } from "vue";
 import { formatDate } from "../../helpers";
-
-const locales = { fr, en, es };
 
 export default defineComponent({
   components: {
@@ -144,7 +140,7 @@ export default defineComponent({
       selectorShown,
       selectorShownStart,
       selectorShownEnd,
-      locale: locales[config.lang],
+      locale: getDatepickerLocale(lang),
       clear,
       formatDate,
       formatTemplate,

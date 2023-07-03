@@ -156,12 +156,19 @@ export default defineComponent({
       /**
        * @type {import("axios").AxiosResponse<{data: Array}|Array>}
        */
-      const resp = await api.get(props.listUrl);
-      let data = resp.data;
-      if(!Array.isArray(data)) {
-        data = data.data;
-      }
-      return mapToOption(data);
+      return api.get(props.listUrl)
+      .then(resp => {
+        let data = resp.data;
+        if(!Array.isArray(data)) {
+          data = data.data;
+        }
+        return mapToOption(data);
+      }).catch((error) => {
+        if (!axios.isCancel(error)) {
+          toast.error(t("Error getting {type}.", {type: props.placeholder}));
+        }
+        return [];
+      });
     };
 
     /**
@@ -286,7 +293,13 @@ export default defineComponent({
         }
       return selectedPromise
         .then(value => selected.value = value)
-        .then(value => value ? value : selected.value = defaultValue);
+        .then(value => value ? value : selected.value = defaultValue)
+        .catch((error) => {
+          if (!axios.isCancel(error)) {
+            toast.error(t("Error getting {type}.", {type: props.placeholder}));
+          }
+          return [];
+        });
     }
 
     /**

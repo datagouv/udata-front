@@ -9,10 +9,24 @@ import "dayjs/esm/locale/fr";
 import "dayjs/esm/locale/it";
 import "dayjs/esm/locale/pt";
 import "dayjs/esm/locale/sr";
+import { enGB as en, es, fr } from 'date-fns/esm/locale';
 import LocalizedFormat from 'dayjs/esm/plugin/localizedFormat';
 import RelativeTime from "dayjs/esm/plugin/relativeTime";
 import messages from '@intlify/unplugin-vue-i18n/messages';
 import { getRegisteredTranslations } from "@etalab/udata-front-plugins-helper";
+
+const dateLocales = { fr, en, es };
+
+fr.formatLong?.date()
+
+/**
+ * Get locale messages for date-fns
+ * @param {string} lang
+ * @returns {import("date-fns").Locale | undefined}
+ */
+export function getDatepickerLocale(lang) {
+  return dateLocales[lang];
+}
 
 dayjs.extend(LocalizedFormat);
 dayjs.extend(RelativeTime, {
