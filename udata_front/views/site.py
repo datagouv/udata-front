@@ -178,6 +178,17 @@ class SiteView(object):
     object = site
 
 
+@blueprint.route('/dashboard/', endpoint='dashboard')
+def site_dashboard():
+    context = {
+        'update_date': Dataset.objects.filter(badges__kind='spd'),
+        'recent_datasets': Dataset.objects.visible(),
+        'recent_reuses': Reuse.objects(featured=True).visible(),
+        'last_post': Post.objects.published().first()
+    }
+    return theme.render('site/dashboard.html', **context)
+
+
 @cache.cached(50)
 def get_terms_content():
     filename = current_app.config['SITE_TERMS_LOCATION']

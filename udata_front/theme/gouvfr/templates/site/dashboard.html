@@ -1,0 +1,22 @@
+{% extends theme('layouts/1-column.html') %}
+{% from theme('macros/breadcrumb.html') import breadcrumb with context %}
+
+{% set meta = {
+    'title': _('Dashboard'),
+    'description': _('Site metrics and activity'),
+    'keywords': [_('metrics'), _('activity')],
+} %}
+
+{% block breadcrumb %}
+<li>
+    <a class="fr-breadcrumb__link" aria-current="page">
+        {{ _('Site dashboard') }}
+    </a>
+</li>
+{% endblock %}
+
+{% block content %}
+{{ breadcrumb(self) }}
+
+{{ hook('site.display.metrics') }}
+{% endblock %}
