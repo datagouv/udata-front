@@ -342,6 +342,14 @@ export default defineComponent({
       if(selectA11y) {
         selectA11y.classList.add("fr-select");
       }
+      const label = container.value.querySelector('label');
+      if(label) {
+        label.classList.add("fr-label");
+      }
+      const button = container.value.querySelector('.select-a11y-button__text');
+      if (button && !button.innerHTML) {
+        button.innerHTML = "&nbsp;";
+      }
     };
 
     const registerSelectEvents = () => {

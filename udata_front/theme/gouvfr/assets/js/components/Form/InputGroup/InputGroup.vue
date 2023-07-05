@@ -14,17 +14,18 @@
       :disabled="disabled"
       :type="type"
     ></textarea>
-    <Datepicker
-      v-else-if="isDate"
-      class="fr-input"
-      :class="{ 'fr-input--error': hasError, 'fr-input--valid': isValid }"
-      :aria-describedby="ariaDescribedBy"
-      :id="id"
-      :disabled="disabled"
-      v-model="value"
-      :locale="locale"
-      inputFormat="P"
-    />
+    <div v-else-if="isDate" class="fr-mt-1w">
+      <Datepicker
+        class="fr-input"
+        :class="{ 'fr-input--error': hasError, 'fr-input--valid': isValid }"
+        :aria-describedby="ariaDescribedBy"
+        :id="id"
+        :disabled="disabled"
+        v-model="value"
+        :locale="locale"
+        inputFormat="P"
+      />
+    </div>
     <RangePicker
       v-else-if="isRange"
       :value="value"

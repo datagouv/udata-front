@@ -68,7 +68,7 @@
         <Container>
           <fieldset class="fr-fieldset" aria-labelledby="description-legend">
             <legend class="fr-fieldset__legend" id="description-legend">
-              <h2 class="subtitle subtitle--uppercase">
+              <h2 class="subtitle subtitle--uppercase fr-mb-3v">
                 {{ $t("Description") }}
               </h2>
             </legend>
@@ -113,7 +113,7 @@
           </fieldset>
           <fieldset class="fr-fieldset" aria-labelledby="time-legend">
             <legend class="fr-fieldset__legend" id="time-legend">
-              <h2 class="subtitle subtitle--uppercase">
+              <h2 class="subtitle subtitle--uppercase fr-mb-3v">
                 {{ $t("Time") }}
               </h2>
             </legend>
@@ -149,7 +149,7 @@
           </fieldset>
           <fieldset class="fr-fieldset" aria-labelledby="space-legend">
             <legend class="fr-fieldset__legend" id="space-legend">
-              <h2 class="subtitle subtitle--uppercase">
+              <h2 class="subtitle subtitle--uppercase fr-mb-3v">
                 {{ $t("Space") }}
               </h2>
             </legend>
