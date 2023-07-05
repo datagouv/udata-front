@@ -28,7 +28,7 @@
     "yaml-eslint-parser": "^1.2.0"
   },
   "devDependencies": {
-    "@conciergerie.dev/select-a11y": "^3.1.0",
+    "@conciergerie.dev/select-a11y": "^3.1.4",
     "@conciergerie.dev/vue-toaster": "^2.4.0",
     "@etalab/udata-front-plugins-helper": "1.1.0",
     "@gouvfr/dsfr": "^1.9.2",
