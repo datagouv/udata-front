@@ -1,5 +1,5 @@
 <template>
-<div class="fr-container">
+  <div class="fr-container">
     <Stepper :steps="steps" :currentStep="1"/>
     <div class="fr-grid-row">
       <Sidemenu
@@ -208,7 +208,6 @@
 import { defineComponent, reactive } from 'vue';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
-import ActionCard from '../../components/Form/ActionCard/ActionCard.vue';
 import Container from '../../components/Ui/Container/Container.vue';
 import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
 import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
@@ -222,7 +221,7 @@ import editIcon from "svg/illustrations/edit.svg";
 import { title } from "../../config";
 
 export default defineComponent({
-  components: { Accordion, AccordionGroup, ActionCard, Container, InputGroup, LinkedToAccordion, MultiSelect, SelectGroup, Stepper, Well, Sidemenu },
+  components: { Accordion, AccordionGroup, Container, InputGroup, LinkedToAccordion, MultiSelect, SelectGroup, Stepper, Well, Sidemenu },
   props: {
     steps: {
       type: Array,
