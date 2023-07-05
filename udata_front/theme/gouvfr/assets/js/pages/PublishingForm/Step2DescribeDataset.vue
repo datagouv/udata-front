@@ -66,6 +66,21 @@
       </Sidemenu>
       <div class="fr-col-12 fr-col-md-7">
         <Container>
+          <Well
+            color="blue-cumulus"
+            weight="regular"
+            class="fr-mb-2w"
+          >
+            <div class="fr-grid-row">
+              <div class="fr-col-auto fr-mr-3v">
+                <img :src="editIcon" alt="" />
+              </div>
+              <div class="fr-col">
+                <p class="fr-m-0 fr-text--bold">{{ $t('What is a dataset?') }}</p>
+                <p class="fr-m-0 fr-text--xs">{{ $t('On {site}, a dataset is a set of files.', {site: title}) }}</p>
+              </div>
+            </div>
+          </Well>
           <fieldset class="fr-fieldset" aria-labelledby="description-legend">
             <legend class="fr-fieldset__legend" id="description-legend">
               <h2 class="subtitle subtitle--uppercase fr-mb-3v">
@@ -193,6 +208,7 @@
 import { defineComponent, reactive } from 'vue';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
+import ActionCard from '../../components/Form/ActionCard/ActionCard.vue';
 import Container from '../../components/Ui/Container/Container.vue';
 import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
 import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
@@ -202,9 +218,11 @@ import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Well from "../../components/Ui/Well/Well.vue";
 import useUid from "../../composables/useUid";
+import editIcon from "svg/illustrations/edit.svg";
+import { title } from "../../config";
 
 export default defineComponent({
-  components: { Accordion, AccordionGroup, Container, InputGroup, LinkedToAccordion, MultiSelect, SelectGroup, Stepper, Well, Sidemenu },
+  components: { Accordion, AccordionGroup, ActionCard, Container, InputGroup, LinkedToAccordion, MultiSelect, SelectGroup, Stepper, Well, Sidemenu },
   props: {
     steps: {
       type: Array,
@@ -231,6 +249,8 @@ export default defineComponent({
       addTemporalCoverageAccordionId,
       addSpacialInformationAccordionId,
       dataset,
+      editIcon,
+      title,
     };
   },
 });
