@@ -30,10 +30,10 @@ APIGOUVFR_ALLOW_OPENNESS = ['open', 'semi_open']
 
 # Etalab Guides
 ETALAB_GUIDES_URL = 'https://guides.data.gouv.fr/'
-GUIDES_USER_ACCOUNT_URL = 'https://guides.data.gouv.fr/publier-des-donnees/guide-data.gouv.fr/creer-un-compte-utilisateur-et-rejoindre-une-organisation'
-GUIDES_ORGANIZATION_URL = 'https://guides.data.gouv.fr/publier-des-donnees/guide-data.gouv.fr/organisation/creer-une-organisation'
-GUIDES_DATASET_URL = 'https://guides.data.gouv.fr/publier-des-donnees/guide-data.gouv.fr/jeux-de-donnees/publier-un-jeu-de-donnees'
-GUIDES_REUSE_URL = 'https://guides.data.gouv.fr/publier-des-donnees/guide-data.gouv.fr/reutilisations'
+GUIDES_USER_ACCOUNT_URL = 'https://guides.data.gouv.fr/publier-des-donnees/guide-data.gouv.fr/creer-un-compte-utilisateur-et-rejoindre-une-organisation' # noqa
+GUIDES_ORGANIZATION_URL = 'https://guides.data.gouv.fr/publier-des-donnees/guide-data.gouv.fr/organisation/creer-une-organisation' # noqa
+GUIDES_DATASET_URL = 'https://guides.data.gouv.fr/publier-des-donnees/guide-data.gouv.fr/jeux-de-donnees/publier-un-jeu-de-donnees' # noqa
+GUIDES_REUSE_URL = 'https://guides.data.gouv.fr/publier-des-donnees/guide-data.gouv.fr/reutilisations' # noqa
 GUIDES_COMMUNITY_URL = 'https://guides.data.gouv.fr/publier-des-donnees/guide-data.gouv.fr/ressource-communautaire' # noqa
 GUIDES_QUALITY_URL = 'https://guides.data.gouv.fr/publier-des-donnees/guide-qualite/ameliorer-la-qualite-dun-jeu-de-donnees-en-continu/ameliorer-le-score-de-qualite-des-metadonnees' # noqa
 
