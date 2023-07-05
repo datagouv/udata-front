@@ -26,7 +26,7 @@
       @click.prevent="showStartSelector"
       v-if="selectorShown === null"
     >
-      <template v-if="!start">{{$t('Publication date')}}</template>
+      <template v-if="!start">{{$t('from dd/mm/yyyy to dd/mm/yyyy')}}</template>
       <template v-else>
         {{formatDate(start, formatTemplate)}}<template v-if="end">–{{formatDate(end, formatTemplate)}}</template>
         <button

@@ -120,7 +120,7 @@
             <div class="fr-fieldset__element">
               <div class="fr-grid-row fr-grid-row--gutters">
                 <div class="fr-col-12 fr-col-md-6">
-                  <LinkedToAccordion class="fr-fieldset__element" :accordion="chooseFrequencyAccordionId">
+                  <LinkedToAccordion :accordion="chooseFrequencyAccordionId">
                     <MultiSelect
                       :placeholder="$t('Update frequency')"
                       :searchPlaceholder="$t('Search a frequency...')"

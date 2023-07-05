@@ -39,7 +39,7 @@
       :id="id"
       :disabled="disabled"
       :type="type"
-     />
+    />
     <p :id="validTextId" class="fr-valid-text" v-if="isValid">
       {{ validText }}
     </p>
