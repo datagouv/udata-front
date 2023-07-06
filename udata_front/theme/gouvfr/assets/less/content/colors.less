@@ -129,6 +129,7 @@ Similar to the contextual text color classes, easily set the background of an el
 @text-default-success: var(--text-default-success);
 @text-default-warning: var(--text-default-warning);
 @text-default-info: var(--text-default-info);
+@text-disabled-grey: var(--text-disabled-grey);
 @text-label-blue-cumulus: var(--text-label-blue-cumulus);
 
 @contrast-white: var(--text-default-grey);
@@ -192,12 +193,20 @@ each(@colors, {
     background-color: @background-alt-green-tilleul-verveine;
 }
 
+.text-disabled-grey {
+    color: @text-disabled-grey !important;
+}
+
 .text-mention-grey {
     color: @text-mention-grey !important;
 }
 
 .text-default-error {
     color: @text-default-error !important;
+}
+
+.text-default-success {
+    color: @text-default-success !important;
 }
 
 .text-default-warning {

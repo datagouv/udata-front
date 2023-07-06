@@ -3,6 +3,18 @@ import Accordion from './Accordion.vue';
 export default {
   title: 'Components/Accordion',
   component: Accordion,
+  argTypes: {
+    state: {
+      options: [
+        "default",
+        "info",
+        "disabled",
+        "error",
+        "success",
+      ],
+      control: 'select',
+    },
+  }
 };
 
 const args = {
@@ -20,6 +32,76 @@ export const ClosedAccordion = {
     template: '<Accordion v-bind="args">Some content</Accordion>',
   }),
   args,
+};
+
+export const AccordionInInfoState = {
+  render: (args) => ({
+    components: { Accordion },
+    setup() {
+      return { args };
+    },
+    template: '<Accordion v-bind="args">Some content</Accordion>',
+  }),
+  args: {
+    ...args,
+    state: "info"
+  },
+};
+
+export const AccordionInDisabledState = {
+  render: (args) => ({
+    components: { Accordion },
+    setup() {
+      return { args };
+    },
+    template: '<Accordion v-bind="args">Some content</Accordion>',
+  }),
+  args: {
+    ...args,
+    state: "disabled"
+  },
+};
+
+export const AccordionInErrorState = {
+  render: (args) => ({
+    components: { Accordion },
+    setup() {
+      return { args };
+    },
+    template: '<Accordion v-bind="args">Some content</Accordion>',
+  }),
+  args: {
+    ...args,
+    state: "error"
+  },
+};
+
+export const AccordionInWarningState = {
+  render: (args) => ({
+    components: { Accordion },
+    setup() {
+      return { args };
+    },
+    template: '<Accordion v-bind="args">Some content</Accordion>',
+  }),
+  args: {
+    ...args,
+    state: "warning"
+  },
+};
+
+export const AccordionInSuccessState = {
+  render: (args) => ({
+    components: { Accordion },
+    setup() {
+      return { args };
+    },
+    template: '<Accordion v-bind="args">Some content</Accordion>',
+  }),
+  args: {
+    ...args,
+    state: "success"
+  },
 };
 
 export const OpenedAccordion = {
