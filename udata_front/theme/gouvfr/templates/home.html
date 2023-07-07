@@ -20,6 +20,13 @@
                     <h2 class="fr-text--md fr-my-0">{{ _('Featured topics') }}</h2>
                     <ul>
                         <li>
+                            <a href="{{ url_for('gouvfr.show_page', slug='donnees_agriculture-alimentation') }}"
+                                class="btn-venti fr-my-2w bg-green-400">
+                                Données relatives à
+                                <strong>l'Agriculture et à l'Alimentation</strong>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ url_for('gouvfr.show_page', slug='donnees-energie') }}"
                                 class="btn-venti fr-my-2w bg-orange-100">
                                 Données relatives aux
@@ -31,13 +38,6 @@
                                 class="btn-venti fr-my-2w bg-blue-450">
                                 Données à composante
                                 <strong>Géographique</strong>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ url_for('gouvfr.show_page', slug='donnees_logement-urbanisme') }}"
-                                class="btn-venti bg-green-400">
-                                Données relatives au
-                                <strong>Logement et à l'Urbanisme</strong>
                             </a>
                         </li>
                     </ul>

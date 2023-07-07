@@ -557,7 +557,7 @@
                         {{dataset.frequency_label}}
                     {% endcall %}
                 {% endif %}
-                {% if temporal_coverage %}
+                {% if dataset.temporal_coverage %}
                     {% call() information_col(_('Temporal coverage')) %}
                         {{dataset.temporal_coverage|daterange(details=True)}}
                     {% endcall %}
