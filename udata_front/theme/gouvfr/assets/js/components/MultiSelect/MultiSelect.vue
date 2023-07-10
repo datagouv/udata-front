@@ -1,21 +1,35 @@
 <template>
-  <div class="multiselect w-100" ref="container" :data-selected="!!selected">
-    <label :for="id" :title="explanation">{{placeholder}} <span v-if="explanation" class="fr-icon-information-line" aria-hidden="true"></span></label>
-    <select
-      class="multiselect__input"
-      :id="id"
-      ref="select"
-      v-model="selected"
-    >
-      <option
-        v-for="option in displayedOptions"
-        :key="option.value"
-        :value="option.value"
-        :data-image="option.image"
+  <div class="multiselect w-100 fr-select-group" :class="selectGroupClass" ref="container" :data-selected="!!selected">
+    <div>
+      <label :for="id" :title="explanation">
+        {{placeholder}}
+        <Required :required="required"/>
+        <span v-if="explanation" class="fr-icon-information-line" aria-hidden="true"></span>
+        <span class="fr-hint-text" v-if="hintText">{{ hintText }}</span>
+      </label>
+      <select
+        class="multiselect__input"
+        :id="id"
+        ref="select"
+        v-model="selected"
+        :required="required"
       >
-        {{option.label}}
-      </option>
-    </select>
+        <option
+          v-for="option in displayedOptions"
+          :key="option.value"
+          :value="option.value"
+          :data-image="option.image"
+        >
+          {{option.label}}
+        </option>
+      </select>
+    </div>
+    <p :id="validTextId" class="fr-valid-text" v-if="isValid">
+      {{ validText }}
+    </p>
+    <p :id="errorTextId" class="fr-error-text" v-else-if="hasError">
+      {{ errorText }}
+    </p>
   </div>
 </template>
 
@@ -25,6 +39,7 @@ import Select from "@conciergerie.dev/select-a11y";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
 import {api, generateCancelToken} from "../../plugins/api";
+import Required from "../Ui/Required/Required.vue";
 import useUid from "../../composables/useUid";
 import { useToast } from "../../composables/useToast";
 
@@ -36,13 +51,47 @@ import { useToast } from "../../composables/useToast";
  */
 
 export default defineComponent({
+  components: { Required },
   props: {
-    suggestUrl: String,
-    listUrl: String,
-    entityUrl: String,
+    allOption: {
+      type: String,
+      default: '',
+    },
+    emptyPlaceholder: {
+      type: String,
+    },
+    entityUrl: {
+      type: String,
+    },
+    errorText: {
+      type: String,
+      default: "",
+    },
+    explanation: {
+      type: String,
+      default: '',
+    },
+    hasError: {
+      type: Boolean,
+      default: false,
+    },
+    hintText: {
+      type: String,
+      default: "",
+    },
     /** @type {import("vue").PropType<Promise<Option[]>>} */
     initialOptions: Promise,
-    values: [Array, String],
+    isValid: {
+      type: Boolean,
+      default: false,
+    },
+    listUrl: {
+      type: String
+    },
+    minimumCharacterBeforeSuggest: {
+      type: Number,
+      default: 1,
+    },
     onChange: {
       type: Function,
       required: true,
@@ -51,30 +100,34 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    explanation: {
-      type: String,
-      default: '',
+    required: {
+      type: Boolean,
+      default: false,
     },
     searchPlaceholder: {
       type: String,
       required: true,
     },
-    emptyPlaceholder: {
-      type: String,
+    suggestUrl: {
+      type: String
     },
-    allOption: {
-      type: String,
-      default: '',
+    values: {
+      type: [Array, String],
     },
-    minimumCharacterBeforeSuggest: {
-      type: Number,
-      default: 1,
-    }
   },
   setup(props) {
     const { t } = useI18n();
     const toast = useToast();
     const { id } = useUid('multiselect');
+    const errorTextId = computed(() => id + "-desc-error");
+    const validTextId = computed(() => id + "-desc-valid");
+
+    const selectGroupClass = computed(() => {
+      return {
+        'fr-select-group--error': props.hasError,
+        'fr-select-group--valid': props.isValid
+      };
+    });
 
     /**
     * Select template Ref
@@ -390,12 +443,15 @@ export default defineComponent({
     onMounted(() => fillOptionsAndValues.then(makeSelect));
     onUpdated(updateStylesAndEvents);
     return {
-      id,
-      displayedOptions,
-      selected,
-      select,
       container,
+      displayedOptions,
+      errorTextId,
+      id,
       offset,
+      select,
+      selected,
+      selectGroupClass,
+      validTextId,
     }
   }
 });

@@ -46,6 +46,8 @@
     "@storybook/vue3-vite": "^7.0.18",
     "@vitejs/plugin-legacy": "^4.0.2",
     "@vitejs/plugin-vue": "^4.1.0",
+    "@vuelidate/core": "^2.0.3",
+    "@vuelidate/validators": "^2.0.3",
     "axe-core": "^4.3.3",
     "axios": "^0.26.1",
     "browserslist": "^4.21.5",

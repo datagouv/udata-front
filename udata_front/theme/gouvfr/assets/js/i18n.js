@@ -14,10 +14,11 @@ import LocalizedFormat from 'dayjs/esm/plugin/localizedFormat';
 import RelativeTime from "dayjs/esm/plugin/relativeTime";
 import messages from '@intlify/unplugin-vue-i18n/messages';
 import { getRegisteredTranslations } from "@etalab/udata-front-plugins-helper";
+import { createI18nMessage, minLength as vMinLength, not as vNot, required as vRequired, sameAs as vSameAs, helpers } from '@vuelidate/validators';
 
 const dateLocales = { fr, en, es };
 
-fr.formatLong?.date()
+fr.formatLong?.date();
 
 /**
  * Get locale messages for date-fns
@@ -69,6 +70,31 @@ export function reloadLocale() {
   }
   i18n.global.mergeLocaleMessage(lang, messages);
 }
+
+const withI18nMessage = createI18nMessage({ t: i18n.global.t.bind(i18n) })
+
+const { withMessage } = helpers;
+
+/**
+ *
+ * @param {import("@vuelidate/validators").ValidatorWrapper} validator
+ * @returns {(message: string, ...args: Array<any>) => import("@vuelidate/core").ValidationRuleWithParams}
+ */
+function passLocalizedMessageWithArguments(validator) {
+  return (message, ...args) => withMessage(message, validator(...args));
+}
+
+/**
+ * This is a local fake `t` function
+ * @param {string} message
+ * @returns {string}
+ */
+const t = (message) => message;
+
+export const required = withI18nMessage(vRequired, { messagePath: () => t("The field {property} is required.")});
+export const minLength = withI18nMessage(vMinLength, { messagePath: () => t("The {property} field has a value of '{model}', but it must have a min length of {min}."), withArguments: true });
+export const not = passLocalizedMessageWithArguments(vNot);
+export const sameAs = withI18nMessage(vSameAs, { messagePath: () => t("The value must be equal to the ${otherName} value"), withArguments: true });
 
 export default i18n;
 export { dayjs, i18n };

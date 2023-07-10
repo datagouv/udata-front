@@ -13,6 +13,9 @@
       :id="id"
       :disabled="disabled"
       :type="type"
+      :value="modelValue"
+      @change="change"
+      :required="required"
     ></textarea>
     <div v-else-if="isDate" class="fr-mt-1w">
       <Datepicker
@@ -21,15 +24,16 @@
         :aria-describedby="ariaDescribedBy"
         :id="id"
         :disabled="disabled"
-        v-model="value"
+        :modelValue="modelValue"
+        @change="change"
         :locale="locale"
         inputFormat="P"
       />
     </div>
     <RangePicker
       v-else-if="isRange"
-      :value="value"
-      :onChange="(range) => value = range"
+      :value="modelValue"
+      :onChange="change"
     />
     <input
       v-else
@@ -39,11 +43,14 @@
       :id="id"
       :disabled="disabled"
       :type="type"
+      :value="modelValue"
+      @change="change"
+      :required="required"
     />
     <p :id="validTextId" class="fr-valid-text" v-if="isValid">
       {{ validText }}
     </p>
-    <p :id="validTextId" class="fr-error-text" v-else-if="hasError">
+    <p :id="errorTextId" class="fr-error-text" v-else-if="hasError">
       {{ errorText }}
     </p>
   </div>
@@ -104,8 +111,7 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const { id } = useUid("select");
-    const value = ref();
+    const { id } = useUid("input");
 
     const errorTextId = computed(() => id + "-desc-error");
     const validTextId = computed(() => id + "-desc-valid");
@@ -153,7 +159,6 @@ export default defineComponent({
       isTextarea,
       locale: dateLocale,
       validTextId,
-      value,
     };
   },
 });

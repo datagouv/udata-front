@@ -16,16 +16,36 @@
   * @typedef {"start" | "center" | "end"} AxisAlignment
   */
 
-  /**
-  * @typedef {"default" | "error" | "success"} DSFRFormState
+   /**
+  * @typedef {"default" } DSFRFormDefaultState
+  */
+
+   /**
+  * @typedef {"error" | "success"} DSFRFormFunctionalState
   */
 
   /**
-  * @typedef {DSFRFormState | "warning"} FormState
+  * @typedef {DSFRFormDefaultState | DSFRFormFunctionalState } DSFRFormState
   */
 
   /**
-  * @typedef {FormState | "disabled" | "info"} AccordionState
+  * @typedef {DSFRFormFunctionalState | "warning"} FormFunctionalState
+  */
+
+  /**
+  * @typedef {FormFunctionalState | "disabled"} AccordionFunctionalState
+  */
+
+  /**
+  * @typedef {"info"} AccordionInfoState
+  */
+
+  /**
+  * @typedef {AccordionFunctionalState | AccordionInfoState} PublishingFormAccordionState
+  */
+
+  /**
+  * @typedef {DSFRFormDefaultState | AccordionFunctionalState | AccordionInfoState} AccordionState
   */
 
  export default {};

@@ -145,6 +145,11 @@ export const api_doc_external_link = _meta("api-doc-external-link");
 export const catalog_url = _meta("catalog-url");
 
 /**
+ * The description length required to pass the quality score check
+ */
+export const quality_description_length = _meta("quality-description-length");
+
+/**
  * Sentry configuration (as json) if available
  */
 const sentryEl = document.querySelector("meta[name=sentry]");
@@ -266,4 +271,5 @@ export default {
   resources_min_count_to_show_search,
   markdown,
   read_only_enabled,
+  quality_description_length,
 };

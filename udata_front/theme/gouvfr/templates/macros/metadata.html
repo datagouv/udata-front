@@ -38,6 +38,9 @@
 {% if config.CATALOG_URL %}
 <meta name="catalog-url" content="{{ config.CATALOG_URL }}" />
 {% endif %}
+{% if config.QUALITY_DESCRIPTION_LENGTH %}
+<meta name="quality-description-length" content="{{ config.QUALITY_DESCRIPTION_LENGTH }}" />
+{% endif %}
 <meta name="github" content="{{ config.SITE_GITHUB_URL }}" />
 <meta name="js-config-dataset-url" content="{{ url_for('datasets.list') }}" />
 <meta name="js-config-organization-url" content="{{ url_for('organizations.list') }}" />

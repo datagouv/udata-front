@@ -38,7 +38,7 @@
     <p :id="validTextId" class="fr-valid-text" v-if="isValid">
       {{ validText }}
     </p>
-    <p :id="validTextId" class="fr-error-text" v-else-if="hasError">
+    <p :id="errorTextId" class="fr-error-text" v-else-if="hasError">
       {{ errorText }}
     </p>
   </div>

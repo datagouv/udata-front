@@ -1,5 +1,5 @@
 <template>
-  <div @focusin="openIfClosed">
+  <div @focusin="openIfClosed" @focusout="$emit('blur')">
       <slot></slot>
   </div>
 </template>
@@ -8,6 +8,7 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
+  emits: ["blur"],
   props: {
     accordion: {
       type: String,

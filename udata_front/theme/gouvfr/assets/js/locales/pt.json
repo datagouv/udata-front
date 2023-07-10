@@ -173,7 +173,6 @@
   "If you want to do tests, use {demo_server}.": "",
   "Select lower bound:": "",
   "Select upper bound:": "",
-  "Publication date": "",
   "Are you an administration and do you want to catalog your data ?": "",
   "You can use the service for central administrations to manage and open their data catalog.": "",
   "Go to cataloging space": "",
@@ -197,5 +196,17 @@
   "Last update": "",
   "Temporal coverage": "",
   "Space": "",
-  "Next": ""
+  "Next": "",
+  "from dd/mm/yyyy to dd/mm/yyyy": "",
+  "What is a dataset?": "",
+  "On {site}, a dataset is a set of files.": "",
+  "Publish the right types of files": "",
+  "What is a file?": "",
+  "A file can contain multiple types of files (updates, history, documentation, source code, API, link, etc.)": "",
+  "Files": "",
+  "The field {property} is required.": "",
+  "The {property} field has a value of '{model}', but it must have a min length of {min}.": "",
+  "The value must be equal to the ${otherName} value": "",
+  "The value must be different from unknown.": "",
+  "License": ""
 }

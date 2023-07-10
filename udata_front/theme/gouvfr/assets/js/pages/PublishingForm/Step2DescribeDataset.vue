@@ -15,6 +15,7 @@
             <Accordion
               :title= "$t('Naming your dataset')"
               :id="nameDatasetAccordionId"
+              :state="quality.title"
             >
               {{ $t(`Dataset title must be the most precise and specific possible.
               It must match the vocabulary used by users.
@@ -23,42 +24,49 @@
             <Accordion
               :title= "$t('Add an acronym to the dataset')"
               :id="addAcronymAccordionId"
+              state="info"
             >
               {{ $t(`TO DO`) }}
             </Accordion>
             <Accordion
               :title= "$t('Write a good description')"
               :id="writeAGoodDescriptionAccordionId"
+              :state="quality.description"
             >
               {{ $t(`TO DO`) }}
             </Accordion>
             <Accordion
               :title= "$t('Use tags')"
               :id="useTagsAccordionId"
+              :state="quality.tags"
             >
               {{ $t(`TO DO`) }}
             </Accordion>
             <Accordion
               :title= "$t('Select a license')"
               :id="selectLicenseAccordionId"
+              :state="quality.license"
             >
               {{ $t(`TO DO`) }}
             </Accordion>
             <Accordion
               :title= "$t('Choose the update frequency')"
               :id="chooseFrequencyAccordionId"
+              :state="quality.frequency"
             >
               {{ $t(`TO DO`) }}
             </Accordion>
             <Accordion
               :title= "$t('Add temporal coverage')"
               :id="addTemporalCoverageAccordionId"
+              :state="quality.temporalCoverage"
             >
               {{ $t(`TO DO`) }}
             </Accordion>
             <Accordion
               :title= "$t('Add spacial information')"
               :id="addSpacialInformationAccordionId"
+              :state="quality.spacialInformation"
             >
               {{ $t(`TO DO`) }}
             </Accordion>
@@ -87,38 +95,63 @@
                 {{ $t("Description") }}
               </h2>
             </legend>
-            <LinkedToAccordion class="fr-fieldset__element" :accordion="nameDatasetAccordionId">
+            <LinkedToAccordion
+              class="fr-fieldset__element"
+              :accordion="nameDatasetAccordionId"
+              @blur="vQuality$.title.$touch"
+            >
               <InputGroup
                 :aria-describedby="nameDatasetAccordionId"
                 :label="$t('Dataset name')"
                 :required="true"
+                v-model="dataset.title"
+                :hasError="hasError('title')"
+                :errorText="getErrorText('title')"
               />
             </LinkedToAccordion>
-            <LinkedToAccordion class="fr-fieldset__element" :accordion="addAcronymAccordionId">
+            <LinkedToAccordion
+              class="fr-fieldset__element"
+              :accordion="addAcronymAccordionId"
+            >
               <InputGroup
                 :label="$t('Acronym')"
               />
             </LinkedToAccordion>
-            <LinkedToAccordion class="fr-fieldset__element" :accordion="writeAGoodDescriptionAccordionId">
+            <LinkedToAccordion
+              class="fr-fieldset__element"
+              :accordion="writeAGoodDescriptionAccordionId"
+              @blur="vQuality$.description.$touch"
+            >
               <InputGroup
                 :label="$t('Description')"
                 :required="true"
                 type="textarea"
+                v-model="dataset.description"
+                :hasError="hasError('description')"
+                :errorText="getErrorText('description')"
               />
             </LinkedToAccordion>
-            <LinkedToAccordion class="fr-fieldset__element" :accordion="useTagsAccordionId">
+            <LinkedToAccordion
+              class="fr-fieldset__element"
+              :accordion="useTagsAccordionId"
+              @blur="vQuality$.tags.$touch"
+            >
               <MultiSelect
                 :minimumCharacterBeforeSuggest="2"
-                :onChange="(value) => dataset.tag = value"
+                :onChange="(value) => dataset.tags = value"
                 :placeholder="$t('Tags')"
                 :searchPlaceholder="$t('Search a tag...')"
                 suggestUrl="/tags/suggest/"
-                :values="dataset.tag"
+                :values="dataset.tags"
               />
             </LinkedToAccordion>
-            <LinkedToAccordion class="fr-fieldset__element" :accordion="selectLicenseAccordionId">
+            <LinkedToAccordion
+              class="fr-fieldset__element"
+              :accordion="selectLicenseAccordionId"
+              @blur="vQuality$.license.$touch"
+            >
               <MultiSelect
-                :placeholder="$t('Licenses')"
+                :placeholder="$t('License')"
                 :searchPlaceholder="$t('Search a license...')"
                 listUrl="/datasets/licenses/"
                 :values="dataset.license"
@@ -135,13 +168,19 @@
             <div class="fr-fieldset__element">
               <div class="fr-grid-row fr-grid-row--gutters">
                 <div class="fr-col-12 fr-col-md-6">
-                  <LinkedToAccordion :accordion="chooseFrequencyAccordionId">
+                  <LinkedToAccordion
+                    :accordion="chooseFrequencyAccordionId"
+                    @blur="vQuality$.frequency.$touch"
+                  >
                     <MultiSelect
                       :placeholder="$t('Update frequency')"
                       :searchPlaceholder="$t('Search a frequency...')"
                       listUrl="/datasets/frequencies/"
                       :values="dataset.frequency"
                       :onChange="(value) => dataset.frequency = value"
+                      :required="true"
+                      :hasError="hasError('frequency')"
+                      :errorText="getErrorText('frequency')"
                     />
                   </LinkedToAccordion>
                 </div>
@@ -149,18 +188,22 @@
                   <InputGroup
                     :label="$t('Last update')"
                     type="date"
-                    @change="(value) => dataset.last_update = value"
+                    v-model="dataset.last_update"
                   />
                 </div>
               </div>
             </div>
-            <div class="fr-fieldset__element">
+            <LinkedToAccordion
+              :accordion="addTemporalCoverageAccordionId"
+              @blur="vQuality$.temporal_coverage.$touch"
+              class="fr-fieldset__element"
+            >
               <InputGroup
                 :label="$t('Temporal coverage')"
                 type="range"
-                @change="(value) => dataset.temporal_coverage = value"
+                v-model="dataset.temporal_coverage"
               />
-            </div>
+            </LinkedToAccordion>
           </fieldset>
           <fieldset class="fr-fieldset" aria-labelledby="space-legend">
             <legend class="fr-fieldset__legend" id="space-legend">
@@ -168,7 +211,11 @@
                 {{ $t("Space") }}
               </h2>
             </legend>
-            <div class="fr-fieldset__element">
+            <LinkedToAccordion
+              :accordion="addSpacialInformationAccordionId"
+              @blur="vQuality$.spatial.$touch"
+              class="fr-fieldset__element"
+            >
               <div class="fr-grid-row fr-grid-row--gutters">
                 <div class="fr-col-12 fr-col-md-6">
                   <MultiSelect
@@ -176,8 +223,8 @@
                     :searchPlaceholder="$t('Search a spatial coverage...')"
                     suggestUrl="/spatial/zones/suggest/"
                     entityUrl="/spatial/zone/"
-                    :values="dataset.geozone"
-                    :onChange="(value) => dataset.geozone = value"
+                    :values="dataset.spatial.zones"
+                    :onChange="(value) => dataset.spatial.zones = value"
                   />
                 </div>
                 <div class="fr-col-12 fr-col-md-6">
@@ -185,12 +232,12 @@
                     :placeholder="$t('Spatial granularity')"
                     :searchPlaceholder="$t('Search a granularity...')"
                     listUrl="/spatial/granularities/"
-                    :values="dataset.granularity"
-                    :onChange="(value) => dataset.granularity = value"
+                    :values="dataset.spatial.granularity"
+                    :onChange="(value) => dataset.spatial.granularity = value"
                   />
                 </div>
               </div>
-            </div>
+            </LinkedToAccordion>
           </fieldset>
           <div class="fr-grid-row fr-grid-row--right">
             <button class="fr-btn">
@@ -205,7 +252,9 @@
 </template>
 
 <script>
-import { defineComponent, reactive } from 'vue';
+import { computed, defineComponent, reactive, watchEffect } from 'vue';
+import { useVuelidate } from '@vuelidate/core';
+import { minLength, not, required, sameAs } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
 import Container from '../../components/Ui/Container/Container.vue';
@@ -218,7 +267,8 @@ import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Well from "../../components/Ui/Well/Well.vue";
 import useUid from "../../composables/useUid";
 import editIcon from "svg/illustrations/edit.svg";
-import { title } from "../../config";
+import { quality_description_length, title } from "../../config";
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   components: { Accordion, AccordionGroup, Container, InputGroup, LinkedToAccordion, MultiSelect, SelectGroup, Stepper, Well, Sidemenu },
@@ -229,6 +279,7 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const { t } = useI18n();
     const { id: nameDatasetAccordionId } = useUid("accordion");
     const { id: addAcronymAccordionId } = useUid("accordion");
     const { id: writeAGoodDescriptionAccordionId } = useUid("accordion");
@@ -237,7 +288,101 @@ export default defineComponent({
     const { id: chooseFrequencyAccordionId } = useUid("accordion");
     const { id: addTemporalCoverageAccordionId } = useUid("accordion");
     const { id: addSpacialInformationAccordionId } = useUid("accordion");
-    const dataset = reactive({});
+    const dataset = reactive({
+      title: "",
+      acronym: "",
+      description: "",
+      tags: null,
+      license: "",
+      frequency: "",
+      temporal_coverage: "",
+      last_update: null,
+      spatial: {
+        zones: "",
+        granularity: "",
+      }
+    });
+
+    /**
+     *
+     * @param {boolean} dirty
+     * @param {boolean} failRequired
+     * @param {boolean} failQuality
+     * @returns {import("../../types").AccordionFunctionalState}
+     */
+    const getFunctionalState = (dirty, failRequired, failQuality) => {
+      // console.log({
+      //   disabled: !dirty,
+      //   error: dirty && !passRequired,
+      //   warning: dirty && passRequired && !passQuality,
+      //   success: dirty && passRequired && passQuality,
+      // });
+      if(!dirty) {
+        return "disabled";
+      }
+      if(failRequired) {
+        return "error";
+      }
+      if(failQuality) {
+        return "warning";
+      }
+      return "success"
+    };
+
+    const notUnknown = not(t("The value must be different from unknown."), sameAs("unknown"));
+
+    const requiredRules = {
+      description: { required },
+      frequency: { required, notUnknown },
+      title: { required },
+    };
+
+    const qualityRules = {
+      description: {required, minLengthValue: minLength(quality_description_length), },
+      frequency: { required, notUnknown },
+      license: { required },
+      spatial: { required },
+      tags: { required, notEmpty: minLength(1) },
+      temporal_coverage: { required },
+      title: { required },
+    };
+
+    const v$ = useVuelidate(requiredRules, dataset);
+    const vQuality$ = useVuelidate(qualityRules, dataset);
+
+    /**
+     * @type {import("vue").ComputedRef<Record<string, import("../../types").AccordionFunctionalState>>}
+     */
+    const quality = computed(() => {
+      return {
+        title: getFunctionalState(vQuality$.value.title.$dirty, v$.value.title.$invalid, vQuality$.value.title.$error),
+        description: getFunctionalState(vQuality$.value.description.$dirty, v$.value.description.$invalid, vQuality$.value.description.$error),
+        tags: getFunctionalState(vQuality$.value.tags.$dirty, false, vQuality$.value.tags.$error),
+        license: getFunctionalState(vQuality$.value.license.$dirty, false, vQuality$.value.license.$error),
+        frequency: getFunctionalState(vQuality$.value.frequency.$dirty, v$.value.frequency.$invalid, vQuality$.value.frequency.$error),
+        temporalCoverage: getFunctionalState(vQuality$.value.temporal_coverage.$dirty, false, vQuality$.value.temporal_coverage.$error),
+        spacialInformation: getFunctionalState(vQuality$.value.spatial.$dirty, false, vQuality$.value.spatial.$error),
+      };
+    });
+
+    /**
+     * @param {string} field
+     * @returns {boolean}
+     */
+    const hasError = (field) => quality.value[field] === "error";
+
+    const getErrorText = (field) => {
+      if(vQuality$.value[field].$dirty) {
+        v$.value[field].$touch();
+      }
+      return v$.value[field].$errors.map(error => error.$message).join("\n");
+    }
+
+    watchEffect(() => {
+      console.log(quality.value);
+      console.log(dataset);
+    });
+
     return {
       addAcronymAccordionId,
       nameDatasetAccordionId,
@@ -249,7 +394,12 @@ export default defineComponent({
       addSpacialInformationAccordionId,
       dataset,
       editIcon,
+      quality,
+      hasError,
+      getErrorText,
       title,
+      v$,
+      vQuality$,
     };
   },
 });
