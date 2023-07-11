@@ -28,13 +28,14 @@ PAGES_REPO_BRANCH = 'master'
 APIGOUVFR_URL = 'https://api.gouv.fr/api/v1/apis'
 APIGOUVFR_ALLOW_OPENNESS = ['open', 'semi_open']
 
-# Etalab Guides
-ETALAB_GUIDES_URL = 'https://guides.etalab.gouv.fr'
-GUIDES_USER_ACCOUNT_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/creer-compte-utilisateur/'
-GUIDES_ORGANIZATION_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/creer-rejoindre-organisation/'
-GUIDES_DATASET_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/publier-jeu-de-donnees/'
-GUIDES_REUSE_URL = 'https://guides.etalab.gouv.fr/reutilisation/'
-GUIDES_COMMUNITY_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/animer-communaute-reutilisateurs/#valoriser-les-usages-des-donnees' # noqa
+# Guides
+GUIDES_URL = 'https://guides.data.gouv.fr/'
+GUIDES_USER_ACCOUNT_URL = 'https://guides.data.gouv.fr/publier-des-donnees/guide-data.gouv.fr/creer-un-compte-utilisateur-et-rejoindre-une-organisation' # noqa
+GUIDES_ORGANIZATION_URL = 'https://guides.data.gouv.fr/publier-des-donnees/guide-data.gouv.fr/organisation/creer-une-organisation' # noqa
+GUIDES_DATASET_URL = 'https://guides.data.gouv.fr/publier-des-donnees/guide-data.gouv.fr/jeux-de-donnees/publier-un-jeu-de-donnees' # noqa
+GUIDES_REUSE_URL = 'https://guides.data.gouv.fr/publier-des-donnees/guide-data.gouv.fr/reutilisations' # noqa
+GUIDES_COMMUNITY_URL = 'https://guides.data.gouv.fr/publier-des-donnees/guide-data.gouv.fr/ressource-communautaire' # noqa
+GUIDES_QUALITY_URL = 'https://guides.data.gouv.fr/publier-des-donnees/guide-qualite/ameliorer-la-qualite-dun-jeu-de-donnees-en-continu/ameliorer-le-score-de-qualite-des-metadonnees' # noqa
 
 # CAPTCHEtat
 
