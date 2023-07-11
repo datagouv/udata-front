@@ -125,3 +125,12 @@ reuses:
         response = client.get(url_for('gouvfr.show_page', slug='subdir/test'))
         assert response.status_code == 200
         assert b'<h1>test</h1>' in response.data
+
+    def test_page_missing_trailing_slash(self, client, rmock):
+        raw_url, _ = get_pages_gh_urls('subdir/test')
+        rmock.head(f'{raw_url}.md', status_code=200)
+        rmock.get(f'{raw_url}.md', text="""#test""")
+        url_missing_trailing_slash = url_for('gouvfr.show_page', slug='subdir/test').rstrip('/')
+        response = client.get(url_missing_trailing_slash)
+        assert response.status_code == 302
+        assert response.location == url_missing_trailing_slash + '/'
