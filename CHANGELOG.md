@@ -6,6 +6,7 @@
 - Fix dataset oembed links [#271](https://github.com/etalab/udata-front/pull/271)
 - Hide CaptchEtat icon loader [#272](https://github.com/etalab/udata-front/pull/272)
 - Update guide links [#276](https://github.com/etalab/udata-front/pull/276)
+- Redirect *pages* when missing trailing slash [#278](https://github.com/etalab/udata-front/pull/278)
 
 ## 3.2.4 (2023-06-19)
 
