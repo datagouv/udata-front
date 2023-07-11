@@ -5,6 +5,13 @@
  */
 
 /**
+ * @typedef {Object} MultiSelectOption
+ * @property {string} label - Label (display) of the option
+ * @property {string} value - Value (id) of the option
+ * @property {string} [image] - Image (optional) to show
+ */
+
+/**
  * @typedef {"primary" | "secondary"} WellType
  */
 

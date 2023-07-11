@@ -7,7 +7,6 @@ export default {
 
 const args = {
   value: null,
-  onChange(value) { console.log(value) }
 };
 
 export const SimpleRangePicker = {

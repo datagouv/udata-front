@@ -138,7 +138,7 @@
             >
               <MultiSelect
                 :minimumCharacterBeforeSuggest="2"
-                :onChange="(value) => dataset.tags = value"
+                @change="(value) => dataset.tags = value"
                 :placeholder="$t('Tags')"
                 :searchPlaceholder="$t('Search a tag...')"
                 suggestUrl="/tags/suggest/"
@@ -155,7 +155,7 @@
                 :searchPlaceholder="$t('Search a license...')"
                 listUrl="/datasets/licenses/"
                 :values="dataset.license"
-                :onChange="(value) => dataset.license = value"
+                @change="(value) => dataset.license = value"
               />
             </LinkedToAccordion>
           </fieldset>
@@ -177,7 +177,7 @@
                       :searchPlaceholder="$t('Search a frequency...')"
                       listUrl="/datasets/frequencies/"
                       :values="dataset.frequency"
-                      :onChange="(value) => dataset.frequency = value"
+                      @change="(value) => dataset.frequency = value"
                       :required="true"
                       :hasError="hasError('frequency')"
                       :errorText="getErrorText('frequency')"
@@ -224,7 +224,7 @@
                     suggestUrl="/spatial/zones/suggest/"
                     entityUrl="/spatial/zone/"
                     :values="dataset.spatial.zones"
-                    :onChange="(value) => dataset.spatial.zones = value"
+                    @change="(value) => dataset.spatial.zones = value"
                   />
                 </div>
                 <div class="fr-col-12 fr-col-md-6">
@@ -233,7 +233,7 @@
                     :searchPlaceholder="$t('Search a granularity...')"
                     listUrl="/spatial/granularities/"
                     :values="dataset.spatial.granularity"
-                    :onChange="(value) => dataset.spatial.granularity = value"
+                    @change="(value) => dataset.spatial.granularity = value"
                   />
                 </div>
               </div>

@@ -24,7 +24,7 @@
                     suggestUrl="/organizations/suggest/"
                     entityUrl="/organizations/"
                     :values="facets.organization"
-                    :onChange="handleFacetChange('organization')"
+                    @change="(value) => handleFacetChange('organization', value)"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -34,7 +34,7 @@
                     :allOption="$t('All tags')"
                     suggestUrl="/tags/suggest/"
                     :values="facets.tag"
-                    :onChange="handleFacetChange('tag')"
+                    @change="(value) => handleFacetChange('tag', value)"
                     :minimumCharacterBeforeSuggest="2"
                   />
                 </div>
@@ -45,7 +45,7 @@
                     :allOption="$t('All formats')"
                     listUrl="/datasets/extensions/"
                     :values="facets.format"
-                    :onChange="handleFacetChange('format')"
+                    @change="(value) => handleFacetChange('format', value)"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -56,13 +56,13 @@
                     :allOption="$t('All licenses')"
                     listUrl="/datasets/licenses/"
                     :values="facets.license"
-                    :onChange="handleFacetChange('license')"
+                    @change="(value) => handleFacetChange('license', value)"
                   />
                 </div>
                 <div class="fr-col-12">
                   <SchemaFilter
                     :values="facets.schema"
-                    :onChange="handleFacetChange('schema')"
+                    @change="(value) => handleFacetChange('schema', value)"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -74,7 +74,7 @@
                     suggestUrl="/spatial/zones/suggest/"
                     entityUrl="/spatial/zone/"
                     :values="facets.geozone"
-                    :onChange="handleFacetChange('geozone')"
+                    @change="(value) => handleFacetChange('geozone', value)"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -85,7 +85,7 @@
                     :allOption="$t('All granularities')"
                     listUrl="/spatial/granularities/"
                     :values="facets.granularity"
-                    :onChange="handleFacetChange('granularity')"
+                    @change="(value) => handleFacetChange('granularity', value)"
                   />
                 </div>
                 <div class="fr-col-12 fr-mb-3w text-align-center">
@@ -375,30 +375,29 @@ export default defineComponent({
     /**
      * Called on every facet selector change, updates the `facets.xxx` object then searches with new values
      */
-    const handleFacetChange = (facet) => {
-      return (values) => {
-        // Values can either be an array of varying length, or a String.
-        if (Array.isArray(values)) {
-          if (values.length > 1) {
-            facets.value[facet] = values.map((obj) => obj.value);
-          } else if (values.length === 1) {
-            facets.value[facet] = values[0].value;
-          } else {
-            facets.value[facet] = null;
-          }
+    const handleFacetChange = (facet, values) => {
+      console.log("new value", values);
+      // Values can either be an array of varying length, or a String.
+      if (Array.isArray(values)) {
+        if (values.length > 1) {
+          facets.value[facet] = values.map((obj) => obj.value);
+        } else if (values.length === 1) {
+          facets.value[facet] = values[0].value;
         } else {
-          if(values) {
-            facets.value[facet] = values;
-          } else {
-            facets.value[facet] = null;
-          }
+          facets.value[facet] = null;
         }
-        if (props.organization) {
-          facets.value.organization = props.organization;
+      } else {
+        if(values) {
+          facets.value[facet] = values;
+        } else {
+          facets.value[facet] = null;
         }
-        currentPage.value = 1;
-        search();
-      };
+      }
+      if (props.organization) {
+        facets.value.organization = props.organization;
+      }
+      currentPage.value = 1;
+      search();
     };
 
     /**

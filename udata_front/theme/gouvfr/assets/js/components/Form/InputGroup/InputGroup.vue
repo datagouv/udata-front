@@ -33,7 +33,7 @@
     <RangePicker
       v-else-if="isRange"
       :value="modelValue"
-      :onChange="change"
+      @change="change"
     />
     <input
       v-else
@@ -141,11 +141,19 @@ export default defineComponent({
 
     /**
      *
-     * @param {Event} event
+     * @param {Event | string | null} event
      */
     const change = (event) => {
-      const target = /** @type {HTMLSelectElement | null} */ (event.target);
-      emit('update:modelValue', target?.value);
+      /** @type {string | undefined | null} */
+      let value;
+      if(event instanceof Event) {
+        const target = /** @type {HTMLSelectElement | HTMLInputElement | null} */ (event.target);
+        value = target?.value;
+      } else {
+        value = event;
+      }
+
+      emit('update:modelValue', value);
     }
 
     return {

@@ -6,7 +6,6 @@ export default {
 };
 
 const args = {
-  onChange(change) {console.log(change)},
   placeholder: "Complex select",
   searchPlaceholder: "Type to search",
   emptyPlaceholder: "Select an option",

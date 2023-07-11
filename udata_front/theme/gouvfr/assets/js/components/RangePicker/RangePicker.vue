@@ -51,11 +51,11 @@ export default defineComponent({
   components: {
     Datepicker,
   },
+  emits: ["change"],
   props: {
     value: String,
-    onChange: Function,
   },
-  setup(props) {
+  setup(props, { emit }) {
     /** @type {import("vue").Ref<Date | null>} */
     const start = ref(null);
 
@@ -93,8 +93,6 @@ export default defineComponent({
     });
 
     watch([start, end], () => {
-      if (!props.onChange) return;
-
       let value = null;
 
       if (start.value && end.value)
@@ -103,7 +101,7 @@ export default defineComponent({
           "-" +
           format(end.value, "yyyy-MM-dd");
 
-      return props.onChange(value);
+      emit("change", value);
     });
 
     const clear = () => {

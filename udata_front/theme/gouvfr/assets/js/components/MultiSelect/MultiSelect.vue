@@ -43,15 +43,9 @@ import Required from "../Ui/Required/Required.vue";
 import useUid from "../../composables/useUid";
 import { useToast } from "../../composables/useToast";
 
-/**
- * @typedef {Object} Option
- * @property {string} label - Label (display) of the option
- * @property {string} value - Value (id) of the option
- * @property {string} [image] - Image (optional) to show
- */
-
 export default defineComponent({
   components: { Required },
+  emits: ["change"],
   props: {
     allOption: {
       type: String,
@@ -79,7 +73,7 @@ export default defineComponent({
       type: String,
       default: "",
     },
-    /** @type {import("vue").PropType<Promise<Option[]>>} */
+    /** @type {import("vue").PropType<Promise<Array<import("../../types").MultiSelectOption>>>} */
     initialOptions: Promise,
     isValid: {
       type: Boolean,
@@ -91,10 +85,6 @@ export default defineComponent({
     minimumCharacterBeforeSuggest: {
       type: Number,
       default: 1,
-    },
-    onChange: {
-      type: Function,
-      required: true,
     },
     placeholder: {
       type: String,
@@ -115,7 +105,7 @@ export default defineComponent({
       type: [Array, String],
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const { t } = useI18n();
     const toast = useToast();
     const { id } = useUid('multiselect');
@@ -158,7 +148,7 @@ export default defineComponent({
 
     /**
      * Current options
-     * @type {import("vue").Ref<Option[]>}
+     * @type {import("vue").Ref<Array<import("../../types").MultiSelectOption>>}
      */
     const options = ref([]);
 
@@ -200,7 +190,7 @@ export default defineComponent({
 
     /**
      * Get initial set of options from API or an empty array
-     * @returns {Promise<Option[]>}
+     * @returns {Promise<Array<import("../../types").MultiSelectOption>>}
      */
     const getInitialOptions = async () => {
       if(props.initialOptions) return props.initialOptions;
@@ -227,7 +217,7 @@ export default defineComponent({
     /**
      * Map an array of all different objects received from API to an array of {@link Option}
      * @param {Array} data
-     * @returns {Array<Option>}
+     * @returns {Array<import("../../types").MultiSelectOption>}
      **/
     const mapToOption = (data) => data.map((obj) => ({
       label: obj.name ?? obj.title ?? obj.text ?? obj?.properties?.name ?? obj.label ?? obj,
@@ -276,7 +266,7 @@ export default defineComponent({
      * It uses list API if no query is provided
      * Fallback to an empty array without query and props.listUrl
      * @param {Array} suggestions
-     * @returns {Array<Option>}
+     * @returns {Array<import("../../types").MultiSelectOption>}
      */
     const addAllOptionAndMapToOption = (suggestions) => {
       if(props.allOption) {
@@ -287,8 +277,8 @@ export default defineComponent({
 
     /**
      * Set options from DOM processing
-     * @param {Option[] | void} values
-     * @returns {Option[] | void}
+     * @param {Array<import("../../types").MultiSelectOption> | void} values
+     * @returns {Array<import("../../types").MultiSelectOption> | void}
      */
     const setOptions = (values) => {
       if(values) {
@@ -360,7 +350,8 @@ export default defineComponent({
      */
     const registerTriggerOnChange = () => {
       if(select.value) {
-        props.onChange(select.value.value);
+        emit("change", select.value.value);
+        console.log("change", select.value.value);
       }
     };
 
