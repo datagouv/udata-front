@@ -205,7 +205,7 @@
   "A file can contain multiple types of files (updates, history, documentation, source code, API, link, etc.)": "A file can contain multiple types of files (updates, history, documentation, source code, API, link, etc.)",
   "Files": "Files",
   "The field {property} is required.": "The field {property} is required.",
-  "The {property} field has a value of '{model}', but it must have a min length of {min}.": "The {property} field has a value of '{model}', but it must have a min length of {min}.",
+  "The {property} field has a minimum length of {min}.": "The {property} field has a minimum length of {min}.",
   "The value must be equal to the ${otherName} value": "The value must be equal to the ${otherName} value",
   "The value must be different from unknown.": "The value must be different from unknown.",
   "License": "License"

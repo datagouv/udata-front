@@ -34,6 +34,9 @@
               :state="quality.description"
             >
               {{ $t(`TO DO`) }}
+              <Well v-if="hasQualityWarning('description')" color="orange-terre-battue">
+                {{ getQualityWarningText("description") }}
+              </Well>
             </Accordion>
             <Accordion
               :title= "$t('Use tags')"
@@ -41,6 +44,9 @@
               :state="quality.tags"
             >
               {{ $t(`TO DO`) }}
+              <Well v-if="hasQualityWarning('tags')" color="orange-terre-battue">
+                {{ getQualityWarningText("tags") }}
+              </Well>
             </Accordion>
             <Accordion
               :title= "$t('Select a license')"
@@ -48,6 +54,9 @@
               :state="quality.license"
             >
               {{ $t(`TO DO`) }}
+              <Well v-if="hasQualityWarning('license')" color="orange-terre-battue">
+                {{ getQualityWarningText("license") }}
+              </Well>
             </Accordion>
             <Accordion
               :title= "$t('Choose the update frequency')"
@@ -59,16 +68,22 @@
             <Accordion
               :title= "$t('Add temporal coverage')"
               :id="addTemporalCoverageAccordionId"
-              :state="quality.temporalCoverage"
+              :state="quality.temporal_coverage"
             >
               {{ $t(`TO DO`) }}
+              <Well v-if="hasQualityWarning('temporal_coverage')" color="orange-terre-battue">
+                {{ getQualityWarningText("temporal_coverage") }}
+              </Well>
             </Accordion>
             <Accordion
-              :title= "$t('Add spacial information')"
-              :id="addSpacialInformationAccordionId"
-              :state="quality.spacialInformation"
+              :title= "$t('Add spatial information')"
+              :id="addSpatialInformationAccordionId"
+              :state="quality.spatial_information"
             >
               {{ $t(`TO DO`) }}
+              <Well v-if="hasQualityWarning('spatial_information')" color="orange-terre-battue">
+                {{ getQualityWarningText("spatial") }}
+              </Well>
             </Accordion>
           </AccordionGroup>
       </Sidemenu>
@@ -212,7 +227,7 @@
               </h2>
             </legend>
             <LinkedToAccordion
-              :accordion="addSpacialInformationAccordionId"
+              :accordion="addSpatialInformationAccordionId"
               @blur="vQuality$.spatial.$touch"
               class="fr-fieldset__element"
             >
@@ -287,7 +302,7 @@ export default defineComponent({
     const { id: selectLicenseAccordionId } = useUid("accordion");
     const { id: chooseFrequencyAccordionId } = useUid("accordion");
     const { id: addTemporalCoverageAccordionId } = useUid("accordion");
-    const { id: addSpacialInformationAccordionId } = useUid("accordion");
+    const { id: addSpatialInformationAccordionId } = useUid("accordion");
     const dataset = reactive({
       title: "",
       acronym: "",
@@ -341,7 +356,9 @@ export default defineComponent({
       description: {required, minLengthValue: minLength(quality_description_length), },
       frequency: { required, notUnknown },
       license: { required },
-      spatial: { required },
+      spatial: {
+        granularity: { required },
+      },
       tags: { required, notEmpty: minLength(1) },
       temporal_coverage: { required },
       title: { required },
@@ -360,8 +377,8 @@ export default defineComponent({
         tags: getFunctionalState(vQuality$.value.tags.$dirty, false, vQuality$.value.tags.$error),
         license: getFunctionalState(vQuality$.value.license.$dirty, false, vQuality$.value.license.$error),
         frequency: getFunctionalState(vQuality$.value.frequency.$dirty, v$.value.frequency.$invalid, vQuality$.value.frequency.$error),
-        temporalCoverage: getFunctionalState(vQuality$.value.temporal_coverage.$dirty, false, vQuality$.value.temporal_coverage.$error),
-        spacialInformation: getFunctionalState(vQuality$.value.spatial.$dirty, false, vQuality$.value.spatial.$error),
+        temporal_coverage: getFunctionalState(vQuality$.value.temporal_coverage.$dirty, false, vQuality$.value.temporal_coverage.$error),
+        spatial_information: getFunctionalState(vQuality$.value.spatial.granularity.$dirty, false, vQuality$.value.spatial.granularity.$error),
       };
     });
 
@@ -371,11 +388,22 @@ export default defineComponent({
      */
     const hasError = (field) => quality.value[field] === "error";
 
+    /**
+     * @param {string} field
+     * @returns {boolean}
+     */
+     const hasQualityWarning = (field) => quality.value[field] === "warning";
+
     const getErrorText = (field) => {
       if(vQuality$.value[field].$dirty) {
         v$.value[field].$touch();
       }
       return v$.value[field].$errors.map(error => error.$message).join("\n");
+    }
+
+    const getQualityWarningText = (field) => {
+      console.log(vQuality$.value, vQuality$.value[field]);
+      return vQuality$.value[field].$errors.map(error => error.$message).join("\n");
     }
 
     watchEffect(() => {
@@ -391,12 +419,14 @@ export default defineComponent({
       selectLicenseAccordionId,
       chooseFrequencyAccordionId,
       addTemporalCoverageAccordionId,
-      addSpacialInformationAccordionId,
+      addSpatialInformationAccordionId,
       dataset,
       editIcon,
       quality,
       hasError,
+      hasQualityWarning,
       getErrorText,
+      getQualityWarningText,
       title,
       v$,
       vQuality$,

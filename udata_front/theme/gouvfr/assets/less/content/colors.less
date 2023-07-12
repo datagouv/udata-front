@@ -108,6 +108,7 @@ Similar to the contextual text color classes, easily set the background of an el
 @background-contrast-blue-cumulus: var(--background-contrast-blue-cumulus);
 @background-contrast-blue-cumulus-hover: var(--background-contrast-blue-cumulus-hover);
 @background-contrast-blue-cumulus-active: var(--background-contrast-blue-cumulus-active);
+@background-contrast-orange-terre-battue: var(--background-contrast-orange-terre-battue);
 @background-alt-blue-cumulus: var(--background-alt-blue-cumulus);
 @background-alt-blue-cumulus-hover: var(--background-alt-blue-cumulus-hover);
 @background-alt-blue-cumulus-active: var(--background-alt-blue-cumulus-active);
@@ -125,12 +126,14 @@ Similar to the contextual text color classes, easily set the background of an el
 @border-plain-warning: var(--border-plain-warning);
 
 @text-mention-grey: var(--text-mention-grey);
+@text-title-grey: var(--text-title-grey);
 @text-default-error: var(--text-default-error);
 @text-default-success: var(--text-default-success);
 @text-default-warning: var(--text-default-warning);
 @text-default-info: var(--text-default-info);
 @text-disabled-grey: var(--text-disabled-grey);
 @text-label-blue-cumulus: var(--text-label-blue-cumulus);
+@text-label-orange-terre-battue: var(--text-label-orange-terre-battue);
 
 @contrast-white: var(--text-default-grey);
 @contrast-blue-100: var(--text-default-grey);
@@ -138,11 +141,11 @@ Similar to the contextual text color classes, easily set the background of an el
 @contrast-blue-400: var(--text-inverted-grey);
 @contrast-blue-450: @white;
 @contrast-warning-425: @white;
-@contrast-orange-100: var(--text-title-grey);
+@contrast-orange-100: @text-title-grey;
 @contrast-grey-50: var(--text-default-grey);
 @contrast-grey-100: var(--text-default-grey);
 @contrast-grey-200: var(--text-default-grey);
-@contrast-grey-300: var(--text-title-grey);
+@contrast-grey-300: @text-title-grey;
 @contrast-grey-380: var(--text-inverted-grey);
 @contrast-grey-400: var(--grey-850-200);
 @contrast-grey-500: var(--grey-850-200);
@@ -179,6 +182,10 @@ each(@colors, {
 
 .bg-contrast-blue-cumulus {
     background-color: @background-contrast-blue-cumulus;
+}
+
+.bg-contrast-orange-terre-battue {
+    background-color: @background-contrast-orange-terre-battue;
 }
 
 .bg-alt-blue-cumulus {
@@ -218,7 +225,11 @@ each(@colors, {
 }
 
 .text-title-grey {
-    color: var(--text-title-grey) !important;
+    color: @text-title-grey !important;
+}
+
+.text-label-orange-terre-battue {
+    color: @text-label-orange-terre-battue !important;
 }
 
 .text-white--link-white {
