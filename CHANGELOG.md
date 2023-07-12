@@ -5,6 +5,8 @@
 - Fix reuse page padding for discussions and reuses section [#270](https://github.com/etalab/udata-front/pull/270)
 - Fix dataset oembed links [#271](https://github.com/etalab/udata-front/pull/271)
 - Hide CaptchEtat icon loader [#272](https://github.com/etalab/udata-front/pull/272)
+- Update guide links [#276](https://github.com/etalab/udata-front/pull/276)
+- Redirect *pages* when missing trailing slash [#278](https://github.com/etalab/udata-front/pull/278)
 - Add feedback link to header and footer [#275](https://github.com/etalab/udata-front/pull/275)
 
 ## 3.2.4 (2023-06-19)
