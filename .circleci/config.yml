@@ -73,7 +73,7 @@ jobs:
   python:
     docker:
       - image: udata/circleci:2-alpine
-      - image: mongo:3.6
+      - image: mongo:6.0.4
       - image: redis:alpine
     environment:
        BASH_ENV: /root/.bashrc
@@ -187,7 +187,7 @@ jobs:
   cypress:
     docker:
       - image: cimg/python:3.7.13-browsers
-      - image: mongo:3.6
+      - image: mongo:6.0.4
       - image: redis:alpine
     steps:
       - checkout
@@ -217,7 +217,7 @@ jobs:
   lighthouse:
     docker:
       - image: cimg/python:3.7.13-browsers
-      - image: mongo:3.6
+      - image: mongo:6.0.4
       - image: redis:alpine
     steps:
       - checkout
