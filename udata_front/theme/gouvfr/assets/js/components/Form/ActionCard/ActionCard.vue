@@ -59,8 +59,10 @@ export default defineComponent({
     const alignment = computed(() => `fr-grid-row--${getMainAxisAlignment(props.actionsAlignment)}`);
     const type = computed(() => props.type === "primary" ? "bg-contrast-blue-cumulus" : "bg-white");
     const isPrimary = computed(() => props.type === "primary");
+    const isDefault = computed(() => props.type === "default");
     return {
       alignment,
+      isDefault,
       isPrimary,
       type,
     }
