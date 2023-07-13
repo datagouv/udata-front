@@ -17,23 +17,39 @@
               :id="nameDatasetAccordionId"
               :state="quality.title"
             >
-              {{ $t(`Dataset title must be the most precise and specific possible.
-              It must match the vocabulary used by users.
-              They search the data usually with the search engine.`) }}
+              {{ $t("Dataset title must be the most precise and specific possible.") }} <br/>
+              {{ $t("It must match the vocabulary used by users.") }} <br/>
+              {{ $t("They search the data usually with the search engine.") }}
             </Accordion>
             <Accordion
               :title= "$t('Add an acronym to the dataset')"
               :id="addAcronymAccordionId"
               state="info"
             >
-              {{ $t(`TO DO`) }}
+              {{ $t(`You can add an acronym to your dataset. The letters composing the acronym shouldn't be separated with dots.`) }}
             </Accordion>
             <Accordion
               :title= "$t('Write a good description')"
               :id="writeAGoodDescriptionAccordionId"
               :state="quality.description"
+              class="markdown"
             >
-              {{ $t(`TO DO`) }}
+              {{ $t(`Dataset description allows people reading it to get information about the content and structure of the published resources,
+               you can write :`) }}
+              <ul class="fr-mt-3v">
+                <li>{{ $t("The list of file provided ;") }}</li>
+                <li>{{ $t("The description of file format ;") }}</li>
+                <li>{{ $t("The update frequency.") }}</li>
+              </ul>
+              <ul class="fr-mt-3v">
+                <li>{{ $t("The motivation to create the dataset") }}</li>
+                <li>{{ $t("The dataset composition") }}</li>
+                <li>{{ $t("The data collection process") }}</li>
+                <li>{{ $t("The data pre-treatment") }}</li>
+                <li>{{ $t("The dataset broadcasting") }}</li>
+                <li>{{ $t("The dataset maintenance") }}</li>
+                <li>{{ $t("The legals and ethics considerations") }}</li>
+              </ul>
               <Well v-if="hasQualityWarning('description')" color="orange-terre-battue">
                 {{ getQualityWarningText("description") }}
               </Well>
