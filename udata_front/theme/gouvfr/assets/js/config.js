@@ -124,6 +124,11 @@ export const schema_documentation_url = _meta("schema-documentation-url");
 export const schema_validata_url = _meta("schema-validata-url");
 
 /**
+ * The data search form URL
+ */
+export const data_search_feedback_form_url = _meta("data-search-feedback-form-url");
+
+/**
  * The guide on how to improve quality metadata URL
  */
 export const guides_quality_url = _meta("guides-quality-url");
@@ -224,6 +229,7 @@ export default {
   lang,
   title,
   csrf_token,
+  data_search_feedback_form_url,
   api_root,
   api_2_root,
   api_specs,
