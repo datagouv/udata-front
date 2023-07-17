@@ -110,9 +110,12 @@ def get_object(model, id_or_slug):
     return obj
 
 
-@blueprint.route('/pages/<path:slug>/')
+@blueprint.route('/pages/<path:slug>', endpoint='show_page')
 def show_page(slug):
-    content, gh_url, extension = get_page_content(slug)
+    # We expect a trailing slash in route and redirect if missing
+    if not slug.endswith('/'):
+        return redirect(url_for('gouvfr.show_page', slug=slug + '/'))
+    content, gh_url, extension = get_page_content(slug.rstrip('/'))
     page = frontmatter.loads(content)
     reuses = [get_object(Reuse, r) for r in page.get('reuses') or []]
     datasets = [get_object(Dataset, d) for d in page.get('datasets') or []]

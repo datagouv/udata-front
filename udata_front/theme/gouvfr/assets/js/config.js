@@ -129,6 +129,11 @@ export const schema_validata_url = _meta("schema-validata-url");
 export const data_search_feedback_form_url = _meta("data-search-feedback-form-url");
 
 /**
+ * The guide on how to improve quality metadata URL
+ */
+export const guides_quality_url = _meta("guides-quality-url");
+
+/**
  * Sentry configuration (as json) if available
  */
 const sentryEl = document.querySelector("meta[name=sentry]");
@@ -235,6 +240,7 @@ export default {
   schema_catalog_url,
   schema_documentation_url,
   schema_validata_url,
+  guides_quality_url,
   sentry,
   check_urls,
   unchecked_types,
