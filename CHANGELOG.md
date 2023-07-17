@@ -8,6 +8,8 @@
 - Update guide links [#276](https://github.com/etalab/udata-front/pull/276)
 - Redirect *pages* when missing trailing slash [#278](https://github.com/etalab/udata-front/pull/278)
 - Add feedback link to header and footer [#275](https://github.com/etalab/udata-front/pull/275)
+- Fix actions with scroll inside full-page tabs (e.g. dataset page) [#281](https://github.com/etalab/udata-front/pull/281)
+- Add data search form to search [#274](https://github.com/etalab/udata-front/pull/274)
 
 ## 3.2.4 (2023-06-19)
 

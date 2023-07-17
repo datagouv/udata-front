@@ -20,6 +20,9 @@ BANNER_ACTIVATED = False
 BANNER_HTML_CONTENT_EN = ''
 BANNER_HTML_CONTENT_FR = ''
 
+# Frontend data search form url
+DATA_SEARCH_FEEDBACK_FORM_URL = ''
+
 # Frontend forms url
 FEEDBACK_FORM_URL = 'https://tally.so/r/mOld5R'
 
