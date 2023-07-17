@@ -32,34 +32,35 @@
               :title= "$t('Write a good description')"
               :id="writeAGoodDescriptionAccordionId"
               :state="quality.description"
-              class="markdown"
             >
-              {{ $t(`Dataset description allows people reading it to get information about the content and structure of the published resources,
-               you can write :`) }}
-              <ul class="fr-mt-3v">
-                <li>{{ $t("The list of file provided ;") }}</li>
-                <li>{{ $t("The description of file format ;") }}</li>
-                <li>{{ $t("The update frequency.") }}</li>
-              </ul>
-              <ul class="fr-mt-3v">
-                <li>{{ $t("The motivation to create the dataset") }}</li>
-                <li>{{ $t("The dataset composition") }}</li>
-                <li>{{ $t("The data collection process") }}</li>
-                <li>{{ $t("The data pre-treatment") }}</li>
-                <li>{{ $t("The dataset broadcasting") }}</li>
-                <li>{{ $t("The dataset maintenance") }}</li>
-                <li>{{ $t("The legals and ethics considerations") }}</li>
-              </ul>
-              <Well v-if="hasQualityWarning('description')" color="orange-terre-battue">
-                {{ getQualityWarningText("description") }}
-              </Well>
+              <div class="markdown fr-m-0">
+                {{ $t(`Dataset description allows people reading it to get information about the content and structure of the published resources,
+                you can write :`) }}
+                <ul class="fr-mt-3v">
+                  <li>{{ $t("The list of file provided ;") }}</li>
+                  <li>{{ $t("The description of file format ;") }}</li>
+                  <li>{{ $t("The update frequency.") }}</li>
+                </ul>
+                <ul class="fr-mt-3v">
+                  <li>{{ $t("The motivation to create the dataset") }}</li>
+                  <li>{{ $t("The dataset composition") }}</li>
+                  <li>{{ $t("The data collection process") }}</li>
+                  <li>{{ $t("The data pre-treatment") }}</li>
+                  <li>{{ $t("The dataset broadcasting") }}</li>
+                  <li>{{ $t("The dataset maintenance") }}</li>
+                  <li>{{ $t("The legals and ethics considerations") }}</li>
+                </ul>
+                <Well v-if="hasQualityWarning('description')" color="orange-terre-battue">
+                  {{ getQualityWarningText("description") }}
+                </Well>
+              </div>
             </Accordion>
             <Accordion
               :title= "$t('Use tags')"
               :id="useTagsAccordionId"
               :state="quality.tags"
             >
-              {{ $t(`TO DO`) }}
+              {{ $t(`Tags characterize your dataset. They are public and allow a better listing of the dataset during a user search.`) }}
               <Well v-if="hasQualityWarning('tags')" color="orange-terre-battue">
                 {{ getQualityWarningText("tags") }}
               </Well>
@@ -69,7 +70,7 @@
               :id="selectLicenseAccordionId"
               :state="quality.license"
             >
-              {{ $t(`TO DO`) }}
+              {{ $t(`Licenses define reuse rules. By choosing a reuse license, you ensure the published dataset is reused using the conditions you defined.`) }}
               <Well v-if="hasQualityWarning('license')" color="orange-terre-battue">
                 {{ getQualityWarningText("license") }}
               </Well>
@@ -79,14 +80,15 @@
               :id="chooseFrequencyAccordionId"
               :state="quality.frequency"
             >
-              {{ $t(`TO DO`) }}
+              {{ $t(`Update frequency is the frequency you plan to update the published data. Update frequency is indicative.`) }}
             </Accordion>
             <Accordion
               :title= "$t('Add temporal coverage')"
               :id="addTemporalCoverageAccordionId"
               :state="quality.temporal_coverage"
             >
-              {{ $t(`TO DO`) }}
+              {{ $t(`Temporal coverage show the time range of published data.`) }} <br/>
+              {{ $t("For example : from 2012 to 2015.") }}
               <Well v-if="hasQualityWarning('temporal_coverage')" color="orange-terre-battue">
                 {{ getQualityWarningText("temporal_coverage") }}
               </Well>
@@ -96,7 +98,8 @@
               :id="addSpatialInformationAccordionId"
               :state="quality.spatial_information"
             >
-              {{ $t(`TO DO`) }}
+            {{ $t(`Spatial granularity shows the finest level of geographical details covered by your data.`) }} <br/>
+            {{ $t("For example : at the department scale or the city scale.") }}
               <Well v-if="hasQualityWarning('spatial_information')" color="orange-terre-battue">
                 {{ getQualityWarningText("spatial") }}
               </Well>
@@ -285,7 +288,7 @@
 <script>
 import { computed, defineComponent, reactive, watchEffect } from 'vue';
 import { useVuelidate } from '@vuelidate/core';
-import { minLength, not, required, sameAs } from '../../i18n';
+import { minLength, not, required, requiredWithCustomMessage, sameAs } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
 import Container from '../../components/Ui/Container/Container.vue';
@@ -361,6 +364,9 @@ export default defineComponent({
     };
 
     const notUnknown = not(t("The value must be different from unknown."), sameAs("unknown"));
+    const tagsRequired = requiredWithCustomMessage(t("Add tags allow to improve listing of your data."));
+    const temporalCoverageRequired = requiredWithCustomMessage(t("You didn't provide the temporal coverage."));
+    const spatialGranularityRequired = requiredWithCustomMessage(t("You didn't provide the spatial granularity."));
 
     const requiredRules = {
       description: { required },
@@ -373,10 +379,10 @@ export default defineComponent({
       frequency: { required, notUnknown },
       license: { required },
       spatial: {
-        granularity: { required },
+        granularity: { required: spatialGranularityRequired },
       },
-      tags: { required, notEmpty: minLength(1) },
-      temporal_coverage: { required },
+      tags: { required: tagsRequired, notEmpty: minLength(1) },
+      temporal_coverage: { required: temporalCoverageRequired },
       title: { required },
     };
 
@@ -418,7 +424,6 @@ export default defineComponent({
     }
 
     const getQualityWarningText = (field) => {
-      console.log(vQuality$.value, vQuality$.value[field]);
       return vQuality$.value[field].$errors.map(error => error.$message).join("\n");
     }
 

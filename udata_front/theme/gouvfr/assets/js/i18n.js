@@ -85,6 +85,15 @@ function passLocalizedMessageWithArguments(validator) {
 }
 
 /**
+ *
+ * @param {import("@vuelidate/core").ValidationRuleWithoutParams} validator
+ * @returns {(message: string, ...args: Array<any>) => import("@vuelidate/core").ValidationRuleWithParams}
+ */
+function passLocalizedMessageWithoutArguments(validator) {
+  return (message) => withMessage(message, validator);
+}
+
+/**
  * This is a local fake `t` function
  * @param {string} message
  * @returns {string}
@@ -92,6 +101,7 @@ function passLocalizedMessageWithArguments(validator) {
 const t = (message) => message;
 
 export const required = withI18nMessage(vRequired, { messagePath: () => t("The field {property} is required.")});
+export const requiredWithCustomMessage = passLocalizedMessageWithoutArguments(vRequired);
 export const minLength = withI18nMessage(vMinLength, { messagePath: () => t("The {property} field has a minimum length of {min}."), withArguments: true });
 export const not = passLocalizedMessageWithArguments(vNot);
 export const sameAs = withI18nMessage(vSameAs, { messagePath: () => t("The value must be equal to the ${otherName} value"), withArguments: true });
