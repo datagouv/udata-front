@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import abort, url_for, redirect
 from udata.i18n import I18nBlueprint
 from udata_front.frontend import oauth
@@ -34,6 +36,7 @@ def auth():
             email=mcp_user['email'],
             first_name=mcp_user.get('given_name'),
             last_name=mcp_user.get('family_name'),
+            confirmed_at=datetime.now()
             )
 
     if not login_user(user):
