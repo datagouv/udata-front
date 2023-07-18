@@ -11,6 +11,7 @@
 - Fix actions with scroll inside full-page tabs (e.g. dataset page) [#281](https://github.com/etalab/udata-front/pull/281)
 - Add data search form to search [#274](https://github.com/etalab/udata-front/pull/274)
 - Upgrade pyyaml dependency to 6.0.1 in deps tree [#283](https://github.com/etalab/udata-front/pull/283)
+- Set confirmed_at when creating user in MonComptePro auth [#284](https://github.com/etalab/udata-front/pull/284)
 
 ## 3.2.4 (2023-06-19)
 
