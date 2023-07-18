@@ -26,7 +26,7 @@
               :id="addAcronymAccordionId"
               state="info"
             >
-              {{ $t(`You can add an acronym to your dataset. The letters composing the acronym shouldn't be separated with dots.`) }}
+              {{ $t("You can add an acronym to your dataset. The letters composing the acronym shouldn't be separated with dots.") }}
             </Accordion>
             <Accordion
               :title= "$t('Write a good description')"
@@ -50,7 +50,7 @@
                   <li>{{ $t("The dataset maintenance") }}</li>
                   <li>{{ $t("The legals and ethics considerations") }}</li>
                 </ul>
-                <Well v-if="hasQualityWarning('description')" color="orange-terre-battue">
+                <Well class="fr-mt-1w" v-if="hasQualityWarning('description')" color="orange-terre-battue">
                   {{ getQualityWarningText("description") }}
                 </Well>
               </div>
@@ -60,8 +60,8 @@
               :id="useTagsAccordionId"
               :state="quality.tags"
             >
-              {{ $t(`Tags characterize your dataset. They are public and allow a better listing of the dataset during a user search.`) }}
-              <Well v-if="hasQualityWarning('tags')" color="orange-terre-battue">
+              {{ $t("Tags characterize your dataset. They are public and allow a better listing of the dataset during a user search.") }}
+              <Well class="fr-mt-1w" v-if="hasQualityWarning('tags')" color="orange-terre-battue">
                 {{ getQualityWarningText("tags") }}
               </Well>
             </Accordion>
@@ -70,8 +70,8 @@
               :id="selectLicenseAccordionId"
               :state="quality.license"
             >
-              {{ $t(`Licenses define reuse rules. By choosing a reuse license, you ensure the published dataset is reused using the conditions you defined.`) }}
-              <Well v-if="hasQualityWarning('license')" color="orange-terre-battue">
+              {{ $t("Licenses define reuse rules. By choosing a reuse license, you ensure the published dataset is reused using the conditions you defined.") }}
+              <Well class="fr-mt-1w" v-if="hasQualityWarning('license')" color="orange-terre-battue">
                 {{ getQualityWarningText("license") }}
               </Well>
             </Accordion>
@@ -80,16 +80,16 @@
               :id="chooseFrequencyAccordionId"
               :state="quality.frequency"
             >
-              {{ $t(`Update frequency is the frequency you plan to update the published data. Update frequency is indicative.`) }}
+              {{ $t("Update frequency is the frequency you plan to update the published data. Update frequency is indicative.") }}
             </Accordion>
             <Accordion
               :title= "$t('Add temporal coverage')"
               :id="addTemporalCoverageAccordionId"
               :state="quality.temporal_coverage"
             >
-              {{ $t(`Temporal coverage show the time range of published data.`) }} <br/>
+              {{ $t("Temporal coverage show the time range of published data.") }} <br/>
               {{ $t("For example : from 2012 to 2015.") }}
-              <Well v-if="hasQualityWarning('temporal_coverage')" color="orange-terre-battue">
+              <Well class="fr-mt-1w" v-if="hasQualityWarning('temporal_coverage')" color="orange-terre-battue">
                 {{ getQualityWarningText("temporal_coverage") }}
               </Well>
             </Accordion>
@@ -98,9 +98,9 @@
               :id="addSpatialInformationAccordionId"
               :state="quality.spatial_information"
             >
-            {{ $t(`Spatial granularity shows the finest level of geographical details covered by your data.`) }} <br/>
+            {{ $t("Spatial granularity shows the finest level of geographical details covered by your data.") }} <br/>
             {{ $t("For example : at the department scale or the city scale.") }}
-              <Well v-if="hasQualityWarning('spatial_information')" color="orange-terre-battue">
+              <Well class="fr-mt-1w" v-if="hasQualityWarning('spatial_information')" color="orange-terre-battue">
                 {{ getQualityWarningText("spatial") }}
               </Well>
             </Accordion>
