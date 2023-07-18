@@ -6,7 +6,7 @@
         :aria-expanded="opened"
         :aria-controls="id"
       >
-        <span class="fr-mr-2w" :class="classes" aria-hidden="true"></span>
+        <span v-if="hasState" class="fr-mr-2w" :class="classes" aria-hidden="true"></span>
         {{ title }}
       </button>
     </h3>
