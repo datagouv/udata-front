@@ -152,9 +152,9 @@
   "Download list as CSV": "Télécharger la liste au format CSV",
   "today": "aujourd'hui",
   "See {n} messages": "Aucun message | Voir le message | Voir {n} messages",
-  "Didn't find what you are looking for ?": "",
-  "Try to reset filters to widen your search.": "",
-  "You can also give us more details with our feedback form.": "",
-  "Tell us what you are looking for": "",
-  "No result found for your search": ""
+  "Didn't find what you are looking for ?": "Vous n'avez pas trouvé votre bonheur ?",
+  "Try to reset filters to widen your search.": "Essayez de réinitialiser les filtres pour agrandir votre champ de recherche.",
+  "You can also give us more details with our feedback form.": "Vous pouvez aussi nous donner plus d'informations via notre formulaire de retours.",
+  "Tell us what you are looking for": "Dites-nous ce que vous recherchez",
+  "No result found for your search": "Aucun résultat ne correspond à votre recherche"
 }

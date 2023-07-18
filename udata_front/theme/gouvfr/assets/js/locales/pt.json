@@ -152,9 +152,9 @@
   "Download list as CSV": "Download list as CSV",
   "today": "today",
   "See {n} messages": "No messages | See the message | See {n} messages",
-  "Didn't find what you are looking for ?": "",
-  "Try to reset filters to widen your search.": "",
-  "You can also give us more details with our feedback form.": "",
-  "Tell us what you are looking for": "",
-  "No result found for your search": ""
+  "Didn't find what you are looking for ?": "Didn't find what you are looking for ?",
+  "Try to reset filters to widen your search.": "Try to reset filters to widen your search.",
+  "You can also give us more details with our feedback form.": "You can also give us more details with our feedback form.",
+  "Tell us what you are looking for": "Tell us what you are looking for",
+  "No result found for your search": "No result found for your search"
 }
