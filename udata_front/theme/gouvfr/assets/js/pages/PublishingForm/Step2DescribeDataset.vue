@@ -17,16 +17,20 @@
               :id="nameDatasetAccordionId"
               :state="quality.title"
             >
-              {{ $t("Dataset title must be the most precise and specific possible.") }} <br/>
-              {{ $t("It must match the vocabulary used by users.") }} <br/>
-              {{ $t("They search the data usually with the search engine.") }}
+              <p class="fr-m-0">
+                {{ $t("Dataset title must be the most precise and specific possible.") }} <br/>
+                {{ $t("It must match the vocabulary used by users.") }} <br/>
+                {{ $t("They search the data usually with the search engine.") }}
+              </p>
             </Accordion>
             <Accordion
               :title= "$t('Add an acronym to the dataset')"
               :id="addAcronymAccordionId"
               state="info"
             >
-              {{ $t("You can add an acronym to your dataset. The letters composing the acronym shouldn't be separated with dots.") }}
+              <p class="fr-m-0">
+                {{ $t("You can add an acronym to your dataset. The letters composing the acronym shouldn't be separated with dots.") }}
+              </p>
             </Accordion>
             <Accordion
               :title= "$t('Write a good description')"
@@ -34,8 +38,10 @@
               :state="quality.description"
             >
               <div class="markdown fr-m-0">
-                {{ $t(`Dataset description allows people reading it to get information about the content and structure of the published resources,
+                <p class="fr-m-0">
+                  {{ $t(`Dataset description allows people reading it to get information about the content and structure of the published resources,
                 you can write :`) }}
+                </p>
                 <ul class="fr-mt-3v">
                   <li>{{ $t("The list of file provided ;") }}</li>
                   <li>{{ $t("The description of file format ;") }}</li>
@@ -60,7 +66,9 @@
               :id="useTagsAccordionId"
               :state="quality.tags"
             >
-              {{ $t("Tags characterize your dataset. They are public and allow a better listing of the dataset during a user search.") }}
+              <p class="fr-m-0">
+                {{ $t("Tags characterize your dataset. They are public and allow a better listing of the dataset during a user search.") }}
+              </p>
               <Well class="fr-mt-1w" v-if="hasQualityWarning('tags')" color="orange-terre-battue">
                 {{ getQualityWarningText("tags") }}
               </Well>
@@ -70,7 +78,9 @@
               :id="selectLicenseAccordionId"
               :state="quality.license"
             >
-              {{ $t("Licenses define reuse rules. By choosing a reuse license, you ensure the published dataset is reused using the conditions you defined.") }}
+              <p class="fr-m-0">
+                {{ $t("Licenses define reuse rules. By choosing a reuse license, you ensure the published dataset is reused using the conditions you defined.") }}
+              </p>
               <Well class="fr-mt-1w" v-if="hasQualityWarning('license')" color="orange-terre-battue">
                 {{ getQualityWarningText("license") }}
               </Well>
@@ -80,15 +90,19 @@
               :id="chooseFrequencyAccordionId"
               :state="quality.frequency"
             >
-              {{ $t("Update frequency is the frequency you plan to update the published data. Update frequency is indicative.") }}
+              <p class="fr-m-0">
+                {{ $t("Update frequency is the frequency you plan to update the published data. Update frequency is indicative.") }}
+              </p>
             </Accordion>
             <Accordion
               :title= "$t('Add temporal coverage')"
               :id="addTemporalCoverageAccordionId"
               :state="quality.temporal_coverage"
             >
-              {{ $t("Temporal coverage show the time range of published data.") }} <br/>
-              {{ $t("For example : from 2012 to 2015.") }}
+              <p class="fr-m-0">
+                {{ $t("Temporal coverage show the time range of published data.") }} <br/>
+                {{ $t("For example : from 2012 to 2015.") }}
+              </p>
               <Well class="fr-mt-1w" v-if="hasQualityWarning('temporal_coverage')" color="orange-terre-battue">
                 {{ getQualityWarningText("temporal_coverage") }}
               </Well>
@@ -98,8 +112,10 @@
               :id="addSpatialInformationAccordionId"
               :state="quality.spatial_information"
             >
-            {{ $t("Spatial granularity shows the finest level of geographical details covered by your data.") }} <br/>
-            {{ $t("For example : at the department scale or the city scale.") }}
+              <p class="fr-m-0">
+                {{ $t("Spatial granularity shows the finest level of geographical details covered by your data.") }} <br/>
+                {{ $t("For example : at the department scale or the city scale.") }}
+              </p>
               <Well class="fr-mt-1w" v-if="hasQualityWarning('spatial_information')" color="orange-terre-battue">
                 {{ getQualityWarningText("spatial") }}
               </Well>
