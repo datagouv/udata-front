@@ -1,11 +1,11 @@
 <template>
-  <div @focusin="openIfClosed" @focusout="$emit('blur')">
+  <div @focusin="openIfClosed" @focusout="focusout" ref="parent">
       <slot></slot>
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   emits: ["blur"],
@@ -15,7 +15,11 @@ export default defineComponent({
       required: true,
     }
   },
-  setup(props) {
+  setup(props, { emit }) {
+
+    /** @type {import("vue").Ref<HTMLDivElement | null>} */
+    const parent = ref(null);
+
     const openIfClosed = () => {
       const button = document.querySelector(`[aria-controls=${props.accordion}]`);
       if(button && button.ariaExpanded !== "true") {
@@ -23,8 +27,21 @@ export default defineComponent({
       }
     };
 
+    /**
+     *
+     * @param {FocusEvent} event
+     */
+    const focusout = (event) => {
+      const target = /** @type {HTMLElement | null} */ (event.relatedTarget);
+      if(!parent.value?.contains(target)) {
+        emit('blur');
+      }
+    }
+
     return {
       openIfClosed,
+      focusout,
+      parent,
     };
   },
 });
