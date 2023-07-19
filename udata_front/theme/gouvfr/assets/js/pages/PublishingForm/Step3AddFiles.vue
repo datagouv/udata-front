@@ -16,9 +16,16 @@
               :title= "$t('Publish the right types of files')"
               :id="publishFileAccordionId"
             >
-              {{ $t(`Dataset title must be the most precise and specific possible.
-              It must match the vocabulary used by users.
-              They search the data usually with the search engine.`) }}
+              <div class="markdown fr-m-0">
+                <p class="fr-m-0 fr-mb-1w">
+                  {{ $t("Formats should be :") }}
+                </p>
+                <ul>
+                  <li>{{ $t("open : an open format doesn't add technical specifications that restrict data use (i.e. using a paid software) ;") }}</li>
+                  <li>{{ $t("easily reusable : a format easily reusable implies that anybody or server can reuse easily the dataset ;") }}</li>
+                  <li>{{ $t("usable in an automated processing system : an automated processing system allows to make automatic operations, related to data exploitation (i.e. a CSV file is easily usable by an automated system unlike a PDF file).") }}</li>
+                </ul>
+              </div>
             </Accordion>
           </AccordionGroup>
       </Sidemenu>
