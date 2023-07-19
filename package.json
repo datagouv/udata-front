@@ -1,6 +1,6 @@
 {
   "name": "udata-front",
-  "version": "3.2.5.dev",
+  "version": "3.2.5",
   "description": "Open Data Portal - French customization",
   "author": "Etalab",
   "scripts": {
