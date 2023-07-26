@@ -21,3 +21,21 @@ export const SimpleContainer = {
   }),
   args,
 };
+
+export const GreyContainer = {
+  render: (args) => ({
+    components: { Container },
+    setup() {
+      return { args };
+    },
+    template: ` <div class="fr-p-4w">
+                  <Container v-bind="args">
+                    Container with an alt grey Background and some padding.
+                  </Container>
+                </div>`,
+  }),
+  args: {
+    ...args,
+    color: "alt-grey"
+  },
+};

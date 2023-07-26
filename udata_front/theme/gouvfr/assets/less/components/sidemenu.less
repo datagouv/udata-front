@@ -51,6 +51,15 @@ You can use sidemenus from DSFR. You can find documented usage on [DSFR document
 @import (less) "@gouvfr/dsfr/dist/component/sidemenu/sidemenu.css";
 
 // Data.gouv customization
+.fr-sidemenu--no-border .fr-sidemenu__inner {
+    box-shadow: none;
+    padding-right: 0;
+}
+
+.fr-sidemenu--right.fr-sidemenu--no-border .fr-sidemenu__inner {
+    padding-left: 0;
+}
+
 .fr-sidemenu__link[aria-current] {
     --text-active-blue-france: @blue-400;
 }

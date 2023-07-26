@@ -361,12 +361,6 @@ export default defineComponent({
      * @returns {import("../../types").AccordionFunctionalState}
      */
     const getFunctionalState = (dirty, failRequired, failQuality) => {
-      // console.log({
-      //   disabled: !dirty,
-      //   error: dirty && !passRequired,
-      //   warning: dirty && passRequired && !passQuality,
-      //   success: dirty && passRequired && passQuality,
-      // });
       if(!dirty) {
         return "disabled";
       }

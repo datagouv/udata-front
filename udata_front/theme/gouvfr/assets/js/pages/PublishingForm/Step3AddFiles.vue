@@ -6,6 +6,7 @@
         class="fr-col-12 fr-col-md-5"
         :buttonText="$t('Help')"
         :onRight="true"
+        :showBorder="false"
         >
           <template #title>
             <span class="fr-icon--sm fr-icon-question-line" aria-hidden="true"></span>
@@ -27,6 +28,14 @@
                 </ul>
               </div>
             </Accordion>
+            <Accordion
+              :title= "$t('Add a description')"
+              :id="addDescriptionAccordionId"
+            >
+                <p class="fr-m-0">
+                  {{ $t("The description of the dataset production mode allows a reuser to understand the dataset structure, data nature and possible gap or flaws in the file.") }}
+                </p>
+            </Accordion>
           </AccordionGroup>
       </Sidemenu>
       <div class="fr-col-12 fr-col-md-7">
@@ -46,18 +55,45 @@
               </div>
             </div>
           </Well>
-          <fieldset class="fr-fieldset" aria-labelledby="description-legend">
+          <fieldset class="fr-fieldset min-width-0" aria-labelledby="description-legend">
             <legend class="fr-fieldset__legend" id="description-legend">
               <h2 class="subtitle subtitle--uppercase fr-mb-3v">
                 {{ $t("Files") }}
               </h2>
             </legend>
-            <LinkedToAccordion class="fr-fieldset__element" :accordion="publishFileAccordionId">
-              <InputGroup
-                :aria-describedby="publishFileAccordionId"
-                :label="$t('Dataset name')"
-                :required="true"
-              />
+            <LinkedToAccordion class="fr-fieldset__element min-width-0" :accordion="publishFileAccordionId">
+              <Container
+                color="alt-grey"
+                class="fr-grid-row fr-grid-row--middle flex-direction-column"
+                v-if="dataset.files.length === 0"
+              >
+                <h3 class="fr-text--md fr-text--bold fr-m-0 fr-mb-2w">{{ $t("Add your first files") }}</h3>
+                <UploadGroup
+                  :label="$t('Add files')"
+                  type="button"
+                  @change="addFiles"
+                  :multiple="true"
+                />
+              </Container>
+              <template v-else>
+                <FileCard
+                  v-for="file in dataset.files"
+                  :filename="file.name"
+                  :filesize="file.size"
+                  :format="file.type"
+                  :lastModified="file.lastModified"
+                  :missingMetadata="true"
+                  :title="file.title || file.name"
+                />
+                <div class="fr-grid-row fr-grid-row--center fr-mt-3v">
+                  <UploadGroup
+                    :label="$t('Add files')"
+                    type="button"
+                    @change="addFiles"
+                    :multiple="true"
+                  />
+                </div>
+              </template>
             </LinkedToAccordion>
           </fieldset>
           <div class="fr-grid-row fr-grid-row--right">
@@ -72,20 +108,25 @@
   </div>
 </template>
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent, reactive, watch, watchEffect } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useVuelidate } from '@vuelidate/core';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
 import Container from '../../components/Ui/Container/Container.vue';
 import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
+import FileCard from '../../components/Form/FileCard/FileCard.vue';
 import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
+import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
 import Well from "../../components/Ui/Well/Well.vue";
 import useUid from "../../composables/useUid";
+import { requiredWithCustomMessage } from '../../i18n';
 import editIcon from "svg/illustrations/edit.svg";
 
 export default defineComponent({
-  components: { Accordion, AccordionGroup, Container, InputGroup, LinkedToAccordion, Stepper, Well, Sidemenu },
+  components: { Accordion, AccordionGroup, Container, InputGroup, LinkedToAccordion, Stepper, Well, Sidemenu, UploadGroup, FileCard },
   props: {
     steps: {
       type: Array,
@@ -93,10 +134,35 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const { t } = useI18n();
     const { id: publishFileAccordionId } = useUid("accordion");
+    const { id: addDescriptionAccordionId } = useUid("accordion");
+    /** @type {import("vue").UnwrapNestedRefs<{files: Array<File>}>} */
+    const dataset = reactive({
+      files: [],
+    });
+    const fileRequired = requiredWithCustomMessage(t("You didn't provide the spatial granularity."));
+    const requiredRules = {
+      files: { fileRequired },
+    };
+    const qualityRules = {
+      files: { fileRequired },
+    };
+    const v$ = useVuelidate(requiredRules, dataset);
+    const vQuality$ = useVuelidate(qualityRules, dataset);
+    /**
+     *
+     * @param {FileList} files
+     */
+    const addFiles = (files) => dataset.files.push(...files);
     return {
+      addFiles,
+      dataset,
       editIcon,
       publishFileAccordionId,
+      addDescriptionAccordionId,
+      v$,
+      vQuality$,
     };
   },
 });

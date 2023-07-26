@@ -1,6 +1,6 @@
 <template>
   <div :class="{'order-md-2': onRight}" class="fr-mb-2w fr-mb-md-0">
-    <nav class="fr-sidemenu" :class="{'fr-sidemenu--right': onRight}" :aria-labelledby="titleId">
+    <nav class="fr-sidemenu" :class="{'fr-sidemenu--right': onRight, 'fr-sidemenu--no-border': !showBorder}" :aria-labelledby="titleId">
       <div class="fr-sidemenu__inner">
         <button
           class="fr-sidemenu__btn"
@@ -27,6 +27,10 @@ import useUid from "../../composables/useUid";
 
 export default defineComponent({
   props: {
+    showBorder: {
+      type: Boolean,
+      default: true,
+    },
     onRight: {
       type: Boolean,
       default: false,

@@ -9,7 +9,7 @@ import {api, apiv2} from "../plugins/api";
  * @property {Object} harvest
  * @property {number} filesize
  * @property {string} filetype
- * @property {string} format
+ * @property {string?} format
  * @property {string} last_modified
  * @property {string} last_update
  * @property {string} preview_url

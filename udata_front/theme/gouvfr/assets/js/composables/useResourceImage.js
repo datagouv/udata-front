@@ -4,12 +4,20 @@ import documentation from 'svg/resources/documentation.svg';
 import file from 'svg/resources/file.svg';
 import link from 'svg/resources/link.svg';
 import table from 'svg/resources/table.svg';
+import { toValue } from 'vue';
 /***
  *
- * @param {import("../api/resources").Resource} resource
+ * @param {import("vue").MaybeRefOrGetter<import("../api/resources").Resource | string>} resource
  */
 export default function useResourceImage(resource) {
-  switch (resource.format?.trim()?.toLowerCase()) {
+  const localResource = toValue(resource);
+  let format;
+  if(typeof localResource === "string") {
+    format = localResource;
+  } else {
+    format = localResource.format || "";
+  }
+  switch (format.trim()?.toLowerCase()) {
     case 'txt':
     case 'pdf':
     case 'rtf':
