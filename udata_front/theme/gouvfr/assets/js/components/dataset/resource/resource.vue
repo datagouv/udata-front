@@ -267,6 +267,15 @@
                 </DescriptionDetails>
               </template>
             </DescriptionList>
+            <div class="fr-col-auto fr-ml-auto">
+              <button
+                :id="resourceCopyId"
+                :data-clipboard-text="resourceExternalUrl"
+                class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-right fr-icon-links-fill"
+              >
+                {{$t('Copy permalink')}}
+            </button>
+            </div>
           </div>
           <template v-if="resource.description">
             <h5 class="fr-text--sm fr-my-0 fr-text--bold">
@@ -392,6 +401,11 @@ export default defineComponent({
     const resourcePreviewButtonId = computed(() => 'resource-' + props.resource.id + '-preview-button');
     const resourcePreviewTabId = computed(() => 'resource-' + props.resource.id + '-preview-tab');
     const resourceTitleId = computed(() => 'resource-' + props.resource.id + '-title');
+    const resourceCopyId = computed(() => 'resource-' + props.resource.id + '-copy');
+    const resourceExternalUrl = computed(() => {
+      let hash = "#/resources/" + props.resource.id;
+      return window.location.origin + window.location.pathname + hash;
+    });
     const resourceInformationSelectedTab = computed(() => !hasExplore.value);
     const resourceInformationTabIndex = computed(() => hasExplore.value ? -1 : 0);
 
@@ -414,6 +428,8 @@ export default defineComponent({
       loading,
       validationUrl,
       resourceContentId,
+      resourceCopyId,
+      resourceExternalUrl,
       resourceHeaderId,
       resourceInformationButtonId,
       resourceInformationTabId,

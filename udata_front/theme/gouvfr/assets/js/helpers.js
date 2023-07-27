@@ -68,4 +68,16 @@ export const formatRelativeIfRecentDate = (date) => {
   return formatFromNow(date);
 }
 
+export const UUIDRegExp = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
+
+export const urlRegExp = new RegExp(
+  "resources\/(" +
+  UUIDRegExp.source +
+  ")?$", UUIDRegExp.flags);
+
+export const previousUrlRegExp = new RegExp(
+  "resource-(" +
+  UUIDRegExp.source +
+  ")?$", UUIDRegExp.flags);
+
 export { markdown };

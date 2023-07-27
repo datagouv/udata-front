@@ -49,6 +49,7 @@ Discussions allow users to interact with others.
       </template>
       <template v-else>
         <div v-if="threadFromURL">
+          <!-- TODO: move to <Well> component when available -->
           <div class="fr-mt-2w fr-px-3w well well-secondary-success" data-cy="threadFromURL">
             <div class="fr-grid-row fr-grid-row--middle justify-between">
               {{

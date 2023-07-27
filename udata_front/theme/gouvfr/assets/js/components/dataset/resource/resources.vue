@@ -1,5 +1,5 @@
 <template>
-  <section class="fr-mb-3v" v-if="showTitle" ref="top">
+  <section class="fr-mb-3v" v-if="!resourceIdFromHash" ref="top">
     <div class="fr-grid-row">
       <div class="fr-col">
         <h2 :class="{'fr-mt-4w': !firstGroup}" class="fr-mb-0 subtitle subtitle--uppercase">
@@ -19,7 +19,7 @@
     </div>
     <transition mode="out-in">
       <div v-if="loading">
-        <Loader class="fr-mt-2w" />
+        <Loader v-for="i in pageSize" class="fr-mt-2w" />
       </div>
       <div v-else>
         <p
@@ -55,19 +55,21 @@
 </template>
 
 <script>
-import {useI18n} from 'vue-i18n'
-import {onMounted, ref, computed, watch, defineComponent} from 'vue';
-import Loader from "../loader.vue";
+import { useI18n } from 'vue-i18n'
+import { onMounted, ref, computed, defineComponent, watch, watchEffect } from 'vue';
+import Loader from "./loader.vue";
 import { Pagination } from "@etalab/udata-front-plugins-helper";
 import Resource from "./resource.vue";
 import SearchBar from "../../utils/search-bar.vue";
 import config from "../../../config";
-import {useToast} from "../../../composables/useToast";
+import { useToast } from "../../../composables/useToast";
 import {fetchDatasetCommunityResources, fetchDatasetResources} from "../../../api/resources";
 import {
   bus,
   RESOURCES_SEARCH,
 } from "../../../plugins/eventbus";
+import useIdFromHash from '../../../composables/useIdFromHash';
+import { previousUrlRegExp, urlRegExp } from '../../../helpers';
 
 export default defineComponent({
   name: "resources",
@@ -90,10 +92,6 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    showTitle: {
-      type: Boolean,
-      default: true,
-    },
     showTotal: {
       type: Boolean,
       default: true,
@@ -114,6 +112,7 @@ export default defineComponent({
   setup(props) {
     const { t } = useI18n();
     const toast = useToast();
+    const { id: resourceIdFromHash } = useIdFromHash([urlRegExp, previousUrlRegExp]);
     const currentPage = ref(1);
     /** @type {import("vue").Ref<Array<import("../../../api/resources").Resource>>} */
     const resources = ref([]);
@@ -170,7 +169,7 @@ export default defineComponent({
 
     const changePage = (index, scroll = true) => {
       currentPage.value = index;
-      loadPage(index, scroll);
+      return loadPage(index, scroll);
     };
 
     const getCanEdit = (resource) => {
@@ -180,8 +179,6 @@ export default defineComponent({
       return props.canEditResources[resource.id];
     }
 
-    onMounted(() => loadPage(currentPage.value).then(results => firstResults.value = results));
-
     if(!isCommunityResources.value) {
       bus.on(RESOURCES_SEARCH, ({type, value}) => {
         if(type === props.type) {
@@ -190,6 +187,22 @@ export default defineComponent({
         }
       });
     }
+
+    /**
+     * First resource load can append when the component is mounted, on page load without hash
+     * Or it can be triggered when a page load with a hash and the hash is later deleted.
+     */
+    const firstLoad = () => {
+      changePage(1, DONT_SCROLL).then(results => firstResults.value = results);
+    };
+
+    onMounted(() => firstLoad());
+
+    watch(resourceIdFromHash, (id) => {
+      if(!id) {
+        firstLoad();
+      }
+    });
 
     return {
       changePage,
@@ -201,6 +214,7 @@ export default defineComponent({
       loading,
       newResourceAdminPath,
       pageSize,
+      resourceIdFromHash,
       resources,
       RESOURCES_SEARCH,
       showSearch,
