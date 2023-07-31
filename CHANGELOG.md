@@ -2,9 +2,20 @@
 
 ## Current (in progress)
 
+- Nothing yet
+
+## 3.2.5 (2023-07-19)
+
 - Fix reuse page padding for discussions and reuses section [#270](https://github.com/etalab/udata-front/pull/270)
 - Fix dataset oembed links [#271](https://github.com/etalab/udata-front/pull/271)
 - Hide CaptchEtat icon loader [#272](https://github.com/etalab/udata-front/pull/272)
+- Update guide links [#276](https://github.com/etalab/udata-front/pull/276)
+- Redirect *pages* when missing trailing slash [#278](https://github.com/etalab/udata-front/pull/278)
+- Add feedback link to header and footer [#275](https://github.com/etalab/udata-front/pull/275)
+- Fix actions with scroll inside full-page tabs (e.g. dataset page) [#281](https://github.com/etalab/udata-front/pull/281)
+- Add data search form to search [#274](https://github.com/etalab/udata-front/pull/274)
+- Upgrade pyyaml dependency to 6.0.1 in deps tree [#283](https://github.com/etalab/udata-front/pull/283)
+- Set confirmed_at when creating user in MonComptePro auth [#284](https://github.com/etalab/udata-front/pull/284)
 
 ## 3.2.4 (2023-06-19)
 
