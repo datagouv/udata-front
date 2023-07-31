@@ -55,8 +55,8 @@
 </template>
 
 <script>
-import { useI18n } from 'vue-i18n'
-import { onMounted, ref, computed, defineComponent, watch, watchEffect } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { onMounted, ref, computed, defineComponent, watch } from 'vue';
 import Loader from "./loader.vue";
 import { Pagination } from "@etalab/udata-front-plugins-helper";
 import Resource from "./resource.vue";
@@ -69,7 +69,7 @@ import {
   RESOURCES_SEARCH,
 } from "../../../plugins/eventbus";
 import useIdFromHash from '../../../composables/useIdFromHash';
-import { previousUrlRegExp, urlRegExp } from '../../../helpers';
+import { previousResourceUrlRegExp, resourceUrlRegExp } from '../../../helpers';
 
 export default defineComponent({
   name: "resources",
@@ -82,11 +82,11 @@ export default defineComponent({
   props: {
     canEdit: {
       type: Boolean,
-      default: false
+      default: false,
     },
     canEditResources: {
       type: Object,
-      default:() => ({})
+      default:() => ({}),
     },
     datasetId: {
       type: String,
@@ -112,8 +112,9 @@ export default defineComponent({
   setup(props) {
     const { t } = useI18n();
     const toast = useToast();
-    const { id: resourceIdFromHash } = useIdFromHash([urlRegExp, previousUrlRegExp]);
+    const { id: resourceIdFromHash } = useIdFromHash([resourceUrlRegExp, previousResourceUrlRegExp]);
     const currentPage = ref(1);
+
     /** @type {import("vue").Ref<Array<import("../../../api/resources").Resource>>} */
     const resources = ref([]);
     const pageSize = config.resources_default_page_size;
@@ -124,6 +125,7 @@ export default defineComponent({
     const firstResults = ref(0);
     const totalResults = ref(0);
     const loading = ref(true);
+
     /** @type {import("vue").Ref<HTMLElement | null>} */
     const top = ref(null);
     const search = ref('');
@@ -198,12 +200,6 @@ export default defineComponent({
 
     onMounted(() => firstLoad());
 
-    watch(resourceIdFromHash, (id) => {
-      if(!id) {
-        firstLoad();
-      }
-    });
-
     return {
       changePage,
       currentPage,
@@ -220,8 +216,7 @@ export default defineComponent({
       showSearch,
       top,
       totalResults,
-      type: props.type,
-    }
+    };
   }
 });
 </script>

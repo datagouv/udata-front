@@ -34,7 +34,7 @@ import Loader from "./loader.vue";
 import Resource from "./resource.vue";
 import { useToast } from "../../../composables/useToast";
 import useIdFromHash from "../../../composables/useIdFromHash";
-import { previousUrlRegExp, urlRegExp } from '../../../helpers';
+import { previousResourceUrlRegExp, resourceUrlRegExp } from '../../../helpers';
 import { api } from "../../../plugins/api";
 
 export default defineComponent({
@@ -61,7 +61,7 @@ export default defineComponent({
     const resource = ref(null);
     const loading = ref(true);
 
-    const { id: resourceId, resetHash } = useIdFromHash([urlRegExp, previousUrlRegExp]);
+    const { id: resourceId, resetHash } = useIdFromHash([resourceUrlRegExp, previousResourceUrlRegExp]);
 
     /** @type {import("vue").Ref<HTMLElement | null>} */
     const top = ref(null);

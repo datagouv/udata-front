@@ -55,7 +55,7 @@ Discussions allow users to interact with others.
               {{
                 $t("You are seeing a specific discussion about this dataset")
               }}
-              <button class="fr-btn--close fr-btn fr-mr-0" @click.prevent="viewAllDiscussions">
+              <button class="fr-btn--close fr-btn fr-mr-0" @click.prevent="resetHash">
                 {{$t('Close')}}
               </button>
             </div>
@@ -63,7 +63,7 @@ Discussions allow users to interact with others.
           <thread v-bind="threadFromURL"></thread>
           <button
             class="nav-link nav-link--no-icon text-decoration-none fr-link fr-mt-9v fr-link--icon-left fr-icon-arrow-right-s-line"
-            @click.prevent="viewAllDiscussions"
+            @click.prevent="resetHash"
           >
             <span class="text-decoration-underline">{{ $t("See all discussions about this dataset") }}</span>
           </button>
@@ -97,7 +97,7 @@ Discussions allow users to interact with others.
 </template>
 
 <script>
-import {defineComponent, onMounted, ref, unref, watch} from "vue";
+import { defineComponent, onMounted, ref, unref, watch, watchEffect } from "vue";
 import config from "../../config";
 import { Pagination } from "@etalab/udata-front-plugins-helper";
 import CreateThread from "./threads-create.vue";
@@ -108,6 +108,7 @@ import {DISCUSSIONS_START_THREAD, bus} from "../../plugins/eventbus";
 import { useI18n } from "vue-i18n";
 import { api } from "../../plugins/api";
 import { useToast } from "../../composables/useToast";
+import useIdFromHash from "../../composables/useIdFromHash";
 
 export default defineComponent({
   components: {
@@ -133,8 +134,10 @@ export default defineComponent({
 
     const discussions = ref([]);
 
-    const URL_REGEX = /discussions\/([a-f0-9]{24})-?([0-9]+)?$/i;
-    const PREVIOUS_URL_REGEX = /discussion-([a-f0-9]{24})-?([0-9]+)?$/i;
+    const discussionUrlRegExp = /discussions\/([a-f0-9]{24})-?([0-9]+)?$/i;
+    const previousDiscussionUrlRegExp = /discussion-([a-f0-9]{24})-?([0-9]+)?$/i;
+
+    const { id: discussionId, resetHash } = useIdFromHash([discussionUrlRegExp, previousDiscussionUrlRegExp]);
 
     /**
      * @typedef {object} Thread
@@ -176,8 +179,7 @@ export default defineComponent({
     const top = ref(null);
 
     const loadThreadFromHash = () => {
-      const discussionId = getDiscussionId();
-      loadThread(discussionId);
+      loadThread(discussionId.value);
     };
 
     const loadThread = (id) => {
@@ -291,12 +293,6 @@ export default defineComponent({
         );
     };
 
-    const viewAllDiscussions = () => {
-      threadFromURL.value = null;
-      history.pushState(null, "", " ");
-      loadPage(1);
-    };
-
     const changePage = (index, scroll = true) => {
       currentPage.value = index;
       loadPage(index, scroll);
@@ -307,33 +303,17 @@ export default defineComponent({
       loadPage(currentPage);
     };
 
-    /**
-     * Check if URL contains a thread
-     * @returns {string | undefined}
-     */
-    const getDiscussionId = () => {
-      let hash = window.location.hash.slice(2);
-      let [a, discussionId, b] = URL_REGEX.exec(hash) || [];
-
-      if(!discussionId) {
-        hash = window.location.hash.slice(1);
-        [a, discussionId, b] = PREVIOUS_URL_REGEX.exec(hash) || [];
-      }
-      return discussionId;
-    }
-
     onMounted(() => {
       // Listen to bus events
       bus.on(DISCUSSIONS_START_THREAD, () => startThread());
 
-      const discussionId = getDiscussionId();
+      loadPage();
+    });
 
-      window.addEventListener("hashchange", () => loadThreadFromHash());
-
-      // If not, we load the first page
-      if (!discussionId) return loadPage(currentPage);
-
-      loadThreadFromHash();
+    watchEffect(() => {
+      if (discussionId.value) {
+        loadThreadFromHash();
+      }
     });
 
     watch(totalResults, (count) => {
@@ -353,11 +333,11 @@ export default defineComponent({
       sorts,
       readOnlyEnabled,
       createThread,
-      viewAllDiscussions,
       changePage,
       changeSort,
       createNewThread,
       top,
+      resetHash,
     };
   }
 });
