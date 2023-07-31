@@ -1,30 +1,31 @@
 <template>
 <section ref="top" v-if="resourceId">
   <transition mode="out-in">
-      <div v-if="loading">
-        <Loader />
-      </div>
-      <div v-else>
-        <!-- TODO: move to <Well> component when available -->
-        <div class="fr-mt-2w fr-px-3w well well-secondary-success">
-          <div class="fr-grid-row fr-grid-row--middle justify-between">
-            {{
-              $t("You are seeing a specific file of this dataset")
-            }}
-            <button class="fr-btn--close fr-btn fr-mr-0" @click.prevent="resetHash">
-              {{$t('Close')}}
-            </button>
-          </div>
+    <div v-if="loading">
+      <Loader />
+    </div>
+    <div v-else>
+      <!-- TODO: move to <Well> component when available -->
+      <div class="fr-mb-2w fr-px-3w well well-secondary-success">
+        <div class="fr-grid-row fr-grid-row--middle justify-between">
+          {{
+            $t("You are seeing a specific file of this dataset")
+          }}
+          <button class="fr-btn--close fr-btn fr-mr-0" @click.prevent="resetHash">
+            {{$t('Close')}}
+          </button>
         </div>
-        <Resource
-          :id="'resource-' + resourceId"
-          :datasetId="datasetId"
-          :resource="resource"
-          :canEdit="canEdit"
-          :typeLabel="typeLabel"
-        />
       </div>
-    </transition>
+      <Resource
+        :id="'resource-' + resourceId"
+        :datasetId="datasetId"
+        :expandedOnMount="true"
+        :resource="resource"
+        :canEdit="canEdit"
+        :typeLabel="typeLabel"
+      />
+    </div>
+  </transition>
 </section>
 </template>
 <script>

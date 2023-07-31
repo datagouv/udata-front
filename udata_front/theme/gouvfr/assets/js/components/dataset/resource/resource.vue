@@ -299,7 +299,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed, unref } from "vue";
+import { defineComponent, ref, computed, unref, onMounted } from "vue";
 import SchemaLoader from "./schema-loader.vue";
 import useOwnerName from "../../../composables/useOwnerName";
 import useResourceImage from "../../../composables/useResourceImage";
@@ -316,12 +316,16 @@ import { explorable_resources, schema_documentation_url } from "../../../config"
 import { filesize, formatRelativeIfRecentDate, formatDate, markdown } from "../../../helpers";
 
 export default defineComponent({
-  components: {DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, OrganizationNameWithCertificate, SchemaLoader},
+  components: { DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, OrganizationNameWithCertificate, SchemaLoader },
   inheritAttrs: false,
   props: {
     datasetId: {
       type: String,
       required: true,
+    },
+    expandedOnMount: {
+      type: Boolean,
+      default: false,
     },
     isCommunityResource: {
       type: Boolean,
@@ -408,6 +412,12 @@ export default defineComponent({
     });
     const resourceInformationSelectedTab = computed(() => !hasExplore.value);
     const resourceInformationTabIndex = computed(() => hasExplore.value ? -1 : 0);
+
+    onMounted(() => {
+      if(props.expandedOnMount) {
+        expand();
+      }
+    });
 
     return {
       registerEvent,
