@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add resource permalink [#286](https://github.com/etalab/udata-front/pull/286)
 
 ## 3.2.5 (2023-07-19)
 
