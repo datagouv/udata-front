@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add missing quality criterion (`all_resources_available`) [#287](https://github.com/etalab/udata-front/pull/287)
 
 ## 3.2.5 (2023-07-19)
 
