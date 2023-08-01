@@ -50,6 +50,12 @@
             _("Spatial coverage not set"),
             "fr-my-1w"
         )}}
+        {{quality_item(
+            dataset.quality.all_resources_available,
+            _("All files are available"),
+            _("Some files are unavailable"),
+            "fr-my-1w"
+        )}}
         <div class="fr-grid-row fr-grid-row--right not-enlarged">
             <a
                 href="{{ config.GUIDES_QUALITY_URL }}"
