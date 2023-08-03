@@ -231,17 +231,15 @@
                   <CopyButton :text="resource.latest"/>
                 </div>
               </DescriptionDetails>
-              <template v-if="resource.checksum">
-                <DescriptionTerm>{{resource.checksum.type}}</DescriptionTerm>
-                <DescriptionDetails :withEllipsis="false">
-                  <div class="fr-col text-overflow-ellipsis">
-                    {{resource.checksum.value}}
-                  </div>
-                  <div class="fr-col-auto">
-                    <CopyButton :text="resource.checksum.value"/>
-                  </div>
-                </DescriptionDetails>
-              </template>
+              <DescriptionTerm>{{ $t('ID') }}</DescriptionTerm>
+              <DescriptionDetails :withEllipsis="false">
+                <div class="fr-col text-overflow-ellipsis">
+                  {{ resource.id }}
+                </div>
+                <div class="fr-ml-1w fr-col-auto">
+                  <CopyButton :text="resource.id"/>
+                </div>
+              </DescriptionDetails>
               <template v-if="resource.mime">
                 <DescriptionTerm>{{ $t('MIME Type') }}</DescriptionTerm>
                 <DescriptionDetails>
@@ -258,6 +256,17 @@
               <DescriptionDetails>
                 {{formatDate(resource.last_modified)}}
               </DescriptionDetails>
+              <template v-if="resource.checksum">
+                <DescriptionTerm>{{resource.checksum.type}}</DescriptionTerm>
+                <DescriptionDetails :withEllipsis="false">
+                  <div class="fr-col text-overflow-ellipsis">
+                    {{resource.checksum.value}}
+                  </div>
+                  <div class="fr-col-auto">
+                    <CopyButton :text="resource.checksum.value"/>
+                  </div>
+                </DescriptionDetails>
+              </template>
             </DescriptionList>
             <DescriptionList>
               <template v-if="resource.filesize">
