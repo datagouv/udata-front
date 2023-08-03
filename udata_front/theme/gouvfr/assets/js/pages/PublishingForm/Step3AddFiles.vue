@@ -12,31 +12,32 @@
             <span class="fr-icon--sm fr-icon-question-line" aria-hidden="true"></span>
             {{ $t('Help') }}
           </template>
-          <AccordionGroup>
-            <Accordion
-              :title= "$t('Publish the right types of files')"
-              :id="publishFileAccordionId"
-            >
-              <div class="markdown fr-m-0">
-                <p class="fr-m-0 fr-mb-1w">
-                  {{ $t("Formats should be :") }}
-                </p>
-                <ul>
-                  <li>{{ $t("open : an open format doesn't add technical specifications that restrict data use (i.e. using a paid software) ;") }}</li>
-                  <li>{{ $t("easily reusable : a format easily reusable implies that anybody or server can reuse easily the dataset ;") }}</li>
-                  <li>{{ $t("usable in an automated processing system : an automated processing system allows to make automatic operations, related to data exploitation (i.e. a CSV file is easily usable by an automated system unlike a PDF file).") }}</li>
-                </ul>
-              </div>
-            </Accordion>
-            <Accordion
-              :title= "$t('Add a description')"
-              :id="addDescriptionAccordionId"
-            >
-                <p class="fr-m-0">
-                  {{ $t("The description of the dataset production mode allows a reuser to understand the dataset structure, data nature and possible gap or flaws in the file.") }}
-                </p>
-            </Accordion>
-          </AccordionGroup>
+          <Accordion
+            :title= "$t('Publish the right types of files')"
+            :id="publishFileAccordionId"
+          >
+            <div class="markdown fr-m-0">
+              <p class="fr-m-0 fr-mb-1w">
+                {{ $t("Formats should be :") }}
+              </p>
+              <ul>
+                <li>{{ $t("open : an open format doesn't add technical specifications that restrict data use (i.e. using a paid software) ;") }}</li>
+                <li>{{ $t("easily reusable : a format easily reusable implies that anybody or server can reuse easily the dataset ;") }}</li>
+                <li>{{ $t("usable in an automated processing system : an automated processing system allows to make automatic operations, related to data exploitation (i.e. a CSV file is easily usable by an automated system unlike a PDF file).") }}</li>
+              </ul>
+            </div>
+            <Well class="fr-mt-1w" v-if="stateHasWarning('files')" color="orange-terre-battue">
+              {{ getWarningText("files") }}
+            </Well>
+          </Accordion>
+          <Accordion
+            :title= "$t('Add a description')"
+            :id="addDescriptionAccordionId"
+          >
+              <p class="fr-m-0">
+                {{ $t("The description of the dataset production mode allows a reuser to understand the dataset structure, data nature and possible gap or flaws in the file.") }}
+              </p>
+          </Accordion>
       </Sidemenu>
       <div class="fr-col-12 fr-col-md-7">
         <Container>
@@ -61,7 +62,11 @@
                 {{ $t("Files") }}
               </h2>
             </legend>
-            <LinkedToAccordion class="fr-fieldset__element min-width-0" :accordion="publishFileAccordionId">
+            <LinkedToAccordion
+              class="fr-fieldset__element min-width-0"
+              :accordion="publishFileAccordionId"
+              @blur="vWarning$.files.$touch"
+            >
               <Container
                 color="alt-grey"
                 class="fr-grid-row fr-grid-row--middle flex-direction-column"
@@ -77,15 +82,18 @@
               </Container>
               <template v-else>
                 <FileCard
-                  v-for="file in dataset.files"
-                  :filename="file.name"
-                  :filesize="file.size"
-                  :format="file.type"
-                  :lastModified="file.lastModified"
+                  class="fr-mb-3v"
+                  v-for="(resource, index) in dataset.files"
+                  :key="index"
+                  :filename="resource.file.name"
+                  :filesize="resource.filesize"
+                  :format="resource.format"
+                  :lastModified="resource.file.lastModified"
                   :missingMetadata="true"
-                  :title="file.title || file.name"
+                  :title="resource.title || resource.file.name"
+                  @delete="removeFile(index)"
                 />
-                <div class="fr-grid-row fr-grid-row--center fr-mt-3v">
+                <div class="fr-grid-row fr-grid-row--center">
                   <UploadGroup
                     :label="$t('Add files')"
                     type="button"
@@ -108,9 +116,8 @@
   </div>
 </template>
 <script>
-import { defineComponent, reactive, watch, watchEffect } from 'vue';
+import { computed, defineComponent, reactive, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useVuelidate } from '@vuelidate/core';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
 import Container from '../../components/Ui/Container/Container.vue';
@@ -122,8 +129,10 @@ import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
 import Well from "../../components/Ui/Well/Well.vue";
 import useUid from "../../composables/useUid";
-import { requiredWithCustomMessage } from '../../i18n';
+import { requiredWithCustomMessage, withMessage } from '../../i18n';
 import editIcon from "svg/illustrations/edit.svg";
+import useFunctionalState from '../../composables/useFunctionalState';
+import { isClosedFormat } from '../../helpers';
 
 export default defineComponent({
   components: { Accordion, AccordionGroup, Container, InputGroup, LinkedToAccordion, Stepper, Well, Sidemenu, UploadGroup, FileCard },
@@ -137,32 +146,95 @@ export default defineComponent({
     const { t } = useI18n();
     const { id: publishFileAccordionId } = useUid("accordion");
     const { id: addDescriptionAccordionId } = useUid("accordion");
-    /** @type {import("vue").UnwrapNestedRefs<{files: Array<File>}>} */
+
+    /** @type {import("vue").UnwrapNestedRefs<{files: Array<import("../../types").DatasetFile>}>} */
     const dataset = reactive({
       files: [],
     });
-    const fileRequired = requiredWithCustomMessage(t("You didn't provide the spatial granularity."));
+
+    const fileRequired = requiredWithCustomMessage(t("At least one file is required."));
+
+    /**
+     * Validates that the dataset doesn't contain a closed format file.
+     * @param {Array<import("../../types").DatasetFile>} value
+     */
+    const onefileHasOpenFormats = (value) => value.reduce((previous, current) => previous || !isClosedFormat(current.format), false);
+
     const requiredRules = {
       files: { fileRequired },
     };
-    const qualityRules = {
-      files: { fileRequired },
+    const warningRules = {
+      files: { required: fileRequired, openFormat: withMessage(t("At least one file should have an open format."), onefileHasOpenFormats) },
     };
-    const v$ = useVuelidate(requiredRules, dataset);
-    const vQuality$ = useVuelidate(qualityRules, dataset);
+
+    const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, v$, vWarning$ } = useFunctionalState(dataset, requiredRules, warningRules);
+
     /**
      *
      * @param {FileList} files
      */
-    const addFiles = (files) => dataset.files.push(...files);
+    const addFiles = (files) => {
+      for(const file of files) {
+        dataset.files.push({
+          file,
+          description: "",
+          format: file.type.includes("/") ? file.type.split("/").pop() || "" : file.type,
+          filesize: file.size,
+          filetype: "file",
+          mime: file.type,
+          title: "",
+          type: "main"
+        });
+      }
+    };
+
+    /**
+     *
+     * @param {number} position
+     */
+    const removeFile = (position) => dataset.files.splice(position, 1);
+
+    /**
+     * @type {import("vue").ComputedRef<Record<string, import("../../types").AccordionFunctionalState>>}
+     */
+    const state = computed(() => {
+      return {
+        files: getFunctionalState(vWarning$.value.files.$dirty, v$.value.files.$invalid, vWarning$.value.files.$error),
+      };
+    });
+
+    watchEffect(() => {
+      console.log(state.value);
+      console.log(v$.value);
+      console.log(vWarning$.value);
+    });
+
+    /**
+     *
+     * @param {string} field
+     */
+    const stateHasError = (field) => hasError(state, field);
+
+    /**
+     *
+     * @param {string} field
+     */
+    const stateHasWarning = (field) => hasWarning(state, field);
+
     return {
+      addDescriptionAccordionId,
       addFiles,
       dataset,
       editIcon,
+      getErrorText,
+      getFunctionalState,
+      getWarningText,
       publishFileAccordionId,
-      addDescriptionAccordionId,
+      removeFile,
+      stateHasError,
+      stateHasWarning,
       v$,
-      vQuality$,
+      vWarning$,
     };
   },
 });

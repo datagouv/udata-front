@@ -59,4 +59,20 @@
   * @typedef {DSFRFormDefaultState | AccordionFunctionalState | AccordionInfoState} AccordionState
   */
 
+  /**
+   * @typedef {"main" | "documentation" | "update" | "api" | "code" | "other"} ResourceType
+   */
+
+  /**
+   * @typedef {"remote" | "file"} ResourceFileType
+   */
+
+  /**
+   * @typedef {typeof import("./helpers").CLOSED_FORMATS[number]} ClosedFormats
+   */
+
+  /**
+   * @typedef {{rid?: string, file: File, sha256?: string, description: string?, format: string, filesize: number, filetype: string, mime: string, schema?: string, title: string?, type: ResourceType}} DatasetFile
+   */
+
  export default {};

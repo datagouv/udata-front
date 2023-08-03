@@ -15,7 +15,7 @@
             <Accordion
               :title= "$t('Naming your dataset')"
               :id="nameDatasetAccordionId"
-              :state="quality.title"
+              :state="state.title"
             >
               <p class="fr-m-0">
                 {{ $t("Dataset title must be the most precise and specific possible.") }} <br/>
@@ -35,7 +35,7 @@
             <Accordion
               :title= "$t('Write a good description')"
               :id="writeAGoodDescriptionAccordionId"
-              :state="quality.description"
+              :state="state.description"
             >
               <div class="markdown fr-m-0">
                 <p class="fr-m-0">
@@ -56,39 +56,39 @@
                   <li>{{ $t("The dataset maintenance") }}</li>
                   <li>{{ $t("The legals and ethics considerations") }}</li>
                 </ul>
-                <Well class="fr-mt-1w" v-if="hasQualityWarning('description')" color="orange-terre-battue">
-                  {{ getQualityWarningText("description") }}
+                <Well class="fr-mt-1w" v-if="stateHasWarning('description')" color="orange-terre-battue">
+                  {{ getWarningText("description") }}
                 </Well>
               </div>
             </Accordion>
             <Accordion
               :title= "$t('Use tags')"
               :id="useTagsAccordionId"
-              :state="quality.tags"
+              :state="state.tags"
             >
               <p class="fr-m-0">
                 {{ $t("Tags characterize your dataset. They are public and allow a better listing of the dataset during a user search.") }}
               </p>
-              <Well class="fr-mt-1w" v-if="hasQualityWarning('tags')" color="orange-terre-battue">
-                {{ getQualityWarningText("tags") }}
+              <Well class="fr-mt-1w" v-if="stateHasWarning('tags')" color="orange-terre-battue">
+                {{ getWarningText("tags") }}
               </Well>
             </Accordion>
             <Accordion
               :title= "$t('Select a license')"
               :id="selectLicenseAccordionId"
-              :state="quality.license"
+              :state="state.license"
             >
               <p class="fr-m-0">
                 {{ $t("Licenses define reuse rules. By choosing a reuse license, you ensure the published dataset is reused using the conditions you defined.") }}
               </p>
-              <Well class="fr-mt-1w" v-if="hasQualityWarning('license')" color="orange-terre-battue">
-                {{ getQualityWarningText("license") }}
+              <Well class="fr-mt-1w" v-if="stateHasWarning('license')" color="orange-terre-battue">
+                {{ getWarningText("license") }}
               </Well>
             </Accordion>
             <Accordion
               :title= "$t('Choose the update frequency')"
               :id="chooseFrequencyAccordionId"
-              :state="quality.frequency"
+              :state="state.frequency"
             >
               <p class="fr-m-0">
                 {{ $t("Update frequency is the frequency you plan to update the published data. Update frequency is indicative.") }}
@@ -97,27 +97,27 @@
             <Accordion
               :title= "$t('Add temporal coverage')"
               :id="addTemporalCoverageAccordionId"
-              :state="quality.temporal_coverage"
+              :state="state.temporal_coverage"
             >
               <p class="fr-m-0">
                 {{ $t("Temporal coverage show the time range of published data.") }} <br/>
                 {{ $t("For example : from 2012 to 2015.") }}
               </p>
-              <Well class="fr-mt-1w" v-if="hasQualityWarning('temporal_coverage')" color="orange-terre-battue">
-                {{ getQualityWarningText("temporal_coverage") }}
+              <Well class="fr-mt-1w" v-if="stateHasWarning('temporal_coverage')" color="orange-terre-battue">
+                {{ getWarningText("temporal_coverage") }}
               </Well>
             </Accordion>
             <Accordion
               :title= "$t('Add spatial information')"
               :id="addSpatialInformationAccordionId"
-              :state="quality.spatial_information"
+              :state="state.spatial_information"
             >
               <p class="fr-m-0">
                 {{ $t("Spatial granularity shows the finest level of geographical details covered by your data.") }} <br/>
                 {{ $t("For example : at the department scale or the city scale.") }}
               </p>
-              <Well class="fr-mt-1w" v-if="hasQualityWarning('spatial_information')" color="orange-terre-battue">
-                {{ getQualityWarningText("spatial") }}
+              <Well class="fr-mt-1w" v-if="stateHasWarning('spatial_information')" color="orange-terre-battue">
+                {{ getWarningText("spatial") }}
               </Well>
             </Accordion>
           </AccordionGroup>
@@ -148,14 +148,14 @@
             <LinkedToAccordion
               class="fr-fieldset__element"
               :accordion="nameDatasetAccordionId"
-              @blur="vQuality$.title.$touch"
+              @blur="vWarning$.title.$touch"
             >
               <InputGroup
                 :aria-describedby="nameDatasetAccordionId"
                 :label="$t('Dataset name')"
                 :required="true"
                 v-model="dataset.title"
-                :hasError="hasError('title')"
+                :hasError="stateHasError('title')"
                 :errorText="getErrorText('title')"
               />
             </LinkedToAccordion>
@@ -170,21 +170,21 @@
             <LinkedToAccordion
               class="fr-fieldset__element"
               :accordion="writeAGoodDescriptionAccordionId"
-              @blur="vQuality$.description.$touch"
+              @blur="vWarning$.description.$touch"
             >
               <InputGroup
                 :label="$t('Description')"
                 :required="true"
                 type="textarea"
                 v-model="dataset.description"
-                :hasError="hasError('description')"
+                :hasError="stateHasError('description')"
                 :errorText="getErrorText('description')"
               />
             </LinkedToAccordion>
             <LinkedToAccordion
               class="fr-fieldset__element"
               :accordion="useTagsAccordionId"
-              @blur="vQuality$.tags.$touch"
+              @blur="vWarning$.tags.$touch"
             >
               <MultiSelect
                 :minimumCharacterBeforeSuggest="2"
@@ -198,7 +198,7 @@
             <LinkedToAccordion
               class="fr-fieldset__element"
               :accordion="selectLicenseAccordionId"
-              @blur="vQuality$.license.$touch"
+              @blur="vWarning$.license.$touch"
             >
               <MultiSelect
                 :placeholder="$t('License')"
@@ -220,7 +220,7 @@
                 <div class="fr-col-12 fr-col-md-6">
                   <LinkedToAccordion
                     :accordion="chooseFrequencyAccordionId"
-                    @blur="vQuality$.frequency.$touch"
+                    @blur="vWarning$.frequency.$touch"
                   >
                     <MultiSelect
                       :placeholder="$t('Update frequency')"
@@ -229,7 +229,7 @@
                       :values="dataset.frequency"
                       @change="(value) => dataset.frequency = value"
                       :required="true"
-                      :hasError="hasError('frequency')"
+                      :hasError="stateHasError('frequency')"
                       :errorText="getErrorText('frequency')"
                     />
                   </LinkedToAccordion>
@@ -245,7 +245,7 @@
             </div>
             <LinkedToAccordion
               :accordion="addTemporalCoverageAccordionId"
-              @blur="vQuality$.temporal_coverage.$touch"
+              @blur="vWarning$.temporal_coverage.$touch"
               class="fr-fieldset__element"
             >
               <InputGroup
@@ -263,7 +263,7 @@
             </legend>
             <LinkedToAccordion
               :accordion="addSpatialInformationAccordionId"
-              @blur="vQuality$.spatial.$touch"
+              @blur="vWarning$.spatial.$touch"
               class="fr-fieldset__element"
             >
               <div class="fr-grid-row fr-grid-row--gutters">
@@ -303,7 +303,6 @@
 
 <script>
 import { computed, defineComponent, reactive, watchEffect } from 'vue';
-import { useVuelidate } from '@vuelidate/core';
 import { minLength, not, required, requiredWithCustomMessage, sameAs } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -319,6 +318,7 @@ import useUid from "../../composables/useUid";
 import editIcon from "svg/illustrations/edit.svg";
 import { quality_description_length, title } from "../../config";
 import { useI18n } from 'vue-i18n';
+import useFunctionalState from '../../composables/useFunctionalState';
 
 export default defineComponent({
   components: { Accordion, AccordionGroup, Container, InputGroup, LinkedToAccordion, MultiSelect, SelectGroup, Stepper, Well, Sidemenu },
@@ -353,26 +353,6 @@ export default defineComponent({
       }
     });
 
-    /**
-     *
-     * @param {boolean} dirty
-     * @param {boolean} failRequired
-     * @param {boolean} failQuality
-     * @returns {import("../../types").AccordionFunctionalState}
-     */
-    const getFunctionalState = (dirty, failRequired, failQuality) => {
-      if(!dirty) {
-        return "disabled";
-      }
-      if(failRequired) {
-        return "error";
-      }
-      if(failQuality) {
-        return "warning";
-      }
-      return "success"
-    };
-
     const notUnknown = not(t("The value must be different from unknown."), sameAs("unknown"));
     const tagsRequired = requiredWithCustomMessage(t("Add tags allow to improve listing of your data."));
     const temporalCoverageRequired = requiredWithCustomMessage(t("You didn't provide the temporal coverage."));
@@ -384,7 +364,7 @@ export default defineComponent({
       title: { required },
     };
 
-    const qualityRules = {
+    const warningRules = {
       description: {required, minLengthValue: minLength(quality_description_length), },
       frequency: { required, notUnknown },
       license: { required },
@@ -396,49 +376,37 @@ export default defineComponent({
       title: { required },
     };
 
-    const v$ = useVuelidate(requiredRules, dataset);
-    const vQuality$ = useVuelidate(qualityRules, dataset);
+    const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, v$, vWarning$ } = useFunctionalState(dataset, requiredRules, warningRules);
 
     /**
      * @type {import("vue").ComputedRef<Record<string, import("../../types").AccordionFunctionalState>>}
      */
-    const quality = computed(() => {
+    const state = computed(() => {
       return {
-        title: getFunctionalState(vQuality$.value.title.$dirty, v$.value.title.$invalid, vQuality$.value.title.$error),
-        description: getFunctionalState(vQuality$.value.description.$dirty, v$.value.description.$invalid, vQuality$.value.description.$error),
-        tags: getFunctionalState(vQuality$.value.tags.$dirty, false, vQuality$.value.tags.$error),
-        license: getFunctionalState(vQuality$.value.license.$dirty, false, vQuality$.value.license.$error),
-        frequency: getFunctionalState(vQuality$.value.frequency.$dirty, v$.value.frequency.$invalid, vQuality$.value.frequency.$error),
-        temporal_coverage: getFunctionalState(vQuality$.value.temporal_coverage.$dirty, false, vQuality$.value.temporal_coverage.$error),
-        spatial_information: getFunctionalState(vQuality$.value.spatial.granularity.$dirty, false, vQuality$.value.spatial.granularity.$error),
+        title: getFunctionalState(vWarning$.value.title.$dirty, v$.value.title.$invalid, vWarning$.value.title.$error),
+        description: getFunctionalState(vWarning$.value.description.$dirty, v$.value.description.$invalid, vWarning$.value.description.$error),
+        tags: getFunctionalState(vWarning$.value.tags.$dirty, false, vWarning$.value.tags.$error),
+        license: getFunctionalState(vWarning$.value.license.$dirty, false, vWarning$.value.license.$error),
+        frequency: getFunctionalState(vWarning$.value.frequency.$dirty, v$.value.frequency.$invalid, vWarning$.value.frequency.$error),
+        temporal_coverage: getFunctionalState(vWarning$.value.temporal_coverage.$dirty, false, vWarning$.value.temporal_coverage.$error),
+        spatial_information: getFunctionalState(vWarning$.value.spatial.granularity.$dirty, false, vWarning$.value.spatial.granularity.$error),
       };
     });
 
     /**
+     *
      * @param {string} field
-     * @returns {boolean}
      */
-    const hasError = (field) => quality.value[field] === "error";
+    const stateHasError = (field) => hasError(state, field);
 
     /**
+     *
      * @param {string} field
-     * @returns {boolean}
      */
-     const hasQualityWarning = (field) => quality.value[field] === "warning";
-
-    const getErrorText = (field) => {
-      if(vQuality$.value[field].$dirty) {
-        v$.value[field].$touch();
-      }
-      return v$.value[field].$errors.map(error => error.$message).join("\n");
-    }
-
-    const getQualityWarningText = (field) => {
-      return vQuality$.value[field].$errors.map(error => error.$message).join("\n");
-    }
+    const stateHasWarning = (field) => hasWarning(state, field);
 
     watchEffect(() => {
-      console.log(quality.value);
+      console.log(state.value);
       console.log(dataset);
     });
 
@@ -453,14 +421,14 @@ export default defineComponent({
       addSpatialInformationAccordionId,
       dataset,
       editIcon,
-      quality,
-      hasError,
-      hasQualityWarning,
+      state,
+      stateHasError,
+      stateHasWarning,
       getErrorText,
-      getQualityWarningText,
+      getWarningText,
       title,
       v$,
-      vQuality$,
+      vWarning$,
     };
   },
 });

@@ -107,4 +107,4 @@ export const not = passLocalizedMessageWithArguments(vNot);
 export const sameAs = withI18nMessage(vSameAs, { messagePath: () => t("The value must be equal to the ${otherName} value"), withArguments: true });
 
 export default i18n;
-export { dayjs, i18n };
+export { dayjs, i18n, withMessage };
