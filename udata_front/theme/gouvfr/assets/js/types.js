@@ -60,7 +60,7 @@
   */
 
   /**
-   * @typedef {"main" | "documentation" | "update" | "api" | "code" | "other"} ResourceType
+   * @typedef {typeof import("./helpers").RESOURCE_TYPE[number]} ResourceType
    */
 
   /**
@@ -72,7 +72,7 @@
    */
 
   /**
-   * @typedef {{rid?: string, file: File, sha256?: string, description: string?, format: string, filesize: number, filetype: string, mime: string, schema?: string, title: string?, type: ResourceType}} DatasetFile
+   * @typedef {{rid?: string, file: File, sha256?: string, description: string?, format: string, filesize: number, filetype: ResourceFileType, mime: string, schema?: string, title: string, type: ResourceType}} DatasetFile
    */
 
  export default {};

@@ -71,6 +71,29 @@ export const formatRelativeIfRecentDate = (date) => {
 
 export const CLOSED_FORMATS = readonly(/** @type {const} */(['pdf', 'doc', 'docx', 'word', 'xls', 'excel', 'xlsx']));
 
+export const RESOURCE_TYPE = readonly(/** @type {const} */(["main", "documentation", "update", "api", "code", "other"]));
+
+/**
+ *
+ * @param {import("./types").ResourceType} type
+ */
+export const getResourceLabel = (type) => {
+  const { t } = useI18n();
+  switch(type) {
+    case "main":
+      return t("Main file");
+    case "documentation":
+      return t("Documentation");
+    case "update":
+      return t("Update");
+    case "api":
+      return t("API");
+    case "code":
+      return t("Source code");
+    case "other":
+      return t("Other");
+  }
+}
 /**
  * Checks if a value is in an array
  * @template U

@@ -60,7 +60,7 @@
                   />
                 </div>
                 <div class="fr-col-12">
-                  <SchemaFilter
+                  <SchemaSelect
                     :values="facets.schema"
                     @change="(value) => handleFacetChange('schema', value)"
                   />
@@ -181,7 +181,7 @@ import useSearchUrl from "../../composables/useSearchUrl";
 import SearchInput from "./search-input.vue";
 import Dataset from "../dataset/card-lg.vue";
 import Loader from "../dataset/loader.vue";
-import SchemaFilter from "./schema-filter.vue";
+import SchemaSelect from "../SchemaSelect/SchemaSelect.vue";
 import Empty from "./empty.vue";
 import { Pagination } from "@etalab/udata-front-plugins-helper";
 import MultiSelect from "../MultiSelect/MultiSelect.vue";
@@ -193,7 +193,7 @@ export default defineComponent({
   components: {
     MultiSelect,
     SearchInput,
-    SchemaFilter,
+    SchemaSelect,
     Dataset,
     Empty,
     Loader,

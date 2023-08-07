@@ -3,7 +3,7 @@
     :placeholder="$t('Schema')"
     :explanation="$t('Data schemas describe data models: what are the fields, how are data shown, what are the available values, etc. See schema.data.gouv.fr')"
     :searchPlaceholder="$t('Search a schema...')"
-    :allOption="$t('All schemas')"
+    :allOption="showAllOption ? $t('All schemas') : ''"
     :initialOptions="initialOptions"
     :values="values"
     @change="change"
@@ -21,9 +21,13 @@ export default defineComponent({
   },
   emits: ["change"],
   props: {
+    showAllOption: {
+      type: Boolean,
+      default: true,
+    },
     values: {
       type: [String, Array],
-    }
+    },
   },
   setup(props, {emit}) {
     /** @type {Promise<Array<import("../../types").MultiSelectOption>>} */

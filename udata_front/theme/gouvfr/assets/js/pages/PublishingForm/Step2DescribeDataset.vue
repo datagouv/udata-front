@@ -310,7 +310,6 @@ import Container from '../../components/Ui/Container/Container.vue';
 import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
 import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
-import SelectGroup from '../../components/Form/SelectGroup/SelectGroup.vue';
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Well from "../../components/Ui/Well/Well.vue";
@@ -321,7 +320,7 @@ import { useI18n } from 'vue-i18n';
 import useFunctionalState from '../../composables/useFunctionalState';
 
 export default defineComponent({
-  components: { Accordion, AccordionGroup, Container, InputGroup, LinkedToAccordion, MultiSelect, SelectGroup, Stepper, Well, Sidemenu },
+  components: { Accordion, AccordionGroup, Container, InputGroup, LinkedToAccordion, MultiSelect, Stepper, Well, Sidemenu },
   props: {
     steps: {
       type: Array,
