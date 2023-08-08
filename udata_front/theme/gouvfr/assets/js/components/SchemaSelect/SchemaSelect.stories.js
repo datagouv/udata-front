@@ -20,7 +20,7 @@ export const SimpleSchemaSelect = {
   args,
 };
 
-export const SchemaSelectWithoutAllOption = {
+export const SchemaSelectWithAllOption = {
   render: (args) => ({
     components: { SchemaSelect },
     setup() {
@@ -30,6 +30,6 @@ export const SchemaSelectWithoutAllOption = {
   }),
   args: {
     ...args,
-    showAllOption: false,
+    allOption: "Select a schema",
   },
 };

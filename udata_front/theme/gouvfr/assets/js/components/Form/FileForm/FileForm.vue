@@ -26,7 +26,7 @@
   />
 
   <SchemaSelect
-    :showAllOption="false"
+    :allOption="$t('Select a schema')"
     :values="file.schema"
     @change="(value) => file.schema = value"
   />
