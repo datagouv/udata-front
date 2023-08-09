@@ -34,9 +34,19 @@
             :title= "$t('Add a description')"
             :id="addDescriptionAccordionId"
           >
-              <p class="fr-m-0">
-                {{ $t("The description of the dataset production mode allows a reuser to understand the dataset structure, data nature and possible gap or flaws in the file.") }}
+            <div class="markdown fr-m-0">
+              <p class="fr-m-0 fr-mb-1w">
+                {{ $t("The description of the dataset has an educational purpose and eases the data reuse. It covers among others:") }}
               </p>
+              <ul>
+                <li>{{ $t("a general description of the dataset ;") }}</li>
+                <li>{{ $t("a description of the data production mode ;") }}</li>
+                <li>{{ $t("a description of the data model ;") }}</li>
+                <li>{{ $t("a description of the data schema ;") }}</li>
+                <li>{{ $t("a description of the metadata ;") }}</li>
+                <li>{{ $t("a description of major changes.") }}</li>
+              </ul>
+            </div>
           </Accordion>
       </Sidemenu>
       <div class="fr-col-12 fr-col-md-7">
@@ -81,18 +91,25 @@
                 />
               </Container>
               <template v-else>
-                <FileCard
-                  class="fr-mb-3v"
-                  v-for="(resource, index) in dataset.files"
-                  :key="index"
-                  :filename="resource.file.name"
-                  :filesize="resource.filesize"
-                  :format="resource.format"
-                  :lastModified="resource.file.lastModified"
-                  :missingMetadata="true"
-                  :title="resource.title || resource.file.name"
-                  @delete="removeFile(index)"
-                />
+                <template v-for="(resource, index) in dataset.files">
+                  <FileForm
+                    v-if="editingFile === index"
+                    :datasetFile="resource"
+                  />
+                  <FileCard
+                    v-else
+                    class="fr-mb-3v"
+                    :key="index"
+                    :filename="resource.file.name"
+                    :filesize="resource.filesize"
+                    :format="resource.format"
+                    :lastModified="resource.file.lastModified"
+                    :missingMetadata="true"
+                    :title="resource.title || resource.file.name"
+                    @delete="removeFile(index)"
+                    @edit="() => editingFile = index"
+                  />
+                </template>
                 <div class="fr-grid-row fr-grid-row--center">
                   <UploadGroup
                     :label="$t('Add files')"
@@ -111,12 +128,11 @@
           </div>
         </Container>
       </div>
-
     </div>
   </div>
 </template>
 <script>
-import { computed, defineComponent, reactive, watchEffect } from 'vue';
+import { computed, defineComponent, reactive, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -133,9 +149,10 @@ import { requiredWithCustomMessage, withMessage } from '../../i18n';
 import editIcon from "svg/illustrations/edit.svg";
 import useFunctionalState from '../../composables/useFunctionalState';
 import { isClosedFormat } from '../../helpers';
+import FileForm from '../../components/Form/FileForm/FileForm.vue';
 
 export default defineComponent({
-  components: { Accordion, AccordionGroup, Container, InputGroup, LinkedToAccordion, Stepper, Well, Sidemenu, UploadGroup, FileCard },
+  components: { Accordion, AccordionGroup, Container, InputGroup, LinkedToAccordion, Stepper, Well, Sidemenu, UploadGroup, FileCard, FileForm },
   props: {
     steps: {
       type: Array,
@@ -151,6 +168,9 @@ export default defineComponent({
     const dataset = reactive({
       files: [],
     });
+
+    /** @type {import("vue").Ref<number | null>} */
+    const editingFile = ref(null);
 
     const fileRequired = requiredWithCustomMessage(t("At least one file is required."));
 
@@ -226,6 +246,7 @@ export default defineComponent({
       addFiles,
       dataset,
       editIcon,
+      editingFile,
       getErrorText,
       getFunctionalState,
       getWarningText,

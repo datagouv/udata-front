@@ -19,7 +19,7 @@
           </p>
         </div>
       </div>
-      <div class="fr-col-auto">
+      <div class="fr-col-auto" v-if="!hideActions">
         <div class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
           <p class="fr-col-auto fr-m-0">
             <button
@@ -31,7 +31,11 @@
             </button>
           </p>
           <p class="fr-col-auto fr-ml-1w fr-m-0">
-            <button class="fr-btn fr-icon-pencil-line fr-icon--sm">
+            <button
+              type="button"
+              class="fr-btn fr-icon-pencil-line fr-icon--sm"
+              @click="$emit('edit')"
+            >
               {{ $t("Edit file") }}
             </button>
           </p>
@@ -60,6 +64,10 @@ export default defineComponent({
     },
     format: {
       type: String,
+    },
+    hideActions: {
+      type: Boolean,
+      default: false,
     },
     lastModified: {
       type: Number,
