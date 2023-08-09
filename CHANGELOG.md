@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Update certified icon [#288](https://github.com/etalab/udata-front/pull/288)
 
 ## 3.2.5 (2023-07-19)
 
