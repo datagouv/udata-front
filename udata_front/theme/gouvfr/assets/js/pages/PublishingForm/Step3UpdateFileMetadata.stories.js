@@ -13,7 +13,7 @@ const args = {
     file: new File(["foo"], "foo.csv", {
       type: "text/csv",
     }),
-    title: "Mon Fichier",
+    title: "",
     description: "",
     format: "csv",
     filesize: 142045,

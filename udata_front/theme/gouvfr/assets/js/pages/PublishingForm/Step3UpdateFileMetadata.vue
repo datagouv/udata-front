@@ -16,6 +16,7 @@
             <Accordion
               :title= "$t('Name a file')"
               :id="nameAFileAccordionId"
+              :state="state.title"
             >
               <div class="markdown fr-m-0">
                 <p class="fr-m-0 fr-mb-1w">
@@ -32,6 +33,7 @@
             <Accordion
               :title= "$t('Choose the right type of file')"
               :id="chooseTheRightTypeOfFileAccordionId"
+              :state="state.type"
             >
               <div class="markdown fr-m-0">
                 <p class="fr-m-0 fr-mb-1w">
@@ -45,6 +47,7 @@
             <Accordion
               :title= "$t('Write a good description')"
               :id="writeAGoodDescriptionAccordionId"
+              :state="state.description"
             >
               <div class="markdown fr-m-0">
                 <p class="fr-m-0 fr-mb-1w">
@@ -61,8 +64,9 @@
               </div>
             </Accordion>
             <Accordion
-              :title= "$t('Write a good description')"
+              :title= "$t('Select a schema')"
               :id="selectASchemaAccordionId"
+              state="info"
             >
               <i18n-t
                 keypath="It is possible to identify an existing data schema by visiting the {schema} website, which references a list of existing data schema."
@@ -87,15 +91,66 @@
             <div class="fr-fieldset__element">
               <FileCard
                 class="fr-mb-3v"
-                :filename="datasetFile.file.name"
-                :filesize="datasetFile.filesize"
-                :format="datasetFile.format"
-                :lastModified="datasetFile.file.lastModified"
-                :missingMetadata="true"
-                :title="datasetFile.title || datasetFile.file.name"
+                :filename="file.file.name"
+                :filesize="file.filesize"
+                :format="file.format"
+                :lastModified="file.file.lastModified"
+                :missingMetadata="v$.$invalid"
+                :title="file.title || file.file.name"
                 :hideActions="true"
               />
             </div>
+            <LinkedToAccordion
+              class="fr-fieldset__element min-width-0"
+              :accordion="nameAFileAccordionId"
+              @blur="v$.title.$touch"
+            >
+              <InputGroup
+                :label="$t('File title')"
+                :required="true"
+                v-model="file.title"
+                :hasError="stateHasError('title')"
+                :errorText="getErrorText('title')"
+              />
+            </LinkedToAccordion>
+            <LinkedToAccordion
+              class="fr-fieldset__element min-width-0"
+              :accordion="chooseTheRightTypeOfFileAccordionId"
+              @blur="v$.type.$touch"
+            >
+              <SelectGroup
+                :label="$t('Type')"
+                :required="true"
+                v-model="file.type"
+                :hasError="stateHasError('type')"
+                :errorText="getErrorText('type')"
+                :options="fileTypes"
+              />
+            </LinkedToAccordion>
+            <LinkedToAccordion
+              class="fr-fieldset__element min-width-0"
+              :accordion="writeAGoodDescriptionAccordionId"
+              @blur="v$.description.$touch"
+            >
+              <InputGroup
+                :label="$t('Description')"
+                :required="true"
+                v-model="file.description"
+                :hasError="stateHasError('description')"
+                :errorText="getErrorText('description')"
+                type="textarea"
+              />
+            </LinkedToAccordion>
+            <LinkedToAccordion
+              class="fr-fieldset__element min-width-0"
+              :accordion="selectASchemaAccordionId"
+            >
+              <SchemaSelect
+                :allOption="$t('Select a schema')"
+                :values="file.schema"
+                @change="(value) => file.schema = value"
+              />
+            </LinkedToAccordion>
           </fieldset>
           <div class="fr-grid-row fr-grid-row--right">
             <button class="fr-btn">
@@ -108,21 +163,25 @@
   </div>
 </template>
 <script>
-import { defineComponent } from 'vue';
+import { computed, defineComponent, reactive } from 'vue';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
 import Container from '../../components/Ui/Container/Container.vue';
 import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
 import FileCard from '../../components/Form/FileCard/FileCard.vue';
 import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
+import SchemaSelect from "../../components/SchemaSelect/SchemaSelect.vue";
+import SelectGroup from '../../components/Form/SelectGroup/SelectGroup.vue';
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
+import useFunctionalState from '../../composables/useFunctionalState';
 import useUid from "../../composables/useUid";
-import { RESOURCE_TYPE, getResourceLabel } from '../../helpers';
 import { schema_documentation_url } from "../../config";
+import { RESOURCE_TYPE, getResourceLabel } from '../../helpers';
+import { required } from '../../i18n';
 
 export default defineComponent({
-  components: { Accordion, AccordionGroup, Container, InputGroup, FileCard, LinkedToAccordion, Sidemenu, Stepper },
+  components: { Accordion, AccordionGroup, Container, InputGroup, FileCard, LinkedToAccordion, SchemaSelect, SelectGroup, Sidemenu, Stepper },
   props: {
     steps: {
       type: Array,
@@ -140,8 +199,37 @@ export default defineComponent({
     const { id: writeAGoodDescriptionAccordionId } = useUid("accordion");
     const { id: selectASchemaAccordionId } = useUid("accordion");
 
+    /** @type {import("vue").UnwrapNestedRefs<import("../../types").DatasetFile>} */
+    const file = reactive({...props.datasetFile});
+
+    const requiredRules = {
+      title: { required },
+      type: { required },
+      description: { required },
+    };
+
+    const { getErrorText, getFunctionalState, hasError, v$ } = useFunctionalState(file, requiredRules, requiredRules);
+
+    /**
+     * @type {import("vue").ComputedRef<Record<string, import("../../types").AccordionFunctionalState>>}
+     */
+     const state = computed(() => {
+      return {
+        title: getFunctionalState(v$.value.title.$dirty, v$.value.title.$error, false),
+        type: getFunctionalState(v$.value.type.$dirty, v$.value.type.$error, false),
+        description: getFunctionalState(v$.value.description.$dirty, v$.value.description.$error, false),
+      };
+    });
+
+
     /** @type {Array<{label: string, value: import("../../types").ResourceType}>} */
     const fileTypes = RESOURCE_TYPE.map(type => ({label: getResourceLabel(type), value: type}));
+
+    /**
+     *
+     * @param {string} field
+     */
+     const stateHasError = (field) => hasError(state, field);
 
     return {
       nameAFileAccordionId,
@@ -149,8 +237,12 @@ export default defineComponent({
       writeAGoodDescriptionAccordionId,
       selectASchemaAccordionId,
       fileTypes,
+      file,
       schema_documentation_url,
-      datasetFile,
+      state,
+      getErrorText,
+      stateHasError,
+      v$,
     }
   },
 });
