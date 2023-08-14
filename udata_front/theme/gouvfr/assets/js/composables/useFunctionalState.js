@@ -36,12 +36,22 @@ export default function useFunctionalState(data, requiredRules, warningRules) {
       .join("\n");
   }
 
+  /**
+   * Validate all required rules
+   * @returns {Promise<boolean>}
+   */
+  const validateRequiredRules = () => {
+    vWarning$.value.$validate();
+    return v$.value.$validate();
+  }
+
   return {
     getErrorText,
     getFunctionalState,
     getWarningText,
     hasError,
     hasWarning,
+    validateRequiredRules,
     v$,
     vWarning$,
   }

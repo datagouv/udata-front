@@ -93,6 +93,9 @@
               <p class="fr-m-0">
                 {{ $t("Update frequency is the frequency you plan to update the published data. Update frequency is indicative.") }}
               </p>
+              <Well class="fr-mt-1w" v-if="stateHasWarning('frequency')" color="orange-terre-battue">
+                {{ getWarningText("frequency") }}
+              </Well>
             </Accordion>
             <Accordion
               :title= "$t('Add temporal coverage')"
@@ -290,7 +293,7 @@
             </LinkedToAccordion>
           </fieldset>
           <div class="fr-grid-row fr-grid-row--right">
-            <button class="fr-btn">
+            <button class="fr-btn" @click="submit">
               {{ $t("Next") }}
             </button>
           </div>
@@ -302,7 +305,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, reactive, watchEffect } from 'vue';
+import { computed, defineComponent, reactive } from 'vue';
 import { minLength, not, required, requiredWithCustomMessage, sameAs } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -321,13 +324,18 @@ import useFunctionalState from '../../composables/useFunctionalState';
 
 export default defineComponent({
   components: { Accordion, AccordionGroup, Container, InputGroup, LinkedToAccordion, MultiSelect, Stepper, Well, Sidemenu },
+  emits: ["next"],
   props: {
+    originalDataset: {
+      type: Object,
+      required: true
+    },
     steps: {
       type: Array,
       required: true,
     }
   },
-  setup(props) {
+  setup(props, { emit }) {
     const { t } = useI18n();
     const { id: nameDatasetAccordionId } = useUid("accordion");
     const { id: addAcronymAccordionId } = useUid("accordion");
@@ -337,29 +345,17 @@ export default defineComponent({
     const { id: chooseFrequencyAccordionId } = useUid("accordion");
     const { id: addTemporalCoverageAccordionId } = useUid("accordion");
     const { id: addSpatialInformationAccordionId } = useUid("accordion");
-    const dataset = reactive({
-      title: "",
-      acronym: "",
-      description: "",
-      tags: null,
-      license: "",
-      frequency: "",
-      temporal_coverage: "",
-      last_update: null,
-      spatial: {
-        zones: "",
-        granularity: "",
-      }
-    });
 
-    const notUnknown = not(t("The value must be different from unknown."), sameAs("unknown"));
+    const dataset = reactive({...props.originalDataset});
+
+    const notUnknown = not(t("The value must be different than unknown."), sameAs("unknown"));
     const tagsRequired = requiredWithCustomMessage(t("Add tags allow to improve listing of your data."));
     const temporalCoverageRequired = requiredWithCustomMessage(t("You didn't provide the temporal coverage."));
     const spatialGranularityRequired = requiredWithCustomMessage(t("You didn't provide the spatial granularity."));
 
     const requiredRules = {
       description: { required },
-      frequency: { required, notUnknown },
+      frequency: { required },
       title: { required },
     };
 
@@ -375,7 +371,7 @@ export default defineComponent({
       title: { required },
     };
 
-    const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, v$, vWarning$ } = useFunctionalState(dataset, requiredRules, warningRules);
+    const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(dataset, requiredRules, warningRules);
 
     /**
      * @type {import("vue").ComputedRef<Record<string, import("../../types").AccordionFunctionalState>>}
@@ -404,10 +400,13 @@ export default defineComponent({
      */
     const stateHasWarning = (field) => hasWarning(state, field);
 
-    watchEffect(() => {
-      console.log(state.value);
-      console.log(dataset);
-    });
+    const submit = () => {
+      validateRequiredRules().then(valid => {
+        if(valid) {
+          emit("next", dataset);
+        }
+      });
+    };
 
     return {
       addAcronymAccordionId,
@@ -425,6 +424,7 @@ export default defineComponent({
       stateHasWarning,
       getErrorText,
       getWarningText,
+      submit,
       title,
       v$,
       vWarning$,

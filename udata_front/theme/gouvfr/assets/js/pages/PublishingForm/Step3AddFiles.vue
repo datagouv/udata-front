@@ -84,20 +84,19 @@
               >
                 <h3 class="fr-text--md fr-text--bold fr-m-0 fr-mb-2w">{{ $t("Add your first files") }}</h3>
                 <UploadGroup
+                  class="fr-grid-row flex-direction-column fr-grid-row--middle"
                   :label="$t('Add files')"
                   type="button"
                   @change="addFiles"
                   :multiple="true"
+                  :required="true"
+                  :hasError="stateHasError('files')"
+                  :errorText="getErrorText('files')"
                 />
               </Container>
               <template v-else>
-                <template v-for="(resource, index) in dataset.files">
-                  <FileForm
-                    v-if="editingFile === index"
-                    :datasetFile="resource"
-                  />
                   <FileCard
-                    v-else
+                    v-for="(resource, index) in dataset.files"
                     class="fr-mb-3v"
                     :key="index"
                     :filename="resource.file.name"
@@ -107,22 +106,24 @@
                     :missingMetadata="true"
                     :title="resource.title || resource.file.name"
                     @delete="removeFile(index)"
-                    @edit="() => editingFile = index"
+                    @edit="$emit('editFile', resource)"
                   />
-                </template>
                 <div class="fr-grid-row fr-grid-row--center">
                   <UploadGroup
                     :label="$t('Add files')"
                     type="button"
                     @change="addFiles"
                     :multiple="true"
+                    :required="true"
+                    :hasError="stateHasError('files')"
+                    :errorText="getErrorText('files')"
                   />
                 </div>
               </template>
             </LinkedToAccordion>
           </fieldset>
           <div class="fr-grid-row fr-grid-row--right">
-            <button class="fr-btn">
+            <button class="fr-btn" @click="submit">
               {{ $t("Next") }}
             </button>
           </div>
@@ -132,7 +133,7 @@
   </div>
 </template>
 <script>
-import { computed, defineComponent, reactive, ref, watchEffect } from 'vue';
+import { computed, defineComponent, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -149,17 +150,17 @@ import { requiredWithCustomMessage, withMessage } from '../../i18n';
 import editIcon from "svg/illustrations/edit.svg";
 import useFunctionalState from '../../composables/useFunctionalState';
 import { isClosedFormat } from '../../helpers';
-import FileForm from '../../components/Form/FileForm/FileForm.vue';
 
 export default defineComponent({
-  components: { Accordion, AccordionGroup, Container, InputGroup, LinkedToAccordion, Stepper, Well, Sidemenu, UploadGroup, FileCard, FileForm },
+  components: { Accordion, AccordionGroup, Container, FileCard, InputGroup, LinkedToAccordion, Sidemenu, Stepper, UploadGroup, Well },
+  emits: ["editFile", "next"],
   props: {
     steps: {
       type: Array,
       required: true,
     }
   },
-  setup(props) {
+  setup(props, { emit }) {
     const { t } = useI18n();
     const { id: publishFileAccordionId } = useUid("accordion");
     const { id: addDescriptionAccordionId } = useUid("accordion");
@@ -168,9 +169,6 @@ export default defineComponent({
     const dataset = reactive({
       files: [],
     });
-
-    /** @type {import("vue").Ref<number | null>} */
-    const editingFile = ref(null);
 
     const fileRequired = requiredWithCustomMessage(t("At least one file is required."));
 
@@ -187,7 +185,7 @@ export default defineComponent({
       files: { required: fileRequired, openFormat: withMessage(t("At least one file should have an open format."), onefileHasOpenFormats) },
     };
 
-    const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, v$, vWarning$ } = useFunctionalState(dataset, requiredRules, warningRules);
+    const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(dataset, requiredRules, warningRules);
 
     /**
      *
@@ -223,11 +221,13 @@ export default defineComponent({
       };
     });
 
-    watchEffect(() => {
-      console.log(state.value);
-      console.log(v$.value);
-      console.log(vWarning$.value);
-    });
+    const submit = () => {
+      validateRequiredRules().then(validated => {
+        if(validated) {
+          emit("next", dataset);
+        }
+      });
+    };
 
     /**
      *
@@ -246,7 +246,6 @@ export default defineComponent({
       addFiles,
       dataset,
       editIcon,
-      editingFile,
       getErrorText,
       getFunctionalState,
       getWarningText,
@@ -254,6 +253,7 @@ export default defineComponent({
       removeFile,
       stateHasError,
       stateHasWarning,
+      submit,
       v$,
       vWarning$,
     };

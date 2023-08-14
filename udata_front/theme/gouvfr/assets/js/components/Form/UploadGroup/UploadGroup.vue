@@ -3,7 +3,7 @@
     class="fr-upload-group"
     :class="inputGroupClass"
   >
-    <button class="fr-btn fr-btn--icon-left fr-icon-upload-line" @click="openInput" v-if="isButton">
+    <button class="fr-btn fr-btn--icon-left fr-icon-upload-line" @click="openInput" v-if="isButton" :disabled="disabled">
       {{ label }}
     </button>
     <div v-show="!isButton">
@@ -16,6 +16,7 @@
         class="fr-upload"
         type="file"
         :id="id"
+        :disabled="disabled"
         :multiple="multiple"
         ref="input"
         @change="change"

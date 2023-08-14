@@ -7,7 +7,24 @@ export default {
   component: Step2DescribeDataset,
 };
 
+/** @type {import("../../types").Dataset} */
+const originalDataset = {
+  title: "",
+  acronym: "",
+  description: "",
+  tags: null,
+  license: "",
+  frequency: "",
+  temporal_coverage: "",
+  last_update: null,
+  spatial: {
+    zones: "",
+    granularity: "",
+  }
+};
+
 const args = {
+  originalDataset,
   steps: Stepper.StepperOnSecondStep.args.steps,
 };
 

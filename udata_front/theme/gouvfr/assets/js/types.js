@@ -72,6 +72,23 @@
    */
 
   /**
+   * @typedef {{
+   *  title: string,
+   *  acronym: string,
+   *  description: string,
+   *  tags: Array<string> | null,
+   *  license: string,
+   *  frequency: string,
+   *  temporal_coverage: string,
+   *  last_update: Date | null,
+   *  spatial: {
+   *    zones: string,
+   *    granularity: string,
+   *  }
+   * }} Dataset
+   */
+
+  /**
    * @typedef {{rid?: string, file: File, sha256?: string, description: string?, format: string, filesize: number, filetype: ResourceFileType, mime: string, schema?: string, title: string, type: ResourceType}} DatasetFile
    */
 

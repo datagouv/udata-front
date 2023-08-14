@@ -25,7 +25,7 @@
             :stretchHeight="true"
           >
             <template #actions>
-              <button class="fr-btn">{{ $t("Start publishing") }}</button>
+              <button class="fr-btn" @click="$emit('start')">{{ $t("Start publishing") }}</button>
             </template>
           </ActionCard>
         </div>
@@ -97,6 +97,7 @@ import schemaIcon from "svg/illustrations/schema.svg";
 
 export default defineComponent({
   components: { ActionCard, Container, Stepper, Well },
+  emits: ["start"],
   props: {
     steps: {
       type: Array,
