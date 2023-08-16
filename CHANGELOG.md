@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Use the word file instead of resource [#291](https://github.com/etalab/udata-front/pull/291)
 
 ## 3.2.5 (2023-07-19)
 
