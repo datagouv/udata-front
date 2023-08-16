@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix preview style discrepancies [#289](https://github.com/etalab/udata-front/pull/289)
 
 ## 3.2.5 (2023-07-19)
 
