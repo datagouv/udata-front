@@ -62,6 +62,11 @@ gouvfr_menu = nav.Bar('gouvfr_menu', [
             'gouvfr.show_page',
             args={'slug': 'onboarding/reutilisateurs'}
         ),
+        nav.Item(
+            _('data.gouv.fr guides'),
+            None,
+            url=current_app.config.get('GUIDES_URL')
+        ),
     ]),
     nav.Item(_('News'), 'posts.list'),
     nav.Item(_('Contact us'), None, url='https://support.data.gouv.fr/'),
