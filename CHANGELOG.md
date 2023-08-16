@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add guides to the menu [#290](https://github.com/etalab/udata-front/pull/290)
 
 ## 3.2.5 (2023-07-19)
 
