@@ -107,6 +107,12 @@
                   :messageFailed='$t("Spatial coverage not set")'
                   class="fr-my-1w"
                 />
+                <QualityItem
+                  :passed="quality.all_resources_available"
+                  :messagePassed='$t("All files are available")'
+                  :messageFailed='$t("Some files are unavailable")'
+                  class="fr-my-1w"
+                />
                 <div class="fr-grid-row fr-grid-row--right not-enlarged">
                   <a
                     :href="guides_quality_url"
