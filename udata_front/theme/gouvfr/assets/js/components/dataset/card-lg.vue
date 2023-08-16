@@ -73,8 +73,8 @@
                 />
                 <QualityItem
                   :passed="quality.resources_documentation"
-                  :messagePassed='$t("Resources documented")'
-                  :messageFailed='$t("Resources documentation missing")'
+                  :messagePassed='$t("Files documented")'
+                  :messageFailed='$t("Files documentation missing")'
                   class="fr-my-1w"
                 />
                 <QualityItem
