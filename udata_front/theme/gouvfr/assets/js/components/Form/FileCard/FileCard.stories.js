@@ -32,7 +32,7 @@ export const FileCardWithFormat = {
   }),
   args: {
     ...args,
-    format: "text/csv",
+    format: "csv",
   },
 };
 
@@ -47,7 +47,7 @@ export const FileCardWithFormatAndSize = {
   args: {
     ...args,
     filesize: "142045",
-    format: "text/csv",
+    format: "csv",
   },
 };
 
@@ -75,7 +75,7 @@ export const WarningFileCardWithFormat = {
   }),
   args: {
     ...args,
-    format: "text/csv",
+    format: "csv",
     missingMetadata: true
   },
 };
@@ -93,7 +93,7 @@ export const WarningFileCardWithFormatAndSize = {
   args: {
     ...args,
     filesize: "142045",
-    format: "text/csv",
+    format: "csv",
     missingMetadata: true
   },
 };
