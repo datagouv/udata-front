@@ -153,7 +153,7 @@
             </LinkedToAccordion>
           </fieldset>
           <div class="fr-grid-row fr-grid-row--right">
-            <button class="fr-btn">
+            <button class="fr-btn" @click="submit">
               {{ $t("Next") }}
             </button>
           </div>
@@ -182,6 +182,7 @@ import { required } from '../../i18n';
 
 export default defineComponent({
   components: { Accordion, AccordionGroup, Container, InputGroup, FileCard, LinkedToAccordion, SchemaSelect, SelectGroup, Sidemenu, Stepper },
+  emits: ["next"],
   props: {
     steps: {
       type: Array,
@@ -193,7 +194,7 @@ export default defineComponent({
       required: true,
     }
   },
-  setup(props) {
+  setup(props, { emit }) {
     const { id: nameAFileAccordionId } = useUid("accordion");
     const { id: chooseTheRightTypeOfFileAccordionId } = useUid("accordion");
     const { id: writeAGoodDescriptionAccordionId } = useUid("accordion");
@@ -208,7 +209,7 @@ export default defineComponent({
       description: { required },
     };
 
-    const { getErrorText, getFunctionalState, hasError, v$ } = useFunctionalState(file, requiredRules, requiredRules);
+    const { getErrorText, getFunctionalState, hasError, validateRequiredRules, v$ } = useFunctionalState(file, requiredRules, requiredRules);
 
     /**
      * @type {import("vue").ComputedRef<Record<string, import("../../types").AccordionFunctionalState>>}
@@ -231,6 +232,14 @@ export default defineComponent({
      */
      const stateHasError = (field) => hasError(state, field);
 
+     const submit = () => {
+      validateRequiredRules().then(validated => {
+        if(validated) {
+          emit("next", file);
+        }
+      });
+    };
+
     return {
       nameAFileAccordionId,
       chooseTheRightTypeOfFileAccordionId,
@@ -242,6 +251,7 @@ export default defineComponent({
       state,
       getErrorText,
       stateHasError,
+      submit,
       v$,
     }
   },
