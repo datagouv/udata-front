@@ -145,7 +145,7 @@
         </ul>
         <div
           :id="resourcePreviewTabId"
-          class="fr-tabs__panel fr-tabs__panel--selected fr-tabs__panel--no-padding"
+          class="fr-tabs__panel fr-tabs__panel--selected fr-tabs__panel--no-padding fr-table--dense"
           role="tabpanel"
           :aria-labelledby="resourcePreviewButtonId"
           tabindex="0"
