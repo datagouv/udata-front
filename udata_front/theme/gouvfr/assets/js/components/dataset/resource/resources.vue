@@ -39,7 +39,7 @@
           :typeLabel="typeLabel"
         />
         <p v-if="!totalResults">
-          {{$t('No resources match your search.')}}
+          {{$t('No files match your search.')}}
         </p>
         <Pagination
           class="fr-mt-3w"
