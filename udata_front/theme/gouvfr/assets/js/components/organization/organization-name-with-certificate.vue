@@ -1,6 +1,7 @@
 <template>
   {{ organization.name }}
   <span
+    v-if="organizationCertified"
     class="fr-icon-success-line fr-icon--sm text-blue-400"
     :title="$t('The identity of this public service is certified by {certifier}', { certifier: title })"
     aria-hidden="true"
