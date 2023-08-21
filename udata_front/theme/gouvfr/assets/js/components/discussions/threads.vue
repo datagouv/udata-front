@@ -16,7 +16,7 @@ Discussions allow users to interact with others.
       <div class="fr-col">
         <h2 id="community-discussions" class="subtitle subtitle--uppercase">{{ $t("{n} discussions", totalResults) }}</h2>
       </div>
-      <div class="fr-col-12 fr-col-md-6 fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-grid-row--right" v-if="!threadFromURL">
+      <div class="fr-col-12 fr-col-md-6 fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-grid-row--right" v-if="!discussionId">
         <div class="fr-col-auto">
           <select
           name="sortBy"
@@ -48,7 +48,7 @@ Discussions allow users to interact with others.
         <Loader class="fr-mt-2w" />
       </template>
       <template v-else>
-        <div v-if="threadFromURL">
+        <div v-if="discussionId">
           <!-- TODO: move to <Well> component when available -->
           <div class="fr-mt-2w fr-px-3w well well-secondary-success" data-cy="threadFromURL">
             <div class="fr-grid-row fr-grid-row--middle justify-between">
@@ -323,6 +323,7 @@ export default defineComponent({
     });
 
     return {
+      discussionId,
       discussions,
       threadFromURL,
       currentPage,
