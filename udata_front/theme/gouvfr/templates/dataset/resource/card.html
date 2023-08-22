@@ -16,7 +16,7 @@
                     class="fr-col-auto fr-mb-1w fr-mr-1v"
                     id="resource-{{resource.id}}-title"
                 >
-                    {{ resource.title or _('Nameless resource') }}
+                    {{ resource.title or _('Nameless file') }}
                 </h4>
                 <div class="fr-my-0 text-grey-380 fr-grid-row fr-grid-row--middle">
                     {% if resource.schema %}
@@ -48,7 +48,7 @@
                     <li class="fr-col-auto">
                         <a
                             href="{{ resource.latest }}"
-                            title="{{ _('Resource link - opens a new window') }}"
+                            title="{{ _('File link - opens a new window') }}"
                             rel="nofollow noopener"
                             target="_blank"
                             class="fr-btn fr-btn--sm fr-icon-external-link-line"
@@ -58,7 +58,7 @@
                     <li class="fr-col-auto">
                         <a
                             href="{{ resource.latest }}"
-                            title="{{ _('Download resource') }}"
+                            title="{{ _('Download file') }}"
                             download
                             class="fr-btn fr-btn--sm fr-icon-download-line matomo_download"
                         ></a>

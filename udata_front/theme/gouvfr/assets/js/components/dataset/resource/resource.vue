@@ -14,7 +14,7 @@
             class="fr-mb-1v"
             :id="resourceTitleId"
           >
-            {{ resource.title || $t('Nameless resource') }}
+            {{ resource.title || $t('Nameless file') }}
           </h4>
           <div class="fr-my-0 text-grey-380 fr-grid-row fr-grid-row--middle">
             <p v-if="hasSchema" class="fr-tag fr-tag--sm z-2">
@@ -67,7 +67,7 @@
           <p class="fr-col-auto fr-ml-3v fr-m-0" v-if="resource.format === 'url'">
             <a
               :href="resource.latest"
-              :title="$t('Resource link - opens a new window')"
+              :title="$t('File link - opens a new window')"
               rel="nofollow noopener"
               target="_blank"
               class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-external-link-line fr-icon--sm"
@@ -77,7 +77,7 @@
           <p class="fr-col-auto fr-ml-3v fr-m-0" v-else>
             <a
               :href="resource.latest"
-              :title="$t('Download resource')"
+              :title="$t('Download file')"
               download
               class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-download-line fr-icon--sm matomo_download"
             >
@@ -100,7 +100,7 @@
       ref="content"
     >
       <div class="fr-tabs fr-tabs--no-border fr-mt-1v">
-        <ul class="fr-tabs__list" role="tablist" :aria-label="$t('Resource menu')">
+        <ul class="fr-tabs__list" role="tablist" :aria-label="$t('File menu')">
           <template v-if="hasExplore">
             <li role="presentation">
               <button
