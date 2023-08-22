@@ -6,6 +6,7 @@
         class="fr-col-12 fr-col-md-5"
         :buttonText="$t('Help')"
         :onRight="true"
+        :fixed="true"
         >
           <template #title>
             <span class="fr-icon--sm fr-icon-question-line" aria-hidden="true"></span>
