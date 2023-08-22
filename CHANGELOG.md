@@ -6,6 +6,7 @@
 - Replace linkedin link in footer [#292](https://github.com/etalab/udata-front/pull/292)
 - Use the word file instead of resource [#291](https://github.com/etalab/udata-front/pull/291)
 - Update certified icon [#288](https://github.com/etalab/udata-front/pull/288)
+- Add guides to the menu [#290](https://github.com/etalab/udata-front/pull/290)
 
 ## 3.2.5 (2023-07-19)
 
