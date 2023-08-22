@@ -7,6 +7,7 @@ RESOURCES_SCHEMAGOUVFR_ENABLED = True
 SCHEMA_GOUVFR_VALIDATA_URL = 'https://validata.etalab.studio'
 SCHEMA_CATALOG_URL = 'https://schema.data.gouv.fr/schemas/schemas.json'
 SCHEMA_DOCUMENTATION_URL = 'https://schema.data.gouv.fr/'
+SCHEMA_PUBLISHING_URL = 'https://publier.etalab.studio/fr'
 
 # Dataset settings
 # Default page size for resources on dataset page
@@ -42,6 +43,10 @@ GUIDES_ORGANIZATION_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/creer-rejo
 GUIDES_DATASET_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/publier-jeu-de-donnees/'
 GUIDES_REUSE_URL = 'https://guides.etalab.gouv.fr/reutilisation/'
 GUIDES_COMMUNITY_URL = 'https://guides.etalab.gouv.fr/data.gouv.fr/animer-communaute-reutilisateurs/#valoriser-les-usages-des-donnees' # noqa
+GUIDES_HARVESTING_URL = 'https://guides.data.gouv.fr/publier-des-donnees/guide-data.gouv.fr/moissonnage'
+
+# suport.data.gouv.fr
+SUPPORT_URL = 'https://support.data.gouv.fr/'
 
 # CAPTCHEtat
 

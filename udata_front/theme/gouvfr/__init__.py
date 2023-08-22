@@ -64,7 +64,7 @@ gouvfr_menu = nav.Bar('gouvfr_menu', [
         ),
     ]),
     nav.Item(_('News'), 'posts.list'),
-    nav.Item(_('Contact us'), None, url='https://support.data.gouv.fr/'),
+    nav.Item(_('Contact us'), None, url=current_app.config.get('SUPPORT_EXTERNAL_LINK', '#')),
 ])
 
 theme.menu(gouvfr_menu)
@@ -94,7 +94,7 @@ support_links = [
     nav.Item(_("Platform's documentation"), None, url='https://doc.data.gouv.fr'),
     nav.Item(_("Portal's API"), None, url=current_app.config.get('API_DOC_EXTERNAL_LINK', '#')),
     nav.Item(_('Open data guides'), None, url=current_app.config.get('ETALAB_GUIDES_URL', '#')),
-    nav.Item(_('Contact us'), None, url='https://support.data.gouv.fr'),
+    nav.Item(_('Contact us'), None, url=current_app.config.get('SUPPORT_EXTERNAL_LINK', '#')),
 ]
 
 nav.Bar('gouvfr_support', support_links)

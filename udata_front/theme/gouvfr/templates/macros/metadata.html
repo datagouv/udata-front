@@ -27,6 +27,7 @@
 <meta name="schema-catalog-url" content="{{ config.SCHEMA_CATALOG_URL }}" />
 <meta name="schema-documentation-url" content="{{ config.SCHEMA_DOCUMENTATION_URL }}" />
 <meta name="schema-validata-url" content="{{ config.SCHEMA_GOUVFR_VALIDATA_URL }}" />
+<meta name="schema-publishing-url" content="{{ config.SCHEMA_PUBLISHING_URL }}" />
 {% endif %}
 {% if config.DEMO_SERVER_URL %}
 <meta name="demo-server-url" content="{{ config.DEMO_SERVER_URL }}" />
@@ -34,6 +35,12 @@
 {% endif %}
 {% if config.API_DOC_EXTERNAL_LINK %}
 <meta name="api-doc-external-link" content="{{ config.API_DOC_EXTERNAL_LINK }}" />
+{% endif %}
+{% if config.GUIDES_HARVESTING_URL %}
+<meta name="guides-harvesting-url" content="{{ config.GUIDES_HARVESTING_URL }}" />
+{% endif %}
+{% if config.SUPPORT_URL %}
+<meta name="support-url" content="{{ config.SUPPORT_URL }}" />
 {% endif %}
 {% if config.CATALOG_URL %}
 <meta name="catalog-url" content="{{ config.CATALOG_URL }}" />

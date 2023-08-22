@@ -124,6 +124,11 @@ export const schema_documentation_url = _meta("schema-documentation-url");
 export const schema_validata_url = _meta("schema-validata-url");
 
 /**
+ * The schema publishing url
+ */
+export const schema_publishing_url = _meta("schema-publishing-url");
+
+/**
  * The demo server URL
  */
 export const demo_server_url = _meta("demo-server-url");
@@ -138,6 +143,18 @@ export const demo_server_name = _meta("demo-server-name");
  */
 
 export const api_doc_external_link = _meta("api-doc-external-link");
+
+/**
+ * The harvesting guide url
+ */
+
+export const guides_harvesting_url = _meta("guides-harvesting-url");
+
+/**
+ * The harvesting guide url
+ */
+
+export const support_url = _meta("support-url");
 
 /**
  * The catalog service URL
@@ -249,6 +266,8 @@ export default {
   demo_server_url,
   demo_server_name,
   api_doc_external_link,
+  guides_harvesting_url,
+  support_url,
   api_root,
   api_2_root,
   api_specs,
@@ -258,6 +277,7 @@ export default {
   auth_url,
   schema_catalog_url,
   schema_documentation_url,
+  schema_publishing_url,
   schema_validata_url,
   sentry,
   check_urls,

@@ -38,9 +38,9 @@
             :stretchHeight="true"
           >
             <template #actions>
-              <button class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500">
+              <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500" :href="schema_publishing_url">
                 {{ $t("Use our dedicated tool") }}
-              </button>
+              </a>
             </template>
           </ActionCard>
         </div>
@@ -61,12 +61,12 @@
         </div>
         <div class="fr-col-auto">
           <p class="fr-m-0">
-            <a class="fr-link" :href="api_doc_external_link" target="_blank">{{ $t("Learn more about harvesting") }}</a>
+            <a class="fr-link" :href="guides_harvesting_url" target="_blank">{{ $t("Learn more about harvesting") }}</a>
           </p>
         </div>
         <div class="fr-col-auto">
           <p class="fr-m-0">
-            <a class="fr-link" :href="api_doc_external_link" target="_blank">{{ $t("Contact us") }}</a>
+            <a class="fr-link" :href="support_url" target="_blank">{{ $t("Contact us") }}</a>
           </p>
         </div>
       </div>
@@ -91,7 +91,7 @@ import ActionCard from '../../components/Form/ActionCard/ActionCard.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Container from '../../components/Ui/Container/Container.vue';
 import Well from '../../components/Ui/Well/Well.vue';
-import { api_doc_external_link, catalog_url, demo_server_name, demo_server_url, title } from "../../config";
+import { api_doc_external_link, guides_harvesting_url, schema_publishing_url, support_url, catalog_url, demo_server_name, demo_server_url, title } from "../../config";
 import datasetIcon from "svg/illustrations/dataset.svg";
 import schemaIcon from "svg/illustrations/schema.svg";
 
@@ -111,7 +111,10 @@ export default defineComponent({
       demo_server_name,
       demo_server_url,
       datasetIcon,
+      guides_harvesting_url,
       schemaIcon,
+      schema_publishing_url,
+      support_url,
       title,
     }
   },
