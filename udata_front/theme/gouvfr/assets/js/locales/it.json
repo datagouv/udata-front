@@ -156,5 +156,10 @@
   "Download file": "Download file",
   "File menu": "File menu",
   "No files match your search.": "No files match your search.",
-  "Search files": "Search files"
+  "Search files": "Search files",
+  "All files are available": "All files are available",
+  "Some files are unavailable": "Some files are unavailable",
+  "ID": "ID",
+  "You are seeing a specific file of this dataset": "You are seeing a specific file of this dataset",
+  "An error occurred while fetching the file ": "An error occurred while fetching the file "
 }
