@@ -1,5 +1,5 @@
 <template>
-  <section class="fr-mb-3v" v-if="showTitle" ref="top">
+  <section class="fr-mb-3v" v-if="!resourceIdFromHash" ref="top">
     <div class="fr-grid-row">
       <div class="fr-col">
         <h2 :class="{'fr-mt-4w': !firstGroup}" class="fr-mb-0 subtitle subtitle--uppercase">
@@ -19,7 +19,7 @@
     </div>
     <transition mode="out-in">
       <div v-if="loading">
-        <Loader class="fr-mt-2w" />
+        <Loader v-for="i in pageSize" class="fr-mt-2w" />
       </div>
       <div v-else>
         <p
@@ -55,19 +55,21 @@
 </template>
 
 <script>
-import {useI18n} from 'vue-i18n'
-import {onMounted, ref, computed, watch, defineComponent} from 'vue';
-import Loader from "../loader.vue";
+import { useI18n } from 'vue-i18n';
+import { onMounted, ref, computed, defineComponent, watch } from 'vue';
+import Loader from "./loader.vue";
 import { Pagination } from "@etalab/udata-front-plugins-helper";
 import Resource from "./resource.vue";
 import SearchBar from "../../utils/search-bar.vue";
 import config from "../../../config";
-import {useToast} from "../../../composables/useToast";
+import { useToast } from "../../../composables/useToast";
 import {fetchDatasetCommunityResources, fetchDatasetResources} from "../../../api/resources";
 import {
   bus,
   RESOURCES_SEARCH,
 } from "../../../plugins/eventbus";
+import useIdFromHash from '../../../composables/useIdFromHash';
+import { previousResourceUrlRegExp, resourceUrlRegExp } from '../../../helpers';
 
 export default defineComponent({
   name: "resources",
@@ -80,19 +82,15 @@ export default defineComponent({
   props: {
     canEdit: {
       type: Boolean,
-      default: false
+      default: false,
     },
     canEditResources: {
       type: Object,
-      default:() => ({})
+      default:() => ({}),
     },
     datasetId: {
       type: String,
       required: true,
-    },
-    showTitle: {
-      type: Boolean,
-      default: true,
     },
     showTotal: {
       type: Boolean,
@@ -114,7 +112,9 @@ export default defineComponent({
   setup(props) {
     const { t } = useI18n();
     const toast = useToast();
+    const { id: resourceIdFromHash } = useIdFromHash([resourceUrlRegExp, previousResourceUrlRegExp]);
     const currentPage = ref(1);
+
     /** @type {import("vue").Ref<Array<import("../../../api/resources").Resource>>} */
     const resources = ref([]);
     const pageSize = config.resources_default_page_size;
@@ -125,6 +125,7 @@ export default defineComponent({
     const firstResults = ref(0);
     const totalResults = ref(0);
     const loading = ref(true);
+
     /** @type {import("vue").Ref<HTMLElement | null>} */
     const top = ref(null);
     const search = ref('');
@@ -170,7 +171,7 @@ export default defineComponent({
 
     const changePage = (index, scroll = true) => {
       currentPage.value = index;
-      loadPage(index, scroll);
+      return loadPage(index, scroll);
     };
 
     const getCanEdit = (resource) => {
@@ -180,8 +181,6 @@ export default defineComponent({
       return props.canEditResources[resource.id];
     }
 
-    onMounted(() => loadPage(currentPage.value).then(results => firstResults.value = results));
-
     if(!isCommunityResources.value) {
       bus.on(RESOURCES_SEARCH, ({type, value}) => {
         if(type === props.type) {
@@ -190,6 +189,16 @@ export default defineComponent({
         }
       });
     }
+
+    /**
+     * First resource load can append when the component is mounted, on page load without hash
+     * Or it can be triggered when a page load with a hash and the hash is later deleted.
+     */
+    const firstLoad = () => {
+      changePage(1, DONT_SCROLL).then(results => firstResults.value = results);
+    };
+
+    onMounted(() => firstLoad());
 
     return {
       changePage,
@@ -201,13 +210,13 @@ export default defineComponent({
       loading,
       newResourceAdminPath,
       pageSize,
+      resourceIdFromHash,
       resources,
       RESOURCES_SEARCH,
       showSearch,
       top,
       totalResults,
-      type: props.type,
-    }
+    };
   }
 });
 </script>
