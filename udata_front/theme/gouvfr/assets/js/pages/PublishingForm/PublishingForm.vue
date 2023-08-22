@@ -37,7 +37,7 @@ export default defineComponent({
   components: { Step1PublishingType, Step2DescribeDataset, Step3AddFiles, Step3UpdateFileMetadata },
   setup(props) {
     const { t } = useI18n();
-    const steps = [t("Publish data on data.gouv.fr"), t("Describe your dataset"), t("Add files"), t("Check information of your dataset"), t("Complete your publishing")];
+    const steps = [t("Publish data on data.gouv.fr"), t("Describe your dataset"), t("Add files"), t("Complete your publishing")];
     const currentStep = ref(0);
 
     /** @type {import("vue").Ref<import("../../types").Dataset>} */
