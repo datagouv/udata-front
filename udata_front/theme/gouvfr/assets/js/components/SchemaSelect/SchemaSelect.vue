@@ -1,7 +1,7 @@
 <template>
   <MultiSelect
     :placeholder="$t('Schema')"
-    :explanation="$t('Data schemas describe data models: what are the fields, how are data shown, what are the available values, etc. See schema.data.gouv.fr')"
+    :explanation="showExplanation ? $t('Data schemas describe data models: what are the fields, how are data shown, what are the available values, etc. See schema.data.gouv.fr') : ''"
     :searchPlaceholder="$t('Search a schema...')"
     :allOption="allOption ? allOption : $t('All schemas')"
     :initialOptions="initialOptions"
@@ -24,6 +24,10 @@ export default defineComponent({
     allOption: {
       type: String,
       default: "",
+    },
+    showExplanation: {
+      type: Boolean,
+      default: true,
     },
     values: {
       type: [String, Array],

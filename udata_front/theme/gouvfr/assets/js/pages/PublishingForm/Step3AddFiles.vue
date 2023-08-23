@@ -17,6 +17,7 @@
             :title= "$t('Publish the right types of files')"
             :id="publishFileAccordionId"
             :state="state.files"
+            :opened="true"
           >
             <div class="markdown fr-m-0">
               <p class="fr-m-0 fr-mb-1w">
