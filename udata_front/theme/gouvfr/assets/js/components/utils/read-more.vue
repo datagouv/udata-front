@@ -110,7 +110,7 @@ export default defineComponent({
     onMounted(() => {
       updateReadMoreHeight();
       setTimeout(() => updateReadMoreHeight(), 500);
-      document.querySelectorAll(".read-more details").forEach(
+      container.value?.querySelectorAll("details").forEach(
         (detail) => { detail.addEventListener("toggle", updateReadMoreHeight); }
       )
     });
