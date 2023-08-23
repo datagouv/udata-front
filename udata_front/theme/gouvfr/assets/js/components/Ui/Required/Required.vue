@@ -2,7 +2,7 @@
   <span
     v-if="required"
     class="required-field-star"
-  >&nbsp;*</span>
+  >*</span>
 </template>
 <script>
 import { defineComponent } from 'vue';
