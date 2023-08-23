@@ -27,7 +27,7 @@
             <Accordion
               :title= "$t('Add an acronym to the dataset')"
               :id="addAcronymAccordionId"
-              state="info"
+              :state="state.acronym"
             >
               <p class="fr-m-0">
                 {{ $t("You can add an acronym to your dataset. The letters composing the acronym shouldn't be separated with dots.") }}
@@ -166,9 +166,11 @@
             <LinkedToAccordion
               class="fr-fieldset__element"
               :accordion="addAcronymAccordionId"
+              @blur="vWarning$.acronym.$touch"
             >
               <InputGroup
                 :label="$t('Acronym')"
+                v-model="dataset.acronym"
               />
             </LinkedToAccordion>
             <LinkedToAccordion
@@ -306,7 +308,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, reactive } from 'vue';
+import { computed, defineComponent, reactive, watchEffect } from 'vue';
 import { minLength, not, required, requiredWithCustomMessage, sameAs } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -361,6 +363,7 @@ export default defineComponent({
     };
 
     const warningRules = {
+      acronym: {},
       description: {required, minLengthValue: minLength(quality_description_length), },
       frequency: { required, notUnknown },
       license: { required },
@@ -375,10 +378,11 @@ export default defineComponent({
     const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(dataset, requiredRules, warningRules);
 
     /**
-     * @type {import("vue").ComputedRef<Record<string, import("../../types").AccordionFunctionalState>>}
+     * @type {import("vue").ComputedRef<Record<string, import("../../types").PublishingFormAccordionState>>}
      */
     const state = computed(() => {
       return {
+        acronym: vWarning$.value.acronym.$dirty ? "info" : "disabled",
         title: getFunctionalState(vWarning$.value.title.$dirty, v$.value.title.$invalid, vWarning$.value.title.$error),
         description: getFunctionalState(vWarning$.value.description.$dirty, v$.value.description.$invalid, vWarning$.value.description.$error),
         tags: getFunctionalState(vWarning$.value.tags.$dirty, false, vWarning$.value.tags.$error),
@@ -408,6 +412,10 @@ export default defineComponent({
         }
       });
     };
+
+    watchEffect(() => {
+      console.log(state.value);
+    });
 
     return {
       addAcronymAccordionId,

@@ -16,6 +16,7 @@
           <Accordion
             :title= "$t('Publish the right types of files')"
             :id="publishFileAccordionId"
+            :state="state.files"
           >
             <div class="markdown fr-m-0">
               <p class="fr-m-0 fr-mb-1w">
@@ -34,6 +35,7 @@
           <Accordion
             :title= "$t('Add a description')"
             :id="addDescriptionAccordionId"
+            :state="state.hasDocumentation"
           >
             <div class="markdown fr-m-0">
               <p class="fr-m-0 fr-mb-1w">
@@ -48,6 +50,9 @@
                 <li>{{ $t("a description of major changes.") }}</li>
               </ul>
             </div>
+            <Well class="fr-mt-1w" v-if="stateHasWarning('hasDocumentation')" color="orange-terre-battue">
+              {{ getWarningText("hasDocumentation") }}
+            </Well>
           </Accordion>
       </Sidemenu>
       <div class="fr-col-12 fr-col-md-7">
@@ -76,7 +81,7 @@
             <LinkedToAccordion
               class="fr-fieldset__element min-width-0"
               :accordion="publishFileAccordionId"
-              @blur="vWarning$.files.$touch"
+              @blur="touch"
             >
               <Container
                 color="alt-grey"
@@ -134,7 +139,7 @@
   </div>
 </template>
 <script>
-import { computed, defineComponent, reactive } from 'vue';
+import { computed, defineComponent, reactive, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -174,16 +179,24 @@ export default defineComponent({
     const fileRequired = requiredWithCustomMessage(t("At least one file is required."));
 
     /**
-     * Validates that the dataset doesn't contain a closed format file.
+     * Validates that the dataset contains an open format file.
      * @param {Array<import("../../types").DatasetFile>} value
      */
     const onefileHasOpenFormats = (value) => value.reduce((previous, current) => previous || !isClosedFormat(current.format), false);
+
+    /**
+     * Validates that the dataset contains a documentation file.
+     * @param {undefined} value
+     * * @param {{files: Array<import("../../types").DatasetFile>}} siblings
+     */
+     const hasDocumentation = (value, siblings) => siblings.files.reduce((previous, current) => previous || current.type === "documentation", false);
 
     const requiredRules = {
       files: { fileRequired },
     };
     const warningRules = {
       files: { required: fileRequired, openFormat: withMessage(t("At least one file should have an open format."), onefileHasOpenFormats) },
+      hasDocumentation: { hasDocumentation: withMessage(t("You don't add any documentation file or describe your files."), hasDocumentation) }
     };
 
     const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(dataset, requiredRules, warningRules);
@@ -219,8 +232,14 @@ export default defineComponent({
     const state = computed(() => {
       return {
         files: getFunctionalState(vWarning$.value.files.$dirty, v$.value.files.$invalid, vWarning$.value.files.$error),
+        hasDocumentation: getFunctionalState(vWarning$.value.hasDocumentation.$dirty, false, vWarning$.value.hasDocumentation.$error),
       };
     });
+
+    const touch = () => {
+      vWarning$.value.files.$touch();
+      vWarning$.value.hasDocumentation.$touch()
+    };
 
     const submit = () => {
       validateRequiredRules().then(validated => {
@@ -242,6 +261,8 @@ export default defineComponent({
      */
     const stateHasWarning = (field) => hasWarning(state, field);
 
+    watchEffect(() => console.log(vWarning$.value));
+
     return {
       addDescriptionAccordionId,
       addFiles,
@@ -252,9 +273,11 @@ export default defineComponent({
       getWarningText,
       publishFileAccordionId,
       removeFile,
+      state,
       stateHasError,
       stateHasWarning,
       submit,
+      touch,
       v$,
       vWarning$,
     };

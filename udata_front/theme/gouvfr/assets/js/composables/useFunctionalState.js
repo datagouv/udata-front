@@ -79,14 +79,14 @@ export const getFunctionalState = (dirty, failRequired, failWarning) => {
 };
 
 /**
- * @param {import("vue").MaybeRefOrGetter<Record<string, import("../types").AccordionFunctionalState>>} object
+ * @param {import("vue").MaybeRefOrGetter<Record<string, import("../types").PublishingFormAccordionState>>} object
  * @param {string} field
  * @returns {boolean}
  */
 export const hasError = (object, field) => toValue(object)[field] === "error";
 
 /**
- * @param {import("vue").MaybeRefOrGetter<Record<string, import("../types").AccordionFunctionalState>>} object
+ * @param {import("vue").MaybeRefOrGetter<Record<string, import("../types").PublishingFormAccordionState>>} object
  * @param {string} field
  * @returns {boolean}
  */

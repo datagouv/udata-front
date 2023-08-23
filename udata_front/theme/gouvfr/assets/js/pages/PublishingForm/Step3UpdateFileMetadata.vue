@@ -66,7 +66,7 @@
             <Accordion
               :title= "$t('Select a schema')"
               :id="selectASchemaAccordionId"
-              state="info"
+              :state="state.schema"
             >
               <i18n-t
                 keypath="It is possible to identify an existing data schema by visiting the {schema} website, which references a list of existing data schema."
@@ -144,6 +144,7 @@
             <LinkedToAccordion
               class="fr-fieldset__element min-width-0"
               :accordion="selectASchemaAccordionId"
+              @blur="v$.schema.$touch"
             >
               <SchemaSelect
                 :allOption="$t('Select a schema')"
@@ -163,7 +164,7 @@
   </div>
 </template>
 <script>
-import { computed, defineComponent, reactive } from 'vue';
+import { computed, defineComponent, reactive, watchEffect } from 'vue';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
 import Container from '../../components/Ui/Container/Container.vue';
@@ -207,18 +208,20 @@ export default defineComponent({
       title: { required },
       type: { required },
       description: { required },
+      schema: {},
     };
 
     const { getErrorText, getFunctionalState, hasError, validateRequiredRules, v$ } = useFunctionalState(file, requiredRules, requiredRules);
 
     /**
-     * @type {import("vue").ComputedRef<Record<string, import("../../types").AccordionFunctionalState>>}
+     * @type {import("vue").ComputedRef<Record<string, import("../../types").PublishingFormAccordionState>>}
      */
      const state = computed(() => {
       return {
         title: getFunctionalState(v$.value.title.$dirty, v$.value.title.$error, false),
         type: getFunctionalState(v$.value.type.$dirty, v$.value.type.$error, false),
         description: getFunctionalState(v$.value.description.$dirty, v$.value.description.$error, false),
+        schema: v$.value.schema.$dirty ? "info" : "disabled",
       };
     });
 
@@ -239,6 +242,8 @@ export default defineComponent({
         }
       });
     };
+
+    watchEffect(() => console.log(state.value));
 
     return {
       nameAFileAccordionId,
