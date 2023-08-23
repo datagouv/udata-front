@@ -8,7 +8,7 @@
     <textarea
       v-if="isTextarea"
       class="fr-input"
-      :class="{ 'fr-input--error': hasError, 'fr-input--valid': isValid }"
+      :class="{ 'fr-input--error': hasError, 'fr-input--warning': !hasError && hasWarning, 'fr-input--valid': isValid }"
       :aria-describedby="ariaDescribedBy"
       :id="id"
       :disabled="disabled"
@@ -64,6 +64,7 @@ import RangePicker from '../../RangePicker/RangePicker.vue';
 import Required from '../../Ui/Required/Required.vue';
 import { getDatepickerLocale } from "../../../i18n";
 import { lang } from "../../../config";
+import { hasWarning } from '../../../composables/useFunctionalState';
 
 export default defineComponent({
   components: { Datepicker, RangePicker, Required },
@@ -78,6 +79,10 @@ export default defineComponent({
       default: "",
     },
     hasError: {
+      type: Boolean,
+      default: false,
+    },
+    hasWarning: {
       type: Boolean,
       default: false,
     },
@@ -130,6 +135,7 @@ export default defineComponent({
       return {
         'fr-input-group--disabled': props.disabled,
         'fr-input-group--error': props.hasError,
+        'fr-input-group--warning': !props.hasError && props.hasWarning,
         'fr-input-group--valid': props.isValid
       };
     });

@@ -160,6 +160,7 @@
                 :required="true"
                 v-model="dataset.title"
                 :hasError="stateHasError('title')"
+                :hasWarning="stateHasWarning('title')"
                 :errorText="getErrorText('title')"
               />
             </LinkedToAccordion>
@@ -184,6 +185,7 @@
                 type="textarea"
                 v-model="dataset.description"
                 :hasError="stateHasError('description')"
+                :hasWarning="stateHasWarning('description')"
                 :errorText="getErrorText('description')"
               />
             </LinkedToAccordion>
@@ -199,6 +201,7 @@
                 :searchPlaceholder="$t('Search a tag...')"
                 suggestUrl="/tags/suggest/"
                 :values="dataset.tags"
+                :hasWarning="stateHasWarning('tags')"
               />
             </LinkedToAccordion>
             <LinkedToAccordion
@@ -236,6 +239,7 @@
                       @change="(value) => dataset.frequency = value"
                       :required="true"
                       :hasError="stateHasError('frequency')"
+                      :hasWarning="stateHasWarning('frequency')"
                       :errorText="getErrorText('frequency')"
                     />
                   </LinkedToAccordion>
@@ -281,6 +285,7 @@
                     entityUrl="/spatial/zone/"
                     :values="dataset.spatial.zones"
                     @change="(value) => dataset.spatial.zones = value"
+                    :hasWarning="stateHasWarning('spatial_information')"
                   />
                 </div>
                 <div class="fr-col-12 fr-col-md-6">
@@ -290,6 +295,7 @@
                     listUrl="/spatial/granularities/"
                     :values="dataset.spatial.granularity"
                     @change="(value) => dataset.spatial.granularity = value"
+                    :hasWarning="stateHasWarning('spatial_information')"
                   />
                 </div>
               </div>

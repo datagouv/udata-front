@@ -70,6 +70,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    hasWarning: {
+      type: Boolean,
+      default: false,
+    },
     hintText: {
       type: String,
       default: "",
@@ -120,6 +124,7 @@ export default defineComponent({
     const selectGroupClass = computed(() => {
       return {
         'fr-select-group--error': props.hasError,
+        'fr-select-group--warning': !props.hasError && props.hasWarning,
         'fr-select-group--valid': props.isValid
       };
     });
