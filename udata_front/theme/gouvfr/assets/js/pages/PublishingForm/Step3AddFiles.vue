@@ -33,13 +33,13 @@
             </Well>
           </Accordion>
           <Accordion
-            :title= "$t('Add a description')"
+            :title= "$t('Add a documentation')"
             :id="addDescriptionAccordionId"
             :state="state.hasDocumentation"
           >
             <div class="markdown fr-m-0">
               <p class="fr-m-0 fr-mb-1w">
-                {{ $t("The description of the dataset has an educational purpose and eases the data reuse. It covers among others:") }}
+                {{ $t("The documentation of the dataset has an educational purpose and eases the data reuse. It covers among others:") }}
               </p>
               <ul>
                 <li>{{ $t("a general description of the dataset ;") }}</li>
