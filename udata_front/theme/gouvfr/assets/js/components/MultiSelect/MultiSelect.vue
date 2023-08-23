@@ -20,6 +20,8 @@
           :key="option.value"
           :value="option.value"
           :data-image="option.image"
+          :disabled="option.disabled"
+          :hidden="option.hidden"
         >
           {{option.label}}
         </option>
@@ -48,6 +50,10 @@ export default defineComponent({
   components: { Required },
   emits: ["change"],
   props: {
+    addAllOption: {
+      type: Boolean,
+      default: true,
+    },
     allOption: {
       type: String,
       default: '',
@@ -233,6 +239,8 @@ export default defineComponent({
       label: obj.name ?? obj.title ?? obj.text ?? obj?.properties?.name ?? obj.label ?? obj,
       value: obj.id ?? obj.text ?? obj.value ?? obj,
       image: obj.logo_thumbnail ?? obj.logo ?? obj.image_url ?? obj.image,
+      disabled: obj.disabled,
+      hidden: obj.hidden,
     }));
 
     /**
@@ -240,7 +248,7 @@ export default defineComponent({
      * It uses list API if no query is provided
      * Fallback to an empty array without props.listUrl
      * @param {string} q
-     * @returns {Promise<Array<Option>>}
+     * @returns {Promise<Array<import("../../types").MultiSelectOption>>}
      */
     const suggest = (q) => {
       if(q.length < props.minimumCharacterBeforeSuggest || !props.suggestUrl) {
@@ -275,12 +283,17 @@ export default defineComponent({
      * Get options from suggest API
      * It uses list API if no query is provided
      * Fallback to an empty array without query and props.listUrl
-     * @param {Array} suggestions
+     * @param {Array<import("../../types").MultiSelectOption>} suggestions
      * @returns {Array<import("../../types").MultiSelectOption>}
      */
     const addAllOptionAndMapToOption = (suggestions) => {
       if(props.allOption) {
-        suggestions.unshift({name: props.allOption, id: ''});
+        suggestions.unshift({
+          label: props.allOption,
+          value: '',
+          disabled: !props.addAllOption,
+          hidden: !props.addAllOption
+        });
       }
       return mapToOption(suggestions);
     }

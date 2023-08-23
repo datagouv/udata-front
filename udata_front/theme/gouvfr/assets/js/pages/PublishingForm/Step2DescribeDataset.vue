@@ -241,6 +241,8 @@
                       :hasError="stateHasError('frequency')"
                       :hasWarning="stateHasWarning('frequency')"
                       :errorText="getErrorText('frequency')"
+                      :allOption="$t('Select an option')"
+                      :addAllOption="false"
                     />
                   </LinkedToAccordion>
                 </div>
@@ -286,6 +288,8 @@
                     :values="dataset.spatial.zones"
                     @change="(value) => dataset.spatial.zones = value"
                     :hasWarning="stateHasWarning('spatial_information')"
+                    :allOption="$t('ex. France')"
+                    :addAllOption="false"
                   />
                 </div>
                 <div class="fr-col-12 fr-col-md-6">
@@ -296,6 +300,8 @@
                     :values="dataset.spatial.granularity"
                     @change="(value) => dataset.spatial.granularity = value"
                     :hasWarning="stateHasWarning('spatial_information')"
+                    :allOption="$t('Select an option')"
+                    :addAllOption="false"
                   />
                 </div>
               </div>
