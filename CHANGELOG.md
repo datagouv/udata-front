@@ -8,6 +8,7 @@
 - Update certified icon [#288](https://github.com/etalab/udata-front/pull/288)
 - Add guides to the menu [#290](https://github.com/etalab/udata-front/pull/290)
 - Add resource permalink [#286](https://github.com/etalab/udata-front/pull/286)
+- Update read-more height on `details` toggle [#294](https://github.com/etalab/udata-front/pull/294)
 - Fix preview style discrepancies [#289](https://github.com/etalab/udata-front/pull/289)
 
 ## 3.2.5 (2023-07-19)
