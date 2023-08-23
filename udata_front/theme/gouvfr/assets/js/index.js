@@ -11,6 +11,7 @@ import FeaturedButton from './components/utils/featured.vue';
 import FollowButton from "./components/utils/follow-button.vue";
 import ReadMore from "./components/utils/read-more.vue";
 import RequestMembership from "./components/organization/request-membership.vue";
+import ResourceFromHash from "./components/dataset/resource/resourceFromHash.vue";
 import Resources from "./components/dataset/resource/resources.vue";
 import Captcha from "./components/utils/captcha.vue";
 import Toggletip from "./components/utils/Toggletip/Toggletip.vue";
@@ -56,6 +57,7 @@ const configAndMountApp = (el) => {
   app.component("read-more", ReadMore);
   app.component("request-membership", RequestMembership);
   app.component("dataset-resources", Resources);
+  app.component("dataset-resource-from-hash", ResourceFromHash);
   app.component("captcha", Captcha);
   app.component("toggletip", Toggletip);
 

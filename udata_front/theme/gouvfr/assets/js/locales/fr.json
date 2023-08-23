@@ -156,5 +156,10 @@
   "Download file": "",
   "File menu": "",
   "No files match your search.": "",
-  "Search files": ""
+  "Search files": "",
+  "All files are available": "",
+  "Some files are unavailable": "",
+  "ID": "",
+  "You are seeing a specific file of this dataset": "",
+  "An error occurred while fetching the file ": ""
 }
