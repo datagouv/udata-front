@@ -24,7 +24,7 @@ Discussions allow users to interact with others.
           :aria-label="$t('Sort discussions by')"
           @change="changeSort(currentSort)"
           v-model="currentSort"
-          class="fr-select fr-select--no-border"
+          class="fr-select fr-select--no-border fr-select--blue"
         >
           <option
             v-for="sort in sorts"

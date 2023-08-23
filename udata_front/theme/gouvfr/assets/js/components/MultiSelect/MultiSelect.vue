@@ -9,6 +9,7 @@
       </label>
       <select
         class="multiselect__input"
+        :class="{'fr-select--blue': isBlue}"
         :id="id"
         ref="select"
         v-model="selected"
@@ -72,6 +73,10 @@ export default defineComponent({
     hintText: {
       type: String,
       default: "",
+    },
+    isBlue: {
+      type: Boolean,
+      default: false,
     },
     /** @type {import("vue").PropType<Promise<Array<import("../../types").MultiSelectOption>>>} */
     initialOptions: Promise,

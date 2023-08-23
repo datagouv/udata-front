@@ -121,7 +121,7 @@
             <div class="fr-col">
                 <select
                   id="sort-search"
-                  class="fr-select"
+                  class="fr-select fr-select--blue"
                   name="sort"
                   v-model="searchSort"
                   @change="handleSortChange"
