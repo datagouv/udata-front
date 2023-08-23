@@ -7,6 +7,7 @@
     :initialOptions="initialOptions"
     :values="values"
     @change="change"
+    :isBlue="isBlue"
   />
 </template>
 
@@ -24,6 +25,10 @@ export default defineComponent({
     allOption: {
       type: String,
       default: "",
+    },
+    isBlue: {
+      type: Boolean,
+      default: false,
     },
     showExplanation: {
       type: Boolean,

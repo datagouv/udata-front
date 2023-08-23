@@ -25,6 +25,7 @@
                     entityUrl="/organizations/"
                     :values="facets.organization"
                     @change="(value) => handleFacetChange('organization', value)"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -36,6 +37,7 @@
                     :values="facets.tag"
                     @change="(value) => handleFacetChange('tag', value)"
                     :minimumCharacterBeforeSuggest="2"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -46,6 +48,7 @@
                     listUrl="/datasets/extensions/"
                     :values="facets.format"
                     @change="(value) => handleFacetChange('format', value)"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -57,12 +60,14 @@
                     listUrl="/datasets/licenses/"
                     :values="facets.license"
                     @change="(value) => handleFacetChange('license', value)"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12">
                   <SchemaSelect
                     :values="facets.schema"
                     @change="(value) => handleFacetChange('schema', value)"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -75,6 +80,7 @@
                     entityUrl="/spatial/zone/"
                     :values="facets.geozone"
                     @change="(value) => handleFacetChange('geozone', value)"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -86,6 +92,7 @@
                     listUrl="/spatial/granularities/"
                     :values="facets.granularity"
                     @change="(value) => handleFacetChange('granularity', value)"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12 fr-mb-3w text-align-center">

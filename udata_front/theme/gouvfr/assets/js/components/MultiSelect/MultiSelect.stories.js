@@ -23,3 +23,45 @@ export const SimpleMultiSelect = {
   }),
   args,
 };
+
+export const SimpleMultiSelectWithoutAllOption = {
+  render: (args) => ({
+    components: { MultiSelect },
+    setup() {
+      return { args };
+    },
+    template: '<MultiSelect v-bind="args"/>',
+  }),
+  args: {
+    ...args,
+    allOption: "",
+  },
+};
+
+export const SimpleMultiSelectWithAllOptionNotAdded = {
+  render: (args) => ({
+    components: { MultiSelect },
+    setup() {
+      return { args };
+    },
+    template: '<MultiSelect v-bind="args"/>',
+  }),
+  args: {
+    ...args,
+    addAllOption: false,
+  },
+};
+
+export const BlueMultiSelect = {
+  render: (args) => ({
+    components: { MultiSelect },
+    setup() {
+      return { args };
+    },
+    template: '<MultiSelect v-bind="args"/>',
+  }),
+  args: {
+    ...args,
+    isBlue: true,
+  },
+};

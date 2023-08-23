@@ -63,3 +63,17 @@ export const SchemaSelectWithoutExplanationWithAllOption = {
     allOption: "Select a schema",
   },
 };
+
+export const BlueSchemaSelect = {
+  render: (args) => ({
+    components: { SchemaSelect },
+    setup() {
+      return { args };
+    },
+    template: '<SchemaSelect v-bind="args" />',
+  }),
+  args: {
+    ...args,
+    isBlue: true,
+  },
+};

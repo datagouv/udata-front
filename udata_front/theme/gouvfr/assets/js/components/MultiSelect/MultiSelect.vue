@@ -9,7 +9,6 @@
       </label>
       <select
         class="multiselect__input"
-        :class="{'fr-select--blue': isBlue}"
         :id="id"
         ref="select"
         v-model="selected"
@@ -408,6 +407,9 @@ export default defineComponent({
       const selectA11y = container.value.querySelector('.select-a11y');
       if(selectA11y) {
         selectA11y.classList.add("fr-select");
+        if(props.isBlue) {
+          selectA11y.classList.add("fr-select--blue");
+        }
       }
       const label = container.value.querySelector('label');
       if(label) {

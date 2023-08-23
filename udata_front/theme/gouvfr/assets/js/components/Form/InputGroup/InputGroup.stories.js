@@ -41,6 +41,20 @@ export const InputHasError = {
   },
 };
 
+export const InputWarningState = {
+  render: (args) => ({
+    components: { InputGroup },
+    setup() {
+      return { args };
+    },
+    template: '<InputGroup v-bind="args" />',
+  }),
+  args: {
+    ...args,
+    hasWarning: true,
+  },
+};
+
 export const InputSuccessState = {
   render: (args) => ({
     components: { InputGroup },
@@ -95,3 +109,18 @@ export const TextareaSuccessState = {
     isValid: true,
   },
 };
+
+export const TextareaWarningState = {
+  render: (args) => ({
+    components: { InputGroup },
+    setup() {
+      return { args };
+    },
+    template: '<InputGroup v-bind="args" />',
+  }),
+  args: {
+    ...textareaArgs,
+    hasWarning: true,
+  },
+};
+
