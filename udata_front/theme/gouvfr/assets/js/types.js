@@ -14,10 +14,6 @@
  */
 
 /**
- * @typedef {"button" | "input"} UploadType
- */
-
-/**
  * @typedef {"primary" | "secondary"} WellType
  */
 

@@ -3,25 +3,9 @@
     class="fr-upload-group"
     :class="inputGroupClass"
   >
-    <button class="fr-btn fr-btn--icon-left fr-icon-upload-line" @click="openInput" v-if="isButton" :disabled="disabled">
+    <button class="fr-btn fr-btn--icon-left fr-icon-upload-line" @click="openInput" :disabled="disabled">
       {{ label }}
     </button>
-    <div v-show="!isButton">
-      <label class="fr-label" :for="id">
-        {{ label }}
-        <Required :required="required" v-if="!isButton"/>
-        <span class="fr-hint-text" v-if="hintText">{{ hintText }}</span>
-      </label>
-      <input
-        class="fr-upload"
-        type="file"
-        :id="id"
-        :disabled="disabled"
-        :multiple="multiple"
-        ref="input"
-        @change="change"
-      />
-    </div>
     <p :id="validTextId" class="fr-valid-text" v-if="isValid">
       {{ validText }}
     </p>
@@ -85,10 +69,6 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
-    type: {
-      type: /** @type {import("vue").PropType<import("../../../types").UploadType>} */(String),
-      default: "input"
-    },
     validText: {
       type: String,
       default: "",
@@ -136,8 +116,6 @@ export default defineComponent({
 
     const openInput = () => input.value?.click();
 
-    const isButton = computed(() => props.type === "button");
-
     return {
       ariaDescribedBy,
       change,
@@ -145,7 +123,6 @@ export default defineComponent({
       id,
       input,
       inputGroupClass,
-      isButton,
       openInput,
       validTextId,
     };

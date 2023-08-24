@@ -14,7 +14,6 @@ const args = {
   label: "Your select label",
   multiple: false,
   required: true,
-  type: "input",
   validText: "The field is valid !",
 };
 
@@ -82,64 +81,5 @@ export const UploadMultiple = {
   args: {
     ...args,
     multiple: true,
-  },
-};
-
-export const UploadButton = {
-  render: (args) => ({
-    components: { UploadGroup },
-    setup() {
-      return { args };
-    },
-    template: '<UploadGroup v-bind="args" />',
-  }),
-  args: {
-    ...args,
-    type: "button",
-  },
-};
-
-export const UploadButtonDisabled = {
-  render: (args) => ({
-    components: { UploadGroup },
-    setup() {
-      return { args };
-    },
-    template: '<UploadGroup v-bind="args" />',
-  }),
-  args: {
-    ...args,
-    type: "button",
-    disabled: true,
-  },
-};
-
-export const UploadButtonHasError = {
-  render: (args) => ({
-    components: { UploadGroup },
-    setup() {
-      return { args };
-    },
-    template: '<UploadGroup v-bind="args" />',
-  }),
-  args: {
-    ...args,
-    type: "button",
-    hasError: true,
-  },
-};
-
-export const UploadButtonSuccesState = {
-  render: (args) => ({
-    components: { UploadGroup },
-    setup() {
-      return { args };
-    },
-    template: '<UploadGroup v-bind="args" />',
-  }),
-  args: {
-    ...args,
-    type: "button",
-    isValid: true,
   },
 };

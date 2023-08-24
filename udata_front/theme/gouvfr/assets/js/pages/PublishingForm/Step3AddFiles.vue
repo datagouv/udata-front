@@ -93,7 +93,6 @@
                 <UploadGroup
                   class="fr-grid-row flex-direction-column fr-grid-row--middle"
                   :label="$t('Add files')"
-                  type="button"
                   @change="addFiles"
                   :multiple="true"
                   :required="true"
@@ -118,7 +117,6 @@
                 <div class="fr-grid-row fr-grid-row--center">
                   <UploadGroup
                     :label="$t('Add files')"
-                    type="button"
                     @change="addFiles"
                     :multiple="true"
                     :required="true"
