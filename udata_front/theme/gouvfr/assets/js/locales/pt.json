@@ -54,7 +54,7 @@
   "An error occurred while fetching resources": "Ocorreu um erro ao buscar recursos",
   "Unavailable": "Indisponível",
   "Close": "Fechado",
-  "Copy permalink": "Copiar link ",
+  "Copy discussion permalink": "Copiar link ",
   "Sort discussions by": "Classificar discussões por",
   "Feature this content": "Apresentar este conteúdo",
   "From": "A partir de",
@@ -161,5 +161,6 @@
   "Some files are unavailable": "",
   "ID": "",
   "You are seeing a specific file of this dataset": "",
-  "An error occurred while fetching the file ": ""
+  "An error occurred while fetching the file ": "",
+  "Copy resource permalink": ""
 }
