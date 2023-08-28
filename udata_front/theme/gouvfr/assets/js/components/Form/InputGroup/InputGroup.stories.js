@@ -27,6 +27,20 @@ export const Input = {
   args,
 };
 
+export const InputWithPlaceholder = {
+  render: (args) => ({
+    components: { InputGroup },
+    setup() {
+      return { args };
+    },
+    template: '<InputGroup v-bind="args" />',
+  }),
+  args: {
+    ...args,
+    placeholder: "A placeholder"
+  },
+};
+
 export const InputHasError = {
   render: (args) => ({
     components: { InputGroup },
@@ -80,6 +94,20 @@ export const Textarea = {
     template: '<InputGroup v-bind="args" />',
   }),
   args: textareaArgs,
+};
+
+export const TextareaWithPlaceholder = {
+  render: (args) => ({
+    components: { InputGroup },
+    setup() {
+      return { args };
+    },
+    template: '<InputGroup v-bind="args" />',
+  }),
+  args: {
+    ...textareaArgs,
+    placeholder: "Some placeholder"
+  },
 };
 
 export const TextareaHasError = {

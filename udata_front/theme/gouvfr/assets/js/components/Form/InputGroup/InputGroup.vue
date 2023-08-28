@@ -14,6 +14,7 @@
       :disabled="disabled"
       :type="type"
       :value="modelValue"
+      :placeholder="placeholder"
       @change="change"
       :required="required"
     ></textarea>
@@ -43,6 +44,7 @@
       :id="id"
       :disabled="disabled"
       :type="type"
+      :placeholder="placeholder"
       :value="modelValue"
       @change="change"
       :required="required"
@@ -101,6 +103,10 @@ export default defineComponent({
     modelValue: {
       type: String,
       default: undefined,
+    },
+    placeholder: {
+      type: String,
+      default: ""
     },
     required: {
       type: Boolean,
