@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent } from 'vue';
 import useUid from '../../../composables/useUid';
 import Datepicker from "vue3-datepicker";
 import RangePicker from '../../RangePicker/RangePicker.vue';
@@ -121,7 +121,7 @@ export default defineComponent({
       default: "",
     },
   },
-  setup(props, { emit }) {
+  setup(props, { emit, expose }) {
     const { id } = useUid("input");
 
     const errorTextId = computed(() => id + "-desc-error");
@@ -167,6 +167,8 @@ export default defineComponent({
 
       emit('update:modelValue', value);
     }
+
+    expose({ id });
 
     return {
       ariaDescribedBy,

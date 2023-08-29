@@ -94,6 +94,14 @@ You can change this behaviour by using the `filet-currentcolor` class that will 
     border-color: @border-default-grey;
 }
 
+.border-plain-error {
+    border-color: @border-plain-error;
+}
+
+.border-dashed {
+    border-style: dashed;
+}
+
 each(@dsfr-breakpoints, .(@bk, @_k, @_i) {
     @var: 'dsfr-query-@{bk}';
 

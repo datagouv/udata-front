@@ -91,9 +91,11 @@
               >
                 <h3 class="fr-text--md fr-text--bold fr-m-0 fr-mb-2w">{{ $t("Add your first files") }}</h3>
                 <UploadGroup
-                  class="fr-grid-row flex-direction-column fr-grid-row--middle"
+                  data-fr-opened="false"
+                  :aria-controls="fileModalId"
+                  groupClass="fr-grid-row flex-direction-column fr-grid-row--middle"
                   :label="$t('Add files')"
-                  @change="addFiles"
+                  :title="$t('Add files (opens a modal dialog)')"
                   :multiple="true"
                   :required="true"
                   :hasError="stateHasError('files')"
@@ -105,19 +107,21 @@
                     v-for="(resource, index) in dataset.files"
                     class="fr-mb-3v"
                     :key="index"
-                    :filename="resource.file.name"
+                    :filename="resource.file?.name"
                     :filesize="resource.filesize"
                     :format="resource.format"
-                    :lastModified="resource.file.lastModified"
+                    :lastModified="resource.file?.lastModified"
                     :missingMetadata="true"
-                    :title="resource.title || resource.file.name"
+                    :title="resource.title || resource.file?.name || ''"
                     @delete="removeFile(index)"
                     @edit="$emit('editFile', resource)"
                   />
                 <div class="fr-grid-row fr-grid-row--center">
                   <UploadGroup
+                    data-fr-opened="false"
+                    :aria-controls="fileModalId"
                     :label="$t('Add files')"
-                    @change="addFiles"
+                    :title="$t('Add files (opens a modal dialog)')"
                     :multiple="true"
                     :required="true"
                     :hasError="stateHasError('files')"
@@ -132,6 +136,10 @@
               {{ $t("Next") }}
             </button>
           </div>
+          <UploadModal
+            :id="fileModalId"
+            @send="addFiles"
+          />
         </Container>
       </div>
     </div>
@@ -155,9 +163,10 @@ import { requiredWithCustomMessage, withMessage } from '../../i18n';
 import editIcon from "svg/illustrations/edit.svg";
 import useFunctionalState from '../../composables/useFunctionalState';
 import { isClosedFormat } from '../../helpers';
+import UploadModal from '../../components/Form/UploadGroup/UploadModal.vue';
 
 export default defineComponent({
-  components: { Accordion, AccordionGroup, Container, FileCard, InputGroup, LinkedToAccordion, Sidemenu, Stepper, UploadGroup, Well },
+  components: { Accordion, AccordionGroup, Container, FileCard, InputGroup, LinkedToAccordion, Sidemenu, Stepper, UploadGroup, Well, UploadModal },
   emits: ["editFile", "next"],
   props: {
     steps: {
@@ -169,6 +178,7 @@ export default defineComponent({
     const { t } = useI18n();
     const { id: publishFileAccordionId } = useUid("accordion");
     const { id: addDescriptionAccordionId } = useUid("accordion");
+    const { id: fileModalId } = useUid("modal");
 
     /** @type {import("vue").UnwrapNestedRefs<{files: Array<import("../../types").DatasetFile>}>} */
     const dataset = reactive({
@@ -202,21 +212,10 @@ export default defineComponent({
 
     /**
      *
-     * @param {FileList} files
+     * @param {Array<import("../../types").DatasetFile>} files
      */
     const addFiles = (files) => {
-      for(const file of files) {
-        dataset.files.push({
-          file,
-          description: "",
-          format: file.type.includes("/") ? file.type.split("/").pop() || "" : file.type,
-          filesize: file.size,
-          filetype: "file",
-          mime: file.type,
-          title: "",
-          type: "main"
-        });
-      }
+      dataset.files.push(...files);
     };
 
     /**
@@ -237,7 +236,7 @@ export default defineComponent({
 
     const touch = () => {
       vWarning$.value.files.$touch();
-      vWarning$.value.hasDocumentation.$touch()
+      vWarning$.value.hasDocumentation.$touch();
     };
 
     const submit = () => {
@@ -267,6 +266,7 @@ export default defineComponent({
       addFiles,
       dataset,
       editIcon,
+      fileModalId,
       getErrorText,
       getFunctionalState,
       getWarningText,

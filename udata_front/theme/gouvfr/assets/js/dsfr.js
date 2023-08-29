@@ -4,7 +4,7 @@
  * We use a manual mode to load all our vue instances before starting the DSFR engine.
  */
 window.dsfr = {
-    mode: 'manual',
+  mode: 'manual',
 }
 
 /**

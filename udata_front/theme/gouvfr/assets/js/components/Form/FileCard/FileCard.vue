@@ -11,7 +11,7 @@
           </h4>
         </div>
         <div class="fr-my-0 text-grey-380 fr-grid-row fr-grid-row--middle">
-          <p class="fr-text--xs fr-m-0 dash-after">{{ filename }}</p>
+          <p v-if="filename" class="fr-text--xs fr-m-0 dash-after">{{ filename }}</p>
           <p class="fr-text--xs fr-m-0">{{ $t('Updated {date}', { date: formatRelativeIfRecentDate(lastModified) }) }}</p>
           <p v-if="format" class="fr-text--xs fr-m-0 dash-before">
             {{ format.trim()?.toLowerCase() }}

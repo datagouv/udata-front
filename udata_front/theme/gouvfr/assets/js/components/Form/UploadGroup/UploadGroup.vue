@@ -1,23 +1,64 @@
 <template>
   <div
     class="fr-upload-group"
-    :class="inputGroupClass"
+    :class="containerClass"
   >
-    <button class="fr-btn fr-btn--icon-left fr-icon-upload-line" @click="openInput" :disabled="disabled">
+    <button
+      v-if="type === 'button'"
+      class="fr-btn fr-btn--icon-left fr-icon-upload-line"
+      :aria-describedby="ariaDescribedBy"
+      @click="$emit('click')"
+      :disabled="disabled"
+      v-bind="$attrs"
+    >
       {{ label }}
     </button>
-    <p :id="validTextId" class="fr-valid-text" v-if="isValid">
+    <div v-else>
+      <Container
+        color="alt-grey"
+        class="fr-grid-row fr-grid-row--middle flex-direction-column border border-default-grey border-dashed text-mention-grey fr-text--bold"
+        :class="{'border-plain-error': hasError}"
+        ref="dropFilesHereRef"
+      >
+        {{ $t('Drag and drop files') }}
+        <p class="fr-hr-or w-50 text-transform-lowercase fr-text--regular fr-mt-3v">
+          <span class="fr-hr-or-text">{{ $t('or') }}</span>
+        </p>
+        <div class="fr-hidden">
+          <label class="fr-label" :for="id">{{ label }}</label>
+          <input
+            class="fr-upload"
+            type="file"
+            :id="id"
+            :aria-describedby="ariaDescribedBy"
+            ref="inputRef"
+          />
+        </div>
+        <button
+          @click="open"
+          class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500"
+          :title="$t('Browse')"
+          :aria-controls="id"
+        >
+          {{ $t('Browse') }}
+        </button>
+      </Container>
+    </div>
+    <p :id="hintTextId" class="fr-hint-text fr-mb-1w" v-if="hintText">{{ hintText }}</p>
+    <p :id="validTextId" class="fr-valid-text fr-my-0" v-if="isValid">
       {{ validText }}
     </p>
-    <p :id="errorTextId" class="fr-error-text" v-else-if="hasError">
+    <p :id="errorTextId" class="fr-error-text fr-my-0" v-else-if="hasError">
       {{ errorText }}
     </p>
   </div>
 </template>
 
 <script>
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent } from 'vue';
+import { templateRef, useDropZone } from '@vueuse/core';
 import useUid from '../../../composables/useUid';
+import Container from '../../Ui/Container/Container.vue';
 import Required from '../../Ui/Required/Required.vue';
 
 /**
@@ -30,8 +71,9 @@ import Required from '../../Ui/Required/Required.vue';
  */
 
 export default defineComponent({
-  components: { Required },
-  emits: ['change'],
+  components: { Container, Required },
+  emits: ['click', 'change'],
+  inheritAttrs: false,
   props: {
     disabled: {
       type: Boolean,
@@ -46,6 +88,10 @@ export default defineComponent({
       default: false,
     },
     hintText: {
+      type: String,
+      default: "",
+    },
+    groupClass: {
       type: String,
       default: "",
     },
@@ -69,6 +115,10 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+    type: {
+      type: String,
+      default: "button"
+    },
     validText: {
       type: String,
       default: "",
@@ -78,12 +128,19 @@ export default defineComponent({
     const { id } = useUid("upload");
 
     /** @type {import("vue").Ref<HTMLInputElement | null>} */
-    const input = ref(null);
+    const inputRef = templateRef("inputRef");
+
+    /** @type {import("vue").Ref<HTMLDivElement | null>} */
+    const dropFilesHereRef = templateRef("dropFilesHereRef");
 
     const errorTextId = computed(() => id + "-desc-error");
     const validTextId = computed(() => id + "-desc-valid");
+    const hintTextId = computed(() => id + "-desc-hint");
     const ariaDescribedBy = computed(() => {
       let describedBy = "";
+      if(props.hintText) {
+        describedBy += hintTextId;
+      }
       if (props.isValid) {
         describedBy += " " + validTextId;
       }
@@ -93,37 +150,39 @@ export default defineComponent({
       return describedBy;
     });
 
-    const inputGroupClass = computed(() => {
+    const containerClass = computed(() => {
       return {
+        [props.groupClass]: true,
         'fr-input-group--disabled': props.disabled,
         'fr-input-group--error': props.hasError,
         'fr-input-group--valid': props.isValid
       };
     });
 
+    const open = () => {
+      inputRef.value?.click();
+    };
+
     /**
      *
-     * @param {Event} event
+     * @param {File[] | null} files
      */
-    const change = (event) => {
-      const target = /** @type {HTMLInputElement | null} */ (event.target);
-      if(props.multiple) {
-        emit('change', target?.files);
-      } else {
-        emit('change', target?.files?.item(0));
+     const onDrop = (files) => {
+      console.log("drop");
+      if(files) {
+        emit('change', files);
       }
     }
 
-    const openInput = () => input.value?.click();
+    useDropZone(dropFilesHereRef, onDrop);
 
     return {
       ariaDescribedBy,
-      change,
+      containerClass,
       errorTextId,
+      hintTextId,
       id,
-      input,
-      inputGroupClass,
-      openInput,
+      open,
       validTextId,
     };
   },

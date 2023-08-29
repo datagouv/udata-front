@@ -87,7 +87,9 @@
    */
 
   /**
-   * @typedef {{rid?: string, file: File, sha256?: string, description: string?, format: string, filesize: number, filetype: ResourceFileType, mime: string, schema?: string, title: string, type: ResourceType}} DatasetFile
+   * @typedef {{rid?: string, description: string?, filetype: ResourceFileType, schema?: string, title: string, type: ResourceType, url: string}} DatasetRemoteFile
+   * @typedef {{rid?: string, file: File, sha256?: string, description: string?, format: string, filesize: number, filetype: ResourceFileType, mime: string, schema?: string, title: string, type: ResourceType}} DatasetLocalFile
+   * @typedef {DatasetLocalFile | DatasetRemoteFile} DatasetFile
    */
 
  export default {};

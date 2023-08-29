@@ -1,4 +1,5 @@
 import "../../less/style.less";
+import "../dsfr";
 import "@gouvfr/dsfr/dist/dsfr/dsfr.module";
 import Toaster from "@conciergerie.dev/vue-toaster";
 import { setup } from '@storybook/vue3';
@@ -13,3 +14,5 @@ setup((app) => {
     dismissible: true,
   }).provide('toast', app.config.globalProperties.$toast);
 });
+
+globalThis.dsfr.start();

@@ -45,12 +45,18 @@ export default function useFunctionalState(data, requiredRules, warningRules) {
     return v$.value.$validate();
   }
 
+  const reset = () => {
+    vWarning$.value.$reset();
+    v$.value.$reset();
+  }
+
   return {
     getErrorText,
     getFunctionalState,
     getWarningText,
     hasError,
     hasWarning,
+    reset,
     validateRequiredRules,
     v$,
     vWarning$,
