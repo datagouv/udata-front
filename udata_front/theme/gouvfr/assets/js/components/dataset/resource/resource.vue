@@ -282,7 +282,7 @@
                 :data-clipboard-text="resourceExternalUrl"
                 class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-right fr-icon-links-fill"
               >
-                {{$t('Copy permalink')}}
+                {{$t('Copy resource permalink')}}
             </button>
             </div>
           </div>
