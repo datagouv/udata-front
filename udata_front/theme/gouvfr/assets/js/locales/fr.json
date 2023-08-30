@@ -54,7 +54,7 @@
   "An error occurred while fetching resources": "Une erreur est survenue lors de la récupération des ressources",
   "Unavailable": "Indisponible",
   "Close": "Fermer",
-  "Copy discussion permalink": "Copy discussion permalink",
+  "Copy discussion permalink": "Copier le lien vers la discussion",
   "Sort discussions by": "Trier les discussions par",
   "Feature this content": "Mettre ce contenu en avant",
   "From": "Par",
@@ -162,5 +162,5 @@
   "ID": "ID",
   "You are seeing a specific file of this dataset": "Vous consultez un fichier spécifique sur ce jeu de données",
   "An error occurred while fetching the file ": "Une erreur est survenue lors de la récupération des ressources ",
-  "Copy resource permalink": "Copy resource permalink"
+  "Copy resource permalink": "Copier le lien vers le fichier"
 }
