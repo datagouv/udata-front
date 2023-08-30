@@ -5,6 +5,11 @@
 - Add missing quality criterion (`all_resources_available`) [#287](https://github.com/etalab/udata-front/pull/287)
 - Replace linkedin link in footer [#292](https://github.com/etalab/udata-front/pull/292)
 - Use the word file instead of resource [#291](https://github.com/etalab/udata-front/pull/291)
+- Update certified icon [#288](https://github.com/etalab/udata-front/pull/288)
+- Add guides to the menu [#290](https://github.com/etalab/udata-front/pull/290)
+- Add resource permalink [#286](https://github.com/etalab/udata-front/pull/286) [#295](https://github.com/etalab/udata-front/pull/295)
+- Update read-more height on `details` toggle [#294](https://github.com/etalab/udata-front/pull/294)
+- Fix preview style discrepancies [#289](https://github.com/etalab/udata-front/pull/289)
 
 ## 3.2.5 (2023-07-19)
 

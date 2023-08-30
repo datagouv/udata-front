@@ -145,7 +145,7 @@
         </ul>
         <div
           :id="resourcePreviewTabId"
-          class="fr-tabs__panel fr-tabs__panel--selected fr-tabs__panel--no-padding"
+          class="fr-tabs__panel fr-tabs__panel--selected fr-tabs__panel--no-padding fr-table--dense"
           role="tabpanel"
           :aria-labelledby="resourcePreviewButtonId"
           tabindex="0"
@@ -231,17 +231,15 @@
                   <CopyButton :text="resource.latest"/>
                 </div>
               </DescriptionDetails>
-              <template v-if="resource.checksum">
-                <DescriptionTerm>{{resource.checksum.type}}</DescriptionTerm>
-                <DescriptionDetails :withEllipsis="false">
-                  <div class="fr-col text-overflow-ellipsis">
-                    {{resource.checksum.value}}
-                  </div>
-                  <div class="fr-col-auto">
-                    <CopyButton :text="resource.checksum.value"/>
-                  </div>
-                </DescriptionDetails>
-              </template>
+              <DescriptionTerm>{{ $t('ID') }}</DescriptionTerm>
+              <DescriptionDetails :withEllipsis="false">
+                <div class="fr-col text-overflow-ellipsis">
+                  {{ resource.id }}
+                </div>
+                <div class="fr-ml-1w fr-col-auto">
+                  <CopyButton :text="resource.id"/>
+                </div>
+              </DescriptionDetails>
               <template v-if="resource.mime">
                 <DescriptionTerm>{{ $t('MIME Type') }}</DescriptionTerm>
                 <DescriptionDetails>
@@ -258,6 +256,17 @@
               <DescriptionDetails>
                 {{formatDate(resource.last_modified)}}
               </DescriptionDetails>
+              <template v-if="resource.checksum">
+                <DescriptionTerm>{{resource.checksum.type}}</DescriptionTerm>
+                <DescriptionDetails :withEllipsis="false">
+                  <div class="fr-col text-overflow-ellipsis">
+                    {{resource.checksum.value}}
+                  </div>
+                  <div class="fr-col-auto">
+                    <CopyButton :text="resource.checksum.value"/>
+                  </div>
+                </DescriptionDetails>
+              </template>
             </DescriptionList>
             <DescriptionList>
               <template v-if="resource.filesize">
@@ -267,6 +276,15 @@
                 </DescriptionDetails>
               </template>
             </DescriptionList>
+            <div class="fr-col-auto fr-ml-auto">
+              <button
+                :id="resourceCopyId"
+                :data-clipboard-text="resourceExternalUrl"
+                class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-right fr-icon-links-fill"
+              >
+                {{$t('Copy resource permalink')}}
+            </button>
+            </div>
           </div>
           <template v-if="resource.description">
             <h5 class="fr-text--sm fr-my-0 fr-text--bold">
@@ -290,7 +308,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed, unref } from "vue";
+import { defineComponent, ref, computed, unref, onMounted } from "vue";
 import SchemaLoader from "./schema-loader.vue";
 import useOwnerName from "../../../composables/useOwnerName";
 import useResourceImage from "../../../composables/useResourceImage";
@@ -307,12 +325,16 @@ import { explorable_resources, schema_documentation_url } from "../../../config"
 import { filesize, formatRelativeIfRecentDate, formatDate, markdown } from "../../../helpers";
 
 export default defineComponent({
-  components: {DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, OrganizationNameWithCertificate, SchemaLoader},
+  components: { DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, OrganizationNameWithCertificate, SchemaLoader },
   inheritAttrs: false,
   props: {
     datasetId: {
       type: String,
       required: true,
+    },
+    expandedOnMount: {
+      type: Boolean,
+      default: false,
     },
     isCommunityResource: {
       type: Boolean,
@@ -392,8 +414,19 @@ export default defineComponent({
     const resourcePreviewButtonId = computed(() => 'resource-' + props.resource.id + '-preview-button');
     const resourcePreviewTabId = computed(() => 'resource-' + props.resource.id + '-preview-tab');
     const resourceTitleId = computed(() => 'resource-' + props.resource.id + '-title');
+    const resourceCopyId = computed(() => 'resource-' + props.resource.id + '-copy');
+    const resourceExternalUrl = computed(() => {
+      let hash = "#/resources/" + props.resource.id;
+      return window.location.origin + window.location.pathname + hash;
+    });
     const resourceInformationSelectedTab = computed(() => !hasExplore.value);
     const resourceInformationTabIndex = computed(() => hasExplore.value ? -1 : 0);
+
+    onMounted(() => {
+      if(props.expandedOnMount) {
+        expand();
+      }
+    });
 
     return {
       registerEvent,
@@ -414,6 +447,8 @@ export default defineComponent({
       loading,
       validationUrl,
       resourceContentId,
+      resourceCopyId,
+      resourceExternalUrl,
       resourceHeaderId,
       resourceInformationButtonId,
       resourceInformationTabId,

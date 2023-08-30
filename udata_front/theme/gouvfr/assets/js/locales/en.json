@@ -54,7 +54,7 @@
   "An error occurred while fetching resources": "An error occurred while fetching resources",
   "Unavailable": "Unavailable",
   "Close": "Close",
-  "Copy permalink": "Copy permalink",
+  "Copy discussion permalink": "Copy discussion permalink",
   "Sort discussions by": "Sort discussions by",
   "Feature this content": "Feature this content",
   "From": "From",
@@ -156,5 +156,11 @@
   "Download file": "Download file",
   "File menu": "File menu",
   "No files match your search.": "No files match your search.",
-  "Search files": "Search files"
+  "Search files": "Search files",
+  "All files are available": "All files are available",
+  "Some files are unavailable": "Some files are unavailable",
+  "ID": "ID",
+  "You are seeing a specific file of this dataset": "You are seeing a specific file of this dataset",
+  "An error occurred while fetching the file ": "An error occurred while fetching the file ",
+  "Copy resource permalink": "Copy resource permalink"
 }
