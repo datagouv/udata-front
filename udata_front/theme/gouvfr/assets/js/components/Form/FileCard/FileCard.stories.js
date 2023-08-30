@@ -22,6 +22,20 @@ export const SimpleFileCard = {
   args,
 };
 
+export const FileCardWithoutEdit = {
+  render: (args) => ({
+    components: { FileCard },
+    setup() {
+      return { args };
+    },
+    template: '<FileCard v-bind="args" />',
+  }),
+  args: {
+    ...args,
+    allowEdit: false,
+  },
+};
+
 export const FileCardWithFormat = {
   render: (args) => ({
     components: { FileCard },

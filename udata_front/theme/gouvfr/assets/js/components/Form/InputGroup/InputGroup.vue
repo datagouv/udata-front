@@ -70,7 +70,7 @@ import { hasWarning } from '../../../composables/useFunctionalState';
 
 export default defineComponent({
   components: { Datepicker, RangePicker, Required },
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'change'],
   props: {
     disabled: {
       type: Boolean,
@@ -166,6 +166,7 @@ export default defineComponent({
       }
 
       emit('update:modelValue', value);
+      emit('change', value);
     }
 
     expose({ id });

@@ -21,12 +21,24 @@
                 <UploadGroup
                   :label="$t('Upload files')"
                   type="drop"
-                  :multiple="true"
-                  v-model="files"
+                  :multiple="multiple"
+                  @change="setFiles"
                   :required="true"
-                  :hintText="$t('Max size: 420 Mb. Multiple files allowed.')"
+                  :hintText="multiple ? $t('Max size: 420 Mb. Multiple files allowed.') : $t('Max size: 420 Mb.')"
                   :hasError="stateHasError('files')"
                   :errorText="getErrorText('files')"
+                />
+                <FileCard
+                  v-for="(resource, index) in nonRemoteFiles"
+                  class="fr-mb-3v"
+                  :key="index"
+                  :filename="resource.file?.name"
+                  :filesize="resource.filesize"
+                  :format="resource.format"
+                  :lastModified="resource.file?.lastModified"
+                  :title="resource.title || resource.file?.name || ''"
+                  :allowEdit="false"
+                  @delete="removeFile(index)"
                 />
                 <p class="fr-hr-or text-transform-lowercase fr-text--regular text-mention-grey fr-mt-3v">
                   <span class="fr-hr-or-text">{{ $t('or') }}</span>
@@ -66,20 +78,25 @@ import { computed, defineComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { templateRef } from '@vueuse/core';
 import Container from '../../Ui/Container/Container.vue';
+import FileCard from '../FileCard/FileCard.vue';
 import InputGroup from '../InputGroup/InputGroup.vue';
 import UploadGroup from './UploadGroup.vue';
 import useFunctionalState from '../../../composables/useFunctionalState';
 import { requiredWithCustomMessage } from '../../../i18n';
 
 export default defineComponent({
-  components: { Container, InputGroup, UploadGroup },
+  components: { Container, FileCard, InputGroup, UploadGroup },
   emits: ["send"],
   inheritAttrs: false,
   props: {
     id: {
       type: String,
       required: true,
-    }
+    },
+    multiple: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props, { emit }) {
     const { t } = useI18n();
@@ -114,12 +131,14 @@ export default defineComponent({
      */
     const stateHasError = (field) => hasError(state, field);
 
+    const nonRemoteFiles = computed(() => files.value.filter(file => file.filetype === "file"));
+
     /**
      *
      * @param {Array<File>} newFiles
      */
     const setFiles = (newFiles) => {
-      files.value = [];
+      files.value = nonRemoteFiles.value;
       for(const file of newFiles) {
         files.value.push({
           file,
@@ -140,7 +159,7 @@ export default defineComponent({
      */
      const setFileLink = (url) => {
       files.value = [];
-        files.value.push({
+      files.value.push({
         description: "",
         filetype: "remote",
         title: "",
@@ -148,6 +167,12 @@ export default defineComponent({
         url,
       });
     }
+
+    /**
+     *
+     * @param {number} position
+     */
+    const removeFile = (position) => files.value.splice(position, 1);
 
     const close = () => {
       files.value = [];
@@ -168,9 +193,10 @@ export default defineComponent({
     return {
       close,
       fileModalTitleId,
-      files,
       getErrorText,
+      nonRemoteFiles,
       open,
+      removeFile,
       send,
       setFileLink,
       setFiles,

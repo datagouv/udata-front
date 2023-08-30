@@ -90,9 +90,7 @@
                 v-if="dataset.files.length === 0"
               >
                 <h3 class="fr-text--md fr-text--bold fr-m-0 fr-mb-2w">{{ $t("Add your first files") }}</h3>
-                <UploadGroup
-                  data-fr-opened="false"
-                  :aria-controls="fileModalId"
+                <UploadModalButton
                   groupClass="fr-grid-row flex-direction-column fr-grid-row--middle"
                   :label="$t('Add files')"
                   :title="$t('Add files (opens a modal dialog)')"
@@ -100,6 +98,7 @@
                   :required="true"
                   :hasError="stateHasError('files')"
                   :errorText="getErrorText('files')"
+                  @change="addFiles"
                 />
               </Container>
               <template v-else>
@@ -107,7 +106,7 @@
                     v-for="(resource, index) in dataset.files"
                     class="fr-mb-3v"
                     :key="index"
-                    :filename="resource.file?.name"
+                    :filename="resource.file?.name || resource.url"
                     :filesize="resource.filesize"
                     :format="resource.format"
                     :lastModified="resource.file?.lastModified"
@@ -117,15 +116,14 @@
                     @edit="$emit('editFile', resource)"
                   />
                 <div class="fr-grid-row fr-grid-row--center">
-                  <UploadGroup
-                    data-fr-opened="false"
-                    :aria-controls="fileModalId"
+                  <UploadModalButton
                     :label="$t('Add files')"
                     :title="$t('Add files (opens a modal dialog)')"
                     :multiple="true"
                     :required="true"
                     :hasError="stateHasError('files')"
                     :errorText="getErrorText('files')"
+                    @change="addFiles"
                   />
                 </div>
               </template>
@@ -136,10 +134,6 @@
               {{ $t("Next") }}
             </button>
           </div>
-          <UploadModal
-            :id="fileModalId"
-            @send="addFiles"
-          />
         </Container>
       </div>
     </div>
@@ -156,17 +150,16 @@ import FileCard from '../../components/Form/FileCard/FileCard.vue';
 import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
-import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
 import Well from "../../components/Ui/Well/Well.vue";
 import useUid from "../../composables/useUid";
 import { requiredWithCustomMessage, withMessage } from '../../i18n';
 import editIcon from "svg/illustrations/edit.svg";
 import useFunctionalState from '../../composables/useFunctionalState';
 import { isClosedFormat } from '../../helpers';
-import UploadModal from '../../components/Form/UploadGroup/UploadModal.vue';
+import UploadModalButton from '../../components/Form/UploadGroup/UploadModalButton.vue';
 
 export default defineComponent({
-  components: { Accordion, AccordionGroup, Container, FileCard, InputGroup, LinkedToAccordion, Sidemenu, Stepper, UploadGroup, Well, UploadModal },
+  components: { Accordion, AccordionGroup, Container, FileCard, InputGroup, LinkedToAccordion, Sidemenu, Stepper, UploadModalButton, Well },
   emits: ["editFile", "next"],
   props: {
     steps: {
@@ -178,7 +171,6 @@ export default defineComponent({
     const { t } = useI18n();
     const { id: publishFileAccordionId } = useUid("accordion");
     const { id: addDescriptionAccordionId } = useUid("accordion");
-    const { id: fileModalId } = useUid("modal");
 
     /** @type {import("vue").UnwrapNestedRefs<{files: Array<import("../../types").DatasetFile>}>} */
     const dataset = reactive({
@@ -266,7 +258,6 @@ export default defineComponent({
       addFiles,
       dataset,
       editIcon,
-      fileModalId,
       getErrorText,
       getFunctionalState,
       getWarningText,

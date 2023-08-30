@@ -3,42 +3,21 @@
     class="fr-upload-group"
     :class="containerClass"
   >
-    <Container
-      color="alt-grey"
-      class="fr-grid-row fr-grid-row--middle flex-direction-column border border-default-grey border-dashed text-mention-grey fr-text--bold"
-      :class="{'border-plain-error': hasError}"
-      ref="dropFilesHereRef"
+    <button
+      class="fr-btn fr-btn--icon-left fr-icon-upload-line"
+      :aria-describedby="ariaDescribedBy"
+      data-fr-opened="false"
+      :aria-controls="modalId"
+      :disabled="disabled"
+      v-bind="$attrs"
     >
-      {{ $t('Drag and drop files') }}
-      <p class="fr-hr-or w-50 text-transform-lowercase fr-text--regular fr-mt-3v">
-        <span class="fr-hr-or-text">{{ $t('or') }}</span>
-      </p>
-      <div class="fr-hidden">
-        <label class="fr-label" :for="id">
-          {{ label }}
-          <Required :required="required"/>
-        </label>
-        <input
-          class="fr-upload"
-          type="file"
-          :id="id"
-          :aria-describedby="ariaDescribedBy"
-          ref="inputRef"
-          @change="change"
-          :multiple="multiple"
-          :required="required"
-        />
-      </div>
-      <button
-        @click="open"
-        class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500"
-        :title="$t('Browse')"
-        :aria-controls="id"
-      >
-        {{ $t('Browse') }}
-      </button>
-    </Container>
-    <p :id="hintTextId" class="fr-hint-text fr-mb-1w" v-if="hintText">{{ hintText }}</p>
+      {{ label }}
+    </button>
+    <UploadModal
+      :id="modalId"
+      :multiple="true"
+      @send="onChange"
+    />
     <p :id="validTextId" class="fr-valid-text fr-my-0" v-if="isValid">
       {{ validText }}
     </p>
@@ -50,10 +29,8 @@
 
 <script>
 import { computed, defineComponent } from 'vue';
-import { templateRef, useDropZone } from '@vueuse/core';
 import useUid from '../../../composables/useUid';
-import Container from '../../Ui/Container/Container.vue';
-import Required from '../../Ui/Required/Required.vue';
+import UploadModal from './UploadModal.vue';
 
 /**
  * @typedef {Object} Option
@@ -65,8 +42,8 @@ import Required from '../../Ui/Required/Required.vue';
  */
 
 export default defineComponent({
-  components: { Container, Required },
-  emits: ['click', 'change'],
+  components: { UploadModal },
+  emits: ['change'],
   inheritAttrs: false,
   props: {
     disabled: {
@@ -80,10 +57,6 @@ export default defineComponent({
     hasError: {
       type: Boolean,
       default: false,
-    },
-    hintText: {
-      type: String,
-      default: "",
     },
     groupClass: {
       type: String,
@@ -113,20 +86,11 @@ export default defineComponent({
   setup(props, { emit }) {
     const { id } = useUid("upload");
 
-    /** @type {import("vue").Ref<HTMLInputElement | null>} */
-    const inputRef = templateRef("inputRef");
-
-    /** @type {import("vue").Ref<HTMLDivElement | null>} */
-    const dropFilesHereRef = templateRef("dropFilesHereRef");
-
     const errorTextId = computed(() => id + "-desc-error");
+    const modalId = computed(() => id + "-modal");
     const validTextId = computed(() => id + "-desc-valid");
-    const hintTextId = computed(() => id + "-desc-hint");
     const ariaDescribedBy = computed(() => {
       let describedBy = "";
-      if(props.hintText) {
-        describedBy += hintTextId;
-      }
       if (props.isValid) {
         describedBy += " " + validTextId;
       }
@@ -145,10 +109,6 @@ export default defineComponent({
       };
     });
 
-    const open = () => {
-      inputRef.value?.click();
-    };
-
     /**
      * Handle and emit file changes
      * @param {File[] | null} files
@@ -157,25 +117,12 @@ export default defineComponent({
       emit('change', files);
     }
 
-    /**
-     * Handle input file change event
-     * @param {Event} event
-     */
-    const change = (event) => {
-      const target = /** @type {HTMLInputElement | null} */ (event.target);
-      const files = Array.from(target?.files ?? []);
-      onChange(files);
-    }
-
-    useDropZone(dropFilesHereRef, onChange);
-
     return {
       ariaDescribedBy,
-      change,
       containerClass,
       errorTextId,
-      hintTextId,
       id,
+      modalId,
       onChange,
       open,
       validTextId,

@@ -11,7 +11,7 @@
           </h4>
         </div>
         <div class="fr-my-0 text-grey-380 fr-grid-row fr-grid-row--middle">
-          <p v-if="filename" class="fr-text--xs fr-m-0 dash-after">{{ filename }}</p>
+          <p v-if="filename" class="fr-text--xs fr-m-0 overflow-wrap-anywhere text-overflow-ellipsis dash-after">{{ filename }}</p>
           <p class="fr-text--xs fr-m-0">{{ $t('Updated {date}', { date: formatRelativeIfRecentDate(lastModified) }) }}</p>
           <p v-if="format" class="fr-text--xs fr-m-0 dash-before">
             {{ format.trim()?.toLowerCase() }}
@@ -30,7 +30,7 @@
               {{ $t("Remove file") }}
             </button>
           </p>
-          <p class="fr-col-auto fr-ml-1w fr-m-0">
+          <p class="fr-col-auto fr-ml-1w fr-m-0" v-if="allowEdit">
             <button
               type="button"
               class="fr-btn fr-icon-pencil-line fr-icon--sm"
@@ -56,6 +56,10 @@ import { filesize as formatFilesize, formatRelativeIfRecentDate } from "../../..
 export default defineComponent({
   emits: ["delete", "edit"],
   props: {
+    allowEdit: {
+      type: Boolean,
+      default: true
+    },
     filename: {
       type: String,
     },
@@ -71,7 +75,6 @@ export default defineComponent({
     },
     lastModified: {
       type: Number,
-      required: true,
     },
     missingMetadata: {
       type: Boolean,
