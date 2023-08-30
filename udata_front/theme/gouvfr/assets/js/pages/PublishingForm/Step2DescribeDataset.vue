@@ -288,7 +288,7 @@
                     :values="dataset.spatial.zones"
                     @change="(value) => dataset.spatial.zones = value"
                     :hasWarning="stateHasWarning('spatial_information')"
-                    :allOption="$t('ex. France')"
+                    :allOption="$t('e.g. France')"
                     :addAllOption="false"
                   />
                 </div>
