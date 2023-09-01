@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 3.2.6 (2023-09-01)
 
 - Add missing quality criterion (`all_resources_available`) [#287](https://github.com/etalab/udata-front/pull/287)
