@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 3.2.6 (2023-09-01)
 
 - Add missing quality criterion (`all_resources_available`) [#287](https://github.com/etalab/udata-front/pull/287)
 - Replace linkedin link in footer [#292](https://github.com/etalab/udata-front/pull/292)
