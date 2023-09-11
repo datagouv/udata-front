@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Update testing dependencies [dependabot/30](https://github.com/etalab/udata-front/security/dependabot/30)[dependabot/22](https://github.com/etalab/udata-front/security/dependabot/22)[#297](https://github.com/etalab/udata-front/pull/297)
 
 ## 3.2.6 (2023-09-01)
 
