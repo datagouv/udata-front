@@ -8,53 +8,53 @@
         :onRight="true"
         :fixed="true"
         :showBorder="false"
+      >
+        <template #title>
+          <span class="fr-icon--sm fr-icon-question-line" aria-hidden="true"></span>
+          {{ $t('Help') }}
+        </template>
+        <Accordion
+          :title= "$t('Publish the right types of files')"
+          :id="publishFileAccordionId"
+          :state="state.files"
+          :opened="true"
         >
-          <template #title>
-            <span class="fr-icon--sm fr-icon-question-line" aria-hidden="true"></span>
-            {{ $t('Help') }}
-          </template>
-          <Accordion
-            :title= "$t('Publish the right types of files')"
-            :id="publishFileAccordionId"
-            :state="state.files"
-            :opened="true"
-          >
-            <div class="markdown fr-m-0">
-              <p class="fr-m-0 fr-mb-1w">
-                {{ $t("Formats should be :") }}
-              </p>
-              <ul>
-                <li>{{ $t("open : an open format doesn't add technical specifications that restrict data use (i.e. using a paid software) ;") }}</li>
-                <li>{{ $t("easily reusable : a format easily reusable implies that anybody or server can reuse easily the dataset ;") }}</li>
-                <li>{{ $t("usable in an automated processing system : an automated processing system allows to make automatic operations, related to data exploitation (i.e. a CSV file is easily usable by an automated system unlike a PDF file).") }}</li>
-              </ul>
-            </div>
-            <Well class="fr-mt-1w" v-if="stateHasWarning('files')" color="orange-terre-battue">
-              {{ getWarningText("files") }}
-            </Well>
-          </Accordion>
-          <Accordion
-            :title= "$t('Add a documentation')"
-            :id="addDescriptionAccordionId"
-            :state="state.hasDocumentation"
-          >
-            <div class="markdown fr-m-0">
-              <p class="fr-m-0 fr-mb-1w">
-                {{ $t("The documentation of the dataset has an educational purpose and eases the data reuse. It covers among others:") }}
-              </p>
-              <ul>
-                <li>{{ $t("a general description of the dataset ;") }}</li>
-                <li>{{ $t("a description of the data production mode ;") }}</li>
-                <li>{{ $t("a description of the data model ;") }}</li>
-                <li>{{ $t("a description of the data schema ;") }}</li>
-                <li>{{ $t("a description of the metadata ;") }}</li>
-                <li>{{ $t("a description of major changes.") }}</li>
-              </ul>
-            </div>
-            <Well class="fr-mt-1w" v-if="stateHasWarning('hasDocumentation')" color="orange-terre-battue">
-              {{ getWarningText("hasDocumentation") }}
-            </Well>
-          </Accordion>
+          <div class="markdown fr-m-0">
+            <p class="fr-m-0 fr-mb-1w">
+              {{ $t("Formats should be :") }}
+            </p>
+            <ul>
+              <li>{{ $t("open : an open format doesn't add technical specifications that restrict data use (i.e. using a paid software) ;") }}</li>
+              <li>{{ $t("easily reusable : a format easily reusable implies that anybody or server can reuse easily the dataset ;") }}</li>
+              <li>{{ $t("usable in an automated processing system : an automated processing system allows to make automatic operations, related to data exploitation (i.e. a CSV file is easily usable by an automated system unlike a PDF file).") }}</li>
+            </ul>
+          </div>
+          <Well class="fr-mt-1w" v-if="stateHasWarning('files')" color="orange-terre-battue">
+            {{ getWarningText("files") }}
+          </Well>
+        </Accordion>
+        <Accordion
+          :title= "$t('Add a documentation')"
+          :id="addDescriptionAccordionId"
+          :state="state.hasDocumentation"
+        >
+          <div class="markdown fr-m-0">
+            <p class="fr-m-0 fr-mb-1w">
+              {{ $t("The documentation of the dataset has an educational purpose and eases the data reuse. It covers among others:") }}
+            </p>
+            <ul>
+              <li>{{ $t("a general description of the dataset ;") }}</li>
+              <li>{{ $t("a description of the data production mode ;") }}</li>
+              <li>{{ $t("a description of the data model ;") }}</li>
+              <li>{{ $t("a description of the data schema ;") }}</li>
+              <li>{{ $t("a description of the metadata ;") }}</li>
+              <li>{{ $t("a description of major changes.") }}</li>
+            </ul>
+          </div>
+          <Well class="fr-mt-1w" v-if="stateHasWarning('hasDocumentation')" color="orange-terre-battue">
+            {{ getWarningText("hasDocumentation") }}
+          </Well>
+        </Accordion>
       </Sidemenu>
       <div class="fr-col-12 fr-col-md-7">
         <Container>
