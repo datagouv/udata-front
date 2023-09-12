@@ -111,5 +111,16 @@ const includeInSubtype = (array, value) => {
  * @param {string } format
  */
 export const isClosedFormat = (format) => includeInSubtype(CLOSED_FORMATS, format);
+export const UUIDRegExp = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
+
+export const resourceUrlRegExp = new RegExp(
+  "resources\/(" +
+  UUIDRegExp.source +
+  ")?$", UUIDRegExp.flags);
+
+export const previousResourceUrlRegExp = new RegExp(
+  "resource-(" +
+  UUIDRegExp.source +
+  ")?$", UUIDRegExp.flags);
 
 export { markdown };

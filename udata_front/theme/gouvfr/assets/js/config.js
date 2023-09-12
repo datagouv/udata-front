@@ -167,6 +167,16 @@ export const catalog_url = _meta("catalog-url");
 export const quality_description_length = _meta("quality-description-length");
 
 /**
+ * The data search form URL
+ */
+export const data_search_feedback_form_url = _meta("data-search-feedback-form-url");
+
+/**
+ * The guide on how to improve quality metadata URL
+ */
+export const guides_quality_url = _meta("guides-quality-url");
+
+/**
  * Sentry configuration (as json) if available
  */
 const sentryEl = document.querySelector("meta[name=sentry]");
@@ -268,6 +278,7 @@ export default {
   api_doc_external_link,
   guides_harvesting_url,
   support_url,
+  data_search_feedback_form_url,
   api_root,
   api_2_root,
   api_specs,
@@ -279,6 +290,7 @@ export default {
   schema_documentation_url,
   schema_publishing_url,
   schema_validata_url,
+  guides_quality_url,
   sentry,
   check_urls,
   unchecked_types,
