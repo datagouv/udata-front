@@ -8,7 +8,7 @@ orbs:
 jobs:
   deps:
     docker:
-      - image: udata/circleci:3.10-alpine
+      - image: udata/circleci:py3.10
     steps:
       - checkout
       # needed to commit changed *.pip files if needed
@@ -25,11 +25,9 @@ jobs:
           - py-cache-v16-{{ arch }}-{{ .Environment.BASE_BRANCH }}
       - run:
           name: Create venv and install pip-tools
-          # FIXME: For now, we fix setuptools due to https://github.com/etalab/data.gouv.fr/issues/1041
           command: |
             python -m venv venv
             source venv/bin/activate
-            pip install --force-reinstall setuptools==66.1.1
             pip install --upgrade pip-tools
       - run:
           name: Upgrade udata to latest pypi release if tagged release
@@ -72,7 +70,7 @@ jobs:
 
   python:
     docker:
-      - image: udata/circleci:3.10-alpine
+      - image: udata/circleci:py3.10
       - image: mongo:6.0.4
       - image: redis:alpine
     environment:
@@ -113,7 +111,7 @@ jobs:
   assets:
     docker:
       # TODO make an image based on 2-alpine w/ nvm and phantom deps
-      - image: udata/circleci:py3
+      - image: udata/circleci:py3.10
     environment:
        BASH_ENV: /root/.bashrc
     steps:
@@ -245,7 +243,7 @@ jobs:
 
   dist:
     docker:
-      - image: udata/circleci:3.10-alpine
+      - image: udata/circleci:py3.10
     environment:
        BASH_ENV: /root/.bashrc
     steps:
@@ -278,7 +276,7 @@ jobs:
 
   publish:
     docker:
-      - image: udata/circleci:3.10-alpine
+      - image: udata/circleci:py3.10
     steps:
       - attach_workspace:
           at: .
