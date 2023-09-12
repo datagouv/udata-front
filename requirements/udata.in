@@ -1,1 +1,2 @@
-udata@git+https://github.com/opendatateam/udata.git
+udata@git+https://github.com/maudetes/udata.git@chore/upgrade-python
+# TODO: ping udata master when merged

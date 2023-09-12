@@ -37,7 +37,7 @@ setup(
     author_email='pypi@data.gouv.fr',
     packages=find_packages(),
     include_package_data=True,
-    python_requires='>=3.7',
+    python_requires='>=3.8',
     install_requires=get_requirements(),
     entry_points={
         'udata.themes': [

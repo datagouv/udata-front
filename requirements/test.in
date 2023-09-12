@@ -1,8 +1,9 @@
 -c install.pip
+-c udata.pip
 
-mock==3.0.5
-pytest==7.2.1
+mock==5.0.1
+pytest==7.3.1
 pytest-flask==1.2.0
-pytest-mock==2.0.0
-requests-mock==1.7.0
+pytest-mock==3.10.0
+requests-mock==1.10.0
 feedgen==0.7.0
