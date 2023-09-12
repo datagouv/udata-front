@@ -215,6 +215,8 @@
                 listUrl="/datasets/licenses/"
                 :values="dataset.license"
                 @change="(value) => dataset.license = value"
+                :allOption="$t('Select a license')"
+                :addAllOption="false"
               />
             </LinkedToAccordion>
           </fieldset>

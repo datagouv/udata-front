@@ -19,7 +19,6 @@
           :key="option.value"
           :value="option.value"
           :data-image="option.image"
-          :disabled="option.disabled"
           :hidden="option.hidden"
         >
           {{option.label}}
@@ -238,7 +237,6 @@ export default defineComponent({
       label: obj.name ?? obj.title ?? obj.text ?? obj?.properties?.name ?? obj.label ?? obj,
       value: obj.id ?? obj.text ?? obj.value ?? obj,
       image: obj.logo_thumbnail ?? obj.logo ?? obj.image_url ?? obj.image,
-      disabled: obj.disabled,
       hidden: obj.hidden,
     }));
 
@@ -290,7 +288,6 @@ export default defineComponent({
         suggestions.unshift({
           label: props.allOption,
           value: '',
-          disabled: !props.addAllOption,
           hidden: !props.addAllOption
         });
       }
