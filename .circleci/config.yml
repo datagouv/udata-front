@@ -184,7 +184,7 @@ jobs:
 
   cypress:
     docker:
-      - image: cimg/python:3.7.13-browsers
+      - image: cimg/python:3.10.13-browsers
       - image: mongo:6.0.4
       - image: redis:alpine
     steps:
@@ -214,7 +214,7 @@ jobs:
 
   lighthouse:
     docker:
-      - image: cimg/python:3.7.13-browsers
+      - image: cimg/python:3.10.13-browsers
       - image: mongo:6.0.4
       - image: redis:alpine
     steps:
