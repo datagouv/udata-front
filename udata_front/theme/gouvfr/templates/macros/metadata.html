@@ -29,6 +29,7 @@
 <meta name="schema-validata-url" content="{{ config.SCHEMA_GOUVFR_VALIDATA_URL }}" />
 {% endif %}
 <meta name="github" content="{{ config.SITE_GITHUB_URL }}" />
+<meta name="guides-quality-url" content="{{config.GUIDES_QUALITY_URL}}" />
 <meta name="js-config-dataset-url" content="{{ url_for('datasets.list') }}" />
 <meta name="js-config-organization-url" content="{{ url_for('organizations.list') }}" />
 <meta name="js-config-reuse-url" content="{{ url_for('reuses.list') }}" />
@@ -38,6 +39,9 @@
     data-release="{{config.SENTRY_RELEASE}}"
     data-tags="{{config.SENTRY_TAGS|default({})|tojson|urlencode}}"
 />
+{% endif %}
+{% if config.DATA_SEARCH_FEEDBACK_FORM_URL %}
+<meta name="data-search-feedback-form-url" content="{{config.DATA_SEARCH_FEEDBACK_FORM_URL}}"/>
 {% endif %}
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <meta name="site-title" content="{{config.SITE_TITLE}}" />

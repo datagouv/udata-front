@@ -2,10 +2,32 @@
 
 ## Current (in progress)
 
+- Update testing dependencies [dependabot/30](https://github.com/etalab/udata-front/security/dependabot/30) [dependabot/22](https://github.com/etalab/udata-front/security/dependabot/22) [dependabot/23](https://github.com/etalab/udata-front/security/dependabot/23) [#297](https://github.com/etalab/udata-front/pull/297) [#298](https://github.com/etalab/udata-front/pull/298)
+- Fix dependencies according to udata's Flask-Babel migration [#300](https://github.com/etalab/udata-front/pull/300)
+
+## 3.2.6 (2023-09-01)
+
+- Add missing quality criterion (`all_resources_available`) [#287](https://github.com/etalab/udata-front/pull/287)
+- Replace linkedin link in footer [#292](https://github.com/etalab/udata-front/pull/292)
+- Use the word file instead of resource [#291](https://github.com/etalab/udata-front/pull/291)
+- Update certified icon [#288](https://github.com/etalab/udata-front/pull/288)
+- Add guides to the menu [#290](https://github.com/etalab/udata-front/pull/290)
+- Add resource permalink [#286](https://github.com/etalab/udata-front/pull/286) [#295](https://github.com/etalab/udata-front/pull/295)
+- Update read-more height on `details` toggle [#294](https://github.com/etalab/udata-front/pull/294)
+- Fix preview style discrepancies [#289](https://github.com/etalab/udata-front/pull/289)
+
+## 3.2.5 (2023-07-19)
+
 - Fix reuse page padding for discussions and reuses section [#270](https://github.com/etalab/udata-front/pull/270)
 - Fix dataset oembed links [#271](https://github.com/etalab/udata-front/pull/271)
 - Hide CaptchEtat icon loader [#272](https://github.com/etalab/udata-front/pull/272)
-- Fix dependencies according to udata's Flask-Babel migration [#300](https://github.com/etalab/udata-front/pull/300)
+- Update guide links [#276](https://github.com/etalab/udata-front/pull/276)
+- Redirect *pages* when missing trailing slash [#278](https://github.com/etalab/udata-front/pull/278)
+- Add feedback link to header and footer [#275](https://github.com/etalab/udata-front/pull/275)
+- Fix actions with scroll inside full-page tabs (e.g. dataset page) [#281](https://github.com/etalab/udata-front/pull/281)
+- Add data search form to search [#274](https://github.com/etalab/udata-front/pull/274)
+- Upgrade pyyaml dependency to 6.0.1 in deps tree [#283](https://github.com/etalab/udata-front/pull/283)
+- Set confirmed_at when creating user in MonComptePro auth [#284](https://github.com/etalab/udata-front/pull/284)
 
 ## 3.2.4 (2023-06-19)
 

@@ -88,7 +88,7 @@
                     :onChange="handleFacetChange('granularity')"
                   />
                 </div>
-                <div class="fr-col-12 fr-mb-3w text-align-center">
+                <div class="fr-col-12 fr-mb-3w text-align-center" v-if="isFiltered || downloadLink">
                   <button
                     class="fr-btn fr-btn--secondary fr-icon-close-circle-line fr-btn--icon-left justify-center w-100"
                     @click="resetFilters"
@@ -110,8 +110,8 @@
         </nav>
       </div>
       <section class="fr-col-12 fr-col-md-8 fr-col-lg-9 fr-mt-2w fr-mt-md-0 search-results" ref="resultsRef" v-bind="$attrs">
-        <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle justify-between fr-pb-1w">
-          <p class="fr-col-auto fr-my-0" v-if="totalResults" role="status">
+        <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle justify-between fr-pb-1w" v-if="totalResults">
+          <p class="fr-col-auto fr-my-0" role="status">
             {{ $t("{count} results", totalResults) }}
           </p>
           <div class="fr-col-auto fr-grid-row fr-grid-row--middle">
@@ -154,16 +154,46 @@
                 :changePage="changePage"
                 class="fr-mt-2w"
               />
+            <div v-else>
+              <ActionCard
+                :title="$t(`Didn't find what you are looking for ?`)"
+                :icon="magnifyingGlassIcon"
+                type="primary"
+                >
+                <p class="fr-m-0 fr-text--sm">
+                  {{ $t("Try to reset filters to widen your search.") }}<br/>
+                  {{ $t("You can also give us more details with our feedback form.") }}
+                </p>
+                  <template v-slot:actions>
+                    <button @click="resetForm" class="fr-btn fr-btn--secondary">
+                      {{ $t("Reset filters") }}
+                    </button>
+                    <a :href="data_search_feedback_form_url" class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line fr-ml-1w">
+                      {{ $t("Tell us what you are looking for") }}
+                    </a>
+                  </template>
+                </ActionCard>
+            </div>
           </div>
-          <div v-else>
-            <Empty
-              wide
-              :queryString="queryString"
-              :cta="$t('Reset filters')"
-              :copy="$t('No dataset matching your query')"
-              :copyAfter="$t('You can try to reset the filters to expand your search.')"
-              :onClick="() => reloadForm()"
-            />
+          <div v-else class="fr-mt-2w">
+            <ActionCard
+            :title="$t('No result found for your search')"
+            :icon="franceWithMagnifyingGlassIcon"
+            type="primary"
+            >
+              <p class="fr-mt-1v fr-mb-3v">
+                {{ $t("Try to reset filters to widen your search.") }}<br/>
+                {{ $t("You can also give us more details with our feedback form.") }}
+              </p>
+              <template v-slot:actions>
+                <button @click="resetForm" class="fr-btn fr-btn--secondary">
+                  {{ $t("Reset filters") }}
+                </button>
+                <a :href="data_search_feedback_form_url" class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line fr-ml-1w">
+                  {{ $t("Tell us what you are looking for") }}
+                </a>
+              </template>
+            </ActionCard>
           </div>
         </transition>
       </section>
@@ -173,20 +203,22 @@
 
 <script>
 import { defineComponent, ref, onMounted, computed } from "vue";
-import {useI18n} from 'vue-i18n';
+import { useI18n } from 'vue-i18n';
 import axios from "axios";
 import { generateCancelToken, apiv2 } from "../../plugins/api";
-import {useToast} from "../../composables/useToast";
+import { useToast } from "../../composables/useToast";
 import useSearchUrl from "../../composables/useSearchUrl";
 import SearchInput from "./search-input.vue";
 import Dataset from "../dataset/card-lg.vue";
 import Loader from "../dataset/loader.vue";
 import SchemaFilter from "./schema-filter.vue";
-import Empty from "./empty.vue";
 import { Pagination } from "@etalab/udata-front-plugins-helper";
 import MultiSelect from "./multi-select.vue";
-import { search_autocomplete_debounce } from "../../config";
+import ActionCard from "../Form/ActionCard/ActionCard.vue";
+import { data_search_feedback_form_url, search_autocomplete_debounce } from "../../config";
 import { debounce } from "../../composables/useDebouncedRef";
+import franceWithMagnifyingGlassIcon from "svg/illustrations/france_with_magnifying_glass.svg";
+import magnifyingGlassIcon from "svg/illustrations/magnifying_glass.svg";
 
 export default defineComponent({
   inheritAttrs: false,
@@ -195,7 +227,7 @@ export default defineComponent({
     SearchInput,
     SchemaFilter,
     Dataset,
-    Empty,
+    ActionCard,
     Loader,
     Pagination,
   },
@@ -436,6 +468,10 @@ export default defineComponent({
       reloadFilters({});
     };
 
+    const resetForm = () => {
+      reloadForm();
+    };
+
     const reloadForm = ({q = '', ...params} = {}, saveToHistory = SAVE_TO_HISTORY) => {
       queryString.value = q;
       reloadFilters(params, saveToHistory);
@@ -521,13 +557,14 @@ export default defineComponent({
     });
 
     return {
+      data_search_feedback_form_url,
       isFiltered,
       search,
       handleSearchChange,
       handleFacetChange,
       changePage,
-      reloadForm,
       resetFilters,
+      resetForm,
       facets,
       results,
       totalResults,
@@ -541,6 +578,8 @@ export default defineComponent({
       searchSort,
       handleSortChange,
       zIndex,
+      franceWithMagnifyingGlassIcon,
+      magnifyingGlassIcon,
     };
   },
 });
