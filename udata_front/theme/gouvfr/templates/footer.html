@@ -1,7 +1,9 @@
-{% cache cache_duration, 'footer', g.lang_code|default(config.DEFAULT_LANGUAGE)|string,'-'.join((package_version('udata'), package_version('udata-front'))) %}
 <footer role="contentinfo">
+    {% cache cache_duration, 'participez', g.lang_code|default(config.DEFAULT_LANGUAGE)|string,'-'.join((package_version('udata'), package_version('udata-front'))) %}
     {% include theme("participez/participez.html") %}
+    {% endcache %}
     <div class="fr-footer" id="footer">
+        {% cache cache_duration, 'footer-top', g.lang_code|default(config.DEFAULT_LANGUAGE)|string,'-'.join((package_version('udata'), package_version('udata-front'))) %}
         <div class="fr-footer__top">
             <div class="fr-container">
                 <div class="fr-grid-row fr-grid-row--start fr-grid-row--gutters">
@@ -114,8 +116,10 @@
                 </div>
             </div>
         </div>
+        {% endcache %}
         <div class="fr-container">
             <div class="fr-footer__body">
+            {% cache cache_duration, 'footer-brand-and-links', g.lang_code|default(config.DEFAULT_LANGUAGE)|string,'-'.join((package_version('udata'), package_version('udata-front'))) %}
                 <div class="fr-footer__brand fr-enlarge-link">
                     <a href="/" title="{{_('Go back to website home')}}">
                         <p class="fr-logo" title="république française">
@@ -133,6 +137,7 @@
                         {% endfor %}
                     </ul>
                 </div>
+                {% endcache %}
                 <div class="fr-col-6 fr-col-sm-4 fr-col-md-3 fr-col-lg-2 fr-ml-auto self-end">
                     <nav role="navigation" class="fr-translate fr-nav">
                         <div class="fr-nav__item">
@@ -165,6 +170,7 @@
                     </nav>
                 </div>
             </div>
+            {% cache cache_duration, 'footer-bottom', g.lang_code|default(config.DEFAULT_LANGUAGE)|string,'-'.join((package_version('udata'), package_version('udata-front'))) %}
             <div class="fr-footer__bottom">
                 <ul class="fr-footer__bottom-list">
                     {% for item in nav.gouvfr_footer %}
@@ -181,7 +187,7 @@
                     ) }}</p>
                 </div>
             </div>
+            {% endcache %}
         </div>
     </div>
 </footer>
-{% endcache %}
