@@ -1,5 +1,5 @@
 <footer role="contentinfo">
-    {% cache cache_duration, 'participez', g.lang_code|default(config.DEFAULT_LANGUAGE)|string,'-'.join((package_version('udata'), package_version('udata-front'))) %}
+    {% cache cache_duration, 'participez', g.lang_code|default(config.DEFAULT_LANGUAGE)|string %}
     {% include theme("participez/participez.html") %}
     {% endcache %}
     <div class="fr-footer" id="footer">
@@ -119,7 +119,7 @@
         {% endcache %}
         <div class="fr-container">
             <div class="fr-footer__body">
-            {% cache cache_duration, 'footer-brand-and-links', g.lang_code|default(config.DEFAULT_LANGUAGE)|string,'-'.join((package_version('udata'), package_version('udata-front'))) %}
+            {% cache cache_duration, 'footer-brand-and-links', g.lang_code|default(config.DEFAULT_LANGUAGE)|string %}
                 <div class="fr-footer__brand fr-enlarge-link">
                     <a href="/" title="{{_('Go back to website home')}}">
                         <p class="fr-logo" title="république française">
@@ -170,7 +170,7 @@
                     </nav>
                 </div>
             </div>
-            {% cache cache_duration, 'footer-bottom', g.lang_code|default(config.DEFAULT_LANGUAGE)|string,'-'.join((package_version('udata'), package_version('udata-front'))) %}
+            {% cache cache_duration, 'footer-bottom', g.lang_code|default(config.DEFAULT_LANGUAGE)|string %}
             <div class="fr-footer__bottom">
                 <ul class="fr-footer__bottom-list">
                     {% for item in nav.gouvfr_footer %}
