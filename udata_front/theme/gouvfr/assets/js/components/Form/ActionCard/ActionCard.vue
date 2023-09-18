@@ -1,13 +1,13 @@
 <template>
   <div
-    class="rounded-xxs fr-p-3w fr-grid-row flex-direction-column"
-    :class="{'h-100': stretchHeight, [type]: type, 'border border-default-grey': isDefault }"
+    class="rounded-xxs fr-p-3w"
+    :class="{'fr-grid-row flex-direction-column h-100': stretchHeight, [type]: type, 'border border-default-grey': isDefault }"
   >
     <div class="fr-col fr-grid-row fr-grid-row--gutters" :class="{'text-blue-400': isPrimary}">
-      <div class="fr-col-auto">
-        <img :src="icon" alt="" />
+      <div class="fr-col-4 fr-col-sm-3 fr-col-lg-2 fr-col-xl-2">
+        <img class="w-100" :src="icon" alt="" />
       </div>
-      <div class="fr-col fr-grid-row flex-direction-column justify-between">
+      <div class="fr-col-12 fr-col-sm fr-grid-row flex-direction-column justify-between">
         <div class="fr-mb-1w">
           <component
             :is="heading"
@@ -16,7 +16,8 @@
           >
             {{ title }}
           </component>
-          <slot></slot>
+          <p class="fr-my-1w" v-if="content">{{ content }}</p>
+          <slot v-else></slot>
         </div>
         <div class="fr-grid-row" :class="alignment">
           <slot name="actions"></slot>

@@ -16,3 +16,14 @@ setup((app) => {
 });
 
 globalThis.dsfr.start();
+
+const preview = {
+  decorators: [
+    (story) => ({
+      components: { story },
+      template: '<div class="fr-container"><story /></div>',
+    }),
+  ],
+};
+
+export default preview;
