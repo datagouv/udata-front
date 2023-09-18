@@ -4,7 +4,7 @@
     :class="{'fr-grid-row flex-direction-column h-100': stretchHeight, [type]: type, 'border border-default-grey': isDefault }"
   >
     <div class="fr-col fr-grid-row fr-grid-row--gutters" :class="{'text-blue-400': isPrimary}">
-      <div class="fr-col-4 fr-col-sm-3 fr-col-lg-2 fr-col-xl-2">
+      <div class="fr-col-auto">
         <img class="w-100" :src="icon" alt="" />
       </div>
       <div class="fr-col-12 fr-col-sm fr-grid-row flex-direction-column justify-between">

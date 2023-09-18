@@ -19,10 +19,12 @@ globalThis.dsfr.start();
 
 const preview = {
   decorators: [
-    (story) => ({
-      components: { story },
-      template: '<div class="fr-container"><story /></div>',
-    }),
+    (story, ctx) => {
+      return {
+        components: { story },
+        template: ctx.title.includes("Pages") ? `<story />` : `<div class="fr-container"><story /></div>`,
+      };
+    },
   ],
 };
 
