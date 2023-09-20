@@ -23,10 +23,10 @@ However, if `src` is undefined, it falls back to a placeholder. Don't forget to 
 </template>
 
 <script>
-import config from "../../config";
+import { theme_static } from "../../config";
 
 export const placeholderUrl = (src, type) =>
-  src ? src : `${config.theme_static}img/placeholders/${type}.png`;
+  src ? src : `${theme_static}img/placeholders/${type}.png`;
 
 export default {
   props: {

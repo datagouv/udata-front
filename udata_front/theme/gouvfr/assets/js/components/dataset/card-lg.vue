@@ -38,12 +38,6 @@
             {{ title }}
             <small v-if="acronym">{{ acronym }}</small>
           </a>
-          <p
-            v-if="private"
-            class="fr-my-0 badge grey-300 fr-ml-1w"
-          >
-            {{ $t('Private') }}
-        </p>
         </h4>
         <p class="fr-m-0 fr-text--sm" v-if="organization || owner">
           {{ $t('From') }}
@@ -55,10 +49,10 @@
           <template v-if="owner">{{ownerName}}</template>
         </p>
         <p class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm overflow-wrap-anywhere">
-          {{ excerpt(description, 160) }}
+          {{ excerpt(description, 500) }}
         </p>
         <div class="fr-m-0 fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
-          <div class="fr-grid-row fr-grid-row--middle fr-hidden flex-sm dash-after not-enlarged">
+          <div class="fr-grid-row fr-grid-row--middle fr-hidden flex-sm dash-after text-grey-500 not-enlarged">
             <Toggletip
               class="fr-btn fr-btn--tertiary-no-outline fr-btn--secondary-grey-500 fr-icon-info-line"
             >
@@ -135,7 +129,7 @@
           <p class=fr-m-0>{{ $t('Updated {date}', {date: formatRelativeIfRecentDate(last_update)}) }}</p>
         </div>
       </div>
-      <ul class="fr-hidden fr-unhidden-sm fr-hidden-md fr-unhidden-lg fr-col-auto fr-tags-group fr-grid-row--bottom self-center flex-direction-column">
+      <ul v-if="showMetrics" class="fr-hidden fr-unhidden-sm fr-hidden-md fr-unhidden-lg fr-col-auto fr-tags-group fr-grid-row--bottom self-center flex-direction-column">
         <li>
           <p class="fr-tag">
             <i18n-t keypath="{n} reuses" :plural="metrics.reuses || 0" scope="global">
@@ -149,7 +143,7 @@
           <p class="fr-tag">
             <i18n-t keypath="{n} favorites" :plural="metrics.followers || 0" scope="global">
               <template #n>
-                <strong class="fr-mr-1v">{{metrics.followers}}</strong>
+                <strong class="fr-mr-1v">{{metrics.followers || 0}}</strong>
               </template>
             </i18n-t>
           </p>
@@ -202,8 +196,14 @@ export default defineComponent({
       required: true,
     },
     metrics: Object,
-    organization: Object,
-    owner: Object,
+    organization: {
+      /** @type {import("vue").PropType<import("../../types").Organization>} */
+      type: Object
+    },
+    owner: {
+      /** @type {import("vue").PropType<import("../../types").User>} */
+      type: Object,
+    },
     page: {
       type: String,
       required: true,
@@ -216,7 +216,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
-    resources: Object,
+    showMetrics: {
+      type: Boolean,
+      default: true,
+    },
     style: {
       type: Object,
       default: () => ({})
@@ -227,16 +230,13 @@ export default defineComponent({
     },
   },
   setup(props) {
-    /** @type {import("vue").ComputedRef<import("../../composables/useOwnerName").Owned>} */
+    /** @type {import("vue").ComputedRef<import("../../types").Owned>} */
     const owned = computed(() => {
-      let owned = {};
       if(props.organization) {
-        owned.organization = props.organization;
+        return { organization: props.organization };
+      } else {
+        return { owner: /** @type {import("../../types").User} */ (props.owner) };
       }
-      if(props.owner) {
-        owned.owner = props.owner;
-      }
-      return owned;
     });
     const {id} = useUid("metadata-quality");
     const ownerName = useOwnerName(owned);

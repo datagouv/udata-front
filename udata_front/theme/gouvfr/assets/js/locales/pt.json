@@ -95,7 +95,7 @@
   "{n} favorites": "{n} favoritos | {n} favoritos | {n} favoritos",
   "The identity of this public service is certified by {certifier}": "A identidade deste serviço público é certificada pela {certifier}",
   "{n} reuses": "{n} reutiliza | {n} reutiliza | {n} reutiliza",
-  "Metadata quality:": "Qualidade de metadados",
+  "Metadata quality:": "Qualidade de metadados:",
   "Data description filled": "Descrição dos dados preenchida",
   "Data description empty": "Descrição dos dados vazia",
   "License filled": "Licença preenchida",

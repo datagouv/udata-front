@@ -1,5 +1,5 @@
 <template>
-  <div class="fr-stepper">
+  <div class="fr-stepper fr-mb-3w">
     <h2 class="fr-stepper__title">
       <span class="fr-stepper__state">{{ $t("Step {n} of {count}", { n: currentStepNumber, count: stepCount }) }}</span>
       {{ currentStepName }}

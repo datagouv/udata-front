@@ -95,7 +95,7 @@
   "{n} favorites": "{n} favorites | {n} favorite | {n} favorites",
   "The identity of this public service is certified by {certifier}": "The identity of this public service is certified by {certifier}",
   "{n} reuses": "{n} reuses | {n} reuse | {n} reuses",
-  "Metadata quality:": "Metadata quality",
+  "Metadata quality:": "Metadata quality:",
   "Data description filled": "Data description filled",
   "Data description empty": "Data description empty",
   "License filled": "License filled",

@@ -49,8 +49,7 @@ Discussions allow users to interact with others.
       </template>
       <template v-else>
         <div v-if="discussionId">
-          <!-- TODO: move to <Well> component when available -->
-          <div class="fr-mt-2w fr-px-3w well well-secondary-success" data-cy="threadFromURL">
+          <Well type="secondary" color="success" class="fr-mt-2w" data-cy="threadFromURL">
             <div class="fr-grid-row fr-grid-row--middle justify-between">
               {{
                 $t("You are seeing a specific discussion about this dataset")
@@ -59,7 +58,7 @@ Discussions allow users to interact with others.
                 {{$t('Close')}}
               </button>
             </div>
-          </div>
+          </Well>
           <thread v-bind="threadFromURL"></thread>
           <button
             class="nav-link nav-link--no-icon text-decoration-none fr-link fr-mt-9v fr-link--icon-left fr-icon-arrow-right-s-line"
@@ -103,6 +102,7 @@ import { Pagination } from "@etalab/udata-front-plugins-helper";
 import CreateThread from "./threads-create.vue";
 import Thread from "./thread.vue";
 import Loader from "./loader.vue";
+import Well from "../Ui/Well/Well.vue";
 import ThreadsCreateButton from "./threads-create-button.vue";
 import {DISCUSSIONS_START_THREAD, bus} from "../../plugins/eventbus";
 import { useI18n } from "vue-i18n";
@@ -117,6 +117,7 @@ export default defineComponent({
     Thread,
     Pagination,
     Loader,
+    Well,
   },
   props: {
     subjectId: {

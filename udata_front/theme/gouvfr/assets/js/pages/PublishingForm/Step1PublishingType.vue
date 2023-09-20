@@ -5,7 +5,11 @@
       <h1 class="subtitle subtitle--uppercase">
         {{ $t("Publishing type") }}
       </h1>
-      <Well weight="regular" class="fr-mb-3w">
+      <Well
+        color="blue-cumulus"
+        weight="regular"
+        class="fr-mb-3w"
+      >
         <i18n-t
           keypath="If you want to do tests, use {demo_server}."
           scope="global"

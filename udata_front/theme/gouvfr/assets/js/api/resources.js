@@ -16,7 +16,7 @@ import {api, apiv2} from "../plugins/api";
  * @property {Object} schema
  * @property {string} url
  *
- * @typedef {import("../composables/useOwnerName").Owned & ResourceRest} Resource
+ * @typedef {import("../types").Owned & ResourceRest} Resource
  */
 
 /**

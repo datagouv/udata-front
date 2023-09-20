@@ -1,0 +1,112 @@
+import { Canvas, Controls, Description, Meta } from '@storybook/blocks';
+
+import * as CardLGStories from './CardLG.stories';
+
+<Meta of={CardLGStories} />
+
+# Card Large
+
+A large card to show a dataset. It's usually used in a list but it also work alone.
+
+## Props
+
+<Controls />
+
+## Stories
+
+There are lots of differents cases here based on the dataset owner and all the optional fields.
+
+### Cards with logo
+
+The card logo is the organization logo or the owner avatar.
+
+<Description of={CardLGStories.CardLGWithOrganizationLogo} />
+<Canvas of={CardLGStories.CardLGWithOrganizationLogo} />
+
+<Description of={CardLGStories.CardLGWithDescriptionAndCertifiedOrganization} />
+<Canvas of={CardLGStories.CardLGWithDescriptionAndCertifiedOrganization} />
+
+<Description of={CardLGStories.CardLGWithOwnerAvatar} />
+<Canvas of={CardLGStories.CardLGWithOwnerAvatar} />
+
+### Cards of dataset belonging to an organization
+
+Public organizations should be certified while non-public organizations can't be.
+
+<Description of={CardLGStories.CardLGWithOrganizationLogo} />
+<Canvas of={CardLGStories.CardLGWithOrganizationLogo} />
+
+<Description of={CardLGStories.CardLGWithCertifiedOrganization} />
+<Canvas of={CardLGStories.CardLGWithCertifiedOrganization} />
+
+### Cards with different update dates
+
+<Description of={CardLGStories.CardLGWithOrganizationLogo} />
+<Canvas of={CardLGStories.CardLGWithOrganizationLogo} />
+
+<Description of={CardLGStories.CardLGUpdatedLastMonthWithOrganizationLogo} />
+<Canvas of={CardLGStories.CardLGUpdatedLastMonthWithOrganizationLogo} />
+
+<Description of={CardLGStories.CardLGUpdatedLastYearWithOrganizationLogo} />
+<Canvas of={CardLGStories.CardLGUpdatedLastYearWithOrganizationLogo} />
+
+### Cards with Acronym
+
+The card logo is the organization logo or the owner avatar.
+
+<Description of={CardLGStories.CardLGWithAcronymAndOrganizationLogo} />
+<Canvas of={CardLGStories.CardLGWithAcronymAndOrganizationLogo} />
+
+<Description of={CardLGStories.CardLGWithAcronymAndOwnerWithAvatar} />
+<Canvas of={CardLGStories.CardLGWithAcronymAndOwnerWithAvatar} />
+
+### Archived dataset
+
+An archived dataset has a badge on it.
+
+<Description of={CardLGStories.CardLGArchivedWithOrganizationLogo} />
+<Canvas of={CardLGStories.CardLGArchivedWithOrganizationLogo} />
+
+<Description of={CardLGStories.CardLGArchivedWithOwnerAvatar} />
+<Canvas of={CardLGStories.CardLGArchivedWithOwnerAvatar} />
+
+### Private dataset
+
+A private dataset has another badge on it.
+
+<Description of={CardLGStories.CardLGPrivateWithOrganizationLogo} />
+<Canvas of={CardLGStories.CardLGPrivateWithOrganizationLogo} />
+
+<Description of={CardLGStories.CardLGPrivateWithOwnerAvatar} />
+<Canvas of={CardLGStories.CardLGPrivateWithOwnerAvatar} />
+
+### Archived private dataset
+
+An archived private dataset has 2 badges on it.
+
+<Description of={CardLGStories.CardLGPrivateArchivedWithOrganizationLogo} />
+<Canvas of={CardLGStories.CardLGPrivateArchivedWithOrganizationLogo} />
+
+<Description of={CardLGStories.CardLGPrivateArchivedWithOwnerAvatar} />
+<Canvas of={CardLGStories.CardLGPrivateArchivedWithOwnerAvatar} />
+
+### Cards with placeholder
+
+When the organization doesn't have a logo, the dataset placeholder is shown.
+For an owner, the avatar is used or an identicon is computed.
+
+<Description of={CardLGStories.CardLGWithOrganizationPlaceholder} />
+<Canvas of={CardLGStories.CardLGWithOrganizationPlaceholder} />
+
+<Description of={CardLGStories.CardLGWithOwnerPlaceholder} />
+<Canvas of={CardLGStories.CardLGWithOwnerPlaceholder} />
+
+<Description of={CardLGStories.CardLGWithDatasetPlaceholder} />
+<Canvas of={CardLGStories.CardLGWithDatasetPlaceholder} />
+
+### Card without metrics
+
+During the dataset creation, the metrics part should be hidden.
+
+<Description of={CardLGStories.CardLGWithoutMetricsWithOrganizationLogo} />
+<Canvas of={CardLGStories.CardLGWithoutMetricsWithOrganizationLogo} />

@@ -1,7 +1,40 @@
 /**
- * @typedef {object} User
- * @property {String} first_name
- * @property {String} last_name
+ * @typedef {Object} User
+ * @property {string} first_name
+ * @property {string} last_name
+ * @property {string} [avatar_thumbnail]
+ */
+
+/**
+ * @typedef {Object} Organization
+ * @property {string} name
+ * @property {Array<{kind: string}>} badges
+ * @property {string} [page]
+ * @property {string} [logo]
+ * @property {string} [logo_thumbnail]
+ */
+
+/**
+ * @typedef {Object} Quality
+ * @property {boolean} all_resources_available
+ * @property {boolean} dataset_description_quality
+ * @property {boolean} has_open_format
+ * @property {boolean} has_resources
+ * @property {boolean} license
+ * @property {boolean} resources_documentation
+ * @property {number} score
+ * @property {boolean} spatial
+ * @property {boolean} temporal_coverage
+ * @property {boolean} update_frequency
+ * @property {boolean} update_fulfilled_in_time
+ */
+
+/**
+ * @typedef {{organization: Organization, owner?: never}} OwnedByOrganization
+ * @typedef {{organization?: never, owner: User}} OwnedByOwner
+ *
+ * A resource, dataset, reuse or any other object owned by an organization or a user.
+ * @typedef {OwnedByOrganization | OwnedByOwner} Owned
  */
 
 /**
@@ -69,15 +102,19 @@
    */
 
   /**
-   * @typedef {{
+   * @typedef {Owned & {
    *  title: string,
    *  acronym: string,
+   *  archived: boolean,
    *  description: string,
    *  tags: Array<string> | null,
    *  license: string,
    *  frequency: string,
    *  temporal_coverage: string,
    *  last_update: Date | null,
+   *  page: string,
+   *  private: boolean,
+   *  quality?: Quality,
    *  spatial: {
    *    zones: string,
    *    granularity: string,

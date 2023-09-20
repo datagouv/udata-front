@@ -44,12 +44,14 @@ export default defineComponent({
     const dataset = ref({
       title: "",
       acronym: "",
+      archived: false,
       description: "",
       tags: null,
       license: "",
       frequency: "",
       temporal_coverage: "",
       last_update: null,
+      private: true,
       spatial: {
         zones: "",
         granularity: "",

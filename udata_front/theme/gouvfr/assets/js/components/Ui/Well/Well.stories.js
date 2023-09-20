@@ -1,4 +1,5 @@
 import Well from './Well.vue';
+import editIcon from "svg/illustrations/edit.svg";
 
 export default {
   title: 'Ui/Well',
@@ -15,7 +16,8 @@ export default {
       options: [
         "success",
         "warning",
-        "grey-100"
+        "grey-100",
+        "blue-cumulus"
       ],
       control: 'select',
     }
@@ -40,3 +42,29 @@ export const SimpleWell = {
   }),
   args,
 };
+
+const argsRegular = {
+  color: "blue-cumulus",
+  weight: "regular"
+};
+
+export const WellWithImg = {
+  render: (args) => ({
+    components: { Well },
+    setup() {
+      return { args: argsRegular, editIcon };
+    },
+    template: ` <Well v-bind="args">
+                    <div class="fr-grid-row">
+                      <div class="fr-col-auto fr-mr-3v">
+                        <img :src="editIcon" alt="" />
+                      </div>
+                      <div class="fr-col">
+                        <p class="fr-m-0 fr-text--bold">What is a dataset?</p>
+                        <p class="fr-m-0 fr-text--xs">On udata-front, a dataset is a set of files.</p>
+                      </div>
+                    </div>
+                  </Well>`,
+  }),
+  args,
+}
