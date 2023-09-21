@@ -128,6 +128,7 @@ Similar to the contextual text color classes, easily set the background of an el
 
 @text-mention-grey: var(--text-mention-grey);
 @text-title-grey: var(--text-title-grey);
+@text-default-grey: @grey-400;
 @text-default-error: var(--text-default-error);
 @text-default-success: var(--text-default-success);
 @text-default-warning: var(--text-default-warning);
@@ -207,6 +208,10 @@ each(@colors, {
 
 .text-mention-grey {
     color: @text-mention-grey !important;
+}
+
+.text-default-grey {
+    color: @text-default-grey !important;
 }
 
 .text-default-error {

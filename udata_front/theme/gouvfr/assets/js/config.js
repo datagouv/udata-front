@@ -139,6 +139,11 @@ export const demo_server_url = _meta("demo-server-url");
 export const demo_server_name = _meta("demo-server-name");
 
 /**
+ * The publishing form feedback URL
+ */
+export const publishing_form_feedback_url = _meta("publishing-form-feedback-url");
+
+/**
  * The API documentation external link
  */
 
@@ -286,6 +291,7 @@ export default {
   static_root,
   admin_root,
   auth_url,
+  publishing_form_feedback_url,
   schema_catalog_url,
   schema_documentation_url,
   schema_publishing_url,
