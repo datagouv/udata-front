@@ -1,64 +1,54 @@
-describe("Testing search bar", () => {
+import organization from '../fixtures/organization.json';
+
+describe("Testing organization search page", () => {
   beforeEach(() => {
     cy.intercept('**/?(_themes)/**').as('script')
-    cy.visit("/")
+    cy.intercept('**/api/**').as('request')
+    cy.visit("/organizations/" + organization.id, {
+      onBeforeLoad(window) {
+        // spy on the "pushState" method
+        cy.spy(window.history, 'pushState').as('pushState');
+      },
+    });
     cy.injectAxe()
     cy.wait(['@script'])
-    const input = 'input[data-cy="search-input"]';
+    const input = '[data-cy="search"] input[data-cy="search-input"]';
     cy.get(input).as('input');
-    cy.get('@input').invoke('attr', 'aria-controls').then(val => {
-      cy.get("#" + val).as('popup');
-    });
   });
 
-  it("shows you a search bar", () => {
-    cy.get('@input').should("be.visible");
-  });
-
-  it("opens popup as you type", () => {
-    cy.get('@input')
-      .type("some string")
-      .get('@popup')
-      .should("be.visible");
-  });
-
-  it("Focus an empty field don't open the popup", () => {
-    cy.get('@input')
-      .focus()
-      .get('@popup')
-      .should("be.hidden");
-  });
-
-  it("Focus out should close the popup", () => {
-    cy.get('@input')
-      .type("some string")
-      .get('a')
-      .first()
-      .focus()
-      .get('@popup')
-      .should("be.hidden");
-  });
-
-  it("Popup content should contain typed string", () => {
+  it("triggers search when typing", () => {
     const typed = "some string";
+    cy.get('[aria-controls="datasets-panel"]').click();
     cy.get('@input')
-      .type(typed)
-      .invoke('attr', 'aria-activedescendant').then(val => {
-        cy.get("#" + val).should(($option) => {
-          expect($option).to.contain(typed);
-        });
-      });
+      .type(typed);
+    cy.wait(['@request']);
   });
 
-  it("Click on first option should change to datasets page", () => {
-    const typed = "somestring";
+  it("always adds organization to request", () => {
+    const typed = "some string";
+    const typed_next = "another string";
+    cy.get('[aria-controls="datasets-panel"]').click();
     cy.get('@input')
-      .type(typed)
-      .invoke('attr', 'aria-activedescendant').then(val => {
-        cy.get("#" + val).click().then(() => {
-          cy.url().should('include', 'datasets');
-          cy.url().should('include', typed);
-        });
-      });
+      .type(typed);
+    cy.intercept('**/api/**', (req) => {
+      expect(req.query).to.have.property("organization");
+      req.continue();
+    });
+    cy.wait(['@request']);
+    cy.wait(2000);
+    cy.get('@pushState')
+      .should('have.been.called', 2);
+    cy.get('@input')
+      .clear()
+      cy.wait(2000);
+    cy.get('@input')
+      .type("{backspace}{backspace}{backspace}");
+    cy.wait(['@request']);
+    cy.wait(2000);
+    cy.get('@pushState')
+      .should('have.been.called', 3);
+    cy.get('@input')
+      .type(typed_next);
+    cy.wait(['@request']);
   });
 });

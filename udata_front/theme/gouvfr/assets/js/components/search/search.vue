@@ -1,6 +1,6 @@
 <template>
   <form class="fr-pt-3v" @submit.prevent="search">
-    <div class="fr-grid-row fr-grid-row--middle justify-between search-bar" ref="searchRef">
+    <div class="fr-grid-row fr-grid-row--middle justify-between" ref="searchRef" data-cy="search">
       <SearchInput
         @change="handleSearchChange"
         :value="queryString"
@@ -349,7 +349,7 @@ export default defineComponent({
     const updateUrl = (save = SAVE_TO_HISTORY) => {
       // Update URL to match current search params value for deep linking
       let url = new URL(window.location.href);
-      const urlParams = searchParameters.value;
+      const urlParams = { ...searchParameters.value };
       if(props.organization) {
         delete urlParams.organization;
       }
@@ -371,6 +371,7 @@ export default defineComponent({
       loading.value = true;
       if (currentRequest.value) currentRequest.value.cancel();
       currentRequest.value = generateCancelToken();
+      console.log(searchParameters.value);
       apiv2
         .get("/datasets/search/", {
           cancelToken: currentRequest.value.token,
@@ -497,6 +498,7 @@ export default defineComponent({
        *  @type Record<string, string>
        */
       let params = {};
+      console.log(facets.value)
       for (let key in facets.value) {
         if(facets.value[key]) {
           params[key] = facets.value[key];
@@ -505,6 +507,7 @@ export default defineComponent({
       if (currentPage.value > 1) params.page = currentPage.value.toString();
       if (queryString.value) params.q = queryString.value;
       if(searchSort.value) params.sort = searchSort.value;
+      console.log(params);
       return params;
     });
 
