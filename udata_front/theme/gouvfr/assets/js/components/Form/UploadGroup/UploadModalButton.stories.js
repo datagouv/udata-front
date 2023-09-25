@@ -1,8 +1,19 @@
 import UploadModalButton from './UploadModalButton.vue';
+import UploadModalStories from "./UploadModal.stories";
+import { withActions } from '@storybook/addon-actions/decorator';
 
 export default {
   title: 'Components/UploadModalButton',
   component: UploadModalButton,
+  parameters: {
+    actions: {
+      handles: [
+        ...UploadModalStories.parameters.actions.handles,
+        'click .fr-upload-group button[data-fr-js-modal-button]',
+      ],
+    },
+  },
+  decorators: [withActions],
 };
 
 const args = {

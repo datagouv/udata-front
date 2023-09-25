@@ -1,8 +1,19 @@
 import FileCard from './FileCard.vue';
+import { withActions } from '@storybook/addon-actions/decorator';
+
 
 export default {
   title: 'Components/FileCard',
   component: FileCard,
+  parameters: {
+    actions: {
+      handles: [
+        "click button.fr-icon-delete-line",
+        "click button.fr-icon-pencil-line"
+      ],
+    },
+  },
+  decorators: [withActions],
 };
 
 const args = {

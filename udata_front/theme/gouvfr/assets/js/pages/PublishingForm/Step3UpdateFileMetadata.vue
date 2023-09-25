@@ -165,7 +165,7 @@
   </div>
 </template>
 <script>
-import { computed, defineComponent, reactive, watchEffect } from 'vue';
+import { computed, defineComponent, reactive } from 'vue';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
 import Container from '../../components/Ui/Container/Container.vue';
@@ -243,8 +243,6 @@ export default defineComponent({
         }
       });
     };
-
-    watchEffect(() => console.log(state.value));
 
     return {
       nameAFileAccordionId,

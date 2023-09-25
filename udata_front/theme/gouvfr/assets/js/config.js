@@ -30,18 +30,20 @@ function _jsonMeta(name) {
 
 /**
  * The current user extracted from the header
+ * @type {import("./types").User | null}
  */
-export let user;
+export let user = null;
 const userEl = document.querySelector("meta[name=current-user]");
 
 if (userEl instanceof HTMLElement) {
   user = {
-    id: userEl.getAttribute("content"),
+    id: userEl.getAttribute("content") || "",
     slug: userEl.dataset.slug,
-    first_name: userEl.dataset.first_name,
-    last_name: userEl.dataset.last_name,
+    first_name: userEl.dataset.first_name || "",
+    last_name: userEl.dataset.last_name || "",
     avatar: userEl.dataset.avatar,
-    roles: userEl.dataset.roles.split(","),
+    avatar_thumbnail: userEl.dataset.avatar_thumbnail,
+    roles: userEl.dataset.roles?.split(","),
   };
 }
 

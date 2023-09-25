@@ -113,7 +113,7 @@
                     :missingMetadata="true"
                     :title="resource.title || resource.file?.name || ''"
                     @delete="removeFile(index)"
-                    @edit="$emit('editFile', resource)"
+                    @edit="$emit('editFile', resource, index)"
                   />
                 <div class="fr-grid-row fr-grid-row--center">
                   <UploadModalButton
@@ -140,7 +140,7 @@
   </div>
 </template>
 <script>
-import { computed, defineComponent, reactive, watchEffect } from 'vue';
+import { computed, defineComponent, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -165,6 +165,11 @@ export default defineComponent({
     steps: {
       type: Array,
       required: true,
+    },
+    files: {
+      /** @type {import("vue").PropType<Array<import("../../types").DatasetFile>>} */
+      type: Array,
+      required: true,
     }
   },
   setup(props, { emit }) {
@@ -174,7 +179,7 @@ export default defineComponent({
 
     /** @type {import("vue").UnwrapNestedRefs<{files: Array<import("../../types").DatasetFile>}>} */
     const dataset = reactive({
-      files: [],
+      files: [...props.files],
     });
 
     const fileRequired = requiredWithCustomMessage(t("At least one file is required."));
@@ -250,8 +255,6 @@ export default defineComponent({
      * @param {string} field
      */
     const stateHasWarning = (field) => hasWarning(state, field);
-
-    watchEffect(() => console.log(vWarning$.value));
 
     return {
       addDescriptionAccordionId,

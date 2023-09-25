@@ -1,5 +1,6 @@
 import Step2DescribeDataset from './Step2DescribeDataset.vue';
 import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
+import { user } from '../../config';
 
 
 export default {
@@ -7,20 +8,36 @@ export default {
   component: Step2DescribeDataset,
 };
 
-/** @type {import("../../types").Dataset} */
 const originalDataset = {
-  title: "",
+  title: "My new dataset",
+  archived: false,
+  private: false,
+  page: "",
   acronym: "",
-  description: "",
+  description: "Its has a required description",
   tags: null,
   license: "",
-  frequency: "",
+  frequency: "punctual",
   temporal_coverage: "",
-  last_update: null,
+  last_update: new Date(),
   spatial: {
     zones: "",
     granularity: "",
-  }
+  },
+  owner: user,
+  quality: {
+    all_resources_available: true,
+    dataset_description_quality: true,
+    has_open_format: true,
+    has_resources: true,
+    license: true,
+    resources_documentation: true,
+    score: 1,
+    spatial: true,
+    temporal_coverage: true,
+    update_frequency: true,
+    update_fulfilled_in_time: true,
+  },
 };
 
 const args = {
