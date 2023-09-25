@@ -30,7 +30,7 @@ describe("Testing organization search page", () => {
     cy.get('[aria-controls="datasets-panel"]').click();
     cy.get('@input')
       .type(typed);
-    cy.intercept('**/api/**', (req) => {
+    cy.intercept('**/api/2/datasets/search/*', (req) => {
       expect(req.query).to.have.property("organization");
       req.continue();
     });
