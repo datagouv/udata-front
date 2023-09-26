@@ -18,7 +18,7 @@ export default {
 
 const args = {
   steps: Stepper.StepperOnSecondStep.args.steps,
-  files: [],
+  originalFiles: [],
 };
 
 export const Step3 = {

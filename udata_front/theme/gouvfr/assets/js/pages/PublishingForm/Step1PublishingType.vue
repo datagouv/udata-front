@@ -10,6 +10,7 @@
         weight="regular"
         class="fr-mb-3w"
       >
+        <span class="fr-icon-info-line fr-mr-1w" aria-hidden="true"></span>
         <i18n-t
           keypath="If you want to do tests, use {demo_server}."
           scope="global"

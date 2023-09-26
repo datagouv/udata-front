@@ -10,8 +10,8 @@ import { toValue } from "vue";
  * @param {U} warningRules
 */
 export default function useFunctionalState(data, requiredRules, warningRules) {
-  const v$ = useVuelidate(requiredRules, data);
-  const vWarning$ = useVuelidate(warningRules, data);
+  const v$ = useVuelidate(requiredRules, data, { $scope: false });
+  const vWarning$ = useVuelidate(warningRules, data, { $scope: false });
 
   /**
    * Get the error messages if any for given field
@@ -42,6 +42,7 @@ export default function useFunctionalState(data, requiredRules, warningRules) {
    */
   const validateRequiredRules = () => {
     vWarning$.value.$validate();
+    v$.value.$validate();
     return v$.value.$validate();
   }
 

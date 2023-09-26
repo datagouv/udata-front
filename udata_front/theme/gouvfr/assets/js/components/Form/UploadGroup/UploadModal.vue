@@ -25,8 +25,8 @@
                   @change="setFiles"
                   :required="true"
                   :hintText="multiple ? $t('Max size: 420 Mb. Multiple files allowed.') : $t('Max size: 420 Mb.')"
-                  :hasError="stateHasError('files')"
-                  :errorText="getErrorText('files')"
+                  :hasError="stateHasError('modalFiles')"
+                  :errorText="getErrorText('modalFiles')"
                 />
                 <FileCard
                   v-for="(resource, index) in nonRemoteFiles"
@@ -50,8 +50,8 @@
                   placeholder="https://"
                   @change="setFileLink"
                   type="url"
-                  :hasError="stateHasError('files')"
-                  :errorText="getErrorText('files')"
+                  :hasError="stateHasError('modalFiles')"
+                  :errorText="getErrorText('modalFiles')"
                 />
               </div>
               <div class="fr-modal__footer">
@@ -106,22 +106,22 @@ export default defineComponent({
     const modalRef = templateRef('modalRef');
 
     /** @type {import("vue").Ref<Array<import("../../../types").DatasetFile>>} */
-    const files = ref([]);
+    const modalFiles = ref([]);
 
     const fileRequired = requiredWithCustomMessage(t("At least one file or link is required."));
 
     const requiredRules = {
-      files: { fileRequired },
+      modalFiles: { fileRequired },
     };
 
-    const { getErrorText, getFunctionalState, hasError, reset, validateRequiredRules, v$ } = useFunctionalState({ files }, requiredRules, requiredRules);
+    const { getErrorText, getFunctionalState, hasError, reset, validateRequiredRules, v$ } = useFunctionalState({ modalFiles }, requiredRules, requiredRules);
 
     /**
      * @type {import("vue").ComputedRef<Record<string, import("../../../types").AccordionFunctionalState>>}
      */
     const state = computed(() => {
       return {
-        files: getFunctionalState(v$.value.files.$dirty, v$.value.files.$error, false),
+        modalFiles: getFunctionalState(v$.value.modalFiles.$dirty, v$.value.modalFiles.$error, false),
       };
     });
 
@@ -131,16 +131,16 @@ export default defineComponent({
      */
     const stateHasError = (field) => hasError(state, field);
 
-    const nonRemoteFiles = computed(() => files.value.filter(file => file.filetype === "file"));
+    const nonRemoteFiles = computed(() => modalFiles.value.filter(file => file.filetype === "file"));
 
     /**
      *
      * @param {Array<File>} newFiles
      */
     const setFiles = (newFiles) => {
-      files.value = nonRemoteFiles.value;
+      modalFiles.value = nonRemoteFiles.value;
       for(const file of newFiles) {
-        files.value.push({
+        modalFiles.value.push({
           file,
           description: "",
           format: file.type.includes("/") ? file.type.split("/").pop() || "" : file.type,
@@ -158,8 +158,8 @@ export default defineComponent({
      * @param {string} url
      */
      const setFileLink = (url) => {
-      files.value = [];
-      files.value.push({
+      modalFiles.value = [];
+      modalFiles.value.push({
         description: "",
         filetype: "remote",
         title: "",
@@ -172,10 +172,10 @@ export default defineComponent({
      *
      * @param {number} position
      */
-    const removeFile = (position) => files.value.splice(position, 1);
+    const removeFile = (position) => modalFiles.value.splice(position, 1);
 
     const close = () => {
-      files.value = [];
+      modalFiles.value = [];
       globalThis.dsfr(modalRef.value).modal.conceal();
       reset();
     };
@@ -183,11 +183,10 @@ export default defineComponent({
     const send = () => {
       validateRequiredRules().then(valid => {
         if(valid) {
-          emit('send', files.value);
+          emit('send', modalFiles.value);
           close();
         }
       });
-
     };
 
     return {

@@ -87,7 +87,7 @@
               <Container
                 color="alt-grey"
                 class="fr-grid-row fr-grid-row--middle flex-direction-column"
-                v-if="dataset.files.length === 0"
+                v-if="files.length === 0"
               >
                 <h3 class="fr-text--md fr-text--bold fr-m-0 fr-mb-2w">{{ $t("Add your first files") }}</h3>
                 <UploadModalButton
@@ -103,14 +103,13 @@
               </Container>
               <template v-else>
                   <FileCard
-                    v-for="(resource, index) in dataset.files"
+                    v-for="(resource, index) in files"
                     class="fr-mb-3v"
-                    :key="index"
                     :filename="resource.file?.name || resource.url"
                     :filesize="resource.filesize"
                     :format="resource.format"
                     :lastModified="resource.file?.lastModified"
-                    :missingMetadata="true"
+                    :missingMetadata="!resource.title || !resource.description"
                     :title="resource.title || resource.file?.name || ''"
                     @delete="removeFile(index)"
                     @edit="$emit('editFile', resource, index)"
@@ -140,7 +139,7 @@
   </div>
 </template>
 <script>
-import { computed, defineComponent, reactive } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -166,7 +165,7 @@ export default defineComponent({
       type: Array,
       required: true,
     },
-    files: {
+    originalFiles: {
       /** @type {import("vue").PropType<Array<import("../../types").DatasetFile>>} */
       type: Array,
       required: true,
@@ -177,10 +176,7 @@ export default defineComponent({
     const { id: publishFileAccordionId } = useUid("accordion");
     const { id: addDescriptionAccordionId } = useUid("accordion");
 
-    /** @type {import("vue").UnwrapNestedRefs<{files: Array<import("../../types").DatasetFile>}>} */
-    const dataset = reactive({
-      files: [...props.files],
-    });
+    const files = ref([...props.originalFiles]);
 
     const fileRequired = requiredWithCustomMessage(t("At least one file is required."));
 
@@ -200,26 +196,27 @@ export default defineComponent({
     const requiredRules = {
       files: { fileRequired },
     };
+
     const warningRules = {
-      files: { required: fileRequired, openFormat: withMessage(t("At least one file should have an open format."), onefileHasOpenFormats) },
+      files: { fileRequired, openFormat: withMessage(t("At least one file should have an open format."), onefileHasOpenFormats) },
       hasDocumentation: { hasDocumentation: withMessage(t("You don't add any documentation file or describe your files."), hasDocumentation) }
     };
 
-    const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(dataset, requiredRules, warningRules);
+    const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState({ files }, requiredRules, warningRules);
 
     /**
      *
-     * @param {Array<import("../../types").DatasetFile>} files
+     * @param {Array<import("../../types").DatasetFile>} newFiles
      */
-    const addFiles = (files) => {
-      dataset.files.push(...files);
+    const addFiles = (newFiles) => {
+      files.value.push(...newFiles);
     };
 
     /**
      *
      * @param {number} position
      */
-    const removeFile = (position) => dataset.files.splice(position, 1);
+    const removeFile = (position) => files.value.splice(position, 1);
 
     /**
      * @type {import("vue").ComputedRef<Record<string, import("../../types").AccordionFunctionalState>>}
@@ -232,6 +229,7 @@ export default defineComponent({
     });
 
     const touch = () => {
+      v$.value.files.$touch();
       vWarning$.value.files.$touch();
       vWarning$.value.hasDocumentation.$touch();
     };
@@ -239,7 +237,7 @@ export default defineComponent({
     const submit = () => {
       validateRequiredRules().then(validated => {
         if(validated) {
-          emit("next", dataset);
+          emit("next", files);
         }
       });
     };
@@ -259,7 +257,7 @@ export default defineComponent({
     return {
       addDescriptionAccordionId,
       addFiles,
-      dataset,
+      files,
       editIcon,
       getErrorText,
       getFunctionalState,

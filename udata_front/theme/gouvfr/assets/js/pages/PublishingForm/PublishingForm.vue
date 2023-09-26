@@ -13,7 +13,7 @@
   <template v-else-if="currentStep === 2">
     <Step3AddFiles
       v-if="editedFile === null"
-      :files="files"
+      :originalFiles="files"
       :steps="steps"
       @next="updateFilesAndMoveToNextStep"
       @editFile="editFile"
@@ -156,12 +156,6 @@ export default defineComponent({
       editedFile.value = null;
       editedIndex.value = null;
     }
-
-     /**
-     *
-     * @param {import("vue").MaybeRefOrGetter<import("../../types").DatasetFile>} updatedFile
-     */
-     const saveFile = (updatedFile) => files.value = toValue(updatedFile);
 
     return {
       currentStep,

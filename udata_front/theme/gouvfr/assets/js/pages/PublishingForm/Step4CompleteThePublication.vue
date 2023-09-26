@@ -17,7 +17,7 @@
           </div>
         </div>
       </Well>
-      <CardLg v-bind="originalDataset" :showMetrics="false" />
+      <CardLg v-bind="dataset" :showMetrics="false" />
       <div class="fr-grid-row justify-between">
         <a
             :href="publishing_form_feedback_url"
@@ -52,6 +52,7 @@ export default defineComponent({
   emits: ["next"],
   props: {
     originalDataset: {
+      /** @type {import("vue").PropType<import("../../types").Dataset>} */
       type: Object,
       required: true
     },
@@ -61,7 +62,7 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const dataset = reactive({...props.originalDataset});
+    const dataset = reactive({...props.originalDataset, private: false, last_update: new Date()});
     const submit = () => {
 
     };
