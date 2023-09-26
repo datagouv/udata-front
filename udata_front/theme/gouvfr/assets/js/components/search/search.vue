@@ -1,6 +1,6 @@
 <template>
   <form class="fr-pt-3v" @submit.prevent="search">
-    <div class="fr-grid-row fr-grid-row--middle justify-between search-bar" ref="searchRef">
+    <div class="fr-grid-row fr-grid-row--middle justify-between" ref="searchRef" data-cy="search">
       <SearchInput
         @change="handleSearchChange"
         :value="queryString"
@@ -349,7 +349,7 @@ export default defineComponent({
     const updateUrl = (save = SAVE_TO_HISTORY) => {
       // Update URL to match current search params value for deep linking
       let url = new URL(window.location.href);
-      const urlParams = searchParameters.value;
+      const urlParams = { ...searchParameters.value };
       if(props.organization) {
         delete urlParams.organization;
       }
