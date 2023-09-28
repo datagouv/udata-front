@@ -6,6 +6,8 @@ export default {
 };
 
 const args = {
+  redirectDraftUrl: "https://demo.data.gouv.fr/fr/datasets/?q=draft",
+  redirectPublishedUrl: "https://demo.data.gouv.fr/fr/datasets/?q=published"
 };
 
 export const Form = {
@@ -15,7 +17,7 @@ export const Form = {
       return { args };
     },
     template: ` <div class="bg-grey-50 fr-p-4w">
-                  <PublishingForm />
+                  <PublishingForm v-bind="args" />
                 </div>`,
   }),
   args,

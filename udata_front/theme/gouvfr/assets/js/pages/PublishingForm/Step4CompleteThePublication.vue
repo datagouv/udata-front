@@ -20,18 +20,18 @@
       <CardLg v-bind="dataset" :showMetrics="false" />
       <div class="fr-grid-row justify-between">
         <a
-            :href="publishing_form_feedback_url"
+            :href="feedbackUrl"
             class="fr-btn fr-btn--tertiary-no-outline fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-lightbulb-line"
         >
             {{ $t('Give us your feedback on the publishing form') }}
         </a>
         <div class="fr-grid-row fr-grid-row--right">
-          <button class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v" @click="submit">
+          <a :href="redirectDraftUrl" class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v">
             {{ $t("Save as draft") }}
-          </button>
-          <button class="fr-btn" @click="submit">
+          </a>
+          <a :href="redirectPublishedUrl" class="fr-btn">
             {{ $t("Publish the dataset") }}
-          </button>
+          </a>
         </div>
       </div>
     </Container>
@@ -44,22 +44,33 @@ import Container from '../../components/Ui/Container/Container.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Well from "../../components/Ui/Well/Well.vue";
 import CardLg from '../../components/dataset/card-lg.vue';
-import { publishing_form_feedback_url } from '../../config';
 import successIcon from "svg/illustrations/success.svg";
 
 export default defineComponent({
   components: { Container, Stepper, Well, CardLg },
   emits: ["next"],
   props: {
+    feedbackUrl: {
+      type: String,
+      required: true,
+    },
     originalDataset: {
       /** @type {import("vue").PropType<import("../../types").Dataset>} */
       type: Object,
       required: true
     },
+    redirectDraftUrl: {
+      type: String,
+      required: true,
+    },
+    redirectPublishedUrl: {
+      type: String,
+      required: true,
+    },
     steps: {
       type: Array,
       required: true,
-    }
+    },
   },
   setup(props) {
     const dataset = reactive({...props.originalDataset, private: false, last_update: new Date()});
@@ -69,7 +80,6 @@ export default defineComponent({
 
     return {
       dataset,
-      publishing_form_feedback_url,
       submit,
       successIcon,
     };

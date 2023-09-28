@@ -27,8 +27,11 @@
   </template>
   <Step4CompleteThePublication
     v-else-if="currentStep === 3"
+    :feedbackUrl="publishing_form_feedback_url"
     :steps="steps"
     :originalDataset="dataset"
+    :redirectDraftUrl="redirectDraftUrl"
+    :redirectPublishedUrl="redirectPublishedUrl"
   />
 </template>
 <script>
@@ -39,7 +42,8 @@ import Step2DescribeDataset from './Step2DescribeDataset.vue';
 import Step3AddFiles from './Step3AddFiles.vue';
 import Step3UpdateFileMetadata from "./Step3UpdateFileMetadata.vue";
 import Step4CompleteThePublication from "./Step4CompleteThePublication.vue";
-import { user } from '../../config';
+import { publishing_form_feedback_url, user } from '../../config';
+import createDataset from '../../api/datasets';
 
 export default defineComponent({
   components: { Step1PublishingType, Step2DescribeDataset, Step3AddFiles, Step3UpdateFileMetadata, Step4CompleteThePublication },
@@ -51,6 +55,14 @@ export default defineComponent({
     owner: {
       /** @type {import("vue").PropType<import("../../types").User>} */
       type: Object,
+    },
+    redirectDraftUrl: {
+      type: String,
+      required: true,
+    },
+    redirectPublishedUrl: {
+      type: String,
+      required: true,
     },
   },
   setup(props) {
@@ -104,6 +116,8 @@ export default defineComponent({
       ...owned,
     });
 
+
+
     /** @type {import("vue").Ref<Array<import("../../types").DatasetFile>>} */
     const files = ref([]);
 
@@ -141,6 +155,10 @@ export default defineComponent({
     const updateFilesAndMoveToNextStep = (files) => {
       updateFiles(files);
       currentStep.value = 3;
+      createDataset(dataset).then(savedDataset => {
+        console.log(savedDataset);
+
+      }).catch(e => console.log(e));
     }
 
     const editFile = (resource, index) => {
@@ -163,6 +181,7 @@ export default defineComponent({
       editFile,
       editedFile,
       files,
+      publishing_form_feedback_url,
       steps,
       updateDatasetAndMoveToNextStep,
       updateEditedFile,

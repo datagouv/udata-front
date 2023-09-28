@@ -12,6 +12,7 @@ export default {
   },
   decorators: [withActions],
 };
+
 /**
  * @typedef {{
  *  [Property in keyof import("../../types").Dataset

@@ -12,7 +12,10 @@ const originalDataset = Step2.Step2.args.originalDataset;
 
 const args = {
   originalDataset,
+  feedbackUrl: "https://demo.data.gouv.fr/fr/datasets/?q=feedback",
   steps: Stepper.StepperOnSecondStep.args.steps,
+  redirectDraftUrl: "https://demo.data.gouv.fr/fr/datasets/?q=draft",
+  redirectPublishedUrl: "https://demo.data.gouv.fr/fr/datasets/?q=published",
 };
 
 export const Step4 = {
