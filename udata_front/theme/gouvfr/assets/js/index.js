@@ -19,6 +19,7 @@ import Toggletip from "./components/utils/Toggletip/Toggletip.vue";
 import "./components/vanilla/tabs";
 import "./components/vanilla/accordion";
 import "./components/vanilla/clipboard";
+import "./components/vanilla/dialog";
 import "./components/vanilla/sort-search";
 import handleUpdateUrlButtons from "./components/vanilla/update-url";
 
