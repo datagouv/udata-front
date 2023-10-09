@@ -1,42 +1,45 @@
 <template>
-  <Step1PublishingType
-    v-if="currentStep === 0"
-    :steps="steps"
-    @start="currentStep = 1"
-  />
-  <Step2DescribeDataset
-    v-else-if="currentStep === 1"
-    :originalDataset="dataset"
-    :steps="steps"
-    @next="updateDatasetAndMoveToNextStep"
-  />
-  <template v-else-if="currentStep === 2">
-    <Step3AddFiles
-      v-if="editedFile === null"
-      :originalFiles="files"
+  <div ref="containerRef">
+    <Step1PublishingType
+      v-if="currentStep === 0"
       :steps="steps"
-      @next="updateFilesAndMoveToNextStep"
-      @editFile="editFile"
+      @start="moveToStep(1)"
     />
-    <Step3UpdateFileMetadata
-      v-else
-      :datasetFile="editedFile"
+    <Step2DescribeDataset
+      v-else-if="currentStep === 1"
+      :originalDataset="dataset"
       :steps="steps"
-      @next="updateEditedFile"
+      @next="updateDatasetAndMoveToNextStep"
     />
-  </template>
-  <Step4CompleteThePublication
-    v-else-if="currentStep === 3"
-    :feedbackUrl="publishing_form_feedback_url"
-    :steps="steps"
-    :originalDataset="dataset"
-    :redirectDraftUrl="redirectDraftUrl"
-    :redirectPublishedUrl="redirectPublishedUrl"
-  />
+    <template v-else-if="currentStep === 2">
+      <Step3AddFiles
+        v-if="editedFile === null"
+        :originalFiles="files"
+        :steps="steps"
+        @next="updateFilesAndMoveToNextStep"
+        @editFile="editFile"
+      />
+      <Step3UpdateFileMetadata
+        v-else
+        :datasetFile="editedFile"
+        :steps="steps"
+        @next="updateEditedFile"
+      />
+    </template>
+    <Step4CompleteThePublication
+      v-else-if="currentStep === 3"
+      :feedbackUrl="publishing_form_feedback_url"
+      :steps="steps"
+      :originalDataset="dataset"
+      :redirectDraftUrl="redirectDraftUrl"
+      :redirectPublishedUrl="redirectPublishedUrl"
+    />
+  </div>
 </template>
 <script>
 import { defineComponent, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { templateRef, useEventListener } from '@vueuse/core';
 import Step1PublishingType from "./Step1PublishingType.vue";
 import Step2DescribeDataset from './Step2DescribeDataset.vue';
 import Step3AddFiles from './Step3AddFiles.vue';
@@ -44,6 +47,7 @@ import Step3UpdateFileMetadata from "./Step3UpdateFileMetadata.vue";
 import Step4CompleteThePublication from "./Step4CompleteThePublication.vue";
 import { publishing_form_feedback_url, user } from '../../config';
 import createDataset from '../../api/datasets';
+import { createFile } from '../../api/resources';
 
 export default defineComponent({
   components: { Step1PublishingType, Step2DescribeDataset, Step3AddFiles, Step3UpdateFileMetadata, Step4CompleteThePublication },
@@ -69,8 +73,13 @@ export default defineComponent({
     const { t } = useI18n();
     const steps = [t("Publish data on data.gouv.fr"), t("Describe your dataset"), t("Add files"), t("Complete your publishing")];
     const currentStep = ref(0);
+
+    /** @type {import("vue").Ref<HTMLDivElement | null>} */
+    const containerRef = templateRef('containerRef');
+
     /** @type {import("../../types").Owned} */
     let owned;
+
     if(props.organization) {
       owned = /** @type {import("../../types").OwnedByOrganization} */( {
       organization: props.organization,
@@ -83,7 +92,7 @@ export default defineComponent({
       };
     }
 
-    /** @type {import("vue").Ref<import("../../types").Dataset>} */
+    /** @type {import("vue").Ref<import("../../types").NewDataset>} */
     const dataset = ref({
       archived: false,
       page: "",
@@ -97,7 +106,7 @@ export default defineComponent({
       last_update: null,
       private: true,
       spatial: {
-        zones: "",
+        zones: [],
         granularity: "",
       },
       quality: {
@@ -116,8 +125,6 @@ export default defineComponent({
       ...owned,
     });
 
-
-
     /** @type {import("vue").Ref<Array<import("../../types").DatasetFile>>} */
     const files = ref([]);
 
@@ -129,17 +136,38 @@ export default defineComponent({
 
     /**
      *
-     * @param {import("vue").MaybeRefOrGetter<import("../../types").Dataset>} updatedDataset
+     * @param {number | null} step
+     */
+    const moveToStep = (step = null, saveToHistory = true) => {
+      if(containerRef.value) {
+        containerRef.value.scrollIntoView({
+          behavior: "smooth"
+        });
+      }
+      if(step !== null) {
+        currentStep.value = step;
+        if(saveToHistory) {
+          let url = new URL(window.location.href);
+          const targetHash = `#/step-${step + 1}`;
+          url.hash = targetHash;
+          window.history.pushState(null, "", url);
+        }
+      }
+    };
+
+    /**
+     *
+     * @param {import("vue").MaybeRefOrGetter<import("../../types").NewDataset>} updatedDataset
      */
     const updateDataset = (updatedDataset) => dataset.value = toValue(updatedDataset);
 
     /**
      *
-     * @param {import("vue").MaybeRefOrGetter<import("../../types").Dataset>} updatedDataset
+     * @param {import("vue").MaybeRefOrGetter<import("../../types").NewDataset>} updatedDataset
      */
     const updateDatasetAndMoveToNextStep = (updatedDataset) => {
       updateDataset(updatedDataset);
-      currentStep.value = 2;
+      moveToStep(2);
     };
 
     /**
@@ -154,16 +182,21 @@ export default defineComponent({
      */
     const updateFilesAndMoveToNextStep = (files) => {
       updateFiles(files);
-      currentStep.value = 3;
       createDataset(dataset).then(savedDataset => {
+        const filesToUpload = toValue(files);
+        const promises = [];
+        for(const file of filesToUpload) {
+          promises.push(createFile(savedDataset.id, file));
+        }
         console.log(savedDataset);
-
+        moveToStep(3);
       }).catch(e => console.log(e));
     }
 
     const editFile = (resource, index) => {
       editedFile.value = toValue(resource);
       editedIndex.value = index;
+      moveToStep();
     };
 
     const updateEditedFile = (file) => {
@@ -173,7 +206,16 @@ export default defineComponent({
       }
       editedFile.value = null;
       editedIndex.value = null;
+      moveToStep();
     }
+
+    useEventListener(window, 'hashchange', (evt) => {
+      const hash = window.location.hash;
+      const step = hash.substring(7);
+      const parsedStep = parseInt(step, 10) - 1|| 0;
+      const dontSave = false;
+      moveToStep(parsedStep, dontSave);
+    });
 
     return {
       currentStep,
@@ -181,6 +223,7 @@ export default defineComponent({
       editFile,
       editedFile,
       files,
+      moveToStep,
       publishing_form_feedback_url,
       steps,
       updateDatasetAndMoveToNextStep,

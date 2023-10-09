@@ -147,7 +147,7 @@ export default defineComponent({
           filesize: file.size,
           filetype: "file",
           mime: file.type,
-          title: "",
+          title: file.name,
           type: "main"
         });
       }

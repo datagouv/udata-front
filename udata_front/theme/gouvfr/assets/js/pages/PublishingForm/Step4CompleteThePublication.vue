@@ -55,7 +55,7 @@ export default defineComponent({
       required: true,
     },
     originalDataset: {
-      /** @type {import("vue").PropType<import("../../types").Dataset>} */
+      /** @type {import("vue").PropType<import("../../types").NewDataset>} */
       type: Object,
       required: true
     },

@@ -15,9 +15,9 @@ export default {
 
 /**
  * @typedef {{
- *  [Property in keyof import("../../types").Dataset
+ *  [Property in keyof import("../../types").NewDataset
  *    as Extract<Property, "acronym" | "archived" | "description" | "last_update" | "license" | "page" | "private" | "quality" | "title" | "owner" | "organization">
- *  ]: import("../../types").Dataset[Property]
+ *  ]: import("../../types").NewDataset[Property]
  * } & {metrics?: Object, showMetrics: Boolean, style?: Object}} CardLGProps
  */
 

@@ -70,6 +70,8 @@ gouvfr_menu = nav.Bar('gouvfr_menu', [
     ]),
     nav.Item(_('News'), 'posts.list'),
     nav.Item(_('Contact us'), None, url=current_app.config.get('SUPPORT_EXTERNAL_LINK', '#')),
+    nav.Item(_('Publishing Form'), 'datasets.publishing-form'),
+    # TODO: REMOVE
 ])
 
 theme.menu(gouvfr_menu)

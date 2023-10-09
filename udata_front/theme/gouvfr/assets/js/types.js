@@ -61,75 +61,68 @@
   * @typedef {"start" | "center" | "end"} AxisAlignment
   */
 
-   /**
-  * @typedef {"default" } DSFRFormDefaultState
-  */
+/**
+ * @typedef {"default" } DSFRFormDefaultState
+ * @typedef {"error" | "success"} DSFRFormFunctionalState
+ * @typedef {DSFRFormDefaultState | DSFRFormFunctionalState } DSFRFormState
+ * @typedef {DSFRFormFunctionalState | "warning"} FormFunctionalState
+ * @typedef {FormFunctionalState | "disabled"} AccordionFunctionalState
+ * @typedef {"info"} AccordionInfoState
+ * @typedef {AccordionFunctionalState | AccordionInfoState} PublishingFormAccordionState
+ * @typedef {DSFRFormDefaultState | AccordionFunctionalState | AccordionInfoState} AccordionState
+ */
 
-   /**
-  * @typedef {"error" | "success"} DSFRFormFunctionalState
-  */
+/**
+ * @typedef {typeof import("./helpers").RESOURCE_TYPE[number]} ResourceType
+ */
 
-  /**
-  * @typedef {DSFRFormDefaultState | DSFRFormFunctionalState } DSFRFormState
-  */
+/**
+ * @typedef {"remote"} RemoteResourceFileType
+ * @typedef {"file"} FileResourceFileType
+ * @typedef { RemoteResourceFileType | FileResourceFileType} ResourceFileType
+ */
 
-  /**
-  * @typedef {DSFRFormFunctionalState | "warning"} FormFunctionalState
-  */
+/**
+ * @typedef {typeof import("./helpers").CLOSED_FORMATS[number]} ClosedFormats
+ */
 
-  /**
-  * @typedef {FormFunctionalState | "disabled"} AccordionFunctionalState
-  */
+/**
+ * @typedef {Owned & {
+ *  title: string,
+ *  acronym: string,
+ *  archived: boolean,
+ *  description: string,
+ *  tags: Array<string> | null,
+ *  license: string,
+ *  frequency: string,
+ *  temporal_coverage: string,
+ *  last_update: Date | null,
+ *  page: string,
+ *  private: boolean,
+ *  quality?: Quality,
+ *  spatial: {
+ *    zones?: Array<string>,
+ *    granularity?: string,
+ *  } | null
+ * }} NewDataset
+ */
 
-  /**
-  * @typedef {"info"} AccordionInfoState
-  */
+/**
+ * @typedef {NewDataset & {
+ *  id: string
+ * }} Dataset
+ */
 
-  /**
-  * @typedef {AccordionFunctionalState | AccordionInfoState} PublishingFormAccordionState
-  */
-
-  /**
-  * @typedef {DSFRFormDefaultState | AccordionFunctionalState | AccordionInfoState} AccordionState
-  */
-
-  /**
-   * @typedef {typeof import("./helpers").RESOURCE_TYPE[number]} ResourceType
-   */
-
-  /**
-   * @typedef {"remote" | "file"} ResourceFileType
-   */
-
-  /**
-   * @typedef {typeof import("./helpers").CLOSED_FORMATS[number]} ClosedFormats
-   */
-
-  /**
-   * @typedef {Owned & {
-   *  title: string,
-   *  acronym: string,
-   *  archived: boolean,
-   *  description: string,
-   *  tags: Array<string> | null,
-   *  license: string,
-   *  frequency: string,
-   *  temporal_coverage: string,
-   *  last_update: Date | null,
-   *  page: string,
-   *  private: boolean,
-   *  quality?: Quality,
-   *  spatial: {
-   *    zones: string,
-   *    granularity: string,
-   *  }
-   * }} Dataset
-   */
-
-  /**
-   * @typedef {{rid?: string, description: string?, filetype: ResourceFileType, schema?: string, title: string, type: ResourceType, url: string}} DatasetRemoteFile
-   * @typedef {{rid?: string, file: File, sha256?: string, description: string?, format: string, filesize: number, filetype: ResourceFileType, mime: string, schema?: string, title: string, type: ResourceType}} DatasetLocalFile
-   * @typedef {DatasetLocalFile | DatasetRemoteFile} DatasetFile
-   */
+/**
+ * @typedef {{rid?: string, description: string?, filetype: RemoteResourceFileType, schema?: string, title: string, type: ResourceType, url: string}} DatasetRemoteFile
+ * @typedef {{rid?: string, file: File, sha256?: string, description: string?, format: string, filesize: number, filetype: FileResourceFileType, mime: string, schema?: string, title: string, type: ResourceType}} DatasetLocalFile
+ * @typedef {DatasetLocalFile | DatasetRemoteFile} DatasetFile
+ *
+ * @typedef {{file: Blob, uuid: string, filename: string}} DatasetFullFileUpload
+ * @typedef {DatasetFullFileUpload & {partindex: number, partbyteoffset: number, totalparts: number, chunksize: number}} DatasetChunkUpload
+ * @typedef {{uuid: string, filename: string, totalparts: number}} DatasetCombineChunkUpload
+ * @typedef {{"error": string | null, "message": string, "success": boolean}} DatasetChunkResponse
+ * @typedef {DatasetFullFileUpload | DatasetChunkUpload} DatasetFileUpload
+ */
 
  export default {};
