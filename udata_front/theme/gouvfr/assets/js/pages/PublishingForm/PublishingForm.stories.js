@@ -7,7 +7,6 @@ export default {
 
 const args = {
   redirectDraftUrl: "https://demo.data.gouv.fr/fr/datasets/?q=draft",
-  redirectPublishedUrl: "https://demo.data.gouv.fr/fr/datasets/?q=published"
 };
 
 export const Form = {

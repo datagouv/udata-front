@@ -15,7 +15,6 @@ const args = {
   feedbackUrl: "https://demo.data.gouv.fr/fr/datasets/?q=feedback",
   steps: Stepper.StepperOnSecondStep.args.steps,
   redirectDraftUrl: "https://demo.data.gouv.fr/fr/datasets/?q=draft",
-  redirectPublishedUrl: "https://demo.data.gouv.fr/fr/datasets/?q=published",
 };
 
 export const Step4 = {

@@ -29,9 +29,9 @@
           <a :href="redirectDraftUrl" class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v">
             {{ $t("Save as draft") }}
           </a>
-          <a :href="redirectPublishedUrl" class="fr-btn">
+          <button @click="submit" class="fr-btn">
             {{ $t("Publish the dataset") }}
-          </a>
+          </button>
         </div>
       </div>
     </Container>
@@ -48,22 +48,18 @@ import successIcon from "svg/illustrations/success.svg";
 
 export default defineComponent({
   components: { Container, Stepper, Well, CardLg },
-  emits: ["next"],
+  emits: ["redirectToPublicUrl"],
   props: {
     feedbackUrl: {
       type: String,
       required: true,
     },
     originalDataset: {
-      /** @type {import("vue").PropType<import("../../types").NewDataset>} */
+      /** @type {import("vue").PropType<import("../../types").Dataset>} */
       type: Object,
       required: true
     },
     redirectDraftUrl: {
-      type: String,
-      required: true,
-    },
-    redirectPublishedUrl: {
       type: String,
       required: true,
     },
@@ -72,10 +68,10 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
-    const dataset = reactive({...props.originalDataset, private: false, last_update: new Date()});
+  setup(props, { emit }) {
+    const dataset = reactive({...props.originalDataset, private: false});
     const submit = () => {
-
+      emit("redirectToPublicUrl");
     };
 
     return {

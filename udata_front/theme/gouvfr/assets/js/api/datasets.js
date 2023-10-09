@@ -41,10 +41,22 @@ function formatDatasetForUpload(datasetRef) {
 * @param {import("vue").MaybeRefOrGetter<import("../types").NewDataset>} dataset
 * @returns {Promise<import("../types").Dataset>}
 */
-export default function createDataset(dataset) {
+export function createDataset(dataset) {
   /** @type {DatasetToUpload} */
   const datasetToUpload = formatDatasetForUpload(dataset);
   return api.post("datasets/", {
+    ...datasetToUpload,
+  }).then(resp => resp.data);
+}
+
+/**
+* @param {import("vue").MaybeRefOrGetter<import("../types").Dataset>} dataset
+* @returns {Promise<import("../types").Dataset>}
+*/
+export function publishDataset(dataset) {
+  const datasetToUpload = toValue(dataset);
+  datasetToUpload.private = false;
+  return api.put("datasets/" + datasetToUpload.id, {
     ...datasetToUpload,
   }).then(resp => resp.data);
 }

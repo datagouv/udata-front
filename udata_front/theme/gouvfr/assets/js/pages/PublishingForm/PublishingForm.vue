@@ -30,9 +30,9 @@
       v-else-if="currentStep === 3"
       :feedbackUrl="publishing_form_feedback_url"
       :steps="steps"
-      :originalDataset="dataset"
-      :redirectDraftUrl="redirectDraftUrl"
-      :redirectPublishedUrl="redirectPublishedUrl"
+      :originalDataset="savedDataset"
+      :redirectDraftUrl="draftUrl"
+      @redirectToPublicUrl="redirectToPublicUrl"
     />
   </div>
 </template>
@@ -46,7 +46,7 @@ import Step3AddFiles from './Step3AddFiles.vue';
 import Step3UpdateFileMetadata from "./Step3UpdateFileMetadata.vue";
 import Step4CompleteThePublication from "./Step4CompleteThePublication.vue";
 import { publishing_form_feedback_url, user } from '../../config';
-import createDataset from '../../api/datasets';
+import { createDataset, publishDataset } from '../../api/datasets';
 import { createFile } from '../../api/resources';
 
 export default defineComponent({
@@ -61,10 +61,6 @@ export default defineComponent({
       type: Object,
     },
     redirectDraftUrl: {
-      type: String,
-      required: true,
-    },
-    redirectPublishedUrl: {
       type: String,
       required: true,
     },
@@ -125,6 +121,11 @@ export default defineComponent({
       ...owned,
     });
 
+    /** @type {import("vue").Ref<import("../../types").Dataset | null>} */
+    const savedDataset = ref(null);
+
+    const draftUrl = ref(props.redirectDraftUrl);
+
     /** @type {import("vue").Ref<Array<import("../../types").DatasetFile>>} */
     const files = ref([]);
 
@@ -182,16 +183,25 @@ export default defineComponent({
      */
     const updateFilesAndMoveToNextStep = (files) => {
       updateFiles(files);
-      createDataset(dataset).then(savedDataset => {
+      createDataset(dataset).then(datasetFromApi => {
+        savedDataset.value = datasetFromApi;
+
+        draftUrl.value = draftUrl.value + savedDataset.value.id;
+
         const filesToUpload = toValue(files);
         const promises = [];
         for(const file of filesToUpload) {
-          promises.push(createFile(savedDataset.id, file));
+          promises.push(createFile(savedDataset.value.id, file));
         }
-        console.log(savedDataset);
         moveToStep(3);
       }).catch(e => console.log(e));
     }
+
+    const redirectToPublicUrl = () => {
+      if(savedDataset.value) {
+        publishDataset(savedDataset.value).then((dataset) => window.open(dataset.page, "_self"));
+      }
+    };
 
     const editFile = (resource, index) => {
       editedFile.value = toValue(resource);
@@ -220,11 +230,14 @@ export default defineComponent({
     return {
       currentStep,
       dataset,
+      draftUrl,
       editFile,
       editedFile,
       files,
       moveToStep,
       publishing_form_feedback_url,
+      redirectToPublicUrl,
+      savedDataset,
       steps,
       updateDatasetAndMoveToNextStep,
       updateEditedFile,
