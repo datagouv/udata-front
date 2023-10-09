@@ -74,6 +74,14 @@ const chunkSize = 2000000;
 /**
  *
  * @param {string} datasetId
+ */
+export function getUploadUrl(datasetId) {
+  return `datasets/${datasetId}/upload/`;
+}
+
+/**
+ *
+ * @param {string} datasetId
  * @param {import("../types").DatasetFile} file
  */
 export function createFile(datasetId, file) {
@@ -114,7 +122,7 @@ export function createFileResource(datasetId, file) {
     return createChunksResource(datasetId, file);
   }
 
-  return api.postForm(`datasets/${datasetId}/upload/`, {
+  return api.postForm(getUploadUrl(datasetId), {
     ...apiForm,
   });
 }
@@ -137,29 +145,37 @@ export function createChunksResource(datasetId, file) {
 
   for(let i = 0; i < nbChunks; i++) {
     createChunkResource(datasetId, file, i, chunkStart, nbChunks);
+    chunkStart += chunkSize;
   }
+
+  return api.postForm(getUploadUrl(datasetId), {
+    ...apiForm,
+  });
 }
 
 
 /**
- *
- * @param {string} datasetId
- * @param {import("../types").DatasetLocalFile} file
- * @returns {Promise<>}
- */
+* @param {string} datasetId
+* @param {import("../types").DatasetLocalFile} file
+* @param {number} index
+* @param {number} offset
+* @param {number} nbChunks
+* @returns {Promise}
+*/
 export function createChunkResource(datasetId, file, index, offset, nbChunks) {
+  const chunk = file.file.slice(offset, offset + chunkSize, file.file.type);
   /** @type {import("../types").DatasetChunkUpload} */
   const apiForm = {
     uuid: uuidv4(),
     filename: file.file.name,
-    file: file.file,
-    partindex: 0,
-    partbyteoffset: 0,
-    totalparts: 0,
-    chunksize: chunkSize,
+    file: chunk,
+    partindex: index,
+    partbyteoffset: offset,
+    totalparts: nbChunks,
+    chunksize: chunk.size,
   };
 
-  return api.postForm(`datasets/${datasetId}/upload/`, {
+  return api.postForm(getUploadUrl(datasetId), {
     ...apiForm,
   });
 }
