@@ -24,6 +24,7 @@ const config = {
     name: "@storybook/vue3-vite",
     options: {}
   },
+  staticDirs: ['./msw'],
   viteFinal: async config => {
     config.plugins = await withoutVitePlugins(config.plugins, ["vite:legacy", "vite:legacy-config", "vite:legacy-generate-polyfill-chunk", "vite:legacy-post-process", "vite:legacy-polyfills"]);
     return mergeConfig(config, {
