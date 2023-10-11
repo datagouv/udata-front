@@ -25,7 +25,7 @@ function closeDialog (dialog) {
  * @param {number} triggerCount
  * @param {string} startsWithString
  */
-function triggerDialog(dialog, triggerCount = 1, startsWithString = '/') {
+function triggerDialog(dialog, triggerCount = 3, startsWithString = '/') {
   const path = window.location.pathname;
   const dialogId = dialog.id;
   const hasAlreadyBeenTriggered = window.localStorage.getItem(dialogId) || false;

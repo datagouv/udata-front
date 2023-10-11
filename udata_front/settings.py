@@ -24,7 +24,6 @@ BANNER_HTML_CONTENT_FR = ''
 DATA_SEARCH_FEEDBACK_FORM_URL = ''
 
 # Frontend forms url
-FEEDBACK_FORM_URL = ''
 DISCOVERABILITY_FORM_URL = ''
 
 # Static pages from github repo
