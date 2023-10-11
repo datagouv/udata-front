@@ -65,7 +65,10 @@
                         <ul class="fr-btns-group">
                             {% if current_user.is_authenticated %}
                                 <li>
-                                    <div class="fr-btn fr-icon-svg fr-icon--sm fr-grid-row text-grey-500">
+                                    <a
+                                        href="{{ url_for('users.show', user=current_user) }}"
+                                        class="fr-btn fr-icon-svg fr-icon--sm fr-grid-row"
+                                    >
                                         <img
                                             src="{{ current_user|avatar_url(24) }}"
                                             width="24"
@@ -75,7 +78,7 @@
                                             class="fr-mr-1w rounded-circle"
                                         />
                                         {{ current_user.fullname }}
-                                    </div>
+                                    </a>
                                 </li>
                                 <li>
                                     <a

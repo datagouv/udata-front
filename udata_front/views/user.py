@@ -7,7 +7,7 @@ from udata_front.views.base import DetailView
 from udata.models import User, Activity, Organization, Dataset, Reuse, Follow
 from udata.i18n import I18nBlueprint
 
-from udata.core.user.permissions import sysadmin
+from udata.core.user.permissions import sysadmin, UserEditPermission
 
 
 blueprint = I18nBlueprint('users', __name__, url_prefix='/users')
@@ -40,6 +40,19 @@ class UserView(object):
         return context
 
 
+
+@blueprint.route('/<user:user>/', endpoint='show')
+class UserDetailView(UserView, DetailView):
+    template_name = 'user/base.html'
+
+    def get_context(self):
+        context = super(UserDetailView, self).get_context()
+        context['datasets'] = Dataset.objects(owner=self.user).visible()
+        context['reuses'] = Reuse.objects(owner=self.user).visible()
+        context['can_edit'] = UserEditPermission(self.user)
+
+        return context
+
 @blueprint.route('/<user:user>/datasets/', endpoint='datasets')
 class UserDatasetsView(UserView, DetailView):
     template_name = 'user/datasets.html'
@@ -60,7 +73,7 @@ class UserReusesView(UserView, DetailView):
         return context
 
 
-@blueprint.route('/<user:user>/', endpoint='show')
+@blueprint.route('/<user:user>/', endpoint='activities')
 class UserActivityView(UserView, DetailView):
     template_name = 'user/activity.html'
 
