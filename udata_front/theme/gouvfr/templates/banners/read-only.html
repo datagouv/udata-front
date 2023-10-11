@@ -1,9 +1,5 @@
-<div class="bg-contrast-warning fr-py-3v fr-px-1w">
-    <div class="fr-container">
-        <div class="fr-grid-row fr-grid-row--middle text-align-center-sm">
-            <p class="text-default-warning">
-                {{ _('Due to security reasons, the creation of new content is currently disabled.') }}
-            </p>
-        </div>
-    </div>
-</div>
+{% from theme('macros/banner_warning.html') import banner_warning %}
+{{ banner_warning(
+    "fr-icon-alert-line",
+    _('Due to security reasons, the creation of new content is currently disabled.')
+)}}

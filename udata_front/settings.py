@@ -24,7 +24,7 @@ BANNER_HTML_CONTENT_FR = ''
 DATA_SEARCH_FEEDBACK_FORM_URL = ''
 
 # Frontend forms url
-FEEDBACK_FORM_URL = 'https://tally.so/r/mOld5R'
+DISCOVERABILITY_FORM_URL = ''
 
 # Static pages from github repo
 PAGES_GH_REPO_NAME = 'etalab/datagouvfr-pages'
