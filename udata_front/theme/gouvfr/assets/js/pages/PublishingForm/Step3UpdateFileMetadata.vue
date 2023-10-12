@@ -91,12 +91,12 @@
             <div class="fr-fieldset__element">
               <FileCard
                 class="fr-mb-3v"
-                :filename="file.file.name"
+                :filename="file.file?.name"
                 :filesize="file.filesize"
                 :format="file.format"
-                :lastModified="file.file.lastModified"
+                :lastModified="file.file?.lastModified"
                 :missingMetadata="v$.$invalid"
-                :title="file.title || file.file.name"
+                :title="file.title || file.file?.name || ''"
                 :hideActions="true"
               />
             </div>
