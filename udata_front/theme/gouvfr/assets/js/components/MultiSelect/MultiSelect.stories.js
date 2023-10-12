@@ -11,6 +11,7 @@ const args = {
   emptyPlaceholder: "Select an option",
   allOption: "Select something",
   initialOptions: Promise.resolve(["Option 1", "Option 2"]),
+  values: null,
 };
 
 export const SimpleMultiSelect = {
@@ -63,5 +64,20 @@ export const BlueMultiSelect = {
   args: {
     ...args,
     isBlue: true,
+  },
+};
+
+export const MultipleMultiSelect = {
+  render: (args) => ({
+    components: { MultiSelect },
+    setup() {
+      return { args };
+    },
+    template: '<MultiSelect v-bind="args"/>',
+  }),
+  args: {
+    ...args,
+    multiple: true,
+    values: [],
   },
 };

@@ -103,6 +103,7 @@ const t = (message) => message;
 export const required = withI18nMessage(vRequired, { messagePath: () => t("The field {property} is required.")});
 export const requiredWithCustomMessage = passLocalizedMessageWithoutArguments(vRequired);
 export const minLength = withI18nMessage(vMinLength, { messagePath: () => t("The {property} field has a minimum length of {min}."), withArguments: true });
+export const minLengthWarning = withI18nMessage(vMinLength, { messagePath: () => t("It's advised to have a {property} of at least {min} characters."), withArguments: true });
 export const not = passLocalizedMessageWithArguments(vNot);
 export const sameAs = withI18nMessage(vSameAs, { messagePath: () => t("The value must be equal to the ${otherName} value"), withArguments: true });
 

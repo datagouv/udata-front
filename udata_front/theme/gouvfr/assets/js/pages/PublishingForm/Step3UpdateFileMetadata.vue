@@ -62,6 +62,9 @@
                   <li>{{ $t("a description of major changes.") }}</li>
                 </ul>
               </div>
+              <Well class="fr-mt-1w" v-if="stateHasWarning('description')" color="orange-terre-battue">
+                {{ getWarningText("description") }}
+              </Well>
             </Accordion>
             <Accordion
               :title= "$t('Select a schema')"
@@ -130,14 +133,13 @@
             <LinkedToAccordion
               class="fr-fieldset__element min-width-0"
               :accordion="writeAGoodDescriptionAccordionId"
-              @blur="v$.description.$touch"
+              @blur="vWarning$.description.$touch"
             >
               <InputGroup
                 :label="$t('Description')"
-                :required="true"
                 v-model="file.description"
-                :hasError="stateHasError('description')"
-                :errorText="getErrorText('description')"
+                :hasWarning="stateHasWarning('description')"
+                :errorText="getWarningText('description')"
                 type="textarea"
               />
             </LinkedToAccordion>
@@ -176,14 +178,15 @@ import SchemaSelect from "../../components/SchemaSelect/SchemaSelect.vue";
 import SelectGroup from '../../components/Form/SelectGroup/SelectGroup.vue';
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
+import Well from "../../components/Ui/Well/Well.vue";
 import useFunctionalState from '../../composables/useFunctionalState';
 import useUid from "../../composables/useUid";
-import { schema_documentation_url } from "../../config";
+import { quality_description_length, schema_documentation_url } from "../../config";
 import { RESOURCE_TYPE, getResourceLabel } from '../../helpers';
-import { required } from '../../i18n';
+import { minLengthWarning, required } from '../../i18n';
 
 export default defineComponent({
-  components: { Accordion, AccordionGroup, Container, InputGroup, FileCard, LinkedToAccordion, SchemaSelect, SelectGroup, Sidemenu, Stepper },
+  components: { Accordion, AccordionGroup, Container, InputGroup, FileCard, LinkedToAccordion, SchemaSelect, SelectGroup, Sidemenu, Stepper, Well },
   emits: ["next"],
   props: {
     steps: {
@@ -208,11 +211,16 @@ export default defineComponent({
     const requiredRules = {
       title: { required },
       type: { required },
-      description: { required },
-      schema: {},
+      schema: {}
     };
 
-    const { getErrorText, getFunctionalState, hasError, validateRequiredRules, v$ } = useFunctionalState(file, requiredRules, requiredRules);
+    const warningRules = {
+      title: { required },
+      type: { required },
+      description: { minLengthValue: minLengthWarning(quality_description_length) },
+    };
+
+    const { getErrorText, getWarningText, getFunctionalState, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(file, requiredRules, warningRules);
 
     /**
      * @type {import("vue").ComputedRef<Record<string, import("../../types").PublishingFormAccordionState>>}
@@ -221,7 +229,7 @@ export default defineComponent({
       return {
         title: getFunctionalState(v$.value.title.$dirty, v$.value.title.$error, false),
         type: getFunctionalState(v$.value.type.$dirty, v$.value.type.$error, false),
-        description: getFunctionalState(v$.value.description.$dirty, v$.value.description.$error, false),
+        description: getFunctionalState(vWarning$.value.description.$dirty, false, vWarning$.value.description.$error),
         schema: v$.value.schema.$dirty ? "info" : "disabled",
       };
     });
@@ -235,6 +243,12 @@ export default defineComponent({
      * @param {string} field
      */
      const stateHasError = (field) => hasError(state, field);
+
+     /**
+     *
+     * @param {string} field
+     */
+     const stateHasWarning = (field) => hasWarning(state, field);
 
      const submit = () => {
       validateRequiredRules().then(validated => {
@@ -254,9 +268,12 @@ export default defineComponent({
       schema_documentation_url,
       state,
       getErrorText,
+      getWarningText,
       stateHasError,
+      stateHasWarning,
       submit,
       v$,
+      vWarning$,
     }
   },
 });

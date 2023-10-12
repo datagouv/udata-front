@@ -202,6 +202,7 @@
                 suggestUrl="/tags/suggest/"
                 :values="dataset.tags"
                 :hasWarning="stateHasWarning('tags')"
+                :multiple="true"
               />
             </LinkedToAccordion>
             <LinkedToAccordion
@@ -292,7 +293,7 @@
                     :hasWarning="stateHasWarning('spatial_information')"
                     :allOption="$t('e.g. France')"
                     :addAllOption="false"
-                    multiple
+                    :multiple="true"
                   />
                 </div>
                 <div class="fr-col-12 fr-col-md-6">
@@ -323,8 +324,8 @@
 </template>
 
 <script>
-import { computed, defineComponent, reactive, watchEffect } from 'vue';
-import { minLength, not, required, requiredWithCustomMessage, sameAs } from '../../i18n';
+import { computed, defineComponent, reactive } from 'vue';
+import { minLengthWarning, not, required, requiredWithCustomMessage, sameAs } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
 import Container from '../../components/Ui/Container/Container.vue';
@@ -345,6 +346,7 @@ export default defineComponent({
   emits: ["next"],
   props: {
     originalDataset: {
+      /** @type {import("vue").PropType<import("../../types").NewDataset>} */
       type: Object,
       required: true
     },
@@ -367,7 +369,7 @@ export default defineComponent({
     const dataset = reactive({...props.originalDataset});
 
     const notUnknown = not(t("The value must be different than unknown."), sameAs("unknown"));
-    const tagsRequired = requiredWithCustomMessage(t("Add tags allow to improve listing of your data."));
+    const tagsRequired = requiredWithCustomMessage(t("Add tags to improve listing of your data."));
     const temporalCoverageRequired = requiredWithCustomMessage(t("You didn't provide the temporal coverage."));
     const spatialGranularityRequired = requiredWithCustomMessage(t("You didn't provide the spatial granularity."));
 
@@ -379,13 +381,13 @@ export default defineComponent({
 
     const warningRules = {
       acronym: {},
-      description: {required, minLengthValue: minLength(quality_description_length), },
+      description: {required, minLengthValue: minLengthWarning(quality_description_length), },
       frequency: { required, notUnknown },
       license: { required },
       spatial: {
         granularity: { required: spatialGranularityRequired },
       },
-      tags: { required: tagsRequired, notEmpty: minLength(1) },
+      tags: { required: tagsRequired },
       temporal_coverage: { required: temporalCoverageRequired },
       title: { required },
     };

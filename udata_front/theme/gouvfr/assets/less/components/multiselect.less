@@ -63,6 +63,31 @@
         }
         .select-a11y__selected-list li {
             display: inline-block;
+            &:extend(.fr-tag);
+            &:extend(.fr-tag[aria-pressed=false]);
+            &:extend(.fr-tag--sm);
+            border: none;
+            &.select-a11y__selected-item {
+                --text-action-high-blue-france: @text-default-grey;
+            }
+        }
+        .select-a11y__selected-list {
+            padding: 0 2.5rem 0.5rem 1rem;
+        }
+        .select-a11y-delete {
+            padding: 0;
+            padding-right: 0.3125rem;
+            &:hover {
+                color: @text-default-grey;
+                border-color: @blue-400;
+            }
+        }
+        .select-a11y-delete__icon {
+            &::before {
+                color: @text-default-grey;
+                &:extend(.fr-icon-delete-line::before);
+                &:extend(button.fr-tag--dismiss.fr-tag--sm::after);
+            }
         }
     }
 }

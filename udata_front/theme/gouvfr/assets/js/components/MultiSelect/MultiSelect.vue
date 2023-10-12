@@ -10,9 +10,10 @@
       <select
         class="multiselect__input"
         :id="id"
-        ref="select"
+        ref="selectRef"
         v-model="selected"
         :required="required"
+        :multiple="multiple"
       >
         <option
           v-for="option in displayedOptions"
@@ -35,7 +36,7 @@
 </template>
 
 <script>
-import {defineComponent, ref, computed, onMounted, onUpdated, reactive, unref, watch} from "vue";
+import {defineComponent, ref, computed, onMounted, onUpdated, reactive, unref, watch, toValue} from "vue";
 import Select from "@conciergerie.dev/select-a11y";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
@@ -43,6 +44,7 @@ import {api, generateCancelToken} from "../../plugins/api";
 import Required from "../Ui/Required/Required.vue";
 import useUid from "../../composables/useUid";
 import { useToast } from "../../composables/useToast";
+import { templateRef } from "@vueuse/core";
 
 export default defineComponent({
   components: { Required },
@@ -115,8 +117,13 @@ export default defineComponent({
       type: String
     },
     values: {
+      /** @type {import("vue").PropType<Array<string> | string>} */
       type: [Array, String],
     },
+    multiple: {
+      type: Boolean,
+      default: false,
+    }
   },
   setup(props, { emit }) {
     const { t } = useI18n();
@@ -135,9 +142,9 @@ export default defineComponent({
 
     /**
     * Select template Ref
-    * @type {import("vue").Ref<HTMLSelectElement|null>}
+    * @type {import("vue").Ref<HTMLSelectElement | null>}
     */
-    const select = ref(null);
+    const selectRef = templateRef("selectRef");
 
     /**
      * Container Template Ref
@@ -172,12 +179,17 @@ export default defineComponent({
     const displayedOptions = computed(() => options.value.slice(0, maxOptionsCount));
 
     /**
-     * Current selected value(s)
-     * @type {import("vue").Ref<string | null>}
+     * @template T
+     * @typedef {T extends true ? Array<string> : string | null} Multiple
      */
-    const selected = ref(null);
 
-    const defaultValue = '';
+    /**
+     * Current selected value(s)
+     * @type {import("vue").Ref<Multiple<typeof props.multiple>>}
+     */
+    const selected = ref(props.multiple ? [] : null);
+
+    const defaultSingleValue = '';
 
     /**
      * Current request if any to be cancelled if a new one comes
@@ -284,14 +296,15 @@ export default defineComponent({
      * @returns {Array<import("../../types").MultiSelectOption>}
      */
     const addAllOptionAndMapToOption = (suggestions) => {
+      const options = [...suggestions];
       if(props.allOption) {
-        suggestions.unshift({
+        options.unshift({
           label: props.allOption,
           value: '',
           hidden: !props.addAllOption
         });
       }
-      return mapToOption(suggestions);
+      return mapToOption(options);
     }
 
     /**
@@ -308,19 +321,19 @@ export default defineComponent({
 
     /**
      * Normalize provided values to array
-     * @param {string | Array | undefined} values
-     * @returns {import("vue").Ref<string>}
+     * @param {string | Array<string> | undefined} values
+     * @returns {import("vue").Ref<string | Array<string> | null>}
      */
     const normalizeValues = (values) => {
       /**
        * Selected value
-       * @type {import("vue").Ref<string>}
+       * @type {import("vue").Ref<string | Array<string> | null>}
        */
-      const selected = ref('');
+      const selected = ref(null);
       if (typeof values === "string") {
         selected.value = values;
       } else if (Array.isArray(values)) {
-        selected.value = values[0];
+        selected.value = values;
       }
       return selected;
     }
@@ -330,32 +343,25 @@ export default defineComponent({
      * It tries to augment the values with data from props.entityUrl or options.
      */
     const fillSelectedFromValues = () => {
-      let selectedPromise = null;
-      let value = unref(normalizeValues(props.values));
-      if (value && props.entityUrl) {
-          selectedPromise = api
-            .get(props.entityUrl + value)
-            .then((resp) => resp.data)
-            .then((data) => mapToOption([data]))
-            .then((entities) => entities[0]?.label ?? value)
-            .then((label) => {
-              const newOption = options.value.every(option => option.value !== value);
-              if(newOption) {
-                options.value.push({label, value});
-              }
-            })
-            .then(() => value);
-        } else {
-          let option = options.value.find((opt) => opt.value === value);
-          if (!option) {
-            option = {label: value, value};
-            options.value.push(option);
-          }
-          selectedPromise = Promise.resolve(option.value);
+      let selectedPromises = [];
+      let values = toValue(normalizeValues(props.values));
+      if (Array.isArray(values)) {
+        for(let value of values) {
+          selectedPromises.push(augmentFromValue(value));
         }
-      return selectedPromise
-        .then(value => selected.value = value)
-        .then(value => value ? value : selected.value = defaultValue)
+      } else {
+        selectedPromises.push(augmentFromValue(values));
+      }
+
+      return Promise.all(selectedPromises)
+        .then(values => {
+          if(props.multiple) {
+            selected.value = /** @type {Array<string>} */ (values.filter(value => value !== null));
+          } else {
+            selected.value = values[0];
+          }
+          console.log(selected.value);
+        })
         .catch((error) => {
           if (!axios.isCancel(error)) {
             toast.error(t("Error getting {type}.", {type: props.placeholder}));
@@ -365,12 +371,51 @@ export default defineComponent({
     }
 
     /**
+     * Fill selected array with initial props.values.
+     * It tries to augment the values with data from props.entityUrl or options.
+     * @param {string | null} value
+     * @returns {Promise<string | null>}
+     */
+     const augmentFromValue = (value) => {
+      let selectedPromise = null;
+      if (value && props.entityUrl) {
+        selectedPromise = api
+          .get(props.entityUrl + value)
+          .then((resp) => resp.data)
+          .then((data) => mapToOption([data]))
+          .then((entities) => entities[0]?.label ?? value)
+          .then((label) => {
+            const newOption = options.value.every(option => option.value !== value);
+            if(newOption) {
+              options.value.push({label, value});
+            }
+          })
+          .then(() => value);
+      } else {
+        let option = options.value.find((opt) => opt.value === value);
+        if (value && !option) {
+          option = {label: value, value};
+          options.value.push(option);
+        }
+        selectedPromise = Promise.resolve(option?.value ?? null);
+      }
+      return selectedPromise
+        .then(value => value ?? defaultSingleValue)
+        .catch((error) => {
+          if (!axios.isCancel(error)) {
+            toast.error(t("Error getting {type}.", {type: props.placeholder}));
+          }
+          return "";
+        });
+     }
+
+    /**
      * Register event listener to trigger on change on select change event
      */
     const registerTriggerOnChange = () => {
-      if(select.value) {
-        emit("change", select.value.value);
-        console.log("change", select.value.value);
+      if(selectRef.value) {
+        emit("change", selectRef.value.value);
+        console.log("change", selectRef.value.value);
       }
     };
 
@@ -422,9 +467,9 @@ export default defineComponent({
       if(!container.value) {
         return;
       }
-      if(select.value) {
-        select.value.removeEventListener('change', registerTriggerOnChange);
-        select.value.addEventListener('change', registerTriggerOnChange);
+      if(selectRef.value) {
+        selectRef.value.removeEventListener('change', registerTriggerOnChange);
+        selectRef.value.addEventListener('change', registerTriggerOnChange);
       }
     };
 
@@ -437,7 +482,7 @@ export default defineComponent({
         options.fillSuggestions = suggestAndMapToOption;
       }
       try {
-        selectA11y.value = new Select(select.value, options);
+        selectA11y.value = new Select(selectRef.value, options);
         updateStylesAndEvents();
       } catch (e) {
         console.log(e);
@@ -461,7 +506,6 @@ export default defineComponent({
       errorTextId,
       id,
       offset,
-      select,
       selected,
       selectGroupClass,
       validTextId,
