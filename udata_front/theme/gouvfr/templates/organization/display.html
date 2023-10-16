@@ -56,7 +56,7 @@
 {% endblock %}
 
 {% block main_content %}
-{% cache cache_duration, 'org-content', org.id|string, datasets.page|string, reuses.page|string, g.lang_code, current_user.slug or 'anonymous', org.last_modified|string %}
+{% cache cache_duration, 'org-content', org.id|string, datasets.page|string, reuses.page|string, g.lang_code, current_user.slug or 'anonymous', org.last_modified|string, request.query_string|string %}
 <div class="fr-container fr-mt-7w">
     {% if org.deleted %}
         <div class="fr-col-auto fr-mr-1w">
@@ -71,7 +71,7 @@
     <div class="logo logo--80">
         <img src="{{org.logo(80)|placeholder('organization') }}" alt="" />
     </div>
-    <h1 class="fr-mt-1w">{{ organization_name_with_certificate(org) }}</h1>
+    <h1 class="fr-mt-1w">{{ organization_name_with_certificate(org, "lg") }}</h1>
 </div>
 <div class="fr-tabs fr-tabs--full-page">
     <div class="fr-container">

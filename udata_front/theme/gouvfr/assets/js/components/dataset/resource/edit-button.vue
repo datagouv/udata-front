@@ -3,7 +3,7 @@
     :href="adminUrl"
     class="fr-btn fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-icon--sm"
   >
-    {{ $t("Edit resource") }}
+    {{ $t("Edit file") }}
   </a>
 </template>
 

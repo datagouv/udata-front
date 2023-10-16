@@ -192,6 +192,7 @@
                     {% endif %}
                     aria-controls="resources-panel"
                     data-update-url="resources"
+                    data-previous-url="resource-"
                 >
                     {{ _('Files') }}
                     <sup>{{count_resources}}</sup>
@@ -320,6 +321,11 @@
     >
         <div class="fr-container">
             <div class="ressources-files vuejs fr-mb-5v">
+                <dataset-resource-from-hash
+                    dataset-id="{{ dataset.id }}"
+                    type-label="{{ type_label }}"
+                    :can-edit="{{ can_edit.can()|tojson|safe }}"
+                ></dataset-resource-from-hash>
                 {% set show_all_resources = request.args.get('resources') == 'all' %}
                 {% set grouped_resources = dataset.resources|group_resources_by_type %}
                 {% set nb_groups = grouped_resources.keys()|length %}

@@ -73,8 +73,8 @@
                 />
                 <QualityItem
                   :passed="quality.resources_documentation"
-                  :messagePassed='$t("Resources documented")'
-                  :messageFailed='$t("Resources documentation missing")'
+                  :messagePassed='$t("Files documented")'
+                  :messageFailed='$t("Files documentation missing")'
                   class="fr-my-1w"
                 />
                 <QualityItem
@@ -105,6 +105,12 @@
                   :passed="quality.spatial"
                   :messagePassed='$t("Spatial coverage filled")'
                   :messageFailed='$t("Spatial coverage not set")'
+                  class="fr-my-1w"
+                />
+                <QualityItem
+                  :passed="quality.all_resources_available"
+                  :messagePassed='$t("All files are available")'
+                  :messageFailed='$t("Some files are unavailable")'
                   class="fr-my-1w"
                 />
                 <div class="fr-grid-row fr-grid-row--right not-enlarged">

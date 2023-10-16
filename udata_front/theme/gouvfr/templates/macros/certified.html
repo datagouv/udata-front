@@ -1,10 +1,9 @@
-{% macro badge_if_certified(org) %}
+{% macro badge_if_certified(org, size="sm") %}
 {% if org.public_service %}
 <span
-    class="fr-icon-svg fr-icon--sm"
+    class="fr-icon-success-line fr-icon--{{size}} text-blue-400"
     title="{{_('The identity of this public service is certified by %(certifier)s', certifier=config.SITE_AUTHOR)}}"
->
-    {% include theme('svg/certified.svg') %}
-</span>
+    aria-hidden="true"
+  >
 {% endif %}
 {% endmacro %}

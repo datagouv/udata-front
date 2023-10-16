@@ -2,7 +2,22 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Update testing dependencies [dependabot/30](https://github.com/etalab/udata-front/security/dependabot/30) [dependabot/22](https://github.com/etalab/udata-front/security/dependabot/22) [dependabot/23](https://github.com/etalab/udata-front/security/dependabot/23) [#297](https://github.com/etalab/udata-front/pull/297) [#298](https://github.com/etalab/udata-front/pull/298)
+- Fix translate links in footer [#301](https://github.com/etalab/udata-front/pull/301)
+- Track participez clicks [#302](https://github.com/etalab/udata-front/pull/302)
+- Fix datasets search on the organization page [#303](https://github.com/etalab/udata-front/pull/303)
+- Add discoverability indicator form [#304](https://github.com/etalab/udata-front/pull/304)
+
+## 3.2.6 (2023-09-01)
+
+- Add missing quality criterion (`all_resources_available`) [#287](https://github.com/etalab/udata-front/pull/287)
+- Replace linkedin link in footer [#292](https://github.com/etalab/udata-front/pull/292)
+- Use the word file instead of resource [#291](https://github.com/etalab/udata-front/pull/291)
+- Update certified icon [#288](https://github.com/etalab/udata-front/pull/288)
+- Add guides to the menu [#290](https://github.com/etalab/udata-front/pull/290)
+- Add resource permalink [#286](https://github.com/etalab/udata-front/pull/286) [#295](https://github.com/etalab/udata-front/pull/295)
+- Update read-more height on `details` toggle [#294](https://github.com/etalab/udata-front/pull/294)
+- Fix preview style discrepancies [#289](https://github.com/etalab/udata-front/pull/289)
 
 ## 3.2.5 (2023-07-19)
 
