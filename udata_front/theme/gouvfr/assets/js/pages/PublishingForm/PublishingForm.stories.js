@@ -48,6 +48,9 @@ export const Form = {
       rest.post('*/api/1/datasets/:datasetId/upload', async (req, res, ctx) => {
         return res(ctx.json({success: true}));
       }),
+      rest.post('*/api/1/datasets/:datasetId/resources', async (req, res, ctx) => {
+        return res(ctx.json({success: true}));
+      }),
     ],
   },
   render: (args) => ({

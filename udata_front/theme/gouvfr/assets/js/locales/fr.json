@@ -243,7 +243,6 @@
   "For example : at the department scale or the city scale.": "",
   "e.g. France": "",
   "The value must be different than unknown.": "",
-  "Add tags allow to improve listing of your data.": "",
   "You didn't provide the temporal coverage.": "",
   "You didn't provide the spatial granularity.": "",
   "Formats should be :": "",
@@ -297,5 +296,13 @@
   "You are seeing a specific file of this dataset": "Vous consultez un fichier spécifique sur ce jeu de données",
   "An error occurred while fetching the file ": "Une erreur est survenue lors de la récupération des ressources ",
   "Copy resource permalink": "Copier le lien vers le fichier",
-  "Nameless resource": ""
+  "Nameless resource": "",
+  "It's advised to have a {property} of at least {min} characters.": "",
+  "Add tags to improve listing of your data.": "",
+  "It's advised to add a description.": "",
+  "Your dataset is created !": "",
+  "You can now publish it or save it as a draft.": "",
+  "Give us your feedback on the publishing form": "",
+  "Save as draft": "",
+  "Publish the dataset": ""
 }

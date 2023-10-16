@@ -210,6 +210,10 @@ export default defineComponent({
      */
     const addFiles = (newFiles) => {
       files.value.push(...newFiles);
+      if(newFiles.length === 1 && newFiles[0].filetype === "remote") {
+        const file = newFiles[0];
+        emit('editFile', file, files.value.length - 1);
+      }
     };
 
     /**

@@ -167,7 +167,7 @@
   </div>
 </template>
 <script>
-import { computed, defineComponent, reactive } from 'vue';
+import { computed, defineComponent, reactive, watchEffect } from 'vue';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
 import Container from '../../components/Ui/Container/Container.vue';
@@ -183,7 +183,8 @@ import useFunctionalState from '../../composables/useFunctionalState';
 import useUid from "../../composables/useUid";
 import { quality_description_length, schema_documentation_url } from "../../config";
 import { RESOURCE_TYPE, getResourceLabel } from '../../helpers';
-import { minLengthWarning, required } from '../../i18n';
+import { minLengthWarning, required, requiredWithCustomMessage } from '../../i18n';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   components: { Accordion, AccordionGroup, Container, InputGroup, FileCard, LinkedToAccordion, SchemaSelect, SelectGroup, Sidemenu, Stepper, Well },
@@ -200,13 +201,14 @@ export default defineComponent({
     }
   },
   setup(props, { emit }) {
+    const { t } = useI18n();
     const { id: nameAFileAccordionId } = useUid("accordion");
     const { id: chooseTheRightTypeOfFileAccordionId } = useUid("accordion");
     const { id: writeAGoodDescriptionAccordionId } = useUid("accordion");
     const { id: selectASchemaAccordionId } = useUid("accordion");
 
     /** @type {import("vue").UnwrapNestedRefs<import("../../types").DatasetFile>} */
-    const file = reactive({...props.datasetFile});
+    const file = reactive({...props.datasetFile, description: ""});
 
     const requiredRules = {
       title: { required },
@@ -214,10 +216,12 @@ export default defineComponent({
       schema: {}
     };
 
+    const descriptionAdvised = requiredWithCustomMessage(t("It's advised to add a description."));
+
     const warningRules = {
       title: { required },
       type: { required },
-      description: { minLengthValue: minLengthWarning(quality_description_length) },
+      description: { required: descriptionAdvised, minLengthValue: minLengthWarning(quality_description_length) },
     };
 
     const { getErrorText, getWarningText, getFunctionalState, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(file, requiredRules, warningRules);
@@ -257,6 +261,8 @@ export default defineComponent({
         }
       });
     };
+
+    watchEffect(() => console.log(state.value));
 
     return {
       nameAFileAccordionId,
