@@ -79,5 +79,6 @@ export const MultipleMultiSelect = {
     ...args,
     multiple: true,
     values: [],
+    addAllOption: false,
   },
 };

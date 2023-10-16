@@ -61,18 +61,20 @@
             .logo;
             .fr-p-1v;
         }
-        .select-a11y__selected-list li {
-            display: inline-block;
-            &:extend(.fr-tag);
-            &:extend(.fr-tag[aria-pressed=false]);
-            &:extend(.fr-tag--sm);
-            border: none;
-            &.select-a11y__selected-item {
-                --text-action-high-blue-france: @text-default-grey;
-            }
-        }
         .select-a11y__selected-list {
-            padding: 0 2.5rem 0.5rem 1rem;
+            padding: 0.1rem 2.5rem calc(0.1rem + 2px) 1rem;
+            margin-top: -2.5rem;
+            li {
+                &:extend(.fr-tag);
+                &:extend(.fr-tag[aria-pressed=false]);
+                &:extend(.fr-tag--sm);
+                border: none;
+                &.select-a11y__selected-item {
+                    --text-action-high-blue-france: @text-default-grey;
+                }
+                &:extend(.fr-mb-1v);
+                &:extend(.fr-mr-1v);
+            }
         }
         .select-a11y-delete {
             padding: 0;
