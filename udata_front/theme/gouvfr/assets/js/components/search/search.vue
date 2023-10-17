@@ -415,7 +415,6 @@ export default defineComponent({
      * Called on every facet selector change, updates the `facets.xxx` object then searches with new values
      */
     const handleFacetChange = (facet, values) => {
-      console.log("new value", values);
       // Values can either be an array of varying length, or a String.
       if (Array.isArray(values)) {
         if (values.length > 1) {

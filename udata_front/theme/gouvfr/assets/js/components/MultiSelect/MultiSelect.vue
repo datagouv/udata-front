@@ -360,7 +360,6 @@ export default defineComponent({
           } else {
             selected.value = values[0];
           }
-          console.log(selected.value);
         })
         .catch((error) => {
           if (!axios.isCancel(error)) {
@@ -415,7 +414,6 @@ export default defineComponent({
     const registerTriggerOnChange = () => {
       if(selectRef.value) {
         emit("change", selectRef.value.value);
-        console.log("change", selectRef.value.value);
       }
     };
 
