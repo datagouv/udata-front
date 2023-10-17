@@ -262,8 +262,6 @@ export default defineComponent({
       });
     };
 
-    watchEffect(() => console.log(state.value));
-
     return {
       nameAFileAccordionId,
       chooseTheRightTypeOfFileAccordionId,

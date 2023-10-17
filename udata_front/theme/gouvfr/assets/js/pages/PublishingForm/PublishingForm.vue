@@ -224,6 +224,11 @@ export default defineComponent({
       const step = hash.substring(7);
       const parsedStep = parseInt(step, 10) - 1|| 0;
       const dontSave = false;
+      if(editedFile.value && typeof editedIndex.value === "number" && !editedFile.value.title) {
+        files.value.splice(editedIndex.value, 1);
+        editedFile.value = null;
+        editedIndex.value = null;
+      }
       moveToStep(parsedStep, dontSave);
     });
 
