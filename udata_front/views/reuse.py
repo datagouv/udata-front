@@ -104,7 +104,7 @@ class ReuseDetailView(ReuseView, DetailView):
         context.update(
             followers=followers,
             related_reuses=related_reuses,
-            can_edit=ReuseEditPermission(self.reuse),
+            can_edit=ReuseEditPermission(self.reuse)
         )
 
         return context

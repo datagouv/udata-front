@@ -63,3 +63,6 @@ MONCOMPETPRO_CLIENT_SECRET = None
 
 # Newsletter
 NEWSLETTER_SUBSCRIPTION_URL = 'https://f.info.data.gouv.fr/f/lp/infolettre-data-gouv-fr-landing-page/lk3q01y6'  # noqa
+
+# Metrics API
+METRICS_API = None
