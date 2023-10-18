@@ -9,17 +9,32 @@ export default {
 
 const args = {
   steps: Stepper.StepperOnSecondStep.args.steps,
+  /** @type { import("../../types").DatasetLocalFile } */
   datasetFile: {
     file: new File(["foo"], "foo.csv", {
       type: "text/csv",
     }),
-    title: "",
+    title: "foo.csv",
     description: "",
     format: "csv",
     filesize: 142045,
-    filetype: "remote",
+    filetype: "file",
     mime: "text/csv",
     type: "main"
+  }
+};
+
+const remoteArgs = {
+  steps: Stepper.StepperOnSecondStep.args.steps,
+  /** @type { import("../../types").DatasetRemoteFile } */
+  datasetFile: {
+    title: "",
+    description: "",
+    format: "",
+    filetype: "remote",
+    mime: "",
+    type: "main",
+    url: "http://www.example.com/someurl",
   }
 };
 
@@ -34,4 +49,18 @@ export const Step3UpdateFileMetadata = {
                 </div>`,
   }),
   args,
+};
+
+
+export const Step3UpdateRemoteFileMetadata = {
+  render: (args) => ({
+    components: { UpdateFileMetadata },
+    setup() {
+      return { args };
+    },
+    template: ` <div class="bg-grey-50 fr-p-4w">
+                  <UpdateFileMetadata v-bind="args" />
+                </div>`,
+  }),
+  args: remoteArgs,
 };

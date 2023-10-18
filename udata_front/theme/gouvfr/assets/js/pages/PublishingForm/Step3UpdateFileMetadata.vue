@@ -14,7 +14,15 @@
           </template>
           <AccordionGroup>
             <Accordion
-              :title= "$t('Name a file')"
+              :title= "$t('Choose the correct link')"
+              :id="chooseTheCorrectLinkAccordionId"
+              :state="state.url"
+              v-if="isRemote"
+            >
+              {{ $t("It's advised to put the link to the file itself instead of a web page to allow {site} to parse it.") }}
+            </Accordion>
+            <Accordion
+              :title= "nameAFile"
               :id="nameAFileAccordionId"
               :state="state.title"
             >
@@ -31,7 +39,7 @@
               </div>
             </Accordion>
             <Accordion
-              :title= "$t('Choose the right type of file')"
+              :title="$t('Choose the right type of file')"
               :id="chooseTheRightTypeOfFileAccordionId"
               :state="state.type"
             >
@@ -43,6 +51,12 @@
                   <li v-for="fileType in fileTypes">{{ fileType.label }}</li>
                 </ul>
               </div>
+            </Accordion>
+            <Accordion
+              :title= "$t('Choose the correct format')"
+              :id="chooseTheCorrectFormatAccordionId"
+              :state="state.format"
+            >
             </Accordion>
             <Accordion
               :title= "$t('Write a good description')"
@@ -81,6 +95,13 @@
                 </template>
               </i18n-t>
             </Accordion>
+            <Accordion
+              :title= "$t('What is a Mime type')"
+              :id="whatIsAMimeTypeAccordionId"
+              :state="state.mime"
+            >
+              {{ $t("") }}
+            </Accordion>
           </AccordionGroup>
       </Sidemenu>
       <div class="fr-col-12 fr-col-md-7">
@@ -104,12 +125,26 @@
               />
             </div>
             <LinkedToAccordion
+              v-if="isRemote"
+              class="fr-fieldset__element min-width-0"
+              :accordion="chooseTheCorrectLinkAccordionId"
+              @blur="v$.url.$touch"
+            >
+              <InputGroup
+                :label="$t('Link url')"
+                :required="true"
+                v-model="file.url"
+                :hasError="stateHasError('url')"
+                :errorText="getErrorText('url')"
+              />
+            </LinkedToAccordion>
+            <LinkedToAccordion
               class="fr-fieldset__element min-width-0"
               :accordion="nameAFileAccordionId"
               @blur="v$.title.$touch"
             >
               <InputGroup
-                :label="$t('File title')"
+                :label="fileTitle"
                 :required="true"
                 v-model="file.title"
                 :hasError="stateHasError('title')"
@@ -128,6 +163,25 @@
                 :hasError="stateHasError('type')"
                 :errorText="getErrorText('type')"
                 :options="fileTypes"
+              />
+            </LinkedToAccordion>
+            <LinkedToAccordion
+              class="fr-fieldset__element min-width-0"
+              :accordion="chooseTheCorrectFormatAccordionId"
+              @blur="v$.format.$touch"
+            >
+              <MultiSelect
+                :placeholder="$t('Format')"
+                :searchPlaceholder="$t('Search a format...')"
+                listUrl="/datasets/extensions/"
+                :values="file.format"
+                @change="(value) => file.format = value"
+                :required="true"
+                :hasError="stateHasError('format')"
+                :hasWarning="stateHasWarning('format')"
+                :errorText="getErrorText('format')"
+                :allOption="$t('Select a format')"
+                :addAllOption="false"
               />
             </LinkedToAccordion>
             <LinkedToAccordion
@@ -155,6 +209,21 @@
                 :showExplanation="false"
               />
             </LinkedToAccordion>
+            <LinkedToAccordion
+              class="fr-fieldset__element min-width-0"
+              :accordion="whatIsAMimeTypeAccordionId"
+              @blur="v$.mime.$touch"
+            >
+              <MultiSelect
+                :placeholder="$t('Mime type')"
+                :searchPlaceholder="$t('Search a mime type...')"
+                suggestUrl="datasets/suggest/mime/"
+                :values="file.mime"
+                @change="(value) => file.mime = value"
+                :allOption="$t('Select a mime type')"
+                :addAllOption="false"
+              />
+            </LinkedToAccordion>
           </fieldset>
           <div class="fr-grid-row fr-grid-row--right">
             <button class="fr-btn" @click="submit">
@@ -167,13 +236,14 @@
   </div>
 </template>
 <script>
-import { computed, defineComponent, reactive, watchEffect } from 'vue';
+import { computed, defineComponent, reactive } from 'vue';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
 import Container from '../../components/Ui/Container/Container.vue';
 import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
 import FileCard from '../../components/Form/FileCard/FileCard.vue';
 import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
+import MultiSelect from "../../components/MultiSelect/multiselect.vue";
 import SchemaSelect from "../../components/SchemaSelect/SchemaSelect.vue";
 import SelectGroup from '../../components/Form/SelectGroup/SelectGroup.vue';
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
@@ -183,11 +253,11 @@ import useFunctionalState from '../../composables/useFunctionalState';
 import useUid from "../../composables/useUid";
 import { quality_description_length, schema_documentation_url } from "../../config";
 import { RESOURCE_TYPE, getResourceLabel } from '../../helpers';
-import { minLengthWarning, required, requiredWithCustomMessage } from '../../i18n';
+import { minLengthWarning, required, requiredIf, requiredWithCustomMessage } from '../../i18n';
 import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
-  components: { Accordion, AccordionGroup, Container, InputGroup, FileCard, LinkedToAccordion, SchemaSelect, SelectGroup, Sidemenu, Stepper, Well },
+  components: { Accordion, AccordionGroup, Container, InputGroup, FileCard, LinkedToAccordion, MultiSelect, SchemaSelect, SelectGroup, Sidemenu, Stepper, Well },
   emits: ["next"],
   props: {
     steps: {
@@ -202,25 +272,38 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const { t } = useI18n();
+    const { id: chooseTheCorrectLinkAccordionId } = useUid("accordion");
     const { id: nameAFileAccordionId } = useUid("accordion");
     const { id: chooseTheRightTypeOfFileAccordionId } = useUid("accordion");
+    const { id: chooseTheCorrectFormatAccordionId } = useUid("accordion");
     const { id: writeAGoodDescriptionAccordionId } = useUid("accordion");
     const { id: selectASchemaAccordionId } = useUid("accordion");
+    const { id: whatIsAMimeTypeAccordionId } = useUid("accordion");
 
     /** @type {import("vue").UnwrapNestedRefs<import("../../types").DatasetFile>} */
     const file = reactive({...props.datasetFile, description: ""});
 
+    const isRemote = computed(() => file.filetype === 'remote');
+
+    const nameAFile = computed(() => isRemote.value ? t("Name a link") : t("Name a file"));
+    const fileTitle = computed(() => isRemote.value ? t("Link title") : t("File title"));
+
     const requiredRules = {
+      url: { required: requiredIf(isRemote.value) },
       title: { required },
       type: { required },
-      schema: {}
+      format: { required },
+      schema: {},
+      mime: {},
     };
 
     const descriptionAdvised = requiredWithCustomMessage(t("It's advised to add a description."));
 
     const warningRules = {
+      url: { required: requiredIf(isRemote.value) },
       title: { required },
       type: { required },
+      format: { required },
       description: { required: descriptionAdvised, minLengthValue: minLengthWarning(quality_description_length) },
     };
 
@@ -231,10 +314,13 @@ export default defineComponent({
      */
      const state = computed(() => {
       return {
+        url: v$.value.url.$dirty ? "info" : "disabled",
         title: getFunctionalState(v$.value.title.$dirty, v$.value.title.$error, false),
         type: getFunctionalState(v$.value.type.$dirty, v$.value.type.$error, false),
+        format: v$.value.format.$dirty ? "info" : "disabled",
         description: getFunctionalState(vWarning$.value.description.$dirty, false, vWarning$.value.description.$error),
         schema: v$.value.schema.$dirty ? "info" : "disabled",
+        mime: v$.value.mime.$dirty ? "info" : "disabled",
       };
     });
 
@@ -263,12 +349,17 @@ export default defineComponent({
     };
 
     return {
+      chooseTheCorrectLinkAccordionId,
       nameAFileAccordionId,
       chooseTheRightTypeOfFileAccordionId,
+      chooseTheCorrectFormatAccordionId,
       writeAGoodDescriptionAccordionId,
       selectASchemaAccordionId,
       fileTypes,
       file,
+      fileTitle,
+      isRemote,
+      nameAFile,
       schema_documentation_url,
       state,
       getErrorText,
@@ -278,6 +369,7 @@ export default defineComponent({
       submit,
       v$,
       vWarning$,
+      whatIsAMimeTypeAccordionId,
     }
   },
 });

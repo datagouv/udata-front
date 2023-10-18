@@ -14,7 +14,7 @@ import LocalizedFormat from 'dayjs/esm/plugin/localizedFormat';
 import RelativeTime from "dayjs/esm/plugin/relativeTime";
 import messages from '@intlify/unplugin-vue-i18n/messages';
 import { getRegisteredTranslations } from "@etalab/udata-front-plugins-helper";
-import { createI18nMessage, minLength as vMinLength, not as vNot, required as vRequired, sameAs as vSameAs, helpers } from '@vuelidate/validators';
+import { createI18nMessage, minLength as vMinLength, not as vNot, required as vRequired, requiredIf as vRequiredIf, sameAs as vSameAs, helpers } from '@vuelidate/validators';
 
 const dateLocales = { fr, en, es };
 
@@ -95,12 +95,16 @@ function passLocalizedMessageWithoutArguments(validator) {
 
 /**
  * This is a local fake `t` function
+ * It allows vue-i19n-extract to find these messages.
  * @param {string} message
  * @returns {string}
  */
 const t = (message) => message;
 
-export const required = withI18nMessage(vRequired, { messagePath: () => t("The field {property} is required.")});
+const requiredText = t("The field {property} is required.");
+
+export const required = withI18nMessage(vRequired, { messagePath: () => requiredText});
+export const requiredIf = withI18nMessage(vRequiredIf, { messagePath: () => requiredText, withArguments: true });
 export const requiredWithCustomMessage = passLocalizedMessageWithoutArguments(vRequired);
 export const minLength = withI18nMessage(vMinLength, { messagePath: () => t("The {property} field has a minimum length of {min}."), withArguments: true });
 export const minLengthWarning = withI18nMessage(vMinLength, { messagePath: () => t("It's advised to have a {property} of at least {min} characters."), withArguments: true });

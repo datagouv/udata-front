@@ -114,7 +114,7 @@
  */
 
 /**
- * @typedef {{rid?: string, description: string?, filetype: RemoteResourceFileType, schema?: string, title: string, type: ResourceType, url: string}} DatasetRemoteFile
+ * @typedef {{rid?: string, description: string?, filetype: RemoteResourceFileType, format: string, mime: string, schema?: string, title: string, type: ResourceType, url: string}} DatasetRemoteFile
  * @typedef {{rid?: string, file: File, sha256?: string, description: string?, format: string, filesize: number, filetype: FileResourceFileType, mime: string, schema?: string, title: string, type: ResourceType}} DatasetLocalFile
  * @typedef {DatasetLocalFile | DatasetRemoteFile} DatasetFile
  *
