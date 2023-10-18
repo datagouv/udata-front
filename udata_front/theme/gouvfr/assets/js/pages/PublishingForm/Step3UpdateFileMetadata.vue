@@ -243,7 +243,7 @@ import Container from '../../components/Ui/Container/Container.vue';
 import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
 import FileCard from '../../components/Form/FileCard/FileCard.vue';
 import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
-import MultiSelect from "../../components/MultiSelect/multiselect.vue";
+import MultiSelect from "../../components/MultiSelect/Multiselect.vue";
 import SchemaSelect from "../../components/SchemaSelect/SchemaSelect.vue";
 import SelectGroup from '../../components/Form/SelectGroup/SelectGroup.vue';
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
