@@ -47,6 +47,7 @@
  * @property {string} value - Value (id) of the option
  * @property {string} [image] - Image (optional) to show
  * @property {boolean} [hidden] - Hide this option
+ * @property {boolean} [selected] - Select this option
  */
 
 /**

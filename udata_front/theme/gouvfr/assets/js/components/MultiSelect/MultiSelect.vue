@@ -168,15 +168,21 @@ export default defineComponent({
     const maxOptionsCount = 200;
 
     /**
+     * Initial options
+     * @type {import("vue").Ref<Array<import("../../types").MultiSelectOption>>}
+     */
+    const initialOptions = ref([]);
+
+    /**
      * Current options
      * @type {import("vue").Ref<Array<import("../../types").MultiSelectOption>>}
      */
-    const options = ref([]);
+     const options = ref([]);
 
     /**
      * Displayed Options limited to {@link maxOptionsCount}
      */
-    const displayedOptions = computed(() => options.value.slice(0, maxOptionsCount));
+    const displayedOptions = computed(() => initialOptions.value.slice(0, maxOptionsCount));
 
     /**
      * @template T
@@ -220,7 +226,7 @@ export default defineComponent({
      */
     const getInitialOptions = async () => {
       if(props.initialOptions) return props.initialOptions;
-      if (!props.listUrl) return [];
+      if (!props.listUrl) return options.value;
 
       /**
        * @type {import("axios").AxiosResponse<{data: Array}|Array>}
@@ -250,6 +256,7 @@ export default defineComponent({
       value: obj.id ?? obj.text ?? obj.value ?? obj,
       image: obj.logo_thumbnail ?? obj.logo ?? obj.image_url ?? obj.image,
       hidden: obj.hidden,
+      selected: !!obj.selected,
     }));
 
     /**
@@ -287,6 +294,7 @@ export default defineComponent({
     };
 
     const suggestAndMapToOption = (q = '') => suggest(q).then(addAllOptionAndMapToOption);
+    const suggestMapAndSetOption = (q = '') => suggestAndMapToOption(q).then(setOptions);
 
     /**
      * Get options from suggest API
@@ -296,26 +304,55 @@ export default defineComponent({
      * @returns {Array<import("../../types").MultiSelectOption>}
      */
     const addAllOptionAndMapToOption = (suggestions) => {
-      const options = [...suggestions];
+      const newOptions = [...suggestions];
       if(props.allOption) {
-        options.unshift({
+        newOptions.unshift({
           label: props.allOption,
           value: '',
           hidden: !props.addAllOption
         });
       }
-      return mapToOption(options);
+      let selectedValues = [];
+      if(Array.isArray(selected.value)) {
+        selectedValues = selected.value;
+      } else {
+        selectedValues = [selected.value];
+      }
+      for(let value of selectedValues) {
+        if(typeof value === "string") {
+          const valuePositionInNewList = newOptions.findIndex(option => option.value === value);
+          const existingValue = options.value.find(option => option.value === value);
+          if(existingValue) {
+            existingValue.selected = true;
+            if(valuePositionInNewList === -1) {
+              newOptions.unshift(existingValue);
+            } else {
+              newOptions[valuePositionInNewList].selected = true;
+            }
+          }
+        }
+      }
+      return mapToOption(newOptions);
     }
 
     /**
-     * Set options from DOM processing
-     * @param {Array<import("../../types").MultiSelectOption> | void} values
-     * @returns {Array<import("../../types").MultiSelectOption> | void}
+     * Set initial options from DOM processing
+     * @param {Array<import("../../types").MultiSelectOption>} values
+     * @returns {Array<import("../../types").MultiSelectOption>}
      */
-    const setOptions = (values) => {
-      if(values) {
-        options.value = values;
-      }
+    const setInitialOptions = (values) => {
+      initialOptions.value = values;
+      options.value = values;
+      return values;
+    };
+
+    /**
+     * Set initial options from DOM processing
+     * @param {Array<import("../../types").MultiSelectOption>} values
+     * @returns {Array<import("../../types").MultiSelectOption>}
+     */
+     const setOptions = (values) => {
+      options.value = values;
       return values;
     };
 
@@ -341,6 +378,7 @@ export default defineComponent({
     /**
      * Fill selected array with initial props.values.
      * It tries to augment the values with data from props.entityUrl or options.
+     * @returns {Promise<string | Array<string> | null>}
      */
     const fillSelectedFromValues = () => {
       let selectedPromises = [];
@@ -360,6 +398,7 @@ export default defineComponent({
           } else {
             selected.value = values[0];
           }
+          return selected.value;
         })
         .catch((error) => {
           if (!axios.isCancel(error)) {
@@ -370,8 +409,7 @@ export default defineComponent({
     }
 
     /**
-     * Fill selected array with initial props.values.
-     * It tries to augment the values with data from props.entityUrl or options.
+     * Augments the value with data from props.entityUrl or options.
      * @param {string | null} value
      * @returns {Promise<string | null>}
      */
@@ -413,7 +451,14 @@ export default defineComponent({
      */
     const registerTriggerOnChange = () => {
       if(selectRef.value) {
-        emit("change", selectRef.value.value);
+        if(props.multiple) {
+          const values = Array.from(selectRef.value.selectedOptions).map(option => option.value);
+          selected.value = values;
+          emit("change", values);
+        } else {
+          selected.value = selectRef.value.value;
+          emit("change", selectRef.value.value);
+        }
       }
     };
 
@@ -477,7 +522,7 @@ export default defineComponent({
         clearable: true,
       };
       if(props.suggestUrl) {
-        options.fillSuggestions = suggestAndMapToOption;
+        options.fillSuggestions = suggestMapAndSetOption;
       }
       try {
         selectA11y.value = new Select(selectRef.value, options);
@@ -493,7 +538,7 @@ export default defineComponent({
     });
 
     const fillOptionsAndValues = suggestAndMapToOption()
-    .then(setOptions)
+    .then(setInitialOptions)
     .then(fillSelectedFromValues);
 
     onMounted(() => fillOptionsAndValues.then(makeSelect));
