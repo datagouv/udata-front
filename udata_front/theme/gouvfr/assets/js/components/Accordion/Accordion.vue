@@ -65,7 +65,7 @@ export default defineComponent({
         case "error":
           return "text-default-error";
         case "info":
-          return "text-default-info";
+          return "text-title-grey";
         case "success":
           return "text-default-success";
         case "warning":
