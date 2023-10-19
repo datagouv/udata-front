@@ -2,6 +2,6 @@
 -c udata.pip
 
 flake8==3.7.7
-invoke==1.7.3
+invoke==2.2.0
 pytest-cov==2.6.1
 readme-renderer[md]==24.0
