@@ -10,7 +10,16 @@ const args = {
   searchPlaceholder: "Type to search",
   emptyPlaceholder: "Select an option",
   allOption: "Select something",
-  initialOptions: Promise.resolve(["Option 1", "Option 2"]),
+  initialOptions: Promise.resolve([
+    {
+      label: "Option 1",
+      value: "Option 1",
+    },
+    {
+      label: "Option 2",
+      value: "Option 2",
+    },
+  ]),
   values: null,
 };
 
