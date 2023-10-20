@@ -304,7 +304,10 @@ export default defineComponent({
      * @returns {Array<import("../../types").MultiSelectOption>}
      */
     const addAllOptionAndMapToOption = (suggestions) => {
-      const newOptions = [...suggestions];
+      const newOptions = [...suggestions].map(option => {
+        option.selected = false;
+        return option;
+      });
       if(props.allOption) {
         newOptions.unshift({
           label: props.allOption,
