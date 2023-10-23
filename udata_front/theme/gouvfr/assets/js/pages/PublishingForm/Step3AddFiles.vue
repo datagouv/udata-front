@@ -105,10 +105,10 @@
                   <FileCard
                     v-for="(resource, index) in files"
                     class="fr-mb-3v"
-                    :filename="resource.file?.name || resource.url"
+                    :filename="resource?.file?.name || resource.url"
                     :filesize="resource.filesize"
                     :format="resource.format"
-                    :lastModified="resource.file?.lastModified"
+                    :lastModified="resource?.file?.lastModified"
                     :missingMetadata="!resource.title || !resource.description"
                     :title="resource.title || resource.file?.name || ''"
                     @delete="removeFile(index)"
@@ -211,8 +211,7 @@ export default defineComponent({
     const addFiles = (newFiles) => {
       files.value.push(...newFiles);
       if(newFiles.length === 1 && newFiles[0].filetype === "remote") {
-        const file = newFiles[0];
-        emit('editFile', file, files.value.length - 1);
+        emit('editFile', files, files.value.length - 1);
       }
     };
 

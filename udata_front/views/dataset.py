@@ -10,8 +10,7 @@ from udata.core.dataset.permissions import ResourceEditPermission, DatasetEditPe
 from udata.core.site.models import current_site
 
 from udata_front.theme import render as render_template
-from udata_front.views.base import BaseView, DetailView, SearchView, Templated
-from udata.auth import login_required
+from udata_front.views.base import DetailView, LoginOnlyView, SearchView
 from udata.i18n import I18nBlueprint, gettext as _, ngettext
 from udata.sitemap import sitemap
 
@@ -101,16 +100,8 @@ class DatasetDetailView(DatasetView, DetailView):
         return context
 
 @blueprint.route('/publishing-form/', endpoint='publishing-form')
-@login_required
-class PublishingFormView(Templated, BaseView):
+class PublishingFormView(LoginOnlyView):
     template_name = 'dataset/publishing-form.html'
-
-    def get_context(self):
-        context = super(PublishingFormView, self).get_context()
-        return context
-
-    def get(self, **kwargs):
-        return self.render()
 
 
 @blueprint.route('/<dataset:dataset>/followers/', endpoint='followers')

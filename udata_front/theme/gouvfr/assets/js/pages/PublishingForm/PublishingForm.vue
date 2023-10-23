@@ -203,8 +203,9 @@ export default defineComponent({
       }
     };
 
-    const editFile = (resource, index) => {
-      editedFile.value = toValue(resource);
+    const editFile = (resources, index) => {
+      files.value = toValue(resources);
+      editedFile.value = files.value[index];
       editedIndex.value = index;
       moveToStep();
     };
@@ -228,8 +229,10 @@ export default defineComponent({
         files.value.splice(editedIndex.value, 1);
         editedFile.value = null;
         editedIndex.value = null;
+        moveToStep();
+      } else {
+        moveToStep(parsedStep, dontSave);
       }
-      moveToStep(parsedStep, dontSave);
     });
 
     return {
