@@ -304,5 +304,20 @@
   "You can now publish it or save it as a draft.": "",
   "Give us your feedback on the publishing form": "",
   "Save as draft": "",
-  "Publish the dataset": ""
+  "Publish the dataset": "",
+  "Failed to upload file ": "",
+  "An error occured | Some errors occured": "",
+  "Choose the correct link": "",
+  "It's advised to put the link to the file itself instead of a web page to allow {site} to parse it.": "",
+  "Choose the correct format": "",
+  "What is a Mime type": "",
+  "": "",
+  "Link url": "",
+  "Format": "",
+  "Select a format": "",
+  "Mime type": "",
+  "Search a mime type...": "",
+  "Select a mime type": "",
+  "Name a link": "",
+  "Link title": ""
 }

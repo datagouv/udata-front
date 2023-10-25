@@ -1,4 +1,4 @@
-import { initialize, mswLoader } from 'msw-storybook-addon';
+import { initialize, mswDecorator } from 'msw-storybook-addon';
 
 /*
  * Initializes MSW
@@ -16,7 +16,7 @@ initialize({
 
 /** @type { import('@storybook/vue3').Preview } */
 const preview = {
-  loaders: [mswLoader],
+  decorators: [mswDecorator],
   parameters: {
     actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {

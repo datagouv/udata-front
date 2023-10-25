@@ -54,13 +54,22 @@
  * @typedef {"primary" | "secondary"} WellType
  */
 
- /**
-  * @typedef {"light" | "regular" | "semi-bold" | "bold" | "heavy"} Weight
-  */
+/**
+ * @typedef {"light" | "regular" | "semi-bold" | "bold" | "heavy"} Weight
+ */
 
-  /**
-  * @typedef {"start" | "center" | "end"} AxisAlignment
-  */
+/**
+ * @typedef {"start" | "center" | "end"} AxisAlignment
+ */
+
+/**
+ * @typedef {"sm" | "md"} AlertSize
+ * @typedef {FormFunctionalState | DSFRInfoState} AlertType
+ */
+
+/**
+ * * @typedef {"h1" | "h2" | "h3" | "h4" | "h5" | "h6"} TitleLevel
+ */
 
 /**
  * @typedef {"default" } DSFRFormDefaultState
@@ -68,9 +77,9 @@
  * @typedef {DSFRFormDefaultState | DSFRFormFunctionalState } DSFRFormState
  * @typedef {DSFRFormFunctionalState | "warning"} FormFunctionalState
  * @typedef {FormFunctionalState | "disabled"} AccordionFunctionalState
- * @typedef {"info"} AccordionInfoState
- * @typedef {AccordionFunctionalState | AccordionInfoState} PublishingFormAccordionState
- * @typedef {DSFRFormDefaultState | AccordionFunctionalState | AccordionInfoState} AccordionState
+ * @typedef {"info"} DSFRInfoState
+ * @typedef {AccordionFunctionalState | DSFRInfoState} PublishingFormAccordionState
+ * @typedef {DSFRFormDefaultState | AccordionFunctionalState | DSFRInfoState} AccordionState
  */
 
 /**
@@ -115,9 +124,11 @@
  */
 
 /**
- * @typedef {{rid?: string, description: string?, filetype: RemoteResourceFileType, format: string, mime: string, schema?: string, title: string, type: ResourceType, url: string}} DatasetRemoteFile
- * @typedef {{rid?: string, file: File, sha256?: string, description: string?, format: string, filesize: number, filetype: FileResourceFileType, mime: string, schema?: string, title: string, type: ResourceType}} DatasetLocalFile
- * @typedef {DatasetLocalFile | DatasetRemoteFile} DatasetFile
+ * @typedef {{description: string?, filetype: RemoteResourceFileType, format: string, mime: string, schema?: string, title: string, type: ResourceType, url: string}} DatasetRemoteFile
+ * @typedef {{file: File, sha256?: string, description: string?, format: string, filesize: number, filetype: FileResourceFileType, mime: string, schema?: string, title: string, type: ResourceType}} DatasetLocalFile
+ * @typedef {"none" | "loading" | "failed" | "loaded"} FileLoadingState
+ * @typedef {(DatasetLocalFile | DatasetRemoteFile) & {state: FileLoadingState}} NewDatasetFile
+ * @typedef {(DatasetLocalFile | DatasetRemoteFile) & {rid: string}} DatasetFile
  *
  * @typedef {{file: Blob, uuid: string, filename: string}} DatasetFullFileUpload
  * @typedef {DatasetFullFileUpload & {partindex: number, partbyteoffset: number, totalparts: number, chunksize: number}} DatasetChunkUpload

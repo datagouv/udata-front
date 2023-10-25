@@ -83,6 +83,7 @@ import InputGroup from '../InputGroup/InputGroup.vue';
 import UploadGroup from './UploadGroup.vue';
 import useFunctionalState from '../../../composables/useFunctionalState';
 import { requiredWithCustomMessage } from '../../../i18n';
+import { useFilesUpload } from '../../../composables/useFilesUpload';
 
 export default defineComponent({
   components: { Container, FileCard, InputGroup, UploadGroup },
@@ -102,10 +103,12 @@ export default defineComponent({
     const { t } = useI18n();
     const fileModalTitleId = computed(() => props.id + "-title");
 
+    const { allowedExtensions } = useFilesUpload();
+
     /** @type {import("vue").Ref<HTMLDialogElement | null>} */
     const modalRef = templateRef('modalRef');
 
-    /** @type {import("vue").Ref<Array<import("../../../types").DatasetFile>>} */
+    /** @type {import("vue").Ref<Array<import("../../../types").NewDatasetFile>>} */
     const modalFiles = ref([]);
 
     const fileRequired = requiredWithCustomMessage(t("At least one file or link is required."));
@@ -143,14 +146,20 @@ export default defineComponent({
         modalFiles.value.push({
           file,
           description: "",
-          format: file.type.includes("/") ? file.type.split("/").pop() || "" : file.type,
+          format: guessFormat(file.type),
           filesize: file.size,
           filetype: "file",
           mime: file.type,
           title: file.name,
-          type: "main"
+          type: "main",
+          state: "none"
         });
       }
+    }
+
+    const guessFormat = (mimeType) => {
+      const guessedFormat = mimeType.includes("/") ? mimeType.split("/").pop() || "" : mimeType;
+      return guessedFormat in allowedExtensions.value ? guessedFormat : "";
     }
 
     /**
@@ -163,8 +172,11 @@ export default defineComponent({
         description: "",
         filetype: "remote",
         title: "",
+        format: "",
+        mime: "",
         type: "main",
         url,
+        state: "none",
       });
     }
 

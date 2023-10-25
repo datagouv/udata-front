@@ -112,9 +112,12 @@
                     :missingMetadata="!resource.title || !resource.description"
                     :title="resource.title || resource.file?.name || ''"
                     @delete="removeFile(index)"
-                    @edit="$emit('editFile', resource, index)"
+                    @edit="$emit('editFile', files, index)"
+                    :loading="isLoading(resource)"
+                    :hideActions="isLoaded(resource)"
                   />
                 <div class="fr-grid-row fr-grid-row--center">
+                  <ButtonLoader :width="114" v-if="loading"/>
                   <UploadModalButton
                     :label="$t('Add files')"
                     :title="$t('Add files (opens a modal dialog)')"
@@ -123,13 +126,22 @@
                     :hasError="stateHasError('files')"
                     :errorText="getErrorText('files')"
                     @change="addFiles"
+                    v-else
                   />
                 </div>
               </template>
             </LinkedToAccordion>
           </fieldset>
+          <Alert type="error" v-if="errors.length" class="fr-mt-n2w fr-mb-2w">
+            <template #title>{{ $t("An error occured | Some errors occured", errors.length) }}</template>
+            <ul v-if="errors.length > 1">
+              <li v-for="error in errors">{{ error }}</li>
+            </ul>
+            <p v-else> {{ errors[0] }}</p>
+          </Alert>
           <div class="fr-grid-row fr-grid-row--right">
-            <button class="fr-btn" @click="submit">
+            <ButtonLoader :width="66" v-if="loading"/>
+            <button class="fr-btn" @click="submit" v-else>
               {{ $t("Next") }}
             </button>
           </div>
@@ -143,30 +155,41 @@ import { computed, defineComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
+import Alert from '../../components/Alert/Alert.vue';
+import ButtonLoader from '../../components/Form/ButtonLoader.vue';
 import Container from '../../components/Ui/Container/Container.vue';
 import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
 import FileCard from '../../components/Form/FileCard/FileCard.vue';
 import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
+import UploadModalButton from '../../components/Form/UploadGroup/UploadModalButton.vue';
 import Well from "../../components/Ui/Well/Well.vue";
 import useUid from "../../composables/useUid";
 import { requiredWithCustomMessage, withMessage } from '../../i18n';
 import editIcon from "svg/illustrations/edit.svg";
 import useFunctionalState from '../../composables/useFunctionalState';
 import { isClosedFormat } from '../../helpers';
-import UploadModalButton from '../../components/Form/UploadGroup/UploadModalButton.vue';
+import { isLoading, isLoaded } from "../../api/resources";
 
 export default defineComponent({
-  components: { Accordion, AccordionGroup, Container, FileCard, InputGroup, LinkedToAccordion, Sidemenu, Stepper, UploadModalButton, Well },
+  components: { Accordion, AccordionGroup, Alert, ButtonLoader, Container, FileCard, InputGroup, LinkedToAccordion, Sidemenu, Stepper, UploadModalButton, Well, },
   emits: ["editFile", "next"],
   props: {
+    errors: {
+      type: Array,
+      required: true,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
     steps: {
       type: Array,
       required: true,
     },
     originalFiles: {
-      /** @type {import("vue").PropType<Array<import("../../types").DatasetFile>>} */
+      /** @type {import("vue").PropType<Readonly<Array<import("../../types").NewDatasetFile>>>} */
       type: Array,
       required: true,
     }
@@ -206,7 +229,7 @@ export default defineComponent({
 
     /**
      *
-     * @param {Array<import("../../types").DatasetFile>} newFiles
+     * @param {Array<import("../../types").NewDatasetFile>} newFiles
      */
     const addFiles = (newFiles) => {
       files.value.push(...newFiles);
@@ -265,6 +288,8 @@ export default defineComponent({
       getErrorText,
       getFunctionalState,
       getWarningText,
+      isLoaded,
+      isLoading,
       publishFileAccordionId,
       removeFile,
       state,

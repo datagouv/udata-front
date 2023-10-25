@@ -33,8 +33,8 @@ import { getMainAxisAlignment } from '../../../dsfr';
 
 export default defineComponent({
   props: {
-    actionsAlignment: {
-      type: /** @type {import("vue").PropType<import("../../../types").AxisAlignment>} */(String),
+      actionsAlignment: {
+      type: /** @type {import("vue").PropType<import("../../../types").AxisAlignment>} */ (String),
       default: "",
     },
     content: {
@@ -72,7 +72,7 @@ export default defineComponent({
       isDefault,
       isPrimary,
       type,
-    }
-  }
+    };
+  },
 });
 </script>

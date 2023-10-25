@@ -20,7 +20,8 @@
         </div>
       </div>
       <div class="fr-col-auto" v-if="!hideActions">
-        <div class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
+        <FileLoader v-if="loading"/>
+        <div class="fr-grid-row fr-grid-row--middle no-wrap wrap-md" v-else>
           <p class="fr-col-auto fr-m-0">
             <button
               type="button"
@@ -52,47 +53,53 @@
 import { defineComponent } from 'vue';
 import useResourceImage from '../../../composables/useResourceImage';
 import { filesize as formatFilesize, formatRelativeIfRecentDate } from "../../../helpers";
+import FileLoader from './FileLoader.vue';
 
 export default defineComponent({
-  emits: ["delete", "edit"],
-  props: {
-    allowEdit: {
-      type: Boolean,
-      default: true
+    emits: ["delete", "edit"],
+    props: {
+        allowEdit: {
+            type: Boolean,
+            default: true
+        },
+        filename: {
+            type: String,
+        },
+        filesize: {
+            type: Number,
+        },
+        format: {
+            type: String,
+        },
+        hideActions: {
+            type: Boolean,
+            default: false,
+        },
+        lastModified: {
+            type: Number,
+        },
+        loading: {
+            type: Boolean,
+            default: false,
+        },
+        missingMetadata: {
+            type: Boolean,
+            default: false,
+        },
+        title: {
+            type: String,
+            required: true,
+        }
     },
-    filename: {
-      type: String,
+    setup(props) {
+        const resourceImage = useResourceImage(props.format || "");
+        return {
+            format: props.format,
+            formatFilesize,
+            formatRelativeIfRecentDate,
+            resourceImage,
+        };
     },
-    filesize: {
-      type: Number,
-    },
-    format: {
-      type: String,
-    },
-    hideActions: {
-      type: Boolean,
-      default: false,
-    },
-    lastModified: {
-      type: Number,
-    },
-    missingMetadata: {
-      type: Boolean,
-      default: false,
-    },
-    title: {
-      type: String,
-      required: true,
-    }
-  },
-  setup(props) {
-    const resourceImage = useResourceImage(props.format || "");
-    return {
-      format: props.format,
-      formatFilesize,
-      formatRelativeIfRecentDate,
-      resourceImage,
-    }
-  }
+    components: { FileLoader }
 });
 </script>

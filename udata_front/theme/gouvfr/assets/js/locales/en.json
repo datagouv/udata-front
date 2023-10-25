@@ -304,5 +304,20 @@
   "You can now publish it or save it as a draft.": "You can now publish it or save it as a draft.",
   "Give us your feedback on the publishing form": "Give us your feedback on the publishing form",
   "Save as draft": "Save as draft",
-  "Publish the dataset": "Publish the dataset"
+  "Publish the dataset": "Publish the dataset",
+  "Failed to upload file ": "Failed to upload file ",
+  "An error occured | Some errors occured": "An error occured | Some errors occured",
+  "Choose the correct link": "Choose the correct link",
+  "It's advised to put the link to the file itself instead of a web page to allow {site} to parse it.": "It's advised to put the link to the file itself instead of a web page to allow {site} to parse it.",
+  "Choose the correct format": "Choose the correct format",
+  "What is a Mime type": "What is a Mime type",
+  "": "",
+  "Link url": "Link url",
+  "Format": "Format",
+  "Select a format": "Select a format",
+  "Mime type": "Mime type",
+  "Search a mime type...": "Search a mime type...",
+  "Select a mime type": "Select a mime type",
+  "Name a link": "Name a link",
+  "Link title": "Link title"
 }

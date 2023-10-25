@@ -14,6 +14,8 @@
     <template v-else-if="currentStep === 2">
       <Step3AddFiles
         v-if="editedFile === null"
+        :loading="loading"
+        :errors="errors"
         :originalFiles="files"
         :steps="steps"
         @next="updateFilesAndMoveToNextStep"
@@ -37,7 +39,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref, toValue } from 'vue';
+import { computed, defineComponent, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { templateRef, useEventListener } from '@vueuse/core';
 import Step1PublishingType from "./Step1PublishingType.vue";
@@ -47,7 +49,7 @@ import Step3UpdateFileMetadata from "./Step3UpdateFileMetadata.vue";
 import Step4CompleteThePublication from "./Step4CompleteThePublication.vue";
 import { publishing_form_feedback_url, user } from '../../config';
 import { createDataset, publishDataset } from '../../api/datasets';
-import { createFile } from '../../api/resources';
+import { useFilesUpload } from '../../composables/useFilesUpload';
 
 export default defineComponent({
   components: { Step1PublishingType, Step2DescribeDataset, Step3AddFiles, Step3UpdateFileMetadata, Step4CompleteThePublication },
@@ -67,7 +69,11 @@ export default defineComponent({
   },
   setup(props) {
     const { t } = useI18n();
+
+    const { files, updateFiles, uploadFiles } = useFilesUpload();
+
     const steps = [t("Publish data on data.gouv.fr"), t("Describe your dataset"), t("Add files"), t("Complete your publishing")];
+
     const currentStep = ref(0);
 
     /** @type {import("vue").Ref<HTMLDivElement | null>} */
@@ -126,10 +132,14 @@ export default defineComponent({
 
     const draftUrl = ref(props.redirectDraftUrl);
 
-    /** @type {import("vue").Ref<Array<import("../../types").DatasetFile>>} */
-    const files = ref([]);
+    const datasetLoading = ref(false);
 
-    /** @type {import("vue").Ref<import("../../types").DatasetFile | null>} */
+    const loading = computed(() => files.value.reduce((loading, file) => loading || file.state === "loading", datasetLoading.value));
+
+    /** @type {import("vue").Ref<Array<string>>} */
+    const errors = ref([]);
+
+    /** @type {import("vue").Ref<import("../../types").NewDatasetFile | null>} */
     const editedFile = ref(null);
 
     /** @type {import("vue").Ref<number | null>} */
@@ -173,28 +183,41 @@ export default defineComponent({
 
     /**
      *
-     * @param {import("vue").MaybeRefOrGetter<Array<import("../../types").DatasetFile>>} updatedFiles
+     * @param {import("vue").MaybeRefOrGetter<import("../../types").NewDataset>} dataset
      */
-    const updateFiles = (updatedFiles) => files.value = toValue(updatedFiles);
+    const createOrReturnDataset = (dataset) => {
+      if(savedDataset.value) {
+        return Promise.resolve(savedDataset.value);
+      }
+      return createDataset(dataset);
+    }
 
     /**
      *
-     * @param {import("vue").MaybeRefOrGetter<Array<import("../../types").DatasetFile>>} files
+     * @param {import("vue").MaybeRefOrGetter<Array<import("../../types").NewDatasetFile>>} files
      */
     const updateFilesAndMoveToNextStep = (files) => {
       updateFiles(files);
-      createDataset(dataset).then(datasetFromApi => {
+      errors.value = [];
+      datasetLoading.value = true;
+      createOrReturnDataset(dataset).then(datasetFromApi => {
         savedDataset.value = datasetFromApi;
-
         draftUrl.value = draftUrl.value + savedDataset.value.id;
-
-        const filesToUpload = toValue(files);
-        const promises = [];
-        for(const file of filesToUpload) {
-          promises.push(createFile(savedDataset.value.id, file));
-        }
-        moveToStep(3);
-      }).catch(e => console.log(e));
+        uploadFiles(savedDataset.value.id)
+        .then(results => {
+          let allPromisesSucceded = true;
+          for (let result of results) {
+            if(result.status === "rejected") {
+              allPromisesSucceded = false;
+              errors.value.push(result.reason);
+            }
+          }
+          if(allPromisesSucceded) {
+            moveToStep(3);
+          }
+        });
+      }).catch(e => console.log(e))
+      .finally(() => datasetLoading.value = false);
     }
 
     const redirectToPublicUrl = () => {
@@ -203,17 +226,28 @@ export default defineComponent({
       }
     };
 
+    /**
+     *
+     * @param {Array<import("../../types").NewDatasetFile>} resources
+     * @param {number} index
+     */
     const editFile = (resources, index) => {
-      files.value = toValue(resources);
+      updateFiles(resources);
       editedFile.value = files.value[index];
       editedIndex.value = index;
       moveToStep();
     };
 
+    /**
+     *
+     * @param {import("../../types").NewDatasetFile} file
+     */
     const updateEditedFile = (file) => {
       editedFile.value = toValue(file);
       if(editedFile.value) {
-        files.value[editedIndex.value || 0] = editedFile.value;
+        const filesToUpdate = [...toValue(files)];
+        filesToUpdate[editedIndex.value || 0] = editedFile.value;
+        updateFiles(filesToUpdate);
       }
       editedFile.value = null;
       editedIndex.value = null;
@@ -225,8 +259,12 @@ export default defineComponent({
       const step = hash.substring(7);
       const parsedStep = parseInt(step, 10) - 1|| 0;
       const dontSave = false;
-      if(editedFile.value && typeof editedIndex.value === "number" && !editedFile.value.title) {
-        files.value.splice(editedIndex.value, 1);
+      if(editedFile.value && typeof editedIndex.value === "number") {
+        if(!editedFile.value.title || !editedFile.value.format) {
+          const filesToUpdate = [...toValue(files)];
+          filesToUpdate.splice(editedIndex.value, 1);
+          updateFiles(filesToUpdate);
+        }
         editedFile.value = null;
         editedIndex.value = null;
         moveToStep();
@@ -241,7 +279,9 @@ export default defineComponent({
       draftUrl,
       editFile,
       editedFile,
+      errors,
       files,
+      loading,
       moveToStep,
       publishing_form_feedback_url,
       redirectToPublicUrl,

@@ -69,6 +69,16 @@ export function fetchDatasetCommunityResources (datasetId, page, pageSize) {
     .then((resp) => resp.data)
 }
 
+/**
+ * @return {Promise<Array<string>>}
+ */
+export function fetchAllowedExtensions () {
+  return api
+    .get("/datasets/extensions/", {
+    })
+    .then((resp) => resp.data);
+}
+
 const chunkSize = 2000000;
 
 /**
@@ -82,9 +92,12 @@ export function getUploadUrl(datasetId) {
 /**
  *
  * @param {string} datasetId
- * @param {import("../types").DatasetFile} file
+ * @param {import("../types").NewDatasetFile} file
  */
 export function createFile(datasetId, file) {
+  if(file.state === "loaded") {
+    return Promise.resolve(file);
+  }
   if(file.filetype === "remote") {
     return createRemoteResource(datasetId, file);
   } else {
@@ -142,17 +155,39 @@ export function createChunksResource(datasetId, file) {
 
   const nbChunks = Math.ceil(file.filesize / chunkSize);
   let chunkStart = 0;
+  const promises = [];
 
   for(let i = 0; i < nbChunks; i++) {
-    createChunkResource(datasetId, file, i, chunkStart, nbChunks);
+    let promise = createChunkResource(datasetId, file, i, chunkStart, nbChunks);
+    promises.push(promise);
     chunkStart += chunkSize;
   }
 
-  return api.postForm(getUploadUrl(datasetId), {
-    ...apiForm,
+  return Promise.all(promises).then(results => {
+    return api.postForm(getUploadUrl(datasetId), {
+      ...apiForm,
+    });
   });
 }
 
+/**
+ *
+ * @param {import("../types").NewDatasetFile} file
+ */
+export const isLoading = (file) => file.state === "loading";
+
+
+/**
+ *
+ * @param {import("../types").NewDatasetFile} file
+ */
+export const isLoaded = (file) => file.state === "loaded";
+
+/**
+ *
+ * @param {import("../types").NewDatasetFile} file
+ */
+export const isFailed = (file) => file.state === "failed";
 
 /**
 * @param {string} datasetId
