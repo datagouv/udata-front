@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add German translations files and French latest translations [#307](https://github.com/etalab/udata-front/pull/307)
 
 ## 3.2.7 (2023-10-26)
 
