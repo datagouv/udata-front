@@ -317,7 +317,7 @@ export default defineComponent({
         url: v$.value.url.$dirty ? "info" : "disabled",
         title: getFunctionalState(v$.value.title.$dirty, v$.value.title.$error, false),
         type: getFunctionalState(v$.value.type.$dirty, v$.value.type.$error, false),
-        format: v$.value.format.$dirty ? "info" : "disabled",
+        format: getFunctionalState(v$.value.format.$dirty, v$.value.format.$error, false),
         description: getFunctionalState(vWarning$.value.description.$dirty, false, vWarning$.value.description.$error),
         schema: v$.value.schema.$dirty ? "info" : "disabled",
         mime: v$.value.mime.$dirty ? "info" : "disabled",
