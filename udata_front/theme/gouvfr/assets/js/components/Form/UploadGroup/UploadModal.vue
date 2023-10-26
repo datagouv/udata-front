@@ -157,9 +157,13 @@ export default defineComponent({
       }
     }
 
+    /**
+     *
+     * @param {string} mimeType
+     */
     const guessFormat = (mimeType) => {
       const guessedFormat = mimeType.includes("/") ? mimeType.split("/").pop() || "" : mimeType;
-      return guessedFormat in allowedExtensions.value ? guessedFormat : "";
+      return allowedExtensions.value.includes(guessedFormat) ? guessedFormat : "";
     }
 
     /**
