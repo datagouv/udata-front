@@ -146,7 +146,7 @@ export default defineComponent({
         modalFiles.value.push({
           file,
           description: "",
-          format: guessFormat(file.type),
+          format: guessFormat(file),
           filesize: file.size,
           filetype: "file",
           mime: file.type,
@@ -158,12 +158,17 @@ export default defineComponent({
     }
 
     /**
-     *
-     * @param {string} mimeType
+     * Try to guess file format using MIME type or name.
+     * @param {File} file
      */
-    const guessFormat = (mimeType) => {
-      const guessedFormat = mimeType.includes("/") ? mimeType.split("/").pop() || "" : mimeType;
-      return allowedExtensions.value.includes(guessedFormat) ? guessedFormat : "";
+    const guessFormat = (file) => {
+      const formatFromMime = file.type.includes("/") ? file.type.split("/").pop() || "" : file.type;
+      let guessedFormat = allowedExtensions.value.includes(formatFromMime) ? formatFromMime : "";
+      if(!guessedFormat) {
+        const formatFromName = file.name.includes(".") ? file.name.split(".").pop() || "" : file.name;
+        guessedFormat = allowedExtensions.value.includes(formatFromName) ? formatFromName : "";
+      }
+      return guessedFormat;
     }
 
     /**
