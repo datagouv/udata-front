@@ -29,7 +29,7 @@ DEMO_SERVER_NAME = 'demo.data.gouv.fr'
 DATA_SEARCH_FEEDBACK_FORM_URL = ''
 
 # Frontend forms url
-FEEDBACK_FORM_URL = 'https://tally.so/r/mOld5R'
+DISCOVERABILITY_FORM_URL = ''
 
 # Static pages from github repo
 PAGES_GH_REPO_NAME = 'etalab/datagouvfr-pages'
@@ -74,3 +74,6 @@ MONCOMPETPRO_CLIENT_SECRET = None
 
 # Newsletter
 NEWSLETTER_SUBSCRIPTION_URL = 'https://f.info.data.gouv.fr/f/lp/infolettre-data-gouv-fr-landing-page/lk3q01y6'  # noqa
+
+# Metrics API
+METRICS_API = None

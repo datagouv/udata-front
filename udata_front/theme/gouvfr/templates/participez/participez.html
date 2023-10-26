@@ -4,11 +4,29 @@
             <div class="fr-col-12 fr-col-sm-6 text-white filet filet-currentcolor">
                 <h2 class="fr-h2 text-white fr-mb-2w">{{ _('Participate') }}</h2>
                 <ul class="nav-list">
-                    <li><a href="{{ config.GUIDES_ORGANIZATION_URL }}"
-                            class="nav-link text-white text-decoration-none">{{ _('Create or find your organization') }}</a>
+                    <li>
+                    <a
+                        href="{{ config.GUIDES_ORGANIZATION_URL }}"
+                        class="nav-link text-white text-decoration-none"
+                        data-track-content
+                        data-content-name="participez"
+                        data-content-piece="{{ _('Create or find your organization') }}"
+                        data-content-target="{{ config.GUIDES_ORGANIZATION_URL }}"
+                    >
+                        {{ _('Create or find your organization') }}
+                    </a>
                     </li>
-                    <li><a href="{{ config.GUIDES_URL }}"
-                            class="nav-link text-white text-decoration-none">{{ _('Go to documentation') }}</a>
+                    <li>
+                        <a
+                            href="{{ config.GUIDES_URL }}"
+                            class="nav-link text-white text-decoration-none"
+                            data-track-content
+                            data-content-name="participez"
+                            data-content-piece="{{ _('Go to documentation') }}"
+                            data-content-target="{{ config.GUIDES_URL }}"
+                        >
+                            {{ _('Go to documentation') }}
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -18,6 +36,10 @@
                     <a
                         href="{{ url_for('admin.index', path='dataset/new/') }}"
                         class="fr-btn fr-btn--secondary fr-btn--secondary-white fr-icon-arrow-right-s-line fr-btn--icon-right"
+                        data-track-content
+                        data-content-name="participez"
+                        data-content-piece="{{ _('Publish a dataset') }}"
+                        data-content-target="{{ url_for('admin.index', path='dataset/new/') }}"
                     >
                         {{ _('Publish a dataset') }}
                     </a>
@@ -26,6 +48,10 @@
                     <a
                         href="{{ url_for('admin.index', path='reuse/new/') }}"
                         class="fr-btn fr-btn--secondary fr-btn--secondary-white fr-icon-arrow-right-s-line fr-btn--icon-right"
+                        data-track-content
+                        data-content-name="participez"
+                        data-content-piece="{{ _('Publish a reuse') }}"
+                        data-content-target="{{ url_for('admin.index', path='reuse/new/') }}"
                     >
                         {{ _('Publish a reuse') }}
                     </a>

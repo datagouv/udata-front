@@ -219,6 +219,9 @@
             </div>
         {% endif %}
     </section>
+
+    {{ hook('reuse.display.metrics') }}
+
 </div>
 {% endcache %}
 {% endblock %}

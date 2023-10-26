@@ -56,7 +56,7 @@
 {% endblock %}
 
 {% block main_content %}
-{% cache cache_duration, 'org-content', org.id|string, datasets.page|string, reuses.page|string, g.lang_code, current_user.slug or 'anonymous', org.last_modified|string %}
+{% cache cache_duration, 'org-content', org.id|string, datasets.page|string, reuses.page|string, g.lang_code, current_user.slug or 'anonymous', org.last_modified|string, request.query_string|string %}
 <div class="fr-container fr-mt-7w">
     {% if org.deleted %}
         <div class="fr-col-auto fr-mr-1w">
@@ -305,6 +305,9 @@
         tabindex="0"
     >
         <div class="fr-container">
+
+        {{ hook('organization.display.metrics') }}
+
         {% call(slot) information_title_with_button(_('Members')) %}
             {% if slot == "button" %}
                 {% set member = org.member(current_user) %}

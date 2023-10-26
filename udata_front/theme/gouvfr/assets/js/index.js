@@ -3,6 +3,7 @@ import { createApp } from "vue";
 import "./dsfr";
 import * as dsfr from "@gouvfr/dsfr/dist/dsfr/dsfr.module";
 
+import Chart from "./components/charts/chart.vue";
 import Threads from "./components/discussions/threads.vue";
 import ThreadsCreate from "./components/discussions/threads-create.vue";
 import MenuSearch from "./components/search/menu-search.vue";
@@ -21,6 +22,7 @@ import PublishingForm from "./pages/PublishingForm/PublishingForm.vue";
 import "./components/vanilla/tabs";
 import "./components/vanilla/accordion";
 import "./components/vanilla/clipboard";
+import "./components/vanilla/dialog";
 import "./components/vanilla/sort-search";
 import handleUpdateUrlButtons from "./components/vanilla/update-url";
 
@@ -61,6 +63,7 @@ const configAndMountApp = (el) => {
   app.component("dataset-resources", Resources);
   app.component("dataset-resource-from-hash", ResourceFromHash);
   app.component("captcha", Captcha);
+  app.component("chart", Chart);
   app.component("toggletip", Toggletip);
   app.component("publishing-form", PublishingForm);
 

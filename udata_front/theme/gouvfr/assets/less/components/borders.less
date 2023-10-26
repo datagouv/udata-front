@@ -90,6 +90,14 @@ You can change this behaviour by using the `filet-currentcolor` class that will 
     border-top: @defaultBorder;
 }
 
+.border-2 {
+    border-width: 2px;
+}
+
+.border-dashed {
+    border-style: dashed;
+}
+
 .border-default-grey {
     border-color: @border-default-grey;
 }
@@ -98,8 +106,8 @@ You can change this behaviour by using the `filet-currentcolor` class that will 
     border-color: @border-plain-error;
 }
 
-.border-dashed {
-    border-style: dashed;
+.border-blue-400 {
+    border-color: @blue-400;
 }
 
 each(@dsfr-breakpoints, .(@bk, @_k, @_i) {

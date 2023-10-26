@@ -1,0 +1,23 @@
+{
+  "acronym": "SIG",
+  "badges": [
+    {"kind": "public-service"},
+    {"kind": "certified"}
+  ],
+  "created_at": "2014-09-12T05:39:31.894000+00:00",
+  "deleted": null,
+  "description": "Plac\u00e9 sous l\u2019autorit\u00e9 du Premier ministre et du Secr\u00e9tariat g\u00e9n\u00e9ral du Gouvernement, le Service d\u2019information du Gouvernement (SIG) a quatre grandes missions.\n \n> Analyser l\u2019\u00e9volution de l\u2019opinion publique et le contenu des m\u00e9dias.\n> Diffuser aux \u00e9lus, \u00e0 la presse et au public des informations sur l\u2019action gouvernementale.\n> Entreprendre des actions d\u2019information d\u2019int\u00e9r\u00eat g\u00e9n\u00e9ral \u00e0 caract\u00e8re interminist\u00e9riel.\n> Apporter une assistance technique aux administrations publiques et coordonner leur politique de communication.",
+  "id": "54126af3a3a7292a9bbf14d6",
+  "last_modified": "2023-03-20T14:00:42.250000+00:00",
+  "logo": "https://static.data.gouv.fr/avatars/ad/95e60b115a4582b2dcb1eb0ad7e9d3-original.png",
+  "metrics": {
+    "datasets": 10,
+    "followers": 24,
+    "members": 4,
+    "reuses": 0,
+    "views": 51
+  },
+  "name": "Service d'Information du Gouvernement",
+  "slug": "service-d-information-du-gouvernement",
+  "url": "https://www.gouvernement.fr"
+}
