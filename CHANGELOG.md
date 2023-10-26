@@ -2,6 +2,10 @@
 
 ## Current (in progress)
 
+- Nothing yet
+
+## 3.2.7 (2023-10-26)
+
 - Update testing dependencies [dependabot/30](https://github.com/etalab/udata-front/security/dependabot/30) [dependabot/22](https://github.com/etalab/udata-front/security/dependabot/22) [dependabot/23](https://github.com/etalab/udata-front/security/dependabot/23) [#297](https://github.com/etalab/udata-front/pull/297) [#298](https://github.com/etalab/udata-front/pull/298)
 - Fix translate links in footer [#301](https://github.com/etalab/udata-front/pull/301)
 - Track participez clicks [#302](https://github.com/etalab/udata-front/pull/302)

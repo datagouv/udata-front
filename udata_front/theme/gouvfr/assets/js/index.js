@@ -3,6 +3,7 @@ import { createApp } from "vue";
 import "./dsfr";
 import * as dsfr from "@gouvfr/dsfr/dist/dsfr/dsfr.module";
 
+import Chart from "./components/charts/chart.vue";
 import Threads from "./components/discussions/threads.vue";
 import ThreadsCreate from "./components/discussions/threads-create.vue";
 import MenuSearch from "./components/search/menu-search.vue";
@@ -60,6 +61,7 @@ const configAndMountApp = (el) => {
   app.component("dataset-resources", Resources);
   app.component("dataset-resource-from-hash", ResourceFromHash);
   app.component("captcha", Captcha);
+  app.component("chart", Chart);
   app.component("toggletip", Toggletip);
 
   // unset delimiters used in html templates to prevent injections using {{ }}
