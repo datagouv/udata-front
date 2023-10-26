@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 3.2.8 (2023-10-26)
 
 - Add German translations files and French latest translations [#307](https://github.com/etalab/udata-front/pull/307)
