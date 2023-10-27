@@ -125,7 +125,7 @@ inv serve
 
 ##### 🏗 Installing the javascript dependencies
 
-First, you need to use [Node](https://nodejs.org/) (version 14+) on your platform. You should consider [installing NVM](https://github.com/creationix/nvm#installation) which uses the existing .nvmrc.
+First, you need to use [Node](https://nodejs.org/) (version 20+) on your platform. You should consider [installing NVM](https://github.com/creationix/nvm#installation) which uses the existing .nvmrc.
 
 ```shell
 cd udata-front
