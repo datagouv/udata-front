@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Update build dependencies [#309](https://github.com/etalab/udata-front/pull/309)
 
 ## 3.2.8 (2023-10-26)
 
