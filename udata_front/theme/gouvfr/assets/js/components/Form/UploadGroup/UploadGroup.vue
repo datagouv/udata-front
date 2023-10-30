@@ -25,6 +25,7 @@
           :aria-describedby="ariaDescribedBy"
           ref="inputRef"
           @change="change"
+          :accept="accept"
           :multiple="multiple"
           :required="required"
         />
@@ -69,6 +70,9 @@ export default defineComponent({
   emits: ['click', 'change'],
   inheritAttrs: false,
   props: {
+    accept: {
+      type: String,
+    },
     disabled: {
       type: Boolean,
       default: false,

@@ -28,6 +28,20 @@ export const Upload = {
   args,
 };
 
+export const UploadPdfOnly = {
+  render: (args) => ({
+    components: { UploadGroup },
+    setup() {
+      return { args };
+    },
+    template: '<UploadGroup v-bind="args" />',
+  }),
+  args: {
+    ...args,
+    accept: ".pdf"
+  },
+};
+
 export const UploadDisabled = {
   render: (args) => ({
     components: { UploadGroup },

@@ -21,6 +21,7 @@
                 <UploadGroup
                   :label="$t('Upload files')"
                   type="drop"
+                  :accept="accept"
                   :multiple="multiple"
                   @change="setFiles"
                   :required="true"
@@ -104,6 +105,12 @@ export default defineComponent({
     const fileModalTitleId = computed(() => props.id + "-title");
 
     const { allowedExtensions } = useFilesUpload();
+
+    /**
+     * Format allowed extensions as a string with comma between each and a `.` before the extension.
+     * This is the format required by the input accept attribute.
+     */
+    const accept = computed(() => allowedExtensions.value.map(extension => `.${extension}`).join(","));
 
     /** @type {import("vue").Ref<HTMLDialogElement | null>} */
     const modalRef = templateRef('modalRef');
@@ -211,6 +218,8 @@ export default defineComponent({
     };
 
     return {
+      accept,
+      allowedExtensions,
       close,
       fileModalTitleId,
       getErrorText,
