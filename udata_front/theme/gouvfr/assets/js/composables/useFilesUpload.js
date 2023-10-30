@@ -47,6 +47,9 @@ export function useFilesUpload() {
     const promises = [];
     for(const i in files.value) {
       const file = files.value[i];
+      if(file.state === "loaded") {
+        continue;
+      }
       files.value[i].state = "loading";
       let promise = uploadFile(datasetId, file).then(created => {
         files.value[i].state = "loaded";
