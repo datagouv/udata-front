@@ -19,7 +19,7 @@ const originalDataset = {
   license: "",
   frequency: "punctual",
   temporal_coverage: "",
-  last_update: new Date(),
+  frequency_date: new Date(),
   spatial: {
     zones: [],
     granularity: "",

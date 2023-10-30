@@ -106,7 +106,7 @@
  *  license: string,
  *  frequency: string,
  *  temporal_coverage: string,
- *  last_update: Date | null,
+ *  frequency_date: Date | null,
  *  page: string,
  *  private: boolean,
  *  quality?: Quality,

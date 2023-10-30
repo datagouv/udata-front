@@ -253,7 +253,7 @@
                   <InputGroup
                     :label="$t('Last update')"
                     type="date"
-                    v-model="dataset.last_update"
+                    v-model="dataset.frequency_date"
                   />
                 </div>
               </div>

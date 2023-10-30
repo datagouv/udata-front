@@ -105,7 +105,7 @@ export default defineComponent({
       license: "",
       frequency: "",
       temporal_coverage: "",
-      last_update: null,
+      frequency_date: null,
       private: true,
       spatial: {
         zones: [],
@@ -130,7 +130,8 @@ export default defineComponent({
     /** @type {import("vue").Ref<import("../../types").Dataset | null>} */
     const savedDataset = ref(null);
 
-    const draftUrl = ref(props.redirectDraftUrl);
+    /** @type {import("vue").Ref<string | null>} */
+    const draftUrl = ref(null);
 
     const datasetLoading = ref(false);
 
@@ -202,7 +203,7 @@ export default defineComponent({
       datasetLoading.value = true;
       createOrReturnDataset(dataset).then(datasetFromApi => {
         savedDataset.value = datasetFromApi;
-        draftUrl.value = draftUrl.value + savedDataset.value.id;
+        draftUrl.value = props.redirectDraftUrl + savedDataset.value.id;
         uploadFiles(savedDataset.value.id)
         .then(results => {
           let allPromisesSucceded = true;
