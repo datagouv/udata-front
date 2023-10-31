@@ -41,8 +41,8 @@
 </template>
 
 <script>
-import config from "../../config";
-import Author from "./author.vue";
+import config from "../../../config";
+import Author from "../Author/Author.vue";
 
 export default {
   components: {

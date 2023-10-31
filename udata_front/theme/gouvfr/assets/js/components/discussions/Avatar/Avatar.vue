@@ -11,11 +11,15 @@
 </template>
 
 <script>
-import useUserAvatar from "../../composables/useUserAvatar";
+import useUserAvatar from "../../../composables/useUserAvatar";
 
 export default {
   props: {
-    user: Object,
+    user: {
+      /** @type {import("vue").PropType<import("../../../types").User>} */
+      type: Object,
+      required: true,
+    },
     size: {
       type: Number,
       default: 40,
@@ -24,7 +28,7 @@ export default {
   setup(props) {
     const avatarUrl = useUserAvatar(props.user, props.size);
     return {
-      avatarUrl
+      avatarUrl,
     }
   },
 };

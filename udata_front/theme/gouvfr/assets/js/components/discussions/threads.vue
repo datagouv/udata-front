@@ -36,12 +36,12 @@ Discussions allow users to interact with others.
         </select>
         </div>
         <div class="fr-col-auto">
-          <ThreadsCreateButton :onClick="startThreadWithoutScroll"/>
+          <ThreadCreateButton @click="startThreadWithoutScroll"/>
         </div>
       </div>
     </div>
     <div class="fr-grid-row fr-grid-row--center" v-else>
-      <ThreadsCreateButton class="fr-col--bottom" :primary="true" :onClick="startThreadWithoutScroll"/>
+      <ThreadCreateButton class="fr-col--bottom" :primary="true" @click="startThreadWithoutScroll"/>
     </div>
     <transition mode="out-in">
       <template v-if="loading" key="loader">
@@ -69,13 +69,13 @@ Discussions allow users to interact with others.
           </button>
         </div>
         <div v-else>
-          <CreateThread
+          <ThreadCreate
             ref="createThread"
             :onSubmit="createNewThread"
             :subjectId="subjectId"
             :subjectClass="subjectClass"
             v-if="!readOnlyEnabled"
-          ></CreateThread>
+          />
           <ul class="fr-mb-5v">
             <li
               v-for="discussion in discussions"
@@ -100,11 +100,10 @@ Discussions allow users to interact with others.
 import { defineComponent, onMounted, ref, unref, watch, watchEffect } from "vue";
 import config from "../../config";
 import { Pagination } from "@etalab/udata-front-plugins-helper";
-import CreateThread from "./threads-create.vue";
-import Thread from "./thread.vue";
-import Loader from "./loader.vue";
-import ThreadsCreateButton from "./threads-create-button.vue";
-import {DISCUSSIONS_START_THREAD, bus} from "../../plugins/eventbus";
+import ThreadCreate from "./ThreadCreate/ThreadCreate.vue";
+import Thread from "./Thread/Thread.vue";
+import Loader from "./Thread/Loader.vue";
+import ThreadCreateButton from "./ThreadCreate/ThreadCreateButton.vue";
 import { useI18n } from "vue-i18n";
 import { api } from "../../plugins/api";
 import { useToast } from "../../composables/useToast";
@@ -112,8 +111,8 @@ import useIdFromHash from "../../composables/useIdFromHash";
 
 export default defineComponent({
   components: {
-    ThreadsCreateButton,
-    CreateThread,
+    ThreadCreateButton,
+    ThreadCreate,
     Thread,
     Pagination,
     Loader,
@@ -146,7 +145,7 @@ export default defineComponent({
      * @property {String} title
      * @property {String} url
      * @property {String} closed - date when the thread was closed, as string
-     * @property {import("./author.vue").User} closed_by - User who closed the thread
+     * @property {import("../../types").User} closed_by - User who closed the thread
      */
 
     /** @type {import("vue").Ref<Thread | null>} */
@@ -263,7 +262,7 @@ export default defineComponent({
         });
     };
 
-    /** @type {import("vue").Ref<import("./threads-create.vue").default | null>} */
+    /** @type {import("vue").Ref<import("./ThreadCreate/ThreadCreate.vue").default | null>} */
     const createThread = ref(null);
 
     const startThread = () => {
@@ -304,9 +303,6 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      // Listen to bus events
-      bus.on(DISCUSSIONS_START_THREAD, () => startThread());
-
       loadPage();
     });
 
