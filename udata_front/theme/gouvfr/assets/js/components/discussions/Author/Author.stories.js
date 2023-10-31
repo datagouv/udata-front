@@ -25,3 +25,17 @@ export const SimpleAuthor = {
   }),
   args,
 };
+
+export const AdminAuthor = {
+  render: (args) => ({
+    components: { Author },
+    setup() {
+      return { args };
+    },
+    template: ` <Author v-bind="args"/>`,
+  }),
+  args: {
+    ...args,
+    badge: true,
+  },
+};

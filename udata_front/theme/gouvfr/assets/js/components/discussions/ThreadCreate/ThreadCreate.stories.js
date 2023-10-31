@@ -21,10 +21,10 @@ export const DefaultThreadCreate = {
       const create = ref();
       let timeoutId;
       onMounted(() => {
-        timeoutId = setTimeout(() => create.value.displayForm());
+        timeoutId = setTimeout(() => create.value.displayForm(), 500);
       });
       onBeforeUnmount(() => clearTimeout(timeoutId));
-      return { args };
+      return { args, create };
     },
     template: ` <ThreadCreate ref="create" v-bind="args"/>`,
   }),

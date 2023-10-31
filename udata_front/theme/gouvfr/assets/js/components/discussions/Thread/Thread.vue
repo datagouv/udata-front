@@ -106,10 +106,11 @@ export default defineComponent({
     },
     closed: {
       type: String,
+      default: ""
     },
     closed_by: {
       type: Object,
-      required: true,
+      default() {return {};},
     },
   },
   setup(props) {
