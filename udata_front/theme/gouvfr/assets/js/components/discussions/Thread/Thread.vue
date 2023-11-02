@@ -30,9 +30,11 @@
               <p class="fr-text--sm text-mention-grey fr-m-0">
                 {{ formatDate(comment.posted_on) }}
               </p>
-              <div class="white-space-pre-wrap overflow-wrap-anywhere">
-                <p class="fr-mt-3v fr-mb-0">{{ comment.content }}</p>
-              </div>
+              <ReadMore>
+                <div class="white-space-pre-wrap overflow-wrap-anywhere">
+                  <p class="fr-mt-3v fr-mb-0">{{ comment.content }}</p>
+                </div>
+              </ReadMore>
             </div>
           </div>
         </article>
@@ -72,9 +74,10 @@
 </template>
 
 <script>
-import ThreadReply from "../ThreadReply/ThreadReply.vue";
 import Avatar from "../Avatar/Avatar.vue";
 import Author from "../Author/Author.vue";
+import ReadMore from "../../ReadMore/ReadMore.vue";
+import ThreadReply from "../ThreadReply/ThreadReply.vue";
 import { read_only_enabled } from "../../../config";
 import { formatDate } from "../../../helpers";
 import { computed, defineComponent, ref } from "vue";
@@ -83,9 +86,10 @@ import { auth } from "../../../plugins/auth";
 export default defineComponent({
   inheritAttrs: false,
   components: {
-    ThreadReply,
     Avatar,
     Author,
+    ReadMore,
+    ThreadReply,
   },
   props: {
     id: {
