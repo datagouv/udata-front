@@ -22,6 +22,17 @@
  * @property {Subject} subject
  */
 
+/**
+ * @callback CreateDiscussion
+ * @param {NewDiscussion} discussion
+ * @returns {Promise}
+ */
+
+/**
+ * @callback CreateComment
+ * @param {string} comment
+ * @returns {Promise}
+ */
  /**
   * @typedef {"start" | "center" | "end"} AxisAlignment
   */

@@ -1,15 +1,3 @@
-<!--
----
-name: Discussions
-category: 5 - Interactions
----
-
-# Discussions
-
-Discussions allow users to interact with others.
-
--->
-
 <template>
   <section class="discussions-wrapper" ref="top">
     <div class="fr-grid-row fr-grid-row--middle" v-if="totalResults">
@@ -74,7 +62,7 @@ Discussions allow users to interact with others.
             :onSubmit="createNewThread"
             :subjectId="subjectId"
             :subjectClass="subjectClass"
-            v-if="!readOnlyEnabled"
+            v-if="!read_only_enabled"
           />
           <ul class="fr-mb-5v">
             <li
@@ -98,7 +86,7 @@ Discussions allow users to interact with others.
 
 <script>
 import { defineComponent, onMounted, ref, unref, watch, watchEffect } from "vue";
-import config from "../../config";
+import { read_only_enabled } from "../../config";
 import { Pagination } from "@etalab/udata-front-plugins-helper";
 import ThreadCreate from "./ThreadCreate/ThreadCreate.vue";
 import Thread from "./Thread/Thread.vue";
@@ -171,8 +159,6 @@ export default defineComponent({
     ];
 
     const currentSort = ref(sorts[0]);
-
-    const readOnlyEnabled = config.read_only_enabled;
 
     /** @type {import("vue").Ref<HTMLElement | null>} */
     const top = ref(null);
@@ -328,13 +314,14 @@ export default defineComponent({
       loading,
       currentSort,
       sorts,
-      readOnlyEnabled,
+      read_only_enabled,
       createThread,
       changePage,
       changeSort,
       createNewThread,
-      top,
       resetHash,
+      startThreadWithoutScroll,
+      top,
     };
   }
 });

@@ -94,7 +94,7 @@ export default defineComponent({
       required: true,
     },
     onSubmit: {
-      type: /** @type {import("vue").PropType<(discussion: import("../../../types").NewDiscussion) => Promise>} */(Function),
+      type: /** @type {import("vue").PropType<import("../../../types").CreateDiscussion>} */(Function),
       required: true,
     },
   },

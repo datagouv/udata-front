@@ -2,7 +2,7 @@ import { onBeforeUnmount, onMounted, ref } from "vue";
 import ThreadCreate from "./ThreadCreate.vue";
 
 export default {
-  title: 'Components/Discussions/ThreadCreate',
+  title: 'Internals/Discussions/ThreadCreate',
   component: ThreadCreate,
 };
 

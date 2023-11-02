@@ -132,9 +132,9 @@ export default defineComponent({
       showForm.value = true;
     }
 
-    const replyToThread = (values) => {
+    const replyToThread = (comment) => {
       return api
-        .post("/discussions/" + props.id + "/", values)
+        .post("/discussions/" + props.id + "/", { comment })
         .then((resp) => resp.data)
         .then((updatedDiscussion) => {
           currentDiscussion.value = updatedDiscussion.discussion;
