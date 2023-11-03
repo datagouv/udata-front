@@ -164,7 +164,7 @@ import { defineComponent, computed } from "vue";
 import useLicense from "../../composables/useLicense";
 import useOwnerName from "../../composables/useOwnerName";
 import useUid from "../../composables/useUid";
-import Avatar from "../discussions/avatar.vue";
+import Avatar from "../discussions/Avatar/Avatar.vue";
 import OrganizationNameWithCertificate from "../organization/organization-name-with-certificate.vue";
 import Placeholder from "../utils/placeholder.vue";
 import QualityScore from "./quality-score.vue";

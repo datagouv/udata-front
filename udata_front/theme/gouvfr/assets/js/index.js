@@ -5,7 +5,7 @@ import * as dsfr from "@gouvfr/dsfr/dist/dsfr/dsfr.module";
 
 import Chart from "./components/charts/chart.vue";
 import Threads from "./components/discussions/threads.vue";
-import ThreadsCreate from "./components/discussions/threads-create.vue";
+import ThreadCreate from "./components/discussions/ThreadCreate/ThreadCreate.vue";
 import MenuSearch from "./components/search/menu-search.vue";
 import Search from "./components/search/search.vue";
 import FeaturedButton from './components/utils/featured.vue';
@@ -51,7 +51,7 @@ const configAndMountApp = (el) => {
   }).provide('toast', app.config.globalProperties.$toast);
 
   app.component("discussion-threads", Threads);
-  app.component("discussion-create", ThreadsCreate);
+  app.component("discussion-create", ThreadCreate);
   app.component("menu-search", MenuSearch);
   app.component("search", Search);
   app.component("follow-button", FollowButton);

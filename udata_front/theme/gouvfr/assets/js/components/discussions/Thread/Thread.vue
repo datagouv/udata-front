@@ -30,9 +30,9 @@
               <p class="fr-text--sm text-mention-grey fr-m-0">
                 {{ formatDate(comment.posted_on) }}
               </p>
-              <ReadMore>
+              <ReadMore class="fr-mt-3v">
                 <div class="white-space-pre-wrap overflow-wrap-anywhere">
-                  <p class="fr-mt-3v fr-mb-0">{{ comment.content }}</p>
+                  <p class="fr-my-0">{{ comment.content }}</p>
                 </div>
               </ReadMore>
             </div>
