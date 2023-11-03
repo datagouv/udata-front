@@ -174,6 +174,7 @@
                 :placeholder="$t('Format')"
                 :searchPlaceholder="$t('Search a format...')"
                 listUrl="/datasets/extensions/"
+                :suggestUrl="isRemote ? 'datasets/suggest/formats/' : null"
                 :values="file.format"
                 @change="(value) => file.format = value"
                 :required="true"
@@ -182,6 +183,7 @@
                 :errorText="getErrorText('format')"
                 :allOption="$t('Select a format')"
                 :addAllOption="false"
+                :addNewOption="isRemote"
               />
             </LinkedToAccordion>
             <LinkedToAccordion
@@ -222,6 +224,7 @@
                 @change="(value) => file.mime = value"
                 :allOption="$t('Select a mime type')"
                 :addAllOption="false"
+                :addNewOption="isRemote"
               />
             </LinkedToAccordion>
           </fieldset>

@@ -34,6 +34,40 @@ export const SimpleMultiSelect = {
   args,
 };
 
+
+export const SimpleMultiSelectWithSuggest = {
+  render: (args) => ({
+    components: { MultiSelect },
+    setup() {
+      return { args };
+    },
+    template: '<MultiSelect v-bind="args"/>',
+  }),
+  args: {
+    ...args,
+    initialOptions: null,
+    allOption: null,
+    suggestUrl: "datasets/suggest/mime/",
+  },
+};
+
+export const SimpleMultiSelectWithAddNewOption = {
+  render: (args) => ({
+    components: { MultiSelect },
+    setup() {
+      return { args };
+    },
+    template: '<MultiSelect v-bind="args"/>',
+  }),
+  args: {
+    ...args,
+    initialOptions: null,
+    allOption: null,
+    suggestUrl: "datasets/suggest/mime/",
+    addNewOption: true,
+  },
+};
+
 export const SimpleMultiSelectWithoutAllOption = {
   render: (args) => ({
     components: { MultiSelect },

@@ -203,6 +203,7 @@
                 :values="dataset.tags"
                 :hasWarning="stateHasWarning('tags')"
                 :multiple="true"
+                :addNewOption="true"
               />
             </LinkedToAccordion>
             <LinkedToAccordion

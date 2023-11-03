@@ -123,6 +123,10 @@ export default defineComponent({
     multiple: {
       type: Boolean,
       default: false,
+    },
+    addNewOption: {
+      type: Boolean,
+      default: false,
     }
   },
   setup(props, { emit }) {
@@ -260,6 +264,11 @@ export default defineComponent({
     }));
 
     /**
+     * @typedef Suggestion
+     * @property {string} text
+     */
+
+    /**
      * Get options from suggest API
      * It uses list API if no query is provided
      * Fallback to an empty array without props.listUrl
@@ -281,15 +290,19 @@ export default defineComponent({
           cancelToken: currentRequest.value.token,
         })
         .then((resp) => {
-          /** @type Array */
+          /** @type {Array<Suggestion>} */
           const suggestions = resp.data;
-          return suggestions;
+          const addQToSuggestion = props.addNewOption && !suggestions.some(suggestion => suggestion.text === q);
+          if(addQToSuggestion) {
+            suggestions.push({text: q});
+          }
+          return mapToOption(suggestions);
         })
         .catch((error) => {
           if (!axios.isCancel(error)) {
             toast.error(t("Error getting {type}.", {type: props.placeholder}));
           }
-          return [];
+          return /** @type {Array<import("../../types").MultiSelectOption>} */([]);
         });
     };
 
@@ -309,11 +322,14 @@ export default defineComponent({
         return option;
       });
       if(props.allOption) {
-        newOptions.unshift({
-          label: props.allOption,
-          value: '',
-          hidden: !props.addAllOption
-        });
+        const existingAllOption = options.value.find(option => !option.value);
+        if(!existingAllOption) {
+          newOptions.unshift({
+            label: props.allOption,
+            value: '',
+            hidden: !props.addAllOption
+          });
+        }
       }
       let selectedValues = [];
       if(Array.isArray(selected.value)) {
