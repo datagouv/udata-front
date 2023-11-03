@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add read-more to discussions [#310](https://github.com/etalab/udata-front/pull/310)
 
 ## 3.2.8 (2023-10-26)
 
