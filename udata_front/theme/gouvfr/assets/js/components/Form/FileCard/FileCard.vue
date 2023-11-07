@@ -54,7 +54,7 @@
   </div>
 </template>
 <script>
-import { computed, defineComponent, onMounted, ref } from 'vue';
+import { computed, defineComponent, onMounted, ref, watch } from 'vue';
 import useResourceImage from '../../../composables/useResourceImage';
 import { filesize as formatFilesize, formatRelativeIfRecentDate } from "../../../helpers";
 import FileLoader from './FileLoader.vue';
@@ -85,7 +85,11 @@ export default defineComponent({
     const loaded = computed(() => isLoaded(file.value));
     const resourceImage = useResourceImage(props.file.format || "");
     const { stateErrors, stateWarnings, validateRequiredRules } = useFileValidation(file);
+
     onMounted(() => validateRequiredRules());
+
+    watch(props.file, () => file.value = {...props.file});
+
     return {
       file,
       format: props.file.format,
