@@ -4,7 +4,7 @@ import "./dsfr";
 import * as dsfr from "@gouvfr/dsfr/dist/dsfr/dsfr.module";
 
 import Chart from "./components/charts/chart.vue";
-import Threads from "./components/discussions/threads.vue";
+import Threads from "./components/discussions/Threads.vue";
 import ThreadCreate from "./components/discussions/ThreadCreate/ThreadCreate.vue";
 import MenuSearch from "./components/search/menu-search.vue";
 import Search from "./components/search/search.vue";
