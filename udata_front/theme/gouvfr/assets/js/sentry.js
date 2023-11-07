@@ -11,6 +11,7 @@ function InitSentry(app) {
             release: config.sentry.release,
             ignoreErrors: [
                 'Auth required',
+                'Network Error',
                 'ResizeObserver loop limit exceeded'
             ],
         })
