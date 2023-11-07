@@ -8,10 +8,11 @@ import { toValue } from "vue";
  * @param {import("vue").UnwrapNestedRefs<object>} data
  * @param {T} requiredRules
  * @param {U} warningRules
+ * @param {string | boolean} scope
 */
-export default function useFunctionalState(data, requiredRules, warningRules) {
-  const v$ = useVuelidate(requiredRules, data, { $scope: false });
-  const vWarning$ = useVuelidate(warningRules, data, { $scope: false });
+export default function useFunctionalState(data, requiredRules, warningRules, scope = false) {
+  const v$ = useVuelidate(requiredRules, data, { $scope: scope });
+  const vWarning$ = useVuelidate(warningRules, data, { $scope: "warning" });
 
   /**
    * Get the error messages if any for given field

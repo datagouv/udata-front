@@ -57,7 +57,7 @@
                   <li>{{ $t("The dataset maintenance") }}</li>
                   <li>{{ $t("The legals and ethics considerations") }}</li>
                 </ul>
-                <Well class="fr-mt-1w" v-if="stateHasWarning('description')" color="orange-terre-battue">
+                <Well class="fr-mt-1w" v-if="fieldHasWarning('description')" color="orange-terre-battue">
                   {{ getWarningText("description") }}
                 </Well>
               </div>
@@ -70,7 +70,7 @@
               <p class="fr-m-0">
                 {{ $t("Tags characterize your dataset. They are public and allow a better listing of the dataset during a user search.") }}
               </p>
-              <Well class="fr-mt-1w" v-if="stateHasWarning('tags')" color="orange-terre-battue">
+              <Well class="fr-mt-1w" v-if="fieldHasWarning('tags')" color="orange-terre-battue">
                 {{ getWarningText("tags") }}
               </Well>
             </Accordion>
@@ -82,7 +82,7 @@
               <p class="fr-m-0">
                 {{ $t("Licenses define reuse rules. By choosing a reuse license, you ensure the published dataset is reused using the conditions you defined.") }}
               </p>
-              <Well class="fr-mt-1w" v-if="stateHasWarning('license')" color="orange-terre-battue">
+              <Well class="fr-mt-1w" v-if="fieldHasWarning('license')" color="orange-terre-battue">
                 {{ getWarningText("license") }}
               </Well>
             </Accordion>
@@ -94,7 +94,7 @@
               <p class="fr-m-0">
                 {{ $t("Update frequency is the frequency you plan to update the published data. Update frequency is indicative.") }}
               </p>
-              <Well class="fr-mt-1w" v-if="stateHasWarning('frequency')" color="orange-terre-battue">
+              <Well class="fr-mt-1w" v-if="fieldHasWarning('frequency')" color="orange-terre-battue">
                 {{ getWarningText("frequency") }}
               </Well>
             </Accordion>
@@ -107,7 +107,7 @@
                 {{ $t("Temporal coverage show the time range of published data.") }} <br/>
                 {{ $t("For example : from 2012 to 2015.") }}
               </p>
-              <Well class="fr-mt-1w" v-if="stateHasWarning('temporal_coverage')" color="orange-terre-battue">
+              <Well class="fr-mt-1w" v-if="fieldHasWarning('temporal_coverage')" color="orange-terre-battue">
                 {{ getWarningText("temporal_coverage") }}
               </Well>
             </Accordion>
@@ -120,7 +120,7 @@
                 {{ $t("Spatial granularity shows the finest level of geographical details covered by your data.") }} <br/>
                 {{ $t("For example : at the department scale or the city scale.") }}
               </p>
-              <Well class="fr-mt-1w" v-if="stateHasWarning('spatial_information')" color="orange-terre-battue">
+              <Well class="fr-mt-1w" v-if="fieldHasWarning('spatial_information')" color="orange-terre-battue">
                 {{ getWarningText("spatial") }}
               </Well>
             </Accordion>
@@ -159,8 +159,8 @@
                 :label="$t('Dataset name')"
                 :required="true"
                 v-model="dataset.title"
-                :hasError="stateHasError('title')"
-                :hasWarning="stateHasWarning('title')"
+                :hasError="fieldHasError('title')"
+                :hasWarning="fieldHasWarning('title')"
                 :errorText="getErrorText('title')"
               />
             </LinkedToAccordion>
@@ -184,8 +184,8 @@
                 :required="true"
                 type="textarea"
                 v-model="dataset.description"
-                :hasError="stateHasError('description')"
-                :hasWarning="stateHasWarning('description')"
+                :hasError="fieldHasError('description')"
+                :hasWarning="fieldHasWarning('description')"
                 :errorText="getErrorText('description')"
               />
             </LinkedToAccordion>
@@ -201,7 +201,7 @@
                 :searchPlaceholder="$t('Search a tag...')"
                 suggestUrl="/tags/suggest/"
                 :values="dataset.tags"
-                :hasWarning="stateHasWarning('tags')"
+                :hasWarning="fieldHasWarning('tags')"
                 :multiple="true"
                 :addNewOption="true"
               />
@@ -242,8 +242,8 @@
                       :values="dataset.frequency"
                       @change="(value) => dataset.frequency = value"
                       :required="true"
-                      :hasError="stateHasError('frequency')"
-                      :hasWarning="stateHasWarning('frequency')"
+                      :hasError="fieldHasError('frequency')"
+                      :hasWarning="fieldHasWarning('frequency')"
                       :errorText="getErrorText('frequency')"
                       :allOption="$t('Select an option')"
                       :addAllOption="false"
@@ -291,7 +291,7 @@
                     entityUrl="/spatial/zone/"
                     :values="dataset.spatial.zones"
                     @change="(value) => dataset.spatial.zones = value"
-                    :hasWarning="stateHasWarning('spatial_information')"
+                    :hasWarning="fieldHasWarning('spatial_information')"
                     :allOption="$t('e.g. France')"
                     :addAllOption="false"
                     :multiple="true"
@@ -304,7 +304,7 @@
                     listUrl="/spatial/granularities/"
                     :values="dataset.spatial.granularity"
                     @change="(value) => dataset.spatial.granularity = value"
-                    :hasWarning="stateHasWarning('spatial_information')"
+                    :hasWarning="fieldHasWarning('spatial_information')"
                     :allOption="$t('Select an option')"
                     :addAllOption="false"
                   />
@@ -415,13 +415,13 @@ export default defineComponent({
      *
      * @param {string} field
      */
-    const stateHasError = (field) => hasError(state, field);
+    const fieldHasError = (field) => hasError(state, field);
 
     /**
      *
      * @param {string} field
      */
-    const stateHasWarning = (field) => hasWarning(state, field);
+    const fieldHasWarning = (field) => hasWarning(state, field);
 
     const submit = () => {
       validateRequiredRules().then(valid => {
@@ -443,8 +443,8 @@ export default defineComponent({
       dataset,
       editIcon,
       state,
-      stateHasError,
-      stateHasWarning,
+      fieldHasError,
+      fieldHasWarning,
       getErrorText,
       getWarningText,
       submit,

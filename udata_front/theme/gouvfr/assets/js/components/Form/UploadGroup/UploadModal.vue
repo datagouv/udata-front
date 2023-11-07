@@ -26,19 +26,15 @@
                   @change="setFiles"
                   :required="true"
                   :hintText="multiple ? $t('Max size: 420 Mb. Multiple files allowed.') : $t('Max size: 420 Mb.')"
-                  :hasError="stateHasError('modalFiles')"
+                  :hasError="fieldHasError('modalFiles')"
                   :errorText="getErrorText('modalFiles')"
                 />
                 <FileCard
                   v-for="(resource, index) in nonRemoteFiles"
                   class="fr-mb-3v"
                   :key="index"
-                  :filename="resource.file?.name"
-                  :filesize="resource.filesize"
-                  :format="resource.format"
-                  :lastModified="resource.file?.lastModified"
-                  :title="resource.title || resource.file?.name || ''"
-                  :allowEdit="false"
+                  :file="resource"
+                  :showEditAndWarning="false"
                   @delete="removeFile(index)"
                 />
                 <p class="fr-hr-or text-transform-lowercase fr-text--regular text-mention-grey fr-mt-3v">
@@ -51,7 +47,7 @@
                   placeholder="https://"
                   @change="setFileLink"
                   type="url"
-                  :hasError="stateHasError('modalFiles')"
+                  :hasError="fieldHasError('modalFiles')"
                   :errorText="getErrorText('modalFiles')"
                 />
               </div>
@@ -85,6 +81,7 @@ import UploadGroup from './UploadGroup.vue';
 import useFunctionalState from '../../../composables/form/useFunctionalState';
 import { useFilesUpload } from '../../../composables/form/useFilesUpload';
 import { requiredWithCustomMessage } from '../../../i18n';
+import { VALIDATION_SCOPE } from '../../../composables/form/useFileValidation';
 
 export default defineComponent({
   components: { Container, FileCard, InputGroup, UploadGroup },
@@ -124,7 +121,7 @@ export default defineComponent({
       modalFiles: { fileRequired },
     };
 
-    const { getErrorText, getFunctionalState, hasError, reset, validateRequiredRules, v$ } = useFunctionalState({ modalFiles }, requiredRules, requiredRules);
+    const { getErrorText, getFunctionalState, hasError, reset, validateRequiredRules, v$ } = useFunctionalState({ modalFiles }, requiredRules, requiredRules, VALIDATION_SCOPE);
 
     /**
      * @type {import("vue").ComputedRef<Record<string, import("../../../types").AccordionFunctionalState>>}
@@ -139,7 +136,7 @@ export default defineComponent({
      *
      * @param {string} field
      */
-    const stateHasError = (field) => hasError(state, field);
+    const fieldHasError = (field) => hasError(state, field);
 
     const nonRemoteFiles = computed(() => modalFiles.value.filter(file => file.filetype === "file"));
 
@@ -229,7 +226,7 @@ export default defineComponent({
       send,
       setFileLink,
       setFiles,
-      stateHasError,
+      fieldHasError,
       validateRequiredRules,
     }
   },

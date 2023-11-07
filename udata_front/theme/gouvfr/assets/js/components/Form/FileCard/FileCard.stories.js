@@ -83,7 +83,7 @@ export const FileCardWithoutEdit = {
   }),
   args: {
     ...args,
-    allowEdit: false,
+    showEditAndWarning: false,
   },
 };
 

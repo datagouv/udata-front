@@ -31,7 +31,7 @@
               {{ $t("Remove file") }}
             </button>
           </p>
-          <p class="fr-col-auto fr-ml-1w fr-m-0" v-if="allowEdit">
+          <p class="fr-col-auto fr-ml-1w fr-m-0" v-if="showEditAndWarning">
             <button
               type="button"
               class="fr-btn fr-icon-pencil-line fr-icon--sm"
@@ -47,7 +47,7 @@
       <span class="fr-icon-error-line fr-icon--sm" aria-hidden="true"></span>
       {{ stateError }}
     </p>
-    <p v-else-if="stateWarnings.length" v-for="stateWarning in stateWarnings" class="fr-mt-1w fr-mb-0 fr-text--xs text-default-warning">
+    <p v-else-if="stateWarnings.length && showEditAndWarning" v-for="stateWarning in stateWarnings" class="fr-mt-1w fr-mb-0 fr-text--xs text-default-warning">
       <span class="fr-icon-warning-line fr-icon--sm" aria-hidden="true"></span>
       {{ stateWarning }}
     </p>
@@ -65,7 +65,7 @@ export default defineComponent({
   components: { FileLoader },
   emits: ["delete", "edit"],
   props: {
-    allowEdit: {
+    showEditAndWarning: {
       type: Boolean,
       default: true
     },

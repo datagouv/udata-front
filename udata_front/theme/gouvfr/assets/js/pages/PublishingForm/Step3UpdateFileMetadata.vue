@@ -76,7 +76,7 @@
                   <li>{{ $t("a description of major changes.") }}</li>
                 </ul>
               </div>
-              <Well class="fr-mt-1w" v-if="stateHasWarning('description')" color="orange-terre-battue">
+              <Well class="fr-mt-1w" v-if="fieldHasWarning('description')" color="orange-terre-battue">
                 {{ getWarningText("description") }}
               </Well>
             </Accordion>
@@ -115,12 +115,7 @@
             <div class="fr-fieldset__element">
               <FileCard
                 class="fr-mb-3v"
-                :filename="file.file?.name"
-                :filesize="file.filesize"
-                :format="file.format"
-                :lastModified="file.file?.lastModified"
-                :missingMetadata="v$.$invalid"
-                :title="file.title || file.file?.name || ''"
+                :file="file"
                 :hideActions="true"
               />
             </div>
@@ -134,7 +129,7 @@
                 :label="$t('Link url')"
                 :required="true"
                 v-model="file.url"
-                :hasError="stateHasError('url')"
+                :hasError="fieldHasError('url')"
                 :errorText="getErrorText('url')"
               />
             </LinkedToAccordion>
@@ -147,7 +142,7 @@
                 :label="fileTitle"
                 :required="true"
                 v-model="file.title"
-                :hasError="stateHasError('title')"
+                :hasError="fieldHasError('title')"
                 :errorText="getErrorText('title')"
               />
             </LinkedToAccordion>
@@ -160,7 +155,7 @@
                 :label="$t('Type')"
                 :required="true"
                 v-model="file.type"
-                :hasError="stateHasError('type')"
+                :hasError="fieldHasError('type')"
                 :errorText="getErrorText('type')"
                 :options="fileTypes"
               />
@@ -178,8 +173,8 @@
                 :values="file.format"
                 @change="(value) => file.format = value"
                 :required="true"
-                :hasError="stateHasError('format')"
-                :hasWarning="stateHasWarning('format')"
+                :hasError="fieldHasError('format')"
+                :hasWarning="fieldHasWarning('format')"
                 :errorText="getErrorText('format')"
                 :allOption="$t('Select a format')"
                 :addAllOption="false"
@@ -194,7 +189,7 @@
               <InputGroup
                 :label="$t('Description')"
                 v-model="file.description"
-                :hasWarning="stateHasWarning('description')"
+                :hasWarning="fieldHasWarning('description')"
                 :errorText="getWarningText('description')"
                 type="textarea"
               />
@@ -285,7 +280,7 @@ export default defineComponent({
     /** @type {import("vue").Ref<import("../../types").NewDatasetFile>} */
     const file = ref({...props.datasetFile});
 
-    const { isRemote, getErrorText, getWarningText, state, stateHasError, stateHasWarning, validateRequiredRules, v$, vWarning$ } = useFileValidation(file);
+    const { isRemote, getErrorText, getWarningText, state, fieldHasError, fieldHasWarning, validateRequiredRules, v$, vWarning$ } = useFileValidation(file);
 
     const nameAFile = computed(() => isRemote.value ? t("Name a link") : t("Name a file"));
     const fileTitle = computed(() => isRemote.value ? t("Link title") : t("File title"));
@@ -317,8 +312,8 @@ export default defineComponent({
       state,
       getErrorText,
       getWarningText,
-      stateHasError,
-      stateHasWarning,
+      fieldHasError,
+      fieldHasWarning,
       submit,
       v$,
       vWarning$,

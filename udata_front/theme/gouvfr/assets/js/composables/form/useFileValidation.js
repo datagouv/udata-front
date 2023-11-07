@@ -4,6 +4,8 @@ import { minLengthWarning, required, requiredIf, requiredWithCustomMessage } fro
 import { quality_description_length } from "../../config";
 import useFunctionalState from "./useFunctionalState";
 
+export const VALIDATION_SCOPE = "files";
+
 /**
  *
  * @param {import("vue").MaybeRefOrGetter<import("../../types").NewDatasetFile>} datasetFile
@@ -34,7 +36,7 @@ export default function useFileValidation(datasetFile) {
     description: { required: descriptionAdvised, minLengthValue: minLengthWarning(quality_description_length) },
   };
 
-  const { getErrorText, getWarningText, getFunctionalState, hasError, hasWarning, reset, validateRequiredRules, v$, vWarning$ } = useFunctionalState(file, requiredRules, warningRules);
+  const { getErrorText, getWarningText, getFunctionalState, hasError, hasWarning, reset, validateRequiredRules, v$, vWarning$ } = useFunctionalState(file, requiredRules, warningRules, VALIDATION_SCOPE);
 
   /**
    * @type {import("vue").ComputedRef<Record<string, import("../../types").PublishingFormAccordionState>>}

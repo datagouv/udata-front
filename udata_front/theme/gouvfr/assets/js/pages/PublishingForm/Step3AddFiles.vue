@@ -29,7 +29,7 @@
               <li>{{ $t("usable in an automated processing system : an automated processing system allows to make automatic operations, related to data exploitation (i.e. a CSV file is easily usable by an automated system unlike a PDF file).") }}</li>
             </ul>
           </div>
-          <Well class="fr-mt-1w" v-if="stateHasWarning('files')" color="orange-terre-battue">
+          <Well class="fr-mt-1w" v-if="fieldHasWarning('files')" color="orange-terre-battue">
             {{ getWarningText("files") }}
           </Well>
         </Accordion>
@@ -51,7 +51,7 @@
               <li>{{ $t("a description of major changes.") }}</li>
             </ul>
           </div>
-          <Well class="fr-mt-1w" v-if="stateHasWarning('hasDocumentation')" color="orange-terre-battue">
+          <Well class="fr-mt-1w" v-if="fieldHasWarning('hasDocumentation')" color="orange-terre-battue">
             {{ getWarningText("hasDocumentation") }}
           </Well>
         </Accordion>
@@ -96,7 +96,7 @@
                   :title="$t('Add files (opens a modal dialog)')"
                   :multiple="true"
                   :required="true"
-                  :hasError="stateHasError('files')"
+                  :hasError="fieldHasError('files')"
                   :errorText="getErrorText('files')"
                   @change="addFiles"
                 />
@@ -105,16 +105,9 @@
                   <FileCard
                     v-for="(resource, index) in files"
                     class="fr-mb-3v"
-                    :filename="resource?.file?.name || resource.url"
-                    :filesize="resource.filesize"
-                    :format="resource.format"
-                    :lastModified="resource?.file?.lastModified"
-                    :missingMetadata="!resource.title || !resource.description"
-                    :title="resource.title || resource.file?.name || ''"
+                    :file="resource"
                     @delete="removeFile(index)"
                     @edit="$emit('editFile', files, index)"
-                    :loading="isLoading(resource)"
-                    :hideActions="isLoaded(resource)"
                   />
                 <div class="fr-grid-row fr-grid-row--center">
                   <ButtonLoader :width="114" v-if="loading"/>
@@ -123,7 +116,7 @@
                     :title="$t('Add files (opens a modal dialog)')"
                     :multiple="true"
                     :required="true"
-                    :hasError="stateHasError('files')"
+                    :hasError="fieldHasError('files')"
                     :errorText="getErrorText('files')"
                     @change="addFiles"
                     v-else
@@ -272,13 +265,13 @@ export default defineComponent({
      *
      * @param {string} field
      */
-    const stateHasError = (field) => hasError(state, field);
+    const fieldHasError = (field) => hasError(state, field);
 
     /**
      *
      * @param {string} field
      */
-    const stateHasWarning = (field) => hasWarning(state, field);
+    const fieldHasWarning = (field) => hasWarning(state, field);
 
     return {
       addDescriptionAccordionId,
@@ -293,8 +286,8 @@ export default defineComponent({
       publishFileAccordionId,
       removeFile,
       state,
-      stateHasError,
-      stateHasWarning,
+      fieldHasError,
+      fieldHasWarning,
       submit,
       touch,
       v$,
