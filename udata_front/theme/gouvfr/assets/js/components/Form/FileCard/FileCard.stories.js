@@ -16,10 +16,50 @@ export default {
   decorators: [withActions],
 };
 
+
 const args = {
-  title: "Mon Fichier",
-  filename: "monfichier.csv",
-  lastModified: 1519129853500,
+  /** @type {import("../../../types").NewDatasetFile} */
+  file: {
+    title: "Mon Fichier",
+    type: "main",
+    description: "Some really long long description to go above the one hundred characters recommanded length for a description.",
+    file: new File(["foo"], "foo.csv", {
+      type: "text/csv",
+    }),
+    filetype: "file",
+    filesize: 1519129,
+    format: "csv",
+    mime: "",
+    state: "none"
+  }
+};
+
+const argsRemote = {
+  /** @type {import("../../../types").NewDatasetFile} */
+  file: {
+    title: "Mon Fichier",
+    type: "main",
+    description: "Some really long long description to go above the one hundred characters recommanded length for a description.",
+    url: "http://www.example.com",
+    filetype: "remote",
+    format: "pdf",
+    mime: "",
+    state: "none"
+  }
+};
+
+const argsNoDesc = {
+  /** @type {import("../../../types").NewDatasetFile} */
+  file: {
+    title: "Mon Fichier",
+    type: "main",
+    description: "",
+    url: "http://www.example.com",
+    filetype: "remote",
+    format: "gz",
+    mime: "",
+    state: "none"
+  }
 };
 
 export const SimpleFileCard = {
@@ -47,7 +87,7 @@ export const FileCardWithoutEdit = {
   },
 };
 
-export const FileCardWithFormat = {
+export const FileCardWithoutActions = {
   render: (args) => ({
     components: { FileCard },
     setup() {
@@ -57,11 +97,11 @@ export const FileCardWithFormat = {
   }),
   args: {
     ...args,
-    format: "csv",
+    hideActions: true,
   },
 };
 
-export const FileCardWithFormatAndSize = {
+export const FileCardWithoutSize = {
   render: (args) => ({
     components: { FileCard },
     setup() {
@@ -70,13 +110,26 @@ export const FileCardWithFormatAndSize = {
     template: '<FileCard v-bind="args" />',
   }),
   args: {
-    ...args,
-    filesize: "142045",
-    format: "csv",
+    ...argsRemote,
+    file: {
+      ...argsRemote.file,
+      format: "csv",
+    }
   },
 };
 
-export const WarningFileCard = {
+export const FileCardWithoutFormatAndSize = {
+  render: (args) => ({
+    components: { FileCard },
+    setup() {
+      return { args };
+    },
+    template: '<FileCard v-bind="args" />',
+  }),
+  args: argsRemote,
+};
+
+export const FileCardWithSmallDescriptionWarning = {
   render: (args) => ({
     components: { FileCard },
     setup() {
@@ -85,12 +138,15 @@ export const WarningFileCard = {
     template: '<FileCard v-bind="args" />',
   }),
   args: {
-    ...args,
-    missingMetadata: true
+    ...argsNoDesc,
+    file: {
+      ...argsNoDesc.file,
+      description: "small"
+    }
   },
 };
 
-export const WarningFileCardWithFormat = {
+export const FileCardWithoutDescriptionWarning = {
   render: (args) => ({
     components: { FileCard },
     setup() {
@@ -99,15 +155,12 @@ export const WarningFileCardWithFormat = {
     template: '<FileCard v-bind="args" />',
   }),
   args: {
-    ...args,
-    format: "csv",
-    missingMetadata: true
+    ...argsNoDesc,
+    description: ""
   },
 };
 
-
-
-export const WarningFileCardWithFormatAndSize = {
+export const FileCardWithFormatError = {
   render: (args) => ({
     components: { FileCard },
     setup() {
@@ -116,9 +169,10 @@ export const WarningFileCardWithFormatAndSize = {
     template: '<FileCard v-bind="args" />',
   }),
   args: {
-    ...args,
-    filesize: "142045",
-    format: "csv",
-    missingMetadata: true
+    ...argsRemote,
+    file: {
+      ...argsRemote.file,
+      format: ""
+    }
   },
 };

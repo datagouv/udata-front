@@ -66,7 +66,7 @@ import RangePicker from '../../RangePicker/RangePicker.vue';
 import Required from '../../Ui/Required/Required.vue';
 import { getDatepickerLocale } from "../../../i18n";
 import { lang } from "../../../config";
-import { hasWarning } from '../../../composables/useFunctionalState';
+import { hasWarning } from '../../../composables/form/useFunctionalState';
 
 export default defineComponent({
   components: { Datepicker, RangePicker, Required },

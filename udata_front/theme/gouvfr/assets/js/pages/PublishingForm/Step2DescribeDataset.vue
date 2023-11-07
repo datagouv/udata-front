@@ -337,10 +337,10 @@ import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Well from "../../components/Ui/Well/Well.vue";
 import useUid from "../../composables/useUid";
+import useFunctionalState from '../../composables/form/useFunctionalState';
 import editIcon from "svg/illustrations/edit.svg";
 import { quality_description_length, title } from "../../config";
 import { useI18n } from 'vue-i18n';
-import useFunctionalState from '../../composables/useFunctionalState';
 
 export default defineComponent({
   components: { Accordion, AccordionGroup, Container, InputGroup, LinkedToAccordion, MultiSelect, Stepper, Well, Sidemenu },

@@ -3,9 +3,9 @@ import { toValue } from "vue";
 
 /**
  *
- * @template {Record<string, Object>} T
- * @template {Record<string, Object>} U
- * @param {import("vue").UnwrapNestedRefs<Object>} data
+ * @template {Record<string, object>} T
+ * @template {Record<string, object>} U
+ * @param {import("vue").UnwrapNestedRefs<object>} data
  * @param {T} requiredRules
  * @param {U} warningRules
 */
@@ -64,13 +64,12 @@ export default function useFunctionalState(data, requiredRules, warningRules) {
   }
 }
 
-
 /**
  *
  * @param {boolean} dirty
  * @param {boolean} failRequired
  * @param {boolean} failWarning
- * @returns {import("../types").AccordionFunctionalState}
+ * @returns {import("../../types").AccordionFunctionalState}
 */
 export const getFunctionalState = (dirty, failRequired, failWarning) => {
   if (!dirty) {
@@ -86,14 +85,14 @@ export const getFunctionalState = (dirty, failRequired, failWarning) => {
 };
 
 /**
- * @param {import("vue").MaybeRefOrGetter<Record<string, import("../types").PublishingFormAccordionState>>} object
+ * @param {import("vue").MaybeRefOrGetter<Record<string, import("../../types").PublishingFormAccordionState>>} object
  * @param {string} field
  * @returns {boolean}
  */
 export const hasError = (object, field) => toValue(object)[field] === "error";
 
 /**
- * @param {import("vue").MaybeRefOrGetter<Record<string, import("../types").PublishingFormAccordionState>>} object
+ * @param {import("vue").MaybeRefOrGetter<Record<string, import("../../types").PublishingFormAccordionState>>} object
  * @param {string} field
  * @returns {boolean}
  */

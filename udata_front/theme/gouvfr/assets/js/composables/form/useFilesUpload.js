@@ -1,6 +1,6 @@
 import { onMounted, readonly, ref, toRaw, toValue } from "vue";
 import { useI18n } from "vue-i18n";
-import { createFile, fetchAllowedExtensions } from '../api/resources';
+import { createFile, fetchAllowedExtensions } from '../../api/resources';
 
  /** @type {import("vue").Ref<Array<string>>} */
  const allowedExtensions = ref([]);
@@ -11,12 +11,12 @@ import { createFile, fetchAllowedExtensions } from '../api/resources';
 export function useFilesUpload() {
   const { t } = useI18n();
 
-  /** @type {import("vue").Ref<Array<import("../types").NewDatasetFile>>} */
+  /** @type {import("vue").Ref<Array<import("../../types").NewDatasetFile>>} */
   const files = ref([]);
 
   /**
    *
-   * @param {import("vue").MaybeRefOrGetter<Array<import("../types").NewDatasetFile>>} updatedFiles
+   * @param {import("vue").MaybeRefOrGetter<Array<import("../../types").NewDatasetFile>>} updatedFiles
    */
   const updateFiles = (updatedFiles) => {
     files.value = [...toValue(toRaw(updatedFiles))];
@@ -25,7 +25,7 @@ export function useFilesUpload() {
   /**
    *
    * @param {string} datasetId
-   * @param {import("../types").NewDatasetFile} file
+   * @param {import("../../types").NewDatasetFile} file
    * @param {number} retry
    * @returns {Promise}
    */

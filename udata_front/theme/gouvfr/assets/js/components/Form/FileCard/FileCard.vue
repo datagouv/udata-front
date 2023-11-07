@@ -7,19 +7,19 @@
             <img :src="resourceImage" alt="" />
           </div>
           <h4 class="fr-col fr-m-0 fr-text--sm overflow-wrap-anywhere text-overflow-ellipsis">
-            {{ title || $t('Nameless resource') }}
+            {{ file.title || $t('Nameless resource') }}
           </h4>
         </div>
         <div class="fr-my-0 text-grey-380 fr-grid-row fr-grid-row--middle">
-          <p v-if="filename" class="fr-text--xs fr-m-0 overflow-wrap-anywhere text-overflow-ellipsis dash-after">{{ filename }}</p>
-          <p class="fr-text--xs fr-m-0">{{ $t('Updated {date}', { date: formatRelativeIfRecentDate(lastModified) }) }}</p>
-          <p v-if="format" class="fr-text--xs fr-m-0 dash-before">
-            {{ format.trim()?.toLowerCase() }}
-            <template v-if="filesize">({{ formatFilesize(filesize) }})</template>
+          <p v-if="file.file?.name" class="fr-text--xs fr-m-0 overflow-wrap-anywhere text-overflow-ellipsis dash-after">{{ file.file?.name }}</p>
+          <p class="fr-text--xs fr-m-0">{{ $t('Updated {date}', { date: formatRelativeIfRecentDate(file.file?.lastModified) }) }}</p>
+          <p v-if="file.format" class="fr-text--xs fr-m-0 dash-before">
+            {{ file.format.trim()?.toLowerCase() }}
+            <template v-if="file.filesize">({{ formatFilesize(file.filesize) }})</template>
           </p>
         </div>
       </div>
-      <div class="fr-col-auto" v-if="!hideActions">
+      <div class="fr-col-auto" v-if="!hideActions && !loaded">
         <FileLoader v-if="loading"/>
         <div class="fr-grid-row fr-grid-row--middle no-wrap wrap-md" v-else>
           <p class="fr-col-auto fr-m-0">
@@ -43,63 +43,60 @@
         </div>
       </div>
     </div>
-    <p v-if="missingMetadata" class="fr-mt-1w fr-mb-0 fr-text--xs text-default-warning">
+    <p v-if="stateErrors.length" v-for="stateError in stateErrors" class="fr-mt-1w fr-mb-0 fr-text--xs text-default-error">
+      <span class="fr-icon-error-line fr-icon--sm" aria-hidden="true"></span>
+      {{ stateError }}
+    </p>
+    <p v-else-if="stateWarnings.length" v-for="stateWarning in stateWarnings" class="fr-mt-1w fr-mb-0 fr-text--xs text-default-warning">
       <span class="fr-icon-warning-line fr-icon--sm" aria-hidden="true"></span>
-      {{ $t("Metadata are missing.") }}
+      {{ stateWarning }}
     </p>
   </div>
 </template>
 <script>
-import { defineComponent } from 'vue';
+import { computed, defineComponent, onMounted, ref } from 'vue';
 import useResourceImage from '../../../composables/useResourceImage';
 import { filesize as formatFilesize, formatRelativeIfRecentDate } from "../../../helpers";
 import FileLoader from './FileLoader.vue';
+import useFileValidation from '../../../composables/form/useFileValidation';
+import { isLoaded, isLoading } from '../../../api/resources';
 
 export default defineComponent({
-    emits: ["delete", "edit"],
-    props: {
-        allowEdit: {
-            type: Boolean,
-            default: true
-        },
-        filename: {
-            type: String,
-        },
-        filesize: {
-            type: Number,
-        },
-        format: {
-            type: String,
-        },
-        hideActions: {
-            type: Boolean,
-            default: false,
-        },
-        lastModified: {
-            type: Number,
-        },
-        loading: {
-            type: Boolean,
-            default: false,
-        },
-        missingMetadata: {
-            type: Boolean,
-            default: false,
-        },
-        title: {
-            type: String,
-            required: true,
-        }
+  components: { FileLoader },
+  emits: ["delete", "edit"],
+  props: {
+    allowEdit: {
+      type: Boolean,
+      default: true
     },
-    setup(props) {
-        const resourceImage = useResourceImage(props.format || "");
-        return {
-            format: props.format,
-            formatFilesize,
-            formatRelativeIfRecentDate,
-            resourceImage,
-        };
+    hideActions: {
+      type: Boolean,
+      default: false,
     },
-    components: { FileLoader }
+    file: {
+      type: /** @type {import("vue").PropType<import("../../../types").NewDatasetFile>} */(Object),
+      required: true,
+    },
+  },
+  setup(props) {
+    /** @type {import("vue").Ref<import("../../../types").NewDatasetFile>} */
+    const file = ref({...props.file});
+    const loading = computed(() => isLoading(file.value));
+    const loaded = computed(() => isLoaded(file.value));
+    const resourceImage = useResourceImage(props.file.format || "");
+    const { stateErrors, stateWarnings, validateRequiredRules } = useFileValidation(file);
+    onMounted(() => validateRequiredRules());
+    return {
+      file,
+      format: props.file.format,
+      formatFilesize,
+      formatRelativeIfRecentDate,
+      loaded,
+      loading,
+      resourceImage,
+      stateErrors,
+      stateWarnings,
+    };
+  },
 });
 </script>

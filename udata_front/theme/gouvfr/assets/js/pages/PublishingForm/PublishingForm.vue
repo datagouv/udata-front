@@ -49,7 +49,7 @@ import Step3UpdateFileMetadata from "./Step3UpdateFileMetadata.vue";
 import Step4CompleteThePublication from "./Step4CompleteThePublication.vue";
 import { publishing_form_feedback_url, user } from '../../config';
 import { createDataset, publishDataset } from '../../api/datasets';
-import { useFilesUpload } from '../../composables/useFilesUpload';
+import { useFilesUpload } from '../../composables/form/useFilesUpload';
 
 export default defineComponent({
   components: { Step1PublishingType, Step2DescribeDataset, Step3AddFiles, Step3UpdateFileMetadata, Step4CompleteThePublication },

@@ -1,4 +1,3 @@
-import { getFunctionalState } from '../../composables/useFunctionalState';
 import SchemaSelect from './SchemaSelect.vue';
 
 export default {

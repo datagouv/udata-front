@@ -239,7 +239,7 @@
   </div>
 </template>
 <script>
-import { computed, defineComponent, reactive } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
 import Container from '../../components/Ui/Container/Container.vue';
@@ -252,11 +252,10 @@ import SelectGroup from '../../components/Form/SelectGroup/SelectGroup.vue';
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Well from "../../components/Ui/Well/Well.vue";
-import useFunctionalState from '../../composables/useFunctionalState';
 import useUid from "../../composables/useUid";
-import { quality_description_length, schema_documentation_url } from "../../config";
+import useFileValidation from '../../composables/form/useFileValidation';
+import { schema_documentation_url } from "../../config";
 import { RESOURCE_TYPE, getResourceLabel } from '../../helpers';
-import { minLengthWarning, required, requiredIf, requiredWithCustomMessage } from '../../i18n';
 import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
@@ -268,7 +267,7 @@ export default defineComponent({
       required: true,
     },
     datasetFile: {
-      /** @type {import("vue").PropType<import("../../types").DatasetFile>} */
+      /** @type {import("vue").PropType<import("../../types").NewDatasetFile>} */
       type: Object,
       required: true,
     }
@@ -283,65 +282,16 @@ export default defineComponent({
     const { id: selectASchemaAccordionId } = useUid("accordion");
     const { id: whatIsAMimeTypeAccordionId } = useUid("accordion");
 
-    /** @type {import("vue").UnwrapNestedRefs<import("../../types").DatasetFile>} */
-    const file = reactive({...props.datasetFile, description: ""});
+    /** @type {import("vue").Ref<import("../../types").NewDatasetFile>} */
+    const file = ref({...props.datasetFile});
 
-    const isRemote = computed(() => file.filetype === 'remote');
+    const { isRemote, getErrorText, getWarningText, state, stateHasError, stateHasWarning, validateRequiredRules, v$, vWarning$ } = useFileValidation(file);
 
     const nameAFile = computed(() => isRemote.value ? t("Name a link") : t("Name a file"));
     const fileTitle = computed(() => isRemote.value ? t("Link title") : t("File title"));
 
-    const requiredRules = {
-      url: { required: requiredIf(isRemote.value) },
-      title: { required },
-      type: { required },
-      format: { required },
-      schema: {},
-      mime: {},
-    };
-
-    const descriptionAdvised = requiredWithCustomMessage(t("It's advised to add a description."));
-
-    const warningRules = {
-      url: { required: requiredIf(isRemote.value) },
-      title: { required },
-      type: { required },
-      format: { required },
-      description: { required: descriptionAdvised, minLengthValue: minLengthWarning(quality_description_length) },
-    };
-
-    const { getErrorText, getWarningText, getFunctionalState, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(file, requiredRules, warningRules);
-
-    /**
-     * @type {import("vue").ComputedRef<Record<string, import("../../types").PublishingFormAccordionState>>}
-     */
-     const state = computed(() => {
-      return {
-        url: v$.value.url.$dirty ? "info" : "disabled",
-        title: getFunctionalState(v$.value.title.$dirty, v$.value.title.$error, false),
-        type: getFunctionalState(v$.value.type.$dirty, v$.value.type.$error, false),
-        format: getFunctionalState(v$.value.format.$dirty, v$.value.format.$error, false),
-        description: getFunctionalState(vWarning$.value.description.$dirty, false, vWarning$.value.description.$error),
-        schema: v$.value.schema.$dirty ? "info" : "disabled",
-        mime: v$.value.mime.$dirty ? "info" : "disabled",
-      };
-    });
-
-
     /** @type {Array<{label: string, value: import("../../types").ResourceType}>} */
     const fileTypes = RESOURCE_TYPE.map(type => ({label: getResourceLabel(type), value: type}));
-
-    /**
-     *
-     * @param {string} field
-     */
-     const stateHasError = (field) => hasError(state, field);
-
-     /**
-     *
-     * @param {string} field
-     */
-     const stateHasWarning = (field) => hasWarning(state, field);
 
      const submit = () => {
       validateRequiredRules().then(validated => {

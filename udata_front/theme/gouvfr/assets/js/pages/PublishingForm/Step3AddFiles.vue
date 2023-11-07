@@ -166,9 +166,9 @@ import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import UploadModalButton from '../../components/Form/UploadGroup/UploadModalButton.vue';
 import Well from "../../components/Ui/Well/Well.vue";
 import useUid from "../../composables/useUid";
+import useFunctionalState from '../../composables/form/useFunctionalState';
 import { requiredWithCustomMessage, withMessage } from '../../i18n';
 import editIcon from "svg/illustrations/edit.svg";
-import useFunctionalState from '../../composables/useFunctionalState';
 import { isClosedFormat } from '../../helpers';
 import { isLoading, isLoaded } from "../../api/resources";
 

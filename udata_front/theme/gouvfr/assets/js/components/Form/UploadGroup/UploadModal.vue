@@ -82,9 +82,9 @@ import Container from '../../Ui/Container/Container.vue';
 import FileCard from '../FileCard/FileCard.vue';
 import InputGroup from '../InputGroup/InputGroup.vue';
 import UploadGroup from './UploadGroup.vue';
-import useFunctionalState from '../../../composables/useFunctionalState';
+import useFunctionalState from '../../../composables/form/useFunctionalState';
+import { useFilesUpload } from '../../../composables/form/useFilesUpload';
 import { requiredWithCustomMessage } from '../../../i18n';
-import { useFilesUpload } from '../../../composables/useFilesUpload';
 
 export default defineComponent({
   components: { Container, FileCard, InputGroup, UploadGroup },
