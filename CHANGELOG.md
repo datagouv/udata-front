@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Update build dependencies [#309](https://github.com/etalab/udata-front/pull/309)
+- New footer with newsletter [#311](https://github.com/etalab/udata-front/pull/311)
 
 ## 3.2.8 (2023-10-26)
 
