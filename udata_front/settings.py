@@ -20,11 +20,10 @@ BANNER_ACTIVATED = False
 BANNER_HTML_CONTENT_EN = ''
 BANNER_HTML_CONTENT_FR = ''
 
-# Frontend data search form url
-DATA_SEARCH_FEEDBACK_FORM_URL = ''
-
 # Frontend forms url
+DATA_SEARCH_FEEDBACK_FORM_URL = ''
 DISCOVERABILITY_FORM_URL = ''
+FEEDBACK_FORM_URL = ''
 
 # Static pages from github repo
 PAGES_GH_REPO_NAME = 'etalab/datagouvfr-pages'
