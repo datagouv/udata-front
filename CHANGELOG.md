@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Update build dependencies [#309](https://github.com/etalab/udata-front/pull/309)
+- Add publishing form [#266](https://github.com/etalab/udata-front/pull/266) [dependabot/36](https://github.com/etalab/udata-front/security/dependabot/36)
 
 ## 3.2.8 (2023-10-26)
 
@@ -15,7 +16,6 @@
 - Track participez clicks [#302](https://github.com/etalab/udata-front/pull/302)
 - Fix datasets search on the organization page [#303](https://github.com/etalab/udata-front/pull/303)
 - Add discoverability indicator form [#304](https://github.com/etalab/udata-front/pull/304)
-- Add publishing form [#266](https://github.com/etalab/udata-front/pull/266)
 
 ## 3.2.6 (2023-09-01)
 
