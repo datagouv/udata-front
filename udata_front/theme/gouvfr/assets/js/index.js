@@ -4,13 +4,13 @@ import "./dsfr";
 import * as dsfr from "@gouvfr/dsfr/dist/dsfr/dsfr.module";
 
 import Chart from "./components/charts/chart.vue";
-import Threads from "./components/discussions/threads.vue";
-import ThreadsCreate from "./components/discussions/threads-create.vue";
+import Threads from "./components/discussions/Threads.vue";
+import ThreadCreate from "./components/discussions/ThreadCreate/ThreadCreate.vue";
 import MenuSearch from "./components/search/menu-search.vue";
 import Search from "./components/search/search.vue";
 import FeaturedButton from './components/utils/featured.vue';
 import FollowButton from "./components/utils/follow-button.vue";
-import ReadMore from "./components/utils/read-more.vue";
+import ReadMore from "./components/ReadMore/ReadMore.vue";
 import RequestMembership from "./components/organization/request-membership.vue";
 import ResourceFromHash from "./components/dataset/resource/resourceFromHash.vue";
 import Resources from "./components/dataset/resource/resources.vue";
@@ -51,7 +51,7 @@ const configAndMountApp = (el) => {
   }).provide('toast', app.config.globalProperties.$toast);
 
   app.component("discussion-threads", Threads);
-  app.component("discussion-create", ThreadsCreate);
+  app.component("discussion-create", ThreadCreate);
   app.component("menu-search", MenuSearch);
   app.component("search", Search);
   app.component("follow-button", FollowButton);

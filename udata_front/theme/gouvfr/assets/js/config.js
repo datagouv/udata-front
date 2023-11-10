@@ -140,7 +140,7 @@ const sentryEl = document.querySelector("meta[name=sentry]");
 export const sentry = {};
 
 if (sentryEl instanceof HTMLElement) {
-  sentry.dsn = sentryEl.getAttribute("content");
+  sentry.dsn = sentryEl.getAttribute("content") || undefined;
   sentry.release = sentryEl.dataset.release || undefined;
   sentry.tags = JSON.parse(decodeURIComponent(sentryEl.dataset.tags || "{}"));
 }

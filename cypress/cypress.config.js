@@ -17,6 +17,8 @@ module.exports = defineConfig({
     },
     baseUrl: "http://localhost:7000",
     numTestsKeptInMemory: 10,
+    viewportWidth: 1920,
+    viewportHeight: 877,
   },
 
   component: {

@@ -27,23 +27,18 @@ The following events are used :
 */
 /**
  * @typedef {"resourcesSearch"} SearchEvents On new search, with the query as param (see {@link SearchEventsParameters})
- * @typedef {"discussionsStartThread"} DiscussionsStartThreadEvents - when user want to start a new discussion thread without param (see {@link DiscussionsStartThreadEventsParameters})
 
 They require theses parameters :
  * @typedef {{[search in SearchEvents]: {type?: string, value: string}}} SearchEventsParameters
- * @typedef {{[D in DiscussionsStartThreadEvents]: unknown}} DiscussionsStartThreadEventsParameters
 
 Mitt handlers must use the proper parameters for each event.
- * @typedef {SearchEventsParameters & DiscussionsStartThreadEventsParameters} Events
+ * @typedef {SearchEventsParameters} Events
 
 Events are type checked.
  * @typedef {keyof Events} UdataEventType
 */
 
 import mitt from "mitt";
-
-/** @type {DiscussionsStartThreadEvents} */
-export const DISCUSSIONS_START_THREAD = "discussionsStartThread";
 
 const SEARCH_EVENT = "search";
 
