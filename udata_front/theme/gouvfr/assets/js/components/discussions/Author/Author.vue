@@ -15,8 +15,9 @@ import { defineComponent } from "vue";
 export default defineComponent({
   props: {
     author: {
-      /** @type {import("vue").PropType<import("../../types").User>} */
+      /** @type {import("vue").PropType<import("../../../types").User>} */
       type: Object,
+      required: true,
     },
     badge: Boolean
   }

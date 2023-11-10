@@ -1,19 +1,9 @@
-<!--
----
-name: Read More
-category: 5 - Interactions
----
-
-# Read More
-
-A very simple component that display its content up to a maximum height and then add a "read more" link.
-
--->
-
 <template>
   <div class="relative">
-    <div ref="container" class="read-more" :class="{expand: expanded}" :style="{height: containerHeight + 'px'}">
-      <slot></slot>
+    <div class="read-more" ref="readMoreRef" :class="{expand: expanded}" :style="{height: containerHeight + 'px'}">
+      <div ref="containerRef">
+        <slot></slot>
+      </div>
     </div>
     <div class="read-more__bottom" @click.prevent="toggle" v-if="readMoreRequired">
       <button role="button" class="fr-btn fr-btn--tertiary-no-outline" @click.prevent.stop="toggle">
@@ -25,8 +15,10 @@ A very simple component that display its content up to a maximum height and then
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from "vue";
+import { templateRef, useElementSize } from "@vueuse/core";
+import { defineComponent, ref, watch } from "vue";
 import { easing, tween, styler } from "popmotion";
+
 const DEFAULT_HEIGHT = 284;
 
 export default defineComponent({
@@ -42,7 +34,12 @@ export default defineComponent({
     const readMoreRequired = ref(false);
 
     /** @type {import("vue").Ref<HTMLElement | null>} */
-    const container = ref(null);
+    const containerRef = templateRef("containerRef");
+
+    /** @type {import("vue").Ref<HTMLElement | null>} */
+    const readMoreRef = templateRef("readMoreRef");
+
+    const { height } = useElementSize(containerRef);
 
     /**
      *
@@ -67,36 +64,38 @@ export default defineComponent({
 
     const containerHeight = ref(DEFAULT_HEIGHT);
 
-    const updateReadMoreHeight = () => {
-      let contentHeight = Array.from(container.value?.children || [])
-      .map(getHeight)
-      .reduce((total, height) => total + height, 0)
+    /**
+     *
+     * @param {number} height
+     */
+    const updateReadMoreHeight = (height) => {
       containerHeight.value = getDefaultHeight();
-      readMoreRequired.value = contentHeight > containerHeight.value;
+      readMoreRequired.value = height > containerHeight.value;
       if(!readMoreRequired.value) {
-        containerHeight.value = contentHeight;
+        containerHeight.value = height;
+        console.log(containerHeight.value);
       }
     }
 
     const toggle = () => {
-      if(!container.value) {
+      if(!readMoreRef.value) {
         return;
       }
-      const divStyler = styler(container.value);
+      const divStyler = styler(readMoreRef.value);
       if (expanded.value) {
         tween({
-          from: { height: container.value.scrollHeight },
+          from: { height: readMoreRef.value.scrollHeight },
           to: { height: getDefaultHeight() },
           duration: 300,
           ease: easing.anticipate,
         }).start({
           update: divStyler.set,
-          complete: () => container.value?.scrollIntoView({ behavior: "smooth" }),
+          complete: () => readMoreRef.value?.scrollIntoView({ behavior: "smooth" }),
         });
       } else {
         tween({
           from: { height: getDefaultHeight() },
-          to: { height: container.value.scrollHeight },
+          to: { height: readMoreRef.value.scrollHeight },
           duration: 300,
           ease: easing.anticipate,
         }).start({
@@ -107,19 +106,12 @@ export default defineComponent({
       expanded.value = !expanded.value;
     };
 
-    onMounted(() => {
-      updateReadMoreHeight();
-      setTimeout(() => updateReadMoreHeight(), 500);
-      container.value?.querySelectorAll("details").forEach(
-        (detail) => { detail.addEventListener("toggle", updateReadMoreHeight); }
-      )
-    });
+    watch(height, updateReadMoreHeight);
 
     return {
       containerHeight,
       expanded,
       readMoreRequired,
-      container,
       toggle,
     }
   }

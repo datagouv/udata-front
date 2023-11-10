@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-contrast-grey fr-mt-2w" :id="discussionUrl(id)">
+  <div class="bg-contrast-grey fr-mt-2w" :id="discussionUrl">
     <header class="fr-grid-row fr-grid-row--middle justify-between fr-py-2w fr-px-3w no-wrap wrap-md">
       <p class="fr-col-auto text-default-warning fr-text--bold fr-pr-2w fr-my-0" v-if="closed">
         <span>{{ $t("Discussion closed") }}</span>
@@ -8,7 +8,7 @@
       <div class="fr-col-auto text-align-right">
         <button
           :id="id + '-copy'"
-          :data-clipboard-text="discussionExternalUrl(id)"
+          :data-clipboard-text="discussionExternalUrl"
           class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-right fr-icon-links-fill"
         >
           {{$t('Copy discussion permalink')}}
@@ -18,31 +18,33 @@
     <div>
       <transition-group name="list">
         <article
-          v-for="comment in _discussion"
-          v-if="!_collapsed"
+          v-for="comment in currentDiscussion"
+          v-if="!collapsed"
           class="thread-comment fr-py-3w fr-px-3w fr-pr-5w"
           :key="'comment-' + comment.id"
         >
           <div class="fr-grid-row fr-grid-row--gutters">
-            <avatar class="fr-col-auto" :user="comment.posted_by"></avatar>
+            <Avatar class="fr-col-auto" :user="comment.posted_by"/>
             <div class="fr-col">
               <p class="fr-my-0"><Author :author="comment.posted_by" :badge="false" /></p>
               <p class="fr-text--sm text-mention-grey fr-m-0">
                 {{ formatDate(comment.posted_on) }}
               </p>
-              <div class="white-space-pre-wrap overflow-wrap-anywhere">
-                <p class="fr-mt-3v fr-mb-0">{{ comment.content }}</p>
-              </div>
+              <ReadMore class="fr-mt-3v">
+                <div class="white-space-pre-wrap overflow-wrap-anywhere">
+                  <p class="fr-my-0">{{ comment.content }}</p>
+                </div>
+              </ReadMore>
             </div>
           </div>
         </article>
       </transition-group>
-      <div class="fr-py-2w fr-px-3w" v-if="_collapsed">
+      <div class="fr-py-2w fr-px-3w" v-if="collapsed">
         <button
         class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500"
         @click.prevent="collapsed = false"
       >
-        {{ $t("See {n} messages", _discussion.length) }}
+        {{ $t("See {n} messages", currentDiscussion.length) }}
       </button>
       </div>
     </div>
@@ -55,7 +57,7 @@
         >
           {{ $t("Reply") }}
         </button>
-        <thread-reply
+        <ThreadReply
           :subjectId="id"
           v-else
           :onSubmit="replyToThread"
@@ -72,72 +74,90 @@
 </template>
 
 <script>
-import ThreadReply from "./thread-reply.vue";
-import Avatar from "./avatar.vue";
-import Author from "./author.vue";
-import config from "../../config";
-import { formatDate } from "../../helpers";
-import { defineComponent } from "vue";
+import Avatar from "../Avatar/Avatar.vue";
+import Author from "../Author/Author.vue";
+import ReadMore from "../../ReadMore/ReadMore.vue";
+import ThreadReply from "../ThreadReply/ThreadReply.vue";
+import { read_only_enabled } from "../../../config";
+import { formatDate } from "../../../helpers";
+import { computed, defineComponent, ref } from "vue";
+import { auth } from "../../../plugins/auth";
+import { api } from "../../../plugins/api";
 
 export default defineComponent({
   inheritAttrs: false,
   components: {
-    "thread-reply": ThreadReply,
     Avatar,
     Author,
+    ReadMore,
+    ThreadReply,
   },
   props: {
-    id: String,
-    discussion: Array,
-    title: String,
-    url: String,
-    closed: String,
-    closed_by: Object,
+    id: {
+      type: String,
+      required: true,
+    },
+    discussion: {
+      type: Array,
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    url: {
+      type: String,
+      required: true,
+    },
+    closed: {
+      type: String,
+      default: ""
+    },
+    closed_by: {
+      type: Object,
+      default() {return {};},
+    },
   },
   setup(props) {
-    return {
-      formatDate,
-    };
-  },
-  data() {
-    return {
-      showForm: false,
-      updatedDiscussion: null,
-      collapsed: true,
-      readOnlyEnabled: config.read_only_enabled,
-    };
-  },
-  computed: {
-    _discussion() {
-      // Discussion updates are saved locally only
-      // This is the logic to get either the original discussion or the updated one
-      return this.updatedDiscussion ? this.updatedDiscussion : this.discussion;
-    },
-    _collapsed() {
-      return this.closed && this.collapsed;
-    },
-  },
-  methods: {
-    discussionUrl(id) {
-      return "discussions/" + id;
-    },
-    discussionExternalUrl(id) {
-      let hash = "#/" + this.discussionUrl(id)
-      return window.location.origin + window.location.pathname + hash
-    },
-    replyToThread (values) {
-      return this.$api
-        .post("/discussions/" + this.id + "/", values)
+    const showForm = ref(false);
+
+    const currentDiscussion = ref([...props.discussion]);
+
+    const collapsed = ref(!!props.closed);
+
+    const discussionUrl = computed(() => "discussions/" + props.id);
+
+    const discussionExternalUrl = () => {
+      const hash = "#/" + discussionUrl.value;
+      return window.location.origin + window.location.pathname + hash;
+    }
+
+    const displayForm = () => {
+      auth();
+      showForm.value = true;
+    }
+
+    const replyToThread = (comment) => {
+      return api
+        .post("/discussions/" + props.id + "/", { comment })
         .then((resp) => resp.data)
         .then((updatedDiscussion) => {
-          this.updatedDiscussion = updatedDiscussion.discussion;
-          this.showForm = false;
+          currentDiscussion.value = updatedDiscussion.discussion;
+          showForm.value = false;
         });
-    },
-    displayForm() {
-      this.$auth();
-      this.showForm = true;
-    },
-  }
+    };
+
+    return {
+      collapsed,
+      discussionExternalUrl,
+      discussionUrl,
+      displayForm,
+      formatDate,
+      readOnlyEnabled: read_only_enabled,
+      replyToThread,
+      showForm,
+      currentDiscussion,
+    };
+  },
 });
 </script>

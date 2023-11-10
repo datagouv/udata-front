@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Update build dependencies [#309](https://github.com/etalab/udata-front/pull/309)
+- Add read-more to discussions [#310](https://github.com/etalab/udata-front/pull/310)
 - Add publishing form [#266](https://github.com/etalab/udata-front/pull/266) [dependabot/36](https://github.com/etalab/udata-front/security/dependabot/36)
 
 ## 3.2.8 (2023-10-26)

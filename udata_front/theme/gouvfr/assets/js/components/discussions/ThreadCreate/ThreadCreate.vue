@@ -1,8 +1,8 @@
 <template>
   <div class="thread-create fr-mt-2w">
-    <ThreadsCreateButton
+    <ThreadCreateButton
       v-if="showCreateButton && !showForm"
-      :onClick="displayForm"
+      @click="displayForm"
     />
     <div v-if="showForm" class="bg-contrast-grey">
       <div class="fr-grid-row fr-grid-row--middle fr-py-2w fr-px-3w">
@@ -35,7 +35,7 @@
               id="thread-title"
               v-model="title"
               :placeholder="$t('Title')"
-              required="required"
+              :required="true"
           />
           </div>
           <div class="fr-input-group">
@@ -47,7 +47,7 @@
               v-model="comment"
               :placeholder="$t('Comment')"
               class="fr-input"
-              required="required"
+              :required="true"
             ></textarea>
           </div>
           <footer class="fr-grid-row justify-between fr-grid-row--middle">
@@ -69,14 +69,15 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import { auth } from "../../plugins/auth";
-import { user } from "../../config";
-import Author from "./author.vue";
-import ThreadsCreateButton from "./threads-create-button.vue";
+import { auth } from "../../../plugins/auth";
+import { user } from "../../../config";
+import Author from "../Author/Author.vue";
+import ThreadCreateButton from "./ThreadCreateButton.vue";
 
 export default defineComponent({
+  expose: ["displayForm"],
   components: {
-    ThreadsCreateButton,
+    ThreadCreateButton,
     Author,
   },
   props: {
@@ -93,7 +94,7 @@ export default defineComponent({
       required: true,
     },
     onSubmit: {
-      type: Function,
+      type: /** @type {import("vue").PropType<import("../../../types").CreateDiscussion>} */(Function),
       required: true,
     },
   },
@@ -115,6 +116,7 @@ export default defineComponent({
     const submit = () => {
       loading.value = true;
 
+      /** @type {import("../../../types").NewDiscussion} */
       const values = {
         title: title.value,
         comment: comment.value,
@@ -124,13 +126,12 @@ export default defineComponent({
         },
       };
 
-      if (props.onSubmit)
-        props.onSubmit(values).finally(() => {
-          loading.value = false;
-          showForm.value = false;
-          title.value = comment.value = "";
-          document.querySelector("[data-no-discussion]")?.remove();
-        });
+      props.onSubmit(values).finally(() => {
+        loading.value = false;
+        showForm.value = false;
+        title.value = comment.value = "";
+        document.querySelector("[data-no-discussion]")?.remove();
+      });
     };
 
     return {
