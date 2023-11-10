@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <div class="read-more" :class="{expand: expanded}" :style="{height: containerHeight + 'px'}">
+    <div class="read-more" ref="readMoreRef" :class="{expand: expanded}" :style="{height: containerHeight + 'px'}">
       <div ref="containerRef">
         <slot></slot>
       </div>
@@ -36,6 +36,9 @@ export default defineComponent({
     /** @type {import("vue").Ref<HTMLElement | null>} */
     const containerRef = templateRef("containerRef");
 
+    /** @type {import("vue").Ref<HTMLElement | null>} */
+    const readMoreRef = templateRef("readMoreRef");
+
     const { height } = useElementSize(containerRef);
 
     /**
@@ -70,28 +73,29 @@ export default defineComponent({
       readMoreRequired.value = height > containerHeight.value;
       if(!readMoreRequired.value) {
         containerHeight.value = height;
+        console.log(containerHeight.value);
       }
     }
 
     const toggle = () => {
-      if(!containerRef.value) {
+      if(!readMoreRef.value) {
         return;
       }
-      const divStyler = styler(containerRef.value);
+      const divStyler = styler(readMoreRef.value);
       if (expanded.value) {
         tween({
-          from: { height: containerRef.value.scrollHeight },
+          from: { height: readMoreRef.value.scrollHeight },
           to: { height: getDefaultHeight() },
           duration: 300,
           ease: easing.anticipate,
         }).start({
           update: divStyler.set,
-          complete: () => containerRef.value?.scrollIntoView({ behavior: "smooth" }),
+          complete: () => readMoreRef.value?.scrollIntoView({ behavior: "smooth" }),
         });
       } else {
         tween({
           from: { height: getDefaultHeight() },
-          to: { height: containerRef.value.scrollHeight },
+          to: { height: readMoreRef.value.scrollHeight },
           duration: 300,
           ease: easing.anticipate,
         }).start({
