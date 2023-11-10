@@ -82,6 +82,7 @@ import { read_only_enabled } from "../../../config";
 import { formatDate } from "../../../helpers";
 import { computed, defineComponent, ref } from "vue";
 import { auth } from "../../../plugins/auth";
+import { api } from "../../../plugins/api";
 
 export default defineComponent({
   inheritAttrs: false,
