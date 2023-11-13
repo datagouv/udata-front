@@ -40,7 +40,7 @@
         >
           <div class="markdown fr-m-0">
             <p class="fr-m-0 fr-mb-1w">
-              {{ $t("The description of a file facilitates the reuse of data.") }}
+              {{ $t("The description of a file facilitates the reuse of data. It includes, among others:") }}
             </p>
             <ul>
               <li>{{ $t("a general description of the dataset ;") }}</li>
@@ -69,7 +69,7 @@
               </div>
               <div class="fr-col">
                 <p class="fr-m-0 fr-text--bold">{{ $t('What is a file?') }}</p>
-                <p class="fr-m-0 fr-text--xs">{{ $t('A file can contain multiple types of files (updates, history, documentation, source code, API, link, etc.)') }}</p>
+                <p class="fr-m-0 fr-text--xs">{{ $t('A dataset can contain multiple types of files (updates, history, documentation, source code, API, link, etc.)') }}</p>
               </div>
             </div>
           </Well>

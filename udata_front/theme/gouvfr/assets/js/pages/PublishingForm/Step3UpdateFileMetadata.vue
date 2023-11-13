@@ -75,7 +75,7 @@
             >
               <div class="markdown fr-m-0">
                 <p class="fr-m-0 fr-mb-1w">
-                  {{ $t("The description of a file facilitates the reuse of data.") }}
+                  {{ $t("The description of a file facilitates the reuse of data. It includes, among others:") }}
                 </p>
                 <ul>
                   <li>{{ $t("a general description of the dataset ;") }}</li>
@@ -104,13 +104,6 @@
                   <a :href="schema_documentation_url">schema.data.gouv.fr</a>
                 </template>
               </i18n-t>
-            </Accordion>
-            <Accordion
-              :title= "$t('What is a Mime type')"
-              :id="whatIsAMimeTypeAccordionId"
-              :state="state.mime"
-            >
-              {{ $t("") }}
             </Accordion>
           </AccordionGroup>
       </Sidemenu>

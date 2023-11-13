@@ -47,7 +47,7 @@ import Step2DescribeDataset from './Step2DescribeDataset.vue';
 import Step3AddFiles from './Step3AddFiles.vue';
 import Step3UpdateFileMetadata from "./Step3UpdateFileMetadata.vue";
 import Step4CompleteThePublication from "./Step4CompleteThePublication.vue";
-import { publishing_form_feedback_url, user } from '../../config';
+import { publishing_form_feedback_url, title, user } from '../../config';
 import { createDataset, publishDataset } from '../../api/datasets';
 import { useFilesUpload } from '../../composables/form/useFilesUpload';
 
@@ -72,7 +72,7 @@ export default defineComponent({
 
     const { files, updateFiles, uploadFiles } = useFilesUpload();
 
-    const steps = [t("Publish data on data.gouv.fr"), t("Describe your dataset"), t("Add files"), t("Complete your publishing")];
+    const steps = [t("Publish data on {site}", {site: title}), t("Describe your dataset"), t("Add files"), t("Complete your publishing")];
 
     const currentStep = ref(0);
 
