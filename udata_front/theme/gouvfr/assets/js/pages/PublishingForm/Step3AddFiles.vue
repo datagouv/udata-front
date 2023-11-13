@@ -14,7 +14,7 @@
           {{ $t('Help') }}
         </template>
         <Accordion
-          :title= "$t('Publish the right types of files')"
+          :title= "$t('Choose the right format')"
           :id="publishFileAccordionId"
           :state="state.files"
           :opened="true"
@@ -34,13 +34,13 @@
           </Well>
         </Accordion>
         <Accordion
-          :title= "$t('Add a documentation')"
+          :title= "$t('Add documentation')"
           :id="addDescriptionAccordionId"
           :state="state.hasDocumentation"
         >
           <div class="markdown fr-m-0">
             <p class="fr-m-0 fr-mb-1w">
-              {{ $t("The documentation of the dataset has an educational purpose and eases the data reuse. It covers among others:") }}
+              {{ $t("The description of a file facilitates the reuse of data.") }}
             </p>
             <ul>
               <li>{{ $t("a general description of the dataset ;") }}</li>
@@ -207,15 +207,15 @@ export default defineComponent({
      * @param {undefined} value
      * * @param {{files: Array<import("../../types").DatasetFile>}} siblings
      */
-     const hasDocumentation = (value, siblings) => siblings.files.reduce((previous, current) => previous || current.type === "documentation", false);
+     const hasDocumentation = (value, siblings) => siblings.files.reduce((previous, current) => previous || current.type === "documentation" || !!current.description?.trim(), false);
 
     const requiredRules = {
       files: { fileRequired },
     };
 
     const warningRules = {
-      files: { fileRequired, openFormat: withMessage(t("At least one file should have an open format."), onefileHasOpenFormats) },
-      hasDocumentation: { hasDocumentation: withMessage(t("You don't add any documentation file or describe your files."), hasDocumentation) }
+      files: { fileRequired, openFormat: withMessage(t("You did not add a file with an open format."), onefileHasOpenFormats) },
+      hasDocumentation: { hasDocumentation: withMessage(t("You have not added a documentation file or described your files."), hasDocumentation) }
     };
 
     const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState({ files }, requiredRules, warningRules);

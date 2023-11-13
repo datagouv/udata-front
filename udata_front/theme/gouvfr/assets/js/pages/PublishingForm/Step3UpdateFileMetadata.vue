@@ -28,18 +28,18 @@
             >
               <div class="markdown fr-m-0">
                 <p class="fr-m-0 fr-mb-1w">
-                  {{ $t("It is recommended to choose a title that give information to any reuser about the file content. Some cases to avoid :") }}
+                  {{ $t("It is recommended to choose a title that can inform any user about the content of the file. Some practices to avoid:") }}
                 </p>
                 <ul>
-                  <li>{{ $t("to give a too generic title (i.e. : liste.csv) ;") }}</li>
-                  <li>{{ $t("to give a too long title that make file handling difficult ;") }}</li>
-                  <li>{{ $t("to give a title with accents or special characters (file interoperabity problems) ;") }}</li>
-                  <li>{{ $t("to give a too technical title from business nomenclatures.") }}</li>
+                  <li>{{ $t('giving a too generic title (e.g., "list.csv");') }}</li>
+                  <li>{{ $t("giving a too long title that would make the file manipulation difficult;") }}</li>
+                  <li>{{ $t("giving a title containing accents or special characters (file interoperability issues);") }}</li>
+                  <li>{{ $t("giving a title that is too technical and derived from business nomenclatures.") }}</li>
                 </ul>
               </div>
             </Accordion>
             <Accordion
-              :title="$t('Choose the right type of file')"
+              :title="$t('Publish the correct file types')"
               :id="chooseTheRightTypeOfFileAccordionId"
               :state="state.type"
             >
@@ -53,19 +53,29 @@
               </div>
             </Accordion>
             <Accordion
-              :title= "$t('Choose the correct format')"
+              :title= "$t('Choose the right format')"
               :id="chooseTheCorrectFormatAccordionId"
               :state="state.format"
             >
+            <div class="markdown fr-m-0">
+                <p class="fr-m-0 fr-mb-1w">
+                  {{ $t("The formats must be:") }}
+                </p>
+                <ul>
+                  <li>{{ $t("open : an open format doesn't add technical specifications that restrict data use (i.e. using a paid software) ;") }}</li>
+                  <li>{{ $t("easily reusable : a format easily reusable implies that anybody or server can reuse easily the dataset ;") }}</li>
+                  <li>{{ $t("usable in an automated processing system : an automated processing system allows to make automatic operations, related to data exploitation (i.e. a CSV file is easily usable by an automated system unlike a PDF file).") }}</li>
+                </ul>
+              </div>
             </Accordion>
             <Accordion
-              :title= "$t('Write a good description')"
+              :title= "$t('Add documentation')"
               :id="writeAGoodDescriptionAccordionId"
               :state="state.description"
             >
               <div class="markdown fr-m-0">
                 <p class="fr-m-0 fr-mb-1w">
-                  {{ $t("The description of the dataset eases the data reuse. It covers among others:") }}
+                  {{ $t("The description of a file facilitates the reuse of data.") }}
                 </p>
                 <ul>
                   <li>{{ $t("a general description of the dataset ;") }}</li>
@@ -86,7 +96,7 @@
               :state="state.schema"
             >
               <i18n-t
-                keypath="It is possible to identify an existing data schema by visiting the {schema} website, which references a list of existing data schema."
+                keypath="It is possible to identify an existing data schema by visiting the {schema} website, that references a list of existing data schema."
                 tag="p"
                 class="fr-m-0 fr-mb-1w"
               >

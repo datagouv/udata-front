@@ -19,9 +19,9 @@
               :state="state.title"
             >
               <p class="fr-m-0">
-                {{ $t("Dataset title must be the most precise and specific possible.") }} <br/>
-                {{ $t("It must match the vocabulary used by users.") }} <br/>
-                {{ $t("They search the data usually with the search engine.") }}
+                {{ $t("The title of your dataset should be as precise and specific as possible.") }} <br/>
+                {{ $t("It should also correspond to the vocabulary used by users.") }} <br/>
+                {{ $t("They often search for data in a search engine.") }}
               </p>
             </Accordion>
             <Accordion
@@ -30,7 +30,7 @@
               :state="state.acronym"
             >
               <p class="fr-m-0">
-                {{ $t("You can add an acronym to your dataset. The letters composing the acronym shouldn't be separated with dots.") }}
+                {{ $t("You have the option to add an acronym to your dataset. The letters that make up this acronym do not need to be separated by periods.") }}
               </p>
             </Accordion>
             <Accordion
@@ -40,22 +40,21 @@
             >
               <div class="markdown fr-m-0">
                 <p class="fr-m-0">
-                  {{ $t(`Dataset description allows people reading it to get information about the content and structure of the published resources,
-                you can write :`) }}
+                  {{ $t(`The description of your dataset allows to obtain information about the content and structure of the published resources. You can provide:`) }}
                 </p>
                 <ul class="fr-mt-3v">
-                  <li>{{ $t("The list of file provided ;") }}</li>
-                  <li>{{ $t("The description of file format ;") }}</li>
+                  <li>{{ $t("A list of the files available ;") }}</li>
+                  <li>{{ $t("A description of the file format ;") }}</li>
                   <li>{{ $t("The update frequency.") }}</li>
                 </ul>
                 <ul class="fr-mt-3v">
-                  <li>{{ $t("The motivation to create the dataset") }}</li>
-                  <li>{{ $t("The dataset composition") }}</li>
-                  <li>{{ $t("The data collection process") }}</li>
-                  <li>{{ $t("The data pre-treatment") }}</li>
-                  <li>{{ $t("The dataset broadcasting") }}</li>
-                  <li>{{ $t("The dataset maintenance") }}</li>
-                  <li>{{ $t("The legals and ethics considerations") }}</li>
+                  <li>{{ $t("Motivations for creating the dataset ;") }}</li>
+                  <li>{{ $t("The composition of the dataset ;") }}</li>
+                  <li>{{ $t("The data collection process ;") }}</li>
+                  <li>{{ $t("Data preprocessing ;") }}</li>
+                  <li>{{ $t("Dataset dissemination ;") }}</li>
+                  <li>{{ $t("Dataset maintenance ;") }}</li>
+                  <li>{{ $t("Legal and ethical considerations.") }}</li>
                 </ul>
                 <Well class="fr-mt-1w" v-if="fieldHasWarning('description')" color="orange-terre-battue">
                   {{ getWarningText("description") }}
@@ -68,7 +67,7 @@
               :state="state.tags"
             >
               <p class="fr-m-0">
-                {{ $t("Tags characterize your dataset. They are public and allow a better listing of the dataset during a user search.") }}
+                {{ $t("Tags characterize your dataset. They are public and improve the dataset's search engine optimization during a user search.") }}
               </p>
               <Well class="fr-mt-1w" v-if="fieldHasWarning('tags')" color="orange-terre-battue">
                 {{ getWarningText("tags") }}
@@ -80,7 +79,7 @@
               :state="state.license"
             >
               <p class="fr-m-0">
-                {{ $t("Licenses define reuse rules. By choosing a reuse license, you ensure the published dataset is reused using the conditions you defined.") }}
+                {{ $t("Licenses define the rules for reuse. By choosing a reuse license, you ensure that the published dataset will be reused according to the usage conditions you have defined.") }}
               </p>
               <Well class="fr-mt-1w" v-if="fieldHasWarning('license')" color="orange-terre-battue">
                 {{ getWarningText("license") }}
@@ -92,19 +91,19 @@
               :state="state.frequency"
             >
               <p class="fr-m-0">
-                {{ $t("Update frequency is the frequency you plan to update the published data. Update frequency is indicative.") }}
+                {{ $t("The update frequency corresponds to how often you plan to update the published data. This update frequency is only indicative.") }}
               </p>
               <Well class="fr-mt-1w" v-if="fieldHasWarning('frequency')" color="orange-terre-battue">
                 {{ getWarningText("frequency") }}
               </Well>
             </Accordion>
             <Accordion
-              :title= "$t('Add temporal coverage')"
+              :title= "$t('Provide the temporal coverage')"
               :id="addTemporalCoverageAccordionId"
               :state="state.temporal_coverage"
             >
               <p class="fr-m-0">
-                {{ $t("Temporal coverage show the time range of published data.") }} <br/>
+                {{ $t("The temporal coverage indicates the time range of the published data.") }} <br/>
                 {{ $t("For example : from 2012 to 2015.") }}
               </p>
               <Well class="fr-mt-1w" v-if="fieldHasWarning('temporal_coverage')" color="orange-terre-battue">
@@ -112,13 +111,13 @@
               </Well>
             </Accordion>
             <Accordion
-              :title= "$t('Add spatial information')"
+              :title= "$t('Complete the spatial information')"
               :id="addSpatialInformationAccordionId"
               :state="state.spatial_information"
             >
               <p class="fr-m-0">
-                {{ $t("Spatial granularity shows the finest level of geographical details covered by your data.") }} <br/>
-                {{ $t("For example : at the department scale or the city scale.") }}
+                {{ $t("The spatial granularity indicates the finest geographical level of detail that your data can cover.") }} <br/>
+                {{ $t("For example: at the department or municipality scale.") }}
               </p>
               <Well class="fr-mt-1w" v-if="fieldHasWarning('spatial_information')" color="orange-terre-battue">
                 {{ getWarningText("spatial") }}
@@ -370,9 +369,9 @@ export default defineComponent({
     const dataset = reactive({...props.originalDataset});
 
     const notUnknown = not(t("The value must be different than unknown."), sameAs("unknown"));
-    const tagsRequired = requiredWithCustomMessage(t("Add tags to improve listing of your data."));
-    const temporalCoverageRequired = requiredWithCustomMessage(t("You didn't provide the temporal coverage."));
-    const spatialGranularityRequired = requiredWithCustomMessage(t("You didn't provide the spatial granularity."));
+    const tagsRequired = requiredWithCustomMessage(t("Adding tags helps improve the SEO of your data."));
+    const temporalCoverageRequired = requiredWithCustomMessage(t("You did not provide the temporal coverage."));
+    const spatialGranularityRequired = requiredWithCustomMessage(t("You have not specified the spatial granularity."));
 
     const requiredRules = {
       description: { required },
