@@ -8,8 +8,9 @@
  * Simple helper to fetch attribute on given css selector
  */
 function _attr(selector, name) {
+  /** @type {HTMLElement | null} */
   const el = document.querySelector(selector);
-  return el ? el.getAttribute(name) : undefined;
+  return el ? el.getAttribute(name) : null;
 }
 
 /**

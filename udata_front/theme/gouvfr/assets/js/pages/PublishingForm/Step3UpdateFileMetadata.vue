@@ -171,7 +171,7 @@
               <MultiSelect
                 :placeholder="$t('Format')"
                 :searchPlaceholder="$t('Search a format...')"
-                listUrl="/datasets/extensions/"
+                :listUrl="allowedExtensionsUrl"
                 :suggestUrl="isRemote ? 'datasets/suggest/formats/' : null"
                 :values="file.format"
                 @change="(value) => file.format = value"
@@ -255,6 +255,7 @@ import useFileValidation from '../../composables/form/useFileValidation';
 import { schema_documentation_url } from "../../config";
 import { RESOURCE_TYPE, getResourceLabel } from '../../helpers';
 import { useI18n } from 'vue-i18n';
+import { getAllowedExtensionsUrl } from '../../api/resources';
 
 export default defineComponent({
   components: { Accordion, AccordionGroup, Container, InputGroup, FileCard, LinkedToAccordion, MultiSelect, SchemaSelect, SelectGroup, Sidemenu, Stepper, Well },
@@ -280,6 +281,8 @@ export default defineComponent({
     const { id: selectASchemaAccordionId } = useUid("accordion");
     const { id: whatIsAMimeTypeAccordionId } = useUid("accordion");
 
+    const allowedExtensionsUrl = getAllowedExtensionsUrl();
+
     /** @type {import("vue").Ref<import("../../types").NewDatasetFile>} */
     const file = ref({...props.datasetFile});
 
@@ -300,6 +303,7 @@ export default defineComponent({
     };
 
     return {
+      allowedExtensionsUrl,
       chooseTheCorrectLinkAccordionId,
       nameAFileAccordionId,
       chooseTheRightTypeOfFileAccordionId,

@@ -45,7 +45,7 @@
                     :placeholder="$t('Formats')"
                     :searchPlaceholder="$t('Search a format...')"
                     :allOption="$t('All formats')"
-                    listUrl="/datasets/extensions/"
+                    :listUrl="allowedExtensionsUrl"
                     :values="facets.format"
                     @change="(value) => handleFacetChange('format', value)"
                     :isBlue="true"
@@ -57,7 +57,7 @@
                     :explanation="$t('Licenses define reuse rules for published datasets. See page data.gouv.fr/licences')"
                     :searchPlaceholder="$t('Search a license...')"
                     :allOption="$t('All licenses')"
-                    listUrl="/datasets/licenses/"
+                    :listUrl="licensesUrl"
                     :values="facets.license"
                     @change="(value) => handleFacetChange('license', value)"
                     :isBlue="true"
@@ -226,6 +226,8 @@ import { data_search_feedback_form_url, search_autocomplete_debounce } from "../
 import { debounce } from "../../composables/useDebouncedRef";
 import franceWithMagnifyingGlassIcon from "svg/illustrations/france_with_magnifying_glass.svg";
 import magnifyingGlassIcon from "svg/illustrations/magnifying_glass.svg";
+import { getAllowedExtensionsUrl } from "../../api/resources";
+import { getLicensesUrl } from "../../api/licenses";
 
 export default defineComponent({
   inheritAttrs: false,
@@ -265,6 +267,9 @@ export default defineComponent({
      */
     const url = new URL(window.location.href);
     const params = new URLSearchParams(url.search);
+
+    const allowedExtensionsUrl = getAllowedExtensionsUrl();
+    const licensesUrl = getLicensesUrl();
 
     /**
      * Search query
@@ -562,8 +567,10 @@ export default defineComponent({
     });
 
     return {
+      allowedExtensionsUrl,
       data_search_feedback_form_url,
       isFiltered,
+      licensesUrl,
       search,
       handleSearchChange,
       handleFacetChange,

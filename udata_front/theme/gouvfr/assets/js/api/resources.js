@@ -1,5 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import {api, apiv2} from "../plugins/api";
+import { lang } from '../config';
+import { getLocalizedUrl } from '../i18n';
 
 /**
  * @typedef {Object} ResourceRest
@@ -70,12 +72,18 @@ export function fetchDatasetCommunityResources (datasetId, page, pageSize) {
 }
 
 /**
+ * @returns {string}
+ */
+export function getAllowedExtensionsUrl () {
+  return getLocalizedUrl("datasets/extensions/");
+}
+
+/**
  * @return {Promise<Array<string>>}
  */
 export function fetchAllowedExtensions () {
   return api
-    .get("/datasets/extensions/", {
-    })
+    .get(getAllowedExtensionsUrl())
     .then((resp) => resp.data);
 }
 

@@ -1,5 +1,6 @@
 import { toValue } from "vue";
 import { api } from "../plugins/api";
+import { getLocalizedUrl } from "../i18n";
 
 /**
  * @typedef {import("../types").Owned & {
@@ -11,7 +12,7 @@ import { api } from "../plugins/api";
  *  license: string,
  *  frequency: string,
  *  temporal_coverage: string,
- *  last_update: Date | null,
+ *  frequency_date: Date | null,
  *  private: boolean,
  *  spatial?: {
  *    zones?: Array<string>,
@@ -59,4 +60,11 @@ export function publishDataset(dataset) {
   return api.put("datasets/" + datasetToUpload.id, {
     ...datasetToUpload,
   }).then(resp => resp.data);
+}
+
+/**
+ * @returns {string}
+ */
+export function getFrequenciesUrl () {
+  return getLocalizedUrl("datasets/frequencies/");
 }

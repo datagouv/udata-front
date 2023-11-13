@@ -15,10 +15,22 @@ import RelativeTime from "dayjs/esm/plugin/relativeTime";
 import messages from '@intlify/unplugin-vue-i18n/messages';
 import { getRegisteredTranslations } from "@etalab/udata-front-plugins-helper";
 import { createI18nMessage, minLength as vMinLength, not as vNot, required as vRequired, requiredIf as vRequiredIf, sameAs as vSameAs, helpers } from '@vuelidate/validators';
+import { api_root_absolute } from "./plugins/api";
 
 const dateLocales = { fr, en, es };
 
 fr.formatLong?.date();
+
+/**
+ * @param {string} path
+ * @returns {string}
+ */
+export function getLocalizedUrl (path) {
+  const url = new URL(api_root_absolute + path);
+  const params = new URLSearchParams({ lang });
+  url.search = params.toString();
+  return url.toString();
+}
 
 /**
  * Get locale messages for date-fns

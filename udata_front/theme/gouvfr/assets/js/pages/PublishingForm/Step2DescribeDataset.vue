@@ -213,7 +213,7 @@
               <MultiSelect
                 :placeholder="$t('License')"
                 :searchPlaceholder="$t('Search a license...')"
-                listUrl="/datasets/licenses/"
+                :listUrl="licensesUrl"
                 :values="dataset.license"
                 @change="(value) => dataset.license = value"
                 :allOption="$t('Select a license')"
@@ -237,7 +237,7 @@
                     <MultiSelect
                       :placeholder="$t('Update frequency')"
                       :searchPlaceholder="$t('Search a frequency...')"
-                      listUrl="/datasets/frequencies/"
+                      :listUrl="frequenciesUrl"
                       :values="dataset.frequency"
                       @change="(value) => dataset.frequency = value"
                       :required="true"
@@ -340,6 +340,8 @@ import useFunctionalState from '../../composables/form/useFunctionalState';
 import editIcon from "svg/illustrations/edit.svg";
 import { quality_description_length, title } from "../../config";
 import { useI18n } from 'vue-i18n';
+import { getLicensesUrl } from '../../api/licenses';
+import { getFrequenciesUrl } from '../../api/datasets';
 
 export default defineComponent({
   components: { Accordion, AccordionGroup, Container, InputGroup, LinkedToAccordion, MultiSelect, Stepper, Well, Sidemenu },
@@ -367,6 +369,9 @@ export default defineComponent({
     const { id: addSpatialInformationAccordionId } = useUid("accordion");
 
     const dataset = reactive({...props.originalDataset});
+
+    const frequenciesUrl = getFrequenciesUrl();
+    const licensesUrl = getLicensesUrl();
 
     const notUnknown = not(t("The value must be different than unknown."), sameAs("unknown"));
     const tagsRequired = requiredWithCustomMessage(t("Adding tags helps improve the SEO of your data."));
@@ -441,6 +446,8 @@ export default defineComponent({
       addSpatialInformationAccordionId,
       dataset,
       editIcon,
+      frequenciesUrl,
+      licensesUrl,
       state,
       fieldHasError,
       fieldHasWarning,
