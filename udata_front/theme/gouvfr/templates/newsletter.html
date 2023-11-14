@@ -2,12 +2,15 @@
 <div class="fr-follow">
     <div class="fr-container">
         <div class="fr-grid-row">
-            <div class="fr-col-12 fr-col-md-8">
-                <div class="fr-follow__newsletter">
+            <div class="fr-col-12 fr-col-md-8 flex">
+                <div class="fr-col-auto fr-mr-5v">
+                    {% include theme('svg/illustrations/newspaper.svg') %}
+                </div>
+                <div class="fr-follow__newsletter fr-col">
                     <div>
                         <p class="fr-h4">{{ _("Subscribe to our newsletter") }}</p>
                         <p class="fr-text--lg fr-text--alt f-italic">{{
-                            _("To not miss anything, about {site} news and open data, subscribe to our newsletter and follow our events.")
+                            _("To stay up to date about {site} and open data news, subscribe to our newsletter and follow our events.")
                                 .format(site=current_site.title)
                         }}</p>
                     </div>
