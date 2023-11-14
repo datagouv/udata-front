@@ -46,27 +46,35 @@ import Datepicker from "vue3-datepicker";
 import { add, format } from "date-fns/esm";
 import { defineComponent, ref, watch } from "vue";
 import { formatDate } from "../../helpers";
+import { templateRef } from "@vueuse/core";
 
 export default defineComponent({
   components: {
     Datepicker,
   },
-  emits: ["change"],
+  emits: ["change", "update:modelValue"],
   props: {
-    value: String,
+    modelValue: {
+      /** @type {import("vue").PropType<{start: Date | null, end: Date | null}>} */
+      type: Object,
+      default: () => {return {start: null, end: null}},
+    },
   },
   setup(props, { emit }) {
     /** @type {import("vue").Ref<Date | null>} */
-    const start = ref(null);
+    const start = ref(props.modelValue.start);
 
     /** @type {import("vue").Ref<Date | null>} */
-    const end = ref(null);
+    const end = ref(props.modelValue.end);
 
     /** @type {Date} */
     const tomorrow = add(new Date(), {days: 1});
 
-    const startRef = ref(null);
-    const endRef = ref(null);
+    /** @type {Readonly<import("vue").Ref<InstanceType<typeof Datepicker> | null>>} */
+    const startRef = templateRef("startRef");
+
+    /** @type {Readonly<import("vue").Ref<InstanceType<typeof Datepicker> | null>>} */
+    const endRef = templateRef("endRef");
 
     /** @type {import("vue").Ref<string | null>} */
     const selectorShown = ref(null);
@@ -80,28 +88,22 @@ export default defineComponent({
      */
     const formatTemplate = 'L';
 
-    if (props.value) {
-      start.value = new Date(props.value.slice(0, 10));
-      end.value = new Date(props.value.slice(10));
-    }
-
-    watch(() => props.value, value => {
-      if (typeof value === "undefined") {
-        start.value = null;
-        end.value = null;
-      }
-    });
-
     watch([start, end], () => {
-      let value = null;
+      /** @type {{start: string, end: string} | {start: null, end: null}} */
+      let value = {
+        start: null,
+        end: null,
+      };
 
-      if (start.value && end.value)
-        value =
-          format(start.value, "yyyy-MM-dd") +
-          "-" +
-          format(end.value, "yyyy-MM-dd");
+      if (start.value && end.value) {
+        value = {
+          start: format(start.value, "yyyy-MM-dd"),
+          end: format(end.value, "yyyy-MM-dd"),
+        }
+      }
 
-      emit("change", value);
+      emit('update:modelValue', value);
+      emit('change', value);
     });
 
     const clear = () => {
@@ -109,8 +111,14 @@ export default defineComponent({
       end.value = null;
     };
 
+    /**
+     *
+     * @param {Readonly<import("vue").Ref<InstanceType<typeof Datepicker> | null>>} selectorRef
+     */
     const showSelector = (selectorRef) => {
-      selectorRef.value.renderView(selectorRef.value.initialView);
+      if(selectorRef.value) {
+        selectorRef.value.renderView(selectorRef.value.initialView);
+      }
     }
 
     const showStartSelector = () => {
@@ -130,8 +138,6 @@ export default defineComponent({
     return {
       start,
       end,
-      startRef,
-      endRef,
       showStartSelector,
       showEndSelector,
       hideSelector,

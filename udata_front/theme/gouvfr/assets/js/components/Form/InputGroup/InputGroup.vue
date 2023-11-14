@@ -33,7 +33,7 @@
     </div>
     <RangePicker
       v-else-if="isRange"
-      :value="modelValue"
+      :modelValue="modelValue"
       @change="change"
     />
     <input
