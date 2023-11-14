@@ -41,49 +41,46 @@
 </template>
 
 <script>
-import config from "../../config";
-import Author from "./author.vue";
+import { defineComponent, ref } from "vue";
+import { useToast } from "../../../composables/useToast";
+import { user } from "../../../config";
+import Author from "../Author/Author.vue";
+import { useI18n } from "vue-i18n";
 
-export default {
+export default defineComponent({
   components: {
     Author,
   },
   emits: ['close'],
-  data() {
-    return {
-      loading: false,
-      comment: "",
-      user: config.user,
-    };
-  },
   props: {
-    subjectId: String,
-    subjectClass: String,
-    onSubmit: Function,
-  },
-  methods: {
-    submit() {
-      const vm = this;
-      this.loading = true;
-
-      const values = {
-        comment: this.comment,
-        subject: {
-          id: this.subjectId,
-          class: this.subjectClass,
-        },
-      };
-
-      if (this.onSubmit)
-        this.onSubmit(values)
-          .catch((err) => {
-            vm.$toast.error(vm.$t("Error sending response"));
-          })
-          .finally(() => {
-            vm.loading = false;
-            vm.comment = "";
-          });
+    onSubmit: {
+      type: /** @type {import("vue").PropType<import("../../../types").CreateComment>} */(Function),
+      required: true,
     },
   },
-};
+  setup(props) {
+    const {t} = useI18n();
+    const toast = useToast();
+    const loading = ref(false);
+    const comment = ref("");
+    const submit = () => {
+      loading.value = true;
+
+      props.onSubmit(comment.value)
+        .catch((err) => {
+          toast.error(t("Error sending response"));
+        })
+        .finally(() => {
+          loading.value = false;
+          comment.value = "";
+        });
+    };
+    return {
+      comment,
+      loading,
+      submit,
+      user,
+    }
+  },
+});
 </script>

@@ -10,7 +10,9 @@ function InitSentry(app) {
             integrations: [new Integrations.BrowserTracing()],
             release: config.sentry.release,
             ignoreErrors: [
-                'AuthenticationRequired',  // Uncaught but managed
+                'Auth required',
+                'Network Error',
+                'ResizeObserver loop limit exceeded'
             ],
         })
         Sentry.setTags(config.sentry.tags)
