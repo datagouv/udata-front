@@ -1,19 +1,25 @@
 import {api, apiv2} from "../plugins/api";
 
 /**
- * @typedef {Object} ResourceRest
+ * @typedef {object} ResourceRest
  * @property {string} id
- * @property {Object} created_at
- * @property {Object} description
- * @property {Object} extras
- * @property {Object} harvest
+ * @property {string} title
+ * @property {string} type
+ * @property {{type: string, value: string} | null} checksum
+ * @property {string} created_at
+ * @property {string | null} description
+ * @property {Record<string, any>} extras
+ * @property {{views: number}} metrics
+ * @property {object | null} harvest
  * @property {number} filesize
  * @property {string} filetype
  * @property {string} format
+ * @property {string} mime
+ * @property {object} internal
  * @property {string} last_modified
- * @property {string} last_update
+ * @property {string} latest
  * @property {string} preview_url
- * @property {Object} schema
+ * @property {{name: string, version: string} | {}} schema
  * @property {string} url
  *
  * @typedef {import("../composables/useOwnerName").Owned & ResourceRest} Resource

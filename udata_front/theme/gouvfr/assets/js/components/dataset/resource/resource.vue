@@ -168,7 +168,7 @@
               <div class="fr-col-12 fr-col-lg">
                 <h5 class="fr-h6 fr-mb-5v">{{$t('Data schema')}}</h5>
                 <ul class="fr-tags-group" v-if="hasSchemaErrors">
-                  <li v-for="[key, schemaError] in schemaReport">
+                  <li v-for="[_key, schemaError] in schemaReport">
                     <p class="fr-tag fr-tag--sm">{{schemaError.name}}</p>
                   </li>
                 </ul>
@@ -307,8 +307,8 @@
   </article>
 </template>
 
-<script>
-import { defineComponent, ref, computed, unref, onMounted } from "vue";
+<script lang="ts">
+import { defineComponent, ref, computed, unref, onMounted, type ComputedRef, type PropType } from "vue";
 import SchemaLoader from "./schema-loader.vue";
 import useOwnerName from "../../../composables/useOwnerName";
 import useResourceImage from "../../../composables/useResourceImage";
@@ -323,6 +323,7 @@ import useSchema from "../../../composables/useSchema";
 import useComponentsForHook from "../../../composables/useComponentsForHook";
 import { explorable_resources, schema_documentation_url } from "../../../config";
 import { filesize, formatRelativeIfRecentDate, formatDate, markdown } from "../../../helpers";
+import { Resource } from "../../../api/resources";
 
 export default defineComponent({
   components: { DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, OrganizationNameWithCertificate, SchemaLoader },
@@ -341,17 +342,12 @@ export default defineComponent({
       default: false,
     },
     resource: {
-      /** @type {import("vue").PropType<import("../../../api/resources").Resource>} */
-      type: Object,
+      type: Object as PropType<Resource>,
       required: true,
     },
     canEdit: {
       type: Boolean,
       default: false,
-    },
-    typeLabel: {
-      type: String,
-      required: true,
     },
   },
   setup(props) {
@@ -359,8 +355,7 @@ export default defineComponent({
     const resourceImage = useResourceImage(props.resource);
     const { getComponentsForHook } = useComponentsForHook();
 
-    /** @type {import("vue").Ref<HTMLElement | undefined>} */
-    const content = ref();
+    const content = ref<HTMLElement | undefined>();
 
     const expanded = ref(false);
     const expand = () => {
@@ -382,11 +377,7 @@ export default defineComponent({
       }
     }
 
-    /**
-     *
-     * @param {import("vue").ComputedRef<string> | string} tab Tab name
-     */
-    const registerEvent = (tab) => {
+    const registerEvent = (tab: ComputedRef<string> | string) => {
       const tabName = unref(tab);
       globalThis._paq?.push(['trackEvent', 'View resource tab', props.resource.id, tab]);
       if(tabName === resourcePreviewButtonId.value) {

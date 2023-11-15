@@ -34,7 +34,11 @@ import config from "../config";
  * @property {number} rowPosition - Affected row position in file
  */
 
-let catalog = null;
+/**
+ * @typedef {import("axios").AxiosResponse<{schemas: Array<Schema>}>} SchemaResponse
+ */
+
+/** @type {Promise<Array<Schema>> | null} */
 let catalogRequest = null;
 
 /**
@@ -48,13 +52,8 @@ export default function getCatalog() {
   if (catalogRequest) {
     return catalogRequest;
   }
-  catalogRequest = axios.get(config.schema_catalog_url)
+  catalogRequest = /** @type {Promise<SchemaResponse>} */(axios.get(config.schema_catalog_url))
   .then((resp) => resp.data)
-  .then((data) => {
-    if (data.schemas) {
-      catalog = data.schemas;
-    }
-    return catalog;
-  })
+  .then((data) => data.schemas);
   return catalogRequest;
 }

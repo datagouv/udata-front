@@ -36,7 +36,6 @@
           :isCommunityResource="isCommunityResources"
           :resource="resource"
           :canEdit="getCanEdit(resource)"
-          :typeLabel="typeLabel"
         />
         <p v-if="!totalResults">
           {{$t('No files match your search.')}}

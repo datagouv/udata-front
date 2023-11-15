@@ -22,7 +22,6 @@
         :expandedOnMount="true"
         :resource="resource"
         :canEdit="canEdit"
-        :typeLabel="typeLabel"
       />
     </div>
   </transition>
@@ -46,10 +45,6 @@ export default defineComponent({
       default: false
     },
     datasetId: {
-      type: String,
-      required: true,
-    },
-    typeLabel: {
       type: String,
       required: true,
     },

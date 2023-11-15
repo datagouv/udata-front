@@ -1,15 +1,15 @@
-import {useI18n} from 'vue-i18n'
-import {ref, computed} from "vue";
+import { useI18n } from 'vue-i18n';
+import { ref, computed } from "vue";
 import getCatalog from "../api/schemas";
 import config from "../config";
-import {useToast} from "./useToast";
+import { useToast } from "./useToast";
 
 /** @typedef {Map<string, {name: string, count: number}>} ReportMap */
 
 /**
  *
  * @param {import("../api/resources").Resource} resource
- * @returns {{documentationUrl: import("vue").ComputedRef<string>, authorizeValidation: import("vue").ComputedRef<boolean>, validationUrl: import("vue").ComputedRef<?string>, loading: import("vue").Ref<boolean>, schemaReport: import("vue").ComputedRef<ReportMap>}}
+ * @returns {{documentationUrl: import("vue").ComputedRef<string>, authorizeValidation: import("vue").ComputedRef<boolean>, validationUrl: import("vue").ComputedRef<string | undefined>, loading: import("vue").Ref<boolean>, schemaReport: import("vue").ComputedRef<ReportMap>}}
  */
 export default function useSchema(resource) {
   const { t } = useI18n();
@@ -34,7 +34,7 @@ export default function useSchema(resource) {
 
   const validationUrl = computed(() => {
     if(!authorizeValidation) {
-      return null;
+      return undefined;
     }
     /** @type {object} */
     let schemaPath = {'schema_name': `schema-datagouvfr.${resource.schema.name}`};
