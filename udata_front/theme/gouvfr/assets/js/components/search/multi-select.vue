@@ -122,7 +122,7 @@ export default defineComponent({
   },
   setup(props) {
     const { t } = useI18n();
-    const toast = useToast();
+    const { toast } = useToast();
     const { id } = useUid('multiselect');
 
     /**

@@ -19,7 +19,7 @@ import {api, apiv2} from "../plugins/api";
  * @property {string} last_modified
  * @property {string} latest
  * @property {string} preview_url
- * @property {{name: string, version: string} | {}} schema
+ * @property {import("./schemas").Schema} schema
  * @property {string} url
  *
  * @typedef {import("../composables/useOwnerName").Owned & ResourceRest} Resource

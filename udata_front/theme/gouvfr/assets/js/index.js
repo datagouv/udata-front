@@ -24,13 +24,10 @@ import "./components/vanilla/dialog";
 import "./components/vanilla/sort-search";
 import handleUpdateUrlButtons from "./components/vanilla/update-url";
 
-import Toaster from "@conciergerie.dev/vue-toaster";
-
 import Api from "./plugins/api";
 import EventBus from "./plugins/eventbus";
 import Auth from "./plugins/auth";
 import i18n from "./i18n";
-import bodyClass from "./plugins/bodyClass";
 
 import InitSentry from "./sentry";
 
@@ -44,11 +41,6 @@ const configAndMountApp = (el) => {
   app.use(EventBus);
   app.use(Auth);
   app.use(i18n);
-  app.use(bodyClass);
-  app.use(Toaster, {
-    duration: false,
-    dismissible: true,
-  }).provide('toast', app.config.globalProperties.$toast);
 
   app.component("discussion-threads", Threads);
   app.component("discussion-create", ThreadCreate);

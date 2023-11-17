@@ -1,5 +1,10 @@
-import { inject } from 'vue';
+import { createToaster } from "@conciergerie.dev/vue-toaster";
+
+const toast = createToaster({
+  duration: false,
+  dismissible: true,
+});
 
 export function useToast() {
-  return inject('toast');
+  return { toast };
 }

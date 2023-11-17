@@ -55,7 +55,7 @@
 
 <script>
 import { useI18n } from 'vue-i18n';
-import { onMounted, ref, computed, defineComponent, watch } from 'vue';
+import { onMounted, ref, computed, defineComponent } from 'vue';
 import Loader from "./loader.vue";
 import { Pagination } from "@etalab/udata-front-plugins-helper";
 import Resource from "./resource.vue";
@@ -110,7 +110,7 @@ export default defineComponent({
   },
   setup(props) {
     const { t } = useI18n();
-    const toast = useToast();
+    const { toast } = useToast();
     const { id: resourceIdFromHash } = useIdFromHash([resourceUrlRegExp, previousResourceUrlRegExp]);
     const currentPage = ref(1);
 

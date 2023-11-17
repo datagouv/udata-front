@@ -50,8 +50,8 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const {t} = useI18n();
-    const toast = useToast();
+    const { t } = useI18n();
+    const { toast } = useToast();
 
     /** @type {import("vue").Ref<import("../../../api/resources").Resource | null>} */
     const resource = ref(null);

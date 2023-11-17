@@ -7,16 +7,14 @@ import { useToast } from "./useToast";
 /** @typedef {Map<string, {name: string, count: number}>} ReportMap */
 
 /**
- *
  * @param {import("../api/resources").Resource} resource
- * @returns {{documentationUrl: import("vue").ComputedRef<string>, authorizeValidation: import("vue").ComputedRef<boolean>, validationUrl: import("vue").ComputedRef<string | undefined>, loading: import("vue").Ref<boolean>, schemaReport: import("vue").ComputedRef<ReportMap>}}
  */
 export default function useSchema(resource) {
   const { t } = useI18n();
-  const toast = useToast();
-  /** @type {import("vue").Ref<boolean>} */
+  const { toast } = useToast();
   const loading = ref(true);
-  /** @type {import("vue").Ref<Array<import("../api/schemas").Schema>>} */
+
+  /** @type {import("vue").Ref<Array<import("../api/schemas").RegisteredSchema>>} */
   const schemas = ref([]);
   getCatalog()
     .then(catalog => schemas.value = catalog)
@@ -26,20 +24,31 @@ export default function useSchema(resource) {
       );
     }).finally(() => loading.value = false);
 
-  const schema = computed(() => schemas.value.find(schema => schema.name === resource.schema.name));
+  const schemaName = computed(() => {
+    if("name" in resource.schema) {
+      return resource.schema.name;
+    }
+    if("url" in resource.schema) {
+      return resource.schema.url;
+    }
+    return "";
+  });
+
+  const schema = computed(() => schemas.value.find(schema => schemaName.value === schema.name));
 
   const authorizeValidation = computed(() => !!schema.value && schema.value.schema_type === 'tableschema');
 
-  const documentationUrl = computed(() => `${config.schema_documentation_url}${resource.schema.name}/`);
+  const documentationUrl = computed(() => `${config.schema_documentation_url}${schemaName.value}/`);
 
   const validationUrl = computed(() => {
-    if(!authorizeValidation) {
+    if(!authorizeValidation || !("name" in resource.schema)) {
       return undefined;
     }
     /** @type {object} */
     let schemaPath = {'schema_name': `schema-datagouvfr.${resource.schema.name}`};
-    if(resource.schema.version) {
-      const versionUrl = schema.value?.versions.find(version => version.version_name === resource.schema.version)?.schema_url;
+    if("version" in resource.schema) {
+      const schemaVersion = resource.schema.version;
+      const versionUrl = schema.value?.versions.find(version => version.version_name === schemaVersion)?.schema_url;
       if(versionUrl) {
         schemaPath = {"schema_url": versionUrl};
       }
@@ -58,7 +67,6 @@ export default function useSchema(resource) {
     if(!resource.extras || !resource.extras["validation-report:errors"]) {
       return report;
     }
-
 
     for (const error of /** @type {Array<import("../api/schemas").ValidataError>} */ (resource.extras["validation-report:errors"])) {
       let reportedError = report.get(error.code);
@@ -79,6 +87,7 @@ export default function useSchema(resource) {
     documentationUrl,
     loading,
     validationUrl,
+    schemaName,
     schemaReport,
   }
 }

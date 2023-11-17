@@ -10,12 +10,28 @@ import config from "../config";
  */
 
 /**
- * A json schema associated with a resource.
- * @typedef Schema
- * @type {object}
+ * A schema from the schema catalog
+ * @typedef RegisteredSchema
  * @property {string} name - The schema name.
  * @property {string} schema_type - The schema type.
  * @property {Array<SchemaVersion>} versions - The schema versions.
+ */
+
+/**
+ * @typedef UnknownSchema
+ * @property {string} url - The schema name.
+ */
+
+/**
+ * @typedef SelectedSchema
+ * @property {string} name - The schema name.
+ * @property {string} [version] - The schema version.
+ */
+
+/**
+ * A schema associated with a resource.
+ * @typedef Schema
+ * @type {SelectedSchema | UnknownSchema | {}}
  */
 
 /**
@@ -35,15 +51,15 @@ import config from "../config";
  */
 
 /**
- * @typedef {import("axios").AxiosResponse<{schemas: Array<Schema>}>} SchemaResponse
+ * @typedef {import("axios").AxiosResponse<{schemas: Array<RegisteredSchema>}>} SchemaResponse
  */
 
-/** @type {Promise<Array<Schema>> | null} */
+/** @type {Promise<Array<RegisteredSchema>> | null} */
 let catalogRequest = null;
 
 /**
  * Get Schema Catalog
- * @returns {Promise<Array<Schema>>}
+ * @returns {Promise<Array<RegisteredSchema>>}
  */
 export default function getCatalog() {
   if(!config.schema_catalog_url) {

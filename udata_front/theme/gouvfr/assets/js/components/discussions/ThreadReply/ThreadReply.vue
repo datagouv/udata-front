@@ -59,8 +59,8 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const {t} = useI18n();
-    const toast = useToast();
+    const { t } = useI18n();
+    const { toast } = useToast();
     const loading = ref(false);
     const comment = ref("");
     const submit = () => {

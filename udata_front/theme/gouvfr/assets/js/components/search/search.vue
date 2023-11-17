@@ -252,7 +252,7 @@ export default defineComponent({
   },
   setup(props) {
     const { t } = useI18n();
-    const toast = useToast();
+    const { toast } = useToast();
     /**
      * Update search params from URL on page load for deep linking
      */
