@@ -4,6 +4,7 @@
 
 - Update build dependencies [#309](https://github.com/etalab/udata-front/pull/309)
 - Add read-more to discussions [#310](https://github.com/etalab/udata-front/pull/310)
+- Add metric components and hooks [#260](https://github.com/etalab/udata-front/pull/260) [#313](https://github.com/etalab/udata-front/pull/313)
 
 ## 3.2.8 (2023-10-26)
 
