@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: udata-front\n"
 "Report-Msgid-Bugs-To: data.gouv@data.gouv.fr\n"
-"POT-Creation-Date: 2023-10-26 17:25+0200\n"
-"PO-Revision-Date: 2023-10-26 15:32\n"
+"POT-Creation-Date: 2023-11-21 10:04+0100\n"
+"PO-Revision-Date: 2023-11-21 09:57\n"
 "Last-Translator: Data.gouv.fr Team <data.gouv@data.gouv.fr>\n"
 "Language: fr\n"
 "Language-Team: French\n"
@@ -142,7 +142,7 @@ msgstr "Comment publier des données ?"
 msgid "How to use data ?"
 msgstr "Comment exploiter des données ?"
 
-#: udata_front/theme/gouvfr/__init__.py:66 udata_front/theme/gouvfr/__init__.py:99
+#: udata_front/theme/gouvfr/__init__.py:66
 msgid "data.gouv.fr guides"
 msgstr "Guides data.gouv.fr"
 
@@ -161,35 +161,55 @@ msgstr "Nous contacter"
 msgid "Featured topics"
 msgstr "Thématiques à la une"
 
-#: udata_front/theme/gouvfr/__init__.py:80
-msgid "Portal for European data"
-msgstr "Portail des données européennes"
-
-#: udata_front/theme/gouvfr/__init__.py:92
+#: udata_front/theme/gouvfr/__init__.py:91
 msgid "Data catalog"
 msgstr "Catalogue des données"
 
-#: udata_front/theme/gouvfr/__init__.py:93
+#: udata_front/theme/gouvfr/__init__.py:92
+msgid "Follow data opening"
+msgstr "Suivre l'ouverture des données"
+
+#: udata_front/theme/gouvfr/__init__.py:99
+msgid "Guides"
+msgstr "Guides"
+
+#: udata_front/theme/gouvfr/__init__.py:100
 msgid "Release notes"
 msgstr "Nouveautés"
 
-#: udata_front/theme/gouvfr/__init__.py:100
+#: udata_front/theme/gouvfr/__init__.py:102
+msgid "Give us your feedback"
+msgstr "Donnez votre avis"
+
+#: udata_front/theme/gouvfr/__init__.py:109
 msgid "Portal's API"
 msgstr "API du portail"
 
-#: udata_front/theme/gouvfr/__init__.py:107
+#: udata_front/theme/gouvfr/__init__.py:110
+msgid "Data schema referential"
+msgstr "Référentiel des schémas de données"
+
+#: udata_front/theme/gouvfr/__init__.py:112
+msgid "Open Data University"
+msgstr "Open Data University"
+
+#: udata_front/theme/gouvfr/__init__.py:113
+msgid "Portal for European data"
+msgstr "Portail des données européennes"
+
+#: udata_front/theme/gouvfr/__init__.py:119
 msgid "Licences"
 msgstr "Licences"
 
-#: udata_front/theme/gouvfr/__init__.py:108
+#: udata_front/theme/gouvfr/__init__.py:120
 msgid "Terms of use"
 msgstr "Conditions générales d'utilisation"
 
-#: udata_front/theme/gouvfr/__init__.py:109
+#: udata_front/theme/gouvfr/__init__.py:121
 msgid "Tracking and privacy"
 msgstr "Politique de confidentialité"
 
-#: udata_front/theme/gouvfr/__init__.py:110
+#: udata_front/theme/gouvfr/__init__.py:122
 msgid "Accessibility: partially compliant"
 msgstr "Accessibilité : partiellement conforme"
 
@@ -263,60 +283,47 @@ msgstr "Fréquence"
 msgid "License:"
 msgstr "Licence :"
 
-#: udata_front/theme/gouvfr/templates/footer.html:11
+#: udata_front/theme/gouvfr/templates/footer.html:9
 msgid "The Open Data"
 msgstr "L'Open Data"
 
-#: udata_front/theme/gouvfr/templates/footer.html:21
-msgid "Support"
-msgstr "Support"
+#: udata_front/theme/gouvfr/templates/footer.html:19
+msgid "Platform"
+msgstr "Plateforme"
 
-#: udata_front/theme/gouvfr/templates/footer.html:31
-msgid "Social networks"
-msgstr "Réseaux sociaux"
+#: udata_front/theme/gouvfr/templates/footer.html:29
+msgid "Resources"
+msgstr "Ressources"
 
-#: udata_front/theme/gouvfr/templates/footer.html:53
-msgid "RSS feed"
-msgstr "Flux RSS"
+#: udata_front/theme/gouvfr/templates/footer.html:39
+msgid "Development"
+msgstr "Développement"
 
-#: udata_front/theme/gouvfr/templates/footer.html:62
-#: udata_front/theme/gouvfr/templates/footer.html:65
-msgid "Newsletter"
-msgstr "Infolettre"
-
-#: udata_front/theme/gouvfr/templates/footer.html:74
-msgid "Go to Etalab’s blog"
-msgstr "Aller sur le blog d'Etalab"
-
-#: udata_front/theme/gouvfr/templates/footer.html:81
-msgid "A DINUM department"
-msgstr "Un département de la DINUM"
-
-#: udata_front/theme/gouvfr/templates/footer.html:85
-msgid "DINUM website: numerique.gouv.fr"
-msgstr "Un site de la DINUM : numerique.gouv.fr"
-
-#: udata_front/theme/gouvfr/templates/footer.html:98
+#: udata_front/theme/gouvfr/templates/footer.html:46
 msgid "Open-source engine: udata ({version})"
 msgstr "Moteur open source : udata ({version})"
 
-#: udata_front/theme/gouvfr/templates/footer.html:106
+#: udata_front/theme/gouvfr/templates/footer.html:54
 msgid "data.gouv.fr extension: udata-front"
 msgstr "extension data.gouv.fr : udata-front"
 
-#: udata_front/theme/gouvfr/templates/footer.html:109
+#: udata_front/theme/gouvfr/templates/footer.html:57
 msgid "udata theme extension: udata-front ({version})"
 msgstr "Extension du thème udata : udata-front ({version})"
 
-#: udata_front/theme/gouvfr/templates/footer.html:124
-msgid "Go back to website home"
-msgstr "Retour à la page d’accueil"
+#: udata_front/theme/gouvfr/templates/footer.html:76
+msgid "Go back to website home - data.gouv.fr - République Française"
+msgstr "Retourner à l'accueil du site - data.gouv.fr - République Française"
 
-#: udata_front/theme/gouvfr/templates/footer.html:148
+#: udata_front/theme/gouvfr/templates/footer.html:81
+msgid "A product of the Direction Interministérielle du Numérique (DINUM)."
+msgstr "Un produit de la Direction Interministérielle du Numérique (DINUM)."
+
+#: udata_front/theme/gouvfr/templates/footer.html:98
 msgid "Select a Language"
 msgstr "Choisir une langue"
 
-#: udata_front/theme/gouvfr/templates/footer.html:185
+#: udata_front/theme/gouvfr/templates/footer.html:135
 msgid "Unless otherwise stated, all content of this site is availabe under <a href='{lo_url}'>Open Licence 2.0</a>"
 msgstr "Sauf indication contraire, tout le contenu de ce site est disponible sous <a href='{lo_url}'>Licence Ouverte 2.0</a>"
 
@@ -445,7 +452,7 @@ msgstr "Utilisateurs"
 #: udata_front/theme/gouvfr/templates/dataset/display.html:230
 #: udata_front/theme/gouvfr/templates/dataset/display.html:290
 #: udata_front/theme/gouvfr/templates/home.html:81
-#: udata_front/theme/gouvfr/templates/reuse/display.html:181
+#: udata_front/theme/gouvfr/templates/reuse/display.html:184
 msgid "Discussions"
 msgstr "Discussions"
 
@@ -503,6 +510,44 @@ msgstr "Métriques du site"
 #: udata_front/theme/gouvfr/templates/site/dashboard.html:7
 msgid "metrics"
 msgstr "métriques"
+
+#: udata_front/theme/gouvfr/templates/newsletter.html:11
+#: udata_front/theme/gouvfr/templates/newsletter.html:20
+#: udata_front/theme/gouvfr/templates/newsletter.html:27
+msgid "Subscribe to our newsletter"
+msgstr "Abonnez-vous à notre lettre d'information"
+
+#: udata_front/theme/gouvfr/templates/newsletter.html:13
+msgid "To stay up to date about {site} and open data news, subscribe to our newsletter and follow our events."
+msgstr "Pour ne rien manquer de l’actualité de {site} et de l’open data, inscrivez-vous à notre infolettre et suivez nos événements."
+
+#: udata_front/theme/gouvfr/templates/newsletter.html:23
+msgid "Subscribe"
+msgstr "S'abonner"
+
+#: udata_front/theme/gouvfr/templates/newsletter.html:30
+msgid "See our next events"
+msgstr "Voir nos prochains événements"
+
+#: udata_front/theme/gouvfr/templates/newsletter.html:37
+msgid "Follow us"
+msgstr "Suivez-nous"
+
+#: udata_front/theme/gouvfr/templates/newsletter.html:38
+msgid "on social media"
+msgstr "sur les réseaux sociaux"
+
+#: udata_front/theme/gouvfr/templates/newsletter.html:42
+msgid "Twitter - new tab"
+msgstr "Twitter - nouvel onglet"
+
+#: udata_front/theme/gouvfr/templates/newsletter.html:47
+msgid "Linkedin - new tab"
+msgstr "Linkedin - nouvel onglet"
+
+#: udata_front/theme/gouvfr/templates/newsletter.html:62
+msgid "RSS - new tab"
+msgstr "RSS - nouvel onglet"
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:627
 #: udata_front/theme/gouvfr/templates/page.html:52
@@ -784,8 +829,6 @@ msgid "There are no reuses for this dataset yet."
 msgstr "Il n'y a pas encore de réutilisation pour ce jeu de données."
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:420
-#: udata_front/theme/gouvfr/templates/participez/participez.html:53
-#: udata_front/theme/gouvfr/templates/participez/participez.html:56
 msgid "Publish a reuse"
 msgstr "Publiez une réutilisation"
 
@@ -1585,25 +1628,6 @@ msgstr "Rechercher parmi les %(count)s organisations sur %(site)s"
 msgid "Search an organization"
 msgstr "Rechercher une organisation"
 
-#: udata_front/theme/gouvfr/templates/participez/participez.html:5
-msgid "Participate"
-msgstr "Participez"
-
-#: udata_front/theme/gouvfr/templates/participez/participez.html:13
-#: udata_front/theme/gouvfr/templates/participez/participez.html:16
-msgid "Create or find your organization"
-msgstr "Créez ou trouvez votre organisation"
-
-#: udata_front/theme/gouvfr/templates/participez/participez.html:25
-#: udata_front/theme/gouvfr/templates/participez/participez.html:28
-msgid "Go to documentation"
-msgstr "Consultez la documentation"
-
-#: udata_front/theme/gouvfr/templates/participez/participez.html:41
-#: udata_front/theme/gouvfr/templates/participez/participez.html:44
-msgid "Publish a dataset"
-msgstr "Publiez un jeu de données"
-
 #: udata_front/theme/gouvfr/templates/post/display.html:35
 #: udata_front/theme/gouvfr/templates/reuse/card.html:18
 #, python-format
@@ -1696,22 +1720,22 @@ msgid_plural "%(num)d used datasets"
 msgstr[0] "%(num)d jeu de données"
 msgstr[1] "%(num)d jeux de données"
 
-#: udata_front/theme/gouvfr/templates/reuse/display.html:186
+#: udata_front/theme/gouvfr/templates/reuse/display.html:189
 msgid "There are no discussions for this reuse yet."
 msgstr "Il n'y a pas encore de discussion pour cette réutilisation."
 
-#: udata_front/theme/gouvfr/templates/reuse/display.html:201
+#: udata_front/theme/gouvfr/templates/reuse/display.html:204
 #, python-format
 msgid "%(num)d reuse from the same creator"
 msgid_plural "%(num)d reuses from the same creator"
 msgstr[0] "%(num)d réutilisation du même créateur"
 msgstr[1] "%(num)d réutilisations du même créateur"
 
-#: udata_front/theme/gouvfr/templates/reuse/display.html:212
+#: udata_front/theme/gouvfr/templates/reuse/display.html:215
 msgid "Reuses from the same creator"
 msgstr "Réutilisations du même créateur"
 
-#: udata_front/theme/gouvfr/templates/reuse/display.html:217
+#: udata_front/theme/gouvfr/templates/reuse/display.html:220
 msgid "There are no other reuses from this creator."
 msgstr "Il n'y a pas d'autres réutilisations de ce créateur."
 
