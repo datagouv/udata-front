@@ -6,14 +6,31 @@ import messages from '@intlify/unplugin-vue-i18n/messages';
 import { only_locales, default_lang } from "../config";
 import { getRegisteredTranslations } from "@etalab/udata-front-plugins-helper";
 
-import "dayjs/esm/locale/*.js";
-
 const locales = only_locales.split(",");
 if(!locales.includes(default_lang)) {
   throw new Error("Default lang is not in only locales, it won't be loaded");
 }
 
-dayjs.locale(default_lang);
+const modules = import.meta.glob<{default: any}>("/node_modules/dayjs/esm/locale/*.js");
+let langPromises = [];
+for (let path in modules) {
+  let locale = path.split("/").pop()?.split(".").shift() ?? "";
+  if(locales.includes(locale)) {
+    langPromises.push(modules[path]());
+  }
+}
+const isFulfilled = <T>(result: PromiseSettledResult<T>): result is PromiseFulfilledResult<T> => result.status === 'fulfilled';
+
+Promise.allSettled(langPromises).then(results => {
+  const loadedLocales = results
+    .filter(isFulfilled)
+    .map(result => result.value.default);
+  for(let loadedLocale of loadedLocales) {
+    dayjs.locale(loadedLocale, null, true);
+  }
+  dayjs.locale(default_lang);
+});
+
 dayjs.extend(LocalizedFormat);
 dayjs.extend(RelativeTime, {
   thresholds: [

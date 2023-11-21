@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Resource } from "./components";
+import { Resource } from "../src/components";
 import { ref } from "vue";
 import type { Ref } from "vue";
 import type { Resource as ResourceModel } from "../../assets/js/api/resources";
@@ -7,7 +7,34 @@ import type { Resource as ResourceModel } from "../../assets/js/api/resources";
 const resource: Ref<ResourceModel> = ref({
     checksum: {type: "sha1", value: "54d0f3a4847c546c1cc4865f5ca54a1f8fc3f9af"},
     created_at: "2023-11-15T10:40:22.288000+00:00",
-    description: null,
+    description: `# h1 Heading 8-)
+## h2 Heading
+### h3 Heading
+#### h4 Heading
+##### h5 Heading
+###### h6 Heading
+
+
+## Horizontal Rules
+
+___
+
+---
+
+***
+
+
+## Typographic replacements
+
+Enable typographer option to see result.
+
+(c) (C) (r) (R) (tm) (TM) (p) (P) +-
+
+test.. test... test..... test?..... test!....
+
+!!!!!! ???? ,,  -- ---
+
+"Smartypants, double quotes" and 'single quotes'`,
     extras: {"check:available": true, "check:date": "2023-11-15T10:40:27.222278+00:00", "check:headers:content-type": "text/csv", "check:status": 200, "check:timeout": false, "publish_source": "publier.etalab.studio"},
     filesize: 9167,
     filetype: "file",

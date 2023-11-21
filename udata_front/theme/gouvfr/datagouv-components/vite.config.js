@@ -27,13 +27,12 @@ export default defineConfig(config => {
       rollupOptions: {
         // make sure to externalize deps that shouldn't be bundled
         // into your library
-        external: ['clipboard', 'dayjs/esm/*', 'markdown-it', 'popmotion', 'vue', 'vue-i18n'],
+        external: ['vue'],
         output: {
           // Provide global variables to use in the UMD build
           // for externalized deps
           globals: {
             vue: 'Vue',
-            vueI18n: "VueI18n",
           },
         },
       },

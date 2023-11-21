@@ -1,10 +1,3 @@
-import { createApp } from 'vue';
-import { i18n } from './helpers/i18n';
+import { Resource } from "./components";
 
-import App from './App.vue';
-
-createApp(App)
-.use(i18n)
-.mount('#app');
-
-window.dsfr.start();
+export { Resource };

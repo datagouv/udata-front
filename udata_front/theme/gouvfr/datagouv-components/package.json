@@ -1,6 +1,6 @@
 {
   "name": "@etalab/data.gouv.fr-components",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "reusable components to show content from data.gouv.fr",
   "type": "module",
   "files": [
@@ -12,7 +12,11 @@
     "build": "vite build",
     "preview": "vite preview",
     "i18n:report": "vue-i18n-extract report --vueFiles './src/**/*.?(ts|js|vue)' --languageFiles './src/locales/*.json' --separator '^'",
-    "i18n:extract": "npm run i18n:report -- --add"
+    "i18n:extract": "npm run i18n:report -- --add",
+    "preversion": "npm run build && npm run i18n:report",
+    "update-version": "npm version --no-git-tag-version",
+    "publish-stable": "npm publish --access public",
+    "publish-next": "npm run publish-stable -- --tag next"
   },
   "dependencies": {
     "@gouvfr/dsfr": "~1.9.2",
@@ -34,6 +38,6 @@
     "vue-i18n": "^9.6.5",
     "vue-i18n-extract": "^2.0.7"
   },
-  "author": "",
+  "author": "Etalab",
   "license": "MIT"
 }
