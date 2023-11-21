@@ -4,7 +4,8 @@
   "description": "reusable components to show content from data.gouv.fr",
   "type": "module",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "module": "./dist/data-gouv-fr-components.js",
   "scripts": {

@@ -14,7 +14,14 @@ export default defineConfig(config => {
         compositionOnly: true,
         include: resolve(__dirname, './src/locales/**/*.json'),
       }),
-      dts({ rollupTypes: true }),
+      dts({
+        copyDtsFiles: true,
+        staticImport: true,
+        insertTypesEntry: true,
+        compilerOptions: {
+          declarationMap: true
+        }
+      }),
     ],
     build: {
       lib: {
@@ -36,6 +43,7 @@ export default defineConfig(config => {
           },
         },
       },
+      sourcemap: true,
     },
   };
 });
