@@ -111,8 +111,14 @@
 @font-weight-bold: 600;
 @font-weight-bold-dsfr: 700;
 
-@accordion-content-if-data-fr-js: {
+@accordion-content-if-js: {
     &[data-fr-js] .accordion-content {
+        overflow: hidden;
+        height: 0;
+        display: none;
+    }
+
+    & [data-v-app] .accordion-content {
         overflow: hidden;
         height: 0;
         display: none;
