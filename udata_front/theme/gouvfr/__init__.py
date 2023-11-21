@@ -106,7 +106,7 @@ platform_links = [
 nav.Bar('gouvfr_platform', platform_links)
 
 resources_links = [
-    nav.Item(_("Portal's API"), None, url='https://api.gouv.fr'),
+    nav.Item(_("API Portal"), None, url='https://api.gouv.fr'),
     nav.Item(_("Data schema referential"), None,
              url=current_app.config.get('SCHEMA_DOCUMENTATION_URL', '#')),
     nav.Item(_("Open Data University"), 'gouvfr.show_page', args={'slug': 'odu/home'}),
