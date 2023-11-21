@@ -1,6 +1,6 @@
 {
   "name": "@nicolaskempf57/data.gouv.fr-components",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "reusable components to show content from data.gouv.fr",
   "type": "module",
   "files": [
@@ -41,5 +41,5 @@
   },
   "author": "Etalab",
   "license": "MIT",
-  "repository":"https://github.com/nicolaskempf57/udata-front"
+  "repository": "https://github.com/nicolaskempf57/udata-front"
 }
