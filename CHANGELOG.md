@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 3.2.9 (2023-11-21)
 
 - Update build dependencies [#309](https://github.com/etalab/udata-front/pull/309)
