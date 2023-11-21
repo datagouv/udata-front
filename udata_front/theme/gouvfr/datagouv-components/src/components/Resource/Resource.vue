@@ -115,13 +115,15 @@
                 {{$t('Preview')}}
               </button>
             </li>
+          </template>
+          <template v-if="hasSchema">
             <li role="presentation">
               <button
                 :id="resourceStructureButtonId"
                 class="fr-tabs__tab"
                 tabindex="0"
                 role="tab"
-                aria-selected="false"
+                aria-selected="true"
                 :aria-controls="resourceStructureTabId"
                 @click="registerEvent(resourceStructureButtonId)"
               >
@@ -210,7 +212,14 @@
             </div>
           </template>
         </div>
-        <div :id="resourceInformationTabId" class="fr-tabs__panel" role="tabpanel" :aria-labelledby="resourceInformationButtonId" tabindex="0">
+        <div
+          :id="resourceInformationTabId"
+          class="fr-tabs__panel fr-tabs__panel--selected"
+          :class="{'': !hasExplore || !hasSchema }"
+          role="tabpanel"
+          :aria-labelledby="resourceInformationButtonId"
+          tabindex="0"
+        >
           <div class="fr-grid-row fr-grid-row--gutters">
             <DescriptionList>
               <DescriptionTerm>{{ $t('URL') }}</DescriptionTerm>
@@ -414,7 +423,7 @@ export default defineComponent({
       let hash = "#/resources/" + props.resource.id;
       return window.location.origin + window.location.pathname + hash;
     });
-    const resourceInformationSelectedTab = computed(() => !hasExplore.value);
+    const resourceInformationSelectedTab = computed(() => !hasExplore.value && !hasSchema.value);
     const resourceInformationTabIndex = computed(() => hasExplore.value ? -1 : 0);
 
     onMounted(() => {
