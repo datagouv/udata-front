@@ -1,17 +1,3 @@
-[data-tabs] {
-    [role=tab] {
-        // Prevents children from taking the click events.
-        // Might be dangerous, remove if needed
-        > * {
-            pointer-events: none;
-        }
-
-        &.active {
-            pointer-events: none;
-        }
-    }
-}
-
 .fr-tabs {
     --text-active-blue-france: @blue-400;
     --border-active-blue-france: @blue-400;
@@ -30,60 +16,6 @@
     }
 }
 
-.fr-tabs--full-page {
-    overflow: visible;
-    & > .fr-tabs__panel {
-        padding: 0;
-        padding-top: 2.5rem;
-        padding-bottom: 7.5rem;
-        background-color: @white;
-    }
-    &.fr-transition-none > .fr-tabs__panel:not(.fr-tabs__panel--selected)[data-fr-js-tab-panel] {
-        display: none;
-    }
-    &::after {
-        box-shadow: none;
-        .border-top;
-        .border-default-grey;
-    }
-    & > .fr-container > .fr-tabs__list {
-        max-width: calc(100% - 2rem);
-        &[role="tablist"] {
-            display: none;
-        }
-        &[role="tablist"][data-fr-js-tabs-list] {
-            display: flex;
-        }
-        &[role="navigation"] {
-            display: flex;
-        }
-        &[role="navigation"][data-fr-js-tabs-list] {
-            display: none;
-        }
-        @media @dsfr-query-sm {
-            max-width: calc(@breakpoint-sm - 2rem);
-        }
-        @media @dsfr-query-md {
-            max-width: calc(@breakpoint-md - 2rem);
-        }
-        @media @dsfr-query-lg {
-            max-width: calc(@breakpoint-lg - 3rem);
-        }
-        @media @dsfr-query-xl {
-            max-width: calc(@breakpoint-xl - 3rem);
-        }
-    }
-}
-
-.fr-tabs__tab sup {
-    .sup;
-    place-self: baseline;
-    margin-left: 0.125rem;
-    &::before, &::after {
-        color: inherit;
-    }
-}
-
 .fr-tabs--no-border {
     &::after {
         margin: -1px;
@@ -91,8 +23,8 @@
 }
 
 .fr-tabs__panel--no-padding {
-    .fr-p-0-5v;
-    .fr-pb-5v;
+    padding: 0.25rem;
+    padding-bottom: 2.5rem;
 }
 
 .fr-tabs__panel--no-padding:focus, .fr-tabs__panel--no-padding:focus-visible {
