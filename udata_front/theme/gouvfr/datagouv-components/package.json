@@ -8,6 +8,7 @@
     "src"
   ],
   "module": "./dist/data-gouv-fr-components.js",
+  "types": "./dist/data-gouv-fr-components.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
