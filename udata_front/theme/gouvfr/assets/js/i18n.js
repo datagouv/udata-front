@@ -12,7 +12,6 @@ import "dayjs/esm/locale/sr";
 import LocalizedFormat from 'dayjs/esm/plugin/localizedFormat';
 import RelativeTime from "dayjs/esm/plugin/relativeTime";
 import messages from '@intlify/unplugin-vue-i18n/messages';
-import { getRegisteredTranslations } from "@etalab/udata-front-plugins-helper";
 
 dayjs.extend(LocalizedFormat);
 dayjs.extend(RelativeTime, {
@@ -34,27 +33,6 @@ const i18n = createI18n({
   messages,
   formatFallbackMessages: true
 });
-
-let loadedModules = {};
-
-/**
- * Reload translations from plugins if they aren't already loaded
- */
-export function reloadLocale() {
-  const translations = getRegisteredTranslations();
-  /** @type {object} */
-  let messages = {};
-  for (let translation of translations) {
-    if(translation.module) {
-      if (loadedModules[translation.module]) {
-        continue;
-      }
-      loadedModules[translation.module] = true;
-    }
-    messages = {...messages, ...translation.messages[lang]};
-  }
-  i18n.global.mergeLocaleMessage(lang, messages);
-}
 
 export default i18n;
 export { dayjs, i18n };

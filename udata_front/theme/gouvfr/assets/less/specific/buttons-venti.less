@@ -1,0 +1,38 @@
+.btn-venti {
+    .fr-raw-link;
+    position: relative;
+    display: block;
+    padding: @spacing-lg @spacing-md;
+    border-radius: 6px;
+    color: white;
+
+    strong {
+        display: block;
+        .fr-mt-1v;
+        font-size: @font-size-xl;
+    }
+
+    &:after {
+        content: " ";
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        right: calc(@spacing-lg + 3px);
+        margin-top: -12px;
+
+        width: 24px;
+        height: 24px;
+
+        background-image: url(@icon-arrow);
+        background-repeat: no-repeat;
+        background-position: center center;
+
+        transition: right ease 0.2s;
+    }
+
+    &:hover {
+        &:after {
+            right: @spacing-lg;
+        }
+    }
+}

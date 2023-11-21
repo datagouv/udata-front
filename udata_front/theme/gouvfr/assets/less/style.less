@@ -9,6 +9,8 @@
 // Reset powered by normalize + postCSS-normalize
 @import (optional, inline) "sanitize.css";
 
+@import "./variables.less";
+
 // Marianne Font
 @import "./font.less";
 
@@ -24,15 +26,16 @@
 
 // Layout
 @import "./layout/grid.less";
-@import "./layout/responsive.less";
-@import "./layout/rhythm.less";
 
 // Components
+@import (less) "@gouvfr/dsfr/dist/component/accordion/accordion.css";
 @import "./components/accordion.less";
 @import "./components/animations.less";
 @import "./components/badge.less";
 @import "./components/breadcrumbs.less";
 @import "./components/borders.less";
+@import (less) "@gouvfr/dsfr/dist/component/button/button.css";
+@import (less) "@gouvfr/dsfr/dist/component/connect/connect.css";
 @import "./components/buttons.less";
 @import "./components/callout.less";
 @import "./components/card.less";
@@ -60,6 +63,7 @@
 @import "./components/well.less";
 
 // Specific style for non-UI-Kit stuff
+@import "./specific/buttons-venti.less";
 @import "./specific/header.less";
 @import "./specific/hero.less";
 @import "./specific/footer.less";

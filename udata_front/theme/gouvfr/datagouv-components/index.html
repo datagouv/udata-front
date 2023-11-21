@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" data-fr-scheme="light" data-fr-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + Vue</title>
+    <link rel="stylesheet" href="/node_modules/@gouvfr/dsfr/dist/dsfr.min.css"/>
+    <link rel="stylesheet" href="/node_modules/@gouvfr/dsfr/dist/utility/utility.min.css"/>
+  </head>
+  <body>
+    <div class="fr-container datagouv-components" id="app"></div>
+    <script>
+      window.dsfr = {
+        mode: 'manual',
+      }
+  </script>
+    <script type="module" src="/node_modules/@gouvfr/dsfr/dist/dsfr.module.min.js"></script>
+    <script type="module" src="/src/index.js"></script>
+  </body>
+</html>

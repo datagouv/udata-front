@@ -31,16 +31,11 @@ export function getTheme() {
 }
 
 // https://vitejs.dev/config/
-export default defineConfig(async () => {
+export default defineConfig((config) => {
   let theme = getTheme();
 
   return {
     base: `/_themes/${theme}/`,
-    resolve: {
-      alias: [
-        {find: "svg", replacement: `./udata_front/theme/${theme}/templates/svg`},
-      ],
-    },
     plugins: [
       vue(),
       VueI18nPlugin({

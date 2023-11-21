@@ -1,0 +1,21 @@
+<template>
+  {{ organization.name }}
+  <span
+    v-if="organizationCertified"
+    class="fr-icon-success-line fr-icon--sm text-blue-400"
+    :title="t('The identity of this public service is certified by {certifier}', { certifier: title })"
+    aria-hidden="true"
+  >
+  </span>
+</template>
+
+<script setup lang="ts">
+import { useI18n } from "vue-i18n";
+import { title } from "../../config";
+import useOrganizationCertified from "../../composables/organizations/useOrganizationCertified";
+
+const { t } = useI18n();
+const props = defineProps<{organization: import("../../composables/organizations/useOrganizationCertified").Organization}>();
+
+const { organizationCertified } = useOrganizationCertified(props.organization);
+</script>

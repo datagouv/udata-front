@@ -217,8 +217,8 @@ import MultiSelect from "./multi-select.vue";
 import ActionCard from "../Form/ActionCard/ActionCard.vue";
 import { data_search_feedback_form_url, search_autocomplete_debounce } from "../../config";
 import { debounce } from "../../composables/useDebouncedRef";
-import franceWithMagnifyingGlassIcon from "svg/illustrations/france_with_magnifying_glass.svg";
-import magnifyingGlassIcon from "svg/illustrations/magnifying_glass.svg";
+import franceWithMagnifyingGlassIcon from "../../../../templates/svg/illustrations/france_with_magnifying_glass.svg";
+import magnifyingGlassIcon from "../../../../templates/svg/illustrations/magnifying_glass.svg";
 
 export default defineComponent({
   inheritAttrs: false,
