@@ -6,6 +6,7 @@
 - Add read-more to discussions [#310](https://github.com/etalab/udata-front/pull/310)
 - New footer with newsletter [#311](https://github.com/etalab/udata-front/pull/311) [#316](https://github.com/etalab/udata-front/pull/316)
 - Add metric components and hooks [#260](https://github.com/etalab/udata-front/pull/260) [#313](https://github.com/etalab/udata-front/pull/313) [#314](https://github.com/etalab/udata-front/pull/314)
+- Add raise_for_status on captchetat request [#318](https://github.com/etalab/udata-front/pull/318)
 
 ## 3.2.8 (2023-10-26)
 
