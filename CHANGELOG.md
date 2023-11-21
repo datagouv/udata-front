@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 3.2.9 (2023-11-21)
 
 - Update build dependencies [#309](https://github.com/etalab/udata-front/pull/309)
 - Add read-more to discussions [#310](https://github.com/etalab/udata-front/pull/310)
