@@ -99,7 +99,7 @@
       :id="resourceContentId"
       ref="contentRef"
     >
-      <div class="fr-tabs fr-tabs--no-border fr-mt-1v">
+      <div class="fr-tabs fr-tabs--no-border fr-mt-1v" ref="tabsRef" :style="tabsHeightStyle">
         <ul class="fr-tabs__list" role="tablist" :aria-label="$t('File menu')">
           <template v-if="hasExplore">
             <li role="presentation">
@@ -214,8 +214,8 @@
         </div>
         <div
           :id="resourceInformationTabId"
-          class="fr-tabs__panel fr-tabs__panel--selected"
-          :class="{'': !hasExplore || !hasSchema }"
+          class="fr-tabs__panel"
+          :class="{'fr-tabs__panel--selected': !hasExplore || !hasSchema }"
           role="tabpanel"
           :aria-labelledby="resourceInformationButtonId"
           tabindex="0"
@@ -335,7 +335,7 @@ import useComponentsForHook from "../../composables/useComponentsForHook";
 import { explorable_resources, schema_documentation_url, show_copy_resource_permalink } from "../../config";
 import { filesize, formatRelativeIfRecentDate, formatDate, markdown } from "../../helpers";
 import type { Resource } from "../../types/resources";
-import { templateRef } from "@vueuse/core";
+import { templateRef, unrefElement } from "@vueuse/core";
 
 export default defineComponent({
   components: { DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, OrganizationNameWithCertificate, SchemaLoader },
@@ -369,6 +369,13 @@ export default defineComponent({
 
     const contentRef = templateRef<HTMLElement | null>("contentRef");
     const copyRef = templateRef<HTMLButtonElement | null>("copyRef");
+    const tabsRef = templateRef<HTMLButtonElement | null>("tabsRef");
+
+    const tabsHeight = ref("auto");
+
+    const tabsHeightStyle = computed(() => {
+      return {'--tabs-height': tabsHeight.value};
+    });
 
     const expanded = ref(false);
     const expand = () => {
@@ -387,6 +394,15 @@ export default defineComponent({
       expanded.value = !expanded.value;
       if(contentRef.value) {
         toggleAccordion(contentRef.value, expanded.value);
+        const $elem = unrefElement(tabsRef);
+        if ($elem) {
+          if(expanded.value) {
+            const { height } = window.getComputedStyle($elem);
+            tabsHeight.value = height;
+          } else {
+            tabsHeight.value = "auto";
+          }
+        }
       }
     }
 
@@ -471,6 +487,7 @@ export default defineComponent({
       schemaReport,
       hasSchema,
       hasSchemaErrors,
+      tabsHeightStyle,
       schema_documentation_url,
       show_copy_resource_permalink,
     }

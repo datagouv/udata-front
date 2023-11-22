@@ -13,6 +13,7 @@ export default defineConfig(config => {
       VueI18nPlugin({
         compositionOnly: true,
         include: resolve(__dirname, './src/locales/**/*.json'),
+        onlyLocales: VITE_ONLY_LOCALES.split(","),
       }),
       dts({
         copyDtsFiles: true,
