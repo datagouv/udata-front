@@ -157,7 +157,8 @@
         </div>
         <div
           :id="resourceStructureTabId"
-          class="fr-tabs__panel fr-tabs__panel--selected"
+          class="fr-tabs__panel"
+          :class="{'fr-tabs__panel--selected': !hasExplore }"
           role="tabpanel"
           :aria-labelledby="resourceStructureButtonId"
           tabindex="0"
@@ -215,7 +216,7 @@
         <div
           :id="resourceInformationTabId"
           class="fr-tabs__panel"
-          :class="{'fr-tabs__panel--selected': !hasExplore || !hasSchema }"
+          :class="{'fr-tabs__panel--selected': !hasExplore && !hasSchema }"
           role="tabpanel"
           :aria-labelledby="resourceInformationButtonId"
           tabindex="0"
