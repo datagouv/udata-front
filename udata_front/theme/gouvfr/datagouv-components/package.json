@@ -1,6 +1,6 @@
 {
   "name": "@nicolaskempf57/data.gouv.fr-components",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "reusable components to show content from data.gouv.fr",
   "type": "module",
   "files": [
