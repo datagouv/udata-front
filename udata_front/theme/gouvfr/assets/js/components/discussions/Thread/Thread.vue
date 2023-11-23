@@ -79,7 +79,7 @@ import Author from "../Author/Author.vue";
 import ReadMore from "../../ReadMore/ReadMore.vue";
 import ThreadReply from "../ThreadReply/ThreadReply.vue";
 import { read_only_enabled } from "../../../config";
-import { formatDate } from "../../../helpers";
+import { formatDate } from "@nicolaskempf57/data.gouv.fr-components";
 import { computed, defineComponent, ref } from "vue";
 import { auth } from "../../../plugins/auth";
 import { api } from "../../../plugins/api";

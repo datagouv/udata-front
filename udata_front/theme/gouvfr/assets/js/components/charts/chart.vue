@@ -15,7 +15,7 @@ import { Chart as ChartJS } from 'chart.js/auto';
 import { defineComponent, onMounted } from 'vue';
 import useUid from '../../composables/useUid';
 import { lang } from '../../config';
-import { formatDate } from '../../helpers';
+import { formatDate } from '@nicolaskempf57/data.gouv.fr-components';
 
 export default defineComponent({
   props: {
