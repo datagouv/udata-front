@@ -42,6 +42,7 @@ export default defineConfig(config => {
           globals: {
             vue: 'Vue',
           },
+          chunkFileNames: "chunks/[name]-[hash].js",
         },
       },
       sourcemap: true,
