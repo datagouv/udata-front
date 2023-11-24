@@ -4,3 +4,4 @@ export * from "./components";
 export * from "./composables";
 export * from "./helpers";
 export { i18n };
+export type { Organization, Owned, Resource } from "./types";

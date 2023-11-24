@@ -1,12 +1,5 @@
 import { type MaybeRefOrGetter, ref, toValue } from 'vue';
-import type { Organization } from "../../types/organizations";
-/**
- * A resource, dataset, reuse or any other object owned by an organization or a user.
- */
-export type Owned = {
-  organization?: Organization;
-  owner?: { first_name: string; last_name: string; };
-}
+import type { Owned } from "../../types/organizations";
 
 export default function useOwnerName(owned: MaybeRefOrGetter<Owned>) {
   owned = toValue(owned);
