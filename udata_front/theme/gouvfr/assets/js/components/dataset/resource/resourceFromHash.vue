@@ -2,7 +2,7 @@
 <section ref="top" v-if="resourceId">
   <transition mode="out-in">
     <div v-if="loading">
-      <ResourceLoader />
+      <ResourceAccordionLoader />
     </div>
     <div v-else>
       <!-- TODO: move to <Well> component when available -->
@@ -16,7 +16,8 @@
           </button>
         </div>
       </div>
-      <Resource
+      <ResourceAccordion
+        v-if="resource"
         :id="'resource-' + resourceId"
         :datasetId="datasetId"
         :expandedOnMount="true"
@@ -27,17 +28,17 @@
   </transition>
 </section>
 </template>
-<script>
+<script lang="ts">
 import { defineComponent, ref, watchEffect } from 'vue';
 import { useI18n } from "vue-i18n";
-import { Resource, ResourceLoader } from "@nicolaskempf57/data.gouv.fr-components";
+import { ResourceAccordion, ResourceAccordionLoader, type Resource } from "@nicolaskempf57/data.gouv.fr-components";
 import { useToast } from "../../../composables/useToast";
 import useIdFromHash from "../../../composables/useIdFromHash";
 import { previousResourceUrlRegExp, resourceUrlRegExp } from '../../../helpers';
 import { api } from "../../../plugins/api";
 
 export default defineComponent({
-  components: { ResourceLoader, Resource },
+  components: { ResourceAccordion, ResourceAccordionLoader },
   props: {
     canEdit: {
       type: Boolean,
@@ -52,14 +53,12 @@ export default defineComponent({
     const { t } = useI18n();
     const { toast } = useToast();
 
-    /** @type {import("vue").Ref<import("../../../api/resources").Resource | null>} */
-    const resource = ref(null);
+    const resource = ref<Resource | null>(null);
     const loading = ref(true);
 
     const { id: resourceId, resetHash } = useIdFromHash([resourceUrlRegExp, previousResourceUrlRegExp]);
 
-    /** @type {import("vue").Ref<HTMLElement | null>} */
-    const top = ref(null);
+    const top = ref<HTMLElement | null>(null);
 
     const loadFileFromHash = () => {
       if(!resourceId.value) return;
