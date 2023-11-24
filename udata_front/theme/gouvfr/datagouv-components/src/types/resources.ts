@@ -1,3 +1,5 @@
+import type { Owned } from "../composables/organizations/useOwnerName";
+
 type ResourceRest = {
     id: string;
     title: string;
@@ -19,6 +21,6 @@ type ResourceRest = {
     schema: import("../api/schemas").Schema;
     url: string;
 }
-export type Resource = import("../composables/organizations/useOwnerName").Owned & ResourceRest;
+export type Resource = Owned & ResourceRest;
 
 export {};
