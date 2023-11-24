@@ -1,3 +1,3 @@
-import Resource from "./Resource";
+import { Resource, Loader as ResourceLoader } from "./Resource";
 
-export { Resource };
+export { Resource, ResourceLoader };
