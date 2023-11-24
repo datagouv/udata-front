@@ -27,7 +27,7 @@ export default defineConfig(config => {
     build: {
       lib: {
         // Could also be a dictionary or array of multiple entry points
-        entry: resolve(__dirname, 'src/index.js'),
+        entry: resolve(__dirname, 'src/index.ts'),
         name: 'DataGouvFrComponents',
         // the proper extensions will be added
         fileName: 'data-gouv-fr-components',
