@@ -1,4 +1,4 @@
-import type { Owned } from "./organizations";
+import type { Owned } from "./owned";
 
 type ResourceRest = {
   id: string;

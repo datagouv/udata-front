@@ -1,11 +1,3 @@
-/**
- * A resource, dataset, reuse or any other object owned by an organization or a user.
- */
-export type Owned = {
-  organization?: Organization;
-  owner?: { first_name: string; last_name: string; };
-}
-
 export type Organization = {
   acronym: string | null,
   id: string;
