@@ -19,7 +19,7 @@
     </div>
     <transition mode="out-in">
       <div v-if="loading">
-        <Loader v-for="i in pageSize" class="fr-mt-2w" />
+        <ResourceLoader v-for="i in pageSize" class="fr-mt-2w" />
       </div>
       <div v-else>
         <p
@@ -56,9 +56,8 @@
 <script>
 import { useI18n } from 'vue-i18n';
 import { onMounted, ref, computed, defineComponent } from 'vue';
-import Loader from "./loader.vue";
 import { Pagination } from "@etalab/udata-front-plugins-helper";
-import Resource from "./resource.vue";
+import { Resource, ResourceLoader } from "@nicolaskempf57/data.gouv.fr-components";
 import SearchBar from "../../utils/search-bar.vue";
 import config from "../../../config";
 import { useToast } from "../../../composables/useToast";
@@ -73,9 +72,9 @@ import { previousResourceUrlRegExp, resourceUrlRegExp } from '../../../helpers';
 export default defineComponent({
   name: "resources",
   components: {
-    Loader,
     Pagination,
     Resource,
+    ResourceLoader,
     SearchBar,
   },
   props: {

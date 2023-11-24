@@ -2,7 +2,7 @@
 <section ref="top" v-if="resourceId">
   <transition mode="out-in">
     <div v-if="loading">
-      <Loader />
+      <ResourceLoader />
     </div>
     <div v-else>
       <!-- TODO: move to <Well> component when available -->
@@ -30,15 +30,14 @@
 <script>
 import { defineComponent, ref, watchEffect } from 'vue';
 import { useI18n } from "vue-i18n";
-import Loader from "./loader.vue";
-import Resource from "./resource.vue";
+import { Resource, ResourceLoader } from "@nicolaskempf57/data.gouv.fr-components";
 import { useToast } from "../../../composables/useToast";
 import useIdFromHash from "../../../composables/useIdFromHash";
 import { previousResourceUrlRegExp, resourceUrlRegExp } from '../../../helpers';
 import { api } from "../../../plugins/api";
 
 export default defineComponent({
-  components: { Loader, Resource },
+  components: { ResourceLoader, Resource },
   props: {
     canEdit: {
       type: Boolean,
