@@ -1,4 +1,4 @@
-import OrganizationNameWithCertificateVue from "./Organization/OrganizationNameWithCertificate.vue";
+import OrganizationNameWithCertificate from "./Organization";
 import { Resource, Loader as ResourceLoader } from "./Resource";
 
-export { OrganizationNameWithCertificateVue, Resource, ResourceLoader };
+export { OrganizationNameWithCertificate, Resource, ResourceLoader };
