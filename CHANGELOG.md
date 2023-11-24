@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Ignore another ResizeObserver error [#321](https://github.com/etalab/udata-front/pull/321)
 
 ## 3.2.9 (2023-11-21)
 
