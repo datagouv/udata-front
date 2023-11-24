@@ -1,5 +1,5 @@
 import { type MaybeRefOrGetter, ref, toValue } from 'vue';
-import type { Owned } from "../../types/organizations";
+import type { Owned } from "../../types/owned";
 
 export default function useOwnerName(owned: MaybeRefOrGetter<Owned>) {
   owned = toValue(owned);
