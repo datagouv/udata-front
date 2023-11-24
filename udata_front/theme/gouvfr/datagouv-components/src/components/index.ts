@@ -1,4 +1,4 @@
 import OrganizationNameWithCertificate from "./Organization";
-import { Resource, Loader as ResourceLoader } from "./Resource";
+import { ResourceAccordion, Loader as ResourceAccordionLoader } from "./ResourceAccordion";
 
-export { OrganizationNameWithCertificate, Resource, ResourceLoader };
+export { OrganizationNameWithCertificate, Resource, ResourceAccordionLoader };
