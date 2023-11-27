@@ -1,5 +1,5 @@
 {
-  "name": "@nicolaskempf57/data.gouv.fr-components",
+  "name": "@etalab/data.gouv.fr-components",
   "version": "1.5.4",
   "description": "reusable components to show content from data.gouv.fr",
   "type": "module",
