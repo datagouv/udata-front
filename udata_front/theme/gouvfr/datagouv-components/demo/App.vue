@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Resource } from "../src/components";
+import { ResourceAccordion } from "../src";
 import { ref } from "vue";
 import type { Ref } from "vue";
-import type { Resource as ResourceModel } from "../../assets/js/api/resources";
+import type { Resource } from "../src";
 
-const resource: Ref<ResourceModel> = ref({
+const resource = ref<Resource>({
     checksum: {type: "sha1", value: "54d0f3a4847c546c1cc4865f5ca54a1f8fc3f9af"},
     created_at: "2023-11-15T10:40:22.288000+00:00",
     description: `# h1 Heading 8-)
@@ -50,10 +50,12 @@ test.. test... test..... test?..... test!....
     schema: {name: "etalab/schema-indice-reparabilite", version: "0.1.2"},
     title: "tondeuse_batterie_fr.csv",
     type: "main",
+    owner: { id: "someId", first_name: "john", last_name: "Doe" },
+    organization: null,
     url: "https://static.data.gouv.fr/resources/indice-de-reparabilite-organisation-ribimex/20231115-104022/data.csv"
   });
 
-  const resourceWithoutSchema: Ref<ResourceModel> = ref({
+  const resourceWithoutSchema = ref<Resource>({
     checksum: {type: "sha1", value: "54d0f3a4847c546c1cc4865f5ca54a1f8fc3f9af"},
     created_at: "2023-11-15T10:40:22.288000+00:00",
     description: ``,
@@ -72,6 +74,8 @@ test.. test... test..... test?..... test!....
     schema: {},
     title: "tondeuse_batterie_fr.csv",
     type: "main",
+    owner: { id: "someId", first_name: "john", last_name: "Doe" },
+    organization: null,
     url: "https://static.data.gouv.fr/resources/indice-de-reparabilite-organisation-ribimex/20231115-104022/data.csv"
   });
 </script>
@@ -80,8 +84,8 @@ test.. test... test..... test?..... test!....
   <h1>
     data.gouv.fr Components
   </h1>
-  <Resource dataset-id="someId" :resource="resource" :expanded-on-mount="false" />
-  <Resource dataset-id="someId" :resource="resourceWithoutSchema" :expanded-on-mount="false" />
+  <ResourceAccordion dataset-id="someId" :resource="resource" :expanded-on-mount="false" />
+  <ResourceAccordion dataset-id="someId" :resource="resourceWithoutSchema" :expanded-on-mount="false" />
 
   <div class="fr-tabs">
     <ul class="fr-tabs__list" role="tablist" aria-label="[A modifier | nom du système d'onglet]">
@@ -97,7 +101,7 @@ test.. test... test..... test?..... test!....
     </ul>
     <div id="tabpanel-404-panel" class="fr-tabs__panel fr-tabs__panel--selected" role="tabpanel" aria-labelledby="tabpanel-404" tabindex="0">
         <!-- données de test -->
-        <Resource dataset-id="someId" :resource="resourceWithoutSchema" :expanded-on-mount="false" />
+        <ResourceAccordion dataset-id="someId" :resource="resourceWithoutSchema" :expanded-on-mount="false" />
     </div>
     <div id="tabpanel-405-panel" class="fr-tabs__panel" role="tabpanel" aria-labelledby="tabpanel-405" tabindex="0">
         <!-- données de test -->
