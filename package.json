@@ -31,7 +31,7 @@
     "@gouvfr/dsfr": "~1.9.2",
     "@intlify/unplugin-vue-i18n": "^0.8.0",
     "@lhci/cli": "^0.10.0",
-    "@nicolaskempf57/data.gouv.fr-components": "^1.5.3",
+    "@nicolaskempf57/data.gouv.fr-components": "^1.5.4",
     "@sentry/tracing": "^6.10.0",
     "@sentry/vue": "^6.10.0",
     "@storybook/addon-essentials": "^7.5.2",

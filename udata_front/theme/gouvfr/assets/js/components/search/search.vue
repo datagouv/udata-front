@@ -143,7 +143,7 @@
           <div v-else-if="results.length">
             <ul class="fr-mt-1w border-default-grey border-top relative z-2">
               <li v-for="(result, key) in results" :key="result.id">
-                <Dataset v-bind="result" :style="zIndex(key)" />
+                <Dataset :dataset="result" :style="zIndex(key)" />
               </li>
             </ul>
             <Pagination
