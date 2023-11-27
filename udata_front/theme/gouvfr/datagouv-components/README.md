@@ -1,12 +1,13 @@
 # data.gouv.fr Components
 
+> [!WARNING]
+> With `vue-dsfr`, data.gouv.fr resource component only works in a `DsfrAccordion` component. This is going to be fixed in a future release.
+
 ## Architectures
 
-The package is composed of files extracted from `udata-front` and ab `src` folder that allow them to be used as a standalone NPM package.
+The package contains ready-made components to use on your data.gouv.fr front-end.
 
-You should only import files from the `src` folder.
-
-This package works with `@gouvfr/dsfr` package.
+This package works with `@gouvfr/dsfr` and `@gouvminint/vue-dsfr` packages.
 
 You should add their styles and js before using these components.
 
