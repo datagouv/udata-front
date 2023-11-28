@@ -2,7 +2,7 @@ import {api, apiv2} from "../plugins/api";
 
 /**
  * @typedef {Object} ResourceApiWrapper
- * @property {Array<import("@nicolaskempf57/data.gouv.fr-components").Resource>} data
+ * @property {Array<import("@etalab/data.gouv.fr-components").Resource>} data
  * @property {string | null} next_page
  * @property {number} page
  * @property {number} page_size

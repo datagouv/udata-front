@@ -31,7 +31,7 @@
 <script lang="ts">
 import { defineComponent, ref, watchEffect } from 'vue';
 import { useI18n } from "vue-i18n";
-import { ResourceAccordion, ResourceAccordionLoader, type Resource } from "@nicolaskempf57/data.gouv.fr-components";
+import { ResourceAccordion, ResourceAccordionLoader, type Resource } from "@etalab/data.gouv.fr-components";
 import { useToast } from "../../../composables/useToast";
 import useIdFromHash from "../../../composables/useIdFromHash";
 import { previousResourceUrlRegExp, resourceUrlRegExp } from '../../../helpers';

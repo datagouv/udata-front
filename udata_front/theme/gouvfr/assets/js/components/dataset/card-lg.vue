@@ -163,7 +163,7 @@
 import { defineComponent, PropType } from "vue";
 import { useI18n } from "vue-i18n";
 import useLicense from "../../composables/useLicense";
-import { OrganizationNameWithCertificate, useOwnerName, formatRelativeIfRecentDate} from "@nicolaskempf57/data.gouv.fr-components";
+import { OrganizationNameWithCertificate, useOwnerName, formatRelativeIfRecentDate} from "@etalab/data.gouv.fr-components";
 import useUid from "../../composables/useUid";
 import Avatar from "../discussions/Avatar/Avatar.vue";
 import Placeholder from "../utils/placeholder.vue";

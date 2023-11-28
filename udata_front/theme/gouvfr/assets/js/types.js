@@ -39,7 +39,7 @@
  */
 
 /**
- * @typedef {import("@nicolaskempf57/data.gouv.fr-components").Owned & {
+ * @typedef {import("@etalab/data.gouv.fr-components").Owned & {
  *  title: string,
  *  acronym: string,
  *  archived: boolean,
@@ -63,8 +63,8 @@
  * @typedef {NewDataset & {
  *  id: string,
  *  page: string,
- *  resources: Array<import("@nicolaskempf57/data.gouv.fr-components").Resource>,
- *  community_resources: Array<import("@nicolaskempf57/data.gouv.fr-components").Resource>,
+ *  resources: Array<import("@etalab/data.gouv.fr-components").Resource>,
+ *  community_resources: Array<import("@etalab/data.gouv.fr-components").Resource>,
  *  created_at: string,
  *  last_modified: string,
  *  last_update: string,

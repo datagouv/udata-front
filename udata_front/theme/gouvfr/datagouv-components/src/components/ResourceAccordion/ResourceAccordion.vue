@@ -100,7 +100,7 @@
       ref="contentRef"
     >
       <div class="fr-tabs fr-tabs--no-border fr-mt-1v" ref="tabsRef" :style="tabsHeightStyle">
-        <ul class="fr-tabs__list" role="tablist" :aria-label="$t('File menu')">
+        <ul class="fr-tabs__list" ref="tabListRef" role="tablist" :aria-label="$t('File menu')">
           <template v-if="hasExplore">
             <li role="presentation">
               <button
@@ -337,6 +337,7 @@ import { explorable_resources, schema_documentation_url, show_copy_resource_perm
 import { filesize, formatRelativeIfRecentDate, formatDate, markdown } from "../../helpers";
 import type { Resource } from "../../types/resources";
 import { templateRef, unrefElement } from "@vueuse/core";
+import useTabs from "../../composables/useTabs";
 
 export default defineComponent({
   components: { DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, OrganizationNameWithCertificate, SchemaLoader },
@@ -371,12 +372,9 @@ export default defineComponent({
     const contentRef = templateRef<HTMLElement | null>("contentRef");
     const copyRef = templateRef<HTMLButtonElement | null>("copyRef");
     const tabsRef = templateRef<HTMLButtonElement | null>("tabsRef");
+    const tabListRef = templateRef<HTMLUListElement>("tabListRef");
 
-    const tabsHeight = ref("auto");
-
-    const tabsHeightStyle = computed(() => {
-      return {'--tabs-height': tabsHeight.value};
-    });
+    const { isSelected } = useTabs(tabsRef, tabListRef, tabListRef.value.childElementCount);
 
     const expanded = ref(false);
     const expand = () => {
@@ -421,7 +419,7 @@ export default defineComponent({
     const lastUpdate = computed(() => props.resource.last_modified);
     const unavailable = computed(() => availabilityChecked.value === false);
     const { authorizeValidation, documentationUrl, loading, validationUrl, schemaReport} = useSchema(props.resource);
-    const hasSchema = computed(() => !!props.resource.schema.name || !!props.resource.schema.url);
+    const hasSchema = computed(() => "name" in props.resource.schema || "url" in props.resource.schema);
     const hasSchemaErrors = computed(() => !!schemaReport.value.size);
     const explore = getComponentsForHook("explore");
     const structure = getComponentsForHook("data-structure");
@@ -482,13 +480,13 @@ export default defineComponent({
       resourceStructureTabId,
       resourceInformationSelectedTab,
       resourceInformationTabIndex,
+      isSelected,
       explore,
       hasExplore,
       structure,
       schemaReport,
       hasSchema,
       hasSchemaErrors,
-      tabsHeightStyle,
       schema_documentation_url,
       show_copy_resource_permalink,
     }

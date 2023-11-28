@@ -57,7 +57,7 @@
 import { useI18n } from 'vue-i18n';
 import { onMounted, ref, computed, defineComponent } from 'vue';
 import { Pagination } from "@etalab/udata-front-plugins-helper";
-import { ResourceAccordion, ResourceAccordionLoader, type Resource } from "@nicolaskempf57/data.gouv.fr-components";
+import { ResourceAccordion, ResourceAccordionLoader, type Resource } from "@etalab/data.gouv.fr-components";
 import SearchBar from "../../utils/search-bar.vue";
 import config from "../../../config";
 import { useToast } from "../../../composables/useToast";
