@@ -31,11 +31,6 @@ markdown.use(function(md) {
   };
 });
 
-/**
- *
- * @param {string} text
- * @returns {string}
- */
-export default function renderMarkdown(text) {
+export default function renderMarkdown(text: string): string {
   return markdown.render(text).trim();
 }

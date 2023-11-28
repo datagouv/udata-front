@@ -2,12 +2,7 @@ import { dayjs } from "./i18n";
 import { useI18n } from "vue-i18n";
 import markdown from "./markdown";
 
-/**
- *
- * @param {number} val
- * @returns
- */
-export const filesize = (val) => {
+export const filesize = (val: number) => {
   const { t } = useI18n();
   const suffix = t('B')
   const units = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z']
@@ -22,20 +17,16 @@ export const filesize = (val) => {
 
 /**
  * Format date based on locale.
- * @param {Date | string} date
- * @returns {string}
  */
-export const formatDate = (date, format = 'LL') => {
+export const formatDate = (date: Date | string, format = 'LL') => {
   return dayjs(date).format(format);
 }
 
 /**
  * Format date as relative from now.
  * It displays "today" or dayjs.fromNow content, based on date.
- * @param {Date | string} date
- * @returns {string}
  */
-export const formatFromNow = (date) => {
+export const formatFromNow = (date: Date | string) => {
   const { t } = useI18n();
   const today = dayjs().startOf("date");
   const dateWithoutTime = dayjs(date).startOf("date");
@@ -48,10 +39,8 @@ export const formatFromNow = (date) => {
 /**
  * Format date relative form now if date is less than a month ago.
  * Otherwise, show a formatted date.
- * @param {Date | string} date
- * @returns {string}
  */
-export const formatRelativeIfRecentDate = (date) => {
+export const formatRelativeIfRecentDate = (date: Date | string) => {
   const { t } = useI18n();
   const today = dayjs().startOf("date");
   const dateWithoutTime = dayjs(date).startOf("date");

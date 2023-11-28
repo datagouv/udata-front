@@ -1,10 +1,6 @@
 import { easing, tween, styler } from "popmotion";
 
-/**
- * @param {HTMLElement} target
- * @param {boolean} opened
- */
-export function toggleAccordion (target, opened, padding = 0) {
+export function toggleAccordion (target: HTMLElement, opened: boolean, padding = 0) {
   if (target) {
     const divStyler = styler(target);
     if (opened) {

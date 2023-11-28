@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ResourceAccordion } from "../src";
 import { ref } from "vue";
-import type { Ref } from "vue";
 import type { Resource } from "../src";
 
 const resource = ref<Resource>({

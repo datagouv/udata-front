@@ -1,7 +1,7 @@
 import dayjs from "dayjs/esm";
 import LocalizedFormat from 'dayjs/esm/plugin/localizedFormat';
 import RelativeTime from "dayjs/esm/plugin/relativeTime";
-import { createI18n } from "vue-i18n";
+import { I18n, createI18n } from "vue-i18n";
 import messages from '@intlify/unplugin-vue-i18n/messages';
 import { only_locales, default_lang } from "../config";
 import { getRegisteredTranslations } from "@etalab/udata-front-plugins-helper";
@@ -43,24 +43,27 @@ dayjs.extend(RelativeTime, {
   ],
 });
 
-const i18n = createI18n({
-  legacy: false,
-  globalInjection: true,
-  locale: default_lang,
-  messages,
-  formatFallbackMessages: true
-});
+let i18n : I18n | null = null;
 
-/** @type {Record<string, boolean>} */
-const loadedModules = {};
+const setupI18n = () => {
+  i18n = createI18n({
+    legacy: false,
+    globalInjection: true,
+    locale: default_lang,
+    messages,
+    formatFallbackMessages: true
+  });
+  return i18n;
+}
+
+const loadedModules: Record<string, boolean> = {};
 
 /**
  * Reload translations from plugins if they aren't already loaded
  */
 export function reloadLocale() {
   const translations = getRegisteredTranslations();
-  /** @type {Record<string, object>} */
-  let messages = {};
+  let messages: Record<string, any> = {};
   for (let translation of translations) {
     if(translation.module) {
       if (loadedModules[translation.module]) {
@@ -70,7 +73,9 @@ export function reloadLocale() {
     }
     messages = {...messages, ...translation.messages[default_lang]};
   }
-  i18n.global.mergeLocaleMessage(default_lang, messages);
+  if(i18n) {
+    i18n.global.mergeLocaleMessage(default_lang, messages);
+  }
 }
 
-export { dayjs, i18n };
+export { dayjs, i18n, setupI18n };
