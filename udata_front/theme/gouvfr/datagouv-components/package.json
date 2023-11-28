@@ -1,6 +1,6 @@
 {
   "name": "@etalab/data.gouv.fr-components",
-  "version": "1.5.6",
+  "version": "1.6.0",
   "description": "reusable components to show content from data.gouv.fr",
   "type": "module",
   "files": [
