@@ -62,16 +62,6 @@ Similar to the contextual text color classes, easily set the background of an el
 
 */
 
-// This ones are missing from DSFR >1.6.
-:root {
-    --grey-850-200: #cecece;
-    --success-625-425: #27A658;
-}
-:root[data-fr-theme=dark] {
-    --grey-850-200: #3a3a3a;
-    --success-625-425: #18753c;
-}
-
 @white: var(--grey-1000-50);
 @blue-100: var(--blue-cumulus-975-75);
 @blue-300: var(--blue-cumulus-850-200);
@@ -122,6 +112,7 @@ Similar to the contextual text color classes, easily set the background of an el
 @background-success-625-425: var(--success-625-425);
 
 @border-default-grey: var(--border-default-grey);
+@border-default-blue-cumulus: var(--border-default-blue-cumulus);
 @border-plain-success: var(--border-plain-success);
 @border-plain-warning: var(--border-plain-warning);
 @border-plain-error: var(--border-plain-error);
@@ -169,6 +160,20 @@ each(@colors, {
         --active-tint: @@value;
     }
 });
+
+// Missing from DSFR >1.6 and overriden.
+:root {
+    --grey-850-200: #cecece;
+    --success-625-425: #27A658;
+    --background-alt-blue-france: @background-alt-blue-cumulus;
+    --background-alt-blue-france-hover: @background-alt-blue-cumulus-hover;
+    --background-alt-blue-france-active: @background-alt-blue-cumulus-active;
+    --border-default-blue-france: @border-default-blue-cumulus;
+}
+:root[data-fr-theme=dark] {
+    --grey-850-200: #3a3a3a;
+    --success-625-425: #18753c;
+}
 
 .bg-contrast-grey {
     background-color: @background-contrast-grey;
