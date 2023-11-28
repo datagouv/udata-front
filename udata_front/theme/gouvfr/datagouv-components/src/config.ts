@@ -10,7 +10,7 @@ export const schema_validata_url = import.meta.env.VITE_SCHEMA_VALIDATA_URL;
 
 export const title = import.meta.env.VITE_TITLE;
 
-export const explorable_resources = null;
+export const explorable_resources: Array<string> = [];
 
 export const only_locales = import.meta.env.VITE_ONLY_LOCALES;
 
