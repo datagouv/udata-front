@@ -2,6 +2,8 @@
 
 ## Current (in progress)
 
+- Ignore another ResizeObserver error [#321](https://github.com/etalab/udata-front/pull/321)
+- Fixed ol not appearing in descriptions [#322](https://github.com/etalab/udata-front/pull/322)
 - Fix copy discussion link [#323](https://github.com/etalab/udata-front/pull/323)
 
 ## 3.2.9 (2023-11-21)
