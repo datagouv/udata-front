@@ -13,9 +13,10 @@
 import { useI18n } from "vue-i18n";
 import { title } from "../../config";
 import useOrganizationCertified from "../../composables/organizations/useOrganizationCertified";
+import { Organization } from "../../types/organizations";
 
 const { t } = useI18n();
-const props = defineProps<{organization: import("../../composables/organizations/useOrganizationCertified").Organization}>();
+const props = defineProps<{organization: Organization}>();
 
 const { organizationCertified } = useOrganizationCertified(props.organization);
 </script>
