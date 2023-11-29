@@ -1,8 +1,5 @@
 # data.gouv.fr Components
 
-> [!WARNING]
-> With `vue-dsfr`, data.gouv.fr resource component only works in a `DsfrAccordion` component. This is going to be fixed in a future release.
-
 ## Architectures
 
 The package contains ready-made components to use on your data.gouv.fr front-end.
