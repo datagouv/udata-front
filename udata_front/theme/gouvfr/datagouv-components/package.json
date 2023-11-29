@@ -21,8 +21,10 @@
     "publish-next": "npm run publish-stable -- --tag next"
   },
   "dependencies": {
-    "@gouvfr/dsfr": "~1.9.2",
     "vue": "^3.3.8"
+  },
+  "peerDependencies": {
+    "@gouvfr/dsfr": "~1.9.2"
   },
   "devDependencies": {
     "@conciergerie.dev/vue-toaster": "^2.4.5-0",
