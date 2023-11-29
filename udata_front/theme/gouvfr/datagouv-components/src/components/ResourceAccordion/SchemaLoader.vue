@@ -11,13 +11,7 @@
   </ContentLoader>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import { ContentLoader } from "vue-content-loader";
 
-export default defineComponent({
-  components: {
-    ContentLoader,
-  },
-});
 </script>

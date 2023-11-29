@@ -337,9 +337,9 @@
   </article>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import Clipboard from "clipboard";
-import { defineComponent, ref, computed, unref, onMounted, type ComputedRef, type PropType } from "vue";
+import { ref, computed, unref, onMounted, type ComputedRef } from "vue";
 import SchemaLoader from "./SchemaLoader.vue";
 import useOwnerName from "../../composables/organizations/useOwnerName";
 import useResourceImage from "../../composables/resources/useResourceImage";
@@ -358,227 +358,162 @@ import type { Resource } from "../../types/resources";
 import { templateRef, unrefElement } from "@vueuse/core";
 import useTabs from "../../composables/useTabs";
 
-export default defineComponent({
-  components: { DescriptionDetails, DescriptionList, DescriptionTerm, CopyButton, EditButton, OrganizationNameWithCertificate, SchemaLoader },
+type Props = {
+  datasetId: string,
+  expandedOnMount?: boolean,
+  isCommunityResource?: boolean,
+  resource: Resource,
+  canEdit?: boolean
+};
+
+defineOptions({
   inheritAttrs: false,
-  props: {
-    datasetId: {
-      type: String,
-      required: true,
-    },
-    expandedOnMount: {
-      type: Boolean,
-      default: false,
-    },
-    isCommunityResource: {
-      type: Boolean,
-      default: false,
-    },
-    resource: {
-      type: Object as PropType<Resource>,
-      required: true,
-    },
-    canEdit: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  setup(props) {
-    const owner = useOwnerName(props.resource);
-    const { url } = useResourceImage(props.resource);
-    const { getComponentsForHook } = useComponentsForHook();
-
-    const contentRef = templateRef<HTMLElement | null>("contentRef");
-    const copyRef = templateRef<HTMLButtonElement | null>("copyRef");
-    const tabsRef = templateRef<HTMLButtonElement | null>("tabsRef");
-    const tabListRef = templateRef<HTMLUListElement | null>("tabListRef");
-    const explore = getComponentsForHook("explore");
-    const structure = getComponentsForHook("data-structure");
-
-    const schemaName = computed(() => "name" in props.resource.schema ? props.resource.schema.name : "");
-    const schemaUrl = computed(() => "url" in props.resource.schema ? props.resource.schema.url : "");
-
-    const hasSchema = computed(() => schemaName.value || schemaUrl.value);
-    const hasExplore = computed(() => explore.length > 0 && explorable_resources && explorable_resources.includes(props.resource.id));
-    const resourcePreviewIndex = computed(() => {
-      return 0;
-    });
-    const resourceStructureIndex = computed(() => {
-      if (hasExplore.value && hasSchema.value) {
-        return 1;
-      }
-      return 0;
-    });
-    const resourceInformationIndex = computed(() => {
-      if (hasExplore.value && hasSchema.value) {
-        return 2;
-      }
-      if (hasSchema.value) {
-        return 1;
-      }
-      return 0;
-    });
-
-    const { asc, getIdFromIndex, isSelected, selectIndex } = useTabs(tabsRef, tabListRef, resourceInformationIndex.value);
-
-    const expanded = ref(false);
-    const expand = () => {
-      if(expanded.value) {
-        globalThis._paq?.push(['trackEvent', 'Close resource', props.resource.id]);
-      } else {
-        globalThis._paq?.push(['trackEvent', 'Open resource', props.resource.id]);
-        if(hasExplore.value) {
-          registerEvent(resourcePreviewButtonId);
-        } else if (hasSchema.value) {
-          registerEvent(resourceStructureButtonId);
-        } else {
-          registerEvent(resourceInformationButtonId);
-        }
-      }
-      expanded.value = !expanded.value;
-      if(contentRef.value) {
-        toggleAccordion(contentRef.value, expanded.value);
-        const $elem = unrefElement(tabsRef);
-        if ($elem) {
-          if(expanded.value) {
-            //const { height } = window.getComputedStyle($elem);
-            //tabsHeight.value = height;
-          } else {
-            //tabsHeight.value = "auto";
-          }
-        }
-      }
-    }
-
-    const registerEvent = (tab: ComputedRef<string> | string) => {
-      const tabName = unref(tab);
-      globalThis._paq?.push(['trackEvent', 'View resource tab', props.resource.id, tab]);
-      if(tabName === resourcePreviewButtonId.value) {
-        globalThis._paq?.push(['trackEvent', 'Show preview', props.resource.id]);
-      } else if (tabName === resourceStructureButtonId.value) {
-        globalThis._paq?.push(['trackEvent', 'Show data structure', props.resource.id]);
-      }
-    }
-
-    const getTabPanelClass = (selected: boolean) => {
-      return {'fr-tabs__panel--selected': selected };
-    };
-
-    const getTabPanelTabIndex = (selected: boolean) => {
-      return selected ? 0 : -1;
-    };
-
-    const selectTab = (index: number) => {
-      selectIndex(index);
-      registerEvent(getIdFromIndex(index));
-    }
-
-    const availabilityChecked = computed(() => props.resource.extras && props.resource.extras['check:available']);
-    const lastUpdate = computed(() => props.resource.last_modified);
-    const unavailable = computed(() => availabilityChecked.value === false);
-    const { authorizeValidation, documentationUrl, loading, validationUrl, schemaReport} = useSchema(props.resource);
-    const hasSchemaErrors = computed(() => !!schemaReport.value.size);
-    const resourceExternalUrl = computed(() => {
-      let hash = "#/resources/" + props.resource.id;
-      return window.location.origin + window.location.pathname + hash;
-    });
-
-    const resourceContentId = computed(() => 'resource-' + props.resource.id);
-    const resourceHeaderId = computed(() => 'resource-' + props.resource.id + '-header');
-    const resourceTitleId = computed(() => 'resource-' + props.resource.id + '-title');
-    const resourceCopyId = computed(() => 'resource-' + props.resource.id + '-copy');
-
-    const resourcePreviewButtonId = computed(() => getIdFromIndex(resourcePreviewIndex.value));
-    const resourcePreviewTabId = computed(() => 'resource-' + props.resource.id + '-preview-tab');
-    const resourcePreviewSelected = computed(() => isSelected(resourcePreviewIndex.value));
-    const resourcePreviewTabIndex = computed(() => getTabPanelTabIndex(resourcePreviewSelected.value));
-    const resourcePreviewClass = computed(() => getTabPanelClass(resourcePreviewSelected.value));
-
-    const resourceStructureButtonId = computed(() => getIdFromIndex(resourceStructureIndex.value));
-    const resourceStructureTabId = computed(() => resourceStructureButtonId.value + '-structure-tab');
-    const resourceStructureSelected = computed(() => isSelected(resourceStructureIndex.value));
-    const resourceStructureTabIndex = computed(() => getTabPanelTabIndex(resourceStructureSelected.value));
-    const resourceStructureClass = computed(() => getTabPanelClass(resourceStructureSelected.value));
-
-    const resourceInformationButtonId = computed(() => getIdFromIndex(resourceInformationIndex.value));
-    const resourceInformationTabId = computed(() => resourceInformationButtonId.value + '-information-tab');
-    const resourceInformationSelected = computed(() => isSelected(resourceInformationIndex.value));
-    const resourceInformationTabIndex = computed(() => getTabPanelTabIndex(resourceInformationSelected.value));
-    const resourceInformationClass = computed(() => getTabPanelClass(resourceInformationSelected.value));
-
-    onMounted(() => {
-      if(props.expandedOnMount) {
-        expand();
-      }
-      if(copyRef.value && show_copy_resource_permalink) {
-        new Clipboard(copyRef.value);
-      }
-    });
-
-    const values = { true: '100%', false: '-100%' };
-    // @ts-ignore this will be fine
-    const translateValueFrom = computed(() => values[String(asc.value)]);
-    // @ts-ignore this will be fine
-    const translateValueTo = computed(() => values[String(!asc.value)]);
-
-    return {
-      registerEvent,
-      owner,
-      url,
-      filesize,
-      formatRelativeIfRecentDate,
-      formatDate,
-      markdown,
-      expanded,
-      expand,
-      availabilityChecked,
-      lastUpdate,
-      unavailable,
-      authorizeValidation,
-      documentationUrl,
-      loading,
-      validationUrl,
-      resourceContentId,
-      resourceCopyId,
-      resourceExternalUrl,
-      resourceHeaderId,
-      resourcePreviewButtonId,
-      resourcePreviewClass,
-      resourcePreviewIndex,
-      resourcePreviewSelected,
-      resourcePreviewTabId,
-      resourcePreviewTabIndex,
-      resourceStructureButtonId,
-      resourceStructureClass,
-      resourceStructureIndex,
-      resourceStructureSelected,
-      resourceStructureTabId,
-      resourceStructureTabIndex,
-      resourceInformationButtonId,
-      resourceInformationClass,
-      resourceInformationIndex,
-      resourceInformationSelected,
-      resourceInformationTabId,
-      resourceInformationTabIndex,
-      resourceTitleId,
-      isSelected,
-      selectTab,
-      explore,
-      hasExplore,
-      structure,
-      hasSchema,
-      hasSchemaErrors,
-      schemaName,
-      schemaReport,
-      schemaUrl,
-      schema_documentation_url,
-      show_copy_resource_permalink,
-      translateValueFrom,
-      translateValueTo,
-    }
-  },
 });
+
+const props = withDefaults(defineProps<Props>(), {
+  expandedOnMount: false,
+  isCommunityResource: false,
+  canEdit: false,
+})
+
+const owner = useOwnerName(props.resource);
+const { url } = useResourceImage(props.resource);
+const { getComponentsForHook } = useComponentsForHook();
+
+const contentRef = templateRef<HTMLElement | null>("contentRef");
+const copyRef = templateRef<HTMLButtonElement | null>("copyRef");
+const tabsRef = templateRef<HTMLButtonElement | null>("tabsRef");
+const tabListRef = templateRef<HTMLUListElement | null>("tabListRef");
+const explore = getComponentsForHook("explore");
+const structure = getComponentsForHook("data-structure");
+
+const schemaName = computed(() => "name" in props.resource.schema ? props.resource.schema.name : "");
+const schemaUrl = computed(() => "url" in props.resource.schema ? props.resource.schema.url : "");
+
+const hasSchema = computed(() => schemaName.value || schemaUrl.value);
+const hasExplore = computed(() => explore.length > 0 && explorable_resources && explorable_resources.includes(props.resource.id));
+const resourcePreviewIndex = computed(() => {
+  return 0;
+});
+const resourceStructureIndex = computed(() => {
+  if (hasExplore.value && hasSchema.value) {
+    return 1;
+  }
+  return 0;
+});
+const resourceInformationIndex = computed(() => {
+  if (hasExplore.value && hasSchema.value) {
+    return 2;
+  }
+  if (hasSchema.value) {
+    return 1;
+  }
+  return 0;
+});
+
+const { asc, getIdFromIndex, isSelected, selectIndex } = useTabs(tabsRef, tabListRef, resourceInformationIndex.value);
+
+const expanded = ref(false);
+const expand = () => {
+  if(expanded.value) {
+    globalThis._paq?.push(['trackEvent', 'Close resource', props.resource.id]);
+  } else {
+    globalThis._paq?.push(['trackEvent', 'Open resource', props.resource.id]);
+    if(hasExplore.value) {
+      registerEvent(resourcePreviewButtonId);
+    } else if (hasSchema.value) {
+      registerEvent(resourceStructureButtonId);
+    } else {
+      registerEvent(resourceInformationButtonId);
+    }
+  }
+  expanded.value = !expanded.value;
+  if(contentRef.value) {
+    toggleAccordion(contentRef.value, expanded.value);
+    const $elem = unrefElement(tabsRef);
+    if ($elem) {
+      if(expanded.value) {
+        //const { height } = window.getComputedStyle($elem);
+        //tabsHeight.value = height;
+      } else {
+        //tabsHeight.value = "auto";
+      }
+    }
+  }
+}
+
+const registerEvent = (tab: ComputedRef<string> | string) => {
+  const tabName = unref(tab);
+  globalThis._paq?.push(['trackEvent', 'View resource tab', props.resource.id, tab]);
+  if(tabName === resourcePreviewButtonId.value) {
+    globalThis._paq?.push(['trackEvent', 'Show preview', props.resource.id]);
+  } else if (tabName === resourceStructureButtonId.value) {
+    globalThis._paq?.push(['trackEvent', 'Show data structure', props.resource.id]);
+  }
+}
+
+const getTabPanelClass = (selected: boolean) => {
+  return {'fr-tabs__panel--selected': selected };
+};
+
+const getTabPanelTabIndex = (selected: boolean) => {
+  return selected ? 0 : -1;
+};
+
+const selectTab = (index: number) => {
+  selectIndex(index);
+  registerEvent(getIdFromIndex(index));
+}
+
+const availabilityChecked = computed(() => props.resource.extras && props.resource.extras['check:available']);
+const lastUpdate = computed(() => props.resource.last_modified);
+const unavailable = computed(() => availabilityChecked.value === false);
+const { authorizeValidation, documentationUrl, loading, validationUrl, schemaReport} = useSchema(props.resource);
+const hasSchemaErrors = computed(() => !!schemaReport.value.size);
+const resourceExternalUrl = computed(() => {
+  let hash = "#/resources/" + props.resource.id;
+  return window.location.origin + window.location.pathname + hash;
+});
+
+const resourceContentId = computed(() => 'resource-' + props.resource.id);
+const resourceHeaderId = computed(() => 'resource-' + props.resource.id + '-header');
+const resourceTitleId = computed(() => 'resource-' + props.resource.id + '-title');
+const resourceCopyId = computed(() => 'resource-' + props.resource.id + '-copy');
+
+const resourcePreviewButtonId = computed(() => getIdFromIndex(resourcePreviewIndex.value));
+const resourcePreviewTabId = computed(() => 'resource-' + props.resource.id + '-preview-tab');
+const resourcePreviewSelected = computed(() => isSelected(resourcePreviewIndex.value));
+const resourcePreviewTabIndex = computed(() => getTabPanelTabIndex(resourcePreviewSelected.value));
+const resourcePreviewClass = computed(() => getTabPanelClass(resourcePreviewSelected.value));
+
+const resourceStructureButtonId = computed(() => getIdFromIndex(resourceStructureIndex.value));
+const resourceStructureTabId = computed(() => resourceStructureButtonId.value + '-structure-tab');
+const resourceStructureSelected = computed(() => isSelected(resourceStructureIndex.value));
+const resourceStructureTabIndex = computed(() => getTabPanelTabIndex(resourceStructureSelected.value));
+const resourceStructureClass = computed(() => getTabPanelClass(resourceStructureSelected.value));
+
+const resourceInformationButtonId = computed(() => getIdFromIndex(resourceInformationIndex.value));
+const resourceInformationTabId = computed(() => resourceInformationButtonId.value + '-information-tab');
+const resourceInformationSelected = computed(() => isSelected(resourceInformationIndex.value));
+const resourceInformationTabIndex = computed(() => getTabPanelTabIndex(resourceInformationSelected.value));
+const resourceInformationClass = computed(() => getTabPanelClass(resourceInformationSelected.value));
+
+onMounted(() => {
+  if(props.expandedOnMount) {
+    expand();
+  }
+  if(copyRef.value && show_copy_resource_permalink) {
+    new Clipboard(copyRef.value);
+  }
+});
+
+const values = { true: '100%', false: '-100%' };
+// @ts-ignore this will be fine
+const translateValueFrom = computed(() => values[String(asc.value)]);
+// @ts-ignore this will be fine
+const translateValueTo = computed(() => values[String(!asc.value)]);
 </script>
+
 <style scoped>
 .slide-fade-enter-active {
   transition: all 0.3s ease-out;

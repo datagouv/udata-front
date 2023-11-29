@@ -7,34 +7,21 @@
   </a>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import { admin_root } from "../../config";
 import { useI18n } from "vue-i18n";
 
-export default defineComponent({
-  props: {
-    datasetId: {
-      type: String,
-      required: true,
-    },
-    isCommunityResource: {
-      type: Boolean,
-      default: false,
-    },
-    resourceId: {
-      type: String,
-      required: true,
-    },
-  },
-  setup(props) {
-    const { t } = useI18n();
-    const resourceType = props.isCommunityResource ? 'community-resource' : 'resource';
-    const adminUrl = `${admin_root}dataset/${props.datasetId}/${resourceType}/${props.resourceId}`;
-    return {
-      adminUrl,
-      t,
-    }
-  }
+type Props = {
+  datasetId: string,
+  isCommunityResource?: boolean,
+  resourceId: string,
+};
+
+const props = withDefaults(defineProps<Props>(), {
+  isCommunityResource: false,
 });
+
+const { t } = useI18n();
+const resourceType = props.isCommunityResource ? 'community-resource' : 'resource';
+const adminUrl = `${admin_root}dataset/${props.datasetId}/${resourceType}/${props.resourceId}`;
 </script>
