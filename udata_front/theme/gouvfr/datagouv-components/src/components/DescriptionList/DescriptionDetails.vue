@@ -10,7 +10,6 @@
 </template>
 
 <script setup lang="ts">
-
 type Props = {
   withEllipsis?: boolean;
 };

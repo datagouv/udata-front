@@ -17,8 +17,10 @@ import Clipboard from "clipboard";
 defineProps<{
   text: string
 }>();
+
 const { t } = useI18n();
 const buttonRef = ref<HTMLButtonElement | null>(null);
+
 onMounted(() => {
   if(buttonRef.value) {
     new Clipboard(buttonRef.value);
