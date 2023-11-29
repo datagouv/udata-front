@@ -18,7 +18,7 @@
           </h4>
           <div class="fr-my-0 text-grey-380 fr-grid-row fr-grid-row--middle">
             <p v-if="hasSchema" class="fr-tag fr-tag--sm z-2">
-              <strong class="fr-mr-1v">{{ $t("schema:") }}</strong>{{resource.schema.name ? resource.schema.name : resource.schema.url}}
+              <strong class="fr-mr-1v">{{ $t("schema:") }}</strong>{{schemaName ? schemaName : schemaUrl}}
             </p>
             <p
               v-if="hasSchema && hasSchemaErrors"
@@ -99,18 +99,18 @@
       :id="resourceContentId"
       ref="contentRef"
     >
-      <div class="fr-tabs fr-tabs--no-border fr-mt-1v" ref="tabsRef" :style="tabsHeightStyle">
+      <div class="fr-tabs fr-tabs--no-border fr-mt-1v" ref="tabsRef">
         <ul class="fr-tabs__list" ref="tabListRef" role="tablist" :aria-label="$t('File menu')">
           <template v-if="hasExplore">
             <li role="presentation">
               <button
                 :id="resourcePreviewButtonId"
                 class="fr-tabs__tab"
-                tabindex="0"
+                :tabindex="resourcePreviewTabIndex"
                 role="tab"
-                aria-selected="true"
+                :aria-selected="resourcePreviewSelected"
                 :aria-controls="resourcePreviewTabId"
-                @click="registerEvent(resourcePreviewButtonId)"
+                @click="selectTab(resourcePreviewIndex)"
               >
                 {{$t('Preview')}}
               </button>
@@ -121,11 +121,11 @@
               <button
                 :id="resourceStructureButtonId"
                 class="fr-tabs__tab"
-                tabindex="0"
+                :tabindex="resourceStructureTabIndex"
                 role="tab"
-                aria-selected="true"
+                :aria-selected="resourceStructureSelected"
                 :aria-controls="resourceStructureTabId"
-                @click="registerEvent(resourceStructureButtonId)"
+                @click="selectTab(resourceStructureIndex)"
               >
                 {{$t('Data structure')}}
               </button>
@@ -137,182 +137,201 @@
               class="fr-tabs__tab"
               :tabindex="resourceInformationTabIndex"
               role="tab"
-              :aria-selected="resourceInformationSelectedTab"
+              :aria-selected="resourceInformationSelected"
               :aria-controls="resourceInformationTabId"
-              @click="registerEvent(resourceInformationButtonId)"
+              @click="selectTab(resourceInformationIndex)"
             >
               {{$t('Metadata')}}
             </button>
           </li>
         </ul>
-        <div
-          :id="resourcePreviewTabId"
-          class="fr-tabs__panel fr-tabs__panel--selected fr-tabs__panel--no-padding fr-table--dense"
-          role="tabpanel"
-          :aria-labelledby="resourcePreviewButtonId"
-          tabindex="0"
+        <transition
+          name="slide-fade"
+          mode="in-out"
           v-if="hasExplore"
         >
-          <component v-if="expanded" v-for="ex in explore" :is="ex.component" :resource="resource"/>
-        </div>
-        <div
-          :id="resourceStructureTabId"
-          class="fr-tabs__panel"
-          :class="{'fr-tabs__panel--selected': !hasExplore }"
-          role="tabpanel"
-          :aria-labelledby="resourceStructureButtonId"
-          tabindex="0"
+          <div
+            :id="resourcePreviewTabId"
+            class="fr-tabs__panel fr-tabs__panel--no-padding fr-table--dense"
+            :class="resourcePreviewClass"
+            role="tabpanel"
+            :aria-labelledby="resourcePreviewButtonId"
+            :tabindex="resourcePreviewTabIndex"
+            v-show="resourcePreviewSelected"
+          >
+            <component v-if="expanded" v-for="ex in explore" :is="ex.component" :resource="resource"/>
+          </div>
+        </transition>
+        <transition
+          name="slide-fade"
+          mode="in-out"
           v-if="hasExplore || hasSchema"
         >
-          <component v-if="expanded" v-for="dataStructure in structure" :is="dataStructure.component" :resource="resource"/>
-          <hr class="fr-my-5v fr-p-1v" v-if="hasExplore && hasSchema"/>
-          <template v-if="hasSchema">
-            <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle">
-              <div class="fr-col-12 fr-col-lg">
-                <h5 class="fr-h6 fr-mb-5v">{{$t('Data schema')}}</h5>
-                <ul class="fr-tags-group" v-if="hasSchemaErrors">
-                  <li v-for="[_key, schemaError] in schemaReport">
-                    <p class="fr-tag fr-tag--sm">{{schemaError.name}}</p>
-                  </li>
-                </ul>
-                <template v-else>
-                  <div class="fr-grid-row fr-grid-row--middle fr-mb-1w">
-                    <p class="fr-text--xs fr-m-0">{{$t('This file is following a schema: ')}}</p>
-                    <p class="fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
-                      {{resource.schema.name ? resource.schema.name : resource.schema.url}}
-                    </p>
+          <div
+            :id="resourceStructureTabId"
+            class="fr-tabs__panel"
+            :class="resourceStructureClass"
+            role="tabpanel"
+            :aria-labelledby="resourceStructureButtonId"
+            :tabindex="resourceStructureTabIndex"
+            v-show="resourceStructureSelected"
+          >
+            <component v-if="expanded" v-for="dataStructure in structure" :is="dataStructure.component" :resource="resource"/>
+            <hr class="fr-my-5v fr-p-1v" v-if="hasExplore && hasSchema"/>
+            <template v-if="hasSchema">
+              <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle">
+                <div class="fr-col-12 fr-col-lg">
+                  <h5 class="fr-h6 fr-mb-5v">{{$t('Data schema')}}</h5>
+                  <ul class="fr-tags-group" v-if="hasSchemaErrors">
+                    <li v-for="[_key, schemaError] in schemaReport">
+                      <p class="fr-tag fr-tag--sm">{{schemaError.name}}</p>
+                    </li>
+                  </ul>
+                  <template v-else>
+                    <div class="fr-grid-row fr-grid-row--middle fr-mb-1w">
+                      <p class="fr-text--xs fr-m-0">{{$t('This file is following a schema: ')}}</p>
+                      <p class="fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
+                        {{schemaName ? schemaName : schemaUrl}}
+                      </p>
+                    </div>
+                      <i18n-t keypath="Schemas allow to describe data models, discover how schemas improve your data quality and the available use cases on {address}" class="fr-text--xs fr-m-0" tag="p" scope="global">
+                        <template #address>
+                          <a :href="schema_documentation_url">schema.data.gouv.fr</a>
+                        </template>
+                      </i18n-t>
+                  </template>
+                </div>
+                <div class="fr-col-auto">
+                  <div v-if="loading">
+                    <SchemaLoader/>
                   </div>
-                    <i18n-t keypath="Schemas allow to describe data models, discover how schemas improve your data quality and the available use cases on {address}" class="fr-text--xs fr-m-0" tag="p" scope="global">
-                      <template #address>
-                        <a :href="schema_documentation_url">schema.data.gouv.fr</a>
-                      </template>
-                    </i18n-t>
-                </template>
-              </div>
-              <div class="fr-col-auto">
-                <div v-if="loading">
-                  <SchemaLoader/>
-                </div>
-                <div v-else>
-                  <a
-                    v-if="authorizeValidation"
-                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v fr-btn--icon-left fr-icon-checkbox-line"
-                    :href="validationUrl"
-                  >
-                    {{ $t('See validation report') }}
-                  </a>
-                  <a
-                    v-if="resource.schema?.name"
-                    class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-book-2-line"
-                    :href="documentationUrl"
-                  >
-                    {{ $t('See schema documentation') }}
-                  </a>
+                  <div v-else>
+                    <a
+                      v-if="authorizeValidation"
+                      class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v fr-btn--icon-left fr-icon-checkbox-line"
+                      :href="validationUrl"
+                    >
+                      {{ $t('See validation report') }}
+                    </a>
+                    <a
+                      v-if="schemaName"
+                      class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-book-2-line"
+                      :href="documentationUrl"
+                    >
+                      {{ $t('See schema documentation') }}
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
-          </template>
-        </div>
-        <div
-          :id="resourceInformationTabId"
-          class="fr-tabs__panel"
-          :class="{'fr-tabs__panel--selected': !hasExplore && !hasSchema }"
-          role="tabpanel"
-          :aria-labelledby="resourceInformationButtonId"
-          tabindex="0"
+            </template>
+          </div>
+        </transition>
+        <transition
+          name="slide-fade"
+          mode="in-out"
         >
-          <div class="fr-grid-row fr-grid-row--gutters">
-            <DescriptionList>
-              <DescriptionTerm>{{ $t('URL') }}</DescriptionTerm>
-              <DescriptionDetails :withEllipsis="false">
-                <div class="fr-col text-overflow-ellipsis">
-                  <a :href="resource.url">{{resource.url}}</a>
-                </div>
-                <div class="fr-ml-1w fr-col-auto">
-                  <CopyButton :text="resource.url"/>
-                </div>
-              </DescriptionDetails>
-              <DescriptionTerm>{{ $t('Permalink') }}</DescriptionTerm>
-              <DescriptionDetails :withEllipsis="false">
-                <div class="fr-col text-overflow-ellipsis">
-                  <a :href="resource.latest">{{resource.latest}}</a>
-                </div>
-                <div class="fr-ml-1w fr-col-auto">
-                  <CopyButton :text="resource.latest"/>
-                </div>
-              </DescriptionDetails>
-              <DescriptionTerm>{{ $t('ID') }}</DescriptionTerm>
-              <DescriptionDetails :withEllipsis="false">
-                <div class="fr-col text-overflow-ellipsis">
-                  {{ resource.id }}
-                </div>
-                <div class="fr-ml-1w fr-col-auto">
-                  <CopyButton :text="resource.id"/>
-                </div>
-              </DescriptionDetails>
-              <template v-if="resource.mime">
-                <DescriptionTerm>{{ $t('MIME Type') }}</DescriptionTerm>
-                <DescriptionDetails>
-                  {{resource.mime}}
-                </DescriptionDetails>
-              </template>
-            </DescriptionList>
-            <DescriptionList>
-              <DescriptionTerm>{{ $t('Created on') }}</DescriptionTerm>
-              <DescriptionDetails>
-                {{formatDate(resource.created_at)}}
-              </DescriptionDetails>
-              <DescriptionTerm>{{ $t('Modified on') }}</DescriptionTerm>
-              <DescriptionDetails>
-                {{formatDate(resource.last_modified)}}
-              </DescriptionDetails>
-              <template v-if="resource.checksum">
-                <DescriptionTerm>{{resource.checksum.type}}</DescriptionTerm>
+          <div
+            :id="resourceInformationTabId"
+            class="fr-tabs__panel"
+            :class="resourceInformationClass"
+            role="tabpanel"
+            :aria-labelledby="resourceInformationButtonId"
+            :tabindex="resourceInformationTabIndex"
+            v-show="resourceInformationSelected"
+          >
+            <div class="fr-grid-row fr-grid-row--gutters">
+              <DescriptionList>
+                <DescriptionTerm>{{ $t('URL') }}</DescriptionTerm>
                 <DescriptionDetails :withEllipsis="false">
                   <div class="fr-col text-overflow-ellipsis">
-                    {{resource.checksum.value}}
+                    <a :href="resource.url">{{resource.url}}</a>
                   </div>
-                  <div class="fr-col-auto">
-                    <CopyButton :text="resource.checksum.value"/>
+                  <div class="fr-ml-1w fr-col-auto">
+                    <CopyButton :text="resource.url"/>
                   </div>
                 </DescriptionDetails>
-              </template>
-            </DescriptionList>
-            <DescriptionList>
-              <template v-if="resource.filesize">
-                <DescriptionTerm>{{ $t('Size') }}</DescriptionTerm>
+                <DescriptionTerm>{{ $t('Permalink') }}</DescriptionTerm>
+                <DescriptionDetails :withEllipsis="false">
+                  <div class="fr-col text-overflow-ellipsis">
+                    <a :href="resource.latest">{{resource.latest}}</a>
+                  </div>
+                  <div class="fr-ml-1w fr-col-auto">
+                    <CopyButton :text="resource.latest"/>
+                  </div>
+                </DescriptionDetails>
+                <DescriptionTerm>{{ $t('ID') }}</DescriptionTerm>
+                <DescriptionDetails :withEllipsis="false">
+                  <div class="fr-col text-overflow-ellipsis">
+                    {{ resource.id }}
+                  </div>
+                  <div class="fr-ml-1w fr-col-auto">
+                    <CopyButton :text="resource.id"/>
+                  </div>
+                </DescriptionDetails>
+                <template v-if="resource.mime">
+                  <DescriptionTerm>{{ $t('MIME Type') }}</DescriptionTerm>
+                  <DescriptionDetails>
+                    {{resource.mime}}
+                  </DescriptionDetails>
+                </template>
+              </DescriptionList>
+              <DescriptionList>
+                <DescriptionTerm>{{ $t('Created on') }}</DescriptionTerm>
                 <DescriptionDetails>
-                  {{ filesize(resource.filesize) }}
+                  {{formatDate(resource.created_at)}}
                 </DescriptionDetails>
-              </template>
-            </DescriptionList>
-            <div class="fr-col-auto fr-ml-auto" v-if="show_copy_resource_permalink">
-              <button
-                :id="resourceCopyId"
-                ref="copyRef"
-                :data-clipboard-text="resourceExternalUrl"
-                class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-right fr-icon-links-fill"
+                <DescriptionTerm>{{ $t('Modified on') }}</DescriptionTerm>
+                <DescriptionDetails>
+                  {{formatDate(resource.last_modified)}}
+                </DescriptionDetails>
+                <template v-if="resource.checksum">
+                  <DescriptionTerm>{{resource.checksum.type}}</DescriptionTerm>
+                  <DescriptionDetails :withEllipsis="false">
+                    <div class="fr-col text-overflow-ellipsis">
+                      {{resource.checksum.value}}
+                    </div>
+                    <div class="fr-col-auto">
+                      <CopyButton :text="resource.checksum.value"/>
+                    </div>
+                  </DescriptionDetails>
+                </template>
+              </DescriptionList>
+              <DescriptionList>
+                <template v-if="resource.filesize">
+                  <DescriptionTerm>{{ $t('Size') }}</DescriptionTerm>
+                  <DescriptionDetails>
+                    {{ filesize(resource.filesize) }}
+                  </DescriptionDetails>
+                </template>
+              </DescriptionList>
+              <div class="fr-col-auto fr-ml-auto" v-if="show_copy_resource_permalink">
+                <button
+                  :id="resourceCopyId"
+                  ref="copyRef"
+                  :data-clipboard-text="resourceExternalUrl"
+                  class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-right fr-icon-links-fill"
+                >
+                  {{$t('Copy resource permalink')}}
+                </button>
+              </div>
+            </div>
+            <template v-if="resource.description">
+              <h5 class="fr-text--sm fr-my-0 fr-text--bold">
+                {{ $t("File description") }}
+              </h5>
+              <div class="fr-mt-0 markdown fr-text--sm text-mention-grey" v-html="markdown(resource.description)">
+              </div>
+            </template>
+            <div class="text-align-right" v-if="!hasExplore && resource.preview_url">
+              <a
+                :href="resource.preview_url"
+                class="fr-btn fr-btn--icon-left fr-icon-test-tube-line"
               >
-                {{$t('Copy resource permalink')}}
-              </button>
+                {{ $t("Explore data") }}
+              </a>
             </div>
           </div>
-          <template v-if="resource.description">
-            <h5 class="fr-text--sm fr-my-0 fr-text--bold">
-              {{ $t("File description") }}
-            </h5>
-            <div class="fr-mt-0 markdown fr-text--sm text-mention-grey" v-html="markdown(resource.description)">
-            </div>
-          </template>
-          <div class="text-align-right" v-if="!hasExplore && resource.preview_url">
-            <a
-              :href="resource.preview_url"
-              class="fr-btn fr-btn--icon-left fr-icon-test-tube-line"
-            >
-              {{ $t("Explore data") }}
-            </a>
-          </div>
-        </div>
+        </transition>
       </div>
     </section>
   </article>
@@ -372,9 +391,35 @@ export default defineComponent({
     const contentRef = templateRef<HTMLElement | null>("contentRef");
     const copyRef = templateRef<HTMLButtonElement | null>("copyRef");
     const tabsRef = templateRef<HTMLButtonElement | null>("tabsRef");
-    const tabListRef = templateRef<HTMLUListElement>("tabListRef");
+    const tabListRef = templateRef<HTMLUListElement | null>("tabListRef");
+    const explore = getComponentsForHook("explore");
+    const structure = getComponentsForHook("data-structure");
 
-    const { isSelected } = useTabs(tabsRef, tabListRef, tabListRef.value.childElementCount);
+    const schemaName = computed(() => "name" in props.resource.schema ? props.resource.schema.name : "");
+    const schemaUrl = computed(() => "url" in props.resource.schema ? props.resource.schema.url : "");
+
+    const hasSchema = computed(() => schemaName.value || schemaUrl.value);
+    const hasExplore = computed(() => explore.length > 0 && explorable_resources && explorable_resources.includes(props.resource.id));
+    const resourcePreviewIndex = computed(() => {
+      return 0;
+    });
+    const resourceStructureIndex = computed(() => {
+      if (hasExplore.value && hasSchema.value) {
+        return 1;
+      }
+      return 0;
+    });
+    const resourceInformationIndex = computed(() => {
+      if (hasExplore.value && hasSchema.value) {
+        return 2;
+      }
+      if (hasSchema.value) {
+        return 1;
+      }
+      return 0;
+    });
+
+    const { asc, getIdFromIndex, isSelected, selectIndex } = useTabs(tabsRef, tabListRef, resourceInformationIndex.value);
 
     const expanded = ref(false);
     const expand = () => {
@@ -396,10 +441,10 @@ export default defineComponent({
         const $elem = unrefElement(tabsRef);
         if ($elem) {
           if(expanded.value) {
-            const { height } = window.getComputedStyle($elem);
-            tabsHeight.value = height;
+            //const { height } = window.getComputedStyle($elem);
+            //tabsHeight.value = height;
           } else {
-            tabsHeight.value = "auto";
+            //tabsHeight.value = "auto";
           }
         }
       }
@@ -415,31 +460,51 @@ export default defineComponent({
       }
     }
 
+    const getTabPanelClass = (selected: boolean) => {
+      return {'fr-tabs__panel--selected': selected };
+    };
+
+    const getTabPanelTabIndex = (selected: boolean) => {
+      return selected ? 0 : -1;
+    };
+
+    const selectTab = (index: number) => {
+      selectIndex(index);
+      registerEvent(getIdFromIndex(index));
+    }
+
     const availabilityChecked = computed(() => props.resource.extras && props.resource.extras['check:available']);
     const lastUpdate = computed(() => props.resource.last_modified);
     const unavailable = computed(() => availabilityChecked.value === false);
     const { authorizeValidation, documentationUrl, loading, validationUrl, schemaReport} = useSchema(props.resource);
-    const hasSchema = computed(() => "name" in props.resource.schema || "url" in props.resource.schema);
     const hasSchemaErrors = computed(() => !!schemaReport.value.size);
-    const explore = getComponentsForHook("explore");
-    const structure = getComponentsForHook("data-structure");
-    const hasExplore = computed(() => explore.length > 0 && explorable_resources && explorable_resources.includes(props.resource.id));
-    const resourceContentId = computed(() => 'resource-' + props.resource.id);
-    const resourceHeaderId = computed(() => 'resource-' + props.resource.id + '-header');
-    const resourceInformationButtonId = computed(() => 'resource-' + props.resource.id + '-information-button');
-    const resourceInformationTabId = computed(() => 'resource-' + props.resource.id + '-information-tab');
-    const resourceStructureButtonId = computed(() => 'resource-' + props.resource.id + '-structure-button');
-    const resourceStructureTabId = computed(() => 'resource-' + props.resource.id + '-structure-tab');
-    const resourcePreviewButtonId = computed(() => 'resource-' + props.resource.id + '-preview-button');
-    const resourcePreviewTabId = computed(() => 'resource-' + props.resource.id + '-preview-tab');
-    const resourceTitleId = computed(() => 'resource-' + props.resource.id + '-title');
-    const resourceCopyId = computed(() => 'resource-' + props.resource.id + '-copy');
     const resourceExternalUrl = computed(() => {
       let hash = "#/resources/" + props.resource.id;
       return window.location.origin + window.location.pathname + hash;
     });
-    const resourceInformationSelectedTab = computed(() => !hasExplore.value && !hasSchema.value);
-    const resourceInformationTabIndex = computed(() => hasExplore.value ? -1 : 0);
+
+    const resourceContentId = computed(() => 'resource-' + props.resource.id);
+    const resourceHeaderId = computed(() => 'resource-' + props.resource.id + '-header');
+    const resourceTitleId = computed(() => 'resource-' + props.resource.id + '-title');
+    const resourceCopyId = computed(() => 'resource-' + props.resource.id + '-copy');
+
+    const resourcePreviewButtonId = computed(() => getIdFromIndex(resourcePreviewIndex.value));
+    const resourcePreviewTabId = computed(() => 'resource-' + props.resource.id + '-preview-tab');
+    const resourcePreviewSelected = computed(() => isSelected(resourcePreviewIndex.value));
+    const resourcePreviewTabIndex = computed(() => getTabPanelTabIndex(resourcePreviewSelected.value));
+    const resourcePreviewClass = computed(() => getTabPanelClass(resourcePreviewSelected.value));
+
+    const resourceStructureButtonId = computed(() => getIdFromIndex(resourceStructureIndex.value));
+    const resourceStructureTabId = computed(() => resourceStructureButtonId.value + '-structure-tab');
+    const resourceStructureSelected = computed(() => isSelected(resourceStructureIndex.value));
+    const resourceStructureTabIndex = computed(() => getTabPanelTabIndex(resourceStructureSelected.value));
+    const resourceStructureClass = computed(() => getTabPanelClass(resourceStructureSelected.value));
+
+    const resourceInformationButtonId = computed(() => getIdFromIndex(resourceInformationIndex.value));
+    const resourceInformationTabId = computed(() => resourceInformationButtonId.value + '-information-tab');
+    const resourceInformationSelected = computed(() => isSelected(resourceInformationIndex.value));
+    const resourceInformationTabIndex = computed(() => getTabPanelTabIndex(resourceInformationSelected.value));
+    const resourceInformationClass = computed(() => getTabPanelClass(resourceInformationSelected.value));
 
     onMounted(() => {
       if(props.expandedOnMount) {
@@ -449,6 +514,12 @@ export default defineComponent({
         new Clipboard(copyRef.value);
       }
     });
+
+    const values = { true: '100%', false: '-100%' };
+    // @ts-ignore this will be fine
+    const translateValueFrom = computed(() => values[String(asc.value)]);
+    // @ts-ignore this will be fine
+    const translateValueTo = computed(() => values[String(!asc.value)]);
 
     return {
       registerEvent,
@@ -471,25 +542,58 @@ export default defineComponent({
       resourceCopyId,
       resourceExternalUrl,
       resourceHeaderId,
-      resourceInformationButtonId,
-      resourceInformationTabId,
       resourcePreviewButtonId,
+      resourcePreviewClass,
+      resourcePreviewIndex,
+      resourcePreviewSelected,
       resourcePreviewTabId,
-      resourceTitleId,
+      resourcePreviewTabIndex,
       resourceStructureButtonId,
+      resourceStructureClass,
+      resourceStructureIndex,
+      resourceStructureSelected,
       resourceStructureTabId,
-      resourceInformationSelectedTab,
+      resourceStructureTabIndex,
+      resourceInformationButtonId,
+      resourceInformationClass,
+      resourceInformationIndex,
+      resourceInformationSelected,
+      resourceInformationTabId,
       resourceInformationTabIndex,
+      resourceTitleId,
       isSelected,
+      selectTab,
       explore,
       hasExplore,
       structure,
-      schemaReport,
       hasSchema,
       hasSchemaErrors,
+      schemaName,
+      schemaReport,
+      schemaUrl,
       schema_documentation_url,
       show_copy_resource_permalink,
+      translateValueFrom,
+      translateValueTo,
     }
   },
 });
 </script>
+<style scoped>
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from {
+  transform: translateX(v-bind(translateValueFrom));
+  opacity: 0;
+}
+.slide-fade-leave-to {
+  transform: translateX(v-bind(translateValueTo));
+  opacity: 0;
+}
+</style>
