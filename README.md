@@ -253,11 +253,6 @@ npm run test
 
 Cypress also comes with [cypress-axe](https://github.com/component-driven/cypress-axe) to allow for accessibility automated testing.
 
-#### env variables
-
-You can customize how the js works with env variables during build time by changing `.env` file.
-
-
 [udata]: https://github.com/opendatateam/udata
 [udata-doc]: http://udata.readthedocs.io/en/stable/
 [udata-develop]: http://udata.readthedocs.io/en/stable/development-environment/
