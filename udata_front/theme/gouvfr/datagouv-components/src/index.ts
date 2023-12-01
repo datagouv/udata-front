@@ -8,5 +8,6 @@ import { getRandomId } from "@gouvminint/vue-dsfr";
 export type { Organization, Owned, Resource, User };
 export * from "./components";
 export * from "./composables";
+export * from "./config";
 export * from "./helpers";
 export { getRandomId, setupI18n, setupI18nWithExistingInstance };
