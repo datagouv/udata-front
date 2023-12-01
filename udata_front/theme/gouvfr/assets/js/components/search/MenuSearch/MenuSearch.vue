@@ -1,29 +1,22 @@
-<!--
----
-name: Menu Search
-category: Search
----
-
-# Menu Search
-
-It's an input working like a [combobox](https://www.w3.org/TR/wai-aria-practices/#combobox)
- and based on a [WAI-ARIA Authoring Practices 1.2 example](https://www.w3.org/TR/wai-aria-practices/examples/combobox/combobox-autocomplete-list.html).
--->
-
 <template>
   <div
-    class="fr-col fr-grid-row"
+    :id="id"
+    class="fr-search-bar"
+    role="search"
   >
+    <label class="fr-label" :for="inputId" :id="labelId">
+      {{ t('Search for data') }}
+    </label>
     <input
       class="fr-input fr-col"
-      :placeholder="$t('Search')"
+      :placeholder="t('Search')"
       ref="input"
       autocomplete="off"
       role="combobox"
       aria-autocomplete="list"
       :aria-controls="uid"
       :aria-expanded="expanded"
-      id="search-input"
+      :id="inputId"
       data-cy="search-input"
       :aria-activedescendant="selected"
       name="q"
@@ -42,14 +35,14 @@ It's an input working like a [combobox](https://www.w3.org/TR/wai-aria-practices
       :aria-expanded="expanded"
       @click.prevent.stop.capture="showAndFocus"
     >
-      {{  $t('Search') }}
+      {{  t('Search') }}
     </button>
     <div
       class="fr-menu fr-collapse autocomplete"
       :id="uid"
       ref="list"
       role="listbox"
-      aria-labelledby="search-label"
+      :aria-labelledby="labelId"
       @mousedown.prevent
     >
       <ul class="fr-menu__list" role="listbox">
@@ -67,36 +60,37 @@ It's an input working like a [combobox](https://www.w3.org/TR/wai-aria-practices
   </div>
 </template>
 
-<script>
-import {ref, defineComponent,reactive, onMounted, onUnmounted} from "vue";
+<script lang="ts">
+import {ref, defineComponent,reactive, onMounted, onUnmounted, ComputedRef, computed} from "vue";
 import { useI18n } from 'vue-i18n'
-import { useCollapse } from "../../composables/useCollapse";
-import MenuSearchOption from "./menu-search-option.vue";
-import datasetIcon from "../../../../templates/svg/search/dataset.svg";
-import reuseIcon from "../../../../templates/svg/search/reuse.svg";
-import organizationIcon from "../../../../templates/svg/search/organization.svg";
-import useSearchUrl from "../../composables/useSearchUrl";
-import useActiveDescendant from "../../composables/useActiveDescendant";
+import { useCollapse } from "../../../composables/useCollapse";
+import MenuSearchOption from "./MenuSearchOption.vue";
+import datasetIcon from "../../../../../templates/svg/search/dataset.svg";
+import reuseIcon from "../../../../../templates/svg/search/reuse.svg";
+import organizationIcon from "../../../../../templates/svg/search/organization.svg";
+import useSearchUrl from "../../../composables/useSearchUrl";
+import useActiveDescendant from "../../../composables/useActiveDescendant";
+import useUid from "../../../composables/useUid";
+
+type MenuOption = {
+  id: string;
+  icon: string;
+  type: string;
+  link: ComputedRef<string>;
+}
 
 export default defineComponent({
-  components: {MenuSearchOption},
+  components: { MenuSearchOption },
   setup() {
-    const {t} = useI18n();
-    const {handleKeyPressForCollapse, expanded, uid, show, hide, registerBackgroundEvent, removeBackgroundEvent} = useCollapse();
+    const { t } = useI18n();
+    const { handleKeyPressForCollapse, expanded, uid, show, hide, registerBackgroundEvent, removeBackgroundEvent } = useCollapse();
     const q = ref('');
-    const {datasetUrl, reuseUrl, organizationUrl} = useSearchUrl(q);
-    /**
-     * @typedef MenuOption
-     * @property {string} id
-     * @property {string} icon
-     * @property {string} type
-     * @property {string} link
-     */
+    const { datasetUrl, reuseUrl, organizationUrl } = useSearchUrl(q);
+    const { id } = useUid("search");
+    const inputId = computed(() => `${id}-input`);
+    const labelId = computed(() => `${id}-label`);
 
-    /**
-     * @type {MenuOption[]}
-     */
-    const options = reactive([
+    const options = reactive<Array<MenuOption>>([
       {
         id: "dataset-option",
         icon: datasetIcon,
@@ -116,18 +110,18 @@ export default defineComponent({
         link: organizationUrl,
       },
     ]);
-    const {handleKeyPressForActiveDescendant, select, selected, selectedOption, isSelected, focusOut, NOT_MOVED_YET, ALREADY_MOVED_DOWN} = useActiveDescendant(options);
+    const { handleKeyPressForActiveDescendant, select, selected, selectedOption, isSelected, focusOut, NOT_MOVED_YET, ALREADY_MOVED_DOWN } = useActiveDescendant(options);
 
-    const input = ref(null);
-    const button = ref(null);
-    const list = ref(null);
+    const input = ref<HTMLElement | null>(null);
+    const button = ref<HTMLElement | null>(null);
+    const list = ref<HTMLElement | null>(null);
 
     onMounted(() => registerBackgroundEvent(input, list, button));
     onUnmounted(() => removeBackgroundEvent());
 
     const showAndFocus = () => {
       if(!expanded.value) {
-        input.value.focus();
+        input.value?.focus();
         showAndSelectIfQuery();
       } else {
         searchSelectedOption();
@@ -163,20 +157,24 @@ export default defineComponent({
     }
 
     return {
-      options,
       button,
-      input,
-      list,
       expanded,
-      selected,
-      isSelected,
-      uid,
-      q,
-      showAndFocus,
       handleFocusOut,
-      showAndSelectIfQuery,
       handleKeyDown,
+      id,
+      input,
+      inputId,
+      labelId,
+      isSelected,
+      list,
+      options,
+      q,
       searchSelectedOption,
+      selected,
+      showAndFocus,
+      showAndSelectIfQuery,
+      t,
+      uid,
     }
   },
 });

@@ -122,17 +122,23 @@
                         <div class="fr-container fr-container-lg--fluid relative overflow-visible">
                             <button class="fr-btn--close fr-btn" aria-controls="modal-search">{{ _('Close') }}</button>
                             <form action="/datasets">
-                                <div class="fr-search-bar vuejs" id="search" role="search" aria-label="{{  _('Search for data') }}">
-                                    <label class="fr-label" for="search-input" id="search-label">
-                                        {{  _('Search for data') }}
-                                    </label>
+                                <div class="fr-grid-row vuejs">
                                     <menu-search></menu-search>
-                                    <noscript class="fr-col fr-grid-row">
+                                </div>
+                                <noscript class="fr-grid-row">
+                                    <div
+                                        id="no-script-search-bar"
+                                        class="fr-search-bar"
+                                        role="search"
+                                    >
+                                        <label class="fr-label" for="no-script-search-bar-input" id="no-script-search-bar-label">
+                                        {{ _('Search for data') }}
+                                        </label>
                                         <input
                                             class="fr-input fr-col"
                                             placeholder="{{  _('Search for data') }}"
                                             type="search"
-                                            id="search-input"
+                                            id="no-script-search-bar-input"
                                             name="q"
                                         />
                                         <button
@@ -143,7 +149,6 @@
                                             {{  _('Search for data') }}
                                         </button>
                                     </noscript>
-                                </div>
                             </form>
                         </div>
                     </div>

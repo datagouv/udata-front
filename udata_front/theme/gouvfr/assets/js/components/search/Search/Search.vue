@@ -143,7 +143,7 @@
           <div v-else-if="results.length">
             <ul class="fr-mt-1w border-default-grey border-top relative z-2">
               <li v-for="(result, key) in results" :key="result.id">
-                <Dataset :dataset="result" :style="zIndex(key)" />
+                <DatasetCard :dataset="result" :style="zIndex(key)" />
               </li>
             </ul>
             <Pagination
@@ -201,24 +201,35 @@
   </form>
 </template>
 
-<script>
-import { defineComponent, ref, onMounted, computed } from "vue";
+<script lang="ts">
+import { defineComponent, ref, onMounted, computed, PropType } from "vue";
 import { useI18n } from 'vue-i18n';
-import axios from "axios";
-import { generateCancelToken, apiv2 } from "../../plugins/api";
-import { useToast } from "../../composables/useToast";
-import useSearchUrl from "../../composables/useSearchUrl";
-import SearchInput from "./search-input.vue";
-import Dataset from "../dataset/card-lg.vue";
-import Loader from "../dataset/loader.vue";
-import SchemaFilter from "./schema-filter.vue";
+import axios, { CancelTokenSource } from "axios";
+import { generateCancelToken, apiv2 } from "../../../plugins/api";
+import { useToast } from "../../../composables/useToast";
+import useSearchUrl from "../../../composables/useSearchUrl";
+import SearchInput from "../search-input.vue";
+import DatasetCard from "../../dataset/card-lg.vue";
+import Loader from "../../dataset/loader.vue";
+import SchemaFilter from "../schema-filter.vue";
 import { Pagination } from "@etalab/udata-front-plugins-helper";
-import MultiSelect from "./multi-select.vue";
-import ActionCard from "../Form/ActionCard/ActionCard.vue";
-import { data_search_feedback_form_url, search_autocomplete_debounce } from "../../config";
-import { debounce } from "../../composables/useDebouncedRef";
-import franceWithMagnifyingGlassIcon from "../../../../templates/svg/illustrations/france_with_magnifying_glass.svg";
-import magnifyingGlassIcon from "../../../../templates/svg/illustrations/magnifying_glass.svg";
+import MultiSelect from "../multi-select.vue";
+import ActionCard from "../../Form/ActionCard/ActionCard.vue";
+import { data_search_feedback_form_url, search_autocomplete_debounce } from "../../../config";
+import { debounce } from "../../../composables/useDebouncedRef";
+import franceWithMagnifyingGlassIcon from "../../../../../templates/svg/illustrations/france_with_magnifying_glass.svg";
+import magnifyingGlassIcon from "../../../../../templates/svg/illustrations/magnifying_glass.svg";
+import type { Dataset } from "../../../types";
+
+type Facets = {
+  organization: string;
+  tag?: string;
+  license?: string;
+  format?: string;
+  geozone?: string;
+  granularity?: string;
+  schema?: string;
+};
 
 export default defineComponent({
   inheritAttrs: false,
@@ -226,7 +237,7 @@ export default defineComponent({
     MultiSelect,
     SearchInput,
     SchemaFilter,
-    Dataset,
+    DatasetCard,
     ActionCard,
     Loader,
     Pagination,
@@ -245,9 +256,8 @@ export default defineComponent({
       default: "",
     },
     sorts: {
-      /** @type {import("vue").PropType<Array<{label: string, order: string, value: string}>>} */
-      type: Array,
-      default: [],
+      type: Array as PropType<Array<{label: string, order: string, value: string}>>,
+      default: () => [],
     }
   },
   setup(props) {
@@ -276,15 +286,10 @@ export default defineComponent({
 
     /**
      * Search results
-     * @type {import("vue").Ref<Array>}
      */
-    const results = ref([]);
+    const results = ref<Array<Dataset>>([]);
 
-    /**
-     *
-     * @param {number} key
-     */
-    const zIndex = (key) => {
+    const zIndex = (key: number) => {
       return {zIndex: results.value.length - key}
     };
 
@@ -306,7 +311,7 @@ export default defineComponent({
     /**
      * All other params are kept here as facets
      */
-    const facets = ref({organization: props.organization});
+    const facets = ref<Facets>({organization: props.organization});
 
     /**
      * Search loading state
@@ -315,33 +320,18 @@ export default defineComponent({
 
     /**
      * Current request if any to be cancelled if a new one comes
-     * @type {import("vue").Ref<import("axios").CancelTokenSource | null>}
      */
-    const currentRequest = ref(null);
+    const currentRequest = ref<CancelTokenSource | null>(null);
 
     /**
      * Vue ref to results HTML
-     * @type {import("vue").Ref<HTMLElement | null>}
      */
-    const resultsRef = ref(null);
+    const resultsRef = ref<HTMLElement | null>(null);
 
     /**
      * Vue ref to results HTML
-     * @type {import("vue").Ref<HTMLElement | null>}
      */
-    const searchRef = ref(null);
-
-    /**
-     *
-     * @param {Array} data
-     */
-    const formatResults = (data) => {
-      results.value = data.map(result => {
-        result.last_modified = new Date(result.last_modified);
-        return result;
-      });
-      return results;
-    };
+    const searchRef = ref<HTMLElement | null>(null);
 
     const SAVE_TO_HISTORY = true;
     const DONT_SAVE_TO_HISTORY = false;
@@ -357,8 +347,7 @@ export default defineComponent({
       if (save) {
         window.history.pushState(null, "", url);
       }
-      /** @type NodeListOf<HTMLAnchorElement> */
-      let linksWithQuery = document.querySelectorAll('[data-q]');
+      let linksWithQuery = document.querySelectorAll('[data-q]') as NodeListOf<HTMLAnchorElement>;
       for (let link of linksWithQuery) {
         link.href = reuseUrl.value;
       }
@@ -381,7 +370,7 @@ export default defineComponent({
         })
         .then((res) => res.data)
         .then((result) => {
-          formatResults(result.data);
+          results.value = result.data;
           totalResults.value = result.total;
           loading.value = false;
           updateUrl(saveToHistory);
@@ -488,15 +477,12 @@ export default defineComponent({
     });
 
     const sortOptions = computed(() => props.sorts.map(sort => ({
-        value: sort.order == 'asc' ? sort.value : '-' + sort.value,
-        label: sort.label,
-      })));
+      value: sort.order == 'asc' ? sort.value : '-' + sort.value,
+      label: sort.label,
+    })));
 
     const searchParameters = computed(() => {
-      /**
-       *  @type Record<string, string>
-       */
-      let params = {};
+      let params: Record<string, string> = {};
       for (let key in facets.value) {
         if(facets.value[key]) {
           params[key] = facets.value[key];
@@ -523,9 +509,7 @@ export default defineComponent({
       searchSort.value = sort;
       params.delete('sort');
     }
-    /**
-     * @type {import("vue").Ref<{organization: ?string, tag: ?string, license: ?string, format: ?string, geozone: ?string, granularity: ?string, schema: ?string}>}
-     */
+
     facets.value = {...Object.fromEntries(params), organization: props.organization || params.get("organization") || ""};
     if (props.disableFirstSearch) {
       loading.value = true;
@@ -539,7 +523,7 @@ export default defineComponent({
         if (total && parseInt(total) > 0) {
           let datasetResults = resultsRef.value.dataset.results;
           if(datasetResults) {
-            formatResults(JSON.parse(datasetResults));
+            results.value = JSON.parse(datasetResults);
           }
           totalResults.value = JSON.parse(total);
         }

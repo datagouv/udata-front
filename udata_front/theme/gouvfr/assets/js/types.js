@@ -75,6 +75,11 @@
  * }} Dataset
  */
 
+/**
+ * @typedef {Omit<Dataset, 'last_modified'> & {
+ * last_modified: Date;}} UiDataset
+ */
+
  /**
   * @typedef {"start" | "center" | "end"} AxisAlignment
   */
