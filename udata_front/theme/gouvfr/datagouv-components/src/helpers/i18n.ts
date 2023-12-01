@@ -91,4 +91,4 @@ export function reloadLocale() {
   }
 }
 
-export { dayjs, i18n, setupI18n };
+export { dayjs, i18n, setupI18n, setupI18nWithExistingInstance };
