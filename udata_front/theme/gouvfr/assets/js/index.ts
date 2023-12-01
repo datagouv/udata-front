@@ -1,7 +1,9 @@
 import { createApp } from "vue";
+import { setupComponents } from "@etalab/data.gouv.fr-components";
 
-import "./dsfr";
-import * as dsfr from "@gouvfr/dsfr/dist/dsfr/dsfr.module";
+import "./dsfr.ts";
+// @ts-ignore
+import "@gouvfr/dsfr/dist/dsfr/dsfr.module";
 
 import Chart from "./components/charts/chart.vue";
 import Threads from "./components/discussions/Threads.vue";
@@ -17,20 +19,36 @@ import Resources from "./components/dataset/resource/resources.vue";
 import Captcha from "./components/utils/captcha.vue";
 import Toggletip from "./components/utils/Toggletip/Toggletip.vue";
 
-import "./components/vanilla/tabs";
-import "./components/vanilla/accordion";
-import "./components/vanilla/clipboard";
-import "./components/vanilla/dialog";
-import "./components/vanilla/sort-search";
-import handleUpdateUrlButtons from "./components/vanilla/update-url";
+import "./components/vanilla/tabs.js";
+import "./components/vanilla/accordion.js";
+import "./components/vanilla/clipboard.js";
+import "./components/vanilla/dialog.js";
+import "./components/vanilla/sort-search.js";
+import handleUpdateUrlButtons from "./components/vanilla/update-url.js";
 
-import Api from "./plugins/api";
-import EventBus from "./plugins/eventbus";
-import Auth from "./plugins/auth";
-import i18n from "./i18n";
+import i18n from "./i18n.ts";
+import { admin_root, explorable_resources, schema_catalog_url, schema_documentation_url, schema_validata_url, title } from "./config.ts";
+import Api from "./plugins/api.ts";
+import EventBus from "./plugins/eventbus.ts";
+import Auth from "./plugins/auth.ts";
+import InitSentry from "./sentry.ts";
 
-import InitSentry from "./sentry";
+setupComponents({
+  admin_root,
+  default_lang: i18n.global.locale.value,
+  explorable_resources,
+  only_locales: i18n.global.locale.value,
+  schema_catalog_url,
+  schema_documentation_url,
+  schema_validata_url,
+  show_copy_resource_permalink: true,
+  title,
+});
 
+/**
+ *
+ * @param {HTMLElement} el
+ */
 const configAndMountApp = (el) => {
   const app = createApp({});
 
@@ -56,12 +74,15 @@ const configAndMountApp = (el) => {
   app.component("chart", Chart);
   app.component("toggletip", Toggletip);
 
-  // unset delimiters used in html templates to prevent injections using {{ }}
+  // @ts-ignore unset delimiters used in html templates to prevent injections using {{ }}
   app.config.compilerOptions.delimiters = [];
 
-  const vm = app.mount(el);
+  app.mount(el);
 };
 
+/**
+ * @type {NodeListOf<HTMLElement>}
+ */
 const elements = document.querySelectorAll(".vuejs");
 
 elements.forEach((el) => {
@@ -84,6 +105,7 @@ elements.forEach((el) => {
     throw e;
   }
 });
+// @ts-ignore dsfr is added by @gouvfr/dsfr
 globalThis.dsfr.start();
 console.log("JS is injected !");
 handleUpdateUrlButtons();

@@ -222,7 +222,7 @@ import magnifyingGlassIcon from "../../../../../templates/svg/illustrations/magn
 import type { Dataset } from "../../../types";
 
 type Facets = {
-  organization: string;
+  organization?: string;
   tag?: string;
   license?: string;
   format?: string;
@@ -385,9 +385,8 @@ export default defineComponent({
 
     /**
      * Called when user type in search field
-     * @param {string} input - input typed by user
      */
-    const handleSearchChange = (input) => {
+    const handleSearchChange = (input: string) => {
       queryString.value = input;
       currentPage.value = 1;
       search();
@@ -396,23 +395,12 @@ export default defineComponent({
     /**
      * Called on every facet selector change, updates the `facets.xxx` object then searches with new values
      */
-    const handleFacetChange = (facet) => {
-      return (values) => {
-        // Values can either be an array of varying length, or a String.
-        if (Array.isArray(values)) {
-          if (values.length > 1) {
-            facets.value[facet] = values.map((obj) => obj.value);
-          } else if (values.length === 1) {
-            facets.value[facet] = values[0].value;
-          } else {
-            facets.value[facet] = null;
-          }
-        } else {
-          if(values) {
+    const handleFacetChange = (facet: keyof Facets) => {
+      return (values: string) => {
+        if(values) {
             facets.value[facet] = values;
           } else {
-            facets.value[facet] = null;
-          }
+            facets.value[facet] = undefined;
         }
         if (props.organization) {
           facets.value.organization = props.organization;
@@ -432,9 +420,8 @@ export default defineComponent({
 
     /**
      * Change current page
-     * @param {number} page
      */
-    const changePage = (page) => {
+    const changePage = (page: number) => {
       currentPage.value = page;
       search();
       scrollToTop();
@@ -471,8 +458,9 @@ export default defineComponent({
      * We don't count scoped search as being filtered
      */
     const isFiltered = computed(() => {
-      return Object.keys(facets.value).some(
-        (key) => facets.value[key]?.length > 0 && (props.organization ? key !== "organization" : true)
+      const keys = Object.keys(facets.value) as Array<keyof Facets>;
+      return keys.some(
+        (key) => facets.value[key]?.length && (props.organization ? key !== "organization" : true)
       );
     });
 
@@ -483,9 +471,11 @@ export default defineComponent({
 
     const searchParameters = computed(() => {
       let params: Record<string, string> = {};
-      for (let key in facets.value) {
-        if(facets.value[key]) {
-          params[key] = facets.value[key];
+      let key: keyof Facets;
+      for (key in facets.value) {
+        const facet = facets.value[key];
+        if(facet) {
+          params[key] = facet;
         }
       }
       if (currentPage.value > 1) params.page = currentPage.value.toString();
@@ -532,7 +522,7 @@ export default defineComponent({
       addEventListener('popstate', () => {
         // Update URL to match current search params value for deep linking
         const url = new URL(window.location.href);
-        const params = {};
+        const params: Record<string, string> = {};
         for (const [key, value] of url.searchParams) {
           params[key] = value;
         }

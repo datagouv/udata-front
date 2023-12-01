@@ -1,5 +1,6 @@
 import axios from "axios";
 import config from "../config";
+import type { App } from "vue";
 
 const CancelToken = axios.CancelToken;
 export const generateCancelToken = () => CancelToken.source();
@@ -14,7 +15,7 @@ export const apiv2 = axios.create({
   baseURL: config.api_2_root,
 });
 
-export const install = (app) => {
+export const install = (app: App) => {
   app.config.globalProperties.$api = api;
   app.config.globalProperties.$apiv2 = apiv2;
 };

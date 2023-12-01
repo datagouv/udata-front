@@ -1,11 +1,12 @@
+// @ts-ignore
 import RemoveMarkdown from "remove-markdown";
 
-export const truncate = (val, length = 300) => {
+export const truncate = (val: string, length = 300) => {
   if (typeof val !== "string") return;
   return val.length > length ? val.slice(0, length) + "…" : val; //TODO, maybe® : properly truncate words
 };
 
-export const excerpt = (val, length = 300) => {
+export const excerpt = (val: string, length = 300) => {
   if (typeof val !== "string") return;
   return truncate(RemoveMarkdown(val), length);
 };

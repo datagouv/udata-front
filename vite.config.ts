@@ -10,9 +10,8 @@ import projectInformation from "./package.json";
 
 /**
  * Get theme folder name
- * @returns {string}
  */
-export function getTheme() {
+export function getTheme(): string {
   let theme = "gouvfr";
 
   const themeInfoFiles = globSync('udata_front/theme/*/info.json');
@@ -23,8 +22,7 @@ export function getTheme() {
 
   if(themeInfoFiles.length === 1) {
     const file = themeInfoFiles[0];
-    /** @type {Record<string, string>} */
-    const info = require(`./${file}`);
+    const info: Record<string, string> = require(`./${file}`);
     theme = info.identifier;
   }
   return theme;
@@ -58,7 +56,7 @@ export default defineConfig((config) => {
     build: {
       rollupOptions: {
         input: [
-          `udata_front/theme/${theme}/assets/js/index.js`,
+          `udata_front/theme/${theme}/assets/js/index.ts`,
           `udata_front/theme/${theme}/assets/less/style.less`,
           "node_modules/es-module-shims/dist/es-module-shims.js",
           "node_modules/vue/dist/vue.esm-browser.prod.js",
@@ -70,7 +68,7 @@ export default defineConfig((config) => {
         external: ['vue', 'vue-content-loader'],
         output: {
           dir: `./udata_front/theme/${theme}/static/`,
-          entryFileNames: `js/[name].js`,
+          entryFileNames: `js/[name].${projectInformation.version}.js`,
           chunkFileNames: `js/[name].${projectInformation.version}.js`,
           assetFileNames: `assets/[name].[ext]`,
           // Provide global variables to use in the UMD build

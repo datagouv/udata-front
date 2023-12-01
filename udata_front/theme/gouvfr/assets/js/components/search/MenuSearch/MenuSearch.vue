@@ -1,7 +1,7 @@
 <template>
   <div
     :id="id"
-    class="fr-search-bar"
+    class="fr-col fr-search-bar"
     role="search"
   >
     <label class="fr-label" :for="inputId" :id="labelId">
@@ -62,7 +62,7 @@
 
 <script lang="ts">
 import {ref, defineComponent,reactive, onMounted, onUnmounted, ComputedRef, computed} from "vue";
-import { useI18n } from 'vue-i18n'
+import { useI18n } from 'vue-i18n';
 import { useCollapse } from "../../../composables/useCollapse";
 import MenuSearchOption from "./MenuSearchOption.vue";
 import datasetIcon from "../../../../../templates/svg/search/dataset.svg";

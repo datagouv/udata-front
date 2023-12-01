@@ -43,31 +43,31 @@
     <script type="importmap-shim">
     {
         "imports": {
-            "vue": "{{ theme_static('js/vue.esm-browser.prod.js') }}",
-            "vue-content-loader": "{{ theme_static('js/vue-content-loader.es.js') }}"
+            "vue": "{{ theme_static('js/vue.esm-browser.prod.js', inline_burst=True) }}",
+            "vue-content-loader": "{{ theme_static('js/vue-content-loader.es.js', inline_burst=True) }}"
         }
     }
     </script>
-    <script type="module-shim" src="{{ theme_static('js/vue.esm-browser.prod.js') }}"></script>
-    <script type="module-shim" src="{{ theme_static('js/vue-content-loader.es.js') }}"></script>
-    <script type="module-shim" src="{{ theme_static('js/index.js') }}"></script>
+    <script type="module-shim" src="{{ theme_static('js/vue.esm-browser.prod.js', inline_burst=True) }}"></script>
+    <script type="module-shim" src="{{ theme_static('js/vue-content-loader.es.js', inline_burst=True) }}"></script>
+    <script type="module-shim" src="{{ theme_static('js/index.js', inline_burst=True) }}"></script>
 
-    <script async type="module" src="{{ theme_static('js/es-module-shims.js') }}"></script>
+    <script async type="module" src="{{ theme_static('js/es-module-shims.js', inline_burst=True) }}"></script>
 
     <script type="systemjs-importmap">
     {
         "imports": {
-            "vue": "{{ theme_static('js/vue.esm-browser.prod-legacy.js') }}",
-            "vue-content-loader": "{{ theme_static('js/vue-content-loader.es-legacy.js') }}"
+            "vue": "{{ theme_static('js/vue.esm-browser.prod-legacy.js', inline_burst=True) }}",
+            "vue-content-loader": "{{ theme_static('js/vue-content-loader.es-legacy.js', inline_burst=True) }}"
         }
     }
     </script>
     <script nomodule src="{{ theme_static('js/s.min.js') }}"></script>
-    <script nomodule src="{{ theme_static('js/vue.esm-browser.prod-legacy.js') }}"></script>
-    <script nomodule src="{{ theme_static('js/vue-content-loader.es-legacy.js') }}"></script>
+    <script nomodule src="{{ theme_static('js/vue.esm-browser.prod-legacy.js', inline_burst=True) }}"></script>
+    <script nomodule src="{{ theme_static('js/vue-content-loader.es-legacy.js', inline_burst=True) }}"></script>
     <script nomodule src="{{ theme_static('js/_commonjsHelpers-legacy.js', inline_burst=True) }}"></script>
-    <script nomodule src="{{ theme_static('js/polyfills-legacy.js') }}"></script>
-    <script nomodule src="{{ theme_static('js/index-legacy.js') }}"></script>
+    <script nomodule src="{{ theme_static('js/polyfills-legacy.js', inline_burst=True) }}"></script>
+    <script nomodule src="{{ theme_static('js/index-legacy.js', inline_burst=True) }}"></script>
     {% block extra_js %}{% endblock %}
 
     {{ hook('footer.snippets') }}

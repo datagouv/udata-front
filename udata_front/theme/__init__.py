@@ -48,10 +48,7 @@ def theme_static_with_version(ctx, filename, external=False, inline_burst=False)
                              _external=external)
     if url.endswith('/'):  # this is a directory, no need for cache burst
         return url
-    if current_app.config['DEBUG']:
-        burst = time()
-    else:
-        burst = current.entrypoint.dist.version
+    burst = current.entrypoint.dist.version
     if inline_burst:
         url_parts = url.split(".")
         return '.'.join(url_parts[:-1] + [str(burst), url_parts[-1]])

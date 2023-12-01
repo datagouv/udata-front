@@ -25,32 +25,26 @@ bus.dispatch("someType", "someValue");
 
 The following events are used :
 */
-/**
- * @typedef {"resourcesSearch"} SearchEvents On new search, with the query as param (see {@link SearchEventsParameters})
+export type SearchEvents = "resourcesSearch";
 
-They require theses parameters :
- * @typedef {{[search in SearchEvents]: {type?: string, value: string}}} SearchEventsParameters
+export type SearchEventsParameters = {
+[search in SearchEvents]: { type?: string; value: string; };
+};
 
-Mitt handlers must use the proper parameters for each event.
- * @typedef {SearchEventsParameters} Events
+export type Events = SearchEventsParameters;
 
-Events are type checked.
- * @typedef {keyof Events} UdataEventType
-*/
+export type UdataEventType = keyof Events;
 
 import mitt from "mitt";
+import type { App } from "vue";
 
-const SEARCH_EVENT = "search";
+export const SEARCH_EVENT = "search";
 
-/** @type {SearchEvents} */
-export const RESOURCES_SEARCH = "resourcesSearch";
+export const RESOURCES_SEARCH: SearchEvents = "resourcesSearch";
 
-/**
- * @type {import("mitt").Emitter<Events>} Emitter of
- */
-export const bus = mitt();
+export const bus = mitt<Events>();
 
-export const install = (app) => {
+export const install = (app: App) => {
   app.config.globalProperties.$bus = bus;
 };
 

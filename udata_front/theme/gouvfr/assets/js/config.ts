@@ -4,51 +4,51 @@
  * Lots of variables here are probably useless for the front-end
  */
 
+import { User } from "@etalab/data.gouv.fr-components";
+import type { Primitive } from "@sentry/types";
+
 /**
  * Simple helper to fetch attribute on given css selector
  */
-function _attr(selector, name) {
+function _attr(selector: string, name: string) {
   const el = document.querySelector(selector);
-  return el ? el.getAttribute(name) : undefined;
+  return el?.getAttribute(name) ?? undefined;
 }
 
 /**
  * Simple helper to <meta/> tag content given its name
  */
-function _meta(name) {
+function _meta(name: string) {
   return _attr(`meta[name=${name}]`, "content");
 }
 
 /**
  * A simple helper to parse JSON from a <meta/> tag
- * @return {any} meta content as json or false on error
+ * @return meta content as json or false on error
  */
-function _jsonMeta(name) {
+function _jsonMeta(name: string) {
   const data = _meta(name);
   return data ? JSON.parse(decodeURIComponent(data)) : false;
 }
 
+const userEl = document.querySelector<HTMLElement>("meta[name=current-user]");
+
 /**
  * The current user extracted from the header
  */
-export let user;
-const userEl = document.querySelector("meta[name=current-user]");
-
-if (userEl instanceof HTMLElement) {
-  user = {
-    id: userEl.getAttribute("content"),
-    slug: userEl.dataset.slug,
-    first_name: userEl.dataset.first_name,
-    last_name: userEl.dataset.last_name,
-    avatar: userEl.dataset.avatar,
-    roles: userEl.dataset.roles.split(","),
-  };
-}
+export const user: User = {
+  id: userEl?.getAttribute("content") || "",
+  slug: userEl?.dataset.slug,
+  first_name: userEl?.dataset.first_name || "",
+  last_name: userEl?.dataset.last_name || "",
+  avatar: userEl?.dataset.avatar,
+  roles: userEl?.dataset.roles?.split(",") || [],
+};
 
 /**
  * Map debug features on Webpack DEBUG flag
  */
-export const debug = false; //TODO : handle this, no more webpack
+export const debug = import.meta.env.DEV; //TODO : handle this, no more webpack
 
 export const defaultLang = "en";
 
@@ -134,10 +134,36 @@ export const data_search_feedback_form_url = _meta("data-search-feedback-form-ur
 export const guides_quality_url = _meta("guides-quality-url");
 
 /**
+ * The dataset list URL
+ */
+export const dataset_url = _meta("dataset-url");
+
+/**
+ * The organization list URL
+ */
+export const organization_url = _meta("organization-url");
+
+/**
+ * The reuse list URL
+ */
+export const reuse_url = _meta("reuse-url");
+
+/**
  * Sentry configuration (as json) if available
  */
 const sentryEl = document.querySelector("meta[name=sentry]");
-export const sentry = {};
+
+type SentryConfiguration = {
+  dsn: string | undefined;
+  release: string | undefined;
+  tags: Record<string, Primitive>
+}
+
+export const sentry: SentryConfiguration = {
+  dsn: undefined,
+  release: undefined,
+  tags: {},
+};
 
 if (sentryEl instanceof HTMLElement) {
   sentry.dsn = sentryEl.getAttribute("content") || undefined;
@@ -202,26 +228,7 @@ export const search_autocomplete_enabled = _jsonMeta("search-autocomplete-enable
  */
 export const search_autocomplete_debounce = _jsonMeta("search-autocomplete-debounce");
 
-// New generic `js-config-*` variables : simply add them to `metadata.html` with a meta name="js-config-something", content="yourValue" and import this file.
-// Everything is exported in the `values` variable as key: value pairs
-const valuesPrefix = "js-config-";
-
-export const values = [
-  ...document.querySelectorAll(`meta[name^="${valuesPrefix}"]`),
-].reduce((acc, el) => {
-  if (!el) return acc;
-
-  //Stripping prefix from name, camelizing it too (kebab-case is delicious but hard to use in Javascript)
-  const propertyName = el
-    .getAttribute("name")
-    .replace(valuesPrefix, "")
-    .replace(/-./g, (x) => x[1].toUpperCase());
-
-  return { ...acc, [propertyName]: el.getAttribute("content") };
-}, {});
-
-/** @type {Array<string> | false} */
-export const explorable_resources = _jsonMeta("explorable-resources");
+export const explorable_resources: Array<string> = _jsonMeta("explorable-resources") || [];
 
 export default {
   user,
@@ -248,7 +255,6 @@ export default {
   is_delete_me_enabled,
   hidpi,
   tags,
-  values,
   resources_default_page_size,
   resources_min_count_to_show_search,
   markdown,

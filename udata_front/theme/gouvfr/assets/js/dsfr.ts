@@ -3,6 +3,10 @@
  * Then, they overwrite it with the DSFR object
  * We use a manual mode to load all our vue instances before starting the DSFR engine.
  */
+
+import type { AxisAlignment } from "./types";
+
+// @ts-ignore La propriété `dsfr` est comprise par @gouvfr/dsfr
 window.dsfr = {
     mode: 'manual',
 }
@@ -12,10 +16,8 @@ window.dsfr = {
  *
  * @remarks
  * It abstracts the fact that the dsfr name is made for flex-direction row and is odd for flex-direction column.
- *
- * @param {import("./types").AxisAlignment} alignment
  */
-export function getMainAxisAlignment(alignment) {
+export function getMainAxisAlignment(alignment: AxisAlignment) {
   switch(alignment) {
     case "start":
       return "left";
@@ -31,10 +33,8 @@ export function getMainAxisAlignment(alignment) {
  *
  * @remarks
  * It abstracts the fact that the dsfr name is made for flex-direction row and is odd for flex-direction column.
- *
- * @param {import("./types").AxisAlignment} alignment
  */
-export function getCrossAxisAlignment(alignment) {
+export function getCrossAxisAlignment(alignment: AxisAlignment) {
   switch(alignment) {
     case "start":
       return "top";

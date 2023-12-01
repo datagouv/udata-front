@@ -67,12 +67,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, ref } from "vue";
 import { auth } from "../../../plugins/auth";
 import { user } from "../../../config";
 import Author from "../Author/Author.vue";
 import ThreadCreateButton from "./ThreadCreateButton.vue";
+import type { NewDiscussion } from "../../../types";
 
 export default defineComponent({
   expose: ["displayForm"],
@@ -116,8 +117,7 @@ export default defineComponent({
     const submit = () => {
       loading.value = true;
 
-      /** @type {import("../../../types").NewDiscussion} */
-      const values = {
+      const values: NewDiscussion = {
         title: title.value,
         comment: comment.value,
         subject: {
