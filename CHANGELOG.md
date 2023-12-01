@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 3.2.10 (2023-12-01)
 
 - Ignore another ResizeObserver error [#321](https://github.com/etalab/udata-front/pull/321)
 - Fixed ol not appearing in descriptions [#322](https://github.com/etalab/udata-front/pull/322)
