@@ -45,11 +45,7 @@ setupComponents({
   title,
 });
 
-/**
- *
- * @param {HTMLElement} el
- */
-const configAndMountApp = (el) => {
+const configAndMountApp = (el: HTMLElement) => {
   const app = createApp({});
 
   // Configure as early as possible in the app's lifecycle
@@ -80,10 +76,7 @@ const configAndMountApp = (el) => {
   app.mount(el);
 };
 
-/**
- * @type {NodeListOf<HTMLElement>}
- */
-const elements = document.querySelectorAll(".vuejs");
+const elements = document.querySelectorAll<HTMLElement>(".vuejs");
 
 elements.forEach((el) => {
   //We keep the div HTML from before trying to mount the VueJS App

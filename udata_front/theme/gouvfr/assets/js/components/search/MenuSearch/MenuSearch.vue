@@ -135,7 +135,7 @@ export default defineComponent({
       }
     }
 
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       showAndSelectIfQuery();
       let moved = NOT_MOVED_YET;
       if(!expanded.value) {
