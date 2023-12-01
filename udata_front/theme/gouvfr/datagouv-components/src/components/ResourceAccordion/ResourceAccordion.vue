@@ -196,7 +196,7 @@
                     </div>
                       <i18n-t keypath="Schemas allow to describe data models, discover how schemas improve your data quality and the available use cases on {address}" class="fr-text--xs fr-m-0" tag="p" scope="global">
                         <template #address>
-                          <a :href="schema_documentation_url">schema.data.gouv.fr</a>
+                          <a :href="config.schema_documentation_url">schema.data.gouv.fr</a>
                         </template>
                       </i18n-t>
                   </template>
@@ -304,7 +304,7 @@
                   </DescriptionDetails>
                 </template>
               </DescriptionList>
-              <div class="fr-col-auto fr-ml-auto" v-if="show_copy_resource_permalink">
+              <div class="fr-col-auto fr-ml-auto" v-if="config.show_copy_resource_permalink">
                 <button
                   :id="resourceCopyId"
                   ref="copyRef"
@@ -352,7 +352,7 @@ import DescriptionTerm from "../DescriptionList/DescriptionTerm.vue";
 import OrganizationNameWithCertificate from "../Organization/OrganizationNameWithCertificate.vue";
 import useSchema from "../../composables/resources/useSchema";
 import useComponentsForHook from "../../composables/useComponentsForHook";
-import { explorable_resources, schema_documentation_url, show_copy_resource_permalink } from "../../config";
+import { config } from "../../config";
 import { filesize, formatRelativeIfRecentDate, formatDate, markdown } from "../../helpers";
 import type { Resource } from "../../types/resources";
 import { templateRef, unrefElement } from "@vueuse/core";
@@ -391,7 +391,7 @@ const schemaName = computed(() => "name" in props.resource.schema ? props.resour
 const schemaUrl = computed(() => "url" in props.resource.schema ? props.resource.schema.url : "");
 
 const hasSchema = computed(() => schemaName.value || schemaUrl.value);
-const hasExplore = computed(() => explore.length > 0 && explorable_resources && explorable_resources.includes(props.resource.id));
+const hasExplore = computed(() => explore.length > 0 && config.explorable_resources && config.explorable_resources.includes(props.resource.id));
 const resourcePreviewIndex = computed(() => {
   return 0;
 });
@@ -502,7 +502,7 @@ onMounted(() => {
   if(props.expandedOnMount) {
     expand();
   }
-  if(copyRef.value && show_copy_resource_permalink) {
+  if(copyRef.value && config.show_copy_resource_permalink) {
     new Clipboard(copyRef.value);
   }
 });

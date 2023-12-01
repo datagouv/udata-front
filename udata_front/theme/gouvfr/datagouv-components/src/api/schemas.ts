@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { AxiosResponse } from "axios";
-import { schema_catalog_url } from "../config";
+import { config } from "../config";
 
 /**
  * A schema version.
@@ -54,13 +54,13 @@ let catalogRequest: Promise<Array<RegisteredSchema>> | null = null;
  * Get Schema Catalog
  */
 export default function getCatalog() {
-  if(!schema_catalog_url) {
+  if(!config.schema_catalog_url) {
     catalogRequest = Promise.resolve([]);
   }
   if (catalogRequest) {
     return catalogRequest;
   }
-  catalogRequest = axios.get<SchemaResponseData>(schema_catalog_url)
+  catalogRequest = axios.get<SchemaResponseData>(config.schema_catalog_url)
   .then((resp) => resp.data)
   .then((data) => data.schemas);
   return catalogRequest;

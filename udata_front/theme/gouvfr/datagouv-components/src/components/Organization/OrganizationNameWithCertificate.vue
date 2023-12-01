@@ -3,7 +3,7 @@
   <span
     v-if="organizationCertified"
     class="fr-icon-success-line fr-icon--sm text-blue-400"
-    :title="t('The identity of this public service is certified by {certifier}', { certifier: title })"
+    :title="t('The identity of this public service is certified by {certifier}', { certifier: config.title })"
     aria-hidden="true"
   >
   </span>
@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { title } from "../../config";
+import { config } from "../../config";
 import useOrganizationCertified from "../../composables/organizations/useOrganizationCertified";
 import { Organization } from "../../types/organizations";
 

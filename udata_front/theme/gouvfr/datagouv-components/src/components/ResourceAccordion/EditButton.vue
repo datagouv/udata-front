@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { admin_root } from "../../config";
+import { config } from "../../config";
 import { useI18n } from "vue-i18n";
 
 type Props = {
@@ -23,5 +23,5 @@ const props = withDefaults(defineProps<Props>(), {
 
 const { t } = useI18n();
 const resourceType = props.isCommunityResource ? 'community-resource' : 'resource';
-const adminUrl = `${admin_root}dataset/${props.datasetId}/${resourceType}/${props.resourceId}`;
+const adminUrl = `${config.admin_root}dataset/${props.datasetId}/${resourceType}/${props.resourceId}`;
 </script>

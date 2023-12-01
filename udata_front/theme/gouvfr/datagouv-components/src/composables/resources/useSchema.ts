@@ -1,7 +1,7 @@
 import { useI18n } from 'vue-i18n';
 import { ref, computed } from "vue";
 import getCatalog from "../../api/schemas";
-import { schema_documentation_url, schema_validata_url } from "../../config";
+import { config } from "../../config";
 import { useToast } from "../useToast";
 import type { Resource } from "../../types/resources";
 
@@ -37,7 +37,7 @@ export default function useSchema(resource: Resource) {
 
   const authorizeValidation = computed(() => !!schema.value && schema.value.schema_type === 'tableschema');
 
-  const documentationUrl = computed(() => `${schema_documentation_url}${schemaName.value}/`);
+  const documentationUrl = computed(() => `${config.schema_documentation_url}${schemaName.value}/`);
 
   const validationUrl = computed(() => {
     if(!authorizeValidation || !("name" in resource.schema)) {
@@ -56,7 +56,7 @@ export default function useSchema(resource: Resource) {
       'url': resource.url,
       ...schemaPath,
     }).toString();
-    return `${schema_validata_url}/table-schema?${query}`;
+    return `${config.schema_validata_url}/table-schema?${query}`;
   });
 
   const schemaReport = computed(() => {
