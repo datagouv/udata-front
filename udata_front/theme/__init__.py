@@ -30,7 +30,7 @@ current = LocalProxy(get_current_theme)
 
 
 @pass_context
-def theme_static_with_version(ctx, filename, external=False, inline_burst=False):
+def theme_static_with_version(ctx, filename, external=False, inline_burst=False, force_version=False):
     '''
     Override the default theme static to add cache burst, ex: [file].js?_=[burst]
     If inline_burst is true, burst is not added as a dummy param but in filename directly:
@@ -48,7 +48,10 @@ def theme_static_with_version(ctx, filename, external=False, inline_burst=False)
                              _external=external)
     if url.endswith('/'):  # this is a directory, no need for cache burst
         return url
-    burst = current.entrypoint.dist.version
+    if current_app.config['DEBUG'] and not force_version:
+        burst = time()
+    else:
+        burst = current.entrypoint.dist.version
     if inline_burst:
         url_parts = url.split(".")
         return '.'.join(url_parts[:-1] + [str(burst), url_parts[-1]])
