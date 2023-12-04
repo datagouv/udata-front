@@ -26,12 +26,12 @@ Check the example below for more info :
       :page="currentPage"
       :page-size="pageSize"
       :total-results="totalResults"
-      :change-page="changePage"
+      @change="changePage"
     />
 </template>
 
 <script>
-import Pagination from "../components/pagination/pagination.vue"
+import Pagination from "@etalab/data.gouv.fr-components"
 
 export default {
   name: "XXX",
@@ -51,7 +51,7 @@ export default {
 -->
 
 <template>
-  <nav role="navigation" class="fr-pagination fr-pagination--centered" aria-label="Pagination">
+  <nav role="navigation" class="fr-pagination fr-pagination--centered" :aria-label="t('Pagination')">
     <ul class="fr-pagination__list">
       <li>
         <a
@@ -59,7 +59,7 @@ export default {
           class="fr-pagination__link fr-pagination__link--first"
           @click.prevent="onClick(1)"
         >
-          {{ $t('First page') }}
+          {{ t('First page') }}
         </a>
       </li>
       <li>
@@ -68,7 +68,7 @@ export default {
           class="fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label"
           @click.prevent="previousPage"
         >
-          {{ $t('Previous page') }}
+          {{ t('Previous page') }}
         </a>
       </li>
       <li>
@@ -77,7 +77,7 @@ export default {
           :href="page === 1 ? undefined : '#'"
           class="fr-pagination__link"
           :class="{'fr-hidden fr-unhidden-sm': page > 1}"
-          :title="$t('Page', {nb: 1})"
+          :title="t('Page {nb}', {nb: 1})"
           @click.prevent="onClick(1)"
           :data-page="1"
         >
@@ -90,7 +90,7 @@ export default {
           :class="{'fr-hidden fr-unhidden-lg': index < page - 1 || index > page + 1}"
           :aria-current="page === index ? 'page' : undefined"
           :href="page === index ? undefined : '#'"
-          :title="$t('Page', {nb: index})"
+          :title="t('Page {nb}', {nb: index})"
           @click.prevent="onClick(index)"
           :data-page="index"
           v-if="index"
@@ -106,7 +106,7 @@ export default {
           class="fr-pagination__link"
           :aria-current="page === pageCount ? 'page' : undefined"
           :href="page === pageCount ? undefined : '#'"
-          :title="$t('Page', {nb: pageCount})"
+          :title="t('Page {nb}', {nb: pageCount})"
           @click.prevent="onClick(pageCount)"
           :data-page="pageCount"
         >
@@ -119,7 +119,7 @@ export default {
           :href="page === pageCount ? undefined : '#'"
           @click.prevent="nextPage"
         >
-          {{ $t('Next page') }}
+          {{ t('Next page') }}
         </a>
       </li>
       <li>
@@ -128,70 +128,54 @@ export default {
           :href="page === pageCount ? undefined : '#'"
           @click.prevent="onClick(pageCount)"
         >
-          {{ $t('Last page') }}
+          {{ t('Last page') }}
         </a>
       </li>
     </ul>
   </nav>
 </template>
 
-<script>
-import { computed, defineComponent } from "vue";
+<script setup lang="ts">
+import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 import getVisiblePages from "./paginate";
 
-export default defineComponent({
-  props: {
-    page: {
-      type: Number,
-      default: 1,
-    },
-    changePage: {
-      type: Function,
-      required: true,
-    },
-    pageSize: {
-      type: Number,
-      default: 20,
-    },
-    totalResults: {
-      type: Number,
-      required: true,
-    },
-  },
-  setup(props) {
-    const pageCount = computed(() => Math.ceil(props.totalResults / props.pageSize));
-    const visiblePages = computed(() => getVisiblePages(props.page, pageCount.value));
+type Props = {
+  page?: number,
+  pageSize?: number,
+  totalResults: number,
+};
 
-    /**
-    * @param {number} index
-    */
-    const onClick = (index) => {
-      if (index !== props.page) {
-        return props.changePage(index);
-      }
-    }
-
-    const nextPage = () => {
-      const index = props.page + 1;
-      if (index <= pageCount.value) {
-        return props.changePage(index);
-      }
-    };
-
-    const previousPage = () => {
-      const index = props.page - 1;
-      if (index > 0) {
-        return props.changePage(index);
-      }
-    }
-
-    return {
-      pageCount,
-      visiblePages,
-      onClick,
-      nextPage,
-      previousPage,
-    }
-  }
+const props = withDefaults(defineProps<Props>(), {
+  page: 1,
+  pageSize: 20,
 });
+
+const emit = defineEmits<{
+  change: [page: number]
+}>();
+
+const { t } = useI18n();
+const pageCount = computed(() => Math.ceil(props.totalResults / props.pageSize));
+const visiblePages = computed(() => getVisiblePages(props.page, pageCount.value));
+
+const onClick = (index: number) => {
+  if (index !== props.page) {
+    return emit("change", index);
+  }
+}
+
+const nextPage = () => {
+  const index = props.page + 1;
+  if (index <= pageCount.value) {
+    return emit("change", index);
+  }
+};
+
+const previousPage = () => {
+  const index = props.page - 1;
+  if (index > 0) {
+    return emit("change", index);
+  }
+}
 </script>

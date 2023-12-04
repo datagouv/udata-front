@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ResourceAccordion } from "../src";
+import { Pagination, ResourceAccordion } from "../src";
 import { ref } from "vue";
 import type { Resource } from "../src";
 
@@ -85,5 +85,5 @@ test.. test... test..... test?..... test!....
   </h1>
   <ResourceAccordion dataset-id="someId" :resource="resource" :expanded-on-mount="false" />
   <ResourceAccordion dataset-id="someId" :resource="resourceWithoutSchema" :expanded-on-mount="false" />
-
+  <Pagination :total-results="52" @change="p => console.log(p)" />
 </template>
