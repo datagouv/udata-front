@@ -30,7 +30,8 @@ current = LocalProxy(get_current_theme)
 
 
 @pass_context
-def theme_static_with_version(ctx, filename, external=False, inline_burst=False, force_version=False):
+def theme_static_with_version(ctx, filename, external=False, inline_burst=False,
+                              force_version=False):
     '''
     Override the default theme static to add cache burst, ex: [file].js?_=[burst]
     If inline_burst is true, burst is not added as a dummy param but in filename directly:
