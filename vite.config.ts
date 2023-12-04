@@ -29,7 +29,7 @@ export function getTheme(): string {
 }
 
 // https://vitejs.dev/config/
-export default defineConfig((config) => {
+export default defineConfig((_config) => {
   let theme = getTheme();
 
   return {
