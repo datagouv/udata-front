@@ -1,4 +1,4 @@
-import type { Owned, Resource } from "@etalab/data.gouv.fr-components";
+import type { Owned, Resource, User } from "@etalab/data.gouv.fr-components";
 
 export type Subject = {
   id: string;
@@ -14,6 +14,22 @@ export type NewDiscussion = {
 export type CreateDiscussion = (discussion: NewDiscussion) => Promise<any>
 
 export type CreateComment = (comment: string) => Promise<any>
+
+export type Discussion = Array<{content: string, posted_by: User, posted_on: string}>;
+
+export type Thread = {
+  id: string;
+  discussion: Discussion;
+  title: string;
+  url: string;
+  closed: string;
+  closed_by: User;
+};
+
+export type Sort = {
+  name: string,
+  key: string
+}
 
 export type Quality = {
   all_resources_available: boolean;

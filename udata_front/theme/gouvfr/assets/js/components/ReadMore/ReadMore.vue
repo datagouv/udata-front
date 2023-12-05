@@ -73,7 +73,6 @@ export default defineComponent({
       readMoreRequired.value = height > containerHeight.value;
       if(!readMoreRequired.value) {
         containerHeight.value = height;
-        console.log(containerHeight.value);
       }
     }
 

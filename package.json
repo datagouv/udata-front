@@ -27,7 +27,7 @@
   "devDependencies": {
     "@conciergerie.dev/select-a11y": "^3.1.0",
     "@conciergerie.dev/vue-toaster": "^2.4.4",
-    "@etalab/data.gouv.fr-components": "^1.8.2",
+    "@etalab/data.gouv.fr-components": "^1.9.0",
     "@etalab/udata-front-plugins-helper": "1.1.0",
     "@gouvfr/dsfr": "~1.9.2",
     "@intlify/unplugin-vue-i18n": "^0.8.0",

@@ -1,13 +1,13 @@
 <template>
   <div class="bg-contrast-grey fr-mt-2w" :id="discussionUrl">
     <header class="fr-grid-row fr-grid-row--middle justify-between fr-py-2w fr-px-3w no-wrap wrap-md">
-      <p class="fr-col-auto text-default-warning fr-text--bold fr-pr-2w fr-my-0" v-if="closed">
+      <p class="fr-col-auto text-default-warning fr-text--bold fr-pr-2w fr-my-0" v-if="thread.closed">
         <span>{{ $t("Discussion closed") }}</span>
       </p>
-      <h3 class="fr-col fr-mx-3v fr-mx-md-0 fr-h6 fr-mb-0">{{ title }}</h3>
+      <h3 class="fr-col fr-mx-3v fr-mx-md-0 fr-h6 fr-mb-0">{{ thread.title }}</h3>
       <div class="fr-col-auto text-align-right">
         <button
-          :id="id + '-copy'"
+          :id="thread.id + '-copy'"
           :data-clipboard-text="discussionExternalUrl"
           class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-right fr-icon-links-fill"
         >
@@ -21,7 +21,6 @@
           v-for="comment in currentDiscussion"
           v-if="!collapsed"
           class="thread-comment fr-py-3w fr-px-3w fr-pr-5w"
-          :key="'comment-' + comment.id"
         >
           <div class="fr-grid-row fr-grid-row--gutters">
             <Avatar class="fr-col-auto" :user="comment.posted_by"/>
@@ -49,7 +48,7 @@
       </div>
     </div>
     <footer class="fr-py-2w fr-px-3w">
-      <template v-if="!closed && !readOnlyEnabled">
+      <template v-if="!thread.closed && !read_only_enabled">
         <button
           class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-right fr-icon-arrow-right-s-line"
           v-if="!showForm"
@@ -58,106 +57,62 @@
           {{ $t("Reply") }}
         </button>
         <ThreadReply
-          :subjectId="id"
+          :subjectId="thread.id"
           v-else
           :onSubmit="replyToThread"
           @close="showForm = false"
         />
       </template>
-      <div v-if="closed" class="text-grey-380">
+      <div v-if="thread.closed" class="text-grey-380">
         {{ $t("The discussion was closed by") }} &#32;
-        <strong class="fr-px-1v"><Author :author="closed_by" /></strong>
-        {{ $t("on") }} {{ formatDate(closed) }}
+        <strong class="fr-px-1v"><Author :author="thread.closed_by" /></strong>
+        {{ $t("on") }} {{ formatDate(thread.closed) }}
       </div>
     </footer>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import Avatar from "../Avatar/Avatar.vue";
 import Author from "../Author/Author.vue";
 import ReadMore from "../../ReadMore/ReadMore.vue";
 import ThreadReply from "../ThreadReply/ThreadReply.vue";
 import { read_only_enabled } from "../../../config";
 import { formatDate } from "@etalab/data.gouv.fr-components";
-import { computed, defineComponent, ref } from "vue";
+import { computed, ref } from "vue";
 import { auth } from "../../../plugins/auth";
 import { api } from "../../../plugins/api";
+import { Thread } from "../../../types";
 
-export default defineComponent({
-  inheritAttrs: false,
-  components: {
-    Avatar,
-    Author,
-    ReadMore,
-    ThreadReply,
-  },
-  props: {
-    id: {
-      type: String,
-      required: true,
-    },
-    discussion: {
-      type: Array,
-      required: true,
-    },
-    title: {
-      type: String,
-      required: true,
-    },
-    url: {
-      type: String,
-      required: true,
-    },
-    closed: {
-      type: String,
-      default: ""
-    },
-    closed_by: {
-      type: Object,
-      default() {return {};},
-    },
-  },
-  setup(props) {
-    const showForm = ref(false);
+const props = defineProps<{
+  thread: Thread,
+}>();
 
-    const currentDiscussion = ref([...props.discussion]);
+const showForm = ref(false);
 
-    const collapsed = ref(!!props.closed);
+const currentDiscussion = ref([...props.thread.discussion]);
 
-    const discussionUrl = computed(() => "discussions/" + props.id);
+const collapsed = ref(!!props.thread.closed);
 
-    const discussionExternalUrl = () => {
-      const hash = "#/" + discussionUrl.value;
-      return window.location.origin + window.location.pathname + hash;
-    }
+const discussionUrl = computed(() => "discussions/" + props.thread.id);
 
-    const displayForm = () => {
-      auth();
-      showForm.value = true;
-    }
+const discussionExternalUrl = () => {
+  const hash = "#/" + discussionUrl.value;
+  return window.location.origin + window.location.pathname + hash;
+}
 
-    const replyToThread = (comment) => {
-      return api
-        .post("/discussions/" + props.id + "/", { comment })
-        .then((resp) => resp.data)
-        .then((updatedDiscussion) => {
-          currentDiscussion.value = updatedDiscussion.discussion;
-          showForm.value = false;
-        });
-    };
+const displayForm = () => {
+  auth();
+  showForm.value = true;
+}
 
-    return {
-      collapsed,
-      discussionExternalUrl,
-      discussionUrl,
-      displayForm,
-      formatDate,
-      readOnlyEnabled: read_only_enabled,
-      replyToThread,
-      showForm,
-      currentDiscussion,
-    };
-  },
-});
+const replyToThread = (comment: string) => {
+  return api
+    .post("/discussions/" + props.thread.id + "/", { comment })
+    .then((resp) => resp.data)
+    .then((updatedDiscussion) => {
+      currentDiscussion.value = updatedDiscussion.discussion;
+      showForm.value = false;
+    });
+};
 </script>
