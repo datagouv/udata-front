@@ -127,10 +127,10 @@ export default defineComponent({
 
     const discussionUrl = computed(() => "discussions/" + props.id);
 
-    const discussionExternalUrl = () => {
+    const discussionExternalUrl = computed(() => {
       const hash = "#/" + discussionUrl.value;
       return window.location.origin + window.location.pathname + hash;
-    }
+    });
 
     const displayForm = () => {
       auth();

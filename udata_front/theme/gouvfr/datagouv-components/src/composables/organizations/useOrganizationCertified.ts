@@ -1,9 +1,11 @@
 import { ref, onMounted, toValue, type MaybeRefOrGetter } from 'vue';
 import { Organization } from '../../types/organizations';
 
+export const PUBLIC_SERVICE = "public-service";
+
+export const CERTIFIED = "certified";
+
 export default function useOrganizationCertified(organizationRef: MaybeRefOrGetter<Organization>) {
-  const PUBLIC_SERVICE = "public-service";
-  const CERTIFIED = "certified";
   const organizationCertified = ref(false);
   const isOrganizationCertified = () => {
     const organization = toValue(organizationRef);

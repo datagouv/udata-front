@@ -1,5 +1,69 @@
 import type { Owned, Resource } from "@etalab/data.gouv.fr-components";
 
+export type MultiSelectOption = {
+  label: string;
+  value: string;
+  image?: string;
+  hidden?: boolean;
+  selected?: boolean;
+}
+
+export type WellType = "primary" | "secondary";
+
+export type Weight = "light" | "regular" | "semi-bold" | "bold" | "heavy";
+
+export type AlertSize = "sm" | "md";
+
+export type AlertType = FormFunctionalState | DSFRInfoState;
+
+export type TitleLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
+export type DSFRFormDefaultState = "default";
+
+export type DSFRFormFunctionalState = "error" | "success";
+
+export type DSFRFormState = DSFRFormDefaultState | DSFRFormFunctionalState;
+
+export type FormFunctionalState = DSFRFormFunctionalState | "warning";
+
+export type AccordionFunctionalState = FormFunctionalState | "disabled";
+
+export type DSFRInfoState = "info";
+
+export type PublishingFormAccordionState = AccordionFunctionalState | DSFRInfoState;
+
+export type AccordionState = DSFRFormDefaultState | AccordionFunctionalState | DSFRInfoState;
+
+export type ResourceType = typeof import("./helpers").RESOURCE_TYPE[number];
+
+export type RemoteResourceFileType = "remote";
+
+export type FileResourceFileType = "file";
+
+export type ResourceFileType = RemoteResourceFileType | FileResourceFileType;
+
+export type ClosedFormats = typeof import("./helpers").CLOSED_FORMATS[number];
+
+export type DatasetRemoteFile = { description?: string; filetype: RemoteResourceFileType; format: string; mime: string; schema?: string; title: string; type: ResourceType; url: string; };
+
+export type DatasetLocalFile = { file: File; sha256?: string; description?: string; format: string; filesize: number; filetype: FileResourceFileType; mime: string; schema?: string; title: string; type: ResourceType; };
+
+export type FileLoadingState = "none" | "loading" | "failed" | "loaded";
+
+export type NewDatasetFile = (DatasetLocalFile | DatasetRemoteFile) & { state: FileLoadingState; };
+
+export type DatasetFile = (DatasetLocalFile | DatasetRemoteFile) & { rid: string; };
+
+export type DatasetFullFileUpload = { file: Blob; uuid: string; filename: string; };
+
+export type DatasetChunkUpload = DatasetFullFileUpload & { partindex: number; partbyteoffset: number; totalparts: number; chunksize: number; };
+
+export type DatasetCombineChunkUpload = { uuid: string; filename: string; totalparts: number; };
+
+export type DatasetChunkResponse = { "error": string | null; "message": string; "success": boolean; };
+
+export type DatasetFileUpload = DatasetFullFileUpload | DatasetChunkUpload;
+
 export type Subject = {
   id: string;
   class: string;
@@ -60,10 +124,6 @@ uri: string;
 slug: string;
 quality: Quality;
 metrics: { discussions: number; followers: number; reuses: number; views: number; };
-};
-
-export type UiDataset = Omit<Dataset, 'last_modified'> & {
-  last_modified: Date;
 };
 
 export type AxisAlignment = "start" | "center" | "end";

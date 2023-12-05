@@ -10,9 +10,9 @@ from udata.core.dataset.permissions import ResourceEditPermission, DatasetEditPe
 from udata.core.site.models import current_site
 
 from udata_front.theme import render as render_template
-from udata.sitemap import sitemap
+from udata_front.views.base import DetailView, LoginOnlyView, SearchView
 from udata.i18n import I18nBlueprint, gettext as _, ngettext
-from udata_front.views.base import DetailView, SearchView
+from udata.sitemap import sitemap
 
 
 blueprint = I18nBlueprint('datasets', __name__, url_prefix='/datasets')
@@ -97,6 +97,11 @@ class DatasetDetailView(DatasetView, DetailView):
         context['can_edit'] = DatasetEditPermission(self.dataset)
         context['can_edit_resource'] = ResourceEditPermission
         return context
+
+
+@blueprint.route('/publishing-form/', endpoint='publishing-form')
+class PublishingFormView(LoginOnlyView):
+    template_name = 'dataset/publishing-form.html'
 
 
 @blueprint.route('/<dataset:dataset>/followers/', endpoint='followers')

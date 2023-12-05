@@ -38,12 +38,6 @@
             {{ dataset.title }}
             <small v-if="dataset.acronym">{{ dataset.acronym }}</small>
           </a>
-          <p
-            v-if="dataset.private"
-            class="fr-my-0 badge grey-300 fr-ml-1w"
-          >
-            {{ $t('Private') }}
-        </p>
         </h4>
         <p class="fr-m-0 fr-text--sm" v-if="dataset.organization || dataset.owner">
           {{ $t('From') }}
@@ -58,7 +52,7 @@
           {{ excerpt(dataset.description, 160) }}
         </p>
         <div class="fr-m-0 fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
-          <div class="fr-grid-row fr-grid-row--middle fr-hidden flex-sm dash-after not-enlarged">
+          <div class="fr-grid-row fr-grid-row--middle fr-hidden flex-sm dash-after text-grey-500 not-enlarged">
             <Toggletip
               class="fr-btn fr-btn--tertiary-no-outline fr-btn--secondary-grey-500 fr-icon-info-line"
             >
@@ -135,7 +129,7 @@
           <p class=fr-m-0>{{ $t('Updated {date}', {date: formatRelativeIfRecentDate(dataset.last_update)}) }}</p>
         </div>
       </div>
-      <ul class="fr-hidden fr-unhidden-sm fr-hidden-md fr-unhidden-lg fr-col-auto fr-tags-group fr-grid-row--bottom self-center flex-direction-column">
+      <ul v-if="showMetrics" class="fr-hidden fr-unhidden-sm fr-hidden-md fr-unhidden-lg fr-col-auto fr-tags-group fr-grid-row--bottom self-center flex-direction-column">
         <li>
           <p class="fr-tag">
             <i18n-t keypath="{n} reuses" :plural="dataset.metrics.reuses || 0" scope="global">
@@ -192,6 +186,10 @@ export default defineComponent({
     style: {
       type: Object,
       default: () => ({})
+    },
+    showMetrics: {
+      type: Boolean,
+      default: true,
     },
   },
   setup(props) {

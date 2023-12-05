@@ -57,12 +57,13 @@ To adjust the font size of an element you can use the `.fs-{font-size}` classes.
 ```
 
 ## Font weights
-To adjust the font weight, you can use the `.f-{light, normal, bold}` classes.
+To adjust the font weight, you can use the `.fr-text--{light, regular, bold, heavy}` classes.
 
 ```fontweight.html
-<p class="f-light">Light weight</p>
-<p class="f-normal">Normal weight</p>
-<p class="f-bold">Bold weight</p>
+<p class="fr-text--light">Light weight</p>
+<p class="fr-text--regular">Regular weight</p>
+<p class="fr-text--bold">Bold weight</p>
+<p class="fr-text--heavy">Heavy weight</p>
 ```
 
 ## Inline Styles
@@ -130,18 +131,6 @@ h6,
     }
 }
 
-.f-light {
-    font-weight: @font-weight-light;
-}
-
-.f-normal {
-    font-weight: @font-weight-normal;
-}
-
-.f-bold {
-    font-weight: @font-weight-bold;
-}
-
 .line-height-1 {
     line-height: 1;
 }
@@ -152,7 +141,7 @@ h6,
 
 .sup {
     display: inline-block;
-    font-weight: @font-weight-light;
+    font-weight: 300;
     text-decoration: none;
 
     &::before {
@@ -255,6 +244,10 @@ each(@font-sizes, {
 
 .text-transform-uppercase {
     text-transform: uppercase !important;
+}
+
+.text-transform-none {
+    text-transform: none !important;
 }
 
 .text-align-center {
