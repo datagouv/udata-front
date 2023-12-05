@@ -69,7 +69,7 @@ gouvfr_menu = nav.Bar('gouvfr_menu', [
         ),
     ]),
     nav.Item(_('News'), 'posts.list'),
-    nav.Item(_('Contact us'), None, url='https://support.data.gouv.fr/'),
+    nav.Item(_('Contact us'), None, url=current_app.config.get('SUPPORT_EXTERNAL_LINK', '#')),
 ])
 
 theme.menu(gouvfr_menu)

@@ -17,6 +17,7 @@ import useOrganizationCertified from "../../composables/useOrganizationCertified
 export default defineComponent({
   props: {
     organization: {
+      /** @type {import("vue").PropType<import("../../types").Organization>} */
       type: Object,
       required: true,
     },

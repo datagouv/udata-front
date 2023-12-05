@@ -5,8 +5,7 @@
       <Loader />
     </div>
     <div v-else>
-      <!-- TODO: move to <Well> component when available -->
-      <div class="fr-mb-2w fr-px-3w well well-secondary-success">
+      <Well type="secondary" color="success" class="fr-mb-2w">
         <div class="fr-grid-row fr-grid-row--middle justify-between">
           {{
             $t("You are seeing a specific file of this dataset")
@@ -15,7 +14,7 @@
             {{$t('Close')}}
           </button>
         </div>
-      </div>
+      </Well>
       <Resource
         :id="'resource-' + resourceId"
         :datasetId="datasetId"
@@ -33,13 +32,14 @@ import { defineComponent, ref, watchEffect } from 'vue';
 import { useI18n } from "vue-i18n";
 import Loader from "./loader.vue";
 import Resource from "./resource.vue";
+import Well from "../../Ui/Well/Well.vue";
 import { useToast } from "../../../composables/useToast";
 import useIdFromHash from "../../../composables/useIdFromHash";
 import { previousResourceUrlRegExp, resourceUrlRegExp } from '../../../helpers';
 import { api } from "../../../plugins/api";
 
 export default defineComponent({
-  components: { Loader, Resource },
+  components: { Loader, Resource, Well },
   props: {
     canEdit: {
       type: Boolean,

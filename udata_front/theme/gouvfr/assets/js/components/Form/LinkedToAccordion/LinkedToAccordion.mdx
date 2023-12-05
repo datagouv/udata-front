@@ -1,0 +1,21 @@
+import { Canvas, Controls, Meta } from '@storybook/blocks';
+
+import * as LinkedToAccordion from './LinkedToAccordion.stories';
+
+<Meta of={LinkedToAccordion} />
+
+# Linked To Accordion
+
+This component allows an input (or any other element) to open an accordion component on focus.
+
+
+<Canvas of={LinkedToAccordion.LinkedToClosedAccordion} />
+
+## Accessibility
+
+You must provide the accordion `id` as `aria-describedby` for users of assistive technologies.
+They will read the content, even if the accordion is closed.
+
+## Props
+
+<Controls />

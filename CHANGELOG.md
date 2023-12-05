@@ -8,6 +8,7 @@
 
 - Ignore another ResizeObserver error [#321](https://github.com/etalab/udata-front/pull/321)
 - Fixed ol not appearing in descriptions [#322](https://github.com/etalab/udata-front/pull/322)
+- Add publishing form [#266](https://github.com/etalab/udata-front/pull/266) [dependabot/36](https://github.com/etalab/udata-front/security/dependabot/36)
 - Fix copy discussion link [#323](https://github.com/etalab/udata-front/pull/323)
 - Add text-transform-none style and use lowercase k as unit [#325](https://github.com/etalab/udata-front/pull/325)
 
