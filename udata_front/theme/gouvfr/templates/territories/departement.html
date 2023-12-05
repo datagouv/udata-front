@@ -12,11 +12,6 @@
             {{ _('Territories') }}
         </a>
     </li>
-    <li> {{ _('Region:') }}
-        <a class="fr-breadcrumb__link" href="{{ territory.current_parent.url }}">
-            {{ territory.current_parent.name }}
-        </a>
-    </li>
 
     <li> {{ _('Region:') }}
         <a class="fr-breadcrumb__link" aria-current="page">
@@ -30,21 +25,6 @@
     <h1 class="fr-mb-5v">{{ territory.name }}</h1>
     <p>
         {{ _('INSEE code:') }} {{ territory.code }}
-    </p>
-    {% if territory.population %}
-    <p>
-        {{ _('Population:') }} {{ territory.population|format_number }}
-    </p>
-    {% endif %}
-    <section class="fr-my-2w">
-    </section>
-    <h2 class="fr-mb-3v">
-        {{ _('Main towns') }}
-    </h2>
-    <p class="fr-m-0">
-        {% for town in territory.biggest_children %}
-            <a href="{{ town.url }}"> {{ town.name }}</a>{% if not loop.last %},{% endif %}
-        {% endfor %}
     </p>
 </div>
 {% endblock %}
