@@ -1,5 +1,5 @@
 import Well from './Well.vue';
-import editIcon from "svg/illustrations/edit.svg";
+import editIcon from "../../../../../templates/svg/illustrations/edit.svg";
 
 export default {
   title: 'Ui/Well',

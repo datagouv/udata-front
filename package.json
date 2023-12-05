@@ -25,7 +25,7 @@
     "chromatic": "npx chromatic"
   },
   "overrides": {
-    "yaml-eslint-parser": "^1.2.0"
+    "fsevents": "^2.3.3"
   },
   "devDependencies": {
     "@conciergerie.dev/select-a11y": "^3.3.0",
@@ -33,7 +33,7 @@
     "@etalab/data.gouv.fr-components": "^1.8.2",
     "@etalab/udata-front-plugins-helper": "1.1.0",
     "@gouvfr/dsfr": "~1.9.2",
-    "@intlify/unplugin-vue-i18n": "^0.8.0",
+    "@intlify/unplugin-vue-i18n": "^1.5.0",
     "@lhci/cli": "^0.10.0",
     "@sentry/tracing": "^6.10.0",
     "@sentry/vue": "^6.10.0",
