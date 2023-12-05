@@ -227,37 +227,25 @@
                 {{ $t("Time") }}
               </h2>
             </legend>
-            <div class="fr-fieldset__element">
-              <div class="fr-grid-row fr-grid-row--gutters">
-                <div class="fr-col-12 fr-col-md-6">
-                  <LinkedToAccordion
-                    :accordion="chooseFrequencyAccordionId"
-                    @blur="vWarning$.frequency.$touch"
-                  >
-                    <MultiSelect
-                      :placeholder="$t('Update frequency')"
-                      :searchPlaceholder="$t('Search a frequency...')"
-                      :listUrl="frequenciesUrl"
-                      :values="dataset.frequency"
-                      @change="(value) => dataset.frequency = value"
-                      :required="true"
-                      :hasError="fieldHasError('frequency')"
-                      :hasWarning="fieldHasWarning('frequency')"
-                      :errorText="getErrorText('frequency')"
-                      :allOption="$t('Select an option')"
-                      :addAllOption="false"
-                    />
-                  </LinkedToAccordion>
-                </div>
-                <div class="fr-col-12 fr-col-md-6">
-                  <InputGroup
-                    :label="$t('Last update')"
-                    type="date"
-                    v-model="dataset.frequency_date"
-                  />
-                </div>
-              </div>
-            </div>
+            <LinkedToAccordion
+              :accordion="chooseFrequencyAccordionId"
+              @blur="vWarning$.frequency.$touch"
+              class="fr-fieldset__element"
+            >
+              <MultiSelect
+                :placeholder="$t('Update frequency')"
+                :searchPlaceholder="$t('Search a frequency...')"
+                :listUrl="frequenciesUrl"
+                :values="dataset.frequency"
+                @change="(value) => dataset.frequency = value"
+                :required="true"
+                :hasError="fieldHasError('frequency')"
+                :hasWarning="fieldHasWarning('frequency')"
+                :errorText="getErrorText('frequency')"
+                :allOption="$t('Select an option')"
+                :addAllOption="false"
+              />
+            </LinkedToAccordion>
             <LinkedToAccordion
               :accordion="addTemporalCoverageAccordionId"
               @blur="vWarning$.temporal_coverage.$touch"
