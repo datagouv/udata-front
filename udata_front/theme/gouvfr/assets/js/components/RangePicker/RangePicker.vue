@@ -4,7 +4,7 @@
       <p class="rangepicker__hint fr-m-0">{{$t('Select lower bound:')}}</p>
       <Datepicker
         v-model="start"
-        :upperLimit="end ?? tomorrow"
+        :upperLimit="end"
         :locale="locale"
         @update:modelValue="showEndSelector"
         ref="startRef"
@@ -15,7 +15,6 @@
       <Datepicker
         v-model="end"
         :lowerLimit="start"
-        :upperLimit="tomorrow"
         :locale="locale"
         @update:modelValue="hideSelector"
         ref="endRef"
@@ -43,7 +42,7 @@
 import { lang } from "../../config";
 import { getDatepickerLocale } from "../../i18n";
 import Datepicker from "vue3-datepicker";
-import { add, format } from "date-fns/esm";
+import { format } from "date-fns/esm";
 import { defineComponent, ref, watch } from "vue";
 import { formatDate } from "../../helpers";
 import { templateRef } from "@vueuse/core";
@@ -66,9 +65,6 @@ export default defineComponent({
 
     /** @type {import("vue").Ref<Date | null>} */
     const end = ref(props.modelValue.end);
-
-    /** @type {Date} */
-    const tomorrow = add(new Date(), {days: 1});
 
     /** @type {Readonly<import("vue").Ref<InstanceType<typeof Datepicker> | null>>} */
     const startRef = templateRef("startRef");
@@ -148,7 +144,6 @@ export default defineComponent({
       clear,
       formatDate,
       formatTemplate,
-      tomorrow,
     }
   },
 });
