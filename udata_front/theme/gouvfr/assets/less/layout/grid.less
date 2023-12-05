@@ -157,6 +157,10 @@ Sometimes you need to occupy the available space fully, you can use `.fr-contain
     align-self: flex-end;
 }
 
+.w-50 {
+    width: 50%;
+}
+
 .w-100 {
     width: 100%;
 }
@@ -165,10 +169,29 @@ Sometimes you need to occupy the available space fully, you can use `.fr-contain
     max-width: 100%;
 }
 
+.min-width-0 {
+    min-width: 0;
+}
+
 .w-auto {
     width: auto;
 }
 
 .h-4w {
     height: 2rem;
+}
+
+
+.h-100 {
+    height: 100%;
+}
+
+.order-2 {
+    order: 2;
+}
+
+@media @dsfr-query-md {
+    .order-md-2 {
+        .order-2;
+    }
 }

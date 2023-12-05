@@ -446,7 +446,7 @@ def selected(current_value, value):
 @front.app_template_filter()
 def summarize(value: int):
     result = float(value) if value else 0
-    for unit in '', 'K', 'M', 'G', 'T', 'P', 'E', 'Z':
+    for unit in '', 'k', 'M', 'G', 'T', 'P', 'E', 'Z':
         if abs(result) < 1000:
             return format_decimal(round(result, 1), locale=g.lang_code) + unit
         result /= 1000

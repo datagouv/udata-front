@@ -192,7 +192,7 @@
   "The value must be equal to the ${otherName} value": "The value must be equal to the ${otherName} value",
   "License": "License",
   "Remove file": "Remove file",
-  "Edit file": "Edit file",
+  "Edit file": "",
   "Drag and drop files": "Drag and drop files",
   "or": "or",
   "Browse": "Browse",

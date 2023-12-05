@@ -31,7 +31,7 @@ export function getTheme() {
 }
 
 // https://vitejs.dev/config/
-export default defineConfig(async () => {
+export default defineConfig((env) => {
   let theme = getTheme();
 
   return {

@@ -17,6 +17,8 @@ import Resources from "./components/dataset/resource/resources.vue";
 import Captcha from "./components/utils/captcha.vue";
 import Toggletip from "./components/utils/Toggletip/Toggletip.vue";
 
+import PublishingForm from "./pages/PublishingForm/PublishingForm.vue";
+
 import "./components/vanilla/tabs";
 import "./components/vanilla/accordion";
 import "./components/vanilla/clipboard";
@@ -63,6 +65,7 @@ const configAndMountApp = (el) => {
   app.component("captcha", Captcha);
   app.component("chart", Chart);
   app.component("toggletip", Toggletip);
+  app.component("publishing-form", PublishingForm);
 
   // unset delimiters used in html templates to prevent injections using {{ }}
   app.config.compilerOptions.delimiters = [];
