@@ -1,5 +1,4 @@
 from collections import namedtuple
-from datetime import date, datetime
 import unicodedata
 
 from flask import abort, current_app, redirect, url_for
@@ -94,7 +93,6 @@ def redirect_territory(level, code):
 def render_territory(territory):
     if not current_app.config.get('ACTIVATE_TERRITORIES'):
         return abort(404)
-
 
     # Only display dynamic datasets for present territories.
     base_datasets = []
