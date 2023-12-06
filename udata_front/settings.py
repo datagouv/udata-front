@@ -29,6 +29,7 @@ DEMO_SERVER_NAME = 'demo.data.gouv.fr'
 DATA_SEARCH_FEEDBACK_FORM_URL = ''
 DISCOVERABILITY_FORM_URL = ''
 FEEDBACK_FORM_URL = ''
+PUBLISHING_FORM_FEEDBACK_URL = ''
 
 # Static pages from github repo
 PAGES_GH_REPO_NAME = 'etalab/datagouvfr-pages'
