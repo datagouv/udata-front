@@ -1,5 +1,4 @@
 from collections import namedtuple
-from datetime import date, datetime
 import unicodedata
 
 from flask import abort, current_app, redirect, url_for
@@ -26,7 +25,7 @@ def render_home():
         return abort(404)
 
     highest_level = current_app.config['HANDLED_LEVELS'][-1]
-    regions = GeoZone.objects(level=highest_level).valid_at(date.today())
+    regions = GeoZone.objects(level=highest_level)
     regions = sorted(
         regions,
         key=lambda zone: unicodedata.normalize('NFD', zone.name)
@@ -85,7 +84,7 @@ def redirect_territory(level, code):
 
     Optimistically redirect to the latest valid/known INSEE code.
     """
-    territory = GeoZone.objects.valid_at(datetime.utcnow()).filter(
+    territory = GeoZone.objects.filter(
         code=code, level='fr:{level}'.format(level=level)).first()
     return redirect(url_for('territories.territory', territory=territory))
 
@@ -95,28 +94,15 @@ def render_territory(territory):
     if not current_app.config.get('ACTIVATE_TERRITORIES'):
         return abort(404)
 
-    is_present_territory = territory.valid_at(date.today())
-
-    # Retrieve the present territory if not presently valid.
-    present_territory = None
-    if not is_present_territory:
-        present_territory = GeoZone.objects.valid_at(date.today()).get(
-            level=territory.level, ancestors__contains=territory.id)
-
     # Only display dynamic datasets for present territories.
     base_datasets = []
-    if is_present_territory:
-        DATASETS = TERRITORY_DATASETS[territory.level_code]
-        base_dataset_classes = sorted(DATASETS.values(), key=lambda a: a.order)
-        base_datasets = [
-            base_dataset_class(territory)
-            for base_dataset_class in base_dataset_classes
-        ]
+    DATASETS = TERRITORY_DATASETS[territory.level_code]
+    base_dataset_classes = sorted(DATASETS.values(), key=lambda a: a.order)
+    base_datasets = [
+        base_dataset_class(territory)
+        for base_dataset_class in base_dataset_classes
+    ]
     territories = [territory]
-
-    # Deal with territories with ancestors.
-    for ancestor_object in territory.ancestors_objects:
-        territories.append(ancestor_object)
 
     # Retrieve all datasets then split between those optionally owned
     # by an org for that zone and others. We need to know if the current
@@ -135,7 +121,6 @@ def render_territory(territory):
                 other_datasets.append(dataset)
     context = {
         'territory': territory,
-        'present_territory': present_territory,
         'base_datasets': base_datasets,
         'other_datasets': other_datasets,
         'territory_datasets': territory_datasets

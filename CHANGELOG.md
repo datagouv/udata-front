@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Remove parents, children, etc. from territory views [#328](https://github.com/etalab/udata-front/pull/328)
 
 ## 3.2.10 (2023-12-01)
 
