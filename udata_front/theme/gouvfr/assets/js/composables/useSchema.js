@@ -47,6 +47,7 @@ export default function useSchema(resource) {
     const query = new URLSearchParams({
       'input': 'url',
       'url': resource.url,
+      'header-case': 'on',
       ...schemaPath,
     }).toString();
     return `${config.schema_validata_url}/table-schema?${query}`;
