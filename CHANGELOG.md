@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 3.2.11 (2023-12-08)
 
 - Remove parents, children, etc. from territory views [#328](https://github.com/etalab/udata-front/pull/328)
 - Add publishing form [#266](https://github.com/etalab/udata-front/pull/266) [dependabot/36](https://github.com/etalab/udata-front/security/dependabot/36) [#331](https://github.com/etalab/udata-front/pull/331)
