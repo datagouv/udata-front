@@ -1,0 +1,29 @@
+/* Special styling for grid blocks */
+.fr-container [class^="fr-col"],
+.fr-container--fluid [class^="fr-col"] {
+    padding: 30px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Styles for displaying color chips */
+.pill {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-right: 15px;
+    vertical-align: middle;
+    border-radius: 50%;
+}
+
+.pill.bg-white {
+    border: 1px solid  #eeeee8;
+}
+
+/* Styles for spacing blocks */
+.block {
+    width: 50%;
+    text-align: center;
+    background-color: #eeeee8;
+}

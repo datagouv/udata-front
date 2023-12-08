@@ -9,7 +9,7 @@ from flask import g, current_app
 from flask_themes2 import (
     Themes, Theme, render_theme_template, get_theme
 )
-from jinja2 import contextfunction
+from jinja2 import pass_context
 from udata import assets
 
 
@@ -29,9 +29,14 @@ def get_current_theme():
 current = LocalProxy(get_current_theme)
 
 
-@contextfunction
-def theme_static_with_version(ctx, filename, external=False):
-    '''Override the default theme static to add cache burst'''
+@pass_context
+def theme_static_with_version(ctx, filename, external=False, inline_burst=False):
+    '''
+    Override the default theme static to add cache burst, ex: [file].js?_=[burst]
+    If inline_burst is true, burst is not added as a dummy param but in filename directly:
+    Ex: [file].[burst].js
+    It is useful for generated chunks that follow this pattern
+    '''
     if current_app.theme_manager.static_folder:
         url = assets.cdn_for('_themes.static',
                              filename=current.identifier + '/' + filename,
@@ -47,6 +52,9 @@ def theme_static_with_version(ctx, filename, external=False):
         burst = time()
     else:
         burst = current.entrypoint.dist.version
+    if inline_burst:
+        url_parts = url.split(".")
+        return '.'.join(url_parts[:-1] + [str(burst), url_parts[-1]])
     return '{url}?_={burst}'.format(url=url, burst=burst)
 
 
@@ -54,7 +62,6 @@ class ConfigurableTheme(Theme):
     context_processors = None
     defaults = None
     admin_form = None
-    manifest = None
     _menu = None
     _configured = False
 
@@ -69,11 +76,6 @@ class ConfigurableTheme(Theme):
         if 'gouvfr' not in self.variants:
             self.variants.insert(0, 'gouvfr')
         self.context_processors = {}
-
-        # Check JSON manifest
-        manifest = os.path.join(path, 'manifest.json')
-        if os.path.exists(manifest):
-            self.manifest = manifest
 
     @property
     def site(self):
@@ -164,11 +166,6 @@ def init_app(app):
 
     # Override the default theme_static
     app.jinja_env.globals['theme_static'] = theme_static_with_version
-
-    # Load manifest if necessary
-    if theme.manifest:
-        with app.app_context():
-            assets.register_manifest('theme', theme.manifest)
 
     # Hook into flask security to user themed auth pages
     app.config.setdefault('SECURITY_RENDER', 'udata_front.theme:render')

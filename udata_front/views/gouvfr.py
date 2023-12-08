@@ -7,19 +7,18 @@ from jinja2.exceptions import TemplateNotFound
 from mongoengine.errors import ValidationError
 
 from udata_front import theme
-from udata_front.theme import theme_static_with_version
 from udata.app import cache
+from udata.frontend import template_hook
 from udata.models import Reuse, Dataset
 from udata.i18n import I18nBlueprint
 
 from udata_front import APIGOUVFR_EXTRAS_KEY
-from udata_front.frontend import template_hook
 
 log = logging.getLogger(__name__)
 
 blueprint = I18nBlueprint('gouvfr', __name__,
                           template_folder='../templates',
-                          static_folder='static',
+                          static_folder='../static',
                           static_url_path='/static/gouvfr')
 
 PAGE_CACHE_DURATION = 60 * 5  # in seconds
@@ -54,9 +53,16 @@ def get_pages_gh_urls(slug):
     if not repo:
         abort(404)
     branch = current_app.config.get('PAGES_REPO_BRANCH', 'master')
-    raw_url = f'https://raw.githubusercontent.com/{repo}/{branch}/pages/{slug}.md'
-    gh_url = f'https://github.com/{repo}/blob/{branch}/pages/{slug}.md'
+    raw_url = f'https://raw.githubusercontent.com/{repo}/{branch}/pages/{slug}'
+    gh_url = f'https://github.com/{repo}/blob/{branch}/pages/{slug}'
+
     return raw_url, gh_url
+
+
+def detect_pages_extension(raw_url):
+    if requests.head(f'{raw_url}.md').status_code == 200:
+        return 'md'
+    return 'html'
 
 
 @cache.memoize(PAGE_CACHE_DURATION)
@@ -70,6 +76,11 @@ def get_page_content(slug):
     cache_key = f'pages-content-{slug}'
     raw_url, gh_url = get_pages_gh_urls(slug)
     try:
+        extension = detect_pages_extension(raw_url)
+
+        raw_url = f'{raw_url}.{extension}'
+        gh_url = f'{gh_url}.{extension}'
+
         response = requests.get(raw_url, timeout=5)
         # do not cache 404 and forward status code
         if response.status_code == 404:
@@ -85,7 +96,7 @@ def get_page_content(slug):
     if not content:
         log.error(f'No content found inc. from cache for page {slug}')
         abort(503)
-    return content, gh_url
+    return content, gh_url, extension
 
 
 def get_object(model, id_or_slug):
@@ -99,9 +110,12 @@ def get_object(model, id_or_slug):
     return obj
 
 
-@blueprint.route('/pages/<path:slug>/')
+@blueprint.route('/pages/<path:slug>', endpoint='show_page')
 def show_page(slug):
-    content, gh_url = get_page_content(slug)
+    # We expect a trailing slash in route and redirect if missing
+    if not slug.endswith('/'):
+        return redirect(url_for('gouvfr.show_page', slug=slug + '/'))
+    content, gh_url, extension = get_page_content(slug.rstrip('/'))
     page = frontmatter.loads(content)
     reuses = [get_object(Reuse, r) for r in page.get('reuses') or []]
     datasets = [get_object(Dataset, d) for d in page.get('datasets') or []]
@@ -109,7 +123,7 @@ def show_page(slug):
     datasets = [d for d in datasets if d is not None]
     return theme.render(
         'page.html',
-        page=page, reuses=reuses, datasets=datasets, gh_url=gh_url
+        page=page, reuses=reuses, datasets=datasets, gh_url=gh_url, extension=extension
     )
 
 
@@ -126,14 +140,19 @@ def has_apis(ctx):
     return dataset.extras.get(APIGOUVFR_EXTRAS_KEY, [])
 
 
-@template_hook('dataset.display.after-description', when=has_apis)
+@template_hook('dataset.display.after-files', when=has_apis)
 def dataset_apis(ctx):
     dataset = ctx['dataset']
     return theme.render('dataset-apis.html', apis=dataset.extras.get(APIGOUVFR_EXTRAS_KEY))
 
 
-# TODO : better this, redirect is not the best. How to serve it instead ?!
-@blueprint.route('/_stylemark/<path:filename>/')
-def stylemark(filename):
-    return redirect(theme_static_with_version(None,
-                                              filename="stylemark/index.html"))
+@template_hook('oauth_authorize_theme_content')
+def oauth_authorize_theme_content(ctx):
+    grant = ctx['grant']
+    return theme.render('api/oauth_authorize.html', grant=grant)
+
+
+@template_hook('oauth_error_theme_content')
+def oauth_error_theme_content(ctx):
+    request = ctx['request']
+    return theme.render('api/oauth_error.html', error=request.args.get('error'))

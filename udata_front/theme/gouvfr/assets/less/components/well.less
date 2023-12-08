@@ -1,0 +1,146 @@
+/*
+---
+name: Well
+category: 3 - Components
+---
+
+A well is an excavation or structure created in the ground by digging, driving, or drilling to access liquid resources, usually water.
+In this case, it's nothing like that. Wells used to be an "inset" effect on previous versions of Bootstrap. Now it's just a box with a background and rounded corners.
+
+They exist in many colors and two versions, primary with a solid background and secondary with a transparent background :
+
+```wells.html
+<div class="well well-success">
+    I'm well too, but I'm a little green in this field
+</div>
+<div class="well well-secondary-grey-100">
+    Oh well...
+</div>
+<div class="well well-secondary-success">
+    Very well.
+</div>
+```
+*/
+@import (less) "@gouvfr/dsfr/dist/component/notice/notice.css";
+
+.fr-alert p {
+    margin: var(--text-spacing);
+}
+
+html[data-fr-js] [data-show-no-js], html[data-fr-js=true] [data-show-no-js] {
+    display: none;
+}
+
+[data-show-no-js] {
+    opacity: 0;
+    height: 0;
+    animation: fadeIn 0.5s;
+    animation-delay: 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        height: 0;
+    }
+    to {
+        opacity: 1;
+        height: 100%;
+    }
+}
+
+.fr-notice--warning .fr-notice__body {
+    &:extend(.fr-icon-warning-line);
+    &:extend([class^="fr-icon-"]);
+}
+
+.fr-notice--warning .fr-notice__body::before {
+    &:extend(.fr-icon-warning-line::before);
+    &:extend([class^="fr-icon-"]::before);
+}
+
+.fr-notice--warning {
+    background-color: var(--background-contrast-warning);
+
+    --idle: transparent;
+    --hover: var(--background-contrast-warning-hover);
+    --active: var(--background-contrast-warning-active);
+    color: var(--text-default-warning);
+}
+
+.well {
+    display: block;
+    padding: @spacing-sm;
+    border-radius: 4px;
+    font-weight: @font-weight-bold;
+
+    svg {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: @spacing-sm;
+    }
+
+    > * {
+        vertical-align: middle;
+    }
+
+    a {
+        display: inline;
+        color: inherit;
+        vertical-align: baseline;
+    }
+
+    &.well--colored-links {
+        a {
+            color: @blue-400;
+        }
+    }
+
+    [class^="fr-icon-"] {
+        vertical-align: baseline;
+    }
+
+    &.well-success {
+        background: @background-contrast-success;
+        color: @text-default-success;
+        .fr-link {
+            color: @text-default-success;
+        }
+    }
+
+    &.well-warning {
+        background: @background-contrast-warning;
+        color: @text-default-warning;
+    }
+
+    &.well-blue-cumulus {
+        background: @background-contrast-blue-cumulus;
+        color: @text-label-blue-cumulus;
+    }
+
+    &.well-orange-terre-battue {
+        background: @background-contrast-orange-terre-battue;
+        color: @text-label-orange-terre-battue;
+    }
+
+    &.well-grey-100 {
+        background: @grey-100;
+        color: @contrast-grey-100;
+    }
+
+    &.well-secondary-success {
+        .well-success;
+        border: 1px solid @border-plain-success;
+    }
+
+    &.well-secondary-warning {
+        .well-warning;
+        border: 1px solid @border-plain-warning;
+    }
+
+    &.well-secondary-grey-100 {
+        .well-grey-100;
+        border: 1px solid @border-default-grey;
+    }
+}

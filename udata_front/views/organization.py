@@ -8,18 +8,18 @@ from udata.frontend import csv
 from udata_front.views.base import DetailView, SearchView
 from udata.i18n import I18nBlueprint
 from udata.models import (
-    Organization, Reuse, Dataset, Follow, Issue, Discussion
+    Organization, Reuse, Dataset, Follow, Discussion
 )
 from udata.sitemap import sitemap
-
 from udata.core.dataset.csv import (
-    DatasetCsvAdapter, IssuesOrDiscussionCsvAdapter, ResourcesCsvAdapter
+    DatasetCsvAdapter, DiscussionCsvAdapter, ResourcesCsvAdapter
 )
-
+from udata.core.dataset.search import DatasetSearch
 from udata.core.organization.permissions import (
     EditOrganizationPermission, OrganizationPrivatePermission
 )
-
+from udata.core.organization.search import OrganizationSearch
+from udata.utils import not_none_dict
 
 blueprint = I18nBlueprint('organizations', __name__,
                           url_prefix='/organizations')
@@ -36,6 +36,8 @@ class OrganizationListView(SearchView):
     model = Organization
     context_name = 'organizations'
     template_name = 'organization/list.html'
+    search_adapter = OrganizationSearch
+    page_size = 21
 
 
 class OrgView(object):
@@ -60,14 +62,21 @@ class ProtectedOrgView(OrgView):
 
 
 @blueprint.route('/<org:org>/', endpoint='show')
-class OrganizationDetailView(OrgView, DetailView):
+class OrganizationDetailView(SearchView, OrgView, DetailView):
     template_name = 'organization/display.html'
-    page_size = 10
+    model = Dataset
+    search_adapter = DatasetSearch
+    context_name = 'datasets'
+    reuse_page_size = 8
+
+    def get_queryset(self):
+        parser = self.search_adapter.as_request_parser()
+        args = not_none_dict(parser.parse_args())
+        args.update(organization=self.organization.id)
+        return search.query(self.search_adapter, **args)
 
     def get_context(self):
         context = super(OrganizationDetailView, self).get_context()
-
-        params_datasets_page = request.args.get('datasets_page', 1, type=int)
         params_reuses_page = request.args.get('reuses_page', 1, type=int)
 
         can_edit = EditOrganizationPermission(self.organization)
@@ -77,8 +86,7 @@ class OrganizationDetailView(OrgView, DetailView):
             abort(410)
 
         datasets = Dataset.objects(
-            organization=self.organization).order_by(
-            '-temporal_coverage.end', '-metrics.reuses', '-metrics.followers')
+            organization=self.organization)
 
         reuses = Reuse.objects(
             organization=self.organization).order_by(
@@ -88,13 +96,13 @@ class OrganizationDetailView(OrgView, DetailView):
                      .order_by('follower.fullname'))
 
         if not can_view:
-            datasets = datasets.visible()
             reuses = reuses.visible()
+            datasets = datasets.visible()
 
         context.update({
-            'reuses': reuses.paginate(params_reuses_page, self.page_size),
-            'datasets': datasets.paginate(params_datasets_page, self.page_size),
-            'total_datasets': len(datasets),
+            'reuses': reuses.paginate(params_reuses_page, self.reuse_page_size),
+            'total_datasets': context.get("datasets").total,
+            'organization_datasets': len(datasets),
             'total_reuses': len(reuses),
             'followers': followers,
             'can_edit': can_edit,
@@ -110,19 +118,9 @@ def organization_dashboard(org):
 
 @blueprint.route('/<org:org>/datasets.csv')
 def datasets_csv(org):
-    datasets = search.iter(Dataset, organization=str(org.id))
+    datasets = Dataset.objects(organization=str(org.id)).visible()
     adapter = DatasetCsvAdapter(datasets)
     return csv.stream(adapter, '{0}-datasets'.format(org.slug))
-
-
-@blueprint.route('/<org:org>/issues.csv')
-def issues_csv(org):
-    datasets = Dataset.objects.filter(organization=str(org.id))
-    issues = [Issue.objects.filter(subject=dataset)
-              for dataset in datasets]
-    # Turns a list of lists into a flat list.
-    adapter = IssuesOrDiscussionCsvAdapter(itertools.chain(*issues))
-    return csv.stream(adapter, '{0}-issues'.format(org.slug))
 
 
 @blueprint.route('/<org:org>/discussions.csv')
@@ -131,13 +129,13 @@ def discussions_csv(org):
     discussions = [Discussion.objects.filter(subject=dataset)
                    for dataset in datasets]
     # Turns a list of lists into a flat list.
-    adapter = IssuesOrDiscussionCsvAdapter(itertools.chain(*discussions))
+    adapter = DiscussionCsvAdapter(itertools.chain(*discussions))
     return csv.stream(adapter, '{0}-discussions'.format(org.slug))
 
 
 @blueprint.route('/<org:org>/datasets-resources.csv')
 def datasets_resources_csv(org):
-    datasets = search.iter(Dataset, organization=str(org.id))
+    datasets = Dataset.objects(organization=str(org.id)).visible()
     adapter = ResourcesCsvAdapter(datasets)
     return csv.stream(adapter, '{0}-datasets-resources'.format(org.slug))
 

@@ -1,0 +1,13 @@
+{% macro quality_item(passed, message_passed, message_failed, class) %}
+{%if passed %}
+    <p class="fr-my-0 {{class}}">
+        <span class="fr-icon-check-line" aria-hidden="true"></span>
+        {{message_passed}}
+    </p>
+{% else %}
+    <p class="fr-my-0 text-mention-grey {{class}}">
+        <span class="fr-icon-warning-line" aria-hidden="true"></span>
+        {{message_failed}}
+    </p>
+{% endif %}
+{% endmacro %}

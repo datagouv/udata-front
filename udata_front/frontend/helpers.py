@@ -1,22 +1,25 @@
 import calendar
 import html
 import logging
-import pkg_resources
+import slugify
 
 from datetime import date, datetime
-from time import time
 from urllib.parse import urlsplit, urlunsplit
 
 from babel.numbers import format_decimal
-from flask import g, url_for, request, current_app, json
-from jinja2 import Markup, contextfilter
-from werkzeug import url_decode, url_encode
+from flask import g, url_for, request, current_app, json, Request
+from flask_restx import marshal
+from jinja2 import pass_context
+from markupsafe import Markup
+from werkzeug.urls import url_decode, url_encode
 
 from . import front
 
-from udata import assets
+from udata.core.dataset.apiv2 import dataset_fields
+from udata.core.dataset.models import Dataset
 from udata.models import db
-from udata.i18n import format_date, _, pgettext, get_current_locale
+from udata.i18n import get_locale, format_date, format_timedelta, _, pgettext
+from udata.search.result import SearchResult
 from udata.utils import camel_to_lodash
 from udata_front.theme import theme_static_with_version
 
@@ -24,35 +27,8 @@ log = logging.getLogger(__name__)
 
 
 @front.app_template_global()
-def package_version(name):
-    return pkg_resources.get_distribution(name).version
-
-
-@front.app_template_global()
 def now():
     return datetime.now()
-
-
-@front.app_template_global(name='static')
-def static_global(filename, _burst=True, **kwargs):
-    if current_app.config['DEBUG'] or current_app.config['TESTING']:
-        burst = time()
-    else:
-        burst = package_version('udata')
-    if _burst:
-        kwargs['_'] = burst
-    return assets.cdn_for('static', filename=filename, **kwargs)
-
-
-@front.app_template_global()
-def manifest(app, filename, **kwargs):
-    return assets.from_manifest(app, filename, **kwargs)
-
-
-@front.app_template_test()
-def in_manifest(filename, app='udata'):
-    '''A Jinja test to check an asset existance in manifests'''
-    return assets.exists_in_manifest(app, filename)
 
 
 @front.app_template_global(name='form_grid')
@@ -61,11 +37,11 @@ def form_grid(specs):
         return None
     label_sizes, control_sizes, offset_sizes = [], [], []
     for spec in specs.split(','):
-        label_sizes.append('col-{0}'.format(spec))
+        label_sizes.append('fr-col-{0}'.format(spec))
         size, col = spec.split('-')
-        offset_sizes.append('col-{0}-offset-{1}'.format(size, col))
+        offset_sizes.append('fr-col-offset-{0}-{1}'.format(size, col))
         col = 12 - int(col)
-        control_sizes.append('col-{0}-{1}'.format(size, col))
+        control_sizes.append('fr-col-{0}-{1}'.format(size, col))
     return {
         'label': ' '.join(label_sizes),
         'control': ' '.join(control_sizes),
@@ -118,19 +94,24 @@ def in_url(*args, **kwargs):
     scheme, netloc, path, query, fragments = urlsplit(request.url)
     params = url_decode(query)
     return (
-        all(arg in params for arg in args) and
-        all(key in params and params[key] == value
-            for key, value in kwargs.items())
+            all(arg in params for arg in args) and
+            all(key in params and params[key] == value
+                for key, value in kwargs.items())
     )
 
 
 @front.app_template_filter()
-@contextfilter
+@pass_context
 def placeholder(ctx, url, name='default', external=False):
     return url or theme_static_with_version(
         ctx,
         filename='img/placeholders/{0}.png'.format(name),
         external=external)
+
+
+@front.app_template_filter()
+def placeholder_alt(alt, url):
+    return alt if url else ''
 
 
 @front.app_template_filter()
@@ -140,7 +121,7 @@ def obfuscate(email):
 
 
 @front.app_template_filter()
-@contextfilter
+@pass_context
 def avatar_url(ctx, obj, size, external=False):
     if hasattr(obj, 'avatar') and obj.avatar:
         return obj.avatar(size, external=external)
@@ -152,7 +133,7 @@ def avatar_url(ctx, obj, size, external=False):
 
 
 @front.app_template_filter()
-@contextfilter
+@pass_context
 def owner_avatar_url(ctx, obj, size=32, external=False):
     if hasattr(obj, 'organization') and obj.organization:
         return (obj.organization.logo(size, external=external)
@@ -174,7 +155,7 @@ def owner_url(obj, external=False):
 
 
 @front.app_template_filter()
-@contextfilter
+@pass_context
 def avatar(ctx, user, size, classes='', external=False):
     markup = ''.join((
         '<a class="avatar {classes}" href="{url}" title="{title}">',
@@ -193,7 +174,7 @@ def avatar(ctx, user, size, classes='', external=False):
 
 
 @front.app_template_filter()
-@contextfilter
+@pass_context
 def owner_avatar(ctx, obj, size=32, classes='', external=False):
     markup = '''
         <a class="avatar {classes}" href="{url}" title="{title}">
@@ -228,6 +209,17 @@ def owner_name_acronym(obj):
     elif hasattr(obj, 'owner') and obj.owner:
         return obj.owner.fullname
     return ''
+
+
+@front.app_template_global()
+def external_source(dataset):
+    return dataset.harvest.remote_url if dataset.harvest else None
+
+
+@front.app_template_global()
+def is_current_tab(request: Request, tab_arg: str) -> bool:
+    args = request.args
+    return tab_arg in args.to_dict() if args else False
 
 
 @front.app_template_global()
@@ -333,13 +325,28 @@ def daterange(value, details=False):
     return '{start!s}–{end!s}'.format(start=start, end=end) if end else start
 
 
+def format_from_now(value):
+    '''
+    Format date as relative from now.
+    It displays "today" or format_timedelta content, based on date.
+    '''
+    today = date.today()
+    value_without_time = value.date()
+    if(value_without_time == today):
+        return _("today")
+    return format_timedelta(value_without_time - today, add_direction=True)
+
+
 @front.app_template_filter()
-@front.app_template_global()
-def ficon(value):
-    '''A simple helper for font icon class'''
-    return ('fa {0}'.format(value)
-            if value.startswith('fa')
-            else 'fa fa-{0}'.format(value))
+def format_based_on_date(value):
+    '''
+    Format date relative form now if date is less than a month ago.
+    Otherwise, show a formatted date.
+    '''
+    delta = date.today() - value.date()
+    if(delta.days > 30):
+        return _("on %(date)s", date=format_date(value, "long"))
+    return format_from_now(value)
 
 
 @front.app_template_filter()
@@ -358,18 +365,10 @@ def i18n_alternate_links():
         LINK_PATTERN = (
             '<link rel="alternate" href="{url}" hreflang="{lang}" />')
         links = []
-        current_lang = get_current_locale().language
-
-        params = {}
-        if request.args:
-            params.update(request.args)
-        if request.view_args:
-            params.update(request.view_args)
 
         for lang in current_app.config['LANGUAGES']:
-            if lang != current_lang:
-                url = url_for(request.endpoint, lang_code=lang, **params)
-                links.append(LINK_PATTERN.format(url=url, lang=lang))
+            url = language_url(lang)
+            links.append(LINK_PATTERN.format(url=url, lang=lang))
         return Markup(''.join(links))
     except Exception:
         # Never fails
@@ -385,28 +384,33 @@ def to_json(data):
     return json.dumps(data)
 
 
+def is_results_of_type(search_results, result_type):
+    return isinstance(search_results, SearchResult) and all(
+        isinstance(dataset, result_type) for dataset in search_results)
+
+
+@front.app_template_filter()
+def to_api_format(data):
+    if is_results_of_type(data, Dataset):
+        return [to_dataset_api_format(d) for d in data]
+    return list(data)
+
+
+def to_dataset_api_format(dataset):
+    return marshal(dataset, dataset_fields)
+
+
 @front.app_template_filter()
 @front.app_template_global()
 def format_number(number):
     '''A locale aware formatter.'''
-    return format_decimal(number, locale=g.lang_code)
-
-
-@front.app_template_filter()
-def filesize(value):
-    '''Display a human readable filesize'''
-    suffix = 'o'
-    for unit in '', 'K', 'M', 'G', 'T', 'P', 'E', 'Z':
-        if abs(value) < 1024.0:
-            return "%3.1f%s%s" % (value, unit, suffix)
-        value /= 1024.0
-    return "%.1f%s%s" % (value, 'Y', suffix)
+    return format_decimal(number, locale=g.lang_code) if number else number
 
 
 def json_ld_script_preprocessor(o):
     if isinstance(o, dict):
         return {k: json_ld_script_preprocessor(v) for k, v in o.items()}
-    elif isinstance(o,  (list, tuple)):
+    elif isinstance(o, (list, tuple)):
         return [json_ld_script_preprocessor(v) for v in o]
     elif isinstance(o, str):
         return html.escape(o).replace('&#x27;', '&apos;')
@@ -424,3 +428,59 @@ def embedded_json_ld(jsonld):
     See: https://w3c.github.io/json-ld-syntax/#restrictions-for-contents-of-json-ld-script-elements
     '''
     return Markup(json.dumps(json_ld_script_preprocessor(jsonld), ensure_ascii=False))
+
+
+@front.app_template_filter()
+def visibles(value):
+    '''Return visible elements'''
+    if not isinstance(value, list):
+        raise ValueError('visibles only accept list as parameter')
+    return list(filter(lambda elt: elt.is_visible, value))
+
+
+@front.app_template_global()
+def selected(current_value, value):
+    return 'selected' if current_value == value else ''
+
+
+@front.app_template_filter()
+def summarize(value: int):
+    result = float(value) if value else 0
+    for unit in '', 'k', 'M', 'G', 'T', 'P', 'E', 'Z':
+        if abs(result) < 1000:
+            return format_decimal(round(result, 1), locale=g.lang_code) + unit
+        result /= 1000
+
+
+@front.app_template_filter()
+def slug(value):
+    return slugify.slugify(value)
+
+
+@front.app_template_global()
+def current_language_name():
+    '''Get the name of the current locale.'''
+    locale = get_locale()
+    for code, name in current_app.config['LANGUAGES'].items():
+        if locale == code:
+            return name
+
+
+@front.app_template_global()
+def language_url(lang_code):
+    '''Create an URL for the current endpoint and the given language code'''
+    params = {}
+    endpoint = request.endpoint
+    if request.args:
+        params.update(request.args)
+    if request.view_args:
+        params.update(request.view_args)
+    if (not request.endpoint or
+            not current_app.url_map.is_endpoint_expecting(request.endpoint,
+                                                          'lang_code')):
+        endpoint = "site.home"
+    try:
+        return url_for(endpoint, lang_code=lang_code, **params, _external=True)
+    except Exception:
+        # Never fails
+        return url_for("site.home", lang_code=lang_code, **params, _external=True)

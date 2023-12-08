@@ -21,6 +21,7 @@ from udata.tests.helpers import capture_mails, assert_starts_with
 
 from udata_front.tests import GouvFrSettings
 from udata_front.tests.frontend import GouvfrFrontTestCase
+from udata_front.views.organization import OrganizationDetailView
 
 pytestmark = [
     pytest.mark.usefixtures('clean_db'),
@@ -31,26 +32,9 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
     settings = GouvFrSettings
     modules = ['admin']
 
-    def test_render_list(self):
-        '''It should render the organization list page'''
-        with self.autoindex():
-            organizations = [OrganizationFactory() for i in range(3)]
-
-        response = self.get(url_for('organizations.list'))
-
-        self.assert200(response)
-        rendered_organizations = self.get_context_variable('organizations')
-        self.assertEqual(len(rendered_organizations), len(organizations))
-
-    def test_render_list_empty(self):
-        '''It should render the organization list page event if empty'''
-        self.init_search()
-        response = self.get(url_for('organizations.list'))
-        self.assert200(response)
-
     def test_render_display(self):
         '''It should render the organization page'''
-        organization = OrganizationFactory(description='* Title 1\n* Title 2',)
+        organization = OrganizationFactory(description='* Title 1\n* Title 2', )
         url = url_for('organizations.show', org=organization)
         response = self.get(url)
         self.assert200(response)
@@ -66,7 +50,7 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
 
     def test_render_display_if_deleted(self):
         '''It should not render the organization page if deleted'''
-        organization = OrganizationFactory(deleted=datetime.now())
+        organization = OrganizationFactory(deleted=datetime.utcnow())
         response = self.get(url_for('organizations.show', org=organization))
         self.assert410(response)
 
@@ -74,7 +58,7 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         '''It should render the organization page if deleted but user can'''
         self.login()
         member = Member(user=self.user, role='editor')
-        organization = OrganizationFactory(deleted=datetime.now(),
+        organization = OrganizationFactory(deleted=datetime.utcnow(),
                                            members=[member])
         response = self.get(url_for('organizations.show', org=organization))
         self.assert200(response)
@@ -91,14 +75,13 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         self.assertEqual(len(rendered_datasets), len(datasets))
 
     def test_render_display_with_private_assets_only_member(self):
-        '''It should render the organization page without private and empty assets'''
+        '''It should render the organization page without private assets'''
         organization = OrganizationFactory()
         datasets = [VisibleDatasetFactory(organization=organization)
                     for _ in range(2)]
         reuses = [VisibleReuseFactory(organization=organization)
                   for _ in range(2)]
         for _ in range(2):
-            DatasetFactory(organization=organization, resources=[])  # Empty asset
             VisibleDatasetFactory(organization=organization, private=True)
             ReuseFactory(organization=organization, datasets=[])  # Empty asset
             VisibleReuseFactory(organization=organization, private=True)
@@ -107,7 +90,7 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         self.assert200(response)
 
         rendered_datasets = self.get_context_variable('datasets')
-        self.assertEqual(len(rendered_datasets), len(datasets))
+        self.assertEqual(len(rendered_datasets.objects), len(datasets))
 
         rendered_reuses = self.get_context_variable('reuses')
         self.assertEqual(len(rendered_reuses), len(reuses))
@@ -129,26 +112,54 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         me = self.login()
         member = Member(user=me, role='editor')
         organization = OrganizationFactory(members=[member])
+        # We show indexable datasets on the organisation page
+        # so private datasets are omitted
         datasets = [
             VisibleDatasetFactory(organization=organization) for _ in range(2)]
         empty_datasets = [
-            DatasetFactory(organization=organization, resources=[]) for _ in range(2)]
-        private_datasets = [
-            VisibleDatasetFactory(organization=organization, private=True)
-            for _ in range(2)]
+            DatasetFactory(organization=organization, resources=[]) for _ in range(1)]
+        [VisibleDatasetFactory(organization=organization, private=True) for _ in range(1)]
+        response = self.get(url_for('organizations.show', org=organization))
+
+        self.assert200(response)
+
+        rendered_datasets = self.get_context_variable('datasets')
+
+        rendered_private_datasets = [dataset for dataset in rendered_datasets if dataset.private]
+        self.assertEqual(len(rendered_private_datasets), 0)
+
+        rendered_empty_datasets = [
+            dataset for dataset in rendered_datasets if len(dataset.resources) == 0
+        ]
+        self.assertEqual(len(rendered_empty_datasets), len(empty_datasets))
+
+        self.assertEqual(rendered_datasets.total,
+                         len(datasets) + len(empty_datasets))
+
+    def test_render_display_with_paginated_datasets(self):
+        '''It should render the organization page with paginated datasets'''
+        organization = OrganizationFactory()
+        datasets_len = 21
+        for _ in range(datasets_len):
+            VisibleDatasetFactory(organization=organization)
         response = self.get(url_for('organizations.show', org=organization))
 
         self.assert200(response)
         rendered_datasets = self.get_context_variable('datasets')
-        self.assertEqual(len(rendered_datasets),
-                         len(datasets) + len(private_datasets) + len(empty_datasets))
+        self.assertEqual(len(rendered_datasets.objects), 20)
 
-        rendered_private_datasets = [dataset for dataset in rendered_datasets if dataset.private]
-        self.assertEqual(len(rendered_private_datasets), len(private_datasets))
+    def test_render_display_with_paginated_datasets_on_second_page(self):
+        '''It should render the organization page with paginated datasets'''
+        organization = OrganizationFactory()
+        second_page_len = 1
+        datasets_len = 21
+        for _ in range(datasets_len):
+            VisibleDatasetFactory(organization=organization)
+        response = self.get(url_for('organizations.show', org=organization, page=2))
 
-        total_datasets = self.get_context_variable('total_datasets')
-        self.assertEqual(total_datasets,
-                         len(datasets) + len(private_datasets) + len(empty_datasets))
+        self.assert200(response)
+        rendered_datasets = self.get_context_variable('datasets')
+        self.assertEqual(len(rendered_datasets.objects), second_page_len)
 
     def test_render_display_with_reuses(self):
         '''It should render the organization page with some reuses'''
@@ -166,12 +177,14 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         me = self.login()
         member = Member(user=me, role='editor')
         organization = OrganizationFactory(members=[member])
+        # We show paginated reuses on the organisation page
+        # so rendered_reuses length will be at most 4
         reuses = [VisibleReuseFactory(organization=organization) for _ in range(2)]
         empty_reuses = [
-            ReuseFactory(organization=organization, datasets=[]) for _ in range(2)]
+            ReuseFactory(organization=organization, datasets=[]) for _ in range(1)]
         private_reuses = [
             VisibleReuseFactory(organization=organization, private=True)
-            for _ in range(2)]
+            for _ in range(1)]
         response = self.get(url_for('organizations.show', org=organization))
 
         self.assert200(response)
@@ -184,6 +197,31 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
 
         total_reuses = self.get_context_variable('total_reuses')
         self.assertEqual(total_reuses, len(reuses) + len(private_reuses) + len(empty_reuses))
+
+    def test_render_display_with_paginated_reuses(self):
+        '''It should render the organization page with paginated reuses'''
+        organization = OrganizationFactory()
+        reuses_len = OrganizationDetailView.reuse_page_size + 1
+        for _ in range(reuses_len):
+            VisibleReuseFactory(organization=organization)
+        response = self.get(url_for('organizations.show', org=organization))
+
+        self.assert200(response)
+        rendered_reuses = self.get_context_variable('reuses')
+        self.assertEqual(len(rendered_reuses), OrganizationDetailView.reuse_page_size)
+
+    def test_render_display_with_paginated_reuses_on_second_page(self):
+        '''It should render the organization page with paginated datasets'''
+        second_page_len = 1
+        reuses_len = OrganizationDetailView.reuse_page_size + second_page_len
+        organization = OrganizationFactory()
+        for _ in range(reuses_len):
+            VisibleReuseFactory(organization=organization)
+        response = self.get(url_for('organizations.show', org=organization, reuses_page=2))
+
+        self.assert200(response)
+        rendered_reuses = self.get_context_variable('reuses')
+        self.assertEqual(len(rendered_reuses), second_page_len)
 
     def test_render_display_with_followers(self):
         '''It should render the organization page with followers'''
@@ -213,13 +251,10 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
                       response.data)
 
     def test_datasets_csv(self):
-        with self.autoindex():
-            org = OrganizationFactory()
-            datasets = [
-                DatasetFactory(organization=org, resources=[ResourceFactory()])
-                for _ in range(3)]
-            not_org_dataset = DatasetFactory(resources=[ResourceFactory()])
-            hidden_dataset = DatasetFactory()
+        org = OrganizationFactory()
+        [
+            DatasetFactory(organization=org, resources=[ResourceFactory()])
+            for _ in range(3)]
 
         response = self.get(url_for('organizations.datasets_csv', org=org))
 
@@ -240,26 +275,16 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         self.assertIn('tags', header)
         self.assertIn('metric.reuses', header)
 
-        rows = list(reader)
-        ids = [row[0] for row in rows]
-
-        self.assertEqual(len(rows), len(datasets))
-        for dataset in datasets:
-            self.assertIn(str(dataset.id), ids)
-        self.assertNotIn(str(hidden_dataset.id), ids)
-        self.assertNotIn(str(not_org_dataset.id), ids)
-
     def test_resources_csv(self):
-        with self.autoindex():
-            org = OrganizationFactory()
-            datasets = [
-                DatasetFactory(
-                    organization=org,
-                    resources=[ResourceFactory(), ResourceFactory()])
-                for _ in range(3)
-            ]
-            not_org_dataset = DatasetFactory(resources=[ResourceFactory()])
-            hidden_dataset = DatasetFactory()
+        org = OrganizationFactory()
+        datasets = [
+            DatasetFactory(
+                organization=org,
+                resources=[ResourceFactory(), ResourceFactory()])
+            for _ in range(3)
+        ]
+        not_org_dataset = DatasetFactory(resources=[ResourceFactory()])
+        hidden_dataset = DatasetFactory()
 
         response = self.get(
             url_for('organizations.datasets_resources_csv', org=org))

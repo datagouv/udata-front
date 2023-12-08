@@ -8,7 +8,7 @@ import requests
 
 from flask import url_for
 from feedgen.feed import FeedGenerator
-from werkzeug.contrib.atom import AtomFeed
+from feedgenerator.django.utils.feedgenerator import Atom1Feed
 
 from udata.core.dataset.factories import (
     DatasetFactory, LicenseFactory, VisibleDatasetFactory
@@ -34,13 +34,12 @@ class GouvFrThemeTest:
     settings = GouvFrSettings
     modules = []
 
-    def test_render_home(self, autoindex, client):
+    def test_render_home(self, client):
         '''It should render the home page'''
-        with autoindex:
-            for i in range(3):
-                org = OrganizationFactory()
-                DatasetFactory(organization=org)
-                ReuseFactory(organization=org)
+        for i in range(3):
+            org = OrganizationFactory()
+            DatasetFactory(organization=org)
+            ReuseFactory(organization=org)
 
         response = client.get(url_for('site.home'))
         assert200(response)
@@ -370,7 +369,7 @@ class GetBlogPostAtomTest(GetBlogPostMixin):
 
     def feed(self, feed_title, title, content, url, published=None, summary=None,
              enclosure=None, media_thumbnail=None):
-        feed = AtomFeed(feed_title, feed_url=WP_FEED_URL)
+        feed = Atom1Feed(feed_title, feed_url=WP_FEED_URL)
         tz = pytz.timezone(faker.timezone())
         published = published or faker.date_time(tzinfo=tz)
         kwargs = {
@@ -389,7 +388,7 @@ class GetBlogPostAtomTest(GetBlogPostMixin):
                 'rel': 'enclosure',
                 'length': faker.pyint(),
             }]
-        feed.add(title, content, **kwargs)
+        feed.add_item(title, content, **kwargs)
         out = feed.to_string()
         if media_thumbnail:
             el = '<media:thumbnail url="{0}" />'.format(media_thumbnail)
@@ -664,69 +663,64 @@ class SpatialTerritoriesApiTest:
     settings = TerritoriesSettings
     modules = []
 
-    def test_datasets_with_dynamic_region(self, autoindex, client):
+    def test_datasets_with_dynamic_region(self, client):
         paca, bdr, arles = create_geozones_fixtures()
-        with autoindex:
-            organization = OrganizationFactory()
-            for _ in range(3):
-                VisibleDatasetFactory(
-                    organization=organization,
-                    spatial=SpatialCoverageFactory(zones=[paca.id]))
+        organization = OrganizationFactory()
+        for _ in range(3):
+            VisibleDatasetFactory(
+                organization=organization,
+                spatial=SpatialCoverageFactory(zones=[paca.id]))
 
         response = client.get(url_for('api.zone_datasets', id=paca.id),
                               qs={'dynamic': 1})
         assert200(response)
         assert len(response.json) == 9
 
-    def test_datasets_with_dynamic_region_and_size(self, autoindex, client):
+    def test_datasets_with_dynamic_region_and_size(self, client):
         paca, bdr, arles = create_geozones_fixtures()
-        with autoindex:
-            organization = OrganizationFactory()
-            for _ in range(3):
-                VisibleDatasetFactory(
-                    organization=organization,
-                    spatial=SpatialCoverageFactory(zones=[paca.id]))
+        organization = OrganizationFactory()
+        for _ in range(3):
+            VisibleDatasetFactory(
+                organization=organization,
+                spatial=SpatialCoverageFactory(zones=[paca.id]))
 
         response = client.get(url_for('api.zone_datasets', id=paca.id),
                               qs={'dynamic': 1, 'size': 2})
         assert200(response)
         assert len(response.json) == 8
 
-    def test_datasets_without_dynamic_region(self, autoindex, client):
+    def test_datasets_without_dynamic_region(self, client):
         paca, bdr, arles = create_geozones_fixtures()
-        with autoindex:
-            organization = OrganizationFactory()
-            for _ in range(3):
-                VisibleDatasetFactory(
-                    organization=organization,
-                    spatial=SpatialCoverageFactory(zones=[paca.id]))
+        organization = OrganizationFactory()
+        for _ in range(3):
+            VisibleDatasetFactory(
+                organization=organization,
+                spatial=SpatialCoverageFactory(zones=[paca.id]))
 
         response = client.get(url_for('api.zone_datasets', id=paca.id))
         assert200(response)
         assert len(response.json) == 3
 
-    def test_datasets_with_dynamic_county(self, autoindex, client):
+    def test_datasets_with_dynamic_county(self, client):
         paca, bdr, arles = create_geozones_fixtures()
-        with autoindex:
-            organization = OrganizationFactory()
-            for _ in range(3):
-                VisibleDatasetFactory(
-                    organization=organization,
-                    spatial=SpatialCoverageFactory(zones=[bdr.id]))
+        organization = OrganizationFactory()
+        for _ in range(3):
+            VisibleDatasetFactory(
+                organization=organization,
+                spatial=SpatialCoverageFactory(zones=[bdr.id]))
 
         response = client.get(url_for('api.zone_datasets', id=bdr.id),
                               qs={'dynamic': 1})
         assert200(response)
         assert len(response.json) == 9
 
-    def test_datasets_with_dynamic_town(self, autoindex, client):
+    def test_datasets_with_dynamic_town(self, client):
         paca, bdr, arles = create_geozones_fixtures()
-        with autoindex:
-            organization = OrganizationFactory()
-            for _ in range(3):
-                VisibleDatasetFactory(
-                    organization=organization,
-                    spatial=SpatialCoverageFactory(zones=[arles.id]))
+        organization = OrganizationFactory()
+        for _ in range(3):
+            VisibleDatasetFactory(
+                organization=organization,
+                spatial=SpatialCoverageFactory(zones=[arles.id]))
 
         response = client.get(url_for('api.zone_datasets', id=arles.id),
                               qs={'dynamic': 1})

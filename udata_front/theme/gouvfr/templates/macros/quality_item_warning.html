@@ -1,0 +1,8 @@
+{% macro quality_item_warning(passed, message_failed, class) %}
+{%if not passed %}
+    <div class="text-default-warning fr-grid-row fr-grid-row--middle {{class}}">
+        <div class="fr-mr-1v"><span class="fr-icon-warning-line fr-icon--sm" aria-hidden="true"></span></div>
+        <p class="fr-text--sm fr-m-0">{{message_failed}}</p>
+    </div>
+{% endif %}
+{% endmacro %}

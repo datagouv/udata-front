@@ -22,11 +22,7 @@
 
     <div class="tab-pane active" id="datasets">
         {% if datasets %}
-        <ul class="search-results">
-            {% for dataset in datasets %}
-            {% include theme('dataset/search-result.html') %}
-            {% endfor %}
-        </ul>
+            {% include theme('dataset/search-results.html') %}
             {% if datasets.has_next %}
             <p class="text-center">
                 <a class="btn btn-grey btn-sm" href="{{ url_for('datasets.list', **request.args) }}">

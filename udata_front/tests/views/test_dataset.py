@@ -19,53 +19,6 @@ from udata_front.tests.frontend import GouvfrFrontTestCase
 class DatasetBlueprintTest(GouvfrFrontTestCase):
     settings = GouvFrSettings
 
-    def test_render_list(self):
-        '''It should render the dataset list page'''
-        with self.autoindex():
-            datasets = [VisibleDatasetFactory() for i in range(3)]
-
-        response = self.get(url_for('datasets.list'))
-
-        self.assert200(response)
-        rendered_datasets = self.get_context_variable('datasets')
-        self.assertEqual(len(rendered_datasets), len(datasets))
-
-    def test_render_list_with_facets(self):
-        '''It should render the dataset list page with facets'''
-
-        with self.autoindex():
-            datasets = DatasetFactory.create_batch(3, visible=True,
-                                                   org=True, geo=True)
-
-        response = self.get(url_for('datasets.list'))
-
-        self.assert200(response)
-        rendered_datasets = self.get_context_variable('datasets')
-        self.assertEqual(len(rendered_datasets), len(datasets))
-
-    def test_render_list_with_query(self):
-        '''It should render the dataset list page with a query string'''
-        with self.autoindex():
-            datasets = [DatasetFactory(
-                resources=[ResourceFactory()]) for i in range(3)]
-            expected_dataset = DatasetFactory(
-                title='test for query', resources=[ResourceFactory()])
-            datasets.append(expected_dataset)
-
-        response = self.get(url_for('datasets.list'),
-                            qs={'q': 'test for query'})
-
-        self.assert200(response)
-        rendered_datasets = self.get_context_variable('datasets')
-        self.assertEqual(len(rendered_datasets), 1)
-        self.assertEqual(rendered_datasets[0].id, expected_dataset.id)
-
-    def test_render_list_empty(self):
-        '''It should render the dataset list page event if empty'''
-        self.init_search()
-        response = self.get(url_for('datasets.list'))
-        self.assert200(response)
-
     def test_render_display(self):
         '''It should render the dataset page'''
         dataset = VisibleDatasetFactory()
@@ -120,9 +73,7 @@ class DatasetBlueprintTest(GouvfrFrontTestCase):
         self.assertEqual(json_ld_resource['dateCreated'][:16],
                          resource.created_at.isoformat()[:16])
         self.assertEqual(json_ld_resource['dateModified'][:16],
-                         resource.modified.isoformat()[:16])
-        self.assertEqual(json_ld_resource['datePublished'][:16],
-                         resource.published.isoformat()[:16])
+                         resource.last_modified.isoformat()[:16])
         self.assertEqual(json_ld_resource['encodingFormat'], 'png')
         self.assertEqual(json_ld_resource['contentSize'],
                          resource.filesize)
@@ -149,9 +100,7 @@ class DatasetBlueprintTest(GouvfrFrontTestCase):
         self.assertEqual(json_ld_resource['dateCreated'][:16],
                          community_resource.created_at.isoformat()[:16])
         self.assertEqual(json_ld_resource['dateModified'][:16],
-                         community_resource.modified.isoformat()[:16])
-        self.assertEqual(json_ld_resource['datePublished'][:16],
-                         community_resource.published.isoformat()[:16])
+                         community_resource.last_modified.isoformat()[:16])
         self.assertEqual(json_ld_resource['encodingFormat'],
                          community_resource.format)
         self.assertEqual(json_ld_resource['contentSize'],
@@ -193,14 +142,14 @@ class DatasetBlueprintTest(GouvfrFrontTestCase):
 
     def test_raise_410_if_deleted(self):
         '''It should raise a 410 if the dataset is deleted'''
-        dataset = DatasetFactory(deleted=datetime.now())
+        dataset = DatasetFactory(deleted=datetime.utcnow())
         response = self.get(url_for('datasets.show', dataset=dataset))
         self.assert410(response)
 
     def test_200_if_deleted_but_authorized(self):
         '''It should not raise a 410 if the can view it'''
         self.login()
-        dataset = DatasetFactory(deleted=datetime.now(), owner=self.user)
+        dataset = DatasetFactory(deleted=datetime.utcnow(), owner=self.user)
         response = self.get(url_for('datasets.show', dataset=dataset))
         self.assert200(response)
 

@@ -1,0 +1,19 @@
+import { Canvas, Controls, Meta } from '@storybook/blocks';
+
+import * as RangePickerStories from './RangePicker.stories';
+
+<Meta of={RangePickerStories} />
+
+# Range Picker
+
+Used to pick dates for temporal coverage selection.
+
+It supports getting a default value with the `value` prop and will emit `@change` event.
+
+Value is a string composed of the two dates forming a range as such : `YYYY-MM-DD-YYYY-MM-DD`
+
+<Canvas of={RangePickerStories.SimpleRangePicker} />
+
+## Props
+
+<Controls />

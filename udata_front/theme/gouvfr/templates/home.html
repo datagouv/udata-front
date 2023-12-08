@@ -11,43 +11,60 @@
 {% block content %}
 {% cache cache_duration, 'home', g.lang_code %}
 
-<section class="hero py-xl py-lg-lg">
-    <div class="hagrid">
-        <div class="row">
-            <div class="col-5 col-lg-12">
-                <h1 class="mt-0 mb-md-md">{{ _('Open platform for French public data') }}</h1>
-                <div class="mt-md mt-lg-sm">
-                    <h4>{{ _('Featured topics') }}</h4>
-                    <a href="{{ url_for('gouvfr.show_page', slug='donnees-sante') }}"
-                        class="btn-venti my-md bg-blue-470">
-                        Données relatives à la
-                        <strong>Santé et à la COVID-19</strong>
-                    </a>
-                    <a href="{{ url_for('gouvfr.show_page', slug='donnees-emploi') }}"
-                        class="btn-venti my-md bg-blue-450">
-                        Données relatives à
-                        <strong>L'emploi</strong>
-                    </a>
-                    <a href="{{ url_for('gouvfr.show_page', slug='donnees-logement-urbanisme') }}"
-                        class="btn-venti bg-green-350">
-                        Données relatives au
-                        <strong>Logement et à l'Urbanisme</strong>
-                    </a>
-                    <div class="row justify-center mt-md">
-                        <a href="{{ url_for('gouvfr.show_page', slug='donnees-cles-par-sujet') }}"
-                            class="btn-secondary btn-with-arrow">{{ _('All featured topics') }}</a>
+<section class="hero fr-py-3w fr-py-md-9v">
+    <div class="fr-container">
+        <div class="fr-grid-row fr-grid-row--gutters">
+            <div class="fr-col-12 fr-col-lg-5">
+                <h1 class="fr-mt-0 fr-mb-2w">{{ _('Open platform for French public data') }}</h1>
+                <div>
+                    <h2 class="fr-text--md fr-my-0">{{ _('Featured topics') }}</h2>
+                    <ul>
+                        <li>
+                            <a href="{{ url_for('gouvfr.show_page', slug='donnees_agriculture-alimentation') }}"
+                                class="btn-venti fr-my-2w bg-green-400">
+                                Données relatives à
+                                <strong>l'Agriculture et à l'Alimentation</strong>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('gouvfr.show_page', slug='donnees-energie') }}"
+                                class="btn-venti fr-my-2w bg-orange-100">
+                                Données relatives aux
+                                <strong>Énergies</strong>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('gouvfr.show_page', slug='donnees-geographiques') }}"
+                                class="btn-venti fr-my-2w bg-blue-450">
+                                Données à composante
+                                <strong>Géographique</strong>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="fr-grid-row justify-center fr-mt-2w">
+                        <a
+                            href="{{ url_for('gouvfr.show_page', slug='thematiques-a-la-une') }}"
+                            class="fr-btn fr-btn--secondary fr-icon-arrow-right-s-line fr-btn--icon-right"
+                        >
+                            {{ _('All featured topics') }}
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-6 offset-1 offset-lg-0 col-lg-12 mt-lg-md">
-                <h4>{{ _('News') }}</h4>
+            <div class="fr-col-12 fr-col-offset-lg-1 fr-col-lg-6">
+                <h2 class="fr-text--md fr-my-0">{{ _('News') }}</h2>
                 {% if last_post %}
                 {% set post = last_post %}
-                <a href="{{ post.display_url }}" title="{{ post.name }}" class="unstyled w-100 hero-post">
+                <div class="fr-grid-row justify-center fr-mb-2w">
                     {% include theme('post/search-result.html') %}
-                </a>
-                <div class="row justify-center">
-                    <a href="{{ url_for('posts.list') }}" class="btn-secondary btn-with-arrow">{{ _('All news') }}</a>
+                </div>
+                <div class="fr-grid-row justify-center">
+                    <a
+                        href="{{ url_for('posts.list') }}"
+                        class="fr-btn fr-btn--secondary fr-icon-arrow-right-s-line fr-btn--icon-right"
+                    >
+                        {{ _('All news') }}
+                    </a>
                 </div>
                 {% endif %}
             </div>
@@ -57,7 +74,7 @@
 
 {% set metrics = [
     (_('Datasets'), 'datasets'),
-    (_('Resources'), 'resources'),
+    (_('Files'), 'resources'),
     (_('Reuses'), 'reuses'),
     (_('Users'), 'users'),
     (_('Organizations'), 'organizations'),
@@ -67,14 +84,16 @@
 
 {# Metrics Section #}
 <section class="metrics-bar">
-    <div class="hagrid py-hg py-md-md">
-        <div class="bar p-xl">
+    <div class="fr-container fr-py-md-7w fr-py-2w">
+        <div class="bar fr-p-9v">
             <h3>{% include theme('svg/logotype.svg') %} {{ _('is') }}</h3>
-            <div class="row-inline justify-between mt-xl mt-md-md">
+            <div class="fr-grid-row justify-between fr-mt-md-9v fr-mt-2w">
                 {% for (label, metric) in metrics %}
-                <div class="filet my-md-xxs {% if metric == 'reuses' %}filet-currentcolor text-green-300{% endif %}">
-                    <div class="fs-hg f-bold text-grey-400">{{ current_site.metrics[metric] }}</div>
-                    <span class="text-grey-400">{{ label }}</span>
+                <div class="filet fr-my-1v fr-my-md-0">
+                    <p class="fr-m-0 text-grey-400">
+                        <span class="fr-h1 fr-m-0 block">{{ current_site.metrics[metric]|format_number }}</span>
+                        {{ label }}
+                    </p>
                 </div>
                 {% endfor %}
             </div>
@@ -84,35 +103,54 @@
 
 
 {# Datasets section #}
-{% set nb_datasets = current_site.settings.home_datasets|length %}
+{% set visible_datasets = current_site.settings.home_datasets|visibles %}
+{% set nb_datasets = visible_datasets|length %}
 {% set dataset_tabs = (
-    ('editorial-datasets', _('Featured datasets'), current_site.settings.home_datasets, {}),
+    ('editorial-datasets', _('Featured datasets'), visible_datasets, {}),
     ('recent-datasets', _('Latest datasets'), recent_datasets[:nb_datasets], {'sort': '-created'}),
     ('reference-datasets', _('Reference datasets'), spd_datasets, {}),
 ) %}
 
-<section class="datasets pb-hg pt-md bg-grey-50">
-    <div class="hagrid overflow-visible">
+<section class="datasets fr-pb-7w fr-pt-2w bg-grey-50">
+    <div class="fr-container">
         {# Dataset tabs #}
-        <div class="row justify-between">
-            <div class="col-auto">
-                <h2>{{ _('Datasets') }}</h2>
+        <div class="fr-grid-row fr-grid-row--gutters justify-between">
+            <div class="fr-col-auto">
+                <h2 class="fr-m-0">{{ _('Datasets') }}</h2>
             </div>
-            <div class="col-auto">
-                <nav class="tabs">
-                    {% for tab_id, label, _, _ in dataset_tabs %}
-                    <a href="#{{tab_id}}"
-                        class="btn-tab tab {% if loop.first %}active{% endif %} hidden-lg">{{ label }}</a>
-                    {% endfor %}
-                    <a href="{{ url_for('datasets.list') }}" class="btn-tab tab">{{ _('See more') }}</a>
-                </nav>
+            <div class="fr-col-auto fr-grid-row fr-grid-row--gutters">
+                <div class="fr-col-auto">
+                    <div class="fr-tags-group fr-hidden fr-unhidden-lg" data-tabs role="tablist">
+                        {% for tab_id, label, _, _ in dataset_tabs %}
+                        <button
+                            role="tab"
+                            aria-controls="{{tab_id}}"
+                            class="fr-tag"
+                            {% if loop.first %}
+                                aria-selected="true"
+                            {% endif %}
+                        >
+                            {{ label }}
+                        </button>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="fr-col-auto">
+                    <a
+                        href="{{ url_for('datasets.list') }}"
+                        class="fr-link fr-icon-arrow-right-s-line fr-link--icon-right"
+                    >
+                        {{ _('See more datasets') }}
+                    </a>
+                </div>
             </div>
         </div>
         {% for tab_id, label, datasets, kwargs in dataset_tabs  %}
-        <div class="tab-content {% if loop.first %}active{% endif %}" id={{tab_id}}>
-            <div class="row pt-xl pt-md-md">
+        <div class="fr-hidden {% if loop.first %}fr-unhidden{% endif %}" role="tabpanel" id={{tab_id}}>
+            <div class="fr-grid-row fr-grid-row--gutters fr-pt-1w">
                 {% for dataset in datasets %}
-                <div class="col-lg-12 col-4">{% include theme('dataset/card.html') %}
+                <div class="fr-col-12 fr-col-lg-4">
+                    {% include theme('dataset/card-xs.html') %}
                 </div>
                 {% endfor %}
             </div>
@@ -124,38 +162,56 @@
 {# End datasets section #}
 
 {# Reuses section #}
-{% set nb_reuses = current_site.settings.home_reuses|length %}
+{% set visible_reuses = current_site.settings.home_reuses|visibles %}
+{% set nb_reuses = visible_reuses|length %}
 {% set reuses_tabs = (
-    ('best-reuses', _('Featured reuses'), current_site.settings.home_reuses, {}),
-    ('latest-reuses', _('Latest reuses'), recent_reuses[:3], {'sort': '-created'}),
+    ('best-reuses', _('Featured reuses'), visible_reuses, {}),
+    ('latest-reuses', _('Latest reuses'), recent_reuses[:nb_reuses], {'sort': '-created'}),
 ) %}
 
 {# Reuse section #}
-<section class="reuse py-hg py-md-lg">
-    <div class="hagrid">
-        <div class="row justify-between">
-            <div class="col-auto">
-                <h2>{{ _('Data reuses') }}</h2>
+<section class="reuse fr-py-3w fr-py-md-7w">
+    <div class="fr-container">
+        <div class="fr-grid-row fr-grid-row--gutters justify-between">
+            <div class="fr-col-auto">
+                <h2 class="fr-m-0">{{ _('Data reuses') }}</h2>
             </div>
-            <div class="col-auto">
-                <nav class="tabs">
-                    {% for tab_id, label, _, _ in reuses_tabs %}
-                    <a href="#{{tab_id}}"
-                        class="btn-tab tab {% if loop.first %}active{% endif %} hidden-lg">{{ label }}</a>
-                    {% endfor %}
-                    <a href="{{ url_for('reuses.list', sort='-created') }}" title="{{ _('Latest reuses') }}"
-                        class="btn-tab tab">{{ _('See more') }}</a>
-                </nav>
+            <div class="fr-col-auto fr-grid-row fr-grid-row--gutters">
+                <div class="fr-col-auto">
+                    <div class="fr-tags-group fr-hidden fr-unhidden-lg" data-tabs role="tablist">
+                        {% for tab_id, label, _, _ in reuses_tabs %}
+                        <button
+                            role="tab"
+                            aria-controls="{{tab_id}}"
+                            class="fr-tag"
+                            {% if loop.first %}
+                                aria-selected="true"
+                            {% else %}
+                            {% endif %}
+                        >
+                            {{ label }}
+                        </button>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="fr-col-auto">
+                    <a
+                    href="{{ url_for('reuses.list', sort='-created') }}"
+                    title="{{ _('Latest reuses') }}"
+                    class="fr-link fr-icon-arrow-right-s-line fr-link--icon-right"
+                >
+                    {{ _('See more reuses') }}
+                </a>
+                </div>
             </div>
         </div>
     </div>
-    <div class="hagrid reuse-cards">
+    <div class="fr-container">
         {% for tab_id, label, reuses, kwargs in reuses_tabs  %}
-        <div class="tab-content  {% if loop.first %}active{% endif %}" id="{{tab_id}}">
-            <div class="row pt-xl pt-md-md">
+        <div class="fr-hidden {% if loop.first %}fr-unhidden{% endif %}" role="tabpanel" id="{{tab_id}}">
+            <div class="fr-grid-row fr-grid-row--gutters fr-pt-1w">
                 {% for reuse in reuses %}
-                {% set features = ['preview'] %}
-                <div class="col-3 col-md-7 mb-md text-align-center">
+                <div class="fr-col-md-4 fr-col-sm-6 fr-col-12 fr-mb-3v">
                     {% include theme('reuse/card.html') %}
                 </div>
                 {% endfor %}
@@ -165,8 +221,5 @@
     </div>
 </section>
 {# End reuse section #}
-
-{% include theme("participez/participez.html") %}
-
 {% endcache %}
 {% endblock %}

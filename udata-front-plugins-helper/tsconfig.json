@@ -1,0 +1,18 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "target": "es2018",
+    "lib": ["dom", "esnext"],
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "declarationDir": "types",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "types": ["vitest/globals"]
+  }
+}

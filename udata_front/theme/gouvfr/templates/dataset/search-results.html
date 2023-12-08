@@ -1,0 +1,10 @@
+<ul class="search-results fr-my-3v">
+{% for dataset in datasets %}
+    {# FIXME: remove with loop when upgrading jinja. See https://github.com/pallets/jinja/pull/1242 #}
+    {% with loop_ = loop %}
+    <li>
+        {% include theme('dataset/card-lg.html') %}
+    </li>
+    {% endwith %}
+{% endfor %}
+</ul>

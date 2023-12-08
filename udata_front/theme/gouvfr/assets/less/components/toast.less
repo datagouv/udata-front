@@ -1,0 +1,133 @@
+.fadeOut {
+    animation-name: fadeOut;
+}
+
+.fadeInDown {
+    animation-name: fadeInDown;
+}
+
+.fadeInUp {
+    animation-name: fadeInUp;
+}
+
+.fade-enter-active {
+    transition: opacity .3s ease-in;
+}
+
+.fade-leave-active {
+    transition: opacity .15s ease-out;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: .5;
+        transform: translateY(-100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: .5;
+        transform: translateY(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.c-toast-container {
+    z-index: 9999;
+    pointer-events: none;
+    padding: 2em;
+    display: flex;
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+}
+
+.c-toast-container--top {
+    flex-direction: column;
+}
+
+.c-toast-container--bottom {
+    flex-direction: column-reverse;
+}
+
+@media @query-md {
+    .c-toast-container {
+        padding: 0;
+        position: fixed !important;
+    }
+}
+
+.c-toast--top,
+.c-toast--bottom {
+    align-self: center;
+}
+
+.c-toast--top-right,
+.c-toast--bottom-right {
+    align-self: flex-end;
+}
+
+.c-toast--top-left,
+.c-toast--bottom-left {
+    align-self: flex-start;
+}
+
+/*
+Other classes are supported by our toast library but not used for now :
+- .c-toast--success
+- .c-toast--info
+- .c-toast--warning
+- .c-toast--default
+*/
+.v--default-css .c-toast--error {
+    --background-action-high-blue-france: @background-action-high-error;
+    --background-action-high-blue-france-hover: @background-action-high-error-hover;
+    --background-action-high-blue-france-active: @background-action-high-error-active;
+}
+
+.v--default-css .c-toast {
+    pointer-events: auto;
+    color: #fff;
+    min-height: 3em;
+    cursor: pointer;
+    word-break: break-word;
+    border-radius: .5em;
+    align-items: center;
+    margin: .5em 0;
+    padding: .5em 2em;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    animation-duration: .15s;
+    display: flex;
+    &::before {
+        &:extend(.fr-btn--icon-right[class^="fr-icon-"]::before);
+        &:extend(.fr-icon-close-circle-line::before);
+        &:extend([class^="fr-icon-"]::before);
+    }
+    &:extend(.fr-btn);
+    &:extend(.fr-btn--icon-right[class^="fr-icon-"]);
+}

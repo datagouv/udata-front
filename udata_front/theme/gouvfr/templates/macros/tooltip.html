@@ -1,0 +1,12 @@
+{# tooltip expects a call when used #}
+{# Call contents will be included in each caller() call #}
+{# To add different content for the <span> and the tooltip, you should check the call parameter. #}
+{# You'll receive `tooltip` for the caller inside the tooltip. #}
+{% macro tooltip(class) %}
+    <div class="tooltip__wrapper text-grey-500 {{class}}">
+        {{caller()}}
+        <div class="tooltip" role="tooltip">
+            {{caller("tooltip")}}
+        </div>
+    </div>
+{% endmacro %}

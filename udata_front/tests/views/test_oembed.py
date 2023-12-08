@@ -41,7 +41,7 @@ class OEmbedAPITest:
         assert 'maxheight' in response.json
         assert response.json['type'] == 'rich'
         assert response.json['version'] == '1.0'
-        card = theme.render('dataset/card.html', dataset=dataset)
+        card = theme.render('dataset/card-xs.html', dataset=dataset)
         assert card in response.json['html']
 
     def test_oembed_for_dataset_with_organization(self, api):
@@ -55,7 +55,7 @@ class OEmbedAPITest:
         assert200(response)
         assert_cors(response)
 
-        card = theme.render('dataset/card.html', dataset=dataset)
+        card = theme.render('dataset/card-xs.html', dataset=dataset)
         assert card in response.json['html']
 
     def test_oembed_for_dataset_redirect_link(self, api):
@@ -75,7 +75,7 @@ class OEmbedAPITest:
         assert 'maxheight' in response.json
         assert response.json['type'] == 'rich'
         assert response.json['version'] == '1.0'
-        card = theme.render('dataset/card.html', dataset=dataset)
+        card = theme.render('dataset/card-xs.html', dataset=dataset)
         assert card in response.json['html']
 
     def test_oembed_for_unknown_dataset(self, api):

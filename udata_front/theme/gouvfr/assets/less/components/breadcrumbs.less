@@ -1,0 +1,42 @@
+/*
+---
+name: Breadcrumbs
+category: 3 - Components
+---
+
+Breadcrumbs allow a user to see where it is in a website.
+
+```breadcrumbs.html
+<nav role="navigation" class="fr-breadcrumb" aria-label="vous êtes ici :">
+    <button class="fr-breadcrumb__button" aria-expanded="false" aria-controls="breadcrumb-1">Voir le fil d’Ariane</button>
+    <div class="fr-collapse" id="breadcrumb-1">
+        <ol class="fr-breadcrumb__list">
+            <li>
+                <a class="fr-breadcrumb__link" href="/">Accueil</a>
+            </li>
+            <li>
+                <a class="fr-breadcrumb__link" href="/segment-1/">Segment 1</a>
+            </li>
+            <li>
+                <a class="fr-breadcrumb__link" href="/segment-1/segment-2/">Segment 2</a>
+            </li>
+            <li>
+                <a class="fr-breadcrumb__link" href="/segment-1/segment-2/segment-3/">Segment 3</a>
+            </li>
+            <li>
+                <a class="fr-breadcrumb__link" href="/segment-1/segment-2/segment-3/segment-4/">Segment 4</a>
+            </li>
+            <li>
+                <a class="fr-breadcrumb__link" href="/segment-1/segment-2/segment-3/segment-4/segment-5/">Segment 5</a>
+            </li>
+            <li>
+                <a class="fr-breadcrumb__link" aria-current="page">Page Actuelle</a>
+            </li>
+        </ol>
+    </div>
+</nav>
+```
+*/
+
+// tabs from dsfr
+@import (less) "@gouvfr/dsfr/dist/component/breadcrumb/breadcrumb.css";

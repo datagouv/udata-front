@@ -1,0 +1,167 @@
+/*
+---
+name: Tabs
+category: 3 - Components
+---
+
+Tabs allow for easy navigation between categories.
+
+Warning : `.tab` first immediate child (`.tab > *`) has a `pointer-events: none` property set so that clicks actually register to the tab element and not the children.
+This prevents messy event handling with bubbling prevention, but might cause you trouble in some edge cases.
+
+```tabs.html
+<nav class="tabs fr-tags-group">
+    <a class="fr-tag tab active" href="#">Selection Etalab</a>
+    <a class="fr-tag tab" href="#">Dernières réutilisations</a>
+    <a class="fr-tag tab" href="#">Voir plus</div>
+</nav>
+```
+
+## Styling
+By default, tabs have no style.
+You can either use `.fr-tag` (check out the tags documentation page for more information), or any element you'd like.
+
+## From DSFR
+
+You can use tabs from DSFR. It uses DSFR colors and conventions. It allows you to choose an optional icon in every tabs.
+
+```tab-dsfr.html
+<div class="fr-tabs">
+    <ul class="fr-tabs__list" role="tablist" aria-label="[A modifier | nom du système d'onglet]">
+        <li role="presentation">
+            <button id="tabpanel-404" class="fr-tabs__tab fr-icon-checkbox-circle-line fr-tabs__tab--icon-left" tabindex="0" role="tab" aria-selected="true" aria-controls="tabpanel-404-panel">Label Tab 1</button>
+        </li>
+        <li role="presentation">
+            <button id="tabpanel-405" class="fr-tabs__tab fr-icon-checkbox-circle-line fr-tabs__tab--icon-left" tabindex="-1" role="tab" aria-selected="false" aria-controls="tabpanel-405-panel">Label Tab 2</button>
+        </li>
+        <li role="presentation">
+            <button id="tabpanel-406" class="fr-tabs__tab fr-icon-checkbox-circle-line fr-tabs__tab--icon-left" tabindex="-1" role="tab" aria-selected="false" aria-controls="tabpanel-406-panel">Label Tab 2</button>
+        </li>
+    </ul>
+    <div id="tabpanel-404-panel" class="fr-tabs__panel fr-tabs__panel--selected" role="tabpanel" aria-labelledby="tabpanel-404" tabindex="0">
+        <p>Contenu 1</p>
+    </div>
+    <div id="tabpanel-405-panel" class="fr-tabs__panel" role="tabpanel" aria-labelledby="tabpanel-405" tabindex="0">
+        <p>Contenu 2</p>
+    </div>
+    <div id="tabpanel-406-panel" class="fr-tabs__panel" role="tabpanel" aria-labelledby="tabpanel-406" tabindex="0">
+        <p>Contenu 3</p>
+    </div>
+</div>
+```
+
+*/
+
+[data-tabs] {
+    [role=tab] {
+        // Prevents children from taking the click events.
+        // Might be dangerous, remove if needed
+        > * {
+            pointer-events: none;
+        }
+
+        &.active {
+            pointer-events: none;
+        }
+    }
+}
+
+// tabs from dsfr
+@import (less) "@gouvfr/dsfr/dist/component/tab/tab.css";
+
+.fr-tabs {
+    --text-active-blue-france: @blue-400;
+    --border-active-blue-france: @blue-400;
+    --background-action-low-blue-france: @background-action-low-blue-cumulus;
+    --background-action-low-blue-france-hover: @background-action-low-blue-cumulus-hover;
+    --background-action-low-blue-france-active: @background-action-low-blue-cumulus-active;
+    z-index: 1;
+    &:not([data-fr-js-tabs-group]) {
+        display: block;
+    }
+    & > .fr-tabs__panel:not([data-fr-js-tab-panel]) {
+        left: 0;
+        &:not(.fr-tabs__panel--selected) {
+            visibility: visible;
+        }
+    }
+}
+
+.fr-tabs--full-page {
+    overflow: visible;
+    & > .fr-tabs__panel {
+        padding: 0;
+        padding-top: 2.5rem;
+        padding-bottom: 7.5rem;
+        background-color: @white;
+    }
+    &.fr-transition-none > .fr-tabs__panel:not(.fr-tabs__panel--selected)[data-fr-js-tab-panel] {
+        display: none;
+    }
+    &::after {
+        box-shadow: none;
+        .border-top;
+        .border-default-grey;
+    }
+    & > .fr-container > .fr-tabs__list {
+        max-width: calc(100% - 2rem);
+        &[role="tablist"] {
+            display: none;
+        }
+        &[role="tablist"][data-fr-js-tabs-list] {
+            display: flex;
+        }
+        &[role="navigation"] {
+            display: flex;
+        }
+        &[role="navigation"][data-fr-js-tabs-list] {
+            display: none;
+        }
+        @media @dsfr-query-sm {
+            max-width: calc(@breakpoint-sm - 2rem);
+        }
+        @media @dsfr-query-md {
+            max-width: calc(@breakpoint-md - 2rem);
+        }
+        @media @dsfr-query-lg {
+            max-width: calc(@breakpoint-lg - 3rem);
+        }
+        @media @dsfr-query-xl {
+            max-width: calc(@breakpoint-xl - 3rem);
+        }
+    }
+}
+
+.fr-tabs__tab sup {
+    .sup;
+    place-self: baseline;
+    margin-left: 0.125rem;
+    &::before, &::after {
+        color: inherit;
+    }
+}
+
+.fr-tabs--no-border {
+    &::after {
+        margin: -1px;
+    }
+}
+
+.fr-tabs__panel--no-padding {
+    .fr-p-0-5v;
+    .fr-pb-5v;
+}
+
+.fr-tabs__panel--no-padding:focus, .fr-tabs__panel--no-padding:focus-visible {
+    outline-offset: -2px;
+}
+
+.fr-tabs--no-border {
+    &::after {
+        margin: -1px;
+    }
+}
+
+.fr-tabs__panel--no-padding:focus, .fr-tabs__panel--no-padding:focus-visible {
+    outline-offset: -2px;
+}

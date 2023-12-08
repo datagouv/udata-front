@@ -19,11 +19,42 @@
 <meta name="theme-static-root" content="{{ theme_static('') }}" />
 <meta name="static-root" content="{{ static('', _burst=False) }}" />
 <meta name="api-root" content="{{ url_for('api.root') }}" />
+<meta name="api-2-root" content="{{ url_for('apiv2.root') }}" />
 <meta name="admin-root" content="{{ url_for('admin.index') }}" />
 <meta name="api-specs" content="{{ url_for('api.specs', _external=True) }}"/>
 <meta name="auth-url" content="{{ url_for('security.login') }}" />
+{% if config.SCHEMA_CATALOG_URL %}
+<meta name="schema-catalog-url" content="{{ config.SCHEMA_CATALOG_URL }}" />
+<meta name="schema-documentation-url" content="{{ config.SCHEMA_DOCUMENTATION_URL }}" />
+<meta name="schema-validata-url" content="{{ config.SCHEMA_GOUVFR_VALIDATA_URL }}" />
+<meta name="schema-publishing-url" content="{{ config.SCHEMA_PUBLISHING_URL }}" />
+{% endif %}
+{% if config.DEMO_SERVER_URL %}
+<meta name="demo-server-url" content="{{ config.DEMO_SERVER_URL }}" />
+<meta name="demo-server-name" content="{{ config.DEMO_SERVER_NAME }}" />
+{% endif %}
+{% if config.PUBLISHING_FORM_FEEDBACK_URL %}
+<meta name="publishing-form-feedback-url" content="{{ config.PUBLISHING_FORM_FEEDBACK_URL }}" />
+{% endif %}
+{% if config.API_DOC_EXTERNAL_LINK %}
+<meta name="api-doc-external-link" content="{{ config.API_DOC_EXTERNAL_LINK }}" />
+{% endif %}
+{% if config.GUIDES_HARVESTING_URL %}
+<meta name="guides-harvesting-url" content="{{ config.GUIDES_HARVESTING_URL }}" />
+{% endif %}
+{% if config.SUPPORT_URL %}
+<meta name="support-url" content="{{ config.SUPPORT_URL }}" />
+{% endif %}
+{% if config.CATALOG_URL %}
+<meta name="catalog-url" content="{{ config.CATALOG_URL }}" />
+{% endif %}
+{% if config.QUALITY_DESCRIPTION_LENGTH %}
+<meta name="quality-description-length" content="{{ config.QUALITY_DESCRIPTION_LENGTH }}" />
+{% endif %}
 <meta name="github" content="{{ config.SITE_GITHUB_URL }}" />
+<meta name="guides-quality-url" content="{{config.GUIDES_QUALITY_URL}}" />
 <meta name="js-config-dataset-url" content="{{ url_for('datasets.list') }}" />
+<meta name="js-config-organization-url" content="{{ url_for('organizations.list') }}" />
 <meta name="js-config-reuse-url" content="{{ url_for('reuses.list') }}" />
 {{ i18n_alternate_links() }}
 {% if config.SENTRY_PUBLIC_DSN %}
@@ -31,6 +62,9 @@
     data-release="{{config.SENTRY_RELEASE}}"
     data-tags="{{config.SENTRY_TAGS|default({})|tojson|urlencode}}"
 />
+{% endif %}
+{% if config.DATA_SEARCH_FEEDBACK_FORM_URL %}
+<meta name="data-search-feedback-form-url" content="{{config.DATA_SEARCH_FEEDBACK_FORM_URL}}"/>
 {% endif %}
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <meta name="site-title" content="{{config.SITE_TITLE}}" />
@@ -41,7 +75,8 @@
     data-first_name="{{ current_user.first_name }}"
     data-last_name="{{ current_user.last_name }}"
     data-roles="{{ current_user.roles|join(',') }}"
-    data-avatar="{{ current_user.avatar }}"
+    data-avatar="{{ current_user|avatar_url(150) }}"
+    data-avatar_thumbnail="{{ current_user.avatar_thumbnail }}"
 />
 {% endif %}
 
@@ -51,29 +86,19 @@
 <meta name="delete-me-enabled" content="{{ 'true' if config.DELETE_ME else 'false' }}">
 <meta name="search-autocomplete-enabled" content="{{ 'true' if config.SEARCH_AUTOCOMPLETE_ENABLED else 'false' }}">
 <meta name="search-autocomplete-debounce" content="{{ config.SEARCH_AUTOCOMPLETE_DEBOUNCE }}">
-<meta name="dataset-max-resources-uncollapsed" content="{{ config.DATASET_MAX_RESOURCES_UNCOLLAPSED }}">
+<meta name="resources-default-page-size" content="{{ config.RESOURCES_DEFAULT_PAGE_SIZE }}">
+<meta name="resources-min-count-to-show-search" content="{{config.RESOURCES_MIN_COUNT_TO_SHOW_SEARCH}}" />
 <meta name="markdown-config" content="{{ {
     'tags': config.MD_ALLOWED_TAGS,
     'attributes': config.MD_ALLOWED_ATTRIBUTES,
     'styles': config.MD_ALLOWED_STYLES,
 }|tojson|urlencode }}" />
 
-<meta name="map-config" content="{{ {
-    'init': {
-        'center': config.MAP_INITIAL_CENTER,
-        'zoom': config.MAP_INITIAL_ZOOM,
-        'level': config.MAP_INITIAL_LEVEL,
-    },
-    'tiles': {
-        'url': config.MAP_TILES_URL,
-        'hidpi': config.MAP_TILES_URL_HIDPI,
-        'config': config.MAP_TILES_CONFIG,
-    }
-}|to_json|urlencode }}" />
 <meta name="tags-config" content="{{ {
     'MIN_LENGTH': config.TAG_MIN_LENGTH,
     'MAX_LENGTH': config.TAG_MAX_LENGTH,
 }|tojson|urlencode }}" />
+<meta name="read-only-enabled" content="{{ 'true' if config.READ_ONLY_MODE else 'false' }}">
 
 {% if json_ld %}
 <script id="json_ld" type="application/ld+json">{{ json_ld|embedded_json_ld }}</script>

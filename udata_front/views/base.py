@@ -1,3 +1,4 @@
+from typing import Optional
 from flask import request, redirect, abort, g
 from flask.views import MethodView
 
@@ -7,7 +8,7 @@ from udata_front import theme
 
 
 class Templated(object):
-    template_name = None
+    template_name: Optional[str] = None
 
     def get_context(self):
         return {}
@@ -92,15 +93,13 @@ class SearchView(Templated, BaseView):
     model = None
     context_name = 'objects'
     search_adapter = None
+    page_size: Optional[int] = None
 
     def get_queryset(self):
-        adapter = search.adapter_for(self.search_adapter or self.model)
-        parser = adapter.as_request_parser()
-        params = not_none_dict(parser.parse_args())
-        params['facets'] = True
-        adapter = self.search_adapter or self.model
-        result = search.query(adapter, **params)
-        return result
+        parser = self.search_adapter.as_request_parser()
+        if self.page_size:
+            parser.replace_argument('page_size', type=int, location='args', default=self.page_size)
+        return search.query(self.search_adapter, **not_none_dict(parser.parse_args()))
 
     def get_context(self):
         context = super(SearchView, self).get_context()
@@ -219,3 +218,9 @@ class FormView(Templated, BaseView):
             return self.on_form_valid(form)
 
         return self.on_form_error(form)
+
+
+class LoginOnlyView(Templated, BaseView):
+    @auth.login_required
+    def get(self, **kwargs):
+        return self.render()

@@ -1,0 +1,73 @@
+/*
+---
+name: Accordion
+category: 3 - Components
+---
+
+You can use accordions from DSFR. You can find documented usage on [DSFR documentation](https://gouvfr.atlassian.net/wiki/spaces/DB/pages/312082509/Accord+on+-+Accordion
+) with their classes.
+
+
+```accordion-component.html
+<section class="fr-accordion">
+    <h3 class="fr-accordion__title">
+        <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-106">Intitulé accordéon</button>
+    </h3>
+    <div class="fr-collapse" id="accordion-106">
+        <!-- données de test -->
+    </div>
+</section>
+```
+*/
+
+@import (less) "@gouvfr/dsfr/dist/component/accordion/accordion.css";
+
+// Data.gouv customization
+.fr-accordion {
+    --border-default-blue-france: @blue-400;
+}
+
+
+// Accordion interaction styling
+.accordion-button {
+    // Prevent click events bubbling
+    * {
+        pointer-events: none;
+    }
+
+    &:extend(.fr-icon-arrow-right-s-line);
+    &:extend([class^="fr-icon-"]);
+    &::before {
+        &:extend(.fr-icon-arrow-right-s-line::before);
+        &:extend([class^="fr-icon-"]::before);
+        transform: rotate(90deg);
+        transition: transform ease 0.3s; // Warning : if you change the timing here, change it in accordion.js as well
+    }
+
+    &[aria-expanded]::before {
+        transform: rotate(-90deg);
+    }
+
+    &.trigger-once {
+        &[aria-expanded] {
+            display: none;
+        }
+    }
+
+    display: inline-block;
+
+    svg {
+        width: 15px;
+        height: 15px;
+
+        * {
+            fill: @grey-380;
+        }
+    }
+}
+
+[data-fr-js] .accordion-content {
+    overflow: hidden;
+    height: 0;
+    display: none;
+}

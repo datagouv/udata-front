@@ -1,0 +1,16 @@
+{% from theme('macros/quality_score_toggletip.html') import quality_score_toggletip %}
+{% from theme('macros/quality_score.html') import quality_score %}
+
+{% macro quality_score_inline(dataset, class) %}
+    <div class="fr-grid-row fr-grid-row--middle {{class}}">
+        {% call quality_score_toggletip(dataset, "fr-btn fr-btn--tertiary-no-outline fr-btn--secondary-grey-500 fr-icon-info-line") %}
+            {{_('Metadata quality:')}}
+        {% endcall %}
+        <p class="fr-m-0 fr-mr-1v" aria-hidden="true">
+            {{_('Metadata quality:')}}
+        </p>
+        <div class="fr-grid-row fr-grid-row--middle">
+            {{ quality_score(dataset.quality.score) }}
+        </div>
+    </div>
+{% endmacro %}

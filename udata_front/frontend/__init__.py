@@ -1,72 +1,17 @@
 import inspect
 from importlib import import_module
-from jinja2 import Markup, contextfunction
 from flask import abort, current_app
 from flask_navigation import Navigation
+from authlib.integrations.flask_client import OAuth
 from udata import entrypoints
+# included for retro-compatibility reasons (some plugins may import from here instead of udata)
+from udata.frontend import template_hook  # noqa
 from udata.i18n import I18nBlueprint
 
 nav = Navigation()
+oauth = OAuth()
 
 front = I18nBlueprint('front', __name__)
-
-_template_hooks = {}
-
-
-def _wrapper(func, name=None, when=None):
-    name = name or func.__name__
-    if name not in _template_hooks:
-        _template_hooks[name] = []
-    _template_hooks[name].append((func, when))
-    return func
-
-
-def template_hook(func_or_name, when=None):
-    if callable(func_or_name):
-        return _wrapper(func_or_name)
-    elif isinstance(func_or_name, str):
-        def wrapper(func):
-            return _wrapper(func, func_or_name, when=when)
-        return wrapper
-
-
-def has_template_hook(name):
-    return name in _template_hooks
-
-
-class HookRenderer:
-    def __init__(self, funcs, ctx, *args, **kwargs):
-        self.funcs = funcs
-        self.ctx = ctx
-        self.args = args
-        self.kwargs = kwargs
-
-    def __html__(self):
-        return Markup(''.join(
-            f(self.ctx, *self.args, **self.kwargs)
-            for f, w in self.funcs
-            if w is None or w(self.ctx)
-        ))
-
-    def __iter__(self):
-        for func, when in self.funcs:
-            if when is None or when(self.ctx):
-                yield Markup(func(self.ctx, *self.args, **self.kwargs))
-
-
-@contextfunction
-def render_template_hook(ctx, name, *args, **kwargs):
-    if not has_template_hook(name):
-        return ''
-    return HookRenderer(_template_hooks[name], ctx, *args, **kwargs)
-
-
-@front.app_context_processor
-def inject_hooks():
-    return {
-        'hook': render_template_hook,
-        'has_hook': has_template_hook,
-    }
 
 
 @front.app_context_processor
@@ -90,7 +35,7 @@ def _load_views(app, module):
 
 
 VIEWS = ['gouvfr', 'dataset', 'organization', 'follower', 'post',
-         'reuse', 'site', 'territories', 'topic', 'user']
+         'reuse', 'site', 'territories', 'topic', 'user', 'mcp']
 
 
 def init_app(app):
@@ -99,10 +44,7 @@ def init_app(app):
     nav.init_app(app)
     theme.init_app(app)
 
-    from . import helpers, error_handlers  # noqa
-
-    if app.config['RESOURCES_SCHEMAGOUVFR_ENABLED']:
-        VIEWS.append('schema')
+    from . import helpers, error_handlers, menu_helpers, resource_helpers  # noqa
 
     for view in VIEWS:
         _load_views(app, 'udata_front.views.{}'.format(view))
@@ -137,3 +79,24 @@ def init_app(app):
     if app.config.get('DEBUG_TOOLBAR'):
         from flask_debugtoolbar import DebugToolbarExtension
         DebugToolbarExtension(app)
+
+    if app.config.get('CAPTCHETAT_BASE_URL'):
+        # Security override init
+        from udata.auth import security
+        from udata_front.forms import ExtendedRegisterForm
+        with app.app_context():
+            security.forms['register_form'].cls = ExtendedRegisterForm
+            security.forms['confirm_register_form'].cls = ExtendedRegisterForm
+
+    if app.config.get('MONCOMPETPRO_OPENID_CONF_URL'):
+        # MonComptPro SSO
+        oauth.init_app(app)
+        oauth.register(
+            name='mcp',
+            client_id=app.config.get('MONCOMPETPRO_CLIENT_ID'),
+            client_secret=app.config.get('MONCOMPETPRO_CLIENT_SECRET'),
+            server_metadata_url=app.config.get('MONCOMPETPRO_OPENID_CONF_URL'),
+            client_kwargs={
+                'scope': app.config.get('MONCOMPETPRO_SCOPE')
+            }
+        )

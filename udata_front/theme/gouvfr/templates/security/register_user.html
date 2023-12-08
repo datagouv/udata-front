@@ -1,31 +1,84 @@
 {% extends theme('base.html') %}
+{% from theme('macros/banner_warning.html') import banner_warning %}
 {% import theme('macros/forms.html') as forms with context %}
 
 {% block content %}
-<section class="py-xl py-lg-lg bg-grey-50">
-    <div class="container">
-        <div class="row">
-            <div class="col-6 text-align-center offset-3 form-container col-md-12 offset-md-0">
-                <form class="form" method="post" action="{{ url_for('security.register') }}">
-                    <fieldset>
-                        <legend class="h2 mb-0">{{ _('Sign up') }}</legend>
-                        <p class="mb-xl f-light fs-sm text-align-left">
-                            <a href="https://guides.etalab.gouv.fr/data.gouv.fr/creer-compte-utilisateur/" target="_blank">
+<section class="fr-py-3w fr-py-md-9v bg-grey-50">
+    <div class="fr-container">
+        <div class="fr-grid-row">
+            <div class="form-container fr-col-12 fr-col-md-6 fr-col-offset-md-3">
+                <form class="form" method="post" action="{{ url_for('security.register') }}" data-cy="register">
+                    <h1 class="fr-h4 fr-mb-0 text-align-center">{{ _('Sign up') }}</h1>
+                        <p class="fr-mt-2w fr-mb-1w fr-text--light fr-text--sm">
+                            <a
+                                href="{{config.GUIDES_USER_ACCOUNT_URL}}"
+                                target="_blank"
+                                rel="noopener"
+                                title="{{_('Why create an account? - opens a new window')}}"
+                            >
                                 {{ _('Why create an account?') }}
                             </a>
                         </p>
-                        {{ forms.render_fields(register_user_form, exclude=[register_user_form.submit]) }}
-                        <div class="field field-checkbox">
-                            {% block extra_tos %}
-                            {% endblock %}
+                        <p class="fr-mt-2w fr-mb-1w fr-text--xs text-align-left">
+                            {{ _("Fields preceded by a star (<span class='required-field-star'>*</span>) are required.") }}
+                        </p>
+                        {% if config.CAPTCHETAT_BASE_URL %}
+                            <noscript>
+                            {{ banner_warning(
+                                "fr-icon-alert-line",
+                                _("Javascript is required to sign up.")
+                            )}}
+                            </noscript>
+                            {{ forms.render_fields(register_user_form, exclude=[register_user_form.submit, register_user_form.captcha_code, register_user_form.captcha_id]) }}
+                        {% else %}
+                            {{ forms.render_fields(register_user_form, exclude=[register_user_form.submit]) }}
+                        {% endif %}
+                        {% block extra_tos %}
+                        {% endblock %}
+                        <div class="fr-checkbox-group">
                             <input id="accept_conditions" type="checkbox" name="accept_conditions" required />
-                            <label for="accept_conditions">
-                                {{ _('I have read and accept <a href="%(url)s"> the terms and conditions of the service.</a>', url=url_for('site.terms')) }}
+                            <label class="fr-label" for="accept_conditions">
+                                <span>{{ _('I have read and accept <a href="%(url)s"> the terms and conditions of the service.</a>', url=url_for('site.terms')) }}</span>
                             </label>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">{{ _('Sign up') }}</button>
-                    </fieldset>
+                        {% if config.CAPTCHETAT_BASE_URL %}
+                            <div class="vuejs">
+                                <captcha captcha-style-name="captchaFR"></captcha>
+                                <label class="fr-label fr-mt-1w">
+                                    {{ _("Retype the characters from the picture") }} <span class='required-field-star'>*</span>
+                                </label>
+                                <input id="captchaFormulaireExtInput" name="captcha_code" type="text" required="required"/>
+                                {% for error in register_user_form.captcha_code.errors %}
+                                <p class="fr-error-text fr-mt-1v">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="fr-mt-1w fr-grid-row fr-grid-row--center">
+                            <button
+                                type="submit"
+                                class="fr-btn"
+                                {% if config.CAPTCHETAT_BASE_URL %}disabled="disabled"{% endif %}
+                            >
+                                {{ _('Sign up') }}
+                            </button>
+                        </div>
                 </form>
+                {% if config.MONCOMPETPRO_OPENID_CONF_URL %}
+                <div class="text-align-center">
+                    <p class="fr-hr-or"><span class="fr-hr-or-text">{{ _('or') }}</span></p>
+                    <form class="form" method="get" action="{{ url_for('mcp.login') }}">
+                        <div class="fr-connect-group">
+                            <button class="fr-connect">
+                                <span class="fr-connect__login">{{ _('Log in with') }}</span>
+                                <span class="fr-connect__brand">MonComptePro</span>
+                            </button>
+                            <p>
+                                <a href="https://moncomptepro.beta.gouv.fr/" target="_blank"  rel="noopener" title="What is MonComptePro ?">{{ _('What is MonComptePro ?') }}</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

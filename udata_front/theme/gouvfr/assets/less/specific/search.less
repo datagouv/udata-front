@@ -1,0 +1,19 @@
+// Big searchy boy
+
+.fr-container--search {
+    .search-results {
+        min-height: 450px; // This allow the different filter dropdowns to have enough space while loading
+    }
+    .fr-sidemenu__title {
+        font-size: 1rem;
+    }
+    @media @dsfr-query-md {
+        .fr-sidemenu__inner {
+            padding-left: 0;
+        }
+        .fr-sidemenu__inner > .fr-collapse {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+}

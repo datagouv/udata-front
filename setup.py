@@ -15,7 +15,7 @@ def get_requirements():
     '''Return content of pip requirements file with very custom logic'''
     reqs = file_content(os.path.join('requirements', 'udata.pip')).splitlines()
     # keep only the ref to udata, unpinned if not udata==xxx
-    reqs = [r for r in reqs if r.strip().startswith('udata')] or ['udata']
+    reqs = [r for r in reqs if r.strip().startswith('udata==')] or ['udata']
     reqs += file_content(os.path.join('requirements', 'install.pip')).splitlines()
     return reqs
 
@@ -49,6 +49,7 @@ setup(
         'udata.front': 'front = udata_front.frontend',
         'udata.apis': [
             'front_oembed = udata_front.views.oembed',
+            'front_api = udata_front.api',
         ],
         'udata.harvesters': [
             'maaf = udata_front.harvesters.maaf:MaafBackend',

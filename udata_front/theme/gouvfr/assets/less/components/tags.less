@@ -1,0 +1,73 @@
+/*
+---
+name: Tags
+category: 3 - Components
+---
+
+Tags allow for easy categorization of datasets.
+
+We can use DSFR customizations. See Tabs-js for how to use it as tabs.
+There is also `.fr-tags-group` to group multiple tags together like a row.
+
+```dsfr-tags.html
+<nav class="fr-tags-group">
+    <button class="fr-tag">
+        Données mises en avant
+    </button>
+    <button class="fr-tag">
+        Dernières données
+    </button>
+    <button aria-pressed="true" class="fr-tag">
+        Données de référence
+    </button>
+    <a href="/fr/datasets/" class="fr-tag">Voir plus</a>
+</nav>
+```
+*/
+
+@import (less) "@gouvfr/dsfr/dist/component/tag/tag.css";
+
+.fr-tag, a.fr-tag, button.fr-tag {
+    --text-action-high-blue-france: @blue-400;
+    --background-action-low-blue-france: @background-action-low-blue-cumulus;
+    --background-action-low-blue-france-hover: @background-action-low-blue-cumulus-hover;
+    --background-action-low-blue-france-active: @background-action-low-blue-cumulus-active;
+    --background-action-high-blue-france-hover: @blue-400-hover;
+    --background-action-high-blue-france-active: @blue-400-active;
+
+    &[aria-pressed="true"] {
+        &:extend(button.fr-tag[aria-pressed=true]:not(:disabled));
+        --background-action-high-blue-france: @blue-400;
+        --background-action-high-blue-france-hover: @blue-400-hover;
+        &::after {
+            &:extend(button.fr-tag[aria-pressed=true]::after);
+            --text-action-high-blue-france: @blue-400;
+        }
+    }
+
+    &[aria-selected="true"] {
+        &:extend(button.fr-tag[aria-pressed="true"]);
+        &:hover {
+            &:extend(button.fr-tag[aria-pressed="true"]:hover);
+        }
+        &::after {
+            &:extend(button.fr-tag[aria-pressed="true"]::after);
+        }
+    }
+}
+
+.fr-tags-group a.fr-tag--sm {
+    margin-bottom: 0.25rem;
+    margin-right: 0.25rem;
+}
+
+.fr-tag--error {
+    --background-contrast-grey: @background-contrast-error;
+    --hover: @background-contrast-error-hover;
+    --active: @background-contrast-error-active;
+}
+
+.fr-tag--on-right {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}

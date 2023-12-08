@@ -1,0 +1,35 @@
+@import (less) "@gouvfr/dsfr/dist/component/table/table.css";
+
+.fr-table--no-background {
+    thead {
+        background-color: transparent;
+    }
+    th {
+        min-width: 7rem;
+    }
+    tbody {
+        background-color: @background-elevated-grey;
+        --hover: @background-elevated-grey-hover;
+        --active:@background-elevated-grey-active;
+    }
+    tbody tr:nth-child(2n) {
+        background-color: @background-alt-grey;
+        --hover: @background-alt-grey-hover;
+        --active:@background-alt-grey-active;
+    }
+}
+
+.fr-table__shadow:before {
+    --table-offset: 0;
+}
+
+.fr-table--dense table {
+    tbody td {
+        .fr-py-2w;
+        .fr-px-5v;
+    }
+    thead th {
+        padding: 0.75rem 0.5rem;
+        padding-bottom: 0.865rem;
+    }
+}

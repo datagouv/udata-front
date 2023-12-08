@@ -1,0 +1,20 @@
+{% macro dl() %}
+    <dl class="fr-col-12 fr-col-sm-4 fr-col-md-6 fr-col-lg-3 fr-my-0">
+        {{ caller() }}
+    </dl>
+{% endmacro %}
+
+{% macro dt() %}
+    <dt class="fr-text--sm fr-my-0 fr-text--bold">
+        {{ caller() }}
+    </dt>
+{% endmacro %}
+
+
+{% macro dd(with_ellipsis=True) %}
+    <dd class="fr-text--sm fr-ml-0 fr-mt-0 fr-mb-2w {%if with_ellipsis%}text-overflow-ellipsis{%endif%} text-mention-grey">
+        {{ caller() }}
+    </dd>
+{% endmacro %}
+
+{% set WITHOUT_ELLIPSIS=False %}

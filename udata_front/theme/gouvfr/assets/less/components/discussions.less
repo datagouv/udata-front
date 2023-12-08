@@ -1,0 +1,37 @@
+.discussions-wrapper {
+    .thread-comment {
+        .avatar {
+            img {
+                width: 40px;
+                height: 40px;
+                border-radius: 2px;
+            }
+        }
+
+        + .thread-comment {
+            .border-top;
+            .border-default-grey;
+        }
+    }
+
+    .thread-reply,
+    .thread-create {
+        label {
+            display: block;
+        }
+
+        textarea,
+        input[type="text"] {
+            width: 100%;
+            appearance: none;
+            border: none;
+            border-radius: 2px;
+            padding: @spacing-sm;
+            margin-bottom: @spacing-sm;
+        }
+
+        textarea {
+            min-height: 140px;
+        }
+    }
+}

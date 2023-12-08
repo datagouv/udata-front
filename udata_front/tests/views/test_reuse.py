@@ -10,42 +10,12 @@ from udata.core.user.factories import UserFactory
 from udata.core.organization.factories import OrganizationFactory
 from udata_front.tests import GouvFrSettings
 from udata_front.tests.frontend import GouvfrFrontTestCase
+from udata.frontend.markdown import mdstrip
 
 
 class ReuseBlueprintTest(GouvfrFrontTestCase):
     settings = GouvFrSettings
     modules = ['admin']
-
-    def test_render_list(self):
-        '''It should render the reuse list page'''
-        with self.autoindex():
-            reuses = [
-                ReuseFactory(datasets=[DatasetFactory()]) for i in range(3)]
-
-        response = self.get(url_for('reuses.list'))
-
-        self.assert200(response)
-        rendered_reuses = self.get_context_variable('reuses')
-        self.assertEqual(rendered_reuses.total, len(reuses))
-
-    def test_render_list_with_query(self):
-        '''It should render the reuse list page with a query'''
-        with self.autoindex():
-            [ReuseFactory(
-                title='Reuse {0}'.format(i), datasets=[DatasetFactory()])
-             for i in range(3)]
-
-        response = self.get(url_for('reuses.list'), qs={'q': '2'})
-
-        self.assert200(response)
-        rendered_reuses = self.get_context_variable('reuses')
-        self.assertEqual(rendered_reuses.total, 1)
-
-    def test_render_list_empty(self):
-        '''It should render the reuse list page even if empty'''
-        self.init_search()
-        response = self.get(url_for('reuses.list'))
-        self.assert200(response)
 
     def test_render_display(self):
         '''It should render the reuse page'''
@@ -78,14 +48,14 @@ class ReuseBlueprintTest(GouvfrFrontTestCase):
 
     def test_raise_410_if_deleted(self):
         '''It should raise a 410 if the reuse is deleted'''
-        reuse = ReuseFactory(deleted=datetime.now())
+        reuse = ReuseFactory(deleted=datetime.utcnow())
         response = self.get(url_for('reuses.show', reuse=reuse))
         self.assert410(response)
 
     def test_do_not_raise_410_if_deleted_but_authorized(self):
         '''It should display a dalated reuse if authorized'''
         self.login()
-        reuse = ReuseFactory(deleted=datetime.now(), owner=self.user)
+        reuse = ReuseFactory(deleted=datetime.utcnow(), owner=self.user)
         response = self.get(url_for('reuses.show', reuse=reuse))
         self.assert200(response)
 
@@ -156,3 +126,18 @@ class ReuseBlueprintTest(GouvfrFrontTestCase):
         self.assertEqual(author.name, org.name)
         self.assertEqual(author.href,
                          self.full_url('organizations.show', org=org.id))
+
+    def test_render_list(self):
+        '''It should render the reuse list'''
+        reuses = [
+            ReuseFactory(owner=UserFactory(), title="Small title"),
+            ReuseFactory(
+                owner=UserFactory(),
+                title="A really long title that should be handled in front and test"
+            )
+        ]
+        url = url_for('reuses.list', reuses=reuses)
+        response = self.get(url)
+        self.assert200(response)
+        for reuse in reuses:
+            assert mdstrip(reuse.title, 55).encode('utf-8') in response.data

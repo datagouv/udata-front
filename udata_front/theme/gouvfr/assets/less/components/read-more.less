@@ -1,0 +1,35 @@
+.read-more {
+    overflow: hidden;
+
+    .markdown {
+        margin: 0;
+    }
+}
+
+.read-more__bottom {
+    --gradient-color: var(--background-default-grey);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding-top: 80px;
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--gradient-color) 70%, var(--gradient-color));
+    text-align: center;
+    cursor: pointer;
+    --active-tint: transparent;
+    --hover-tint: transparent;
+    &, &:hover {
+        background-size: 100%;
+    }
+}
+
+.bg-contrast-grey .read-more__bottom {
+    --gradient-color: @background-contrast-grey;
+}
+
+
+.expand + .read-more__bottom {
+    position: relative;
+    background-image: none;
+    padding-top:10px;
+    height:inherit;
+}

@@ -6,13 +6,14 @@ from datetime import datetime
 from flask import url_for
 
 from udata.frontend import csv
-from udata.models import Badge, Site, PUBLIC_SERVICE
+from udata.models import Site
 
 from udata.core.dataset import tasks as dataset_tasks
 from udata.core.dataset.factories import DatasetFactory, ResourceFactory
 from udata.core.organization.factories import OrganizationFactory
 from udata.core.site.models import current_site
 from udata.core.reuse.factories import ReuseFactory
+from udata.harvest.models import HarvestSource
 from udata_front.tests import GouvFrSettings
 from udata_front.tests.frontend import GouvfrFrontTestCase
 
@@ -85,10 +86,9 @@ class SiteViewsTest(GouvfrFrontTestCase):
 
     def test_datasets_csv(self):
         self.app.config['EXPORT_CSV_MODELS'] = []
-        with self.autoindex():
-            datasets = [DatasetFactory(resources=[ResourceFactory()])
-                        for _ in range(5)]
-            hidden_dataset = DatasetFactory()
+        datasets = [DatasetFactory(resources=[ResourceFactory()])
+                    for _ in range(5)]
+        hidden_dataset = DatasetFactory()
 
         response = self.get(url_for('site.datasets_csv'))
 
@@ -131,19 +131,18 @@ class SiteViewsTest(GouvfrFrontTestCase):
         self.assertIn('export-dataset-', response.location)
 
     def test_datasets_csv_with_filters(self):
-        '''Should handle filtering but ignore paging or facets'''
-        with self.autoindex():
-            filtered_datasets = [
-                DatasetFactory(resources=[ResourceFactory()],
-                               tags=['selected'])
-                for _ in range(6)]
-            datasets = [DatasetFactory(resources=[ResourceFactory()])
-                        for _ in range(3)]
-            hidden_dataset = DatasetFactory()
+        '''Should handle filtering but ignore paging'''
+        filtered_datasets = [
+            DatasetFactory(resources=[ResourceFactory()],
+                           tags=['selected'])
+            for _ in range(6)]
+        datasets = [DatasetFactory(resources=[ResourceFactory()])
+                    for _ in range(3)]
+        hidden_dataset = DatasetFactory()
 
         response = self.get(
             url_for(
-                'site.datasets_csv', tag='selected', page_size=3, facets=True))
+                'site.datasets_csv', tag='selected', page_size=3))
 
         self.assert200(response)
         self.assertEqual(response.mimetype, 'text/csv')
@@ -175,12 +174,11 @@ class SiteViewsTest(GouvfrFrontTestCase):
 
     def test_resources_csv(self):
         self.app.config['EXPORT_CSV_MODELS'] = []
-        with self.autoindex():
-            datasets = [
-                DatasetFactory(resources=[ResourceFactory(),
-                                          ResourceFactory()])
-                for _ in range(3)]
-            DatasetFactory()
+        datasets = [
+         DatasetFactory(resources=[ResourceFactory(),
+                                   ResourceFactory()])
+         for _ in range(3)]
+        DatasetFactory()
 
         response = self.get(url_for('site.resources_csv'))
 
@@ -228,18 +226,16 @@ class SiteViewsTest(GouvfrFrontTestCase):
         self.assertIn('export-resource-', response.location)
 
     def test_resources_csv_with_filters(self):
-        '''Should handle filtering but ignore paging or facets'''
-        with self.autoindex():
-            filtered_datasets = [DatasetFactory(resources=[ResourceFactory(),
-                                                           ResourceFactory()],
-                                                tags=['selected'])
-                                 for _ in range(6)]
-            [DatasetFactory(resources=[ResourceFactory()]) for _ in range(3)]
-            DatasetFactory()
+        '''Should handle filtering but ignore paging'''
+        filtered_datasets = [DatasetFactory(resources=[ResourceFactory(),
+                             ResourceFactory()],
+                             tags=['selected'])
+                             for _ in range(6)]
+        [DatasetFactory(resources=[ResourceFactory()]) for _ in range(3)]
+        DatasetFactory()
 
         response = self.get(
-            url_for('site.resources_csv', tag='selected', page_size=3,
-                    facets=True))
+            url_for('site.resources_csv', tag='selected', page_size=3))
 
         self.assert200(response)
         self.assertEqual(response.mimetype, 'text/csv')
@@ -273,9 +269,8 @@ class SiteViewsTest(GouvfrFrontTestCase):
 
     def test_organizations_csv(self):
         self.app.config['EXPORT_CSV_MODELS'] = []
-        with self.autoindex():
-            orgs = [OrganizationFactory() for _ in range(5)]
-            hidden_org = OrganizationFactory(deleted=datetime.now())
+        orgs = [OrganizationFactory() for _ in range(5)]
+        hidden_org = OrganizationFactory(deleted=datetime.utcnow())
 
         response = self.get(url_for('site.organizations_csv'))
 
@@ -316,57 +311,11 @@ class SiteViewsTest(GouvfrFrontTestCase):
         self.assertStatus(response, 302)
         self.assertIn('export-organization-', response.location)
 
-    def test_organizations_csv_with_filters(self):
-        '''Should handle filtering but ignore paging or facets'''
-        user = self.login()
-        with self.autoindex():
-            public_service_badge = Badge(
-                kind=PUBLIC_SERVICE,
-                created_by=user
-            )
-            filtered_orgs = [
-                OrganizationFactory(badges=[public_service_badge])
-                for _ in range(6)]
-            orgs = [OrganizationFactory() for _ in range(3)]
-            hidden_org = OrganizationFactory(deleted=datetime.now())
-
-        response = self.get(
-            url_for('site.organizations_csv', badge=PUBLIC_SERVICE,
-                    page_size=3, facets=True))
-
-        self.assert200(response)
-        self.assertEqual(response.mimetype, 'text/csv')
-        self.assertEqual(response.charset, 'utf-8')
-
-        csvfile = StringIO(response.data.decode('utf8'))
-        reader = csv.get_reader(csvfile)
-        header = next(reader)
-
-        self.assertEqual(header[0], 'id')
-        self.assertIn('name', header)
-        self.assertIn('description', header)
-        self.assertIn('created_at', header)
-        self.assertIn('last_modified', header)
-        self.assertIn('metric.datasets', header)
-
-        rows = list(reader)
-        ids = [row[0] for row in rows]
-
-        # Should ignore paging
-        self.assertEqual(len(rows), len(filtered_orgs))
-        # SHoulf pass filter
-        for org in filtered_orgs:
-            self.assertIn(str(org.id), ids)
-        for org in orgs:
-            self.assertNotIn(str(org.id), ids)
-        self.assertNotIn(str(hidden_org.id), ids)
-
     def test_reuses_csv(self):
         self.app.config['EXPORT_CSV_MODELS'] = []
-        with self.autoindex():
-            reuses = [ReuseFactory(datasets=[DatasetFactory()])
-                      for _ in range(5)]
-            hidden_reuse = ReuseFactory()
+        reuses = [ReuseFactory(datasets=[DatasetFactory()])
+                  for _ in range(5)]
+        hidden_reuse = ReuseFactory()
 
         response = self.get(url_for('site.reuses_csv'))
 
@@ -410,17 +359,15 @@ class SiteViewsTest(GouvfrFrontTestCase):
 
     def test_reuses_csv_with_filters(self):
         '''Should handle filtering but ignore paging or facets'''
-        with self.autoindex():
-            filtered_reuses = [
-                ReuseFactory(datasets=[DatasetFactory()], tags=['selected'])
-                for _ in range(6)]
-            reuses = [ReuseFactory(datasets=[DatasetFactory()])
-                      for _ in range(3)]
-            hidden_reuse = ReuseFactory()
+        filtered_reuses = [
+            ReuseFactory(datasets=[DatasetFactory()], tags=['selected'])
+            for _ in range(6)]
+        reuses = [ReuseFactory(datasets=[DatasetFactory()])
+                  for _ in range(3)]
+        hidden_reuse = ReuseFactory()
 
         response = self.get(
-            url_for('site.reuses_csv', tag='selected', page_size=3,
-                    facets=True))
+            url_for('site.reuses_csv', tag='selected', page_size=3))
 
         self.assert200(response)
         self.assertEqual(response.mimetype, 'text/csv')
@@ -450,9 +397,60 @@ class SiteViewsTest(GouvfrFrontTestCase):
             self.assertNotIn(str(reuse.id), ids)
         self.assertNotIn(str(hidden_reuse.id), ids)
 
-    def test_map_view(self):
-        response = self.get(url_for('site.map'))
+    def test_harvest_csv(self):
+        self.app.config['EXPORT_CSV_MODELS'] = []
+        organization = OrganizationFactory()
+        harvests = [HarvestSource.objects.create(
+            name='harvest',
+            url=f'https://example.com/{i}',
+            organization=organization
+            )
+                  for i in range(5)]
+        hidden_harvest = HarvestSource.objects.create(
+            url='https://example.com/deleted',
+            deleted=datetime.utcnow()
+        )
+
+        response = self.get(url_for('site.harvests_csv'))
+
         self.assert200(response)
+        self.assertEqual(response.mimetype, 'text/csv')
+        self.assertEqual(response.charset, 'utf-8')
+
+        csvfile = StringIO(response.data.decode('utf8'))
+        reader = csv.get_reader(csvfile)
+        header = next(reader)
+
+        self.assertEqual(header[0], 'id')
+        self.assertIn('name', header)
+        self.assertIn('url', header)
+        self.assertIn('organization', header)
+        self.assertIn('organization_id', header)
+        self.assertIn('backend', header)
+        self.assertIn('created_at', header)
+        self.assertIn('validation', header)
+
+        rows = list(reader)
+        ids = [row[0] for row in rows]
+
+        self.assertEqual(len(rows), len(harvests))
+        for harvest in harvests:
+            self.assertIn(str(harvest.id), ids)
+        self.assertNotIn(str(hidden_harvest.id), ids)
+
+    @pytest.mark.usefixtures('instance_path')
+    def test_harvest_csv_w_export_csv_feature(self):
+        # no export generated, 404
+        response = self.get(url_for('site.harvests_csv'))
+        self.assert404(response)
+
+        # generate the export
+        d = DatasetFactory()
+        self.app.config['EXPORT_CSV_DATASET_ID'] = d.id
+        dataset_tasks.export_csv()
+        response = self.get(url_for('site.harvests_csv'))
+        self.assertStatus(response, 302)
+        self.assertIn('export-harvest-', response.location)
 
     def test_terms_view(self):
         response = self.client.get(url_for('site.terms'))
