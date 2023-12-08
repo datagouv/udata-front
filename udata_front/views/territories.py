@@ -135,7 +135,7 @@ def sitemap_urls():
     if current_app.config.get('ACTIVATE_TERRITORIES'):
         for level in current_app.config.get('HANDLED_LEVELS'):
             for territory in (GeoZone.objects(level=level)
-                                     .only('id', 'code', 'validity', 'slug')):
+                                     .only('id', 'code', 'slug')):
                 # Remove 'fr:' manually from the level.
                 territory = dict_to_namedtuple(
                     'Territory', {
@@ -143,7 +143,6 @@ def sitemap_urls():
                         'id': territory.id,
                         'code': territory.code,
                         'slug': territory.slug,
-                        'validity': territory.validity
                     })
                 yield ('territories.territory', {'territory': territory},
                        None, 'weekly', 0.5)
