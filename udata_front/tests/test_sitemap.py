@@ -2,7 +2,8 @@ from udata.core.dataset.factories import VisibleDatasetFactory
 from udata.core.organization.factories import OrganizationFactory
 from udata.core.post.factories import PostFactory
 from udata.core.reuse.factories import VisibleReuseFactory
-# from udata.core.topic.factories import TopicFactory
+from udata.core.spatial.factories import GeoZoneFactory
+from udata.core.topic.factories import TopicFactory
 
 from udata_front.tests import GouvFrSettings
 
@@ -11,17 +12,17 @@ class SitemapTest:
     settings = GouvFrSettings
     modules = []
 
-    # def test_topics_within_sitemap(self, sitemap):
-    #     '''It should return a topic list from the sitemap.'''
-    #     topics = TopicFactory.create_batch(3)
+    def test_topics_within_sitemap(self, sitemap):
+        '''It should return a topic list from the sitemap.'''
+        topics = TopicFactory.create_batch(3)
 
-    #     sitemap.fetch()
+        sitemap.fetch()
 
-    #     for topic in topics:
-    #         url = sitemap.get_by_url('topics.display_redirect', topic=topic)
-    #         assert url is not None
-    #         # assert url is not None
-    #         sitemap.assert_url(url, 0.8, 'weekly')
+        for topic in topics:
+            url = sitemap.get_by_url('topics.display_redirect', topic=topic)
+            assert url is not None
+            # assert url is not None
+            sitemap.assert_url(url, 0.8, 'weekly')
 
     def test_organizations_within_sitemap(self, sitemap):
         '''It should return an organization list from the sitemap.'''
@@ -66,6 +67,22 @@ class SitemapTest:
             url = sitemap.get_by_url('posts.show_redirect', post=post)
             assert url is not None
             sitemap.assert_url(url, 0.6, 'weekly')
+
+    def test_territorys_within_sitemap(self, app, sitemap):
+        '''It should return a territory list from the sitemap.'''
+
+        levels = ('fr:commune', 'fr:departement', 'fr:region')
+        app.config['ACTIVATE_TERRITORIES'] = True
+        app.config['HANDLED_LEVELS'] = levels
+
+        territories = [GeoZoneFactory.create(level=levels[i]) for i in range(3)]
+
+        sitemap.fetch()
+
+        for territory in territories:
+            url = sitemap.get_by_url('territories.territory', territory=territory)
+            assert url is not None
+            sitemap.assert_url(url, 0.5, 'weekly')
 
     def test_home_within_sitemap(self, sitemap):
         '''It should return the home page from the sitemap.'''

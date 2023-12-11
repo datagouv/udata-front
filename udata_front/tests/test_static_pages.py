@@ -91,7 +91,7 @@ class StaticPagesTest:
     def test_page_inject_empty_objects(self, client, rmock):
         raw_url, _ = get_pages_gh_urls('test')
         rmock.head(f'{raw_url}.md', status_code=200)
-        rmock.get(f'{raw_url}.md', text=f"""---
+        rmock.get(f'{raw_url}.md', text="""---
 datasets:
 reuses:
 ---

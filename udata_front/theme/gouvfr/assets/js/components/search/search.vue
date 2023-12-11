@@ -1,6 +1,6 @@
 <template>
   <form class="fr-pt-3v" @submit.prevent="search">
-    <div class="fr-grid-row fr-grid-row--middle justify-between search-bar" ref="searchRef">
+    <div class="fr-grid-row fr-grid-row--middle justify-between" ref="searchRef" data-cy="search">
       <SearchInput
         @change="handleSearchChange"
         :value="queryString"
@@ -24,7 +24,8 @@
                     suggestUrl="/organizations/suggest/"
                     entityUrl="/organizations/"
                     :values="facets.organization"
-                    :onChange="handleFacetChange('organization')"
+                    @change="(value) => handleFacetChange('organization', value)"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -34,8 +35,9 @@
                     :allOption="$t('All tags')"
                     suggestUrl="/tags/suggest/"
                     :values="facets.tag"
-                    :onChange="handleFacetChange('tag')"
+                    @change="(value) => handleFacetChange('tag', value)"
                     :minimumCharacterBeforeSuggest="2"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -43,9 +45,10 @@
                     :placeholder="$t('Formats')"
                     :searchPlaceholder="$t('Search a format...')"
                     :allOption="$t('All formats')"
-                    listUrl="/datasets/extensions/"
+                    :listUrl="allowedExtensionsUrl"
                     :values="facets.format"
-                    :onChange="handleFacetChange('format')"
+                    @change="(value) => handleFacetChange('format', value)"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -54,15 +57,17 @@
                     :explanation="$t('Licenses define reuse rules for published datasets. See page data.gouv.fr/licences')"
                     :searchPlaceholder="$t('Search a license...')"
                     :allOption="$t('All licenses')"
-                    listUrl="/datasets/licenses/"
+                    :listUrl="licensesUrl"
                     :values="facets.license"
-                    :onChange="handleFacetChange('license')"
+                    @change="(value) => handleFacetChange('license', value)"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12">
-                  <SchemaFilter
+                  <SchemaSelect
                     :values="facets.schema"
-                    :onChange="handleFacetChange('schema')"
+                    @change="(value) => handleFacetChange('schema', value)"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -74,7 +79,8 @@
                     suggestUrl="/spatial/zones/suggest/"
                     entityUrl="/spatial/zone/"
                     :values="facets.geozone"
-                    :onChange="handleFacetChange('geozone')"
+                    @change="(value) => handleFacetChange('geozone', value)"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -85,7 +91,8 @@
                     :allOption="$t('All granularities')"
                     listUrl="/spatial/granularities/"
                     :values="facets.granularity"
-                    :onChange="handleFacetChange('granularity')"
+                    @change="(value) => handleFacetChange('granularity', value)"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12 fr-mb-3w text-align-center" v-if="isFiltered || downloadLink">
@@ -121,7 +128,7 @@
             <div class="fr-col">
                 <select
                   id="sort-search"
-                  class="fr-select"
+                  class="fr-select fr-select--blue"
                   name="sort"
                   v-model="searchSort"
                   @change="handleSortChange"
@@ -211,21 +218,23 @@ import useSearchUrl from "../../composables/useSearchUrl";
 import SearchInput from "./search-input.vue";
 import Dataset from "../dataset/card-lg.vue";
 import Loader from "../dataset/loader.vue";
-import SchemaFilter from "./schema-filter.vue";
+import SchemaSelect from "../SchemaSelect/SchemaSelect.vue";
 import { Pagination } from "@etalab/udata-front-plugins-helper";
-import MultiSelect from "./multi-select.vue";
+import MultiSelect from "../MultiSelect/MultiSelect.vue";
 import ActionCard from "../Form/ActionCard/ActionCard.vue";
 import { data_search_feedback_form_url, search_autocomplete_debounce } from "../../config";
 import { debounce } from "../../composables/useDebouncedRef";
 import franceWithMagnifyingGlassIcon from "svg/illustrations/france_with_magnifying_glass.svg";
 import magnifyingGlassIcon from "svg/illustrations/magnifying_glass.svg";
+import { getAllowedExtensionsUrl } from "../../api/resources";
+import { getLicensesUrl } from "../../api/licenses";
 
 export default defineComponent({
   inheritAttrs: false,
   components: {
     MultiSelect,
     SearchInput,
-    SchemaFilter,
+    SchemaSelect,
     Dataset,
     ActionCard,
     Loader,
@@ -258,6 +267,9 @@ export default defineComponent({
      */
     const url = new URL(window.location.href);
     const params = new URLSearchParams(url.search);
+
+    const allowedExtensionsUrl = getAllowedExtensionsUrl();
+    const licensesUrl = getLicensesUrl();
 
     /**
      * Search query
@@ -349,7 +361,7 @@ export default defineComponent({
     const updateUrl = (save = SAVE_TO_HISTORY) => {
       // Update URL to match current search params value for deep linking
       let url = new URL(window.location.href);
-      const urlParams = searchParameters.value;
+      const urlParams = { ...searchParameters.value };
       if(props.organization) {
         delete urlParams.organization;
       }
@@ -407,30 +419,28 @@ export default defineComponent({
     /**
      * Called on every facet selector change, updates the `facets.xxx` object then searches with new values
      */
-    const handleFacetChange = (facet) => {
-      return (values) => {
-        // Values can either be an array of varying length, or a String.
-        if (Array.isArray(values)) {
-          if (values.length > 1) {
-            facets.value[facet] = values.map((obj) => obj.value);
-          } else if (values.length === 1) {
-            facets.value[facet] = values[0].value;
-          } else {
-            facets.value[facet] = null;
-          }
+    const handleFacetChange = (facet, values) => {
+      // Values can either be an array of varying length, or a String.
+      if (Array.isArray(values)) {
+        if (values.length > 1) {
+          facets.value[facet] = values.map((obj) => obj.value);
+        } else if (values.length === 1) {
+          facets.value[facet] = values[0].value;
         } else {
-          if(values) {
-            facets.value[facet] = values;
-          } else {
-            facets.value[facet] = null;
-          }
+          facets.value[facet] = null;
         }
-        if (props.organization) {
-          facets.value.organization = props.organization;
+      } else {
+        if(values) {
+          facets.value[facet] = values;
+        } else {
+          facets.value[facet] = null;
         }
-        currentPage.value = 1;
-        search();
-      };
+      }
+      if (props.organization) {
+        facets.value.organization = props.organization;
+      }
+      currentPage.value = 1;
+      search();
     };
 
     /**
@@ -557,8 +567,10 @@ export default defineComponent({
     });
 
     return {
+      allowedExtensionsUrl,
       data_search_feedback_form_url,
       isFiltered,
+      licensesUrl,
       search,
       handleSearchChange,
       handleFacetChange,

@@ -1,0 +1,51 @@
+import { Canvas, Controls, Meta } from '@storybook/blocks';
+
+import * as MultiSelectStories from './MultiSelect.stories';
+
+<Meta of={MultiSelectStories} />
+
+# Multi Select
+
+A pretty simple component that looks like a `<select>` but with autocomplete features.
+
+Options can be :
+- A list from an API that will be fetched once
+- A suggest-style API that will be fetched on each character typed
+- A combination of both : a static list on load that is replaced when the user types something
+
+*  Initial values can be provided from props (can be used to pre-fill the select with values from the URL)
+
+<Canvas of={MultiSelectStories.SimpleMultiSelect} />
+
+## Usage
+
+Simply provide the necessary props for your case.
+
+### Urls
+- `suggestUrl`(optional): The URL that will be called when the user performs a search within the select.
+  If not provided, suggest mode will be disabled and typing in the select will only filter the existing options.
+  If provided, you can add a `minimumCharacterBeforeSuggest` props
+- `listUrl`(optional): The URL that will be called to populate the select options on mount.
+  If not provided, the select will start empty and will fill with options when the user starts typing some text.
+- `entityUrl`(optional): The URL that will be called to fetch labels for options provided before the component mounts.
+
+### Texts
+- `placeholder`: Select placeholder, always shown
+- `searchPlaceholder`: Search input placeholder
+- `emptyPlaceholder`: Options placeholder when there is no search results
+- `explanation`: Title attribute added to select label
+
+### Options
+- `initialOptions`: Initial list of options
+- `values`: Initial values if the select needs to be pre-filled. Can be a String (single value) or an Array of values.
+  Labels will be fetched from entityUrl, or from the options list if listUrl is provided, or the value will be used as label.
+
+### Configuration
+- `minimumCharacterBeforeSuggest`: wait for this count of character before calling suggest
+
+### Events
+- `@change`: Event emitted on each select/deselect action.
+
+## Props
+
+<Controls />

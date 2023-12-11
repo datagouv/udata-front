@@ -174,6 +174,9 @@
         {% include theme('dataset/search-results.html') %}
         {% endwith %}
     </section>
+
+    {{ hook('reuse.display.metrics') }}
+
     <section class="community_container fr-py-5v border-bottom" id="community">
         <div class="vuejs">
             {% if not reuse.metrics.discussions %}
@@ -219,6 +222,7 @@
             </div>
         {% endif %}
     </section>
+
 </div>
 {% endcache %}
 {% endblock %}

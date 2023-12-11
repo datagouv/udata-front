@@ -1,20 +1,12 @@
-import {ref, unref} from 'vue';
+import {readonly, ref, toValue} from 'vue';
 
 /**
- * A resource, dataset, reuse or any other object owned by an organization or a user.
- * @typedef Owned
- * @type {Object}
- * @property {{name: string}} [organization] - The resource, dataset or reuse organization.
- * @property {{first_name: string, last_name: string}} [owner] - The resource, dataset or reuse user.
- */
-
-/**
- *
- * @param {Owned|import("vue").ComputedRef<Owned>} owned - The resource, dataset or reuse owned by an organization or a user.
- * @return {import("vue").Ref<string>}
+ * Get organization name of owner full name
+ * @param {import("vue").MaybeRefOrGetter<import("../types").Owned>} owned - The resource, dataset or reuse owned by an organization or a user.
+ * @return {Readonly<import("vue").Ref<string>>}
  */
 export default function useOwnerName(owned) {
-  owned = unref(owned);
+  owned = toValue(owned);
   const owner = ref('');
   if(!owned) {
     return owner;
@@ -24,5 +16,5 @@ export default function useOwnerName(owned) {
   } else if(owned.owner) {
     owner.value = owned.owner.first_name + " " + owned.owner.last_name;
   }
-  return owner;
+  return readonly(owner);
 }

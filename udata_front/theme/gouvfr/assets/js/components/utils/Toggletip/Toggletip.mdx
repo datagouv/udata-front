@@ -1,7 +1,14 @@
+import { Canvas, Controls, Meta } from '@storybook/blocks';
+import * as Toggletip from './Toggletip.stories';
+
+<Meta of={Toggletip} />
+
 # Toggletip
 
 A toggletip is a tooltip that is activated on click and not on hover / focus.
 This allows a better UX for users with touch screens, screen readers and keyboard navigation.
+
+<Canvas of={Toggletip.SimpleToggletip} />
 
 ## Accessibility
 
@@ -21,3 +28,7 @@ The toggletip is shown on click only and it's hidden :
 Another way of implemented a toggletip is with a [live region feature](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions).
 
 The disclosure pattern was chosen because it allows the toggletip content to be already present on page but hidden for all type of users.
+
+## Props
+
+<Controls />

@@ -1,0 +1,15 @@
+{% if config.DISCOVERABILITY_FORM_URL %}
+<div class="bg-alt-blue-cumulus fr-p-3v border-bottom border-2 border-blue-400 fr-hidden" data-dialogs id="feedback-banner">
+    <div class="fr-container">
+        <div class="fr-grid-row fr-grid-row--middle">
+            <div class="fr-my-0">
+                <a class="fr-link" href="{{ config.DISCOVERABILITY_FORM_URL }}" target="_blank" data-dialogs-close>
+                    {{_("Did you find what you were looking for?")}}</a>
+            </div>
+            <button class="fr-btn fr-btn--close" data-dialogs-close>
+                {{_("Don't show this message again")}}
+            </button>
+        </div>
+    </div>
+</div>
+{% endif %}

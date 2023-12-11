@@ -1,0 +1,29 @@
+import useFileValidation from "./useFileValidation";
+
+import { Canvas, Controls, Meta } from '@storybook/blocks';
+
+import * as useFileValidationStories from './useFileValidation.stories';
+
+<Meta of={useFileValidationStories} />
+
+# Use File Validation
+
+A composable that allows you to validate file before uploading it to a dataset.
+
+You can find all the rules below.
+
+## Local file validation
+
+<Canvas of={useFileValidationStories.FileValidation} />
+
+## Remote file validation
+
+<Canvas of={useFileValidationStories.RemoteValidation} />
+
+## Local file warning
+
+<Canvas of={useFileValidationStories.FileWarning} />
+
+## Remote file warning
+
+<Canvas of={useFileValidationStories.RemoteWarning} />

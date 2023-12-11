@@ -57,12 +57,13 @@ To adjust the font size of an element you can use the `.fs-{font-size}` classes.
 ```
 
 ## Font weights
-To adjust the font weight, you can use the `.f-{light, normal, bold}` classes.
+To adjust the font weight, you can use the `.fr-text--{light, regular, bold, heavy}` classes.
 
 ```fontweight.html
-<p class="f-light">Light weight</p>
-<p class="f-normal">Normal weight</p>
-<p class="f-bold">Bold weight</p>
+<p class="fr-text--light">Light weight</p>
+<p class="fr-text--regular">Regular weight</p>
+<p class="fr-text--bold">Bold weight</p>
+<p class="fr-text--heavy">Heavy weight</p>
 ```
 
 ## Inline Styles
@@ -105,6 +106,7 @@ You can specify alignment for text blocks, with responsive capabilities, using `
 @font-size-base: 1rem;
 @line-height-base: 1.35;
 
+@font-size-xxs: 0.6rem;
 @font-size-xs: 0.75rem;
 @font-size-sm: 0.875rem;
 @font-size-lg: 1.25rem;
@@ -112,13 +114,12 @@ You can specify alignment for text blocks, with responsive capabilities, using `
 @font-size-xxl: 2rem;
 @font-size-hg: 2.5rem; // hg for humongous
 
+@line-height-xxs: 0.9rem;
 @line-height-xs: 1.25rem;
 @line-height-sm: 1.5rem;
 
 @font-sizes: xs, sm, base, lg, xl, xxl, hg;
 
-@font-weight-light: 300;
-@font-weight-normal: 400;
 @font-weight-bold: 600;
 @font-weight-bold-dsfr: 700;
 
@@ -152,16 +153,8 @@ h6,
     }
 }
 
-.f-light {
-    font-weight: @font-weight-light;
-}
-
-.f-normal {
-    font-weight: @font-weight-normal;
-}
-
-.f-bold {
-    font-weight: @font-weight-bold;
+.line-height-1 {
+    line-height: 1;
 }
 
 .f-italic {
@@ -170,7 +163,7 @@ h6,
 
 .sup {
     display: inline-block;
-    font-weight: @font-weight-light;
+    font-weight: 300;
     text-decoration: none;
 
     &::before {
@@ -197,10 +190,6 @@ h6,
 h1 {
     margin-bottom: @spacing-hg;
     font-size: @font-size-xxl;
-
-    @media @dsfr-query-lg {
-        font-size: @font-size-hg;
-    }
 }
 
 .h2,
@@ -271,8 +260,16 @@ each(@font-sizes, {
     text-decoration: none !important;
 }
 
+.text-transform-lowercase {
+    text-transform: lowercase !important;
+}
+
 .text-transform-uppercase {
     text-transform: uppercase !important;
+}
+
+.text-transform-none {
+    text-transform: none !important;
 }
 
 .text-align-center {
@@ -285,6 +282,11 @@ each(@font-sizes, {
 
 .text-align-right {
     text-align: right !important;
+}
+
+.text-xxs {
+    font-size: @font-size-xxs;
+    line-height: @line-height-xxs;
 }
 
 .white-space-pre-wrap {
