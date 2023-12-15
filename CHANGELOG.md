@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 3.2.12 (2023-12-15)
 
 - Fix support menu link [#335](https://github.com/etalab/udata-front/pull/335)
 
