@@ -170,17 +170,18 @@ def assets_watch(ctx):
 
 
 @task
-def assets_build(ctx):
+def assets_build(ctx, buildno=None):
     '''Build static assets'''
     header(assets_build.__doc__)
     with ctx.cd(ROOT):
-        ctx.run('npm run build', pty=True)
+        ctx.run('buildno={0} npm run build'.format(buildno or ''), pty=True)
 
 
-@task(i18nc, assets_build)
+@task(i18nc)
 def dist(ctx, buildno=None):
     '''Package for distribution'''
     header(dist.__doc__)
+    assets_build(ctx, buildno)
     perform_dist(ctx, buildno)
 
 

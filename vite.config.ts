@@ -29,9 +29,11 @@ export function getTheme(): string {
   return theme;
 }
 
-export async function getVersion(): Promise<string | null> {
-  let version = null;
-  const fileName = globSync('*.{egg-info,dist-info}/{PKG-INFO,METADATA}');
+export async function getVersion(version: string): Promise<string | null> {
+  if(version) {
+    return version;
+  }
+  const fileName = globSync('*.egg-info/PKG-INFO');
   if(fileName.length > 0) {
     const fileStream = fs.createReadStream(fileName[0]);
     const rl = readline.createInterface({
@@ -51,7 +53,7 @@ export async function getVersion(): Promise<string | null> {
 
 export async function getConfig(): Promise<UserConfig> {
   const theme = getTheme();
-  let version = await getVersion();
+  let version = await getVersion(process.env.buildno);
 
   return {
     base: `/_themes/${theme}/`,
