@@ -6,7 +6,7 @@ orbs:
   cypress: cypress-io/cypress@3
 
 jobs:
-  set_builno:
+  set_buildno:
     docker:
       - image: udata/circleci:2-alpine
     steps:
@@ -28,6 +28,7 @@ jobs:
       - run:
           name: "What was my custom environment variable?"
           command: echo ${BUILDNO}
+
   deps:
     docker:
       - image: udata/circleci:2-alpine
