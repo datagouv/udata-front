@@ -173,8 +173,10 @@ def assets_watch(ctx):
 def assets_build(ctx, buildno=None):
     '''Build static assets'''
     header(assets_build.__doc__)
+    if buildno:
+        egg_info(ctx, buildno)
     with ctx.cd(ROOT):
-        ctx.run('buildno={0} npm run build'.format(buildno or ''), pty=True)
+        ctx.run('npm run build', pty=True)
 
 
 @task(i18nc)
@@ -191,11 +193,15 @@ def pydist(ctx, buildno=None):
     header(pydist.__doc__)
     perform_dist(ctx, buildno)
 
+def egg_info(ctx, buildno=None):
+    '''Generate package egg_info'''
+    with ctx.cd(ROOT):
+        ctx.run('egg_info -b {0}'.format(buildno), pty=True)
 
 def perform_dist(ctx, buildno=None):
     cmd = ['python setup.py']
     if buildno:
-        cmd.append('egg_info -b {0}'.format(buildno))
+        egg_info(buildno)
     cmd.append('bdist_wheel')
     with ctx.cd(ROOT):
         ctx.run(' '.join(cmd), pty=True)
