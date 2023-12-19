@@ -230,7 +230,7 @@ jobs:
           name: load BUILDNO
           command: |
             cat bash.env >> $BASH_ENV
-       - run:
+      - run:
           name: Generate egg-info
           command: |
             source venv/bin/activate
