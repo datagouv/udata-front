@@ -110,7 +110,6 @@ jobs:
           command: |
             source venv/bin/activate
             inv egg-info --buildno ${BUILDNO}
-            ls udata_front.egg-info
       - save_cache:
           key: py-cache-v16-{{ arch }}-{{ .Branch }}
           paths:
@@ -129,6 +128,7 @@ jobs:
           root: .
           paths:
           - venv
+          - udata_front.egg-info
 
   assets:
     docker:
@@ -330,6 +330,8 @@ workflows:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
       - assets:
+          requires:
+            - python
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
