@@ -83,9 +83,6 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: "What was my custom environment variable?"
-          command: echo ${BUILDNO}
-      - run:
           name: Install python dependencies
           command: |
             source venv/bin/activate
@@ -113,7 +110,7 @@ jobs:
           command: |
             source venv/bin/activate
             pip install -e .
-            inv egg_info
+            inv egg_info ${BUILDNO}
             ls udata_front.egg-info
       - save_cache:
           key: py-cache-v16-{{ arch }}-{{ .Branch }}
@@ -323,13 +320,8 @@ workflows:
   version: 2
   build:
     jobs:
-      - set_buildno:
-          filters:
-            tags:
-              only: /v[0-9]+(\.[0-9]+)*/
       - deps:
           requires:
-            - set_buildno
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
@@ -340,8 +332,6 @@ workflows:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
       - assets:
-          requires:
-            - set_buildno
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
