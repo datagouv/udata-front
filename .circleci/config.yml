@@ -321,6 +321,10 @@ workflows:
   version: 2
   build:
     jobs:
+      - set_buildno:
+          filters:
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
       - deps:
           filters:
             tags:
@@ -332,6 +336,8 @@ workflows:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
       - assets:
+          requires:
+            - set_buildno
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
