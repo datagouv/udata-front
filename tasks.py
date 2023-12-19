@@ -206,7 +206,7 @@ def egg_info(ctx, buildno=None):
 def perform_dist(ctx, buildno=None):
     cmd = ['python setup.py']
     if buildno:
-        egg_info(buildno)
+        egg_info(ctx, buildno)
     cmd.append('bdist_wheel')
     with ctx.cd(ROOT):
         ctx.run(' '.join(cmd), pty=True)
