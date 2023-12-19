@@ -163,10 +163,6 @@ jobs:
           paths:
           - node_modules
       - run:
-          name: Install udata-front
-          command: |
-            pip install -e .
-      - run:
           name: Compile assets
           command: |
             nvm use
