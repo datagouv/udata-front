@@ -118,6 +118,13 @@ jobs:
        BASH_ENV: /root/.bashrc
     steps:
       - checkout
+      - attach_workspace:
+          at: .
+      - run:
+        name: Install udata-front
+        command: |
+          source venv/bin/activate
+          pip install -e .
       - run:
           name: Compute JS dependencies key
           command: cat .nvmrc package.json > js.deps
