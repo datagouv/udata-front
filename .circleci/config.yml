@@ -224,7 +224,6 @@ jobs:
       - run:
           name: Install python deps
           command: |
-            source venv/bin/activate
             pip install --force-reinstall --no-deps -r requirements/udata.in
             pip install -e .
       - run:
@@ -234,7 +233,6 @@ jobs:
       - run:
           name: Generate egg-info
           command: |
-            source venv/bin/activate
             inv egg-info --buildno ${BUILDNO}
       - run:
           name: Prepare udata.cfg file with udata-front plugin
