@@ -106,6 +106,10 @@ jobs:
                 echo 'export BUILDNO="'$CIRCLE_BUILD_NUM'"' >> "$BASH_ENV"
             fi
       - run:
+          name: Save BUILDNO to file
+          commad: |
+            cp $BASH_ENV bash.env
+      - run:
           name: Generate egg-info
           command: |
             source venv/bin/activate
@@ -129,6 +133,7 @@ jobs:
           paths:
           - venv
           - udata_front.egg-info
+          - bash.env
 
   assets:
     docker:
@@ -221,6 +226,15 @@ jobs:
           command: |
             pip install --force-reinstall --no-deps -r requirements/udata.in
             pip install -e .
+      - run:
+          name: load BUILDNO
+          command: |
+          cat bash.env >> $BASH_ENV
+       - run:
+          name: Generate egg-info
+          command: |
+            source venv/bin/activate
+            inv egg-info --buildno ${BUILDNO}
       - run:
           name: Prepare udata.cfg file with udata-front plugin
           command: cp cypress/udata-front-e2e.cfg.example cypress/udata-front-e2e.cfg
@@ -339,6 +353,7 @@ workflows:
           requires:
             - deps
             - assets
+            - python
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
