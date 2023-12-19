@@ -196,6 +196,7 @@ def pydist(ctx, buildno=None):
 @task
 def egg_info(ctx, buildno=None):
     '''Generate package egg_info'''
+    header(egg_info.__doc__)
     cmd = 'python setup.py egg_info'
     if buildno:
        cmd += " -b {0}".format(buildno)

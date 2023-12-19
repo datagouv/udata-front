@@ -109,8 +109,7 @@ jobs:
           name: Generate egg-info
           command: |
             source venv/bin/activate
-            pip install -e .
-            inv egg_info ${BUILDNO}
+            inv egg-info ${BUILDNO}
             ls udata_front.egg-info
       - save_cache:
           key: py-cache-v16-{{ arch }}-{{ .Branch }}
