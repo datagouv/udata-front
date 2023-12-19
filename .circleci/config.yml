@@ -229,7 +229,7 @@ jobs:
       - run:
           name: load BUILDNO
           command: |
-          cat bash.env >> $BASH_ENV
+            cat bash.env >> $BASH_ENV
        - run:
           name: Generate egg-info
           command: |
