@@ -9,6 +9,8 @@ jobs:
   set_buildno:
     docker:
       - image: udata/circleci:2-alpine
+    environment:
+      BASH_ENV: /root/.bashrc
     steps:
       - checkout
       - run:
@@ -84,9 +86,6 @@ jobs:
                 && git push origin ${CIRCLE_BRANCH} \
               ) || true
             fi
-      - run:
-          name: "What was my custom environment variable?"
-          command: echo ${BUILDNO}
       - persist_to_workspace:
           root: .
           paths:
@@ -103,6 +102,9 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
+      - run:
+          name: "What was my custom environment variable?"
+          command: echo ${BUILDNO}
       - run:
           name: Install python dependencies
           command: |
