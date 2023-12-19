@@ -11,23 +11,23 @@ jobs:
       - image: udata/circleci:2-alpine
     steps:
       - checkout
-        - run:
-            name: Set buildno var
-            # FIXME: For now, we fix setuptools due to https://github.com/etalab/data.gouv.fr/issues/1041
-            command: |
-              if [[ $CIRCLE_TAG ]]; then
-                  # This is a tagged release
-                  echo 'export BUILDNO="'$CIRCLE_TAG'"' >> "$BASH_ENV"
-              elif [[ "$CIRCLE_BRANCH" == feature/* ]]; then
-                  # This is a feature branch
-                  echo 'export BUILDNO="'$CIRCLE_BUILD_NUM+${CIRCLE_BRANCH#*/}'"' >> "$BASH_ENV"
-              else
-                  # This is a simple development build
-                  echo 'export BUILDNO="'$CIRCLE_BUILD_NUM'"' >> "$BASH_ENV"
-              fi
-        - run:
-            name: "What was my custom environment variable?"
-            command: echo ${BUILDNO}
+      - run:
+          name: Set buildno var
+          # FIXME: For now, we fix setuptools due to https://github.com/etalab/data.gouv.fr/issues/1041
+          command: |
+            if [[ $CIRCLE_TAG ]]; then
+                # This is a tagged release
+                echo 'export BUILDNO="'$CIRCLE_TAG'"' >> "$BASH_ENV"
+            elif [[ "$CIRCLE_BRANCH" == feature/* ]]; then
+                # This is a feature branch
+                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM+${CIRCLE_BRANCH#*/}'"' >> "$BASH_ENV"
+            else
+                # This is a simple development build
+                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM'"' >> "$BASH_ENV"
+            fi
+      - run:
+          name: "What was my custom environment variable?"
+          command: echo ${BUILDNO}
   deps:
     docker:
       - image: udata/circleci:2-alpine
