@@ -6,26 +6,6 @@ orbs:
   cypress: cypress-io/cypress@3
 
 jobs:
-  set_buildno:
-    docker:
-      - image: udata/circleci:2-alpine
-    environment:
-      BASH_ENV: /root/.bashrc
-    steps:
-      - checkout
-      - run:
-          name: Set buildno var
-          command: |
-            if [[ $CIRCLE_TAG ]]; then
-                # This is a tagged release
-                echo 'export BUILDNO="'$CIRCLE_TAG'"' >> "$BASH_ENV"
-            elif [[ "$CIRCLE_BRANCH" == feature/* ]]; then
-                # This is a feature branch
-                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM+${CIRCLE_BRANCH#*/}'"' >> "$BASH_ENV"
-            else
-                # This is a simple development build
-                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM'"' >> "$BASH_ENV"
-            fi
 
   deps:
     docker:
@@ -115,6 +95,26 @@ jobs:
                         -r requirements/test.pip \
                         -r requirements/develop.pip
             pip install -e .
+      - run:
+          name: Set buildno var
+          command: |
+            if [[ $CIRCLE_TAG ]]; then
+                # This is a tagged release
+                echo 'export BUILDNO="'$CIRCLE_TAG'"' >> "$BASH_ENV"
+            elif [[ "$CIRCLE_BRANCH" == feature/* ]]; then
+                # This is a feature branch
+                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM+${CIRCLE_BRANCH#*/}'"' >> "$BASH_ENV"
+            else
+                # This is a simple development build
+                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM'"' >> "$BASH_ENV"
+            fi
+      - run:
+          name: Generate egg-info
+          command: |
+            source venv/bin/activate
+            pip install -e .
+            inv egg_info
+            ls udata_front.egg-info
       - save_cache:
           key: py-cache-v16-{{ arch }}-{{ .Branch }}
           paths:
