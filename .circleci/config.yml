@@ -107,7 +107,7 @@ jobs:
             fi
       - run:
           name: Save BUILDNO to file
-          commad: |
+          command: |
             cp $BASH_ENV bash.env
       - run:
           name: Generate egg-info
