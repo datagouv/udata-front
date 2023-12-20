@@ -25,38 +25,6 @@
     <p>
         {{ _('INSEE code:') }} {{ territory.code }}
     </p>
-    {% if territory.postal_string %}
-    <p>
-        {{ _('Postal code:') }} {{ territory.postal_string }}
-    </p>
-    {% endif %}
-    {% if territory.population %}
-    <p>
-        {{ _('Population:') }} {{ territory.population|format_number }}
-    </p>
-    {% endif %}
-    {% if territory.ancestors_objects %}
-        <section class="fr-my-2w">
-            <h2 class="fr-mb-3v">
-                {{ _('Previously') }}
-            </h2>
-            <p class="fr-m-0">
-            {% for ancestor in territory.ancestors_objects %}
-                <a href="{{ ancestor.url }}">{{ ancestor.name }}</a>{% if not loop.last %},{% endif %}
-            {% endfor %}
-            </p>
-        </section>
-    {% endif %}
-    <section class="fr-my-2w">
-        <h2 class="fr-mb-3v">
-            {{ _('Counties') }}
-        </h2>
-        <p class="fr-m-0">
-        {% for county in territory.children %}
-            <a href="{{ county.url }}"> {{ county.name }}</a>{% if not loop.last %},{% endif %}
-        {% endfor %}
-        </p>
-    </section>
 </div>
 
 {% endblock %}

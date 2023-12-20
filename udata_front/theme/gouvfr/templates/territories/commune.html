@@ -2,24 +2,14 @@
 
 {% set meta = {
     'title': territory.name,
-    'description': _('Datasets related to the town of %(name)s with INSEE code %(code)s and postal code %(postal)s', name=territory.name, code=territory.code, postal=territory.postal_string),
-    'keywords': [territory.name, territory.code, territory.postal_string],
+    'description': _('Datasets related to the town of %(name)s with INSEE code %(code)s', name=territory.name, code=territory.code),
+    'keywords': [territory.name, territory.code],
 } %}
 
 {% block breadcrumb %}
     <li>
         <a class="fr-breadcrumb__link" href="{{ url_for('territories.home') }}">
             {{ _('Territories') }}
-        </a>
-    </li>
-    <li> {{ _('Region:') }}
-        <a class="fr-breadcrumb__link" href="{{ territory.current_parent.current_parent.url }}">
-            {{ territory.current_parent.current_parent.name }}
-        </a>
-    </li>
-    <li> {{ _('County:') }}
-        <a class="fr-breadcrumb__link" href="{{ territory.current_parent.url }}">
-            {{ territory.current_parent.name }}
         </a>
     </li>
     <li> {{ _('Town:') }}
@@ -35,15 +25,5 @@
     <p>
         {{ _('INSEE code:') }} {{ territory.code }}
     </p>
-    {% if territory.postal_string %}
-    <p>
-        {{ _('Postal code:') }} {{ territory.postal_string }}
-    </p>
-    {% endif %}
-    {% if territory.population %}
-    <p>
-        {{ _('Population:') }} {{ territory.population|format_number }}
-    </p>
-    {% endif %}
 </div>
 {% endblock %}

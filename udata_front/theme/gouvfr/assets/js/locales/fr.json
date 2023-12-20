@@ -245,7 +245,6 @@
   "No result found for your search": "Aucun résultat ne correspond à votre recherche",
   "Files documented": "Fichiers documentés",
   "Files documentation missing": "Documentation des fichiers manquante",
-  "Edit file": "Modifier le fichier",
   "Nameless file": "Fichier sans nom",
   "File link - opens a new window": "Lien du fichier - ouvre une nouvelle fenêtre",
   "Download file": "Télécharger le fichier",
@@ -315,5 +314,6 @@
   "giving a title that is too technical and derived from business nomenclatures.": "donner un titre trop technique issu de nomenclatures métier.",
   "Publish the correct file types": "Publier les bons types de fichiers",
   "The formats must be:": "Les formats doivent être :",
-  "It is possible to identify an existing data schema by visiting the {schema} website, that references a list of existing data schema.": "Il est possible d'identifier un schéma de données déjà existant en consultant le site {schema}, qui référence une liste de schémas de données existants."
+  "It is possible to identify an existing data schema by visiting the {schema} website, that references a list of existing data schema.": "Il est possible d'identifier un schéma de données déjà existant en consultant le site {schema}, qui référence une liste de schémas de données existants.",
+  "Edit file": "Éditer le fichier"
 }
