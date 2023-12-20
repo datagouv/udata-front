@@ -266,6 +266,14 @@ jobs:
             pip install -e .
             udata generate-fixtures
       - run:
+          name: load BUILDNO
+          command: |
+            cat bash.env >> $BASH_ENV
+      - run:
+          name: Generate egg-info
+          command: |
+            python setup.py egg_info --tag-build ${BUILDNO}
+      - run:
           name: Install lighthouse
           command: sudo npm install -g @lhci/cli@0.10.x
       - run:
