@@ -233,7 +233,11 @@ jobs:
       - run:
           name: Generate egg-info
           command: |
-            python setup.py egg_info --buildno ${BUILDNO}
+            ls udata_front.egg-info
+            cat udata_front.egg-info/PKG-INFO
+            python setup.py egg_info --tag-build ${BUILDNO}
+            ls udata_front.egg-info
+            cat udata_front.egg-info/PKG-INFO
       - run:
           name: Prepare udata.cfg file with udata-front plugin
           command: cp cypress/udata-front-e2e.cfg.example cypress/udata-front-e2e.cfg
