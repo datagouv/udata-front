@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Use udata schema endpoint [#336](https://github.com/etalab/udata-front/pull/336)
 
 ## 3.2.12 (2023-12-15)
 
