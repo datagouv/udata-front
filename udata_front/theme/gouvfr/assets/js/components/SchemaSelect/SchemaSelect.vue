@@ -41,8 +41,8 @@ export default defineComponent({
   setup(props, {emit}) {
     /** @type {Promise<Array<import("../../types").MultiSelectOption>>} */
     const initialOptions = getCatalog().then(catalog => catalog.map(schema => ({
-      label: schema.name,
-      value: schema.name,
+      label: schema.id,
+      value: schema.id,
     })));
     const change = (value) => emit("change", value);
     return {

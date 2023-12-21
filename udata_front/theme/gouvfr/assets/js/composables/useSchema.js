@@ -26,7 +26,7 @@ export default function useSchema(resource) {
       );
     }).finally(() => loading.value = false);
 
-  const schema = computed(() => schemas.value.find(schema => schema.name === resource.schema.name));
+  const schema = computed(() => schemas.value.find(schema => schema.id === resource.schema.name));
 
   const authorizeValidation = computed(() => !!schema.value && schema.value.schema_type === 'tableschema');
 
@@ -39,7 +39,7 @@ export default function useSchema(resource) {
     /** @type {object} */
     let schemaPath = {'schema_name': `schema-datagouvfr.${resource.schema.name}`};
     if(resource.schema.version) {
-      const versionUrl = schema.value?.versions.find(version => version.version_name === resource.schema.version)?.schema_url;
+      const versionUrl = schema.value?.versions.find(version => version === resource.schema.version)?.schema_url;
       if(versionUrl) {
         schemaPath = {"schema_url": versionUrl};
       }

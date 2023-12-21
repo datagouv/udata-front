@@ -1,5 +1,5 @@
-import axios from "axios";
 import config from "../config";
+import { api } from "../plugins/api";
 
 /**
  * A schema version.
@@ -13,9 +13,9 @@ import config from "../config";
  * A json schema associated with a resource.
  * @typedef Schema
  * @type {object}
- * @property {string} name - The schema name.
- * @property {string} schema_type - The schema type.
- * @property {Array<SchemaVersion>} versions - The schema versions.
+ * @property {string} id - The schema name.
+ * @property {string} label - The schema label for humans.
+ * @property {Array<string>} versions - The schema versions.
  */
 
 /**
@@ -48,12 +48,10 @@ export default function getCatalog() {
   if (catalogRequest) {
     return catalogRequest;
   }
-  catalogRequest = axios.get(config.schema_catalog_url)
+  catalogRequest = api.get("datasets/schemas/")
   .then((resp) => resp.data)
   .then((data) => {
-    if (data.schemas) {
-      catalog = data.schemas;
-    }
+    catalog = data;
     return catalog;
   })
   return catalogRequest;
