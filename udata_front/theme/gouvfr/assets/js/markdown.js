@@ -1,7 +1,9 @@
 import markdownit from 'markdown-it';
+import purify from 'dompurify';
+import { markdown as markdownConfig } from "./config";
 
 const markdown = markdownit({
-    html: false,
+    html: true,
     linkify: true,
     typographer: true,
     breaks: true,
@@ -41,5 +43,13 @@ markdown.use(function(md) {
 });
 
 export default function(text) {
-    return markdown.render(text).trim();
+  const attributes = Object.values(markdownConfig.attributes).flat();
+  const uniqueAttributes = [...new Set(attributes)];
+  const content = markdown.render(text).trim();
+  return purify.sanitize(content, {
+    ALLOWED_TAGS: markdownConfig.tags,
+    ALLOWED_ATTR: uniqueAttributes,
+    ALLOW_DATA_ATTR: false,
+    USE_PROFILES: { html: true },
+  });
 }

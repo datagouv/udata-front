@@ -21,6 +21,10 @@ const args = {
   (c) (C) (r) (R) (tm) (TM) (p) (P) +-
   test.. test... test..... test?..... test!....
   !!!!!! ???? ,,  -- ---
+  <details>
+    <summary>I have keys but no doors. I have space but no room. You can enter but can’t leave. What am I?</summary>
+    A keyboard.
+  </details>
   "Smartypants, double quotes" and 'single quotes'`,
 };
 
