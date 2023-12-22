@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- force image lazy loading to markdown content [#337](https://github.com/etalab/udata-front/pull/337)
 
 ## 3.2.12 (2023-12-15)
 
