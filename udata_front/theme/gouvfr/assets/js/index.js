@@ -6,6 +6,7 @@ import * as dsfr from "@gouvfr/dsfr/dist/dsfr/dsfr.module";
 import Chart from "./components/charts/chart.vue";
 import Threads from "./components/discussions/Threads.vue";
 import ThreadCreate from "./components/discussions/ThreadCreate/ThreadCreate.vue";
+import MarkdownViewer from "./components/Markdown/MarkdownViewer.vue";
 import MenuSearch from "./components/search/menu-search.vue";
 import Search from "./components/search/search.vue";
 import FeaturedButton from './components/utils/featured.vue';
@@ -58,6 +59,7 @@ const configAndMountApp = (el) => {
   app.component("search", Search);
   app.component("follow-button", FollowButton);
   app.component("featured-button", FeaturedButton);
+  app.component("markdown-viewer", MarkdownViewer);
   app.component("read-more", ReadMore);
   app.component("request-membership", RequestMembership);
   app.component("dataset-resources", Resources);

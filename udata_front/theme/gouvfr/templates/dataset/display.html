@@ -103,8 +103,9 @@
             </h1>
             <h2 id="description" class="subtitle fr-mb-1w">{{ _('Description') }}</h2>
             <read-more max-height="description" class="fr-mb-n1w">
-                {{ dataset.description|markdown }}
+                <markdown-viewer data-content="{{dataset.description|to_json}}"></markdown-viewer>
             </read-more>
+            <noscript>{{ dataset.description | markdown }}</noscript>
         </section>
         <section class="fr-col-12 fr-col-md-4" data-read-more-max-height="description">
             {% if sysadmin %}
