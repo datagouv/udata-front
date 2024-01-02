@@ -1,5 +1,6 @@
 {% extends theme('layouts/1-column.html') %}
 {% from theme('macros/follow.html') import follow_btn with context %}
+{% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate %}
 
 {% set bundle = 'user' %}
 
@@ -53,28 +54,48 @@
         alt=""
         class="rounded-circle"
     />
-    <h1 class="fr-h3">{{ user.fullname }}</h1>
-    {{ user.about|markdown }}
-    {% if user.website %}
-    <p>
-        <a
-            href="{{user.website}}"
-            rel="ugc nofollow"
-            class="fr-link"
-        >
-            <span class="fr-icon-global-line" aria-hidden="true"></span>
-            {{user.website}}
-        </a>
-    </p>
-    {% endif %}
-    {% if organizations %}
-        <div class="panel-body">
-            <h4>{{ _('Organizations') }}</h4>
-            {% for org in organizations %}
-            <a href="{{ url_for('organizations.show', org=org) }}">
-                <img src="{{ org.logo(48)|placeholder('organization') }}"
-                    class="avatar" width="48" height="48" alt="{{ org.name }}" />
+    <h1 class="fr-h3 fr-my-1v">{{ user.fullname }}</h1>
+    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--bottom justify-between">
+        <div class="fr-col markdown fr-text--sm fr-m-0">
+            {{ user.about|markdown(wrap=False) }}
+        </div>
+        {% if user.website %}
+        <p class="fr-mt-1w">
+            <a
+                href="{{user.website}}"
+                rel="ugc nofollow"
+                class="fr-link fr-text--sm"
+            >
+                <span class="fr-icon-global-line" aria-hidden="true"></span>
+                {% if user.website.startswith('https:') %}
+                    {{ user.website[8:] }}
+                {% elif user.website.startswith('http:') %}
+                    {{ user.website[7:] }}
+                {% else %}
+                    {{ user.website }}
+                {% endif %}
             </a>
+        </p>
+        {% endif %}
+    </div>
+    {% if organizations %}
+        <div class="fr-mt-4w">
+            <h2 class="subtitle subtitle--uppercase fr-mt-0 fr-mb-3v">{{ _('Organizations') }}</h2>
+            {% for org in organizations %}
+                <a
+                    href="{{ url_for('organizations.show', org=org) }}"
+                    class="fr-raw-link text-blue-400 fr-text--bold fr-text--sm"
+                >
+                    <div class="inline-block border border-default-grey rounded-xxs fr-p-1v bg-white">
+                        <img
+                            src="{{ org.logo(24)|placeholder('organization') }}"
+                            width="24"
+                            height="24"
+                            alt=""
+                        />
+                    </div>
+                    <span class="text-decoration-underline text-underline-position-under text-decoration-underline--dsfr">{{ organization_name_with_certificate(org) }}</span>
+                </a>
             {% endfor %}
         </div>
     {% endif %}
