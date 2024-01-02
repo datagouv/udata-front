@@ -21,7 +21,6 @@ They exist in many colors and two versions, primary with a solid background and 
 </div>
 ```
 */
-@import (less) "@gouvfr/dsfr/dist/component/alert/alert.css";
 @import (less) "@gouvfr/dsfr/dist/component/notice/notice.css";
 
 .fr-alert p {
@@ -115,6 +114,16 @@ html[data-fr-js] [data-show-no-js], html[data-fr-js=true] [data-show-no-js] {
         color: @text-default-warning;
     }
 
+    &.well-blue-cumulus {
+        background: @background-contrast-blue-cumulus;
+        color: @text-label-blue-cumulus;
+    }
+
+    &.well-orange-terre-battue {
+        background: @background-contrast-orange-terre-battue;
+        color: @text-label-orange-terre-battue;
+    }
+
     &.well-grey-100 {
         background: @grey-100;
         color: @contrast-grey-100;
@@ -125,8 +134,13 @@ html[data-fr-js] [data-show-no-js], html[data-fr-js=true] [data-show-no-js] {
         border: 1px solid @border-plain-success;
     }
 
+    &.well-secondary-warning {
+        .well-warning;
+        border: 1px solid @border-plain-warning;
+    }
+
     &.well-secondary-grey-100 {
         .well-grey-100;
-        border: 1px solid @grey-100;
+        border: 1px solid @border-default-grey;
     }
 }

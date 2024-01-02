@@ -218,3 +218,9 @@ class FormView(Templated, BaseView):
             return self.on_form_valid(form)
 
         return self.on_form_error(form)
+
+
+class LoginOnlyView(Templated, BaseView):
+    @auth.login_required
+    def get(self, **kwargs):
+        return self.render()

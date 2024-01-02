@@ -1,7 +1,5 @@
 <footer role="contentinfo">
-    {% cache cache_duration, 'participez', g.lang_code|default(config.DEFAULT_LANGUAGE)|string %}
-    {% include theme("participez/participez.html") %}
-    {% endcache %}
+    {% include theme("newsletter.html") %}
     <div class="fr-footer" id="footer">
         {% cache cache_duration, 'footer-top', g.lang_code|default(config.DEFAULT_LANGUAGE)|string,'-'.join((package_version('udata'), package_version('udata-front'))) %}
         <div class="fr-footer__top">
@@ -18,9 +16,9 @@
                         </ul>
                     </div>
                     <div class="fr-col-12 fr-col-sm-3">
-                        <h3 class="fr-footer__top-cat">{{ _('Support') }}</h3>
+                        <h3 class="fr-footer__top-cat">{{ _('Platform') }}</h3>
                         <ul class="fr-footer__top-list">
-                            {% for item in nav.gouvfr_support %}
+                            {% for item in nav.gouvfr_platform %}
                             <li>
                                 <a class="fr-footer__top-link" href="{{ item.url }}">{{ item.label }}</a>
                             </li>
@@ -28,68 +26,26 @@
                         </ul>
                     </div>
                     <div class="fr-col-12 fr-col-sm-3">
-                        <h3 class="fr-footer__top-cat">{{ _('Social networks') }}</h3>
-                        <ul class="fr-footer__top-list socials fr-grid-row">
+                        <h3 class="fr-footer__top-cat">{{ _('Resources') }}</h3>
+                        <ul class="fr-footer__top-list">
+                            {% for item in nav.gouvfr_resources %}
                             <li>
-                                <a class="fr-footer__top-link fr-raw-link" href="https://twitter.com/datagouvfr" title="Twitter">
-                                    {% include theme('svg/socials/twitter.svg') %}
-                                </a>
+                                <a class="fr-footer__top-link" href="{{ item.url }}">{{ item.label }}</a>
                             </li>
-                            <li class="fr-ml-9v">
-                                <a class="fr-footer__top-link fr-raw-link" href="https://www.linkedin.com/company/data-gouv-fr/" title="Linkedin">
-                                    {% include theme('svg/socials/linkedin.svg') %}
-                                </a>
-                            </li>
-                            <li class="fr-ml-9v">
-                                <a class="fr-footer__top-link fr-raw-link" href="https://github.com/etalab/data.gouv.fr/" title="Github">
-                                    {% include theme('svg/socials/github.svg') %}
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="fr-footer__top-list fr-grid-row">
-                            <li>
-                                <a
-                                    href="{{ url_for('datasets.recent_feed') }}"
-                                    title="{{ _('RSS feed') }}"
-                                    class="fr-footer__top-link"
-                                >
-                                    RSS
-                                </a>
-                            </li>
-                            <li class="fr-ml-9v">
-                                <a
-                                    href="{{ config.NEWSLETTER_SUBSCRIPTION_URL }}"
-                                    title="{{ _('Newsletter') }}"
-                                    class="fr-footer__top-link"
-                                >
-                                    {{ _('Newsletter') }}
-                                </a>
-                            </li>
+                            {% endfor %}
                         </ul>
                     </div>
                     <div class="fr-col-12 fr-col-sm-3">
-                        <div class="fr-footer__top-cat etalab-logo">
-                            <a
-                                href="http://www.etalab.gouv.fr"
-                                title="{{ _('Go to Etalab’s blog') }}"
-                                class="fr-raw-link"
-                            >
-                                {% include theme('svg/logo-etalab.svg') %}
-                            </a>
-                        </div>
-                        <ul class="fr-text--sm fr-my-0">
-                            <li>{{ _('A DINUM department') }}</li>
+                        <h3 class="fr-footer__top-cat">{{ _('Development') }}</h3>
+                         <ul class="fr-footer__top-list">
                             <li>
                                 <a
-                                    href="https://numerique.gouv.fr"
-                                    title="{{ _('DINUM website: numerique.gouv.fr') }}"
-                                    class="fr-text--bold fr-footer__top-link w-100"
+                                    href="{{config.API_DOC_EXTERNAL_LINK}}"
+                                    class="fr-footer__top-link"
                                 >
-                                    numerique.gouv.fr
+                                   {{  _("Portal's API") }}
                                 </a>
                             </li>
-                        </ul>
-                        <ul class="fr-mt-3v text-grey-380 fr-footer__top-list">
                             <li>
                                 <a
                                     href="https://github.com/opendatateam/udata/"
@@ -121,24 +77,26 @@
             <div class="fr-footer__body">
             {% cache cache_duration, 'footer-brand-and-links', g.lang_code|default(config.DEFAULT_LANGUAGE)|string %}
                 <div class="fr-footer__brand fr-enlarge-link">
-                    <a href="/" title="{{_('Go back to website home')}}">
-                        <p class="fr-logo" title="république française">
-                            république
-                            <br>française
-                        </p>
+                    <p class="fr-logo" title="république française">
+                        république
+                        <br>française
+                    </p>
+                    <a class="fr-footer__brand-link" href="/" title="{{_('Go back to website home - data.gouv.fr - République Française')}}">
+                        {% include theme('svg/logotype.svg') %}
                     </a>
                 </div>
                 <div class="fr-footer__content">
+                    <p class="fr-footer__content-desc">{{ _("A product of the Direction Interministérielle du Numérique (DINUM).") }}</p>
                     <ul class="fr-footer__content-list">
                         {% for item in nav.gouvfr_network %}
                         <li class="fr-footer__content-item">
-                            <a class="fr-footer__content-link" href="{{ item.url }}">{{ item.label }}</a>
+                            <a class="fr-footer__content-link"  target="_blank" href="{{ item.url }}">{{ item.label }}</a>
                         </li>
                         {% endfor %}
                     </ul>
                 </div>
                 {% endcache %}
-                <div class="fr-col-6 fr-col-sm-4 fr-col-md-3 fr-col-lg-2 fr-ml-auto self-end">
+                <div class="fr-col-auto fr-ml-auto self-end">
                     <nav role="navigation" class="fr-translate fr-nav">
                         <div class="fr-nav__item">
                             <button

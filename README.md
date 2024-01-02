@@ -125,7 +125,7 @@ inv serve
 
 ##### 🏗 Installing the javascript dependencies
 
-First, you need to use [Node](https://nodejs.org/) (version 14+) on your platform. You should consider [installing NVM](https://github.com/creationix/nvm#installation) which uses the existing .nvmrc.
+First, you need to use [Node](https://nodejs.org/) (version 16+) on your platform. You should consider [installing NVM](https://github.com/creationix/nvm#installation) which uses the existing .nvmrc.
 
 ```shell
 cd udata-front
@@ -137,6 +137,18 @@ npm install
 ```
 
 And voilà ! ✨
+
+##### 🆕 Start the storybook server
+
+If you want to work on Vue or Less files, you can start the storybook server with this command :
+
+```shell
+npm run storybook
+```
+
+It allows you to work on the front-end only and even [mocks the back-end responses](https://github.com/mswjs/msw-storybook-addon).
+
+You can visit their website to [learn more about storybook](https://storybook.js.org/docs/vue/get-started/why-storybook) and [how to use it](https://storybook.js.org/docs/vue/writing-stories/introduction).
 
 ##### 💪 Starting the javascript development server
 

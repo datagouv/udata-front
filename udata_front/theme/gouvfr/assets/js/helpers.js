@@ -2,6 +2,7 @@ import RemoveMarkdown from "remove-markdown";
 import markdown from "./markdown";
 import dayjs from "dayjs/esm";
 import { useI18n } from 'vue-i18n';
+import { readonly } from "vue";
 
 export const truncate = (val, length = 300) => {
   if (typeof val !== "string") return;
@@ -68,6 +69,48 @@ export const formatRelativeIfRecentDate = (date) => {
   return formatFromNow(date);
 }
 
+export const CLOSED_FORMATS = readonly(/** @type {const} */(['pdf', 'doc', 'docx', 'word', 'xls', 'excel', 'xlsx']));
+
+export const RESOURCE_TYPE = readonly(/** @type {const} */(["main", "documentation", "update", "api", "code", "other"]));
+
+/**
+ *
+ * @param {import("./types").ResourceType} type
+ */
+export const getResourceLabel = (type) => {
+  const { t } = useI18n();
+  switch(type) {
+    case "main":
+      return t("Main file");
+    case "documentation":
+      return t("Documentation");
+    case "update":
+      return t("Update");
+    case "api":
+      return t("API");
+    case "code":
+      return t("Source code");
+    case "other":
+      return t("Other");
+  }
+}
+/**
+ * Checks if a value is in an array
+ * @template U
+ * @template {U} T
+ * @param {ReadonlyArray<T>} array
+ * @param {U} value
+ * @returns {value is T}
+ */
+const includeInSubtype = (array, value) => {
+  return array.includes(/** @type {T} **/(value));
+};
+
+/**
+ *
+ * @param {string } format
+ */
+export const isClosedFormat = (format) => includeInSubtype(CLOSED_FORMATS, format);
 export const UUIDRegExp = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
 
 export const resourceUrlRegExp = new RegExp(

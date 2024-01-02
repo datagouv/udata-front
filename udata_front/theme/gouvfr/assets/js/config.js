@@ -8,8 +8,9 @@
  * Simple helper to fetch attribute on given css selector
  */
 function _attr(selector, name) {
+  /** @type {HTMLElement | null} */
   const el = document.querySelector(selector);
-  return el ? el.getAttribute(name) : undefined;
+  return el ? el.getAttribute(name) : null;
 }
 
 /**
@@ -30,18 +31,20 @@ function _jsonMeta(name) {
 
 /**
  * The current user extracted from the header
+ * @type {import("./types").User | null}
  */
-export let user;
+export let user = null;
 const userEl = document.querySelector("meta[name=current-user]");
 
 if (userEl instanceof HTMLElement) {
   user = {
-    id: userEl.getAttribute("content"),
+    id: userEl.getAttribute("content") || "",
     slug: userEl.dataset.slug,
-    first_name: userEl.dataset.first_name,
-    last_name: userEl.dataset.last_name,
+    first_name: userEl.dataset.first_name || "",
+    last_name: userEl.dataset.last_name || "",
     avatar: userEl.dataset.avatar,
-    roles: userEl.dataset.roles.split(","),
+    avatar_thumbnail: userEl.dataset.avatar_thumbnail,
+    roles: userEl.dataset.roles?.split(","),
   };
 }
 
@@ -124,6 +127,54 @@ export const schema_documentation_url = _meta("schema-documentation-url");
 export const schema_validata_url = _meta("schema-validata-url");
 
 /**
+ * The schema publishing url
+ */
+export const schema_publishing_url = _meta("schema-publishing-url");
+
+/**
+ * The demo server URL
+ */
+export const demo_server_url = _meta("demo-server-url");
+
+/**
+ * The demo server name
+ */
+export const demo_server_name = _meta("demo-server-name");
+
+/**
+ * The publishing form feedback URL
+ */
+export const publishing_form_feedback_url = _meta("publishing-form-feedback-url");
+
+/**
+ * The API documentation external link
+ */
+
+export const api_doc_external_link = _meta("api-doc-external-link");
+
+/**
+ * The harvesting guide url
+ */
+
+export const guides_harvesting_url = _meta("guides-harvesting-url");
+
+/**
+ * The harvesting guide url
+ */
+
+export const support_url = _meta("support-url");
+
+/**
+ * The catalog service URL
+ */
+export const catalog_url = _meta("catalog-url");
+
+/**
+ * The description length required to pass the quality score check
+ */
+export const quality_description_length = _meta("quality-description-length");
+
+/**
  * The data search form URL
  */
 export const data_search_feedback_form_url = _meta("data-search-feedback-form-url");
@@ -140,7 +191,7 @@ const sentryEl = document.querySelector("meta[name=sentry]");
 export const sentry = {};
 
 if (sentryEl instanceof HTMLElement) {
-  sentry.dsn = sentryEl.getAttribute("content");
+  sentry.dsn = sentryEl.getAttribute("content") || undefined;
   sentry.release = sentryEl.dataset.release || undefined;
   sentry.tags = JSON.parse(decodeURIComponent(sentryEl.dataset.tags || "{}"));
 }
@@ -228,7 +279,13 @@ export default {
   debug,
   lang,
   title,
+  catalog_url,
   csrf_token,
+  demo_server_url,
+  demo_server_name,
+  api_doc_external_link,
+  guides_harvesting_url,
+  support_url,
   data_search_feedback_form_url,
   api_root,
   api_2_root,
@@ -237,8 +294,10 @@ export default {
   static_root,
   admin_root,
   auth_url,
+  publishing_form_feedback_url,
   schema_catalog_url,
   schema_documentation_url,
+  schema_publishing_url,
   schema_validata_url,
   guides_quality_url,
   sentry,
@@ -253,4 +312,5 @@ export default {
   resources_min_count_to_show_search,
   markdown,
   read_only_enabled,
+  quality_description_length,
 };

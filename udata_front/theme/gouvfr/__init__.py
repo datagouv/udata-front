@@ -69,7 +69,7 @@ gouvfr_menu = nav.Bar('gouvfr_menu', [
         ),
     ]),
     nav.Item(_('News'), 'posts.list'),
-    nav.Item(_('Contact us'), None, url='https://support.data.gouv.fr/'),
+    nav.Item(_('Contact us'), None, url=current_app.config.get('SUPPORT_URL', '#')),
 ])
 
 theme.menu(gouvfr_menu)
@@ -77,7 +77,6 @@ theme.menu(gouvfr_menu)
 opendata_links = [
     nav.Item(_('Featured topics'), 'gouvfr.show_page', args={'slug': 'thematiques-a-la-une'}),
     nav.Item(_('Reference Data'), 'gouvfr.show_page', args={'slug': 'spd/reference'}),
-    nav.Item(_('Portal for European data'), None, url='https://data.europa.eu'),
 ]
 
 export_dataset_id = current_app.config.get('EXPORT_CSV_DATASET_ID')
@@ -90,18 +89,31 @@ if export_dataset_id:
         export_url = url_for('datasets.show', dataset=export_dataset,
                              _external=True)
         opendata_links.append(nav.Item(_('Data catalog'), None, url=export_url))
-opendata_links.append(nav.Item(_('Release notes'), 'gouvfr.show_page', args={'slug': 'nouveautes'}))
+opendata_links.append(nav.Item(_('Follow data opening'), None,
+                      url="https://ouverture.data.gouv.fr"))
 
 nav.Bar('gouvfr_opendata', opendata_links)
 
 
-support_links = [
-    nav.Item(_('data.gouv.fr guides'), None, url=current_app.config.get('GUIDES_URL', '#')),
-    nav.Item(_("Portal's API"), None, url=current_app.config.get('API_DOC_EXTERNAL_LINK', '#')),
+platform_links = [
+    nav.Item(_('Guides'), None, url=current_app.config.get('GUIDES_URL', '#')),
+    nav.Item(_('Release notes'), 'gouvfr.show_page', args={'slug': 'nouveautes'}),
     nav.Item(_('Contact us'), None, url='https://support.data.gouv.fr'),
+    nav.Item(_('Give us your feedback'), None,
+             url=current_app.config.get('FEEDBACK_FORM_URL', '#')),
 ]
 
-nav.Bar('gouvfr_support', support_links)
+nav.Bar('gouvfr_platform', platform_links)
+
+resources_links = [
+    nav.Item(_("API Portal"), None, url='https://api.gouv.fr'),
+    nav.Item(_("Data schema referential"), None,
+             url=current_app.config.get('SCHEMA_DOCUMENTATION_URL', '#')),
+    nav.Item(_("Open Data University"), 'gouvfr.show_page', args={'slug': 'odu/home'}),
+    nav.Item(_('Portal for European data'), None, url='https://data.europa.eu'),
+]
+
+nav.Bar('gouvfr_resources', resources_links)
 
 footer_links = [
     nav.Item(_('Licences'), 'gouvfr.show_page', args={'slug': 'legal/licences'}),
@@ -114,13 +126,9 @@ footer_links = [
 nav.Bar('gouvfr_footer', footer_links)
 
 NETWORK_LINKS = [
-    ('Gouvernement.fr', 'http://www.gouvernement.fr'),
-    ('France.fr', 'http://www.france.fr'),
-    ('Legifrance.gouv.fr', 'http://www.legifrance.gouv.fr'),
-    ('Service-public.fr', 'http://www.service-public.fr'),
-    ('Opendata France', 'http://opendatafrance.net'),
-    ('CADA.fr', 'http://www.cada.fr'),
-    ('Etalab.gouv.fr', 'https://www.etalab.gouv.fr'),
+    ('legifrance.gouv.fr', 'https://legifrance.gouv.fr'),
+    ('gouvernement.fr', 'https://www.gouvernement.fr'),
+    ('service-public.fr', 'https://www.service-public.fr'),
 ]
 
 nav.Bar(

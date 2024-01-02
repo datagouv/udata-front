@@ -305,6 +305,9 @@
         tabindex="0"
     >
         <div class="fr-container">
+
+        {{ hook('organization.display.metrics') }}
+
         {% call(slot) information_title_with_button(_('Members')) %}
             {% if slot == "button" %}
                 {% set member = org.member(current_user) %}
@@ -317,7 +320,7 @@
                     </div>
                     {% elif pending_request %}
                     <div>
-                        <span class="f-light f-italic">{{ _('Pending request to join this organization') }}</span>
+                        <span class="fr-text--light f-italic">{{ _('Pending request to join this organization') }}</span>
                     </div>
                     {% endif %}
                 {% endif %}
