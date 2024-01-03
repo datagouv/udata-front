@@ -48,7 +48,7 @@
 {% endblock %}
 
 {% block main_content %}
-<div class="fr-container fr-mb-3w">
+<div class="fr-container fr-pb-5w">
     <img
         src="{{ user|avatar_url(80) }}"
         alt=""
@@ -60,22 +60,25 @@
             {{ user.about|markdown(wrap=False) }}
         </div>
         {% if user.website %}
-        <p class="fr-mt-1w">
-            <a
-                href="{{user.website}}"
-                rel="ugc nofollow"
-                class="fr-link fr-text--sm"
-            >
-                <span class="fr-icon-global-line" aria-hidden="true"></span>
-                {% if user.website.startswith('https:') %}
-                    {{ user.website[8:] }}
-                {% elif user.website.startswith('http:') %}
-                    {{ user.website[7:] }}
-                {% else %}
-                    {{ user.website }}
-                {% endif %}
-            </a>
-        </p>
+            <p class="fr-mt-1w">
+                <a
+                    href="{{user.website}}"
+                    rel="ugc nofollow"
+                    class="fr-link fr-text--sm"
+                    target="_blank"
+                >
+                    {% set truncate_length = 15 %}
+                    {% if user.website.startswith('https:') %}
+                        {% set website = user.website[8:] %}
+                    {% elif user.website.startswith('http:') %}
+                        {% set website = user.website[7:] %}
+                    {% else %}
+                        {% set website = user.website %}
+                    {% endif %}
+                    <span class="fr-icon-global-line" aria-hidden="true"></span>
+                    {{ website|truncate(truncate_length, True) }}
+                </a>
+            </p>
         {% endif %}
     </div>
     {% if organizations %}
@@ -99,6 +102,26 @@
             {% endfor %}
         </div>
     {% endif %}
-    {% block user_content %}{% endblock %}
+</div>
+<hr class="fr-py-0-5v" />
+<div class="fr-container fr-mb-3w fr-mt-9v">
+    {% block user_content %}
+        {% if datasets %}
+        <h2 class="subtitle subtitle--uppercase fr-mb-5v">
+            {{ ngettext('%(num)d dataset', '%(num)d datasets', datasets|length) }}
+        </h2>
+        {% for dataset in datasets %}
+            {% include theme('dataset/card-md.html') %}
+        {% endfor %}
+        {% else %}
+            <div class="fr-grid-row">
+                <div class="fr-col-12">
+                    <p class="text-center lead">
+                    {{ _('%(user)s has not yet published any dataset', user=user.fullname) }}
+                    </p>
+                </div>
+            </div>
+        {% endif %}
+    {% endblock %}
 </div>
 {% endblock %}
