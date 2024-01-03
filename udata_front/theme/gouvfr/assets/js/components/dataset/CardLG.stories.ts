@@ -15,9 +15,9 @@ export default {
 
 /**
  * @typedef {{
- *  [Property in keyof import("../../types").NewDataset
+ *  [Property in keyof import("../../types").Dataset
  *    as Extract<Property, "acronym" | "archived" | "description" | "last_update" | "license" | "page" | "private" | "quality" | "title" | "owner" | "organization">
- *  ]: import("../../types").NewDataset[Property]
+ *  ]: import("../../types").Dataset[Property]
  * } & {metrics?: Object, showMetrics: Boolean, style?: Object}} CardLGProps
  */
 
@@ -26,7 +26,7 @@ const args = {
   acronym: "",
   archived: false,
   description: "Some description",
-  last_update: new Date(),
+  last_update: (new Date()).toDateString(),
   license: "lov2",
   page: "https://www.data.gouv.fr",
   private: false,

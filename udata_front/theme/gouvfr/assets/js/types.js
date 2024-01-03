@@ -144,7 +144,8 @@
 
 /**
  * @typedef {NewDataset & {
- *  id: string
+ *  id: string;
+ *  last_update: string;
  * }} Dataset
  */
 
