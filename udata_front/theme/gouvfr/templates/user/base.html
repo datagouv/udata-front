@@ -110,9 +110,7 @@
         <h2 class="subtitle subtitle--uppercase fr-mb-5v">
             {{ ngettext('%(num)d dataset', '%(num)d datasets', datasets|length) }}
         </h2>
-        {% for dataset in datasets %}
-            {% include theme('dataset/card-md.html') %}
-        {% endfor %}
+        <card-md-list datasets="{{datasets|to_api_format|to_json}}"></card-md-list>
         {% else %}
             <div class="fr-grid-row">
                 <div class="fr-col-12">
