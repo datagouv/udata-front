@@ -36,3 +36,18 @@ export const NoReadMoreOnSmallContent = {
   }),
   args: {},
 };
+
+export const ReadMoreWithParagraph = {
+  render: (args) => ({
+    components: { ReadMore },
+    setup() {
+      return { args };
+    },
+    template: ` <ReadMore v-bind="args">
+      <div class="white-space-pre-wrap overflow-wrap-anywhere">
+      <div><p>Dès septembre 2021, l’ensemble du 7e arrondissement de Lyon va être équipé de bornes d’apport volontaire de déchets alimentaires. En 2022, le déploiement se poursuivra dans des territoires de l’est et de l’ouest lyonnais, pour une couverture de l’ensemble des villes et centre-bourg d’ici fin 2023.</p></div>
+      </div>
+    </ReadMore>`,
+  }),
+  args: {},
+};

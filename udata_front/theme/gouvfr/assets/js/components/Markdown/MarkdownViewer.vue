@@ -1,6 +1,5 @@
 <template>
-  <div class="markdown" ref="markdownRef">
-    <div v-if="mdContent" v-html="markdown(mdContent)"></div>
+  <div class="markdown" ref="markdownRef" v-html="markdown(mdContent)">
   </div>
 </template>
 
@@ -11,7 +10,7 @@ import { onMounted } from "vue";
 
 const props = defineProps<{ content?: string }>();
 const markdownRef = ref<HTMLDivElement | null>(null);
-const mdContent = ref(props.content);
+const mdContent = ref(props.content ?? '');
 onMounted(() => {
   if(!props.content) {
     mdContent.value = JSON.parse(markdownRef.value?.dataset.content ?? '');
