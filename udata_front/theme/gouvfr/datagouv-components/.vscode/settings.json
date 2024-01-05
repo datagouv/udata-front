@@ -1,6 +1,0 @@
-{
-    "conventionalCommits.scopes": [
-        "components"
-    ],
-    "typescript.tsdk": "node_modules/typescript/lib"
-}
