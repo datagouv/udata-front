@@ -150,6 +150,25 @@
  */
 
 /**
+ * @typedef {Owned & {
+ *  id: string
+ *  title: string,
+ *  description: string,
+ *  tags: Array<string> | null,
+ *  page: string,
+ *  private: boolean,
+ *  deleted: boolean,
+ *  datasets: Array<Dataset>,
+ *  image: string,
+ *  image_thumbnail: string,
+ *  slug: string,
+ *  topic: string,
+ *  type: string,
+ *  last_update: string,
+ * }} Reuse
+ */
+
+/**
  * @typedef {{description: string?, filetype: RemoteResourceFileType, format: string, mime: string, schema?: string, title: string, type: ResourceType, url: string}} DatasetRemoteFile
  * @typedef {{file: File, sha256?: string, description: string?, format: string, filesize: number, filetype: FileResourceFileType, mime: string, schema?: string, title: string, type: ResourceType}} DatasetLocalFile
  * @typedef {"none" | "loading" | "failed" | "loaded"} FileLoadingState
