@@ -1,6 +1,6 @@
 import logging
 
-from flask import abort, g
+from flask import url_for, redirect, abort, g
 from flask_security import current_user
 
 from udata_front.views.base import DetailView
@@ -63,23 +63,13 @@ class UserDetailView(UserView, DetailView):
         return context
 
 @blueprint.route('/<user:user>/datasets/', endpoint='datasets')
-class UserDatasetsView(UserView, DetailView):
-    template_name = 'user/datasets.html'
-
-    def get_context(self):
-        context = super(UserDatasetsView, self).get_context()
-        context['datasets'] = self.get_dataset_queryset()
-        return context
+def redirect_datasets(user):
+    return redirect(url_for('users.show', user=user))
 
 
 @blueprint.route('/<user:user>/reuses/', endpoint='reuses')
-class UserReusesView(UserView, DetailView):
-    template_name = 'user/reuses.html'
-
-    def get_context(self):
-        context = super(UserReusesView, self).get_context()
-        context['reuses'] = Reuse.objects(owner=self.user).visible()
-        return context
+def redirect_reuses(user):
+    return redirect(url_for('users.show', user=user))
 
 
 @blueprint.route('/<user:user>/', endpoint='activities')
