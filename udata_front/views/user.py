@@ -4,10 +4,12 @@ from flask import abort, g
 from flask_security import current_user
 
 from udata_front.views.base import DetailView
-from udata.models import User, Activity, Organization, Dataset, Reuse, Follow
-from udata.i18n import I18nBlueprint
-
+from udata import search
+from udata.core.dataset.search import DatasetSearch
 from udata.core.user.permissions import sysadmin, UserEditPermission
+from udata.i18n import I18nBlueprint
+from udata.models import User, Activity, Organization, Dataset, Reuse, Follow
+from udata.utils import not_none_dict
 
 
 blueprint = I18nBlueprint('users', __name__, url_prefix='/users')
@@ -33,6 +35,12 @@ class UserView(object):
     def user(self):
         return self.get_object()
 
+    def get_dataset_queryset(self):
+        parser = DatasetSearch.as_request_parser()
+        args = not_none_dict(parser.parse_args())
+        args.update(owner=self.user.id)
+        return search.query(DatasetSearch, **args)
+
     def get_context(self):
         context = super(UserView, self).get_context()
         context['organizations'] = Organization.objects(
@@ -47,7 +55,8 @@ class UserDetailView(UserView, DetailView):
 
     def get_context(self):
         context = super(UserDetailView, self).get_context()
-        context['datasets'] = Dataset.objects(owner=self.user).visible()
+        context['datasets'] = self.get_dataset_queryset()
+        context['total_datasets'] = context['datasets'].total
         context['reuses'] = Reuse.objects(owner=self.user).visible()
         context['can_edit'] = UserEditPermission(self.user)
 
@@ -59,7 +68,7 @@ class UserDatasetsView(UserView, DetailView):
 
     def get_context(self):
         context = super(UserDatasetsView, self).get_context()
-        context['datasets'] = Dataset.objects(owner=self.user).visible()
+        context['datasets'] = self.get_dataset_queryset()
         return context
 
 

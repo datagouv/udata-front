@@ -4,7 +4,7 @@ import "./dsfr";
 import * as dsfr from "@gouvfr/dsfr/dist/dsfr/dsfr.module";
 
 import Chart from "./components/charts/chart.vue";
-import CardMDList from "./components/dataset/CardMDList.vue";
+import UserDatasetList from "./components/UserDatasetList/UserDatasetList.vue";
 import Threads from "./components/discussions/Threads.vue";
 import ThreadCreate from "./components/discussions/ThreadCreate/ThreadCreate.vue";
 import MenuSearch from "./components/search/menu-search.vue";
@@ -67,7 +67,7 @@ const configAndMountApp = (el) => {
   app.component("chart", Chart);
   app.component("toggletip", Toggletip);
   app.component("publishing-form", PublishingForm);
-  app.component("card-md-list", CardMDList);
+  app.component("user-dataset-list", UserDatasetList);
 
   // unset delimiters used in html templates to prevent injections using {{ }}
   app.config.compilerOptions.delimiters = [];

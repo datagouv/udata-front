@@ -104,22 +104,13 @@
     {% endif %}
 </div>
 <hr class="fr-py-0-5v" />
-<div class="fr-container fr-mb-3w fr-mt-9v">
+<div class="fr-container fr-mb-3w fr-mt-9v vuejs">
     {% block user_content %}
-        {% if datasets %}
-        <h2 class="subtitle subtitle--uppercase fr-mb-5v">
-            {{ ngettext('%(num)d dataset', '%(num)d datasets', datasets|length) }}
-        </h2>
-        <card-md-list datasets="{{datasets|to_api_format|to_json}}"></card-md-list>
-        {% else %}
-            <div class="fr-grid-row">
-                <div class="fr-col-12">
-                    <p class="text-center lead">
-                    {{ _('%(user)s has not yet published any dataset', user=user.fullname) }}
-                    </p>
-                </div>
-            </div>
-        {% endif %}
+        <user-dataset-list
+            :total-results="{{total_datasets}}"
+            :owner="{{user|to_json}}"
+            :datasets="{{datasets|to_api_format|to_json}}"
+        ></card-md-list>
     {% endblock %}
 </div>
 {% endblock %}

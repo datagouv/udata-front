@@ -87,5 +87,4 @@ const { t } = useI18n();
 
 const ownerName = useOwnerName(props.dataset);
 const license = useLicense(props.dataset.license);
-console.log(license);
 </script>
