@@ -1,9 +1,10 @@
 import CardMDList, { type CardMDListProps } from './CardMDList.vue';
 import { withActions } from '@storybook/addon-actions/decorator';
 import type { Meta, StoryObj } from "@storybook/vue3";
+import { CardMDWithCertifiedOrganization } from './CardMD.stories';
 
 const meta = {
-  title: 'Components/Dataset Card List',
+  title: 'Lists/Dataset Card List',
   component: CardMDList,
   parameters: {
     actions: {
@@ -16,43 +17,18 @@ const meta = {
 export default meta;
 
 const dataset = {
-  id: "someId",
-  acronym: "",
-  archived: false,
-  description: "Some description",
-  last_update: (new Date()).toDateString(),
-  license: "lov2",
-  page: "https://www.data.gouv.fr",
-  private: false,
-  quality: {
-    all_resources_available: true,
-    dataset_description_quality: true,
-    has_open_format: true,
-    has_resources: true,
-    license: true,
-    resources_documentation: true,
-    score: 1,
-    spatial: true,
-    temporal_coverage: true,
-    update_frequency: true,
-    update_fulfilled_in_time: true,
-  },
-  tags: [],
-  frequency: "Unknown",
-  temporal_coverage: "Test",
-  frequency_date: null,
-  spatial: null,
-  owner: {
-    id: "someUserId",
-    first_name: "First",
-    last_name: "Last",
-  },
-  title: "My new dataset",
-}
+  ...CardMDWithCertifiedOrganization.args.dataset,
+};
 
 const args: CardMDListProps = {
   datasets: [dataset, dataset, dataset],
   totalResults: 3,
+};
+
+const paginatedArgs: CardMDListProps = {
+  datasets: [dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset,
+    dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset],
+  totalResults: 25,
 };
 
 /**
@@ -68,4 +44,19 @@ export const DefaultCardMDList: StoryObj<typeof meta> = {
     template: '<CardMDList v-bind="args"/>',
   }),
   args,
+};
+
+/**
+ * #### Card Medium List With Pagination
+ * A list of dataset cards.
+ */
+export const PaginatedCardMDList: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { CardMDList },
+    setup() {
+      return { args };
+    },
+    template: '<CardMDList v-bind="args"/>',
+  }),
+  args: paginatedArgs,
 };

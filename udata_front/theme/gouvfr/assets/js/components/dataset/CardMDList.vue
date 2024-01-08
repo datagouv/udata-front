@@ -21,7 +21,6 @@
 
 <script lang="ts">
 import type { Dataset } from '../../types';
-import { useI18n } from 'vue-i18n';
 export type CardMDListProps = {
   datasets: Array<Dataset>,
   loading?: boolean,
@@ -35,7 +34,6 @@ import { Pagination } from '@etalab/udata-front-plugins-helper';
 import Loader from "./loader.vue";
 import CardMD from './CardMD.vue';
 
-
 withDefaults(defineProps<CardMDListProps>(), {
   loading: false,
 });
@@ -43,8 +41,6 @@ withDefaults(defineProps<CardMDListProps>(), {
 const emit = defineEmits<{
   (event: 'changePage', page: number): void,
 }>();
-
-const { t } = useI18n();
 
 const currentPage = ref(1);
 
