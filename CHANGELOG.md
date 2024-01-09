@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- User pages are back [#338](https://github.com/etalab/udata-front/pull/338)
 
 ## 3.2.12 (2023-12-15)
 
