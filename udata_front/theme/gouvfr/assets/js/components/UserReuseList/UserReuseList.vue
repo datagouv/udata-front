@@ -1,9 +1,9 @@
 <template>
   <h2 class="subtitle subtitle--uppercase fr-mb-5v" v-if="totalResults">
-    {{ t('{n} datasets', totalResults) }}
+    {{ t('{n} reuses', totalResults) }}
   </h2>
-  <CardMDList
-    :datasets="datasets"
+  <ReuseList
+    :reuses="reuses"
     :loading="loading"
     :total-results="totalResults"
     @change-page="loadPage"
@@ -11,9 +11,9 @@
 </template>
 
 <script lang="ts">
-import type { Dataset, User } from '../../types';
+import type { Reuse, User } from '../../types';
 
-export type UserDatasetListProps = {
+export type UserReuseListProps = {
   owner: User,
 };
 </script>
@@ -24,14 +24,14 @@ import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useToast } from '../../composables/useToast';
 import { apiv2, generateCancelToken } from '../../plugins/api';
-import CardMDList from '../dataset/CardMDList.vue';
+import ReuseList from '../Reuse/ReuseList.vue';
 
 const { t } = useI18n();
 const toast = useToast();
 
-const props = defineProps<UserDatasetListProps>();
+const props = defineProps<UserReuseListProps>();
 
-const datasets = ref<Array<Dataset>>([]);
+const reuses = ref<Array<Reuse>>([]);
 const totalResults = ref(0);
 const loading = ref(false);
 
@@ -41,17 +41,17 @@ const loading = ref(false);
 const currentRequest = ref<CancelTokenSource | null>(null);
 
 /** TODO : use a config when the component moved to data.gouv.fr-components */
-const pageSize = 3;
+const pageSize = 6;
 
 /**
- * Load new datasets
+ * Load new reuses
  */
 function loadPage (page: number) {
   loading.value = true;
   if (currentRequest.value) currentRequest.value.cancel();
   currentRequest.value = generateCancelToken();
   apiv2
-    .get("/datasets/search/", {
+    .get("/reuses/search/", {
       cancelToken: currentRequest.value.token,
       params: {
         page,
@@ -61,7 +61,7 @@ function loadPage (page: number) {
     })
     .then((res) => res.data)
     .then((result) => {
-      datasets.value = result.data;
+      reuses.value = result.data;
       totalResults.value = result.total;
       loading.value = false;
     })
@@ -72,6 +72,7 @@ function loadPage (page: number) {
       }
     });
 };
+
 onMounted(() => {
   loadPage(1);
 });

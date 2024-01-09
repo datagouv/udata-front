@@ -6,6 +6,7 @@ from flask_security import current_user
 from udata_front.views.base import DetailView
 from udata import search
 from udata.core.dataset.search import DatasetSearch
+from udata.core.reuse.search import ReuseSearch
 from udata.core.user.permissions import sysadmin, UserEditPermission
 from udata.i18n import I18nBlueprint
 from udata.models import User, Activity, Organization, Dataset, Reuse, Follow
@@ -41,12 +42,17 @@ class UserView(object):
         args.update(owner=self.user.id)
         return search.query(DatasetSearch, **args)
 
+    def get_reuse_queryset(self):
+        parser = ReuseSearch.as_request_parser()
+        args = not_none_dict(parser.parse_args())
+        args.update(owner=self.user.id)
+        return search.query(ReuseSearch, **args)
+
     def get_context(self):
         context = super(UserView, self).get_context()
         context['organizations'] = Organization.objects(
             members__user=self.user)
         return context
-
 
 
 @blueprint.route('/<user:user>/', endpoint='show')
@@ -57,7 +63,8 @@ class UserDetailView(UserView, DetailView):
         context = super(UserDetailView, self).get_context()
         context['datasets'] = self.get_dataset_queryset()
         context['total_datasets'] = context['datasets'].total
-        context['reuses'] = Reuse.objects(owner=self.user).visible()
+        context['reuses'] = self.get_dataset_queryset()
+        context['total_reuses'] = context['reuses'].total
         context['can_edit'] = UserEditPermission(self.user)
 
         return context

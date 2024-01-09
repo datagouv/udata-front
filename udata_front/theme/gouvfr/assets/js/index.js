@@ -4,7 +4,6 @@ import "./dsfr";
 import * as dsfr from "@gouvfr/dsfr/dist/dsfr/dsfr.module";
 
 import Chart from "./components/charts/chart.vue";
-import UserDatasetList from "./components/UserDatasetList/UserDatasetList.vue";
 import Threads from "./components/discussions/Threads.vue";
 import ThreadCreate from "./components/discussions/ThreadCreate/ThreadCreate.vue";
 import MenuSearch from "./components/search/menu-search.vue";
@@ -17,6 +16,8 @@ import ResourceFromHash from "./components/dataset/resource/resourceFromHash.vue
 import Resources from "./components/dataset/resource/resources.vue";
 import Captcha from "./components/utils/captcha.vue";
 import Toggletip from "./components/utils/Toggletip/Toggletip.vue";
+import UserDatasetList from "./components/UserDatasetList/UserDatasetList.vue";
+import UserReuseList from "./components/UserReuseList/UserReuseList.vue";
 
 import PublishingForm from "./pages/PublishingForm/PublishingForm.vue";
 
@@ -68,6 +69,7 @@ const configAndMountApp = (el) => {
   app.component("toggletip", Toggletip);
   app.component("publishing-form", PublishingForm);
   app.component("user-dataset-list", UserDatasetList);
+  app.component("user-reuse-list", UserReuseList);
 
   // unset delimiters used in html templates to prevent injections using {{ }}
   app.config.compilerOptions.delimiters = [];
