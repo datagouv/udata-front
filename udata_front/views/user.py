@@ -44,6 +44,9 @@ class UserDetailView(UserView, DetailView):
     template_name = 'user/base.html'
 
     def get_context(self):
+        if current_user.is_anonymous or not current_user.sysadmin:
+            if not self.user.active:
+                abort(410, 'User is not active')
         context = super(UserDetailView, self).get_context()
         context['can_edit'] = UserEditPermission(self.user)
 
