@@ -107,10 +107,10 @@
 <div class="fr-container fr-mb-3w fr-mt-9v vuejs">
     {% block user_content %}
         <user-dataset-list
-            :owner="{{user|to_json}}"
+            owner="{{user.id}}"
         ></user-dataset-list>
         <user-reuse-list
-            :owner="{{user|to_json}}"
+            owner="{{user.id}}"
         ></user-reuse-list>
     {% endblock %}
 </div>

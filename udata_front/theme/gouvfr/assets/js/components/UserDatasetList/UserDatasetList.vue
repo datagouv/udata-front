@@ -14,7 +14,7 @@
 import type { Dataset, User } from '../../types';
 
 export type UserDatasetListProps = {
-  owner: User,
+  owner: string,
 };
 </script>
 
@@ -55,7 +55,7 @@ function loadPage (page: number) {
       cancelToken: currentRequest.value.token,
       params: {
         page,
-        owner: props.owner.id,
+        owner: props.owner,
         page_size: pageSize,
       },
     })
