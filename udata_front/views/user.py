@@ -4,13 +4,9 @@ from flask import url_for, redirect, abort, g
 from flask_security import current_user
 
 from udata_front.views.base import DetailView
-from udata import search
-from udata.core.dataset.search import DatasetSearch
-from udata.core.reuse.search import ReuseSearch
 from udata.core.user.permissions import sysadmin, UserEditPermission
 from udata.i18n import I18nBlueprint
 from udata.models import User, Activity, Organization, Dataset, Reuse, Follow
-from udata.utils import not_none_dict
 
 
 blueprint = I18nBlueprint('users', __name__, url_prefix='/users')
@@ -52,6 +48,7 @@ class UserDetailView(UserView, DetailView):
         context['can_edit'] = UserEditPermission(self.user)
 
         return context
+
 
 @blueprint.route('/<user:user>/datasets/', endpoint='datasets')
 def redirect_datasets(user):
