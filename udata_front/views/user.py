@@ -36,18 +36,6 @@ class UserView(object):
     def user(self):
         return self.get_object()
 
-    def get_dataset_queryset(self):
-        parser = DatasetSearch.as_request_parser()
-        args = not_none_dict(parser.parse_args())
-        args.update(owner=self.user.id)
-        return search.query(DatasetSearch, **args)
-
-    def get_reuse_queryset(self):
-        parser = ReuseSearch.as_request_parser()
-        args = not_none_dict(parser.parse_args())
-        args.update(owner=self.user.id)
-        return search.query(ReuseSearch, **args)
-
     def get_context(self):
         context = super(UserView, self).get_context()
         context['organizations'] = Organization.objects(
@@ -61,10 +49,6 @@ class UserDetailView(UserView, DetailView):
 
     def get_context(self):
         context = super(UserDetailView, self).get_context()
-        context['datasets'] = self.get_dataset_queryset()
-        context['total_datasets'] = context['datasets'].total
-        context['reuses'] = self.get_dataset_queryset()
-        context['total_reuses'] = context['reuses'].total
         context['can_edit'] = UserEditPermission(self.user)
 
         return context

@@ -85,20 +85,24 @@
         <div class="fr-mt-4w">
             <h2 class="subtitle subtitle--uppercase fr-mt-0 fr-mb-3v">{{ _('Organizations') }}</h2>
             {% for org in organizations %}
-                <a
-                    href="{{ url_for('organizations.show', org=org) }}"
-                    class="fr-raw-link text-blue-400 fr-text--bold fr-text--sm"
-                >
-                    <div class="inline-block border border-default-grey rounded-xxs fr-p-1v bg-white">
-                        <img
-                            src="{{ org.logo(24)|placeholder('organization') }}"
-                            width="24"
-                            height="24"
-                            alt=""
-                        />
-                    </div>
-                    <span class="text-decoration-underline text-underline-position-under text-decoration-underline--dsfr">{{ organization_name_with_certificate(org) }}</span>
-                </a>
+                <ul>
+                    <li class="fr-mb-1w">
+                        <a
+                            href="{{ url_for('organizations.show', org=org) }}"
+                            class="fr-raw-link text-blue-400 fr-text--bold fr-text--sm"
+                        >
+                            <div class="inline-block border border-default-grey rounded-xxs fr-p-1v bg-white">
+                                <img
+                                    src="{{ org.logo(24)|placeholder('organization') }}"
+                                    width="24"
+                                    height="24"
+                                    alt=""
+                                />
+                            </div>
+                            <span class="text-decoration-underline text-underline-position-under text-decoration-underline--dsfr">{{ organization_name_with_certificate(org) }}</span>
+                        </a>
+                    </li>
+                </ul>
             {% endfor %}
         </div>
     {% endif %}

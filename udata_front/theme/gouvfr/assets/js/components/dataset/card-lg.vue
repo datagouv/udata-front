@@ -46,7 +46,11 @@
               <OrganizationNameWithCertificate :organization="organization" />
             </a>
           </span>
-          <template v-if="owner">{{ownerName}}</template>
+          <span class="not-enlarged" v-else-if="owner">
+            <a class="fr-link" :href="owner.page">
+              {{ ownerName }}
+            </a>
+          </span>
         </p>
         <p class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm overflow-wrap-anywhere">
           {{ excerpt(description, 500) }}

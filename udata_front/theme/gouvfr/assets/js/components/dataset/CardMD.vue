@@ -46,7 +46,11 @@
               <OrganizationNameWithCertificate :organization="dataset.organization" />
             </a>
           </span>
-          <template v-if="dataset.owner">{{ownerName}}</template>
+          <span class="not-enlarged" v-else>
+            <a class="fr-link" :href="dataset.owner.page">
+              {{ ownerName }}
+            </a>
+          </span>
         </p>
         <p class="fr-my-3v fr-hidden fr-unhidden-sm overflow-wrap-anywhere">
           {{ excerpt(dataset.description, 500) }}

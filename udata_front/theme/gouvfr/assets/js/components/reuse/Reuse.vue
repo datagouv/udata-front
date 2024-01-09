@@ -24,7 +24,11 @@
               <OrganizationNameWithCertificate :organization="reuse.organization" />
             </a>
           </span>
-          <template v-if="reuse.owner">{{ ownerName }}</template>
+          <span class="not-enlarged" v-else>
+            <a class="fr-link" :href="reuse.owner.page">
+              {{ ownerName }}
+            </a>
+          </span>
         </p>
       </div>
     </div>
