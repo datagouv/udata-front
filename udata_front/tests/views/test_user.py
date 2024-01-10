@@ -2,7 +2,7 @@ from flask import url_for
 
 from udata.models import Follow
 from udata.core.user.factories import UserFactory, AdminFactory
-from udata.core.dataset.factories import DatasetFactory, ResourceFactory
+from udata.core.dataset.factories import DatasetFactory
 from udata.core.reuse.factories import ReuseFactory
 from udata.core.organization.factories import OrganizationFactory
 from udata_front.tests import GouvFrSettings
