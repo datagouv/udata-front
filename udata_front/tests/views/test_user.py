@@ -45,20 +45,12 @@ class UserBlueprintTest(GouvfrFrontTestCase):
     def test_render_profile_datasets(self):
         '''It should render the user profile datasets page'''
         user = UserFactory()
-        datasets = [DatasetFactory(owner=user, resources=[ResourceFactory()])
-                    for _ in range(3)]
-        for _ in range(2):
-            DatasetFactory(resources=[ResourceFactory()])
         response = self.get(url_for('users.datasets', user=user))
         assert_redirects(response, url_for('users.show', user=user))
 
     def test_render_profile_reuses(self):
         '''It should render the user profile reuses page'''
         user = UserFactory()
-        reuses = [ReuseFactory(owner=user, datasets=[DatasetFactory()])
-                  for _ in range(3)]
-        for _ in range(2):
-            ReuseFactory(datasets=[DatasetFactory()])
         response = self.get(url_for('users.reuses', user=user))
         assert_redirects(response, url_for('users.show', user=user))
 
