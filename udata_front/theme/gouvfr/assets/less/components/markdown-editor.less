@@ -1,12 +1,20 @@
 @import (inline) 'prosemirror-view/style/prosemirror.css';
 @import (inline) 'prosemirror-tables/style/tables.css';
 
-.milkdown {
+.editor__container {
     .bg-alt-grey;
     .fr-px-2w;
     .fr-py-1w;
-    .fr-m-5v;
     .rounded-xxs;
+    --hover: @grey-100;
+
+    .editor pre {
+        background: @grey-125;
+    }
+
+    .editor code {
+        color: @grey-400;
+    }
 }
 
 .editor {
