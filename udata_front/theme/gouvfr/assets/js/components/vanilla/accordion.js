@@ -24,6 +24,8 @@ The accordion panel must have :
 ```
 */
 
+import { toggleAccordion } from "@etalab/data.gouv.fr-components";
+
 const togglers = document.querySelectorAll("[data-accordion-button]");
 togglers.forEach((toggler) => {
   toggler.addEventListener("click", (ev) => {
