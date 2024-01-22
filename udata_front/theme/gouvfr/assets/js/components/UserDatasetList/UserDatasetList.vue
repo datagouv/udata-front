@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import type { Dataset, User } from '../../types';
+import type { Dataset } from '../../types';
 
 export type UserDatasetListProps = {
   owner: string,

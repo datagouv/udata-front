@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import type { Reuse, User } from '../../types';
+import type { Reuse } from '../../types';
 
 export type UserReuseListProps = {
   owner: string,
