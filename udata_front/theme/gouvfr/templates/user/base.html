@@ -68,7 +68,7 @@
                     target="_blank"
                 >
                     {% set truncate_length = 18 %}
-                     {% set website = user.webiste.lstrip("https://").lstrip("http://").lstrip("www.") %}
+                     {% set website = user.website.lstrip("https://").lstrip("http://").lstrip("www.") %}
                     <span class="fr-icon-global-line" aria-hidden="true"></span>
                     {{ website|truncate(truncate_length, True) }}
                 </a>
