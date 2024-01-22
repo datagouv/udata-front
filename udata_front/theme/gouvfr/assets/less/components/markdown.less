@@ -117,58 +117,8 @@ Content on the site can be styled with Markdown. Ready made styles are provided 
         .fr-link;
     }
 
-    // They are indeed supported !
-    table {
-        width: 100%;
-        border-spacing: 0;
-        border-collapse: separate; // Needed for rounded borders
-
-        margin: @spacing-md 0;
-
-        .rounded-xxs;
-
-        // This below is way too complicated just for some borders. But it works®
-        thead {
-            background: @grey-50;
-
-            th:first-child {
-                border-top-left-radius: 3px;
-            }
-
-            th:last-child {
-                border-top-right-radius: 3px;
-            }
-        }
-
-        tr {
-            th,
-            td {
-                border-right: @defaultBorder;
-                padding: @spacing-xs @spacing-sm;
-
-                &:first-child {
-                    border-left: @defaultBorder;
-                }
-            }
-
-            th {
-                border-top: @defaultBorder;
-            }
-
-            &:last-child {
-                td:first-child {
-                    border-bottom-left-radius: 3px;
-                }
-
-                td:last-child {
-                    border-bottom-right-radius: 3px;
-                }
-            }
-        }
-
-        td {
-            border-bottom: @defaultBorder;
-        }
+    :where(td, th) p {
+        .fr-m-0;
     }
 
     pre {

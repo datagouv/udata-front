@@ -88,6 +88,7 @@
 import { Editor, rootCtx, defaultValueCtx, CmdKey } from "@milkdown/core";
 import { history, redoCommand, undoCommand } from "@milkdown/plugin-history";
 import {
+  commonmark,
   createCodeBlockCommand,
   headingAttr,
   paragraphAttr,
@@ -101,20 +102,30 @@ import {
 import {
   insertTableCommand,
   gfm,
+columnResizingPlugin,
 } from "@milkdown/preset-gfm";
-import { callCommand } from "@milkdown/utils";
+import { callCommand, type $Prose } from "@milkdown/utils";
 import { Milkdown, useEditor } from "@milkdown/vue";
-import { commonmark } from "@milkdown/preset-commonmark";
 import { useI18n } from "vue-i18n";
 import EditorButton from "./EditorButton.vue";
+import { dsfrColumnResizingPlugin } from "./Milkdown/dsfr-column-resizing-plugin";
+import { columnResizingPluginKey } from "@milkdown/prose/tables";
+
+import 'prosemirror-view/style/prosemirror.css';
+import 'prosemirror-tables/style/tables.css';
+import { MilkdownPlugin } from "@milkdown/ctx";
 
 const { t } = useI18n();
+
+const gfmWithNewTable = [...gfm];
+const columnResizingPluginIndex = gfmWithNewTable.findIndex(plugin => plugin === columnResizingPlugin);
+gfmWithNewTable[columnResizingPluginIndex] = dsfrColumnResizingPlugin;
 
 const editor = useEditor((root) =>
   Editor.make()
     .config((ctx) => {
       ctx.set(rootCtx, root);
-      ctx.set(defaultValueCtx, '')
+      ctx.set(defaultValueCtx, '');
       // Add attributes to nodes and marks
       ctx.set(headingAttr.key, (node) => {
         const level = node.attrs.level;
@@ -129,7 +140,7 @@ const editor = useEditor((root) =>
       ctx.set(paragraphAttr.key, () => ({ class: 'text-lg' }));
     })
     .use(commonmark)
-    .use(gfm)
+    .use(gfmWithNewTable)
     .use(history)
 );
 
