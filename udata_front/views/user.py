@@ -6,7 +6,7 @@ from flask_security import current_user
 from udata_front.views.base import DetailView
 from udata.core.user.permissions import sysadmin, UserEditPermission
 from udata.i18n import I18nBlueprint
-from udata.models import User, Activity, Organization, Dataset, Reuse, Follow
+from udata.models import User, Organization, Dataset, Reuse, Follow
 
 
 blueprint = I18nBlueprint('users', __name__, url_prefix='/users')
