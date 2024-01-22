@@ -63,20 +63,6 @@ def redirect_reuses(user):
     return redirect(url_for('users.show', user=user))
 
 
-@blueprint.route('/<user:user>/', endpoint='activities')
-class UserActivityView(UserView, DetailView):
-    template_name = 'user/activity.html'
-
-    def get_context(self):
-        if current_user.is_anonymous or not current_user.sysadmin:
-            if not self.user.active:
-                abort(410, 'User is not active')
-        context = super(UserActivityView, self).get_context()
-        context['activities'] = (Activity.objects(actor=self.object)
-                                         .order_by('-created_at').limit(15))
-        return context
-
-
 @blueprint.route('/<user:user>/following/', endpoint='following')
 class UserFollowingView(UserView, DetailView):
     template_name = 'user/following.html'

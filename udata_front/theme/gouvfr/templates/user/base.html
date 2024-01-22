@@ -67,14 +67,8 @@
                     class="fr-link fr-text--sm"
                     target="_blank"
                 >
-                    {% set truncate_length = 15 %}
-                    {% if user.website.startswith('https:') %}
-                        {% set website = user.website[8:] %}
-                    {% elif user.website.startswith('http:') %}
-                        {% set website = user.website[7:] %}
-                    {% else %}
-                        {% set website = user.website %}
-                    {% endif %}
+                    {% set truncate_length = 18 %}
+                     {% set website = user.webiste.lstrip("https://").lstrip("http://").lstrip("www.") %}
                     <span class="fr-icon-global-line" aria-hidden="true"></span>
                     {{ website|truncate(truncate_length, True) }}
                 </a>
