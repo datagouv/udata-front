@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 3.3.0 (2024-01-23)
 
 - Fix dependencies according to udata's Flask-Babel migration [#300](https://github.com/etalab/udata-front/pull/300)
 
