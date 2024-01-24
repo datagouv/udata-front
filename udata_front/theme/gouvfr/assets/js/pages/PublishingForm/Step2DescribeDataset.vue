@@ -282,6 +282,7 @@
                     :allOption="$t('e.g. France')"
                     :addAllOption="false"
                     :multiple="true"
+                    helperLabel="Insee : "
                   />
                 </div>
                 <div class="fr-col-12 fr-col-md-6">
@@ -326,7 +327,7 @@ import Well from "../../components/Ui/Well/Well.vue";
 import useUid from "../../composables/useUid";
 import useFunctionalState from '../../composables/form/useFunctionalState';
 import editIcon from "svg/illustrations/edit.svg";
-import { quality_description_length, title } from "../../config";
+import { license_groups_options, quality_description_length, title } from "../../config";
 import { useI18n } from 'vue-i18n';
 import { getLicensesUrl } from '../../api/licenses';
 import { getFrequenciesUrl } from '../../api/datasets';
@@ -360,6 +361,8 @@ export default defineComponent({
 
     const frequenciesUrl = getFrequenciesUrl();
     const licensesUrl = getLicensesUrl();
+    const licensesGroups = license_groups_options;
+    console.log(licensesGroups);
 
     const notUnknown = not(t("The value must be different than unknown."), sameAs("unknown"));
     const tagsRequired = requiredWithCustomMessage(t("Adding tags helps improve the SEO of your data."));

@@ -21,6 +21,8 @@
           :value="option.value"
           :data-image="option.image"
           :hidden="option.hidden"
+          :data-helper="option.helper"
+          :data-description="option.description"
         >
           {{option.label}}
         </option>
@@ -127,6 +129,13 @@ export default defineComponent({
     addNewOption: {
       type: Boolean,
       default: false,
+    },
+    helperLabel: {
+      type: String,
+      default: '',
+    },
+    groups: {
+      type: Object,
     }
   },
   setup(props, { emit }) {
@@ -255,13 +264,17 @@ export default defineComponent({
      * @param {Array} data
      * @returns {Array<import("../../types").MultiSelectOption>}
      **/
-    const mapToOption = (data) => data.map((obj) => ({
-      label: obj.name ?? obj.title ?? obj.text ?? obj?.properties?.name ?? obj.label ?? obj,
-      value: obj.id ?? obj.text ?? obj.value ?? obj,
-      image: obj.logo_thumbnail ?? obj.logo ?? obj.image_url ?? obj.image,
-      hidden: obj.hidden,
-      selected: !!obj.selected,
-    }));
+     const mapToOption = (data) => data.map((obj) => {
+      return {
+        label: obj.name ?? obj.title ?? obj.text ?? obj?.properties?.name ?? obj.label ?? obj,
+        value: obj.id ?? obj.text ?? obj.value ?? obj,
+        image: obj.logo_thumbnail ?? obj.logo ?? obj.image_url ?? obj.image,
+        hidden: obj.hidden,
+        selected: !!obj.selected,
+        helper: obj?.code ? props.helperLabel + obj.code : obj?.helper,
+        description: obj?.description ?? '',
+      };
+    });
 
     /**
      * @typedef Suggestion

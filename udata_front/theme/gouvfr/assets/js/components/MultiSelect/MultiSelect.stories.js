@@ -14,10 +14,14 @@ const args = {
     {
       label: "Option 1",
       value: "Option 1",
+      helper: "Insee: 53350",
+      description: "French region"
     },
     {
       label: "Option 2",
       value: "Option 2",
+      helper: "Insee: 12005",
+      description: "French department"
     },
   ]),
   values: null,
@@ -124,4 +128,15 @@ export const MultipleMultiSelect = {
     values: [],
     addAllOption: false,
   },
+};
+
+export const SimpleMultiSelectWithHelperAndDescription = {
+  render: (args) => ({
+    components: { MultiSelect },
+    setup() {
+      return { args };
+    },
+    template: '<MultiSelect v-bind="args"/>',
+  }),
+  args,
 };
