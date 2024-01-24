@@ -12,6 +12,8 @@ I18N_ROOT = 'udata_front/theme/gouvfr/translations'
 
 THEME_ROOT = os.path.join(ROOT, 'udata_front/theme', 'gouvfr')
 
+COMPONENTS_ROOT = os.path.join(THEME_ROOT, 'datagouv-components')
+
 LANGUAGES = ['fr']
 
 TO_CLEAN = ['build', 'dist', '**/*.pyc', 'reports']
@@ -143,10 +145,16 @@ def i18n(ctx, update=False):
                 set_po_metadata(pofile, lang)
 
     # Front translations
-    info('Extract vue translations')
+    info('Extract udata-front vue translations')
     with ctx.cd(ROOT):
         ctx.run('npm run i18n:extract')
-    success('Updated translations')
+    success('Updated udata-front translations')
+
+    info('Extract data.gouv.fr-components vue translations')
+    with ctx.cd(COMPONENTS_ROOT):
+        ctx.run('npm run i18n:extract')
+    success('Updated data.gouv.fr-components translations')
+
 
 
 @task
