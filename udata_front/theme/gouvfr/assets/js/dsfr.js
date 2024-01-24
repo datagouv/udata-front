@@ -3,8 +3,12 @@
  * Then, they overwrite it with the DSFR object
  * We use a manual mode to load all our vue instances before starting the DSFR engine.
  */
+
+/// <reference types="vite/client" />
+
 window.dsfr = {
   mode: 'manual',
+  verbose: import.meta.env.DEV,
 }
 
 /**

@@ -71,7 +71,12 @@ Content on the site can be styled with Markdown. Ready made styles are provided 
 @markdown-font-ratio: @font-size-sm;
 
 .markdown {
-    font-size: @font-size-sm;
+
+    &.fr-text--sm {
+        * {
+            font-size: 1rem * @markdown-font-ratio;
+        }
+    }
 
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -117,8 +122,27 @@ Content on the site can be styled with Markdown. Ready made styles are provided 
         .fr-link;
     }
 
-    :where(td, th) p {
-        .fr-m-0;
+    // They are indeed supported !
+    table {
+        tr {
+            th:not(:last-child),
+            td:not(:last-child) {
+                border-right: @defaultBorder;
+                border-color: @border-default-grey;
+            }
+        }
+    }
+
+    .fr-table tbody {
+        tr:nth-child(eveb) {
+            background-color: @grey-100;
+        }
+        tr:nth-child(odd) {
+            background-color: @grey-125;
+        }
+        & > :first-child {
+            &:extend(.fr-table thead);
+        }
     }
 
     pre {
@@ -131,5 +155,30 @@ Content on the site can be styled with Markdown. Ready made styles are provided 
         color: @grey-380;
         .fr-p-1v;
         border-radius: 4px;
+    }
+
+    h1 {
+        font-size: @font-size-hg * @markdown-font-ratio;
+        margin-bottom: @spacing-lg;
+    }
+
+    h2 {
+        font-size: @font-size-xl * @markdown-font-ratio;
+        margin-bottom: @spacing-lg;
+    }
+
+    h3 {
+        font-size: @font-size-lg * @markdown-font-ratio;
+        margin-bottom: @spacing-md;
+    }
+
+    h4 {
+        font-size: @font-size-base * @markdown-font-ratio;
+        margin-bottom: @spacing-sm;
+    }
+
+    h5 {
+        font-size: @font-size-xs * @markdown-font-ratio;
+        margin-bottom: @spacing-xs;
     }
 }

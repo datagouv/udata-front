@@ -86,6 +86,7 @@
 </template>
 <script setup lang="ts">
 import { Editor, rootCtx, defaultValueCtx, CmdKey } from "@milkdown/core";
+import type { Ctx } from "@milkdown/ctx";
 import { history, redoCommand, undoCommand } from "@milkdown/plugin-history";
 import {
   commonmark,
@@ -102,24 +103,42 @@ import {
 import {
   insertTableCommand,
   gfm,
-columnResizingPlugin,
+  columnResizingPlugin,
 } from "@milkdown/preset-gfm";
-import { callCommand, type $Prose } from "@milkdown/utils";
+import { callCommand } from "@milkdown/utils";
 import { Milkdown, useEditor } from "@milkdown/vue";
+import { usePluginViewFactory, useWidgetViewFactory } from "@prosemirror-adapter/vue";
 import { useI18n } from "vue-i18n";
 import EditorButton from "./EditorButton.vue";
-import { dsfrColumnResizingPlugin } from "./Milkdown/dsfr-column-resizing-plugin";
-import { columnResizingPluginKey } from "@milkdown/prose/tables";
+import { dsfrColumnResizingPlugin } from "./Milkdown/dsfrColumnResizingPlugin";
+import { tableSelectorPlugin } from "./Milkdown/tableSelectorPlugin";
+import { tableTooltip, tableTooltipCtx } from "./Milkdown/tableTooltip";
+import TableTooltip from "./Milkdown/TableTooltip.vue";
 
 import 'prosemirror-view/style/prosemirror.css';
 import 'prosemirror-tables/style/tables.css';
-import { MilkdownPlugin } from "@milkdown/ctx";
 
 const { t } = useI18n();
 
-const gfmWithNewTable = [...gfm];
-const columnResizingPluginIndex = gfmWithNewTable.findIndex(plugin => plugin === columnResizingPlugin);
-gfmWithNewTable[columnResizingPluginIndex] = dsfrColumnResizingPlugin;
+const pluginViewFactory = usePluginViewFactory();
+const widgetViewFactory = useWidgetViewFactory();
+
+const columnResizingPluginIndex = gfm.findIndex(plugin => plugin === columnResizingPlugin);
+gfm[columnResizingPluginIndex] = dsfrColumnResizingPlugin;
+
+const gfmPlugins = [
+  gfm,
+  tableTooltip,
+  tableTooltipCtx,
+  (ctx: Ctx) => async () => {
+    ctx.set(tableTooltip.key, {
+      view: pluginViewFactory({
+        component: TableTooltip,
+      }),
+    });
+  },
+  tableSelectorPlugin(widgetViewFactory),
+].flat();
 
 const editor = useEditor((root) =>
   Editor.make()
@@ -140,7 +159,7 @@ const editor = useEditor((root) =>
       ctx.set(paragraphAttr.key, () => ({ class: 'text-lg' }));
     })
     .use(commonmark)
-    .use(gfmWithNewTable)
+    .use(gfmPlugins)
     .use(history)
 );
 
