@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Fix vue runtime errors [#343](https://github.com/etalab/udata-front/pull/343)
+- Create data.gouv.fr-components NPM package and move some `gouvfr` components to it [#324](https://github.com/etalab/udata-front/pull/324)
 
 ## 3.5.0, 3.4.0 and 3.3.0 (2024-01-23)
 
