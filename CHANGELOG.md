@@ -1,6 +1,14 @@
 # Changelog
 
-## 3.3.0 (2024-01-23)
+## Current (in progress)
+
+- Fix vue runtime errors [#343](https://github.com/etalab/udata-front/pull/343)
+
+## 3.5.0, 3.4.0 and 3.3.0 (2024-01-23)
+
+> **Important** <br>
+> These versions contain an invalid js build and are [yanked](https://pypi.org/help/#yanked) from pypi.
+> The update to the next version is mandatory to have a valid js build.
 
 - Fix dependencies according to udata's Flask-Babel migration [#300](https://github.com/etalab/udata-front/pull/300)
 
