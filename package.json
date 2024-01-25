@@ -30,7 +30,7 @@
   "devDependencies": {
     "@conciergerie.dev/select-a11y": "^3.4.0",
     "@conciergerie.dev/vue-toaster": "^2.4.0",
-    "@etalab/data.gouv.fr-components": "^1.13.3",
+    "@etalab/data.gouv.fr-components": "^1.13.4",
     "@etalab/udata-front-plugins-helper": "1.1.0",
     "@gouvfr/dsfr": "~1.9.2",
     "@intlify/unplugin-vue-i18n": "^1.5.0",
@@ -76,7 +76,7 @@
     "storybook": "^7.5.2",
     "terser": "^5.15.1",
     "uuid": "^9.0.1",
-    "vite": "^4.5.0",
+    "vite": "^4.5.2",
     "vue": "^3.3.7",
     "vue-content-loader": "^2.0.1",
     "vue-i18n": "^9.8.0",
