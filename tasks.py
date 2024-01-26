@@ -205,16 +205,21 @@ def pydist(ctx, buildno=None):
 def egg_info(ctx, buildno=None):
     '''Generate package egg_info'''
     header(egg_info.__doc__)
-    cmd = 'python setup.py egg_info'
+    cmd = ['python setup.py']
+    cmd.append(get_egg_info_cmd(buildno))
+    with ctx.cd(ROOT):
+        ctx.run(' '.join(cmd), pty=True)
+
+def get_egg_info_cmd(buildno=None):
+    cmd = 'egg_info'
     if buildno:
        cmd += " -b {0}".format(buildno)
-    with ctx.cd(ROOT):
-        ctx.run(cmd, pty=True)
+    return cmd
 
 def perform_dist(ctx, buildno=None):
     cmd = ['python setup.py']
     if buildno:
-        egg_info(ctx, buildno)
+        cmd.append(get_egg_info_cmd(buildno))
     cmd.append('bdist_wheel')
     with ctx.cd(ROOT):
         ctx.run(' '.join(cmd), pty=True)
