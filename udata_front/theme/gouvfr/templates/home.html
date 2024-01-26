@@ -21,6 +21,15 @@
                     <ul>
                         <li>
                             <a
+                                href="{{ url_for('gouvfr.show_page', slug='donnees_agriculture-alimentation') }}"
+                                class="btn-venti fr-my-2w bg-green-400"
+                            >
+                                Données relatives à
+                                <strong>l'Agriculture et à l'Alimentation</strong>
+                            </a>
+                        </li>
+                        <li>
+                            <a
                                 href="{{ url_for('gouvfr.show_page', slug='donnees-energie') }}"
                                 class="btn-venti fr-my-2w bg-orange-100"
                             >
@@ -30,18 +39,8 @@
                         </li>
                         <li>
                             <a
-                                href="{{ url_for('gouvfr.show_page', slug='donnees_culture') }}"
-                                class="btn-venti fr-my-2w bg-blue-450"
-                            >
-                                Données relatives à
-                                <strong>la Culture</strong>
-                            </a>
-                        </li>
-                        <li>
-                            <a
                                 href="{{ url_for('gouvfr.show_page', slug='donnees_education') }}"
-                                class="btn-venti fr-my-2w"
-                                style="background-color: #3F919B"
+                                class="btn-venti fr-my-2w bg-blue-450"
                             >
                                 Données relatives à
                                 <strong>l'Éducation</strong>
