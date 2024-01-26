@@ -301,6 +301,7 @@ jobs:
                 inv pydist -b $CIRCLE_BUILD_NUM+${CIRCLE_BRANCH#*/}
             else
                 # This is a simple development build
+                echo $CIRCLE_BUILD_NUM
                 inv pydist -b $CIRCLE_BUILD_NUM
             fi
       - store_artifacts:
