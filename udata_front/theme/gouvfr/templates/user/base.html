@@ -55,26 +55,24 @@
         class="rounded-circle"
     />
     <h1 class="fr-h3 fr-my-1v">{{ user.fullname }}</h1>
-    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--bottom justify-between">
-        <div class="fr-col markdown fr-text--sm fr-m-0">
-            {{ user.about|markdown(wrap=False) }}
-        </div>
-        {% if user.website %}
-            <p class="fr-mt-1w">
-                <a
-                    href="{{user.website}}"
-                    rel="ugc nofollow"
-                    class="fr-link fr-text--sm"
-                    target="_blank"
-                >
-                    {% set truncate_length = 18 %}
-                     {% set website = user.website.lstrip("https://").lstrip("http://").lstrip("www.") %}
-                    <span class="fr-icon-global-line" aria-hidden="true"></span>
-                    {{ website|truncate(truncate_length, True) }}
-                </a>
-            </p>
-        {% endif %}
+    <div class="markdown fr-text--sm fr-m-0">
+        {{ user.about|markdown(wrap=False) }}
     </div>
+    {% if user.website %}
+        <p class="fr-m-0">
+            <a
+                href="{{user.website}}"
+                rel="ugc nofollow"
+                class="fr-link fr-text--sm"
+                target="_blank"
+            >
+                {% set truncate_length = 18 %}
+                    {% set website = user.website.lstrip("https://").lstrip("http://").lstrip("www.") %}
+                <span class="fr-icon-global-line" aria-hidden="true"></span>
+                {{ website|truncate(truncate_length, True) }}
+            </a>
+        </p>
+    {% endif %}
     {% if organizations %}
         <div class="fr-mt-4w">
             <h2 class="subtitle subtitle--uppercase fr-mt-0 fr-mb-3v">{{ _('Organizations') }}</h2>
@@ -110,6 +108,20 @@
         <user-reuse-list
             owner="{{user.id}}"
         ></user-reuse-list>
+        <div data-show-no-js>
+            <ul>
+                <li>
+                    <a href="{{ url_for('datasets.list', owner=user.id) }}" class="fr-link">
+                        {{ _('Browse the datasets of this user.') }}
+                    </a>
+                </li>
+                <li class="fr-mt-1w">
+                    <a href="{{ url_for('reuses.list', owner=user.id) }}" class="fr-link">
+                        {{ _('Browse the reuses of this user.') }}
+                    </a>
+                </li>
+            </ul>
+        </div>
     {% endblock %}
 </div>
 {% endblock %}
