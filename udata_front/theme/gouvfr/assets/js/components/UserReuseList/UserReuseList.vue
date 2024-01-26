@@ -3,6 +3,7 @@
     {{ t('{n} reuses', totalResults) }}
   </h2>
   <ReuseList
+    :page-size="pageSize"
     :reuses="reuses"
     :loading="loading"
     :total-results="totalResults"

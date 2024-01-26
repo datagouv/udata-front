@@ -25,7 +25,11 @@ export type CardMDListProps = {
   datasets: Array<Dataset>,
   loading?: boolean,
   totalResults: number,
+  pageSize?: number,
 };
+
+/** TODO : use a config when the component moved to data.gouv.fr-components */
+const defaultPageSize = 20;
 </script>
 
 <script setup lang="ts">
@@ -36,6 +40,7 @@ import CardMD from './CardMD.vue';
 
 withDefaults(defineProps<CardMDListProps>(), {
   loading: false,
+  pageSize: defaultPageSize,
 });
 
 const emit = defineEmits<{
@@ -43,9 +48,6 @@ const emit = defineEmits<{
 }>();
 
 const currentPage = ref(1);
-
-/** TODO : use a config when the component moved to data.gouv.fr-components */
-const pageSize = 20;
 
 const listRef = ref<HTMLElement | undefined>();
 

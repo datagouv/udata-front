@@ -34,6 +34,7 @@ const args: ReuseProps = {
       id: "someUserId",
       first_name: "First",
       last_name: "Last",
+      page: "https://demo.data.gouv.fr/en/users/antonin-garrone/",
     },
     title: "My new dataset",
     image: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",

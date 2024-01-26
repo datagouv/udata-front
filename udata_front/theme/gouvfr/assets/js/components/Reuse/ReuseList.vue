@@ -30,7 +30,11 @@ export type ReuseListProps = {
   reuses: Array<Reuse>,
   loading?: boolean,
   totalResults: number,
+  pageSize?: number,
 };
+
+/** TODO : use a config when the component moved to data.gouv.fr-components */
+const pageSize = 20;
 </script>
 
 <script setup lang="ts">
@@ -39,9 +43,9 @@ import { Pagination } from '@etalab/udata-front-plugins-helper';
 import Loader from "./loader.vue";
 import ReuseCard from './Reuse.vue';
 
-
 withDefaults(defineProps<ReuseListProps>(), {
   loading: false,
+  pageSize,
 });
 
 const emit = defineEmits<{
@@ -49,9 +53,6 @@ const emit = defineEmits<{
 }>();
 
 const currentPage = ref(1);
-
-/** TODO : use a config when the component moved to data.gouv.fr-components */
-const pageSize = 20;
 
 const listRef = ref<HTMLElement | undefined>();
 
