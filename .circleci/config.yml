@@ -296,12 +296,10 @@ jobs:
             if [[ $CIRCLE_TAG ]]; then
                 # This is a tagged release
                 inv pydist
-            elif [[ "$CIRCLE_BRANCH" == feature/* ]]; then
-                # This is a feature branch
-                inv pydist -b $CIRCLE_BUILD_NUM+${CIRCLE_BRANCH#*/}
             else
                 # This is a simple development build
-                inv pydist -b $CIRCLE_BUILD_NUM
+                source set_env_builno.sh
+                inv pydist -b ${BUILDNO}
             fi
       - store_artifacts:
           path: dist
