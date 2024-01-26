@@ -97,22 +97,19 @@ jobs:
           command: |
             if [[ $CIRCLE_TAG ]]; then
                 # This is a tagged release
-                echo 'export BUILDNO="'$CIRCLE_TAG'"' >> "$BASH_ENV"
+                echo 'export BUILDNO="'$CIRCLE_TAG'"' >> set_env_builno.sh
             elif [[ "$CIRCLE_BRANCH" == feature/* ]]; then
                 # This is a feature branch
-                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM+${CIRCLE_BRANCH#*/}'"' >> "$BASH_ENV"
+                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM+${CIRCLE_BRANCH#*/}'"' >> set_env_builno.sh
             else
                 # This is a simple development build
-                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM'"' >> "$BASH_ENV"
+                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM'"' >> set_env_builno.sh
             fi
-      - run:
-          name: Save BUILDNO to file
-          command: |
-            cp $BASH_ENV bash.env
       - run:
           name: Generate egg-info
           command: |
             source venv/bin/activate
+            source set_env_builno.sh
             inv egg-info --buildno ${BUILDNO}
       - save_cache:
           key: py-cache-v16-{{ arch }}-{{ .Branch }}
@@ -133,7 +130,7 @@ jobs:
           paths:
           - venv
           - udata_front.egg-info
-          - bash.env
+          - set_env_builno.sh
 
   assets:
     docker:
@@ -227,12 +224,9 @@ jobs:
             pip install --force-reinstall --no-deps -r requirements/udata.in
             pip install -e .
       - run:
-          name: load BUILDNO
-          command: |
-            cat bash.env >> $BASH_ENV
-      - run:
           name: Generate egg-info
           command: |
+            source set_env_builno.sh
             python setup.py egg_info --tag-build ${BUILDNO}
       - run:
           name: Prepare udata.cfg file with udata-front plugin
@@ -266,12 +260,9 @@ jobs:
             pip install -e .
             udata generate-fixtures
       - run:
-          name: load BUILDNO
-          command: |
-            cat bash.env >> $BASH_ENV
-      - run:
           name: Generate egg-info
           command: |
+            source set_env_builno.sh
             python setup.py egg_info --tag-build ${BUILDNO}
       - run:
           name: Install lighthouse
