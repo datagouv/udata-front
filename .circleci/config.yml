@@ -105,6 +105,8 @@ jobs:
                 # This is a simple development build
                 echo 'export BUILDNO="'$CIRCLE_BUILD_NUM'"' >> set_env_builno.sh
             fi
+            source set_env_builno.sh
+            echo $BUILDNO
       - when:
           condition:
             not: << pipeline.git.tag >>
