@@ -223,11 +223,15 @@ jobs:
           command: |
             pip install --force-reinstall --no-deps -r requirements/udata.in
             pip install -e .
-      - run:
-          name: Generate egg-info
-          command: |
-            source set_env_builno.sh
-            python setup.py egg_info --tag-build ${BUILDNO}
+      - when:
+          condition:
+            not: << pipeline.git.tag >>
+          steps:
+            - run:
+              name: Generate egg-info
+              command: |
+                source set_env_builno.sh
+                python setup.py egg_info --tag-build ${BUILDNO}
       - run:
           name: Prepare udata.cfg file with udata-front plugin
           command: cp cypress/udata-front-e2e.cfg.example cypress/udata-front-e2e.cfg
@@ -259,11 +263,16 @@ jobs:
             pip install --force-reinstall --no-deps -r requirements/udata.in
             pip install -e .
             udata generate-fixtures
-      - run:
-          name: Generate egg-info
-          command: |
-            source set_env_builno.sh
-            python setup.py egg_info --tag-build ${BUILDNO}
+      - when:
+          condition:
+            not: << pipeline.git.tag >>
+          steps:
+            - run:
+              name: Generate egg-info
+              command: |
+                source set_env_builno.sh
+                python setup.py egg_info --tag-build ${BUILDNO}
+
       - run:
           name: Install lighthouse
           command: sudo npm install -g @lhci/cli@0.10.x
