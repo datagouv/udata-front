@@ -105,12 +105,16 @@ jobs:
                 # This is a simple development build
                 echo 'export BUILDNO="'$CIRCLE_BUILD_NUM'"' >> set_env_builno.sh
             fi
-      - run:
-          name: Generate egg-info
-          command: |
-            source venv/bin/activate
-            source set_env_builno.sh
-            inv egg-info --buildno ${BUILDNO}
+      - when:
+          condition:
+            not: << pipeline.git.tag >>
+          steps:
+            - run:
+                name: Generate egg-info
+                command: |
+                  source venv/bin/activate
+                  source set_env_builno.sh
+                  inv egg-info --buildno ${BUILDNO}
       - save_cache:
           key: py-cache-v16-{{ arch }}-{{ .Branch }}
           paths:
