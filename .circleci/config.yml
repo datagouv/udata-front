@@ -337,23 +337,23 @@ workflows:
       - deps:
           filters:
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+              only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
       - python:
           requires:
             - deps
           filters:
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+              only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
       - assets:
           requires:
             - python
           filters:
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+              only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
       - udata_front_plugins_helper:
           filters:
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+              only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
       - cypress:
           requires:
             - deps
@@ -361,21 +361,21 @@ workflows:
             - python
           filters:
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+              only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
       - lighthouse:
           requires:
             - deps
             - assets
           filters:
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+              only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
       - dist:
           requires:
             - python
             - assets
           filters:
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+              only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
       - publish:
           requires:
             - dist
@@ -384,5 +384,5 @@ workflows:
               only:
                 - master
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+              only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
           context: org-global
