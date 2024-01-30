@@ -97,23 +97,26 @@ jobs:
           command: |
             if [[ $CIRCLE_TAG ]]; then
                 # This is a tagged release
-                echo 'export BUILDNO="'$CIRCLE_TAG'"' >> "$BASH_ENV"
+                echo 'export BUILDNO="'$CIRCLE_TAG'"' >> set_env_builno.sh
             elif [[ "$CIRCLE_BRANCH" == feature/* ]]; then
                 # This is a feature branch
-                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM+${CIRCLE_BRANCH#*/}'"' >> "$BASH_ENV"
+                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM+${CIRCLE_BRANCH#*/}'"' >> set_env_builno.sh
             else
                 # This is a simple development build
-                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM'"' >> "$BASH_ENV"
+                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM'"' >> set_env_builno.sh
             fi
-      - run:
-          name: Save BUILDNO to file
-          command: |
-            cp $BASH_ENV bash.env
-      - run:
-          name: Generate egg-info
-          command: |
-            source venv/bin/activate
-            inv egg-info --buildno ${BUILDNO}
+            source set_env_builno.sh
+            echo $BUILDNO
+      - when:
+          condition:
+            not: << pipeline.git.tag >>
+          steps:
+            - run:
+                name: Generate egg-info
+                command: |
+                  source venv/bin/activate
+                  source set_env_builno.sh
+                  inv egg-info --buildno ${BUILDNO}
       - save_cache:
           key: py-cache-v16-{{ arch }}-{{ .Branch }}
           paths:
@@ -133,7 +136,7 @@ jobs:
           paths:
           - venv
           - udata_front.egg-info
-          - bash.env
+          - set_env_builno.sh
 
   assets:
     docker:
@@ -226,6 +229,15 @@ jobs:
           command: |
             pip install --force-reinstall --no-deps -r requirements/udata.in
             pip install -e .
+      - when:
+          condition:
+            not: << pipeline.git.tag >>
+          steps:
+            - run:
+                name: Generate egg-info
+                command: |
+                  source set_env_builno.sh
+                  python setup.py egg_info --tag-build ${BUILDNO}
       - run:
           name: load BUILDNO
           command: |
@@ -265,6 +277,16 @@ jobs:
             pip install --force-reinstall --no-deps -r requirements/udata.in
             pip install -e .
             udata generate-fixtures
+      - when:
+          condition:
+            not: << pipeline.git.tag >>
+          steps:
+            - run:
+                name: Generate egg-info
+                command: |
+                  source set_env_builno.sh
+                  python setup.py egg_info --tag-build ${BUILDNO}
+
       - run:
           name: load BUILDNO
           command: |
@@ -305,12 +327,10 @@ jobs:
             if [[ $CIRCLE_TAG ]]; then
                 # This is a tagged release
                 inv pydist
-            elif [[ "$CIRCLE_BRANCH" == feature/* ]]; then
-                # This is a feature branch
-                inv pydist -b $CIRCLE_BUILD_NUM+${CIRCLE_BRANCH#*/}
             else
                 # This is a simple development build
-                inv pydist -b $CIRCLE_BUILD_NUM
+                source set_env_builno.sh
+                inv pydist -b ${BUILDNO}
             fi
       - store_artifacts:
           path: dist
@@ -339,23 +359,23 @@ workflows:
       - deps:
           filters:
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+              only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
       - python:
           requires:
             - deps
           filters:
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+              only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
       - assets:
           requires:
             - python
           filters:
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+              only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
       - udata_front_plugins_helper:
           filters:
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+              only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
       - cypress:
           requires:
             - deps
@@ -363,21 +383,21 @@ workflows:
             - python
           filters:
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+              only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
       - lighthouse:
           requires:
             - deps
             - assets
           filters:
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+              only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
       - dist:
           requires:
             - python
             - assets
           filters:
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+              only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
       - publish:
           requires:
             - dist
@@ -386,5 +406,5 @@ workflows:
               only:
                 - master
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+              only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
           context: org-global

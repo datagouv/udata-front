@@ -1,6 +1,7 @@
-import { dayjs } from "./i18n";
 import { useI18n } from "vue-i18n";
+import { dayjs } from "./i18n";
 import markdown from "./markdown";
+import { toggleAccordion } from "./toggleAccordion";
 
 export const filesize = (val: number) => {
   const { t } = useI18n();
@@ -51,4 +52,4 @@ export const formatRelativeIfRecentDate = (date: Date | string) => {
   return formatFromNow(date);
 }
 
-export { markdown };
+export { markdown, toggleAccordion };

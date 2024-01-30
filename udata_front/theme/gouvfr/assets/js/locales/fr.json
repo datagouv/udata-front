@@ -315,5 +315,7 @@
   "Publish the correct file types": "Publier les bons types de fichiers",
   "The formats must be:": "Les formats doivent être :",
   "It is possible to identify an existing data schema by visiting the {schema} website, that references a list of existing data schema.": "Il est possible d'identifier un schéma de données déjà existant en consultant le site {schema}, qui référence une liste de schémas de données existants.",
-  "Edit file": "Éditer le fichier"
+  "Edit file": "Éditer le fichier",
+  "Search for data": "",
+  "{n} downloads": ""
 }

@@ -53,7 +53,7 @@ let catalogRequest: Promise<Array<RegisteredSchema>> | null = null;
 /**
  * Get Schema Catalog
  */
-export default function getCatalog() {
+export function getCatalog() {
   if(!config.schema_catalog_url) {
     catalogRequest = Promise.resolve([]);
   }

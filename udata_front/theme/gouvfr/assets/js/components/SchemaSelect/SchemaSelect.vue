@@ -13,7 +13,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import getCatalog from "../../api/schemas";
+import { getCatalog } from "@etalab/data.gouv.fr-components";
 import MultiSelect from "../MultiSelect/MultiSelect.vue";
 
 export default defineComponent({

@@ -1,6 +1,7 @@
 // @ts-ignore
 import RemoveMarkdown from "remove-markdown";
 import { readonly } from "vue";
+import { useI18n } from "vue-i18n";
 import type { ResourceType } from "./types";
 
 export const truncate = (val: string, length = 300) => {
@@ -52,7 +53,3 @@ export const previousResourceUrlRegExp = new RegExp(
   "resource-(" +
   UUIDRegExp.source +
   ")?$", UUIDRegExp.flags);
-
-function useI18n(): { t: any; } {
-throw new Error("Function not implemented.");
-}
