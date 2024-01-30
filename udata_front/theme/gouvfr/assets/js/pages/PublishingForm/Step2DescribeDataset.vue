@@ -218,6 +218,7 @@
                 @change="(value) => dataset.license = value"
                 :allOption="$t('Select a license')"
                 :addAllOption="false"
+                :groups="licensesGroups"
               />
             </LinkedToAccordion>
           </fieldset>
@@ -270,7 +271,7 @@
               class="fr-fieldset__element"
             >
               <div class="fr-grid-row fr-grid-row--gutters">
-                <div class="fr-col-12 fr-col-md-6">
+                <div class="fr-col-12">
                   <MultiSelect
                     :placeholder="$t('Spatial coverage')"
                     :searchPlaceholder="$t('Search a spatial coverage...')"
@@ -285,7 +286,7 @@
                     helperLabel="Insee : "
                   />
                 </div>
-                <div class="fr-col-12 fr-col-md-6">
+                <div class="fr-col-12">
                   <MultiSelect
                     :placeholder="$t('Spatial granularity')"
                     :searchPlaceholder="$t('Search a granularity...')"
@@ -361,7 +362,10 @@ export default defineComponent({
 
     const frequenciesUrl = getFrequenciesUrl();
     const licensesUrl = getLicensesUrl();
-    const licensesGroups = license_groups_options;
+    const licensesGroups = license_groups_options.map(([name, licenses]) => ({
+      name,
+      licenses
+    }));
     console.log(licensesGroups);
 
     const notUnknown = not(t("The value must be different than unknown."), sameAs("unknown"));
@@ -439,6 +443,7 @@ export default defineComponent({
       editIcon,
       frequenciesUrl,
       licensesUrl,
+      licensesGroups,
       state,
       fieldHasError,
       fieldHasWarning,

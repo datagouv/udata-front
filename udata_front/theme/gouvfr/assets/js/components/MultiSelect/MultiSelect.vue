@@ -2,30 +2,32 @@
   <div class="multiselect w-100 fr-select-group" :class="selectGroupClass" ref="container" :data-selected="!!selected">
     <div>
       <label :for="id" :title="explanation">
-        {{placeholder}}
-        <Required :required="required"/>
+        {{ placeholder }}
+        <Required :required="required" />
         <span v-if="explanation" class="fr-icon-information-line" aria-hidden="true"></span>
         <span class="fr-hint-text" v-if="hintText">{{ hintText }}</span>
       </label>
-      <select
-        class="multiselect__input"
-        :id="id"
-        ref="selectRef"
-        v-model="selected"
-        :required="required"
-        :multiple="multiple"
-      >
-        <option
-          v-for="option in displayedOptions"
-          :key="option.value"
-          :value="option.value"
-          :data-image="option.image"
-          :hidden="option.hidden"
-          :data-helper="option.helper"
-          :data-description="option.description"
-        >
-          {{option.label}}
-        </option>
+      <select class="multiselect__input" :id="id" ref="selectRef" v-model="selected" :required="required"
+        :multiple="multiple">
+        <template v-if="groups">
+          <template v-for="group in groups">
+            <optgroup :label="group.name">
+              <template v-for="option in displayedOptions" :key="option.value">
+                <option v-if="group.licenses.includes(option.value)"
+                  :value="option.value" :data-image="option.image"
+                  :hidden="option.hidden" :data-helper="option.helper" :data-description="option.description">
+                  {{ option.label }}
+                </option>
+              </template>
+            </optgroup>
+          </template>
+        </template>
+        <template v-else>
+          <option v-for="option in displayedOptions" :key="option.value" :value="option.value" :data-image="option.image"
+            :hidden="option.hidden" :data-helper="option.helper" :data-description="option.description">
+            {{ option.label }}
+          </option>
+        </template>
       </select>
     </div>
     <p :id="validTextId" class="fr-valid-text" v-if="isValid">
@@ -135,7 +137,7 @@ export default defineComponent({
       default: '',
     },
     groups: {
-      type: Object,
+      type: [String, Array],
     }
   },
   setup(props, { emit }) {
@@ -190,7 +192,7 @@ export default defineComponent({
      * Current options
      * @type {import("vue").Ref<Array<import("../../types").MultiSelectOption>>}
      */
-     const options = ref([]);
+    const options = ref([]);
 
     /**
      * Displayed Options limited to {@link maxOptionsCount}
@@ -233,6 +235,8 @@ export default defineComponent({
       delete: t('Delete'),
     });
 
+
+    const groups = props.groups;
     /**
      * Get initial set of options from API or an empty array
      * @returns {Promise<Array<import("../../types").MultiSelectOption>>}
@@ -245,18 +249,18 @@ export default defineComponent({
        * @type {import("axios").AxiosResponse<{data: Array}|Array>}
        */
       return api.get(props.listUrl)
-      .then(resp => {
-        let data = resp.data;
-        if(!Array.isArray(data)) {
-          data = data.data;
-        }
-        return mapToOption(data);
-      }).catch((error) => {
-        if (!axios.isCancel(error)) {
-          toast.error(t("Error getting {type}.", {type: props.placeholder}));
-        }
-        return [];
-      });
+        .then(resp => {
+          let data = resp.data;
+          if(!Array.isArray(data)) {
+            data = data.data;
+          }
+          return mapToOption(data);
+        }).catch((error) => {
+          if (!axios.isCancel(error)) {
+            toast.error(t("Error getting {type}.", {type: props.placeholder}));
+          }
+          return [];
+        });
     };
 
     /**
@@ -264,7 +268,7 @@ export default defineComponent({
      * @param {Array} data
      * @returns {Array<import("../../types").MultiSelectOption>}
      **/
-     const mapToOption = (data) => data.map((obj) => {
+    const mapToOption = (data) => data.map((obj) => {
       return {
         label: obj.name ?? obj.title ?? obj.text ?? obj?.properties?.name ?? obj.label ?? obj,
         value: obj.id ?? obj.text ?? obj.value ?? obj,
@@ -383,7 +387,7 @@ export default defineComponent({
      * @param {Array<import("../../types").MultiSelectOption>} values
      * @returns {Array<import("../../types").MultiSelectOption>}
      */
-     const setOptions = (values) => {
+    const setOptions = (values) => {
       options.value = values;
       return values;
     };
@@ -445,7 +449,7 @@ export default defineComponent({
      * @param {string | null} value
      * @returns {Promise<string | null>}
      */
-     const augmentFromValue = (value) => {
+    const augmentFromValue = (value) => {
       let selectedPromise = null;
       if (value && props.entityUrl) {
         selectedPromise = api
@@ -476,7 +480,7 @@ export default defineComponent({
           }
           return "";
         });
-     }
+    }
 
     /**
      * Register event listener to trigger on change on select change event
@@ -570,8 +574,8 @@ export default defineComponent({
     });
 
     const fillOptionsAndValues = suggestAndMapToOption()
-    .then(setInitialOptions)
-    .then(fillSelectedFromValues);
+      .then(setInitialOptions)
+      .then(fillSelectedFromValues);
 
     onMounted(() => fillOptionsAndValues.then(makeSelect));
     onUpdated(updateStylesAndEvents);
