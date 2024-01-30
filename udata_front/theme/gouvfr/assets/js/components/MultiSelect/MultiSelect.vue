@@ -13,9 +13,10 @@
           <template v-for="group in groups">
             <optgroup :label="group.name">
               <template v-for="option in displayedOptions" :key="option.value">
-                <option v-if="group.licenses.includes(option.value)"
+                <option v-if="group.name == option.group"
                   :value="option.value" :data-image="option.image"
-                  :hidden="option.hidden" :data-helper="option.helper" :data-description="option.description">
+                  :hidden="option.hidden" :data-helper="option.helper" :data-description="option.description"
+                  :data-show-icon="option.recommended">
                   {{ option.label }}
                 </option>
               </template>
@@ -138,6 +139,9 @@ export default defineComponent({
     },
     groups: {
       type: [String, Array],
+    },
+    groupType: {
+      type: String,
     }
   },
   setup(props, { emit }) {
@@ -254,7 +258,27 @@ export default defineComponent({
           if(!Array.isArray(data)) {
             data = data.data;
           }
-          return mapToOption(data);
+          if (props.groupType === "license") {
+            const licenses = data.map(license => {
+              const matchingGroup = groups.find(group => group.values.some(groupValue => groupValue.value === license.id))
+              if (matchingGroup) {
+                const matchingGroupValue = matchingGroup.values.find(groupValue => groupValue.value === license.id);
+                if (matchingGroupValue) {
+                  return {
+                    ...license,
+                    group: matchingGroup.name,
+                    description: matchingGroupValue.description || null,
+                    recommended: matchingGroupValue.recommended,
+                    code: matchingGroupValue.code
+                  };
+                }
+              }
+              return license;
+            });
+            return mapToOption(licenses);
+          } else {
+            return mapToOption(data);
+          }
         }).catch((error) => {
           if (!axios.isCancel(error)) {
             toast.error(t("Error getting {type}.", {type: props.placeholder}));
@@ -277,6 +301,8 @@ export default defineComponent({
         selected: !!obj.selected,
         helper: obj?.code ? props.helperLabel + obj.code : obj?.helper,
         description: obj?.description ?? '',
+        group: obj?.group,
+        recommended: obj?.recommended
       };
     });
 

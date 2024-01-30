@@ -219,6 +219,7 @@
                 :allOption="$t('Select a license')"
                 :addAllOption="false"
                 :groups="licensesGroups"
+                groupType="license"
               />
             </LinkedToAccordion>
           </fieldset>
@@ -362,11 +363,10 @@ export default defineComponent({
 
     const frequenciesUrl = getFrequenciesUrl();
     const licensesUrl = getLicensesUrl();
-    const licensesGroups = license_groups_options.map(([name, licenses]) => ({
+    const licensesGroups = license_groups_options.map(([name, values]) => ({
       name,
-      licenses
+      values
     }));
-    console.log(licensesGroups);
 
     const notUnknown = not(t("The value must be different than unknown."), sameAs("unknown"));
     const tagsRequired = requiredWithCustomMessage(t("Adding tags helps improve the SEO of your data."));
