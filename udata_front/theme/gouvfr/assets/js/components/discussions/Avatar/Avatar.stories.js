@@ -6,7 +6,7 @@ export default {
 };
 
 const args = {
-  /** @type {import("../../../types").User} */
+  /** @type {import("@etalab/data.gouv.fr-components").User} */
   user: {
     id: "someUserId",
     first_name: "John",
@@ -16,7 +16,7 @@ const args = {
 
 
 const userWithAvatarArgs = {
-  /** @type {import("../../../types").User} */
+  /** @type {import("@etalab/data.gouv.fr-components").User} */
   user: {
     id: "someUserId",
     first_name: "John",

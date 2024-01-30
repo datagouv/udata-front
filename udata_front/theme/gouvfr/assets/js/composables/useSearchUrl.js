@@ -1,5 +1,5 @@
-import {computed} from "vue";
-import config from "../config";
+import { computed } from "vue";
+import { dataset_url, organization_url, reuse_url } from "../config";
 
 /**
  *
@@ -7,9 +7,9 @@ import config from "../config";
  * @returns {{datasetUrl: import("vue").ComputedRef<string>, organizationUrl: import("vue").ComputedRef<string>, reuseUrl: import("vue").ComputedRef<string>}}
  */
 export default function useSearchUrl(q) {
-  const datasetUrl = computed(() => `${config.values.datasetUrl}?q=${q.value}`);
-  const organizationUrl = computed(() => `${config.values.organizationUrl}?q=${q.value}`);
-  const reuseUrl = computed(() => `${config.values.reuseUrl}?q=${q.value}`);
+  const datasetUrl = computed(() => `${dataset_url}?q=${q.value}`);
+  const organizationUrl = computed(() => `${organization_url}?q=${q.value}`);
+  const reuseUrl = computed(() => `${reuse_url}?q=${q.value}`);
   return {
     datasetUrl,
     organizationUrl,

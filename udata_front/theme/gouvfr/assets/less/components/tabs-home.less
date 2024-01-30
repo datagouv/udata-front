@@ -1,0 +1,13 @@
+[data-tabs] {
+    [role=tab] {
+        // Prevents children from taking the click events.
+        // Might be dangerous, remove if needed
+        > * {
+            pointer-events: none;
+        }
+
+        &.active {
+            pointer-events: none;
+        }
+    }
+}
