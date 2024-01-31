@@ -14,6 +14,24 @@ const args = {
     {
       label: "Option 1",
       value: "Option 1",
+    },
+    {
+      label: "Option 2",
+      value: "Option 2",
+    },
+  ]),
+  values: null,
+};
+
+const argsWithExtraDatas = {
+  placeholder: "Complex select with extra datas",
+  searchPlaceholder: "Type to search",
+  emptyPlaceholder: "Select an option",
+  allOption: "Select something",
+  initialOptions: Promise.resolve([
+    {
+      label: "Option 1",
+      value: "Option 1",
       helper: "Insee: 53350",
       description: "French region"
     },
@@ -138,5 +156,7 @@ export const SimpleMultiSelectWithHelperAndDescription = {
     },
     template: '<MultiSelect v-bind="args"/>',
   }),
-  args,
+  args: {
+    ...argsWithExtraDatas,
+  },
 };
