@@ -219,7 +219,6 @@
                 :allOption="$t('Select a license')"
                 :addAllOption="false"
                 :groups="licensesGroups"
-                groupType="license"
               />
             </LinkedToAccordion>
           </fieldset>
