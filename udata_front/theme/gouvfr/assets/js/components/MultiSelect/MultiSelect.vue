@@ -304,8 +304,6 @@ export default defineComponent({
               }
               return option;
             });
-            console.log(groupData)
-            console.log(props.groups)
             return mapToOption(groupData);
           } else {
             return mapToOption(data);
