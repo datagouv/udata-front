@@ -3,6 +3,7 @@
     {{ t('{n} datasets', totalResults) }}
   </h2>
   <CardMDList
+    :page-size="pageSize"
     :datasets="datasets"
     :loading="loading"
     :total-results="totalResults"

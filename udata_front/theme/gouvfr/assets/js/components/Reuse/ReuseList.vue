@@ -6,7 +6,7 @@
     <ul ref="listRef" class="fr-grid-row fr-grid-row--gutters">
       <li
         class="fr-col-12"
-        :class="{'fr-col-md-6': totalResults <= 2, 'fr-col-md-4': totalResults >= 3}"
+        :class="{'fr-col-md-6': reuses.length <= 2, 'fr-col-md-4': reuses.length >= 3}"
         v-for="reuse in reuses"
         :key="reuse.id"
       >
@@ -34,7 +34,7 @@ export type ReuseListProps = {
 };
 
 /** TODO : use a config when the component moved to data.gouv.fr-components */
-const pageSize = 20;
+const defaultPageSize = 20;
 </script>
 
 <script setup lang="ts">
@@ -45,7 +45,7 @@ import ReuseCard from './Reuse.vue';
 
 withDefaults(defineProps<ReuseListProps>(), {
   loading: false,
-  pageSize,
+  pageSize: defaultPageSize,
 });
 
 const emit = defineEmits<{

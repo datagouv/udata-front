@@ -69,6 +69,7 @@ class UserFollowingView(UserView, DetailView):
 
     def get_context(self):
         context = super(UserFollowingView, self).get_context()
+        context['can_edit'] = UserEditPermission(self.user)
         datasets, reuses, organizations, users = [], [], [], []
 
         for follow in Follow.objects.following(self.user).select_related():
@@ -102,6 +103,7 @@ class UserFollowersView(UserView, DetailView):
 
     def get_context(self):
         context = super(UserFollowersView, self).get_context()
+        context['can_edit'] = UserEditPermission(self.user)
         context['followers'] = (Follow.objects.followers(self.user)
                                               .order_by('follower.fullname'))
         return context

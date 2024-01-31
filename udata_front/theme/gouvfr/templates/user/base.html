@@ -73,6 +73,29 @@
             </a>
         </p>
     {% endif %}
+
+    {% if can_edit %}
+        <ul class="fr-mt-1w">
+            <li>
+                <a
+                    href="{{url_for('users.followers', user=user)}}"
+                    class="fr-link fr-text--sm"
+                >
+                    {{ ngettext('%(num)d follower', '%(num)d followers', user.metrics.followers or 0) }}
+                </a>
+            </li>
+
+            <li>
+                <a
+                    href="{{url_for('users.following', user=user)}}"
+                    class="fr-link fr-text--sm"
+                >
+                    {{ ngettext('%(num)d followed', '%(num)d followed', user.metrics.following or 0) }}
+                </a>
+            </li>
+        </ul>
+    {% endif %}
+
     {% if organizations %}
         <div class="fr-mt-4w">
             <h2 class="subtitle subtitle--uppercase fr-mt-0 fr-mb-3v">{{ _('Organizations') }}</h2>
