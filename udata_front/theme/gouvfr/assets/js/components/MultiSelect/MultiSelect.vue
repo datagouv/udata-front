@@ -7,57 +7,25 @@
         <span v-if="explanation" class="fr-icon-information-line" aria-hidden="true"></span>
         <span class="fr-hint-text" v-if="hintText">{{ hintText }}</span>
       </label>
-      <select
-        class="multiselect__input"
-        :id="id"
-        ref="selectRef"
-        v-model="selected"
-        :required="required"
-        :multiple="multiple"
-      >
-        <template v-if="props?.groups">
-          <template v-for="group in props.groups">
+      <select class="multiselect__input" :id="id" ref="selectRef" v-model="selected" :required="required"
+        :multiple="multiple">
+        <template v-if="groups">
+          <template v-for="group in groups">
             <optgroup :label="group.name">
               <template v-for="option in displayedOptions" :key="option.value">
-                <option
-                  v-if="group.name == option.group"
-                  :value="option.value"
-                  :data-image="option.image"
-                  :hidden="option.hidden"
-                  :data-helper="option.helper"
-                  :data-description="option.description"
-                  :data-show-icon="option.recommended"
-                >
+                <option v-if="group.name == option.group"
+                  :value="option.value" :data-image="option.image"
+                  :hidden="option.hidden" :data-helper="option.helper" :data-description="option.description"
+                  :data-show-icon="option.recommended">
                   {{ option.label }}
                 </option>
               </template>
             </optgroup>
-            <template v-for="option in displayedOptions" :key="option.value">
-              <option
-                  v-if="!group?.name"
-                  :value="option.value"
-                  :data-image="option.image"
-                  :hidden="option.hidden"
-                  :data-helper="option.helper"
-                  :data-description="option.description"
-                  :data-show-icon="option.recommended"
-                >
-                  {{ option.label }}
-                  </option>
-            </template>
           </template>
         </template>
         <template v-else>
-          <option 
-            v-for="option in displayedOptions"
-            :key="option.value"
-            :value="option.value"
-            :data-image="option.image"
-            :hidden="option.hidden"
-            :data-helper="option.helper"
-            :data-description="option.description"
-            :data-show-icon="option.recommended"
-          >
+          <option v-for="option in displayedOptions" :key="option.value" :value="option.value" :data-image="option.image"
+            :hidden="option.hidden" :data-helper="option.helper" :data-description="option.description">
             {{ option.label }}
           </option>
         </template>
@@ -170,10 +138,11 @@ export default defineComponent({
       default: '',
     },
     groups: {
-      /** @type {import("vue").PropType<Array<string> | string>} */
       type: [String, Array],
-      default: null
     },
+    groupType: {
+      type: String,
+    }
   },
   setup(props, { emit }) {
     const { t } = useI18n();
@@ -270,6 +239,8 @@ export default defineComponent({
       delete: t('Delete'),
     });
 
+
+    const groups = props.groups;
     /**
      * Get initial set of options from API or an empty array
      * @returns {Promise<Array<import("../../types").MultiSelectOption>>}
@@ -287,14 +258,14 @@ export default defineComponent({
           if(!Array.isArray(data)) {
             data = data.data;
           }
-          if (props.groups) {
-            const groupData = data.map(option => {
-              const matchingGroup = props.groups.find(group => group.values.some(groupValue => groupValue.value === option.id))
+          if (props.groupType === "license") {
+            const licenses = data.map(license => {
+              const matchingGroup = groups.find(group => group.values.some(groupValue => groupValue.value === license.id))
               if (matchingGroup) {
-                const matchingGroupValue = matchingGroup.values.find(groupValue => groupValue.value === option.id);
+                const matchingGroupValue = matchingGroup.values.find(groupValue => groupValue.value === license.id);
                 if (matchingGroupValue) {
                   return {
-                    ...option,
+                    ...license,
                     group: matchingGroup.name,
                     description: matchingGroupValue.description || null,
                     recommended: matchingGroupValue.recommended,
@@ -302,9 +273,9 @@ export default defineComponent({
                   };
                 }
               }
-              return option;
+              return license;
             });
-            return mapToOption(groupData);
+            return mapToOption(licenses);
           } else {
             return mapToOption(data);
           }
@@ -629,8 +600,8 @@ export default defineComponent({
     });
 
     const fillOptionsAndValues = suggestAndMapToOption()
-    .then(setInitialOptions)
-    .then(fillSelectedFromValues);
+      .then(setInitialOptions)
+      .then(fillSelectedFromValues);
 
     onMounted(() => fillOptionsAndValues.then(makeSelect));
     onUpdated(updateStylesAndEvents);
