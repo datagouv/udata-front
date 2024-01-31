@@ -15,8 +15,8 @@
         :required="required"
         :multiple="multiple"
       >
-        <template v-if="props?.groups">
-          <template v-for="group in props.groups">
+        <template v-if="groups">
+          <template v-for="group in groups">
             <optgroup :label="group.name">
               <template v-for="option in displayedOptions" :key="option.value">
                 <option
@@ -32,9 +32,10 @@
                 </option>
               </template>
             </optgroup>
-            <template v-for="option in displayedOptions" :key="option.value">
+          </template>
+          <template v-for="option in displayedOptions" :key="option.value">
               <option
-                  v-if="!group?.name"
+                  v-if="!option.group"
                   :value="option.value"
                   :data-image="option.image"
                   :hidden="option.hidden"
@@ -43,9 +44,8 @@
                   :data-show-icon="option.recommended"
                 >
                   {{ option.label }}
-                  </option>
+                </option>
             </template>
-          </template>
         </template>
         <template v-else>
           <option 
@@ -58,7 +58,7 @@
             :data-description="option.description"
             :data-show-icon="option.recommended"
           >
-            {{ option.label }}
+            {{ option.value }}
           </option>
         </template>
       </select>
@@ -304,6 +304,8 @@ export default defineComponent({
               }
               return option;
             });
+            console.log(groupData)
+            console.log(props.groups)
             return mapToOption(groupData);
           } else {
             return mapToOption(data);
