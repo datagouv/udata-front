@@ -325,7 +325,7 @@ import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Well from "../../components/Ui/Well/Well.vue";
 import useUid from "../../composables/useUid";
 import useFunctionalState from '../../composables/form/useFunctionalState';
-import editIcon from "svg/illustrations/edit.svg";
+import editIcon from "../../../../templates/svg/illustrations/edit.svg";
 import { quality_description_length, title } from "../../config";
 import { useI18n } from 'vue-i18n';
 import { getLicensesUrl } from '../../api/licenses';

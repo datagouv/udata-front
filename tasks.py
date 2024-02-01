@@ -12,6 +12,8 @@ I18N_ROOT = 'udata_front/theme/gouvfr/translations'
 
 THEME_ROOT = os.path.join(ROOT, 'udata_front/theme', 'gouvfr')
 
+COMPONENTS_ROOT = os.path.join(THEME_ROOT, 'datagouv-components')
+
 LANGUAGES = ['fr']
 
 TO_CLEAN = ['build', 'dist', '**/*.pyc', 'reports']
@@ -143,10 +145,16 @@ def i18n(ctx, update=False):
                 set_po_metadata(pofile, lang)
 
     # Front translations
-    info('Extract vue translations')
+    info('Extract udata-front vue translations')
     with ctx.cd(ROOT):
         ctx.run('npm run i18n:extract')
-    success('Updated translations')
+    success('Updated udata-front translations')
+
+    info('Extract data.gouv.fr-components vue translations')
+    with ctx.cd(COMPONENTS_ROOT):
+        ctx.run('npm run i18n:extract')
+    success('Updated data.gouv.fr-components translations')
+
 
 
 @task
@@ -170,17 +178,20 @@ def assets_watch(ctx):
 
 
 @task
-def assets_build(ctx):
+def assets_build(ctx, buildno=None):
     '''Build static assets'''
     header(assets_build.__doc__)
+    if buildno:
+        egg_info(ctx, buildno)
     with ctx.cd(ROOT):
         ctx.run('npm run build', pty=True)
 
 
-@task(i18nc, assets_build)
+@task(i18nc)
 def dist(ctx, buildno=None):
     '''Package for distribution'''
     header(dist.__doc__)
+    assets_build(ctx, buildno)
     perform_dist(ctx, buildno)
 
 
@@ -190,11 +201,25 @@ def pydist(ctx, buildno=None):
     header(pydist.__doc__)
     perform_dist(ctx, buildno)
 
+@task
+def egg_info(ctx, buildno=None):
+    '''Generate package egg_info'''
+    header(egg_info.__doc__)
+    cmd = ['python setup.py']
+    cmd.append(get_egg_info_cmd(buildno))
+    with ctx.cd(ROOT):
+        ctx.run(' '.join(cmd), pty=True)
+
+def get_egg_info_cmd(buildno=None):
+    cmd = 'egg_info'
+    if buildno:
+       cmd += " -b {0}".format(buildno)
+    return cmd
 
 def perform_dist(ctx, buildno=None):
     cmd = ['python setup.py']
     if buildno:
-        cmd.append('egg_info -b {0}'.format(buildno))
+        cmd.append(get_egg_info_cmd(buildno))
     cmd.append('bdist_wheel')
     with ctx.cd(ROOT):
         ctx.run(' '.join(cmd), pty=True)

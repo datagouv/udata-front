@@ -8,15 +8,15 @@ import useKeyCodes from "./useKeyCodes";
 export default function useActiveDescendant(options) {
   const {KEYCODES} = useKeyCodes();
 
-  /** @type {import("vue").Ref<string|null>} */
-  const selected = ref(null);
+  /** @type {import("vue").Ref<string | undefined>} */
+  const selected = ref();
 
-  /** @type {import("vue").Ref<T|null>} */
+  /** @type {import("vue").Ref<T | undefined>} */
   const selectedOption = computed(() => options.find(option => option.id === selected.value));
 
   /**
    *
-   * @param {string|null} id
+   * @param {string | null} id
    * @returns {boolean}
    */
   const isSelected = (id) => selected.value === id;

@@ -16,7 +16,7 @@ import useUserAvatar from "../../../composables/useUserAvatar";
 export default {
   props: {
     user: {
-      /** @type {import("vue").PropType<import("../../../types").User>} */
+      /** @type {import("vue").PropType<import("@etalab/data.gouv.fr-components").User>} */
       type: Object,
       required: true,
     },

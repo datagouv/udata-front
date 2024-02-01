@@ -1,28 +1,28 @@
 <template>
   <article class="fr-my-3w fr-p-3w border border-default-grey fr-enlarge-link" :style="style">
-    <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v" v-if="private || archived">
-      <p class="fr-badge fr-badge--mention-grey fr-mr-1w" v-if="private">
+    <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v" v-if="dataset.private || dataset.archived">
+      <p class="fr-badge fr-badge--mention-grey fr-mr-1w" v-if="dataset.private">
         <span class="fr-icon-lock-line" aria-hidden="true"></span>
-        {{ $t('Private') }}
+        {{ t('Private') }}
       </p>
-      <p class="fr-badge fr-badge--mention-grey" v-if="archived">
+      <p class="fr-badge fr-badge--mention-grey" v-if="dataset.archived">
         <span class="fr-icon-archive-line" aria-hidden="true"></span>
-        {{ $t('Archived') }}
+        {{ t('Archived') }}
       </p>
     </div>
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
       <div class="fr-col-auto">
         <div class="logo">
           <Placeholder
-            v-if="organization"
+            v-if="dataset.organization"
             type="dataset"
-            :src="organization.logo_thumbnail"
-            :alt="organization.name"
+            :src="dataset.organization.logo_thumbnail"
+            alt=""
             :size="60"
           />
           <Avatar
-            v-else-if="owner"
-            :user="owner"
+            v-else-if="dataset.owner"
+            :user="dataset.owner"
             :size="60"
           />
           <Placeholder
@@ -34,26 +34,26 @@
       </div>
       <div class="fr-col">
         <h4 class="fr-mb-1v fr-grid-row">
-          <a :href="page" class="text-grey-500">
-            {{ title }}
-            <small v-if="acronym">{{ acronym }}</small>
+          <a :href="dataset.page" class="text-grey-500">
+            {{ dataset.title }}
+            <small v-if="dataset.acronym">{{ dataset.acronym }}</small>
           </a>
         </h4>
-        <p class="fr-m-0 fr-text--sm" v-if="organization || owner">
+        <p class="fr-m-0 fr-text--sm" v-if="dataset.organization || dataset.owner">
           {{ $t('From') }}
-          <span class="not-enlarged" v-if="organization">
-            <a class="fr-link" :href="organization.page">
-              <OrganizationNameWithCertificate :organization="organization" />
+          <span class="not-enlarged" v-if="dataset.organization">
+            <a class="fr-link" :href="dataset.organization.page">
+              <OrganizationNameWithCertificate :organization="dataset.organization" />
             </a>
           </span>
-          <span class="not-enlarged" v-else-if="owner">
-            <a class="fr-link" :href="owner.page">
+          <span class="not-enlarged" v-else-if="dataset.owner">
+            <a class="fr-link" :href="dataset.owner.page">
               {{ ownerName }}
             </a>
           </span>
         </p>
         <p class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm overflow-wrap-anywhere">
-          {{ excerpt(description, 500) }}
+          {{ excerpt(dataset.description, 160) }}
         </p>
         <div class="fr-m-0 fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
           <div class="fr-grid-row fr-grid-row--middle fr-hidden flex-sm dash-after text-grey-500 not-enlarged">
@@ -64,49 +64,49 @@
               <template #toggletip>
                 <h5 class="fr-text--sm fr-my-0">{{$t("Metadata quality:")}}</h5>
                 <QualityItem
-                  :passed="quality.dataset_description_quality"
+                  :passed="dataset.quality.dataset_description_quality"
                   :messagePassed='$t("Data description filled")'
                   :messageFailed='$t("Data description empty")'
                   class="fr-my-1w"
                 />
                 <QualityItem
-                  :passed="quality.resources_documentation"
+                  :passed="dataset.quality.resources_documentation"
                   :messagePassed='$t("Files documented")'
                   :messageFailed='$t("Files documentation missing")'
                   class="fr-my-1w"
                 />
                 <QualityItem
-                  :passed="quality.license"
+                  :passed="dataset.quality.license"
                   :messagePassed='$t("License filled")'
                   :messageFailed='$t("No license set")'
                   class="fr-my-1w"
                 />
                 <QualityItem
-                  :passed="quality.update_frequency && !!quality.update_fulfilled_in_time"
+                  :passed="dataset.quality.update_frequency && !!dataset.quality.update_fulfilled_in_time"
                   :messagePassed='$t("Update frequency followed")'
-                  :messageFailed='quality.update_frequency ? $t("Update frequency not followed") : $t("Update frequency not set")'
+                  :messageFailed='dataset.quality.update_frequency ? $t("Update frequency not followed") : $t("Update frequency not set")'
                   class="fr-my-1w"
                 />
                 <QualityItem
-                  :passed="quality.has_open_format"
+                  :passed="dataset.quality.has_open_format"
                   :messagePassed='$t("File formats are open")'
                   :messageFailed='$t("File formats are closed")'
                   class="fr-my-1w"
                 />
                 <QualityItem
-                  :passed="quality.temporal_coverage"
+                  :passed="dataset.quality.temporal_coverage"
                   :messagePassed='$t("Temporal coverage filled")'
                   :messageFailed='$t("Temporal coverage not set")'
                   class="fr-my-1w"
                 />
                 <QualityItem
-                  :passed="quality.spatial"
+                  :passed="dataset.quality.spatial"
                   :messagePassed='$t("Spatial coverage filled")'
                   :messageFailed='$t("Spatial coverage not set")'
                   class="fr-my-1w"
                 />
                 <QualityItem
-                  :passed="quality.all_resources_available"
+                  :passed="dataset.quality.all_resources_available"
                   :messagePassed='$t("All files are available")'
                   :messageFailed='$t("Some files are unavailable")'
                   class="fr-my-1w"
@@ -127,27 +127,27 @@
               {{$t('Metadata quality:')}}
             </p>
             <div class="fr-grid-row fr-grid-row--middle fr-mr-1v">
-              <QualityScore :score="quality.score"/>
+              <QualityScore :score="dataset.quality.score"/>
             </div>
           </div>
-          <p class=fr-m-0>{{ $t('Updated {date}', {date: formatRelativeIfRecentDate(last_update)}) }}</p>
+          <p class=fr-m-0>{{ $t('Updated {date}', {date: formatRelativeIfRecentDate(dataset.last_update)}) }}</p>
         </div>
       </div>
       <ul v-if="showMetrics" class="fr-hidden fr-unhidden-sm fr-hidden-md fr-unhidden-lg fr-col-auto fr-tags-group fr-grid-row--bottom self-center flex-direction-column">
         <li>
           <p class="fr-tag">
-            <i18n-t keypath="{n} reuses" :plural="metrics.reuses || 0" scope="global">
+            <i18n-t keypath="{n} reuses" :plural="dataset.metrics.reuses || 0" scope="global">
               <template #n>
-                <strong class="fr-mr-1v">{{metrics.reuses || 0}}</strong>
+                <strong class="fr-mr-1v">{{dataset.metrics.reuses || 0}}</strong>
               </template>
             </i18n-t>
           </p>
         </li>
         <li>
           <p class="fr-tag">
-            <i18n-t keypath="{n} favorites" :plural="metrics.followers || 0" scope="global">
+            <i18n-t keypath="{n} favorites" :plural="dataset.metrics.followers || 0" scope="global">
               <template #n>
-                <strong class="fr-mr-1v">{{metrics.followers || 0}}</strong>
+                <strong class="fr-mr-1v">{{dataset.metrics.followers}}</strong>
               </template>
             </i18n-t>
           </p>
@@ -157,19 +157,20 @@
   </article>
 </template>
 
-<script>
-import { defineComponent, computed } from "vue";
+<script lang="ts">
+import { defineComponent, PropType } from "vue";
+import { useI18n } from "vue-i18n";
 import useLicense from "../../composables/useLicense";
-import useOwnerName from "../../composables/useOwnerName";
+import { OrganizationNameWithCertificate, useOwnerName, formatRelativeIfRecentDate} from "@etalab/data.gouv.fr-components";
 import useUid from "../../composables/useUid";
 import Avatar from "../discussions/Avatar/Avatar.vue";
-import OrganizationNameWithCertificate from "../organization/organization-name-with-certificate.vue";
 import Placeholder from "../utils/placeholder.vue";
 import QualityScore from "./quality-score.vue";
 import Toggletip from "../utils/Toggletip/Toggletip.vue";
 import QualityItem from "./quality-item.vue";
-import { excerpt, formatRelativeIfRecentDate } from "../../helpers";
+import { excerpt } from "../../helpers";
 import { guides_quality_url } from "../../config";
+import type { Dataset } from "../../types";
 
 export default defineComponent({
   components: {
@@ -182,69 +183,24 @@ export default defineComponent({
 },
   inheritAttrs: false,
   props: {
-    acronym: String,
-    archived: {
-      type: Boolean,
-      default: false,
-    },
-    description: {
-      type: String,
+    dataset: {
+      type: Object as PropType<Dataset>,
       required: true,
-    },
-    last_update: {
-      type: Date,
-      required: true,
-    },
-    license: {
-      type: String,
-      required: true,
-    },
-    metrics: Object,
-    organization: {
-      /** @type {import("vue").PropType<import("../../types").Organization>} */
-      type: Object
-    },
-    owner: {
-      /** @type {import("vue").PropType<import("../../types").User>} */
-      type: Object,
-    },
-    page: {
-      type: String,
-      required: true,
-    },
-    private: {
-      type: Boolean,
-      default: false,
-    },
-    quality: {
-      type: Object,
-      required: true,
-    },
-    showMetrics: {
-      type: Boolean,
-      default: true,
     },
     style: {
       type: Object,
       default: () => ({})
     },
-    title: {
-      type: String,
-      required: true,
+    showMetrics: {
+      type: Boolean,
+      default: true,
     },
   },
   setup(props) {
-    /** @type {import("vue").ComputedRef<import("../../types").Owned>} */
-    const owned = computed(() => {
-      if(props.organization) {
-        return { organization: props.organization };
-      } else {
-        return { owner: /** @type {import("../../types").User} */ (props.owner) };
-      }
-    });
-    const {id} = useUid("metadata-quality");
-    const ownerName = useOwnerName(owned);
-    const license = useLicense(props.license);
+    const { t } = useI18n();
+    const { id } = useUid("metadata-quality");
+    const ownerName = useOwnerName(props.dataset);
+    const license = useLicense(props.dataset.license);
     return {
       excerpt,
       formatRelativeIfRecentDate,
@@ -252,6 +208,7 @@ export default defineComponent({
       license,
       id,
       ownerName,
+      t,
     };
   }
 });
