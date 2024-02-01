@@ -319,5 +319,7 @@
   "{n} datasets": "{n} datasets | {n} dataset | {n} datasets",
   " by ": " by ",
   "Search for data": "Search for data",
-  "{n} downloads": "{n} downloads"
+  "{n} downloads": "{n} downloads",
+  "Are you sure ?": "Are you sure ?",
+  "The content will be permanently deleted.": "The content will be permanently deleted."
 }
