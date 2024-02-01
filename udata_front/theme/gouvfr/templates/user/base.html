@@ -1,4 +1,5 @@
 {% extends theme('layouts/1-column.html') %}
+{% from theme('macros/delete.html') import delete_btn with context %}
 {% from theme('macros/follow.html') import follow_btn with context %}
 {% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate %}
 
@@ -36,6 +37,7 @@
     >
         {{ _("User's admin profile") }}
     </a>
+    {{ delete_btn(user) }}
     {% else %}
     <a
         class="fr-ml-2w fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-btn--icon-left"

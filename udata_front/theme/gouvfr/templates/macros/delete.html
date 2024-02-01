@@ -1,0 +1,9 @@
+{% macro follow_btn(obj, class=None) %}
+{% set basename = obj.__class__.__name__|lower %}
+<div class="fr-col-auto vuejs">
+    <delete-button
+        url="{{ url_for('api.{0}_followers'.format(basename), id=obj.id|string, _external=True) }}"
+    >
+    </delete-button>
+</div>
+{% endmacro %}
