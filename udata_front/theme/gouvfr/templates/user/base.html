@@ -33,7 +33,7 @@
     {% if current_user != user %}
     <a
         href="{{ url_for('admin.index', path='user/{id}/'.format(id=user.id)) }}"
-        class="fr-ml-2w fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-btn--icon-left"
+        class="fr-mx-2w fr-btn fr-btn--sm fr-btn--secondary fr-icon-pencil-line fr-btn--icon-left"
     >
         {{ _("User's admin profile") }}
     </a>

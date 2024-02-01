@@ -63,6 +63,6 @@ const modalTitleId = modalId + "-title";
 
 function deleteObject() {
   auth();
-  return api.delete(props.url);
+  return api.delete(props.url).then(() => window.location.reload());
 };
 </script>

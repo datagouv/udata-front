@@ -10,6 +10,7 @@ import Threads from "./components/discussions/Threads.vue";
 import ThreadCreate from "./components/discussions/ThreadCreate/ThreadCreate.vue";
 import MenuSearch from "./components/search/MenuSearch/MenuSearch.vue";
 import Search from "./components/search/Search/Search.vue";
+import DeleteButton from "./components/utils/DeleteButton/DeleteButton.vue";
 import FeaturedButton from './components/utils/featured.vue';
 import FollowButton from "./components/utils/follow-button.vue";
 import ReadMore from "./components/ReadMore/ReadMore.vue";
@@ -63,8 +64,9 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("discussion-create", ThreadCreate);
   app.component("menu-search", MenuSearch);
   app.component("search", Search);
-  app.component("follow-button", FollowButton);
+  app.component("delete-button", DeleteButton);
   app.component("featured-button", FeaturedButton);
+  app.component("follow-button", FollowButton);
   app.component("read-more", ReadMore);
   app.component("request-membership", RequestMembership);
   app.component("dataset-resources", Resources);

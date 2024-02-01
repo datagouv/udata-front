@@ -64,6 +64,7 @@
 </template>
 
 <script lang="ts">
+import { Dataset } from "../../types";
 export type CardMDProps = {
   dataset: Dataset,
   style?: CSSProperties,
@@ -71,15 +72,12 @@ export type CardMDProps = {
 </script>
 
 <script setup lang="ts">
-import useLicense from "../../composables/useLicense";
-import useOwnerName from "../../composables/useOwnerName";
 import Avatar from "../discussions/Avatar/Avatar.vue";
-import OrganizationNameWithCertificate from "../organization/organization-name-with-certificate.vue";
 import Placeholder from "../utils/placeholder.vue";
-import { excerpt, formatRelativeIfRecentDate } from "../../helpers";
-import type { Dataset } from "../../types";
+import { excerpt } from "../../helpers";
 import { useI18n } from "vue-i18n";
 import { type CSSProperties } from "vue";
+import { formatRelativeIfRecentDate, useOwnerName, OrganizationNameWithCertificate } from "@etalab/data.gouv.fr-components";
 
 defineOptions({inheritAttrs: false});
 
@@ -90,5 +88,4 @@ const props = withDefaults(defineProps<CardMDProps>(), {
 const { t } = useI18n();
 
 const ownerName = useOwnerName(props.dataset);
-const license = useLicense(props.dataset.license);
 </script>

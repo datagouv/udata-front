@@ -126,6 +126,23 @@ quality: Quality;
 metrics: { discussions: number; followers: number; reuses: number; views: number; };
 };
 
+export type Reuse = Owned & {
+  id: string;
+  title: string;
+  description: string;
+  tags: Array<string> | null;
+  page: string;
+  private: boolean;
+  deleted: boolean;
+  datasets: Array<Dataset>;
+  image: string;
+  image_thumbnail: string;
+  slug: string;
+  topic: string;
+  type: string;
+  last_update: string;
+};
+
 export type AxisAlignment = "start" | "center" | "end";
 
 export default {};

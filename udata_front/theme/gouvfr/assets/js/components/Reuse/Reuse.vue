@@ -52,11 +52,10 @@ export type ReuseProps = {
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import useOwnerName from '../../composables/useOwnerName';
-import OrganizationNameWithCertificate from "../organization/organization-name-with-certificate.vue";
 import Placeholder from '../utils/placeholder.vue';
-import { formatRelativeIfRecentDate, truncate } from "../../helpers";
+import { truncate } from "../../helpers";
 import type { Reuse } from '../../types';
+import { formatRelativeIfRecentDate, useOwnerName, OrganizationNameWithCertificate } from "@etalab/data.gouv.fr-components";
 import useReuseType from '../../composables/useReuseType';
 
 const props = defineProps<ReuseProps>();
