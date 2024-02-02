@@ -70,8 +70,6 @@ updateLastMonth.setMonth(updateLastMonth.getMonth() - 1, 20);
 const updateLastYear = new Date();
 updateLastYear.setFullYear(updateLastYear.getFullYear() - 1);
 
-
-
 const ownerWithAvatar: User = {
   ...owner,
   avatar_thumbnail: "https://static.data.gouv.fr/avatars/0d/aebc1b126b410aa73701fde285dd76-100.jpg",
@@ -85,12 +83,13 @@ const organization: Organization = {
   page: "https://www.data.gouv.fr/fr/organizations/data-gouv-fr/",
   uri: "https://www.data.gouv.fr/fr/organizations/data-gouv-fr/",
   slug: "data-gouv-fr",
-  logo: "https://static.data.gouv.fr/avatars/09/1ba932cbfa48dc8c158981de6c700a.jpeg",
-  logo_thumbnail: "https://static.data.gouv.fr/avatars/09/1ba932cbfa48dc8c158981de6c700a-100.jpeg",
+  logo: "",
+  logo_thumbnail: "",
 };
 
 const organizationWithLogo: Organization = {
   ...organization,
+  logo: "https://static.data.gouv.fr/avatars/09/1ba932cbfa48dc8c158981de6c700a.jpeg",
   logo_thumbnail: "https://static.data.gouv.fr/avatars/09/1ba932cbfa48dc8c158981de6c700a-100.jpeg"
 };
 
@@ -459,5 +458,12 @@ export const CardMDWithDatasetPlaceholder: StoryObj<typeof meta> = {
     },
     template: '<CardMD v-bind="args"/>',
   }),
-  args,
+  args: {
+    // @ts-ignore
+    dataset: {
+      ...args.dataset,
+      owner: null,
+      organization: null,
+    }
+  },
 };

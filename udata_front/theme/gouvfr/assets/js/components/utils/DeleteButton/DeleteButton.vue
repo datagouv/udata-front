@@ -49,12 +49,14 @@ import { api } from "../../../plugins/api";
 import { auth } from "../../../plugins/auth";
 import { useI18n } from "vue-i18n";
 import { getRandomId } from "@etalab/data.gouv.fr-components";
+import { useToast } from "../../../composables/useToast";
 
 const props = defineProps<{
   url: string,
 }>();
 
 const { t } = useI18n();
+const { toast } = useToast();
 
 const readOnlyEnabled = read_only_enabled;
 
@@ -63,6 +65,8 @@ const modalTitleId = modalId + "-title";
 
 function deleteObject() {
   auth();
-  return api.delete(props.url).then(() => window.location.reload());
+  return api.delete(props.url)
+  .then(() => window.location.reload())
+  .catch(() => toast.error(t("An error occured during the deletion.")));
 };
 </script>
