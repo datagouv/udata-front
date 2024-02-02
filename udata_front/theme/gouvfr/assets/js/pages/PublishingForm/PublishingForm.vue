@@ -9,6 +9,7 @@
       v-else-if="currentStep === 1"
       :originalDataset="dataset"
       :steps="steps"
+      :granularities="granularities"
       @next="updateDatasetAndMoveToNextStep"
     />
     <template v-else-if="currentStep === 2">
@@ -39,9 +40,10 @@
   </div>
 </template>
 <script>
-import { computed, defineComponent, ref, toValue } from 'vue';
+import { computed, defineComponent, onMounted, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { templateRef, useEventListener } from '@vueuse/core';
+import {api} from "../../plugins/api";
 import Step1PublishingType from "./Step1PublishingType.vue";
 import Step2DescribeDataset from './Step2DescribeDataset.vue';
 import Step3AddFiles from './Step3AddFiles.vue';
@@ -71,6 +73,8 @@ export default defineComponent({
     const { t } = useI18n();
 
     const { files, updateFiles, uploadFiles } = useFilesUpload();
+
+    const granularities = ref([]);
 
     const steps = [t("Publish data on {site}", {site: title}), t("Describe your dataset"), t("Add files"), t("Complete your publishing")];
 
@@ -166,6 +170,16 @@ export default defineComponent({
         }
       }
     };
+
+    onMounted(() => {
+      api.get("/spatial/granularities/")
+        .then(resp => {
+          granularities.value = resp.data;
+        })
+        .catch(error => {
+          console.error("Error fetching granularities:", error);
+        });
+    });
 
     /**
      *
@@ -282,6 +296,7 @@ export default defineComponent({
       editedFile,
       errors,
       files,
+      granularities,
       loading,
       moveToStep,
       publishing_form_feedback_url,

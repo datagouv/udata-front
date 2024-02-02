@@ -284,6 +284,7 @@
                     :addAllOption="false"
                     :multiple="true"
                     helperLabel="Insee : "
+                    :onSuggest="formatSpatialZones"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -345,6 +346,10 @@ export default defineComponent({
     steps: {
       type: Array,
       required: true,
+    },
+    granularities: {
+      type: Array,
+      required: true
     }
   },
   setup(props, { emit }) {
@@ -366,6 +371,23 @@ export default defineComponent({
       name,
       values
     }));
+
+    const formatSpatialZones = (data) => {
+      const suggestions = data.map(item => {
+      const matchingGranularity = props.granularities.find(granularity => granularity.id === item.level);
+      if (matchingGranularity) {
+        return {
+          ...item,
+          description: matchingGranularity.name,
+        };
+      } else {
+        return {
+          ...item,
+        };
+      }
+    });
+    return suggestions;
+    }
 
     const notUnknown = not(t("The value must be different than unknown."), sameAs("unknown"));
     const tagsRequired = requiredWithCustomMessage(t("Adding tags helps improve the SEO of your data."));
@@ -446,6 +468,7 @@ export default defineComponent({
       state,
       fieldHasError,
       fieldHasWarning,
+      formatSpatialZones,
       getErrorText,
       getWarningText,
       submit,
