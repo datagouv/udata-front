@@ -44,7 +44,7 @@ import Container from '../../components/Ui/Container/Container.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Well from "../../components/Ui/Well/Well.vue";
 import CardLg from '../../components/dataset/card-lg.vue';
-import successIcon from "svg/illustrations/success.svg";
+import successIcon from "../../../../templates/svg/illustrations/success.svg";
 
 export default defineComponent({
   components: { Container, Stepper, Well, CardLg },

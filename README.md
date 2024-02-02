@@ -231,6 +231,9 @@ Vile does multiple custom things in this project :
 - Transform the `less` files into modern CSS using `PostCSS`
 - Copy the static assets when they change (config is in the `vite.config.js`)
 
+Vite uses package.json version to name files and udata-front uses its version to load the correct one.
+If you're udata-front version doesn't match the one loaded in the theme, you may have to do a `pip install -e .` to update the package information.
+
 ### 🏭 Javascript architecture
 
 #### 🏔️ Vue mounting
@@ -264,7 +267,6 @@ npm run test
 ```
 
 Cypress also comes with [cypress-axe](https://github.com/component-driven/cypress-axe) to allow for accessibility automated testing.
-
 
 [udata]: https://github.com/opendatateam/udata
 [udata-doc]: http://udata.readthedocs.io/en/stable/

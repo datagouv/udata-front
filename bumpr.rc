@@ -10,7 +10,6 @@ tests = inv test
 publish = inv dist
 files =
     README.md
-    package.json
 
 [bump]
 unsuffix = true

@@ -55,8 +55,7 @@
 </template>
 <script>
 import { computed, defineComponent, onMounted, ref, watch } from 'vue';
-import useResourceImage from '../../../composables/useResourceImage';
-import { filesize as formatFilesize, formatRelativeIfRecentDate } from "../../../helpers";
+import { useResourceImage, filesize as formatFilesize, formatRelativeIfRecentDate } from '@etalab/data.gouv.fr-components';
 import FileLoader from './FileLoader.vue';
 import useFileValidation from '../../../composables/form/useFileValidation';
 import { isLoaded, isLoading } from '../../../api/resources';
