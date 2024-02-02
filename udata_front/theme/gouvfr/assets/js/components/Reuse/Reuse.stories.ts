@@ -1,5 +1,4 @@
-import { CERTIFIED, PUBLIC_SERVICE } from '../../composables/useOrganizationCertified';
-import type { Organization, User } from '../../types';
+import { CERTIFIED, PUBLIC_SERVICE, type Organization } from '@etalab/data.gouv.fr-components';
 import Reuse, { type ReuseProps } from './Reuse.vue';
 import { withActions } from '@storybook/addon-actions/decorator';
 import type { Meta, StoryObj } from "@storybook/vue3";
@@ -36,6 +35,7 @@ const args: ReuseProps = {
       last_name: "Last",
       page: "https://demo.data.gouv.fr/en/users/antonin-garrone/",
     },
+    organization: null,
     title: "My new dataset",
     image: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",
     image_thumbnail: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",
@@ -49,9 +49,15 @@ const updateLastYear = new Date();
 updateLastYear.setFullYear(updateLastYear.getFullYear() - 1);
 
 const organization: Organization = {
+  id: "someId",
+  acronym: null,
   name: "My Organization",
   badges: [],
-  page: "https://www.data.gouv.fr/fr/organizations/data-gouv-fr/"
+  page: "https://www.data.gouv.fr/fr/organizations/data-gouv-fr/",
+  uri: "https://www.data.gouv.fr/fr/organizations/data-gouv-fr/",
+  slug: "data-gouv-fr",
+  logo: "https://static.data.gouv.fr/avatars/09/1ba932cbfa48dc8c158981de6c700a.jpeg",
+  logo_thumbnail: "https://static.data.gouv.fr/avatars/09/1ba932cbfa48dc8c158981de6c700a-100.jpeg",
 };
 
 const organizationWithLogo: Organization = {
@@ -63,7 +69,7 @@ const argsWithOrganizationWithLogo: ReuseProps = {
   reuse: {
     ...args.reuse,
     organization: organizationWithLogo,
-    owner: undefined,
+    owner: null,
   }
 };
 
@@ -74,7 +80,7 @@ const argsWithCertifiedOrganization: ReuseProps = {
       ...organizationWithLogo,
       badges: [{kind: PUBLIC_SERVICE}, {kind: CERTIFIED}]
     },
-    owner: undefined
+    owner: null
   }
 };
 

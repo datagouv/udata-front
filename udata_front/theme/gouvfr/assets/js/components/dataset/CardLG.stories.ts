@@ -1,4 +1,4 @@
-import { CERTIFIED, PUBLIC_SERVICE } from '../../composables/useOrganizationCertified';
+import { CERTIFIED, PUBLIC_SERVICE } from '@etalab/data.gouv.fr-components';
 import CardLG from './card-lg.vue';
 import { withActions } from '@storybook/addon-actions/decorator';
 

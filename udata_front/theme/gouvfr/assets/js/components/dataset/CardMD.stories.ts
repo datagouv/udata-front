@@ -1,5 +1,4 @@
-import { CERTIFIED, PUBLIC_SERVICE } from '../../composables/useOrganizationCertified';
-import type { Organization, User } from '../../types';
+import { CERTIFIED, PUBLIC_SERVICE, type Organization, type User } from '@etalab/data.gouv.fr-components';
 import CardMD, { type CardMDProps } from './CardMD.vue';
 import { withActions } from '@storybook/addon-actions/decorator';
 import type { Meta, StoryObj } from "@storybook/vue3";
@@ -16,6 +15,13 @@ const meta = {
 } satisfies Meta<typeof CardMD>;
 
 export default meta;
+
+const owner: User = {
+  id: "someId",
+  first_name: "Jean",
+  last_name: "Dupond",
+  page: "http://www.data.gouv.fr",
+};
 
 const args: CardMDProps = {
   dataset: {
@@ -40,16 +46,20 @@ const args: CardMDProps = {
       update_frequency: true,
       update_fulfilled_in_time: true,
     },
+    resources: [],
+    community_resources: [],
+    created_at: "2014-12-12T12:01:06.889000+00:0",
+    last_modified: "2020-11-03T09:16:55.837000+00:00",
+    uri: "https://www.data.gouv.fr",
+    slug: "data-gouv-fr",
     tags: [],
     frequency: "Unknown",
+    metrics: {discussions: 3, followers: 5, reuses: 9, views: 115},
     temporal_coverage: "Test",
     frequency_date: null,
     spatial: null,
-    owner: {
-      id: "someUserId",
-      first_name: "First",
-      last_name: "Last",
-    },
+    organization: null,
+    owner,
     title: "My new dataset",
   }
 };
@@ -60,11 +70,7 @@ updateLastMonth.setMonth(updateLastMonth.getMonth() - 1, 20);
 const updateLastYear = new Date();
 updateLastYear.setFullYear(updateLastYear.getFullYear() - 1);
 
-const owner: User = {
-  id: "someId",
-  first_name: "Jean",
-  last_name: "Dupond",
-};
+
 
 const ownerWithAvatar: User = {
   ...owner,
@@ -72,9 +78,15 @@ const ownerWithAvatar: User = {
 }
 
 const organization: Organization = {
+  id: "someId",
+  acronym: null,
   name: "My Organization",
   badges: [],
-  page: "https://www.data.gouv.fr/fr/organizations/data-gouv-fr/"
+  page: "https://www.data.gouv.fr/fr/organizations/data-gouv-fr/",
+  uri: "https://www.data.gouv.fr/fr/organizations/data-gouv-fr/",
+  slug: "data-gouv-fr",
+  logo: "https://static.data.gouv.fr/avatars/09/1ba932cbfa48dc8c158981de6c700a.jpeg",
+  logo_thumbnail: "https://static.data.gouv.fr/avatars/09/1ba932cbfa48dc8c158981de6c700a-100.jpeg",
 };
 
 const organizationWithLogo: Organization = {
@@ -86,7 +98,7 @@ const argsWithOwner: CardMDProps = {
   dataset: {
     ...args.dataset,
     owner,
-    organization: undefined
+    organization: null
   },
 };
 
@@ -94,7 +106,7 @@ const argsWithOwnerWithAvatar: CardMDProps = {
   dataset: {
     ...args.dataset,
     owner: ownerWithAvatar,
-    organization: undefined,
+    organization: null,
   }
 };
 
@@ -102,7 +114,7 @@ const argsWithOrganization: CardMDProps = {
   dataset: {
     ...args.dataset,
     organization: organization,
-    owner: undefined,
+    owner: null,
   }
 };
 
@@ -110,7 +122,7 @@ const argsWithOrganizationWithLogo: CardMDProps = {
   dataset: {
     ...args.dataset,
     organization: organizationWithLogo,
-    owner: undefined,
+    owner: null,
   }
 };
 
@@ -135,7 +147,7 @@ const argsWithCertifiedOrganization: CardMDProps = {
       ...organizationWithLogo,
       badges: [{kind: PUBLIC_SERVICE}, {kind: CERTIFIED}]
     },
-    owner: undefined
+    owner: null
   }
 };
 
