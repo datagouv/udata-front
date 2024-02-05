@@ -291,7 +291,7 @@
                   <MultiSelect
                     :placeholder="$t('Spatial granularity')"
                     :searchPlaceholder="$t('Search a granularity...')"
-                    listUrl="/spatial/granularities/"
+                    :initialOptions="granularities"
                     :values="dataset.spatial.granularity"
                     @change="(value) => dataset.spatial.granularity = value"
                     :hasWarning="fieldHasWarning('spatial_information')"
@@ -348,7 +348,8 @@ export default defineComponent({
       required: true,
     },
     granularities: {
-      type: Array,
+      /** @type {import("vue").PropType<import("../../types").SpatialGranularities>} */
+      type: Object,
       required: true
     }
   },
