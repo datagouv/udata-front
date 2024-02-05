@@ -316,6 +316,11 @@
   "Publish the correct file types": "Publier les bons types de fichiers",
   "The formats must be:": "Les formats doivent être :",
   "It is possible to identify an existing data schema by visiting the {schema} website, that references a list of existing data schema.": "Il est possible d'identifier un schéma de données déjà existant en consultant le site {schema}, qui référence une liste de schémas de données existants.",
+  "{n} datasets": "{n} datasets | {n} dataset | {n} datasets",
+  " by ": " by ",
   "Search for data": "Rechercher des données",
-  "{n} downloads": "{n} téléchargements"
+  "{n} downloads": "{n} téléchargements",
+  "Are you sure ?": "Are you sure ?",
+  "The content will be permanently deleted.": "The content will be permanently deleted.",
+  "An error occured during the deletion.": ""
 }
