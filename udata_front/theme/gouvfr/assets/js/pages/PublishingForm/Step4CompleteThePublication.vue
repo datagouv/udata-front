@@ -17,7 +17,7 @@
           </div>
         </div>
       </Well>
-      <CardLg v-bind="dataset" :showMetrics="false" />
+      <CardLg :dataset="dataset" :showMetrics="false" />
       <div class="fr-grid-row justify-between">
         <a
             :href="feedbackUrl"

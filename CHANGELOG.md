@@ -5,6 +5,7 @@
 - Fix vue runtime errors [#343](https://github.com/etalab/udata-front/pull/343)
 - New featured topic : agriculture [#344](https://github.com/etalab/udata-front/pull/344)
 - Create data.gouv.fr-components NPM package and move some `gouvfr` components to it [#324](https://github.com/etalab/udata-front/pull/324)
+- Setup storybook for data.gouv.fr-components [#346](https://github.com/etalab/udata-front/pull/346)
 
 ## 3.5.0, 3.4.0 and 3.3.0 (2024-01-23)
 
@@ -13,6 +14,7 @@
 > The update to the next version is mandatory to have a valid js build.
 
 - Fix dependencies according to udata's Flask-Babel migration [#300](https://github.com/etalab/udata-front/pull/300)
+- User pages are back [#338](https://github.com/etalab/udata-front/pull/338)
 
 ## 3.2.12 (2023-12-15)
 

@@ -53,6 +53,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    content: {
+      type: String,
+      required: true,
+    },
     type: {
       type: String,
       default: "default"

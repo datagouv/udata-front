@@ -1,13 +1,12 @@
 import logging
 
-from flask import abort, g
+from flask import url_for, redirect, abort, g
 from flask_security import current_user
 
 from udata_front.views.base import DetailView
-from udata.models import User, Activity, Organization, Dataset, Reuse, Follow
+from udata.core.user.permissions import sysadmin, UserEditPermission
 from udata.i18n import I18nBlueprint
-
-from udata.core.user.permissions import sysadmin
+from udata.models import User, Organization, Dataset, Reuse, Follow
 
 
 blueprint = I18nBlueprint('users', __name__, url_prefix='/users')
@@ -40,38 +39,28 @@ class UserView(object):
         return context
 
 
-@blueprint.route('/<user:user>/datasets/', endpoint='datasets')
-class UserDatasetsView(UserView, DetailView):
-    template_name = 'user/datasets.html'
-
-    def get_context(self):
-        context = super(UserDatasetsView, self).get_context()
-        context['datasets'] = Dataset.objects(owner=self.user).visible()
-        return context
-
-
-@blueprint.route('/<user:user>/reuses/', endpoint='reuses')
-class UserReusesView(UserView, DetailView):
-    template_name = 'user/reuses.html'
-
-    def get_context(self):
-        context = super(UserReusesView, self).get_context()
-        context['reuses'] = Reuse.objects(owner=self.user).visible()
-        return context
-
-
 @blueprint.route('/<user:user>/', endpoint='show')
-class UserActivityView(UserView, DetailView):
-    template_name = 'user/activity.html'
+class UserDetailView(UserView, DetailView):
+    template_name = 'user/base.html'
 
     def get_context(self):
         if current_user.is_anonymous or not current_user.sysadmin:
             if not self.user.active:
                 abort(410, 'User is not active')
-        context = super(UserActivityView, self).get_context()
-        context['activities'] = (Activity.objects(actor=self.object)
-                                         .order_by('-created_at').limit(15))
+        context = super(UserDetailView, self).get_context()
+        context['can_edit'] = UserEditPermission(self.user)
+
         return context
+
+
+@blueprint.route('/<user:user>/datasets/', endpoint='datasets')
+def redirect_datasets(user):
+    return redirect(url_for('users.show', user=user))
+
+
+@blueprint.route('/<user:user>/reuses/', endpoint='reuses')
+def redirect_reuses(user):
+    return redirect(url_for('users.show', user=user))
 
 
 @blueprint.route('/<user:user>/following/', endpoint='following')
@@ -80,6 +69,7 @@ class UserFollowingView(UserView, DetailView):
 
     def get_context(self):
         context = super(UserFollowingView, self).get_context()
+        context['can_edit'] = UserEditPermission(self.user)
         datasets, reuses, organizations, users = [], [], [], []
 
         for follow in Follow.objects.following(self.user).select_related():
@@ -113,6 +103,7 @@ class UserFollowersView(UserView, DetailView):
 
     def get_context(self):
         context = super(UserFollowersView, self).get_context()
+        context['can_edit'] = UserEditPermission(self.user)
         context['followers'] = (Follow.objects.followers(self.user)
                                               .order_by('follower.fullname'))
         return context
