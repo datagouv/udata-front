@@ -158,7 +158,7 @@
                 :page="currentPage"
                 :pageSize="pageSize"
                 :totalResults="totalResults"
-                :changePage="changePage"
+                @change="changePage"
                 class="fr-mt-2w"
               />
             <div v-else>
