@@ -1,5 +1,7 @@
 {% extends theme('layouts/1-column.html') %}
+{% from theme('macros/delete.html') import delete_btn with context %}
 {% from theme('macros/follow.html') import follow_btn with context %}
+{% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate %}
 
 {% set bundle = 'user' %}
 
@@ -24,102 +26,127 @@
 {% endblock %}
 
 {% block toolbar %}
+{% if current_user != user %}
+    {{ follow_btn(user) }}
+{% endif %}
 {% if can_edit %}
-<div class="btn-group btn-group-xs">
-    <a href="{{ url_for('admin.index', path='users/{id}/'.format(id=user.id)) }}" class="btn btn-success">
-        <span class="fa fa-pencil"></span>
+    {% if current_user != user %}
+    <a
+        href="{{ url_for('admin.index', path='user/{id}/'.format(id=user.id)) }}"
+        class="fr-mx-2w fr-btn fr-btn--sm fr-btn--secondary fr-icon-pencil-line fr-btn--icon-left"
+    >
+        {{ _("User's admin profile") }}
+    </a>
+    {{ delete_btn(user) }}
+    {% else %}
+    <a
+        class="fr-ml-2w fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-btn--icon-left"
+        href="{{ url_for('admin.index', path='me') }}"
+    >
         {{ _('Edit') }}
     </a>
-</div>
-{% endif %}
-{# Social actions #}
-{% if current_user != user %}
-<div class="btn-group btn-group-xs">
-    {{ follow_btn(user) }}
-</div>
+    {% endif %}
 {% endif %}
 {% endblock %}
 
 {% block main_content %}
-<div class="fr-container">
-    <div class="fr-alert fr-alert--info">
-        <p class="fr-alert__title">{{ _('Work in progress') }}</p>
-        <p>{{ _('The user page is currently being renovated to improve user experience.') }}</p>
+<div class="fr-container fr-pb-5w">
+    <img
+        src="{{ user|avatar_url(80) }}"
+        alt=""
+        class="rounded-circle"
+    />
+    <h1 class="fr-h3 fr-my-1v">{{ user.fullname }}</h1>
+    <div class="markdown fr-text--sm fr-m-0">
+        {{ user.about|markdown(wrap=False) }}
     </div>
-    <div class="fr-my-2w fr-grid-row fr-grid-row--gutters">
-        <div class="fr-col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="text-center">
-                        <img src="{{ user|avatar_url(150) }}"
-                            alt="{{ user.fullname }}" class="scalable"/>
-                    </div>
-                    <h2>{{ user.fullname }}</h2>
-                    {{ user.about|markdown }}
-                    {# <hr/> #}
-                    <div>
-                        <ul class="list-unstyled">
-                            {% if user.website %}
-                            <li>
-                                <span class="fa fa-link"></span>
-                                <a href="{{user.website}}" rel="nofollow">{{user.website}}</a>
-                            </li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                </div>
+    {% if user.website %}
+        <p class="fr-m-0">
+            <a
+                href="{{user.website}}"
+                rel="ugc nofollow"
+                class="fr-link fr-text--sm"
+                target="_blank"
+            >
+                {% set truncate_length = 18 %}
+                    {% set website = user.website.lstrip("https://").lstrip("http://").lstrip("www.") %}
+                <span class="fr-icon-global-line" aria-hidden="true"></span>
+                {{ website|truncate(truncate_length, True) }}
+            </a>
+        </p>
+    {% endif %}
 
-                <div class="list-group text-center">
-                    <a href="{{url_for('users.show', user=user)}}"
-                        class="list-group-item {% if user_tab == 'activity' %}active{% endif %}">
-                        <strong>{{ _('Activity') }}</strong>
-                    </a>
-                    <a href="{{url_for('users.followers', user=user)}}"
-                        class="list-group-item {% if user_tab == 'followers' %}active{% endif %}">
-                        <strong>
-                            {{ ngettext('%(num)d follower', '%(num)d followers', user.metrics.followers or 0) }}
-                        </strong>
-                    </a>
-                    <a href="{{url_for('users.following', user=user)}}"
-                        class="list-group-item {% if user_tab == 'following' %}active{% endif %}">
-                        <strong>
-                            {{ ngettext('%(num)d followed', '%(num)d followed', user.metrics.following or 0) }}
-                        </strong>
-                    </a>
-                    <a href="{{url_for('users.datasets', user=user)}}"
-                        class="list-group-item {% if user_tab == 'datasets' %}active{% endif %}">
-                        <strong>
-                            {{ ngettext('%(num)d dataset', '%(num)d datasets', user.metrics.datasets or 0) }}
-                        </strong>
-                    </a>
-                    <a href="{{url_for('users.reuses', user=user)}}"
-                        class="list-group-item {% if user_tab == 'reuses' %}active{% endif %}">
-                        <strong>
-                        {{ ngettext('%(num)d reuse', '%(num)d reuses', user.metrics.reuses or 0) }}
-                        </strong>
-                    </a>
-                </div>
-
-                {% if organizations %}
-                <div class="panel-body">
-                    <h4>{{ _('Organizations') }}</h4>
-                    {% for org in organizations %}
-                    <a href="{{ url_for('organizations.show', org=org) }}">
-                        <img src="{{ org.logo(48)|placeholder('organization') }}"
-                            class="avatar" width="48" height="48" alt="{{ org.name }}" />
-                    </a>
-                    {% endfor %}
-                </div>
-                {% endif %}
-                {% if sysadmin %}
-                <a href="{{ url_for('admin.index', path='user/{id}/'.format(id=user.id)) }}" class="fr-btn fr-mt-1w">
-                    {{ _("User's admin profile") }}
+    {% if can_edit %}
+        <ul class="fr-mt-1w">
+            <li>
+                <a
+                    href="{{url_for('users.followers', user=user)}}"
+                    class="fr-link fr-text--sm"
+                >
+                    {{ ngettext('%(num)d follower', '%(num)d followers', user.metrics.followers or 0) }}
                 </a>
-                {% endif %}
-            </div>
+            </li>
 
+            <li>
+                <a
+                    href="{{url_for('users.following', user=user)}}"
+                    class="fr-link fr-text--sm"
+                >
+                    {{ ngettext('%(num)d followed', '%(num)d followed', user.metrics.following or 0) }}
+                </a>
+            </li>
+        </ul>
+    {% endif %}
+
+    {% if organizations %}
+        <div class="fr-mt-4w">
+            <h2 class="subtitle subtitle--uppercase fr-mt-0 fr-mb-3v">{{ _('Organizations') }}</h2>
+            {% for org in organizations %}
+                <ul>
+                    <li class="fr-mb-1w">
+                        <a
+                            href="{{ url_for('organizations.show', org=org) }}"
+                            class="fr-raw-link text-blue-400 fr-text--bold fr-text--sm"
+                        >
+                            <div class="inline-block border border-default-grey rounded-xxs fr-p-1v bg-white">
+                                <img
+                                    src="{{ org.logo(24)|placeholder('organization') }}"
+                                    width="24"
+                                    height="24"
+                                    alt=""
+                                />
+                            </div>
+                            <span class="text-decoration-underline text-underline-position-under text-decoration-underline--dsfr">{{ organization_name_with_certificate(org) }}</span>
+                        </a>
+                    </li>
+                </ul>
+            {% endfor %}
         </div>
-        <div class="fr-col-md-9">{% block user_content %}{% endblock %}</div>
-    </div>
+    {% endif %}
+</div>
+<hr class="fr-py-0-5v" />
+<div class="fr-container fr-mb-3w fr-mt-9v vuejs">
+    {% block user_content %}
+        <user-dataset-list
+            owner="{{user.id}}"
+        ></user-dataset-list>
+        <user-reuse-list
+            owner="{{user.id}}"
+        ></user-reuse-list>
+        <div data-show-no-js>
+            <ul>
+                <li>
+                    <a href="{{ url_for('datasets.list', owner=user.id) }}" class="fr-link">
+                        {{ _('Browse the datasets of this user.') }}
+                    </a>
+                </li>
+                <li class="fr-mt-1w">
+                    <a href="{{ url_for('reuses.list', owner=user.id) }}" class="fr-link">
+                        {{ _('Browse the reuses of this user.') }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    {% endblock %}
 </div>
 {% endblock %}

@@ -4,7 +4,7 @@
  * Lots of variables here are probably useless for the front-end
  */
 
-import { User } from "@etalab/data.gouv.fr-components";
+import type { User } from "@etalab/data.gouv.fr-components";
 import type { Primitive } from "@sentry/types";
 
 /**
@@ -40,6 +40,7 @@ const userEl = document.querySelector<HTMLElement>("meta[name=current-user]");
 export const user: User = {
   id: userEl?.getAttribute("content") || "",
   slug: userEl?.dataset.slug,
+  page: "/users/" + userEl?.dataset.slug,
   first_name: userEl?.dataset.first_name || "",
   last_name: userEl?.dataset.last_name || "",
   avatar: userEl?.dataset.avatar,

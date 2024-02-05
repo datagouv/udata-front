@@ -1,0 +1,108 @@
+import { Canvas, Controls, Description, Meta } from '@storybook/blocks';
+
+import * as CardMDStories from './CardMD.stories';
+
+<Meta of={CardMDStories} />
+
+# Card Medium
+
+A medium card to show a dataset. It's usually used in a list but it also work alone.
+It contains all informations except the quality score and metrics.
+
+<Canvas of={CardMDStories.CardMDWithOrganizationLogo} />
+
+## Props
+
+<Controls />
+
+## Stories
+
+There are lots of differents cases here based on the dataset owner and all the optional fields.
+
+### Cards with logo
+
+The card logo is the organization logo or the owner avatar.
+
+<Description of={CardMDStories.CardMDWithOrganizationLogo} />
+<Canvas of={CardMDStories.CardMDWithOrganizationLogo} />
+
+<Description of={CardMDStories.CardMDWithDescriptionAndCertifiedOrganization} />
+<Canvas of={CardMDStories.CardMDWithDescriptionAndCertifiedOrganization} />
+
+<Description of={CardMDStories.CardMDWithOwnerAvatar} />
+<Canvas of={CardMDStories.CardMDWithOwnerAvatar} />
+
+### Cards of dataset belonging to an organization
+
+Public organizations should be certified while non-public organizations can't be.
+
+<Description of={CardMDStories.CardMDWithOrganizationLogo} />
+<Canvas of={CardMDStories.CardMDWithOrganizationLogo} />
+
+<Description of={CardMDStories.CardMDWithCertifiedOrganization} />
+<Canvas of={CardMDStories.CardMDWithCertifiedOrganization} />
+
+### Cards with different update dates
+
+<Description of={CardMDStories.CardMDWithOrganizationLogo} />
+<Canvas of={CardMDStories.CardMDWithOrganizationLogo} />
+
+<Description of={CardMDStories.CardMDUpdatedLastMonthWithOrganizationLogo} />
+<Canvas of={CardMDStories.CardMDUpdatedLastMonthWithOrganizationLogo} />
+
+<Description of={CardMDStories.CardMDUpdatedLastYearWithOrganizationLogo} />
+<Canvas of={CardMDStories.CardMDUpdatedLastYearWithOrganizationLogo} />
+
+### Cards with Acronym
+
+The card logo is the organization logo or the owner avatar.
+
+<Description of={CardMDStories.CardMDWithAcronymAndOrganizationLogo} />
+<Canvas of={CardMDStories.CardMDWithAcronymAndOrganizationLogo} />
+
+<Description of={CardMDStories.CardMDWithAcronymAndOwnerWithAvatar} />
+<Canvas of={CardMDStories.CardMDWithAcronymAndOwnerWithAvatar} />
+
+### Archived dataset
+
+An archived dataset has a badge on it.
+
+<Description of={CardMDStories.CardMDArchivedWithOrganizationLogo} />
+<Canvas of={CardMDStories.CardMDArchivedWithOrganizationLogo} />
+
+<Description of={CardMDStories.CardMDArchivedWithOwnerAvatar} />
+<Canvas of={CardMDStories.CardMDArchivedWithOwnerAvatar} />
+
+### Private dataset
+
+A private dataset has another badge on it.
+
+<Description of={CardMDStories.CardMDPrivateWithOrganizationLogo} />
+<Canvas of={CardMDStories.CardMDPrivateWithOrganizationLogo} />
+
+<Description of={CardMDStories.CardMDPrivateWithOwnerAvatar} />
+<Canvas of={CardMDStories.CardMDPrivateWithOwnerAvatar} />
+
+### Archived private dataset
+
+An archived private dataset has 2 badges on it.
+
+<Description of={CardMDStories.CardMDPrivateArchivedWithOrganizationLogo} />
+<Canvas of={CardMDStories.CardMDPrivateArchivedWithOrganizationLogo} />
+
+<Description of={CardMDStories.CardMDPrivateArchivedWithOwnerAvatar} />
+<Canvas of={CardMDStories.CardMDPrivateArchivedWithOwnerAvatar} />
+
+### Cards with placeholder
+
+When the organization doesn't have a logo, the dataset placeholder is shown.
+For an owner, the avatar is used or an identicon is computed.
+
+<Description of={CardMDStories.CardMDWithOrganizationPlaceholder} />
+<Canvas of={CardMDStories.CardMDWithOrganizationPlaceholder} />
+
+<Description of={CardMDStories.CardMDWithOwnerPlaceholder} />
+<Canvas of={CardMDStories.CardMDWithOwnerPlaceholder} />
+
+<Description of={CardMDStories.CardMDWithDatasetPlaceholder} />
+<Canvas of={CardMDStories.CardMDWithDatasetPlaceholder} />

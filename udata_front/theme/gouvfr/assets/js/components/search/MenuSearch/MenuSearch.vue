@@ -1,7 +1,7 @@
 <template>
   <div
     :id="id"
-    class="fr-col fr-search-bar"
+    class="fr-col fr-search-bar wrap"
     role="search"
   >
     <label class="fr-label" :for="inputId" :id="labelId">

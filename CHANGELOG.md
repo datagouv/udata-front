@@ -13,6 +13,7 @@
 > The update to the next version is mandatory to have a valid js build.
 
 - Fix dependencies according to udata's Flask-Babel migration [#300](https://github.com/etalab/udata-front/pull/300)
+- User pages are back [#338](https://github.com/etalab/udata-front/pull/338)
 
 ## 3.2.12 (2023-12-15)
 

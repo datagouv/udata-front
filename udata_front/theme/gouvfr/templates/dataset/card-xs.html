@@ -63,10 +63,19 @@
                     <a
                         class="fr-link"
                         href="{{ url_for('organizations.show', org=dataset.organization, _external=True) }}"
-                    >{{organization_name_with_certificate(dataset.organization)}}</a>
+                    >
+                        {{organization_name_with_certificate(dataset.organization)}}
+                    </a>
                 </span>
                 {% elif dataset.owner %}
-                {{owner_name(dataset)}}
+                <span class="not-enlarged">
+                    <a
+                        class="fr-link"
+                        href="{{ url_for('users.show', user=dataset.owner, _external=True) }}"
+                    >
+                        {{owner_name(dataset)}}
+                    </a>
+                </span>
                 {% endif %}
             </p>
             {% endif %}

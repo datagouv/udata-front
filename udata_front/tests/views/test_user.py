@@ -2,11 +2,12 @@ from flask import url_for
 
 from udata.models import Follow
 from udata.core.user.factories import UserFactory, AdminFactory
-from udata.core.dataset.factories import DatasetFactory, ResourceFactory
+from udata.core.dataset.factories import DatasetFactory
 from udata.core.reuse.factories import ReuseFactory
 from udata.core.organization.factories import OrganizationFactory
 from udata_front.tests import GouvFrSettings
 from udata_front.tests.frontend import GouvfrFrontTestCase
+from udata.tests.helpers import assert_redirects
 
 
 class UserBlueprintTest(GouvfrFrontTestCase):
@@ -44,26 +45,14 @@ class UserBlueprintTest(GouvfrFrontTestCase):
     def test_render_profile_datasets(self):
         '''It should render the user profile datasets page'''
         user = UserFactory()
-        datasets = [DatasetFactory(owner=user, resources=[ResourceFactory()])
-                    for _ in range(3)]
-        for _ in range(2):
-            DatasetFactory(resources=[ResourceFactory()])
         response = self.get(url_for('users.datasets', user=user))
-        self.assert200(response)
-        rendered_datasets = self.get_context_variable('datasets')
-        self.assertEqual(len(rendered_datasets), len(datasets))
+        assert_redirects(response, url_for('users.show', user=user))
 
     def test_render_profile_reuses(self):
         '''It should render the user profile reuses page'''
         user = UserFactory()
-        reuses = [ReuseFactory(owner=user, datasets=[DatasetFactory()])
-                  for _ in range(3)]
-        for _ in range(2):
-            ReuseFactory(datasets=[DatasetFactory()])
         response = self.get(url_for('users.reuses', user=user))
-        self.assert200(response)
-        rendered_reuses = self.get_context_variable('reuses')
-        self.assertEqual(len(rendered_reuses), len(reuses))
+        assert_redirects(response, url_for('users.show', user=user))
 
     def test_render_profile_following(self):
         '''It should render the user profile following page'''

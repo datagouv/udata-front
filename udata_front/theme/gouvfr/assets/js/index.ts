@@ -10,6 +10,7 @@ import Threads from "./components/discussions/Threads.vue";
 import ThreadCreate from "./components/discussions/ThreadCreate/ThreadCreate.vue";
 import MenuSearch from "./components/search/MenuSearch/MenuSearch.vue";
 import Search from "./components/search/Search/Search.vue";
+import DeleteButton from "./components/utils/DeleteButton/DeleteButton.vue";
 import FeaturedButton from './components/utils/featured.vue';
 import FollowButton from "./components/utils/follow-button.vue";
 import ReadMore from "./components/ReadMore/ReadMore.vue";
@@ -18,6 +19,8 @@ import ResourceFromHash from "./components/dataset/resource/resourceFromHash.vue
 import Resources from "./components/dataset/resource/resources.vue";
 import Captcha from "./components/utils/captcha.vue";
 import Toggletip from "./components/utils/Toggletip/Toggletip.vue";
+import UserDatasetList from "./components/UserDatasetList/UserDatasetList.vue";
+import UserReuseList from "./components/UserReuseList/UserReuseList.vue";
 import PublishingForm from "./pages/PublishingForm/PublishingForm.vue";
 
 import "./components/vanilla/tabs.js";
@@ -61,8 +64,9 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("discussion-create", ThreadCreate);
   app.component("menu-search", MenuSearch);
   app.component("search", Search);
-  app.component("follow-button", FollowButton);
+  app.component("delete-button", DeleteButton);
   app.component("featured-button", FeaturedButton);
+  app.component("follow-button", FollowButton);
   app.component("read-more", ReadMore);
   app.component("request-membership", RequestMembership);
   app.component("dataset-resources", Resources);
@@ -71,6 +75,8 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("chart", Chart);
   app.component("toggletip", Toggletip);
   app.component("publishing-form", PublishingForm);
+  app.component("user-dataset-list", UserDatasetList);
+  app.component("user-reuse-list", UserReuseList);
 
   // @ts-ignore unset delimiters used in html templates to prevent injections using {{ }}
   app.config.compilerOptions.delimiters = [];

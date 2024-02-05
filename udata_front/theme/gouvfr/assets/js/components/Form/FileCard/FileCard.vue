@@ -82,7 +82,7 @@ export default defineComponent({
     const file = ref({...props.file});
     const loading = computed(() => isLoading(file.value));
     const loaded = computed(() => isLoaded(file.value));
-    const resourceImage = useResourceImage(props.file.format || "");
+    const {url: resourceImage} = useResourceImage(file.value);
     const { stateErrors, stateWarnings, validateRequiredRules } = useFileValidation(file);
 
     onMounted(() => validateRequiredRules());
