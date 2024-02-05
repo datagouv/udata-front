@@ -12,7 +12,6 @@ export function useTooltipProvider(getEditor: () => Editor | undefined) {
     if (editor?.ctx && editor.ctx.isInjected(tableTooltipCtx.key)) {
       editor.ctx.set(tableTooltipCtx.key, provider);
       tooltipProvider.value = provider;
-      console.log("new provider");
     }
   }
   return {

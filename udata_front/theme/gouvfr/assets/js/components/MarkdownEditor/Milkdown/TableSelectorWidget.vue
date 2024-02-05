@@ -29,7 +29,7 @@ const containerRef = ref<HTMLDivElement | null>(null);
 const drag = ref(false);
 
 const common = computed(
-  () => "absolute bg-grey-200 " + (drag.value ? "border border-default-grey border-2" : "")
+  () => "absolute bg-grey-200 " + (drag.value ? "border border-blue-400 border-2" : "")
 );
 
 const className = computed(() => {
@@ -48,7 +48,6 @@ function click(e: Event) {
   const editor = getEditor() as Editor;
   editor.action((ctx) => {
     const tooltip = ctx.get(tableTooltipCtx.key);
-    console.log(tooltip);
     tooltip?.getInstance()?.setProps({
       getReferenceClientRect: () => {
         return div.getBoundingClientRect();
@@ -95,7 +94,7 @@ function drop(e: DragEvent) {
   drag.value = false;
   if (type === "top-left") return;
   const i = spec?.index;
-  if (loading || i == null) return;
+  if (loading.value || i == null) return;
   const data = e.dataTransfer?.getData("application/milkdown-table-sort") ?? "";
   try {
     const { index, type } = JSON.parse(data);
