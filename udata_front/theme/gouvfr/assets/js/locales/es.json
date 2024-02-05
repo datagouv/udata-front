@@ -192,7 +192,7 @@
   "The value must be equal to the ${otherName} value": "The value must be equal to the ${otherName} value",
   "License": "License",
   "Remove file": "Remove file",
-  "Edit file": "",
+  "Edit file": "Edit file",
   "Drag and drop files": "Drag and drop files",
   "or": "or",
   "Browse": "Browse",
@@ -316,11 +316,11 @@
   "Publish the correct file types": "Publish the correct file types",
   "The formats must be:": "The formats must be:",
   "It is possible to identify an existing data schema by visiting the {schema} website, that references a list of existing data schema.": "It is possible to identify an existing data schema by visiting the {schema} website, that references a list of existing data schema.",
-  "{n} datasets": "",
-  " by ": "",
-  "Search for data": "",
-  "{n} downloads": "",
-  "Are you sure ?": "",
-  "The content will be permanently deleted.": "",
-  "An error occured during the deletion.": ""
+  "{n} datasets": "{n} datasets | {n} dataset | {n} datasets",
+  " by ": " by ",
+  "Search for data": "Search for data",
+  "{n} downloads": "{n} downloads",
+  "Are you sure ?": "Are you sure ?",
+  "The content will be permanently deleted.": "The content will be permanently deleted.",
+  "An error occured during the deletion.": "An error occured during the deletion."
 }
