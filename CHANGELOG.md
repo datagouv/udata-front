@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 3.5.1 (2024-02-05)
 
 - Fix vue runtime errors [#343](https://github.com/etalab/udata-front/pull/343)
 - New featured topic : agriculture [#344](https://github.com/etalab/udata-front/pull/344)
