@@ -1,7 +1,7 @@
 <template>
   <div
-    class="rounded-xxs fr-p-3w"
-    :class="{'fr-grid-row flex-direction-column h-100': stretchHeight, [type]: type, 'border border-default-grey': isDefault }"
+    class="rounded-xxs fr-p-3w fr-grid-row flex-direction-column"
+    :class="{'h-100': stretchHeight, [type]: type, 'border border-default-grey': !isPrimary }"
   >
     <div class="fr-col fr-grid-row fr-grid-row--gutters" :class="{'text-blue-400': isPrimary}">
       <div class="fr-col-auto">
@@ -12,7 +12,7 @@
           <component
             :is="heading"
             class="fr-m-0 fr-mb-1w"
-            :class="{'fr-text--bold fr-text--md': isPrimary, 'fr--h5': isDefault}"
+            :class="{'fr-text--bold fr-text--md': isPrimary, 'fr--h5': !isPrimary}"
           >
             {{ title }}
           </component>
@@ -37,10 +37,6 @@ export default defineComponent({
       type: /** @type {import("vue").PropType<import("../../../types").AxisAlignment>} */ (String),
       default: "",
     },
-    content: {
-      type: String,
-      required: true,
-    },
     heading: {
       type: String,
       default: "h2"
@@ -54,6 +50,10 @@ export default defineComponent({
       default: false,
     },
     title: {
+      type: String,
+      required: true,
+    },
+    content: {
       type: String,
       required: true,
     },

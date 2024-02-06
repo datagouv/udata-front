@@ -28,10 +28,12 @@
           :accept="accept"
           :multiple="multiple"
           :required="required"
+          :disabled="disabled"
         />
       </div>
       <button
         @click="open"
+        :disabled="disabled"
         class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500"
         :title="$t('Browse')"
         :aria-controls="id"
@@ -129,13 +131,13 @@ export default defineComponent({
     const ariaDescribedBy = computed(() => {
       let describedBy = "";
       if(props.hintText) {
-        describedBy += hintTextId;
+        describedBy += hintTextId.value;
       }
       if (props.isValid) {
-        describedBy += " " + validTextId;
+        describedBy += " " + validTextId.value;
       }
       else if (props.hasError) {
-        describedBy += " " + errorTextId;
+        describedBy += " " + errorTextId.value;
       }
       return describedBy;
     });
@@ -168,7 +170,9 @@ export default defineComponent({
     const change = (event) => {
       const target = /** @type {HTMLInputElement | null} */ (event.target);
       const files = Array.from(target?.files ?? []);
-      onChange(files);
+      if(!props.disabled) {
+        onChange(files);
+      }
     }
 
     useDropZone(dropFilesHereRef, onChange);

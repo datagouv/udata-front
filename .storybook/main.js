@@ -5,10 +5,10 @@ import { withoutVitePlugins } from "@storybook/builder-vite";
 /** @type { import('@storybook/vue3-vite').StorybookConfig } */
 const config = {
   stories: [{
-    directory: "../udata_front/theme/*/",
+    directory: "../udata_front/theme/*/assets/",
     files: "**/*.mdx"
   }, {
-    directory: "../udata_front/theme/*/",
+    directory: "../udata_front/theme/*/assets/",
     files: "**/*.stories.@(js|jsx|ts|tsx)"
   }],
   addons: [

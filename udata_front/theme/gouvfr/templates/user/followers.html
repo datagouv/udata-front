@@ -9,7 +9,10 @@
     </a>
 </li>
 <li>
-    <a class="fr-breadcrumb__link">
+    <a
+        class="fr-breadcrumb__link"
+        href="{{url_for('users.show', user=user)}}"
+    >
         {{ user.fullname }}
     </a>
 </li>
@@ -23,26 +26,16 @@
 {% block user_content %}
 {% if followers|length > 0 %}
     <h3>{{ ngettext('%(num)d follower', '%(num)d followers', followers|length) }}</h3>
-    <div class="fr-grid-row">
-        <ul class="card-list card-list--columned">
+    <div class="fr-grid-row fr-grid-row--gutters">
             {% for follow in followers %}
-            <li class="fr-col-md-4">
+            <div class="fr-col-md-4">
                 {% include theme('follow/follower-card.html') %}
-            </li>
+            </div>
             {% endfor %}
-        </ul>
     </div>
-
 {% else %}
-
-<div class="fr-grid-row">
-    <div class="fr-col-12">
-
-    </div>
-</div>
-<p class="text-center lead">
-{{ _('%(user)s has no follower', user=user.fullname) }}
-</p>
-
+    <p class="text-center lead">
+    {{ _('%(user)s has no follower', user=user.fullname) }}
+    </p>
 {% endif %}
 {% endblock %}

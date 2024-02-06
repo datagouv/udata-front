@@ -41,8 +41,8 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const {t} = useI18n();
-        const toast = useToast();
+        const { t } = useI18n();
+        const { toast } = useToast();
         const isFeatured = ref(props.featured);
         /** @type {import("vue").Ref<HTMLElement | null>} */
         const toggleInput = ref(null);

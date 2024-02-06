@@ -17,7 +17,7 @@
           </div>
         </div>
       </Well>
-      <CardLg v-bind="dataset" :showMetrics="false" />
+      <CardLg :dataset="dataset" :showMetrics="false" />
       <div class="fr-grid-row justify-between">
         <a
             :href="feedbackUrl"
@@ -44,7 +44,7 @@ import Container from '../../components/Ui/Container/Container.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Well from "../../components/Ui/Well/Well.vue";
 import CardLg from '../../components/dataset/card-lg.vue';
-import successIcon from "svg/illustrations/success.svg";
+import successIcon from "../../../../templates/svg/illustrations/success.svg";
 
 export default defineComponent({
   components: { Container, Stepper, Well, CardLg },

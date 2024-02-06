@@ -1,0 +1,53 @@
+.fr-tabs--full-page {
+    overflow: visible;
+    & > .fr-tabs__panel {
+        padding: 0;
+        padding-top: 2.5rem;
+        padding-bottom: 7.5rem;
+        background-color: @white;
+    }
+    &.fr-transition-none > .fr-tabs__panel:not(.fr-tabs__panel--selected)[data-fr-js-tab-panel] {
+        display: none;
+    }
+    &::after {
+        box-shadow: none;
+        .border-top;
+        .border-default-grey;
+    }
+    & > .fr-container > .fr-tabs__list {
+        max-width: calc(100% - 2rem);
+        &[role="tablist"] {
+            display: none;
+        }
+        &[role="tablist"][data-fr-js-tabs-list] {
+            display: flex;
+        }
+        &[role="navigation"] {
+            display: flex;
+        }
+        &[role="navigation"][data-fr-js-tabs-list] {
+            display: none;
+        }
+        @media @dsfr-query-sm {
+            max-width: calc(@breakpoint-sm - 2rem);
+        }
+        @media @dsfr-query-md {
+            max-width: calc(@breakpoint-md - 2rem);
+        }
+        @media @dsfr-query-lg {
+            max-width: calc(@breakpoint-lg - 3rem);
+        }
+        @media @dsfr-query-xl {
+            max-width: calc(@breakpoint-xl - 3rem);
+        }
+    }
+}
+
+.fr-tabs__tab sup {
+    .sup;
+    place-self: baseline;
+    margin-left: 0.125rem;
+    &::before, &::after {
+        color: inherit;
+    }
+}

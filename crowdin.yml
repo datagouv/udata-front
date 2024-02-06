@@ -3,3 +3,5 @@ files:
     translation: /udata_front/theme/gouvfr/translations/%two_letters_code%/LC_MESSAGES/%file_name%.po
   - source: /udata_front/theme/gouvfr/assets/js/locales/en.json
     translation: /udata_front/theme/gouvfr/assets/js/locales/%two_letters_code%.json
+  - source: /udata_front/theme/gouvfr/datagouv-components/src/locales/en.json
+    translation: /udata_front/theme/gouvfr/datagouv-components/src/locales/%two_letters_code%.json

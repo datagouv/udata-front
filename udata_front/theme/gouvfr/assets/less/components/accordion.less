@@ -1,27 +1,3 @@
-/*
----
-name: Accordion
-category: 3 - Components
----
-
-You can use accordions from DSFR. You can find documented usage on [DSFR documentation](https://gouvfr.atlassian.net/wiki/spaces/DB/pages/312082509/Accord+on+-+Accordion
-) with their classes.
-
-
-```accordion-component.html
-<section class="fr-accordion">
-    <h3 class="fr-accordion__title">
-        <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-106">Intitulé accordéon</button>
-    </h3>
-    <div class="fr-collapse" id="accordion-106">
-        <!-- données de test -->
-    </div>
-</section>
-```
-*/
-
-@import (less) "@gouvfr/dsfr/dist/component/accordion/accordion.css";
-
 // Data.gouv customization
 .fr-accordion {
     --border-default-blue-france: @blue-400;
@@ -66,8 +42,6 @@ You can use accordions from DSFR. You can find documented usage on [DSFR documen
     }
 }
 
-[data-fr-js] .accordion-content {
-    overflow: hidden;
-    height: 0;
-    display: none;
+:root {
+    @accordion-content-if-js();
 }
