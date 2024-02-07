@@ -1,16 +1,19 @@
 import type { Editor } from "@milkdown/core";
+import { SliceType } from "@milkdown/ctx";
 import { TooltipProvider } from "@milkdown/plugin-tooltip";
-import { ref, toRaw } from "vue";
-import { tableTooltipCtx } from "./tableTooltip";
+import { useInstance } from "@milkdown/vue";
+import { usePluginViewContext } from "@prosemirror-adapter/vue";
+import { unrefElement } from "@vueuse/core";
+import { type Ref, ref, toRaw, watch, type ComponentPublicInstance } from "vue";
 
-export function useTooltipProvider(getEditor: () => Editor | undefined) {
+export function useTooltipProvider(getEditor: () => Editor | undefined, key: SliceType<TooltipProvider | null>) {
   const getRawEditor = () => toRaw(getEditor());
   const tooltipProvider = ref<TooltipProvider | null>(null);
   const setTooltipProvider = (provider: TooltipProvider) => {
     tooltipProvider.value = provider;
     const editor = getRawEditor();
-    if (editor?.ctx && editor.ctx.isInjected(tableTooltipCtx.key)) {
-      editor.ctx.set(tableTooltipCtx.key, provider);
+    if (editor?.ctx && editor.ctx.isInjected(key)) {
+      editor.ctx.set(key, provider);
       tooltipProvider.value = provider;
     }
   }
@@ -18,4 +21,45 @@ export function useTooltipProvider(getEditor: () => Editor | undefined) {
     tooltipProvider,
     setTooltipProvider,
   }
+}
+
+export function makeTooltipProvider(key: SliceType<TooltipProvider | null>, tooltipRef: Ref<ComponentPublicInstance | HTMLElement | null>) {
+  const { view } = usePluginViewContext();
+  const [loading, getEditor] = useInstance();
+  const { tooltipProvider, setTooltipProvider } = useTooltipProvider(getEditor, key);
+  const hideTooltip = ref(true);
+
+  watch([tooltipRef, loading, tooltipProvider, view], ([ref, loading, tooltipProvider, view], [_oldToolTipRef, _oldLoading, oldTooltipProvider, _oldView], onCleanup) => {
+    if (
+      ref &&
+      !loading &&
+      !tooltipProvider &&
+      view &&
+      view.state
+    ) {
+      const elt = unrefElement<HTMLElement | ComponentPublicInstance>(ref);
+      if(elt instanceof HTMLElement) {
+        const provider = new TooltipProvider({
+          content: elt,
+          tippyOptions: {
+            zIndex: 30,
+          },
+          shouldShow: () => {
+            return false;
+          },
+        });
+        provider.update(view);
+        setTooltipProvider(provider);
+      }
+      onCleanup(() => oldTooltipProvider?.destroy());
+    }
+    if(view && view.state) {
+      hideTooltip.value = view.state.selection.from === -1 || view.state.selection.from === view.state.selection.to;
+    }
+  });
+
+  return {
+    hideTooltip,
+    tooltipProvider,
+  };
 }

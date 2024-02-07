@@ -46,7 +46,7 @@
           />
           <EditorButton
             icon="fr-icon-link"
-            @click="() => call(insertTableCommand.key)"
+            @click="call(insertLinkCommand.key)"
             :title="t('Link')"
           />
           <EditorButton
@@ -113,6 +113,7 @@ import EditorButton from "./EditorButton.vue";
 import { dsfrColumnResizingPlugin } from "./Milkdown/dsfrColumnResizingPlugin";
 import { tableSelectorPlugin } from "./Milkdown/tableSelectorPlugin";
 import { tableTooltip, tableTooltipCtx } from "./Milkdown/tableTooltip";
+import { insertLinkCommand, linkPlugins } from "./Milkdown/LinkEdit";
 import TableTooltip from "./Milkdown/TableTooltip.vue";
 
 import 'prosemirror-view/style/prosemirror.css';
@@ -144,6 +145,7 @@ const editor = useEditor((root) =>
   Editor.make()
     .config((ctx) => {
       ctx.set(rootCtx, root);
+      //configureLinkTooltip(ctx);
       ctx.set(defaultValueCtx, '');
       // Add attributes to nodes and marks
       ctx.set(headingAttr.key, (node) => {
@@ -161,6 +163,7 @@ const editor = useEditor((root) =>
     .use(commonmark)
     .use(gfmPlugins)
     .use(history)
+    .use(linkPlugins)
 );
 
 function call<T>(command: CmdKey<T>, payload?: T) {

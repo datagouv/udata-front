@@ -11,7 +11,7 @@
  */
 
 /**
- * @type keyCodesModel
+ * @type {keyCodesModel}
  */
 const KEYCODES = window.dsfr.core.KeyCodes;
 

@@ -103,7 +103,6 @@
 </template>
 <script setup lang="ts">
 import { commandsCtx } from "@milkdown/core";
-import { TooltipProvider } from "@milkdown/plugin-tooltip";
 import {
   addColAfterCommand,
   addColBeforeCommand,
@@ -120,14 +119,16 @@ import {
 import AlignCenterIcon from 'iconoir/icons/regular/align-center.svg?raw';
 import AlignLeftIcon from 'iconoir/icons/regular/align-left.svg?raw';
 import AlignRightIcon from 'iconoir/icons/regular/align-right.svg?raw';
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
+import { tableTooltipCtx } from "./tableTooltip";
 import TooltipButton from "./TooltipButton.vue";
-import { useTooltipProvider } from "./useTooltipProvider";
+import { makeTooltipProvider } from "./useTooltipProvider";
+
 const toolTipRef = ref<HTMLDivElement | null>(null);
 const { view } = usePluginViewContext();
 
 const [loading, getEditor] = useInstance();
-const { tooltipProvider, setTooltipProvider } = useTooltipProvider(getEditor);
+const { tooltipProvider } = makeTooltipProvider(tableTooltipCtx.key, toolTipRef);
 const isRow = computed(() =>
   view.value.state.selection instanceof CellSelection &&
   view.value.state.selection.isRowSelection());
@@ -140,28 +141,4 @@ const isHeading = computed(() =>
   isRow.value &&
   view.value.state.doc.nodeAt((view.value.state.selection as CellSelection).$headCell.pos)
     ?.type.name === "table_header");
-
-watch([toolTipRef, loading, tooltipProvider, view], ([toolTipRef, loading, tooltipProvider, view], [_oldToolTipRef, _oldLoading, oldTooltipProvider, _oldView], onCleanup) => {
-  if (
-    toolTipRef &&
-    !loading &&
-    !tooltipProvider &&
-    view &&
-    view.state
-  ) {
-    const provider = new TooltipProvider({
-      content: toolTipRef,
-      tippyOptions: {
-        zIndex: 30,
-      },
-      shouldShow: () => {
-        return false;
-      },
-    });
-
-    provider.update(view);
-    setTooltipProvider(provider);
-    onCleanup(() => oldTooltipProvider?.destroy());
-  }
-});
 </script>
