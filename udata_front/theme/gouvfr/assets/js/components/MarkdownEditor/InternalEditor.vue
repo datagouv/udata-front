@@ -113,7 +113,11 @@ import EditorButton from "./EditorButton.vue";
 import { dsfrColumnResizingPlugin } from "./Milkdown/dsfrColumnResizingPlugin";
 import { tableSelectorPlugin } from "./Milkdown/tableSelectorPlugin";
 import { tableTooltip, tableTooltipCtx } from "./Milkdown/tableTooltip";
-import { insertLinkCommand, linkPlugins } from "./Milkdown/LinkEdit";
+import { insertLinkCommand, linkEditPlugins } from "./Milkdown/LinkEdit";
+import { configureEditTooltip } from "./Milkdown/LinkEdit/configureEditTooltip";
+import { linkPreviewPlugins } from "./Milkdown/LinkPreview";
+import { configurePreviewTooltip } from "./Milkdown/LinkPreview/configurePreviewTooltip";
+import { useLinkPreview } from "./Milkdown/LinkPreview/useLinkPreview";
 import TableTooltip from "./Milkdown/TableTooltip.vue";
 
 import 'prosemirror-view/style/prosemirror.css';
@@ -123,6 +127,8 @@ const { t } = useI18n();
 
 const pluginViewFactory = usePluginViewFactory();
 const widgetViewFactory = useWidgetViewFactory();
+
+const { updateLink } = useLinkPreview();
 
 const columnResizingPluginIndex = gfm.findIndex(plugin => plugin === columnResizingPlugin);
 gfm[columnResizingPluginIndex] = dsfrColumnResizingPlugin;
@@ -145,7 +151,8 @@ const editor = useEditor((root) =>
   Editor.make()
     .config((ctx) => {
       ctx.set(rootCtx, root);
-      //configureLinkTooltip(ctx);
+      configureEditTooltip(ctx);
+      configurePreviewTooltip(ctx, updateLink);
       ctx.set(defaultValueCtx, '');
       // Add attributes to nodes and marks
       ctx.set(headingAttr.key, (node) => {
@@ -163,7 +170,8 @@ const editor = useEditor((root) =>
     .use(commonmark)
     .use(gfmPlugins)
     .use(history)
-    .use(linkPlugins)
+    .use(linkEditPlugins)
+    .use(linkPreviewPlugins)
 );
 
 function call<T>(command: CmdKey<T>, payload?: T) {

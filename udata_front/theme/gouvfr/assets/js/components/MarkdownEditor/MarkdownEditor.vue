@@ -9,4 +9,7 @@
 import { MilkdownProvider } from "@milkdown/vue";
 import { ProsemirrorAdapterProvider } from '@prosemirror-adapter/vue';
 import InternalEditor from "./InternalEditor.vue";
+import { useLinkPreviewProvider } from "./Milkdown/LinkPreview/useLinkPreview";
+
+useLinkPreviewProvider();
 </script>

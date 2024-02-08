@@ -10,3 +10,12 @@ export function addLink(view: EditorView, mark: Mark, previousMark?: Mark | null
   tr.addMark(view.state.selection.from, view.state.selection.to, mark);
   view.dispatch(tr);
 }
+
+export function removeLink(view: EditorView, mark: Mark) {
+  const tr = view.state.tr;
+  if (mark) {
+    tr.removeMark(view.state.selection.from, view.state.selection.to, mark);
+  }
+
+  view.dispatch(tr);
+}

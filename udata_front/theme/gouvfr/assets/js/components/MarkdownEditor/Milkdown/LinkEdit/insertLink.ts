@@ -1,7 +1,7 @@
 import { editorViewCtx } from "@milkdown/core";
 import { type Ctx } from "@milkdown/ctx";
 import { linkSchema } from "@milkdown/preset-commonmark";
-import { linkTooltipCtx, linkTooltipState } from "./linkEditTooltip";
+import { linkEditTooltipCtx, linkTooltipState } from "./linkEditTooltip";
 import { posToDOMRect } from "@milkdown/prose";
 import { $command } from "@milkdown/utils";
 import { TextSelection } from "prosemirror-state";
@@ -15,6 +15,7 @@ export function insertLink(ctx: Ctx) {
   if (selection.empty) return false;
 
   const has = doc.rangeHasMark(selection.from, selection.to, linkSchema.type(ctx));
+
   // range already has link
   if (has) return false;
 
@@ -22,11 +23,11 @@ export function insertLink(ctx: Ctx) {
       from: selection.from,
       to: selection.to,
       mark: null,
-  }))
+  }));
 
   view.dispatch(view.state.tr.setSelection(TextSelection.create(view.state.doc, selection.from, selection.to)))
 
-  const tooltip = ctx.get(linkTooltipCtx.key);
+  const tooltip = ctx.get(linkEditTooltipCtx.key);
   tooltip?.getInstance()?.setProps({
     getReferenceClientRect: () => {
       return posToDOMRect(view, selection.from, selection.to);

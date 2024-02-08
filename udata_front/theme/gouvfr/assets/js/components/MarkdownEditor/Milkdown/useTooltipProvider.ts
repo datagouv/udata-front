@@ -27,7 +27,6 @@ export function makeTooltipProvider(key: SliceType<TooltipProvider | null>, tool
   const { view } = usePluginViewContext();
   const [loading, getEditor] = useInstance();
   const { tooltipProvider, setTooltipProvider } = useTooltipProvider(getEditor, key);
-  const hideTooltip = ref(true);
 
   watch([tooltipRef, loading, tooltipProvider, view], ([ref, loading, tooltipProvider, view], [_oldToolTipRef, _oldLoading, oldTooltipProvider, _oldView], onCleanup) => {
     if (
@@ -53,13 +52,9 @@ export function makeTooltipProvider(key: SliceType<TooltipProvider | null>, tool
       }
       onCleanup(() => oldTooltipProvider?.destroy());
     }
-    if(view && view.state) {
-      hideTooltip.value = view.state.selection.from === -1 || view.state.selection.from === view.state.selection.to;
-    }
   });
 
   return {
-    hideTooltip,
     tooltipProvider,
   };
 }

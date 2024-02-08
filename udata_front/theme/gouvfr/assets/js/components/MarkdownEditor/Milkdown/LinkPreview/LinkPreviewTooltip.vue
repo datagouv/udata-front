@@ -1,42 +1,51 @@
 <template>
-  <EditorTooltip class="link-preview">
-    <span class="fr-icon--link">
-    </span>
-    <a class="fr-link" :href="link">
-      {{ link }}
-    </a>
-    <button class="fr-btn fr-btn--sm fr-icon-edit" @click="editLink">
+  <EditorTooltip ref="toolTipRef" :class="{'fr-hidden': link.length === 0}">
+    <span aria-hidden="true" class="fr-icon-link fr-mr-1w"></span>
+    <div class="text-overflow-ellipsis">
+      <a class="fr-link" :href="link">
+        {{ link }}
+      </a>
+    </div>
+    <button class="fr-btn fr-btn--secondary fr-btn--sm fr-icon-pencil-line fr-mx-1w" @click="editLink">
       {{ t("Edit link") }}
     </button>
-    <button class="fr-btn fr-btn--sm fr-icon-link-unlink" :title="t('Remove link')" @click="removeLink">
+    <button class="fr-btn fr-btn--tertiary fr-btn--sm fr-icon-link-unlink" :title="t('Remove link')" @click="deleteLink">
       {{ t("Remove link") }}
     </button>
   </EditorTooltip>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { ref, toRaw } from "vue";
 import { useI18n } from "vue-i18n";
-import { useCtx } from "../useCtx";
 import EditorTooltip from "../EditorTooltip.vue";
+import { linkPreviewTooltipCtx } from "./linkPreviewTooltip";
+import { makeTooltipProvider } from "../useTooltipProvider";
+import { useLinkPreview } from "./useLinkPreview";
+import { removeLink } from "../../ProseMirror/handleLink";
+import { usePluginViewContext } from "@prosemirror-adapter/vue";
+import { useInstance } from "@milkdown/vue";
 import { linkTooltipState } from "../LinkEdit/linkEditTooltip";
 
 const { t } = useI18n();
-const { ctx } = useCtx();
+const toolTipRef = ref<InstanceType<typeof EditorTooltip> | null>(null);
+const { tooltipProvider } = makeTooltipProvider(linkPreviewTooltipCtx.key, toolTipRef);
+const { view } = usePluginViewContext();
+const [_loading, getEditor] = useInstance();
 
-const link = ref("");
-
-onMounted(() => {
-  if(!ctx.value) return;
-  const { mark } = ctx.value.get(linkTooltipState.key);
-  link.value = mark?.attrs.href ?? "";
-});
+const { link } = useLinkPreview();
 
 function editLink() {
-
+  tooltipProvider.value?.hide();
 }
 
-function removeLink() {
-
+function deleteLink() {
+  const editor = toRaw(getEditor());
+  if(!editor) return;
+  const { mark } = editor.ctx.get(linkTooltipState.key);
+  if(mark) {
+    removeLink(view.value, mark);
+  }
+  tooltipProvider.value?.hide();
 }
 </script>
