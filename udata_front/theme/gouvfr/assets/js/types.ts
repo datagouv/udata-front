@@ -126,6 +126,27 @@ quality: Quality;
 metrics: { discussions: number; followers: number; reuses: number; views: number; };
 };
 
+export type Organization = {
+id: string;
+acronym: string;
+badges: Array<any>;
+business_number_id: string;
+created_at: string;
+last_modified: string;
+last_update: string;
+deleted: string;
+description: string;
+logo: string;
+logo_thumbnail: string;
+members: Array<any>
+metrics: { datasets: number; followers: number; members: number; reuses: number; views: number; };
+name: string;
+page: string;
+slug: string;
+uri: string;
+url: string;
+}
+
 export type Reuse = Owned & {
   id: string;
   title: string;
