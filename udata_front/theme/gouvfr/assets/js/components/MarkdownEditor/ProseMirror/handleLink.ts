@@ -11,11 +11,10 @@ export function addLink(view: EditorView, mark: Mark, previousMark?: Mark | null
   view.dispatch(tr);
 }
 
-export function removeLink(view: EditorView, mark: Mark) {
+export function removeLink(view: EditorView, from: number, to: number, mark: Mark) {
   const tr = view.state.tr;
   if (mark) {
-    tr.removeMark(view.state.selection.from, view.state.selection.to, mark);
+    tr.removeMark(from, to, mark);
   }
-
   view.dispatch(tr);
 }

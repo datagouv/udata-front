@@ -26,6 +26,8 @@ import { removeLink } from "../../ProseMirror/handleLink";
 import { usePluginViewContext } from "@prosemirror-adapter/vue";
 import { useInstance } from "@milkdown/vue";
 import { linkTooltipState } from "../LinkEdit/linkEditTooltip";
+import { TextSelection } from "@milkdown/prose/state";
+import { insertLink } from "../LinkEdit/insertLink";
 
 const { t } = useI18n();
 const toolTipRef = ref<InstanceType<typeof EditorTooltip> | null>(null);
@@ -36,15 +38,20 @@ const [_loading, getEditor] = useInstance();
 const { link } = useLinkPreview();
 
 function editLink() {
+  const editor = toRaw(getEditor());
+  if(!editor) return;
+  const { from, to } = editor.ctx.get(linkTooltipState.key);
   tooltipProvider.value?.hide();
+  view.value.dispatch(view.value.state.tr.setSelection(TextSelection.create(view.value.state.doc, from, to)));
+  insertLink(editor.ctx);
 }
 
 function deleteLink() {
   const editor = toRaw(getEditor());
   if(!editor) return;
-  const { mark } = editor.ctx.get(linkTooltipState.key);
+  const { from, to, mark } = editor.ctx.get(linkTooltipState.key);
   if(mark) {
-    removeLink(view.value, mark);
+    removeLink(view.value, from, to, mark);
   }
   tooltipProvider.value?.hide();
 }

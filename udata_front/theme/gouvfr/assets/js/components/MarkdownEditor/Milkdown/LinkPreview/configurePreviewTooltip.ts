@@ -8,6 +8,7 @@ import { linkPreviewTooltip, linkPreviewTooltipCtx } from "./linkPreviewTooltip"
 import { shouldShowPreview } from "./shouldShowPreview";
 import { debounce } from "../../../../composables/useDebouncedRef";
 import { ref } from "vue";
+import { linkEditTooltipCtx, linkTooltipState } from "../LinkEdit/linkEditTooltip";
 
 const DELAY = 200;
 
@@ -39,6 +40,11 @@ export function configurePreviewTooltip(ctx: Ctx, updateLink: (newLink: string)=
             return posToDOMRect(view, markPosition.start, markPosition.end);
           },
         });
+        ctx.update(linkTooltipState.key, () => ({
+          from: markPosition.start,
+          to: markPosition.end,
+          mark: result.mark,
+      }));
         updateLink(result.mark.attrs.href);
 
         tooltip?.show();
@@ -55,11 +61,14 @@ export function configurePreviewTooltip(ctx: Ctx, updateLink: (newLink: string)=
       if(hovering.value) {
         return;
       }
-      const tooltip = ctx.get(linkPreviewTooltipCtx.key);
-      tooltip?.hide();
-      updateLink("");
-      tooltip?.getInstance()?.popper.removeEventListener('mouseenter', onMouseEnterTooltip);
-      tooltip?.getInstance()?.popper.removeEventListener('mouseleave', onMouseLeaveTooltip);
+      const previewTooltip = ctx.get(linkPreviewTooltipCtx.key);
+      const editTooltip = ctx.get(linkEditTooltipCtx.key);
+      previewTooltip?.hide();
+      if(!editTooltip?.getInstance()?.state.isVisible) {
+        updateLink("");
+      }
+      previewTooltip?.getInstance()?.popper.removeEventListener('mouseenter', onMouseEnterTooltip);
+      previewTooltip?.getInstance()?.popper.removeEventListener('mouseleave', onMouseLeaveTooltip);
     }, DELAY);
   }
 

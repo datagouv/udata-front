@@ -1,6 +1,5 @@
 import { editorViewCtx } from "@milkdown/core";
 import { type Ctx } from "@milkdown/ctx";
-import { linkSchema } from "@milkdown/preset-commonmark";
 import { linkEditTooltipCtx, linkTooltipState } from "./linkEditTooltip";
 import { posToDOMRect } from "@milkdown/prose";
 import { $command } from "@milkdown/utils";
@@ -10,14 +9,9 @@ export const insertLinkCommand = $command('InsertLink', ctx => () => () => inser
 
 export function insertLink(ctx: Ctx) {
   const view = ctx.get(editorViewCtx);
-  const { selection, doc } = view.state;
+  const { selection } = view.state;
 
   if (selection.empty) return false;
-
-  const has = doc.rangeHasMark(selection.from, selection.to, linkSchema.type(ctx));
-
-  // range already has link
-  if (has) return false;
 
   ctx.update(linkTooltipState.key, () => ({
       from: selection.from,
