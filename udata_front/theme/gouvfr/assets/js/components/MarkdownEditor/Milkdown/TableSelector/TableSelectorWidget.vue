@@ -17,7 +17,7 @@ import { Editor, commandsCtx } from "@milkdown/core";
 import { useInstance } from "@milkdown/vue";
 import { useWidgetViewContext } from "@prosemirror-adapter/vue";
 import { computed, ref } from "vue";
-import { tableTooltipCtx } from "./tableTooltip";
+import { tableTooltipCtx } from "../TableTooltip/tableTooltip";
 import { moveColCommand, moveRowCommand, selectColCommand, selectRowCommand, selectTableCommand } from "@milkdown/preset-gfm";
 
 const { spec } = useWidgetViewContext();
@@ -118,7 +118,7 @@ function drop(e: DragEvent) {
 </script>
 
 <style lang="less" scoped>
-@import "../../../../less/content/colors.less";
+@import "../../../../../less/content/colors.less";
 .table-selector {
   cursor: pointer;
   &:hover {

@@ -46,13 +46,11 @@
           />
           <EditorButton
             icon="fr-icon-link"
-            @click="call(insertLinkCommand.key)"
+            @click="() => call(insertLinkCommand.key)"
             :title="t('Link')"
           />
-          <EditorButton
-            icon="fr-icon-image-add-fill"
-            @click="() => call(insertTableCommand.key)"
-            :title="t('Image')"
+          <ImageModalButton
+            @send="(data: ImageModalForm) => call(insertImageCommand.key, data)"
           />
         </div>
         <div role="separator" class="w-1px bg-grey-125 fr-my-1v"></div>
@@ -92,6 +90,7 @@ import {
   commonmark,
   createCodeBlockCommand,
   headingAttr,
+  insertImageCommand,
   paragraphAttr,
   toggleEmphasisCommand,
   toggleStrongCommand,
@@ -110,15 +109,17 @@ import { Milkdown, useEditor } from "@milkdown/vue";
 import { usePluginViewFactory, useWidgetViewFactory } from "@prosemirror-adapter/vue";
 import { useI18n } from "vue-i18n";
 import EditorButton from "./EditorButton.vue";
+import type { ImageModalForm } from "./ImageModal/ImageModal.vue";
+import ImageModalButton from "./ImageModal/ImageModalButton.vue";
 import { dsfrColumnResizingPlugin } from "./Milkdown/dsfrColumnResizingPlugin";
-import { tableSelectorPlugin } from "./Milkdown/tableSelectorPlugin";
-import { tableTooltip, tableTooltipCtx } from "./Milkdown/tableTooltip";
+import { tableSelectorPlugin } from "./Milkdown/TableSelector/tableSelectorPlugin";
+import { tableTooltip, tableTooltipCtx } from "./Milkdown/TableTooltip/tableTooltip";
 import { insertLinkCommand, linkEditPlugins } from "./Milkdown/LinkEdit";
 import { configureEditTooltip } from "./Milkdown/LinkEdit/configureEditTooltip";
 import { linkPreviewPlugins } from "./Milkdown/LinkPreview";
 import { configurePreviewTooltip } from "./Milkdown/LinkPreview/configurePreviewTooltip";
 import { useLinkPreview } from "./Milkdown/LinkPreview/useLinkPreview";
-import TableTooltip from "./Milkdown/TableTooltip.vue";
+import TableTooltip from "./Milkdown/TableTooltip/TableTooltip.vue";
 
 import 'prosemirror-view/style/prosemirror.css';
 import 'prosemirror-tables/style/tables.css';

@@ -122,7 +122,7 @@ import AlignRightIcon from 'iconoir/icons/regular/align-right.svg?raw';
 import { computed, ref } from "vue";
 import { tableTooltipCtx } from "./tableTooltip";
 import TooltipButton from "./TooltipButton.vue";
-import { makeTooltipProvider } from "./useTooltipProvider";
+import { makeTooltipProvider } from "../Tooltip/useTooltipProvider";
 
 const toolTipRef = ref<HTMLDivElement | null>(null);
 const { view } = usePluginViewContext();

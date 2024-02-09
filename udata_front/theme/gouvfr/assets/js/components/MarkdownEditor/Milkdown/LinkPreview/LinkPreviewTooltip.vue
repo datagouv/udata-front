@@ -18,9 +18,9 @@
 <script setup lang="ts">
 import { ref, toRaw } from "vue";
 import { useI18n } from "vue-i18n";
-import EditorTooltip from "../EditorTooltip.vue";
+import EditorTooltip from "../Tooltip/EditorTooltip.vue";
 import { linkPreviewTooltipCtx } from "./linkPreviewTooltip";
-import { makeTooltipProvider } from "../useTooltipProvider";
+import { makeTooltipProvider } from "../Tooltip/useTooltipProvider";
 import { useLinkPreview } from "./useLinkPreview";
 import { removeLink } from "../../ProseMirror/handleLink";
 import { usePluginViewContext } from "@prosemirror-adapter/vue";
