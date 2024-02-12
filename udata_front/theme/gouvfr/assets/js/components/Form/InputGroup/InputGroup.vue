@@ -38,6 +38,7 @@
     />
     <MarkdownEditor
       v-else-if="type === 'markdown'"
+      class="fr-mt-1w"
       :class="{ 'fr-input--error': hasError, 'fr-input--warning': !hasError && hasWarning, 'fr-input--valid': isValid }"
       :aria-describedby="ariaDescribedBy"
       :id="id"
