@@ -83,9 +83,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Editor, rootCtx, defaultValueCtx, CmdKey } from "@milkdown/core";
+import { Editor, rootCtx, defaultValueCtx, CmdKey, editorViewOptionsCtx, editorViewCtx } from "@milkdown/core";
 import type { Ctx } from "@milkdown/ctx";
 import { history, redoCommand, undoCommand } from "@milkdown/plugin-history";
+import { listener, listenerCtx } from '@milkdown/plugin-listener';
 import {
   commonmark,
   createCodeBlockCommand,
@@ -120,9 +121,22 @@ import { linkPreviewPlugins } from "./Milkdown/LinkPreview";
 import { configurePreviewTooltip } from "./Milkdown/LinkPreview/configurePreviewTooltip";
 import { useLinkPreview } from "./Milkdown/LinkPreview/useLinkPreview";
 import TableTooltip from "./Milkdown/TableTooltip/TableTooltip.vue";
+import { debounce } from "../../composables/useDebouncedRef";
+import type { MarkdownEditorProps } from "./types";
 
 import 'prosemirror-view/style/prosemirror.css';
 import 'prosemirror-tables/style/tables.css';
+
+const props = withDefaults(defineProps<MarkdownEditorProps>(), {
+  disabled: false,
+  value: ""
+});
+const emit = defineEmits<{
+  (event: 'change', value: string): void,
+  (event: 'editorMounted'): void,
+}>();
+
+const onChange = debounce((markdown: string) => emit("change", markdown), 300);
 
 const { t } = useI18n();
 
@@ -154,7 +168,7 @@ const editor = useEditor((root) =>
       ctx.set(rootCtx, root);
       configureEditTooltip(ctx);
       configurePreviewTooltip(ctx, updateLink);
-      ctx.set(defaultValueCtx, '');
+      ctx.set(defaultValueCtx, props.value);
       // Add attributes to nodes and marks
       ctx.set(headingAttr.key, (node) => {
         const level = node.attrs.level;
@@ -166,13 +180,33 @@ const editor = useEditor((root) =>
         if (level === 6) return { class: 'fr-h6'};
         return {};
       });
+      ctx.update(editorViewOptionsCtx, (prev) => ({
+        ...prev,
+        editable: () => !props.disabled,
+      }));
+
       ctx.set(paragraphAttr.key, () => ({ class: 'text-lg' }));
+      ctx.get(listenerCtx).markdownUpdated((_ctx, markdown, _prevMarkdown) => onChange(markdown));
+      ctx.get(listenerCtx).mounted((ctx) => {
+        ctx.update(editorViewCtx, (prev) => {
+          prev.dom.id = props.id;
+          prev.dom.setAttribute("data-testid", "markdown-editor");
+          if(props.ariaLabelledBy) {
+            prev.dom.setAttribute("aria-labelledby", props.ariaLabelledBy);
+          } else if (props.ariaLabel) {
+            prev.dom.ariaLabel = props.ariaLabel;
+          }
+          return prev;
+        });
+        emit("editorMounted");
+      });
     })
     .use(commonmark)
     .use(gfmPlugins)
     .use(history)
     .use(linkEditPlugins)
     .use(linkPreviewPlugins)
+    .use(listener)
 );
 
 function call<T>(command: CmdKey<T>, payload?: T) {
