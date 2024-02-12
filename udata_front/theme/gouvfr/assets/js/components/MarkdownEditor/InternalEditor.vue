@@ -83,7 +83,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Editor, rootCtx, defaultValueCtx, CmdKey, editorViewOptionsCtx, editorViewCtx } from "@milkdown/core";
+import { Editor, rootCtx, defaultValueCtx, CmdKey, editorViewOptionsCtx } from "@milkdown/core";
 import type { Ctx } from "@milkdown/ctx";
 import { history, redoCommand, undoCommand } from "@milkdown/plugin-history";
 import { listener, listenerCtx } from '@milkdown/plugin-listener';
@@ -180,24 +180,31 @@ const editor = useEditor((root) =>
         if (level === 6) return { class: 'fr-h6'};
         return {};
       });
-      ctx.update(editorViewOptionsCtx, (prev) => ({
+      ctx.update(editorViewOptionsCtx, (prev) => {
+        const prevAttr = prev.attributes;
+
+        return {
         ...prev,
+        attributes: (state) => {
+          const attrs = typeof prevAttr === 'function' ? prevAttr(state) : (prevAttr ?? {});
+          attrs.id = props.id;
+          attrs['data-testid'] = "markdown-editor";
+          if(props.ariaLabelledBy) {
+            attrs["aria-labelledby"] = props.ariaLabelledBy;
+          } else if (props.ariaLabel) {
+            attrs.ariaLabel = props.ariaLabel;
+          }
+          return {
+            ...attrs,
+          };
+        },
         editable: () => !props.disabled,
-      }));
+      };
+      });
 
       ctx.set(paragraphAttr.key, () => ({ class: 'text-lg' }));
       ctx.get(listenerCtx).markdownUpdated((_ctx, markdown, _prevMarkdown) => onChange(markdown));
-      ctx.get(listenerCtx).mounted((ctx) => {
-        ctx.update(editorViewCtx, (prev) => {
-          prev.dom.id = props.id;
-          prev.dom.setAttribute("data-testid", "markdown-editor");
-          if(props.ariaLabelledBy) {
-            prev.dom.setAttribute("aria-labelledby", props.ariaLabelledBy);
-          } else if (props.ariaLabel) {
-            prev.dom.ariaLabel = props.ariaLabel;
-          }
-          return prev;
-        });
+      ctx.get(listenerCtx).mounted((_ctx) => {
         emit("editorMounted");
       });
     })
