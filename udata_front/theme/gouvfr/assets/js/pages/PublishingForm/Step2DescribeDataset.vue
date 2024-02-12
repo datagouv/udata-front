@@ -142,7 +142,7 @@
               </div>
             </div>
           </Well>
-          <fieldset class="fr-fieldset" aria-labelledby="description-legend">
+          <fieldset class="fr-fieldset min-width-0" aria-labelledby="description-legend">
             <legend class="fr-fieldset__legend" id="description-legend">
               <h2 class="subtitle subtitle--uppercase fr-mb-3v">
                 {{ $t("Description") }}
@@ -174,7 +174,7 @@
               />
             </LinkedToAccordion>
             <LinkedToAccordion
-              class="fr-fieldset__element"
+              class="fr-fieldset__element min-width-0"
               :accordion="writeAGoodDescriptionAccordionId"
               @blur="vWarning$.description.$touch"
             >
