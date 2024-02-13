@@ -7,7 +7,7 @@
     {{$t('Mark as no spam')}}
   </button>
 </template>
-<script>
+<script lang="ts">
 export type MarkAsNoSpamProps = {
   url: string,
   // These undefined are not mandatory, there're here 
