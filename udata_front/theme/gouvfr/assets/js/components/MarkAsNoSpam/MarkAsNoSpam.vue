@@ -27,11 +27,11 @@ const markAsNoSpam = () => {
     });
 };
 
-const show = computed(() => props.spam.status
+const show = computed(() => props.spam
+  && props.spam.status
   && props.spam.status === 'potential_spam'
   && user
   && user.roles
   && user.roles.includes('admin')
 )
-
 </script>

@@ -1,0 +1,16 @@
+import { Canvas, Controls, Description, Meta } from '@storybook/blocks';
+
+import * as MarkAsNoSpamStories from './MarkAsNoSpam.stories';
+
+<Meta of={MarkAsNoSpamStories} />
+
+# Mark As No Spam
+
+A button to mark an element as no spam. The button is only shown if the element has a `spam` object with the status `potential_spam`.
+
+<Canvas of={MarkAsNoSpamStories.MarkAsNoSpamShown} />
+
+## Props
+
+<Controls />
+
