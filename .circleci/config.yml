@@ -141,7 +141,7 @@ jobs:
   assets:
     docker:
       # TODO make an image based on 2-alpine w/ nvm and phantom deps
-      - image: udata/circleci:py3
+      - image: cimg/python:3.9.18-node
     environment:
        BASH_ENV: /root/.bashrc
     steps:
