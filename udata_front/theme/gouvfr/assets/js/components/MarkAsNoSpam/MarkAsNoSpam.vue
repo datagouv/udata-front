@@ -7,17 +7,24 @@
     {{$t('Mark as no spam')}}
   </button>
 </template>
+<script>
+export type MarkAsNoSpamProps = {
+  url: string,
+  // These undefined are not mandatory, there're here 
+  // to prevent bugs during the migration because
+  // some old objects could have no `spam` element.
+  // We may add a migration in the future to set them on all old objects
+  spam: {
+    status: string | undefined
+  } | undefined
+}
+</script>
 <script setup lang="ts">
 import { computed, defineProps } from "vue";
 import { user } from "../../config";
 import { api } from "../../plugins/api";
 
-const props = defineProps<{
-  url: string,
-  spam: {
-    status: string
-  }
-}>();
+const props = defineProps<MarkAsNoSpamProps>();
 
 const markAsNoSpam = () => {
   return api
@@ -30,7 +37,6 @@ const markAsNoSpam = () => {
 const show = computed(() => props.spam
   && props.spam.status
   && props.spam.status === 'potential_spam'
-  && user
   && user.roles
   && user.roles.includes('admin')
 )
