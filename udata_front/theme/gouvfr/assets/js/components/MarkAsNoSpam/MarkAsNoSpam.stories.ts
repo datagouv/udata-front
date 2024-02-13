@@ -2,7 +2,7 @@ import MarkAsNoSpam, { type MarkAsNoSpamProps } from './MarkAsNoSpam.vue';
 import type { Meta, StoryObj } from "@storybook/vue3";
 
 const meta = {
-  title: 'Components/MarkAsNoSpam MarkAsNoSpam',
+  title: 'Components/MarkAsNoSpam',
   component: MarkAsNoSpam,
 } satisfies Meta<typeof MarkAsNoSpam>;
 
