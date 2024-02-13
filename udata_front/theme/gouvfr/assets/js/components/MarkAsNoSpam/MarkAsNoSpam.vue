@@ -20,7 +20,7 @@ export type MarkAsNoSpamProps = {
 }
 </script>
 <script setup lang="ts">
-import { computed, defineProps } from "vue";
+import { computed } from "vue";
 import { user } from "../../config";
 import { api } from "../../plugins/api";
 
