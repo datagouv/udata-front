@@ -80,6 +80,7 @@ export async function getConfig(): Promise<UserConfig> {
       rollupOptions: {
         input: [
           `udata_front/theme/${theme}/assets/js/index.ts`,
+          `udata_front/theme/${theme}/assets/js/admin.ts`,
           `udata_front/theme/${theme}/assets/less/style.less`,
           "node_modules/es-module-shims/dist/es-module-shims.js",
           "node_modules/vue/dist/vue.esm-browser.prod.js",
