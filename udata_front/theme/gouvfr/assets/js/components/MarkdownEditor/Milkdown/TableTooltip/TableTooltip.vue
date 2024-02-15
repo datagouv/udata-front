@@ -5,6 +5,7 @@
         v-if="!isWholeTable && !isHeading && isRow"
         icon="fr-icon-arrow-up-line"
         class="fr-mr-1v"
+        :title="t('Add row before')"
         @click="() => {
           if (loading) return;
 
@@ -18,6 +19,7 @@
         v-if="!isWholeTable && isCol"
         icon="fr-icon-arrow-left-line"
         class="fr-mr-1v"
+        :title="t('Add column before')"
         @click="() => {
           if (loading) return;
 
@@ -31,6 +33,7 @@
         v-if="isWholeTable || (!isHeading && isAny)"
         icon="fr-icon-delete-line"
         class="fr-mr-1v"
+        :title="t('Delete selected cells')"
         @click="() => {
           if (loading) return;
 
@@ -45,6 +48,7 @@
         v-if="!isWholeTable && isRow"
         icon="fr-icon-arrow-down-line"
         class="fr-mr-1v"
+        :title="t('Add row after')"
         @click="() => {
           if (loading) return;
 
@@ -58,6 +62,7 @@
         <TooltipButton
           icon="fr-icon-arrow-right-line"
           class="fr-mr-1v"
+          :title="t('Add column after')"
           @click="() => {
             if (loading) return;
             getEditor()?.action((ctx) => {
@@ -70,6 +75,7 @@
         <TooltipButton
           :svg="AlignLeftIcon"
           class="fr-mr-1v"
+          :title="t('Align left')"
           @click="() => {
             if (loading) return;
             getEditor()?.action((ctx) => {
@@ -80,6 +86,7 @@
         <TooltipButton
           class="fr-mr-1v"
           :svg="AlignCenterIcon"
+          :title="t('Align center')"
           @click="() => {
             if (loading) return;
             getEditor()?.action((ctx) => {
@@ -90,6 +97,7 @@
         <TooltipButton
           class="fr-mr-1v"
           :svg="AlignRightIcon"
+          :title="t('Align right')"
           @click="() => {
             if (loading) return;
             getEditor()?.action((ctx) => {
@@ -123,7 +131,9 @@ import { computed, ref } from "vue";
 import { tableTooltipCtx } from "./tableTooltip";
 import TooltipButton from "./TooltipButton.vue";
 import { makeTooltipProvider } from "../Tooltip/useTooltipProvider";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const toolTipRef = ref<HTMLDivElement | null>(null);
 const { view } = usePluginViewContext();
 
