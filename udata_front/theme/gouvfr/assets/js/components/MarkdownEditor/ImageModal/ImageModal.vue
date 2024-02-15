@@ -20,6 +20,7 @@
                             {{ t('Add an image') }}
                         </h1>
                         <p>{{ t("Paste a link of your image to add it to your description. You can also provide a textual alternative for an informative image and a title.") }}</p>
+                        <RequiredExplanation />
                         <InputGroup
                           :label="t('Image link')"
                           :required="true"
@@ -74,6 +75,7 @@ import { useI18n } from "vue-i18n";
 import InputGroup from "../../Form/InputGroup/InputGroup.vue";
 import useFunctionalState from '../../../composables/form/useFunctionalState';
 import { required } from '../../../i18n';
+import RequiredExplanation from '../../Ui/RequiredExplanation/RequiredExplanation.vue';
 
 defineOptions({
   inheritAttrs: false,
@@ -89,11 +91,13 @@ const { t } = useI18n();
 const imageModalTitleId = computed(() => props.id + "-title");
 const modalRef = ref<HTMLDialogElement | null>();
 
-const form = reactive<ImageModalForm>({
+const initialState = {
   src: "",
   title: "",
   alt: "",
-});
+};
+
+const form = reactive<ImageModalForm>({...initialState});
 
 const requiredRules = {
   src: { required },
@@ -113,6 +117,9 @@ function fieldHasError(field: string) {
 
 const close = () => {
   globalThis.dsfr(modalRef.value).modal.conceal();
+  form.src = initialState.src;
+  form.title = initialState.title;
+  form.alt = initialState.alt;
   reset();
 };
 
