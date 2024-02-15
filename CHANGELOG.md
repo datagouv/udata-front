@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 3.5.2 (2024-02-15)
 
 - Show a button to mark as no spam a discussion or a message [#352](https://github.com/etalab/udata-front/pull/352)
