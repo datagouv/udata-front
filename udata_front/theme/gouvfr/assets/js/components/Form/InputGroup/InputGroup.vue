@@ -71,9 +71,11 @@
 </template>
 
 <script lang="ts">
+import type { InputTypeHTMLAttribute } from "vue";
+
 export type InputValue = string | undefined | null;
 
-export type AllowedInputType = "date" | "markdown" | "range" | "text" | "textarea";
+export type AllowedInputType = "date" | "markdown" | "range" | "textarea" | InputTypeHTMLAttribute;
 
 export type InputGroupProps = {
   disabled?: boolean,
