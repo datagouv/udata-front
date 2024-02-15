@@ -15,7 +15,7 @@ export type ButtonProps = {
   svg?: never,
 } | {
   icon?: never,
-  svg: SVGElement,
+  svg: string,
 };
 </script>
 
