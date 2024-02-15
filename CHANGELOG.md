@@ -2,9 +2,13 @@
 
 ## Current (in progress)
 
+- Show a button to mark as no spam a discussion or a message [#352](https://github.com/etalab/udata-front/pull/352)
+
+## 3.5.1 (2024-02-05)
+
 - Fix vue runtime errors [#343](https://github.com/etalab/udata-front/pull/343)
 - New featured topic : agriculture [#344](https://github.com/etalab/udata-front/pull/344)
-- Create data.gouv.fr-components NPM package and move some `gouvfr` components to it [#324](https://github.com/etalab/udata-front/pull/324)
+- Create data.gouv.fr-components NPM package and move some `gouvfr` components to it [#324](https://github.com/etalab/udata-front/pull/324)[#350](https://github.com/etalab/udata-front/pull/350)
 - Setup storybook for data.gouv.fr-components [#346](https://github.com/etalab/udata-front/pull/346)
 
 ## 3.5.0, 3.4.0 and 3.3.0 (2024-01-23)
