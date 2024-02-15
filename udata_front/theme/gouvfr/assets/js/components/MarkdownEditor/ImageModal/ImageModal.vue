@@ -23,13 +23,15 @@
                         <RequiredExplanation />
                         <InputGroup
                           :label="t('Image link')"
+                          :placeholder="t('Paste your link...')"
                           :required="true"
                           v-model="form.src"
+                          type="url"
                           :hasError="fieldHasError('src')"
                           :errorText="getErrorText('src')"
                         />
                         <details>
-                          <summary>{{ t("Customize accessibility options") }}</summary>
+                          <summary data-testid="summary">{{ t("Customize accessibility options") }}</summary>
                           <div class="fr-my-1w">
                             <InputGroup
                               :label="t('Image alternative text')"
@@ -45,7 +47,7 @@
                     </div>
                     <div class="fr-modal__footer">
                         <div class="fr-btns-group fr-btns-group--right">
-                            <button class="fr-btn" @click="send">
+                            <button class="fr-btn" @click="send" data-testid="add-image-button">
                               {{ t('Add image') }}
                             </button>
                         </div>
@@ -126,7 +128,7 @@ function close() {
 function send() {
   validateRequiredRules().then(valid => {
     if(valid) {
-      emit('send', form);
+      emit('send', {...form});
       close();
     }
   });
