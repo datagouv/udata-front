@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Show a button to mark as no spam a discussion or a message
+- Show a button to mark as no spam a discussion or a message [#352](https://github.com/etalab/udata-front/pull/352)
 
 ## 3.5.1 (2024-02-05)
 
