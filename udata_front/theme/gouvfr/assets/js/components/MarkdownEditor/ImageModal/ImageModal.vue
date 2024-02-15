@@ -66,7 +66,7 @@ export type ImageModalForm = {
   src: string,
   title: string,
   alt: string,
-}
+};
 </script>
 
 <script setup lang="ts">
@@ -115,7 +115,7 @@ function fieldHasError(field: string) {
   return hasError(state, field);
 }
 
-const close = () => {
+function close() {
   globalThis.dsfr(modalRef.value).modal.conceal();
   form.src = initialState.src;
   form.title = initialState.title;
@@ -123,7 +123,7 @@ const close = () => {
   reset();
 };
 
-const send = () => {
+function send() {
   validateRequiredRules().then(valid => {
     if(valid) {
       emit('send', form);
