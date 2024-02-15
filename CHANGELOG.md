@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Show a button to mark as no spam a discussion or a message
 
 ## 3.5.1 (2024-02-05)
 
