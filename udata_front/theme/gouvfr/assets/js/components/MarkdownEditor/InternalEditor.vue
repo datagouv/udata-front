@@ -27,14 +27,14 @@
             :title="t('Italic')"
           />
           <EditorButton
-            icon="fr-icon-h-3"
+            icon="fr-icon-h-1"
             @click="() => call(wrapInHeadingCommand.key, 3)"
-            :title="t('Title size 3')"
+            :title="t('Title')"
           />
           <EditorButton
-            icon="fr-icon-h-4"
+            icon="fr-icon-h-2"
             @click="() => call(wrapInHeadingCommand.key, 4)"
-            :title="t('Title size 4')"
+            :title="t('Subtitle')"
           />
         </div>
         <div role="separator" class="w-1px bg-grey-125 fr-my-1v"></div>
