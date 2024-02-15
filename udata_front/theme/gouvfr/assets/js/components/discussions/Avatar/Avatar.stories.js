@@ -1,7 +1,7 @@
 import Avatar from "./Avatar.vue";
 
 export default {
-  title: 'Components/Discussions/Avatar',
+  title: 'Components/Avatar',
   component: Avatar,
 };
 
