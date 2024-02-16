@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix redirect user to auth page [#357](https://github.com/etalab/udata-front/pull/357)
 
 ## 3.5.2 (2024-02-15)
 
