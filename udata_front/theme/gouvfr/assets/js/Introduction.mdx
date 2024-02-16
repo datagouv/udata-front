@@ -1,6 +1,5 @@
 import { Meta } from '@storybook/blocks';
 
-
 <Meta title="Introduction" />
 
 # Welcome to data.gouv.fr theme
@@ -8,8 +7,15 @@ import { Meta } from '@storybook/blocks';
 gouvfr is the udata_front theme for data.gouv.fr.
 
 It uses DSFR for styling.
-It's made of Vue 3 files with Composition API, and some pre-existing components made with Option API.
+It's made of Vue 3 files with Composition API + Typescript, and some pre-existing components made with Option API and / or Javascript.
 
-It uses [TypeScript in JS via JSDoc](https://www.typescriptlang.org/docs/handbook/intro-to-js-ts.html#providing-type-hints-in-js-via-jsdoc) to ease the learning curve for new developers.
 Some components aren't typed yet and include types errors.
-The goal is to move all components to Composition API and correct all type errors.
+The goal is to move all components to Composition API + Typescript and correct all type errors.
+
+## How to use Storybook ?
+
+All components have a documentation with a small description about their usage and how to use them.
+
+Inside the sidebar, below each documentation, you can find stories for the selected component.
+Sometimes, you can also find subcomponents documented.
+If they aren't mean to be use on their own, they are presented in a `Internals` folder.
