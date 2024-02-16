@@ -5,6 +5,7 @@
       :aria-controls="id"
       icon="fr-icon-image-add-fill"
       :title="t('Image')"
+      data-testid="image-modal-button"
     />
     <ImageModal
       :id="id"
