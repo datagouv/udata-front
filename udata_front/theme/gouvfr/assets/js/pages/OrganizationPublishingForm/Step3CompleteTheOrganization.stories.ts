@@ -1,14 +1,18 @@
+import type { Meta, StoryObj } from '@storybook/vue3';
 import Step3CompleteTheOrganization from './Step3CompleteTheOrganization.vue';
 import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
 import * as Step2 from './Step2DescribeOrganization.stories';
 
 
-export default {
+const meta = {
   title: 'Pages/OrganizationPublishingForm/Step3',
   component: Step3CompleteTheOrganization,
-};
+} satisfies Meta<typeof Step3CompleteTheOrganization>;
+
+export default meta;
 
 const organization = Step2.Step2.args.organization;
+organization.logo_thumbnail = "https://picsum.photos/200"
 
 const args = {
   organization,
@@ -17,7 +21,7 @@ const args = {
   redirectDraftUrl: "https://demo.data.gouv.fr/fr/datasets/?q=draft",
 };
 
-export const Step3 = {
+export const Step3: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Step3CompleteTheOrganization },
     setup() {

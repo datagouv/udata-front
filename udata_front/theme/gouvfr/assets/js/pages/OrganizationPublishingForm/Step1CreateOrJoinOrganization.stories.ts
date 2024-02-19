@@ -1,17 +1,19 @@
+import type { Meta, StoryObj } from '@storybook/vue3';
 import Step1CreateOrJoinOrganization from './Step1CreateOrJoinOrganization.vue';
 import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
 
-
-export default {
+const meta = {
   title: 'Pages/OrganizationPublishingForm/Step1',
   component: Step1CreateOrJoinOrganization,
-};
+} satisfies Meta<typeof Step1CreateOrJoinOrganization>;
+
+export default meta
 
 const args = {
   steps: Stepper.StepperOnFirstStep.args.steps,
 };
 
-export const Step1 = {
+export const Step1: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Step1CreateOrJoinOrganization },
     setup() {

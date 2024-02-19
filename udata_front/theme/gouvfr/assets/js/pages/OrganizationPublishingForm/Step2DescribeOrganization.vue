@@ -123,6 +123,19 @@
                   v-model="organization.business_number_id"
                 />
               </LinkedToAccordion>
+              <div v-if="verifOrga.exists !== null" class="fr-col fr-mx-2v fr-mb-2v bg-contrast-grey text-align-center">
+                <div v-if="verifOrga.exists">
+                  <p>Le SIREN n° {{ verifOrga.siren }} correspond à</p>
+                  <p>{{ verifOrga.name }}</p>
+                  <p v-if="verifOrga.isPublicService">
+                    <span class="fr-icon-bank-line" aria-hidden="true"></span>
+                    Service public
+                  </p>
+                </div>
+                <div v-else>
+                  <p>No organization found matching this SIRET</p>
+                </div>
+              </div>
               <LinkedToAccordion
                 class="fr-fieldset__element"
                 :accordion="addAcronymAccordionId"
@@ -164,8 +177,10 @@
                 <p>{{ $t('Logo') }}</p>
                 <UploadGroup
                   :label="$t('Logo')"
+                  :title="$t('Logo')"
                   hintText="Max size: 4Mo. Accepted formats: JPG, JPEG, PNG"
                   accept=".jpeg, .jpg, .png"
+                  @change="addFiles"
                 />
               </LinkedToAccordion>
             </fieldset>
@@ -182,7 +197,7 @@
 </template>
   
 <script setup lang="ts">
-  import { computed, reactive } from 'vue';
+  import { computed, reactive, ref, watch } from 'vue';
   import { minLengthWarning, required, requiredWithCustomMessage } from '../../i18n';
   import Accordion from '../../components/Accordion/Accordion.vue';
   import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -197,16 +212,16 @@
   import useFunctionalState from '../../composables/form/useFunctionalState';
   import editIcon from "../../../../templates/svg/illustrations/edit.svg";
   import { quality_description_length, } from "../../config";
-  import { useI18n } from 'vue-i18n';
   import { Organization } from '../../types';
+import axios from 'axios';
 
   const props = defineProps<{
-    organization: {type: Organization, required: true},
-    steps: {type: Array<any>, required: true}
+    organization: Organization,
+    steps: Array<any>
   }>();
 
   const emit = defineEmits<{
-    (event: 'next', organization: Organization): void,
+    (event: 'next', organization: Organization, file): void,
   }>();
 
   const { id: nameOrganizationAccordionId } = useUid("accordion");
@@ -217,6 +232,14 @@
   const { id: addLogoAccordionId } = useUid("accordion");
 
   const organization = reactive({...props.organization});
+  const file = ref(null);
+
+  const verifOrga = ref({
+    name: '',
+    siren: '',
+    isPublicService: '',
+    exists: null as boolean | null
+  });
 
   const requiredRules = {
     description: { required },
@@ -263,9 +286,40 @@
   const submit = () => {
     validateRequiredRules().then(valid => {
       if(valid) {
-        emit("next", organization);
+        emit("next", organization, file);
       }
     });
   };
+
+  /**
+   *
+   * @param {Array<import("../../types").NewDatasetFile>} newFiles
+   */
+    const addFiles = (newFile) => {
+      file.value = newFile;
+    };
+
+  watch(() => organization.business_number_id, (newValue) => {
+    if (newValue.length === 14) {
+      axios.get("https://recherche-entreprises.api.gouv.fr/search", {
+        params: {
+          q: newValue
+        }
+      })
+      .then((res) => res.data)
+      .then((result) => {
+        if (result.total_results === 0) {
+          verifOrga.value.exists = false;
+        } else {
+          verifOrga.value.name = result.results[0].nom_complet;
+          verifOrga.value.siren = result.results[0].siren;
+          verifOrga.value.isPublicService = result.results[0].complements.est_service_public;
+          verifOrga.value.exists = true;
+        }
+      })
+    } else {
+      verifOrga.value.exists = null;
+    }
+  })
 </script>
   
