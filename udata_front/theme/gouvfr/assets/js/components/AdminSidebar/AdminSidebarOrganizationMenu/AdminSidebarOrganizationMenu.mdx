@@ -1,0 +1,16 @@
+import { Canvas, Controls, Meta } from '@storybook/blocks';
+
+import * as AdminSidebarOrganizationMenuStories from './AdminSidebarOrganizationMenu.stories';
+
+<Meta of={AdminSidebarOrganizationMenuStories} />
+
+# Sidebar Organization Menu
+
+This is a menu with links to all the available content about a given organization in the new administration.
+See [Admin](?path=/docs/pages-admin--docs) if you want the full admin page.
+
+<Canvas of={AdminSidebarOrganizationMenuStories.Opened} />
+
+## Props
+
+<Controls />

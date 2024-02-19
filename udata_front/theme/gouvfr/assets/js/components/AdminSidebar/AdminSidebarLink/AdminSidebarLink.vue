@@ -22,3 +22,27 @@ export type AdminSidebarLinkProps = {
 <script setup lang="ts">
 defineProps<AdminSidebarLinkProps>();
 </script>
+<style scoped>
+.fr-sidemenu__link {
+  padding: 0.25rem 0.375rem;
+}
+
+.fr-sidemenu__link[aria-current]::before {
+  width: 0;
+}
+
+.fr-sidemenu__link:has(> [aria-current]) {
+  border-radius: 2px;
+  background-color: var(--background-alt-grey);
+  color: var(--text-default-grey);
+  font-weight: 800;
+}
+
+.fr-sidemenu__link:has(> [aria-current]):hover {
+  background-color: var(--background-alt-grey-hover);
+}
+
+.fr-sidemenu__link:has(> [aria-current]):active {
+  background-color: var(--background-alt-grey-active);
+}
+</style>
