@@ -174,10 +174,6 @@ export default defineComponent({
       type: [String, Array],
       default: null
     },
-    helperDescriptions: {
-      type: [String, String],
-      default: null
-    },
     onSuggest: {
       type: Function,
       default: null
@@ -365,50 +361,28 @@ export default defineComponent({
 
       currentRequest.value = generateCancelToken();
       return api
-      .get(props.suggestUrl, {
-          params: { q, size: maxOptionsCount },
-          cancelToken: currentRequest.value.token,
-      })
-      .then((resp) => {
-        return props.onSuggest ? props.onSuggest(resp.data) : resp.data;
-      })
-      .then((suggestions) => {
-          const addQToSuggestion = props.addNewOption && !suggestions.some(suggestion => suggestion.text === q);
-          if (addQToSuggestion) {
-              suggestions.push({ text: q });
-          }
-          return mapToOption(suggestions);
-      })
-      .catch((error) => {
-          if (!axios.isCancel(error)) {
-              toast.error(t("Error getting {type}.", { type: props.placeholder }));
-          }
-          return /** @type {Array<import("../../types").MultiSelectOption>} */ ([]);
-      });
-    };
-
-    /*const onSuggest = (data) => {
-      const suggestions = data.map(item => {
-        if (props.helperDescriptions) {
-          const matchingHelperDescription = props.helperDescriptions.find(helperDescription => helperDescription.id === item.level);
-          if (matchingHelperDescription) {
-              return {
-                  ...item,
-                  description: matchingHelperDescription.name,
-              };
-          } else {
-              return {
-                  ...item,
-              };
-          }
-        } else {
-          return {
-            ...item
-          }
+        .get(props.suggestUrl, {
+            params: { q, size: maxOptionsCount },
+            cancelToken: currentRequest.value.token,
+        })
+        .then((resp) => {
+          return props.onSuggest ? props.onSuggest(resp.data) : resp.data;
+        })
+        .then((suggestions) => {
+            const addQToSuggestion = props.addNewOption && !suggestions.some(suggestion => suggestion.text === q);
+            if (addQToSuggestion) {
+                suggestions.push({ text: q });
+            }
+            return mapToOption(suggestions);
+        })
+        .catch((error) => {
+            if (!axios.isCancel(error)) {
+                toast.error(t("Error getting {type}.", { type: props.placeholder }));
+            }
+            return /** @type {Array<import("../../types").MultiSelectOption>} */ ([]);
         }
-    });
-    return suggestions;
-    };*/
+      );
+    };
 
     const suggestAndMapToOption = (q = '') => suggest(q).then(addAllOptionAndMapToOption);
     const suggestMapAndSetOption = (q = '') => suggestAndMapToOption(q).then(setOptions);
