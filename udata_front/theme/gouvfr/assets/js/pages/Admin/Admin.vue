@@ -2,8 +2,8 @@
   <div class="fr-container--fluid h-100">
     <div class="fr-grid-row h-100 bg-grey-50">
       <div class="fr-col-12 fr-col-md-4 fr-col-lg-3 fr-col-xl-2">
-        <nav class="fr-sidemenu" :aria-label="t('Administration menu')">
-          <div class="fr-sidemenu__inner">
+        <nav class="fr-sidemenu h-100" :aria-label="t('Administration menu')">
+          <div class="fr-sidemenu__inner h-100">
             <button
               class="fr-sidemenu__btn"
               hidden
@@ -32,8 +32,9 @@
                   </div>
                 </li>
                 <AdminSidebarOrganizationMenu
-                  name="data.gouv.fr"
-                  :is-opened="isCurrent(organizationId)"
+                  v-for="organization in me?.organizations"
+                  :name="organization.name"
+                  :is-opened="isCurrent(organization.id)"
                 />
               </ul>
             </div>
@@ -54,18 +55,28 @@ import AdminSidebarOrganizationMenu from "../../components/AdminSidebar/AdminSid
 import { user } from "../../config";
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { Me } from "../../types";
+import { onMounted } from "vue";
+import { fetchMe } from "../../api/me";
 
 const { t } = useI18n();
 
 const menuId = getRandomId("menu");
 const profilId = getRandomId("profil-submenu");
-const organizationId = getRandomId("organization-submenu");
+const me = ref<Me | null>(null);
 
-const opened = ref(organizationId);
+const opened = ref<string | null>(null);
 
 function isCurrent(id: string) {
   return id === opened.value;
 }
+
+onMounted(async () => {
+  me.value = await fetchMe();
+  if(me.value.organizations.length > 0) {
+    opened.value = me.value.organizations[0].id;
+  }
+});
 </script>
 
 <style>
@@ -83,7 +94,7 @@ html, body {
   padding: 0;
 }
 
-.fr-sidemenu__inner {
+.fr-sidemenu .fr-sidemenu__inner {
   padding: 0;
   box-shadow: 1px 0 0 0 var(--border-default-grey);
   background-color: var(--background-default-grey);
