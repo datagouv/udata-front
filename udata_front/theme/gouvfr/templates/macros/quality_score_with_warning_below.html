@@ -13,6 +13,12 @@
         </h2>
     </div>
     {{quality_score(dataset.quality.score, "w-100")}}
+    {% if dataset.harvest and dataset.harvest.backend in config.QUALITY_METADATA_BACKEND_IGNORE %}
+    <div class="text-mention-grey fr-text--sm fr-my-1v">
+        <span class="fr-icon-warning-line fr-icon--sm" aria-hidden="true"></span>
+        {{_('Metadata quality may be misleading since metadata info may have been lost from original source')}}
+    </div>
+    {% else %}
     {{quality_item_warning(
         dataset.quality.dataset_description_quality,
         _("Data description empty"),
@@ -53,5 +59,6 @@
         _("Some files are unavailable"),
         "fr-my-1v"
     )}}
+    {% endif %}
 </section>
 {% endmacro %}
