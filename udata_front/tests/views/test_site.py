@@ -401,12 +401,14 @@ class SiteViewsTest(GouvfrFrontTestCase):
         self.app.config['EXPORT_CSV_MODELS'] = []
         organization = OrganizationFactory()
         harvests = [HarvestSource.objects.create(
+            backend='factory',
             name='harvest',
             url=f'https://example.com/{i}',
             organization=organization
             )
                   for i in range(5)]
         hidden_harvest = HarvestSource.objects.create(
+            backend='factory',
             url='https://example.com/deleted',
             deleted=datetime.utcnow()
         )
