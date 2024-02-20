@@ -5,6 +5,6 @@ blueprint = I18nBlueprint('beta', __name__, url_prefix='/beta')
 
 # This is a temporary file and route to keep the existing admin in place
 # and allowing users with the link to view the new admin
-@blueprint.route('/admin', endpoint='beta-admin')
+@blueprint.route('/admin/', endpoint='beta-admin')
 class AdminView(LoginOnlyView):
     template_name = 'beta/admin.html'
