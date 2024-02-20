@@ -56,7 +56,7 @@
           {{ excerpt(dataset.description, 160) }}
         </p>
         <div
-          v-if="!(dataset.harvest && quality_metadata_backend_ignore.includes(dataset.harvest.backend))"
+          v-if="show_quality_score"
           class="fr-m-0 fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
           <div class="fr-grid-row fr-grid-row--middle fr-hidden flex-sm dash-after text-grey-500 not-enlarged">
             <Toggletip
@@ -203,11 +203,12 @@ export default defineComponent({
     const { id } = useUid("metadata-quality");
     const ownerName = useOwnerName(props.dataset);
     const license = useLicense(props.dataset.license);
+    const show_quality_score = !(props.dataset.harvest && quality_metadata_backend_ignore.includes(props.dataset.harvest.backend));
     return {
       excerpt,
       formatRelativeIfRecentDate,
       guides_quality_url,
-      quality_metadata_backend_ignore,
+      show_quality_score,
       license,
       id,
       ownerName,
