@@ -5,6 +5,7 @@
 {% from theme('macros/paginator.html') import paginator with context %}
 {% from theme('macros/breadcrumb.html') import breadcrumb with context %}
 {% from theme('macros/banner_info.html') import banner_info %}
+{% from theme('macros/leaflet.html') import leaflet_map %}
 {% from theme('macros/banner_warning.html') import banner_warning %}
 {% from theme('macros/quality_score_with_warning_below.html') import quality_score_with_warning_below %}
 
@@ -583,6 +584,11 @@
                         {% for zone in dataset.spatial.zones %}
                         {{zone.name}}{% if not loop.last %},{% endif %}
                         {% endfor %}
+                    {% endcall %}
+                {% endif %}
+                {% if dataset.spatial.geom %}
+                    {% call() information_col(_('Territorial coverage')) %}
+                        {{ leaflet_map(dataset.spatial.geom) }}
                     {% endcall %}
                 {% endif %}
                 {% if dataset.spatial.granularity %}

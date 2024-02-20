@@ -1,0 +1,24 @@
+{% set ns = namespace(included=false) %}
+{% macro include_leaflet() %}
+    {% if not ns.included %}
+        <link rel="stylesheet" href="{{ theme_static('js/leaflet.css') }}"/>
+        <script src="{{ theme_static('js/leaflet.js') }}"></script>
+        
+        {% set ns.included = true %}
+    {% endif %}
+{% endmacro %}
+
+{% macro leaflet_map(geojson, height) %}
+    {% set id = range(0, 1000) | random %}
+    {{ include_leaflet() }}
+    <div id="leaflet_map_{{ id }}" class="fr-raw-link" style="height: {{ height | default('400px') }}"></div>
+    <script>
+        var map = L.map('leaflet_map_{{ id }}');
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+        geoJSON = L.geoJSON({{geojson | tojson | safe }}).addTo(map);
+        map.fitBounds(geoJSON.getBounds());
+    </script>
+{% endmacro %}

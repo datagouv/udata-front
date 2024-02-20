@@ -2,6 +2,7 @@
 
 ## Current (in progress)
 
+- Show a map of datasets' spatial coverage [#354](https://github.com/etalab/udata-front/pull/354)
 - Fix redirect user to auth page [#357](https://github.com/etalab/udata-front/pull/357)
 
 ## 3.5.2 (2024-02-15)
