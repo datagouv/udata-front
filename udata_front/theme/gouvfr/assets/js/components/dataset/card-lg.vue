@@ -55,7 +55,9 @@
         <p class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm overflow-wrap-anywhere">
           {{ excerpt(dataset.description, 160) }}
         </p>
-        <div class="fr-m-0 fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
+        <div
+          v-if="!(dataset.harvest && quality_metadata_backend_ignore.includes(dataset.harvest.backend))"
+          class="fr-m-0 fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
           <div class="fr-grid-row fr-grid-row--middle fr-hidden flex-sm dash-after text-grey-500 not-enlarged">
             <Toggletip
               class="fr-btn fr-btn--tertiary-no-outline fr-btn--secondary-grey-500 fr-icon-info-line"
@@ -169,7 +171,7 @@ import QualityScore from "./quality-score.vue";
 import Toggletip from "../utils/Toggletip/Toggletip.vue";
 import QualityItem from "./quality-item.vue";
 import { excerpt } from "../../helpers";
-import { guides_quality_url } from "../../config";
+import { guides_quality_url, quality_metadata_backend_ignore } from "../../config";
 import type { Dataset } from "../../types";
 
 export default defineComponent({
@@ -205,6 +207,7 @@ export default defineComponent({
       excerpt,
       formatRelativeIfRecentDate,
       guides_quality_url,
+      quality_metadata_backend_ignore,
       license,
       id,
       ownerName,

@@ -77,3 +77,6 @@ NEWSLETTER_SUBSCRIPTION_URL = 'https://f.info.data.gouv.fr/f/lp/infolettre-data-
 
 # Metrics API
 METRICS_API = None
+
+# Metadata quality is hidden for datasets harvested from theses backends
+QUALITY_METADATA_BACKEND_IGNORE = []
