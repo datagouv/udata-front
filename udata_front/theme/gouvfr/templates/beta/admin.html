@@ -1,7 +1,5 @@
 {% extends theme('raw.html') %}
 
-{% set read_only_mode = config.READ_ONLY_MODE %}
-
 {% block extra_css %}
 <link href="{{ theme_static('assets/admin.css') }}" rel="stylesheet">
 {% endblock %}
@@ -9,7 +7,7 @@
 {% block body %}
     {% include theme("banners/feedback.html") %}
     {% include theme("header.html") with context %}
-    <main class="fr-col" role="main" id="admin" data-read-only="{{read_only_mode}}"></main>
+    <main class="fr-col" role="main" id="admin"></main>
 {% endblock %}
 
 {% block extra_js %}
