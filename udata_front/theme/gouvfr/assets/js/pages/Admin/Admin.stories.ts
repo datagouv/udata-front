@@ -17,7 +17,7 @@ const meta = {
           "apikey": null,
           "avatar": null,
           "avatar_thumbnail": null,
-          "email": "contact@nicolaskempf.fr",
+          "email": "contact@udata",
           "first_name": "Nicolas",
           "id": "6167f47af6e528f929382ca4",
           "last_name": "KEMPF",
