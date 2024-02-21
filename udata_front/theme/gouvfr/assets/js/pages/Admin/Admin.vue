@@ -2,8 +2,13 @@
   <div class="fr-container--fluid h-100">
     <div class="fr-grid-row h-100 bg-grey-50">
       <div class="fr-col-12 fr-col-md-4 fr-col-lg-3 fr-col-xl-2">
-        <nav class="fr-sidemenu h-100" :aria-label="t('Administration menu')">
-          <div class="fr-sidemenu__inner h-100">
+        <nav
+          class="fr-sidemenu"
+          :aria-label="t('Administration menu')"
+        >
+          <div
+            class="fr-sidemenu__inner"
+          >
             <button
               class="fr-sidemenu__btn"
               hidden
@@ -16,7 +21,7 @@
               <ul class="fr-sidemenu__list">
                 <li class="fr-sidemenu__item">
                   <button
-                    class="fr-sidemenu__btn"
+                    class="fr-sidemenu__btn border-bottom border-default-grey"
                     aria-expanded="false"
                     :aria-controls="profilId"
                     disabled
@@ -80,9 +85,16 @@ onMounted(async () => {
 });
 </script>
 
-<style>
+<style lang="less">
+@import "../../../less/variables.less";
 html, body {
   height: 100%;
+}
+
+@media @dsfr-query-md {
+  .fr-sidemenu, .fr-sidemenu__inner {
+    height: 100%;
+  }
 }
 
 #app {
@@ -99,5 +111,9 @@ html, body {
   padding: 0;
   box-shadow: 1px 0 0 0 var(--border-default-grey);
   background-color: var(--background-default-grey);
+}
+
+.fr-sidemenu .fr-sidemenu__item:first-child:before, .fr-sidemenu .fr-sidemenu__item:last-child:before, .fr-sidemenu .fr-sidemenu__item:before {
+  box-shadow: none;
 }
 </style>
