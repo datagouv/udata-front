@@ -2,7 +2,13 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Show a map of datasets' spatial coverage [#354](https://github.com/etalab/udata-front/pull/354)
+- Fix redirect user to auth page [#357](https://github.com/etalab/udata-front/pull/357)
+- Fix tests factories for `HarvestSource`, `backend` is now required [udata#2962](https://github.com/opendatateam/udata/pull/2962)
+
+## 3.5.2 (2024-02-15)
+
+- Show a button to mark as no spam a discussion or a message [#352](https://github.com/etalab/udata-front/pull/352)
 
 ## 3.5.1 (2024-02-05)
 
