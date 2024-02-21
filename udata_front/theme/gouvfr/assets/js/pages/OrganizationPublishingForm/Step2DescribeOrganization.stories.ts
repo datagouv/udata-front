@@ -42,6 +42,7 @@ const organization: Organization = {
 const args = {
   organization,
   steps: Stepper.StepperOnSecondStep.args.steps,
+  errors: []
 };
 
 export const Step2: StoryObj<typeof meta> = {

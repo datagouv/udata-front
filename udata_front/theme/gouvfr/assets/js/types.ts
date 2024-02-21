@@ -134,7 +134,7 @@ business_number_id: string;
 created_at: string;
 last_modified: string;
 last_update: string;
-deleted: string;
+deleted: string | null;
 description: string;
 logo: string;
 logo_thumbnail: string;

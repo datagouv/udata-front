@@ -45,10 +45,9 @@ export const FormWithFailedRequests = {
         const body = await req.json();
         /** @type {import("../../types").Dataset} */
         const organization = {...body, id: "someId", last_update: new Date()};
-        return res(ctx.delay(), ctx.status(400), ctx.json({error: "Save error"}));
+        return res(ctx.delay(), ctx.json(organization));
       }),
       rest.post('*/api/1/organizations/:organizationId/upload', async (req, res, ctx) => {
-        console.log("error")
         return res(ctx.delay(), ctx.status(400), ctx.json({error: "Chunk size mismatch"}));
       }),
     ],

@@ -68,7 +68,7 @@
   import Placeholder from '../../components/utils/placeholder.vue';
   import successIcon from "../../../../templates/svg/illustrations/success.svg";
   import { excerpt } from "../../helpers";
-  import { Organization } from '@etalab/data.gouv.fr-components';
+  import { Organization } from '../../types';
 
   const props = defineProps<{
     organization: Organization;
