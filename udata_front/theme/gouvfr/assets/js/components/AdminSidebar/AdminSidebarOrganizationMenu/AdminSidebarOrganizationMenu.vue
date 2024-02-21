@@ -12,11 +12,12 @@
     <div class="logo logo--sm">
       <Placeholder
         type="organization"
+        :src="organization.logo_thumbnail"
         :size="20"
       />
     </div>
     <p class="fr-mx-1w fr-col text-overflow-ellipsis">
-      {{ name }}
+      {{ organization.name }}
     </p>
     </button>
     <div class="fr-collapse" data-fr-js-collapse :id="id">
@@ -36,8 +37,9 @@
   </li>
 </template>
 <script lang="ts">
+import type { Organization } from '@etalab/data.gouv.fr-components';
 export type AdminSidebarOrganizationMenuProps = {
-  name: string,
+  organization: Organization,
   isOpened: boolean,
 };
 </script>

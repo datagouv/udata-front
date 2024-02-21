@@ -32,8 +32,9 @@
                   </div>
                 </li>
                 <AdminSidebarOrganizationMenu
-                  v-for="organization in me?.organizations"
-                  :name="organization.name"
+                  v-if="me"
+                  v-for="organization in me.organizations"
+                  :organization="organization"
                   :is-opened="isCurrent(organization.id)"
                 />
               </ul>
