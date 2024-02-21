@@ -11,7 +11,6 @@ import Admin from "./pages/Admin/Admin.vue";
 import i18n from "./i18n.ts";
 import { admin_root, explorable_resources, schema_catalog_url, schema_documentation_url, schema_validata_url, title } from "./config.ts";
 import Api from "./plugins/api.ts";
-import EventBus from "./plugins/eventbus.ts";
 import Auth from "./plugins/auth.ts";
 import InitSentry from "./sentry.ts";
 
@@ -41,7 +40,6 @@ const app = createApp(Admin);
 InitSentry(app);
 
 app.use(Api);
-app.use(EventBus);
 app.use(Auth);
 app.use(i18n);
 app.use(router);
