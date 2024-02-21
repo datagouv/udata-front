@@ -3,7 +3,7 @@
     <div class="fr-grid-row h-100 bg-grey-50">
       <div class="fr-col-12 fr-col-md-4 fr-col-lg-3 fr-col-xl-2">
         <nav
-          class="fr-sidemenu"
+          class="fr-sidemenu fr-pr-2w"
           :aria-label="t('Administration menu')"
         >
           <div
@@ -51,7 +51,7 @@
           </div>
         </nav>
       </div>
-      <div class="fr-col-12 fr-col-md-8 fr-col-lg-9 fr-col-xl-10">
+      <div class="fr-col-12 fr-col-md-8 fr-col-lg-9 fr-col-xl-10 h-100 fr-pr-2w">
         <router-view></router-view>
       </div>
     </div>
