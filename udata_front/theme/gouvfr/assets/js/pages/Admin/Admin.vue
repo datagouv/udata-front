@@ -24,7 +24,6 @@
                     class="fr-sidemenu__btn border-bottom border-default-grey"
                     aria-expanded="false"
                     :aria-controls="profilId"
-                    disabled
                   >
                     <Avatar
                       :user="user"
@@ -34,6 +33,11 @@
                     <p class="fr-mx-1v">{{ t('My Profil') }}</p>
                   </button>
                   <div class="fr-collapse" :id="profilId">
+                    <AdminSidebarLink
+                      icon="fr-icon-account-circle-line"
+                      :label="t('Me')"
+                      to="/me"
+                    />
                   </div>
                 </li>
                 <AdminSidebarOrganizationMenu
@@ -56,13 +60,13 @@
 
 <script setup lang="ts">
 import { getRandomId } from "@etalab/data.gouv.fr-components";
+import { onMounted, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import Avatar from "../../components/discussions/Avatar/Avatar.vue";
+import AdminSidebarLink from "../../components/AdminSidebar/AdminSidebarLink/AdminSidebarLink.vue";
 import AdminSidebarOrganizationMenu from "../../components/AdminSidebar/AdminSidebarOrganizationMenu/AdminSidebarOrganizationMenu.vue";
 import { user } from "../../config";
-import { ref } from "vue";
-import { useI18n } from "vue-i18n";
-import { Me } from "../../types";
-import { onMounted } from "vue";
+import type { Me } from "../../types";
 import { fetchMe } from "../../api/me";
 
 const { t } = useI18n();

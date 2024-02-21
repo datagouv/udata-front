@@ -13,6 +13,7 @@ import { admin_root, explorable_resources, schema_catalog_url, schema_documentat
 import Api from "./plugins/api.ts";
 import Auth from "./plugins/auth.ts";
 import InitSentry from "./sentry.ts";
+import Me from "./pages/Admin/Me/Me.vue";
 
 setupComponents({
   admin_root,
@@ -27,7 +28,7 @@ setupComponents({
 });
 
 const routes: Array<RouteRecordRaw> = [
-//   { path: '/', component: Home },
+  { path: '/me', component: Me },
 ];
 
 const router = createRouter({

@@ -6,6 +6,7 @@ import { setup } from '@storybook/vue3';
 import i18n from "../i18n";
 import Api from "../plugins/api";
 import Container from "../components/Ui/Container/Container.vue";
+import Me from "../pages/Admin/Me/Me.vue";
 import { type RouteRecordRaw, createRouter, createWebHashHistory } from "vue-router";
 
 setup((app) => {
@@ -15,6 +16,7 @@ setup((app) => {
 
   const routes: Array<RouteRecordRaw> = [
     { path: '/', component: Container },
+    { path: '/me', component: Me },
     { path: '/datasets', component: Container },
     { path: '/reuses', component: Container },
   ];
