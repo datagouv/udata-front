@@ -70,7 +70,7 @@ test.. test... test..... test?..... test!....
     metrics: {views: 0},
     mime: "text/csv",
     preview_url: "https://explore.data.gouv.fr/?url=https%3A%2F%2Fwww.data.gouv.fr%2Ffr%2Fdatasets%2Fr%2Fe2bc9b7c-4598-4bdb-92c3-9109a16f288c",
-    schema: {},
+    schema: null,
     title: "tondeuse_batterie_fr.csv",
     type: "main",
     owner: { id: "someId", first_name: "john", last_name: "Doe" },
