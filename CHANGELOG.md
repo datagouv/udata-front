@@ -2,13 +2,10 @@
 
 ## Current (in progress)
 
-- Nothing yet
-
-## 3.5.3 (2024-02-22)
-
 - Show a map of datasets' spatial coverage [#354](https://github.com/etalab/udata-front/pull/354)
 - Fix redirect user to auth page [#357](https://github.com/etalab/udata-front/pull/357)
 - Fix tests factories for `HarvestSource`, `backend` is now required [udata#2962](https://github.com/opendatateam/udata/pull/2962)
+- Fix schema is not longer a `dict` [#361](https://github.com/etalab/udata-front/pull/361) [udata#2949](https://github.com/opendatateam/udata/pull/2949)
 
 ## 3.5.2 (2024-02-15)
 
