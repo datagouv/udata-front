@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 3.5.3 (2024-02-22)
 
 - Show a map of datasets' spatial coverage [#354](https://github.com/etalab/udata-front/pull/354)
