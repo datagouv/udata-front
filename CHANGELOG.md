@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix CI not using udata release when needed [#363](https://github.com/etalab/udata-front/pull/363)
 
 ## 3.5.3 (2024-02-22)
 
