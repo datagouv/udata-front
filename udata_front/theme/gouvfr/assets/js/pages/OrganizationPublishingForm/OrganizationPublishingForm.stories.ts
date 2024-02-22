@@ -6,9 +6,7 @@ export default {
   component: OrganizationPublishingForm,
 };
 
-const args = {
-  redirectDraftUrl: "https://demo.data.gouv.fr/fr/datasets/?q=draft",
-};
+const args = {};
 
 export const Form = {
   parameters: {

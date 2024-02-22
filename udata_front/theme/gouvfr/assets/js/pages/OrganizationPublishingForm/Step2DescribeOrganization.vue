@@ -126,11 +126,11 @@
                 :errorText="$t('This SIRET is not valid')"
               />
             </LinkedToAccordion>
-            <div v-if="verifOrga.exists !== null" class="fr-col fr-mx-2v fr-mb-2v bg-contrast-grey text-align-center">
-              <div v-if="verifOrga.exists">
-                <p>Le SIREN n° {{ verifOrga.siren }} correspond à</p>
-                <p>{{ verifOrga.name }}</p>
-                <p v-if="verifOrga.isPublicService">
+            <div v-if="checkOrga.exists !== null" class="fr-col fr-mx-2v fr-mb-2v bg-contrast-grey text-align-center">
+              <div v-if="checkOrga.exists">
+                <p>Le SIREN n° {{ checkOrga.siren }} correspond à</p>
+                <p>{{ checkOrga.name }}</p>
+                <p v-if="checkOrga.isPublicService">
                   <span class="fr-icon-bank-line" aria-hidden="true"></span>
                   Service public
                 </p>
@@ -251,7 +251,7 @@
   const organization = reactive({...props.organization});
   const file = ref(null);
 
-  const verifOrga = ref({
+  const checkOrga = ref({
     name: '',
     siren: '',
     isPublicService: '',
@@ -259,7 +259,7 @@
   });
 
   const checkBusinessId = (value) => {
-    return !value || verifOrga.value.exists;
+    return !value || checkOrga.value.exists;
   };
 
   const requiredRules = {
@@ -332,16 +332,16 @@
       .then((res) => res.data)
       .then((result) => {
         if (result.total_results === 0) {
-          verifOrga.value.exists = false;
+          checkOrga.value.exists = false;
         } else {
-          verifOrga.value.name = result.results[0].nom_complet;
-          verifOrga.value.siren = result.results[0].siren;
-          verifOrga.value.isPublicService = result.results[0].complements.est_service_public;
-          verifOrga.value.exists = true;
+          checkOrga.value.name = result.results[0].nom_complet;
+          checkOrga.value.siren = result.results[0].siren;
+          checkOrga.value.isPublicService = result.results[0].complements.est_service_public;
+          checkOrga.value.exists = true;
         }
       })
     } else {
-      verifOrga.value.exists = null;
+      checkOrga.value.exists = null;
     }
   })
 </script>

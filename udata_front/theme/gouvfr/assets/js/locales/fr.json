@@ -343,7 +343,7 @@
   "Choose the right logo": "Choisir le bon logo",
   "If your organization has a logo or a profile picture, please upload it here. To upload a logo, click on the \"Choose a file from your computer\" button. The following image formats are accepted: png, jpg/jpeg.": "Si votre organisation possède un logo, ou une image de profil, importez-la ici. Pour importer un logo, cliquez sur le bouton \"Choisissez un fichier de votre ordinateur.\" Les formats d’image suivant sont acceptés : png ; jpg/jpeg.",
   "What is an organization?": "Qu'est-ce-qu'une organisation ?",
-  "An organization is an entity in which many users can collaborate. The datasets published under the organization can be edited by its members.": "Une organisation est une entité dans laquelle plusieurs utilisateurs peuvent collaborer. Les jeux de données publiés sous l'organisation peuvent être édités par ses membres.",
+  "An organization is an entity in which many users can collaborate. The datasets published under the organization can be edited by its members.": "",
   "Name": "Nom",
   "SIRET Number": "Numéro de SIRET",
   "Website": "Site web",
@@ -351,5 +351,7 @@
   "Your organization is created !": "Votre organisation a bien été créée !",
   "You can now publish content or incite members to join your organization.": "Vous pouvez maintenant publier du contenu ou inviter des membres à rejoindre votre organisation.",
   "Manage the organization": "Administrer votre organisation",
-  "Publish a reuse": "Publier une réutilisation"
+  "Publish a reuse": "Publier une réutilisation",
+  "This SIRET is not valid": "Votre SIRET n'est pas valide",
+  "Your file is valid": "Votre fichier est valide"
 }

@@ -33,8 +33,6 @@ import { Organization } from '../../types';
 
 const { t } = useI18n();
 
-const { files } = useFilesUpload();
-
 const steps = [t("Publish data on {site}", {site: title}), t("Describe your organization"), t("Finalize your organization")];
 
 const currentStep = ref(0);
@@ -68,10 +66,6 @@ const organization = ref<Organization>({
   uri: "",
   url: ""
 });
-
-//const organizationLoading = ref(false);
-
-//const loading = computed(() => files.value.reduce((loading, file) => loading || file.state === "loading", organizationLoading.value));
 
 /** @type {import("vue").Ref<Array<string>>} */
 const errors = ref([]);

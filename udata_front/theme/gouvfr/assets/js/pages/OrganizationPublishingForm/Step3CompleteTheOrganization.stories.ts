@@ -16,9 +16,7 @@ organization.logo_thumbnail = "https://picsum.photos/200"
 
 const args = {
   organization,
-  feedbackUrl: "https://demo.data.gouv.fr/fr/datasets/?q=feedback",
   steps: Stepper.StepperOnSecondStep.args.steps,
-  redirectDraftUrl: "https://demo.data.gouv.fr/fr/datasets/?q=draft",
 };
 
 export const Step3: StoryObj<typeof meta> = {
