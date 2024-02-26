@@ -10,7 +10,7 @@
       >
       <template #actions>
         <div class="fr-col-12 fr-grid-row fr-grid-row--middle">
-          <div class="fr-col-12 fr-col-lg-9">
+          <div class="fr-col-12 fr-col-lg-9 fr-pb-2v">
             <MultiSelect
               :searchPlaceholder="$t('Search an organization...')"
               :allOption="$t('All organizations')"

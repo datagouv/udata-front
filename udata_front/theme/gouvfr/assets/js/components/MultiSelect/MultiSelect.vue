@@ -261,6 +261,8 @@ export default defineComponent({
       image: obj.logo_thumbnail ?? obj.logo ?? obj.image_url ?? obj.image,
       hidden: obj.hidden,
       selected: !!obj.selected,
+      link: obj.page,
+      linkText: obj.linkText ?? "See the organization"
     }));
 
     /**
