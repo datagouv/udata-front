@@ -43,14 +43,13 @@
 import { computed, defineComponent, onMounted, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { templateRef, useEventListener } from '@vueuse/core';
-import {api} from "../../plugins/api";
 import Step1PublishingType from "./Step1PublishingType.vue";
 import Step2DescribeDataset from './Step2DescribeDataset.vue';
 import Step3AddFiles from './Step3AddFiles.vue';
 import Step3UpdateFileMetadata from "./Step3UpdateFileMetadata.vue";
 import Step4CompleteThePublication from "./Step4CompleteThePublication.vue";
 import { publishing_form_feedback_url, title, user } from '../../config';
-import { createDataset, publishDataset } from '../../api/datasets';
+import { createDataset, getSpatialGranularities, publishDataset } from '../../api/datasets';
 import { useFilesUpload } from '../../composables/form/useFilesUpload';
 
 export default defineComponent({
@@ -172,13 +171,12 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      api.get("/spatial/granularities/")
-        .then(resp => {
-          granularities.value = resp.data;
-        })
-        .catch(error => {
-          console.error("Error fetching granularities:", error);
-        });
+      try {
+        const granularitiesValue = getSpatialGranularities();
+        granularities.value = granularitiesValue;
+      } catch(error) {
+        console.error("Error fetching granularities:", error);
+      }
     });
 
     /**
