@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add stories to resource component [#364](https://github.com/etalab/udata-front/pull/364)
 
 ## 3.5.3 (2024-02-22)
 
