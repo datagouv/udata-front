@@ -181,7 +181,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const { t } = useI18n();
-    const toast = useToast();
+    const { toast } = useToast();
     const { id } = useUid('multiselect');
     const errorTextId = computed(() => id + "-desc-error");
     const validTextId = computed(() => id + "-desc-valid");

@@ -70,7 +70,7 @@ export function getFrequenciesUrl () {
 }
 
 /**
- * @returns {Promise<Array<any>>}
+ * @returns {Promise<Array<import("../types").SpatialGranularity>>}
 */
 export function getSpatialGranularities () {
   return api.get("/spatial/granularities").then(resp => resp.data);

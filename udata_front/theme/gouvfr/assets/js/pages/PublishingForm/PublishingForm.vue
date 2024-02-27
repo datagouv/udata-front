@@ -73,6 +73,7 @@ export default defineComponent({
 
     const { files, updateFiles, uploadFiles } = useFilesUpload();
 
+    /** @type {import("../../types").SpatialGranularity} */
     const granularities = ref([]);
 
     const steps = [t("Publish data on {site}", {site: title}), t("Describe your dataset"), t("Add files"), t("Complete your publishing")];
