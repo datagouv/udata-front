@@ -73,7 +73,7 @@ export default defineComponent({
 
     const { files, updateFiles, uploadFiles } = useFilesUpload();
 
-    /** @type {import("../../types").SpatialGranularity} */
+    /** @type {import("vue").Ref<Array<import("../../types").SpatialGranularity>>} */
     const granularities = ref([]);
 
     const steps = [t("Publish data on {site}", {site: title}), t("Describe your dataset"), t("Add files"), t("Complete your publishing")];
@@ -171,9 +171,9 @@ export default defineComponent({
       }
     };
 
-    onMounted(() => {
+    onMounted(async () => {
       try {
-        const granularitiesValue = getSpatialGranularities();
+        const granularitiesValue = await getSpatialGranularities();
         granularities.value = granularitiesValue;
       } catch(error) {
         console.error("Error fetching granularities:", error);

@@ -348,7 +348,7 @@ export default defineComponent({
       required: true,
     },
     granularities: {
-      /** @type {import("vue").PropType<import("../../types").SpatialGranularity>} */
+      /** @type {import("vue").PropType<Array<import("../../types").SpatialGranularity>>} */
       type: Array,
       required: true
     }
