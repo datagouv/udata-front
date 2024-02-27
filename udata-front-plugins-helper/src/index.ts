@@ -1,5 +1,5 @@
 import type { Component as VueComponent } from "vue";
-import type { DefineLocaleMessage, Locale } from "vue-i18n"
+import type { DefineLocaleMessage, Locale } from "vue-i18n";
 
 export type Component = {
   hook: string;
