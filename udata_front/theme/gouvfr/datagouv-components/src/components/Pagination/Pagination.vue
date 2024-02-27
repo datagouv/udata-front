@@ -1,55 +1,3 @@
-<!--
----
-name: Pagination
-category: 5 - Interactions
----
-
-# Pagination
-
-A simple pagination Vue component that allow you to paginate long collections.
-
-## Usage
-
-Simply provide necessary props :
-
-* page : current page
-* page_size : how many elements will be on each page
-* total_results : total collection length
-* changePage : a function that will be called on each button click. It will be passed a single argument : the new page number
-
-Check the example below for more info :
-
-```pagination-ex.vue
-<template>
-    <pagination
-      v-if="totalResults > pageSize"
-      :page="currentPage"
-      :page-size="pageSize"
-      :total-results="totalResults"
-      @change="changePage"
-    />
-</template>
-
-<script>
-import Pagination from "@etalab/data.gouv.fr-components"
-
-export default {
-  name: "XXX",
-  components: {
-      Pagination
-  },
-  methods: {
-    changePage(index) {
-      this.page = index; // Change current page
-      this.loadPage(); // Load corresponding new info
-      scrollToTop(); // Then scroll to the top
-    }
-  }
-};
-</script>
-```
--->
-
 <template>
   <nav role="navigation" class="fr-pagination fr-pagination--centered" :aria-label="t('Pagination')">
     <ul class="fr-pagination__list">
@@ -58,6 +6,7 @@ export default {
           :href="page === 1 ? undefined :'#'"
           class="fr-pagination__link fr-pagination__link--first"
           @click.prevent="onClick(1)"
+          data-testid="first-page"
         >
           {{ t('First page') }}
         </a>
@@ -67,6 +16,7 @@ export default {
           :href="page === 1 ? undefined : '#'"
           class="fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label"
           @click.prevent="previousPage"
+          data-testid="previous-page"
         >
           {{ t('Previous page') }}
         </a>
@@ -79,7 +29,7 @@ export default {
           :class="{'fr-hidden fr-unhidden-sm': page > 1}"
           :title="t('Page {nb}', {nb: 1})"
           @click.prevent="onClick(1)"
-          :data-page="1"
+          :data-testid="1"
         >
           1
         </a>
@@ -92,7 +42,7 @@ export default {
           :href="page === index ? undefined : '#'"
           :title="t('Page {nb}', {nb: index})"
           @click.prevent="onClick(index)"
-          :data-page="index"
+          :data-testid="index"
           v-if="index"
           >
           {{ index }}
@@ -108,7 +58,7 @@ export default {
           :href="page === pageCount ? undefined : '#'"
           :title="t('Page {nb}', {nb: pageCount})"
           @click.prevent="onClick(pageCount)"
-          :data-page="pageCount"
+          :data-testid="pageCount"
         >
           {{ pageCount }}
         </a>
@@ -118,6 +68,7 @@ export default {
           class="fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label"
           :href="page === pageCount ? undefined : '#'"
           @click.prevent="nextPage"
+          data-testid="next-page"
         >
           {{ t('Next page') }}
         </a>
@@ -127,6 +78,7 @@ export default {
           class="fr-pagination__link fr-pagination__link--last"
           :href="page === pageCount ? undefined : '#'"
           @click.prevent="onClick(pageCount)"
+          data-testid="last-page"
         >
           {{ t('Last page') }}
         </a>
@@ -138,22 +90,32 @@ export default {
 <script setup lang="ts">
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
-import getVisiblePages from "./paginate";
+import { getVisiblePages } from "./paginate";
 
 type Props = {
+  /**
+   * The current page.
+   */
   page?: number,
+  /**
+   * The page size.
+   */
   pageSize?: number,
+  /**
+   * The number of items in the collection. It's used to calculated the number of pages.
+   */
   totalResults: number,
 };
+
+
+const emit = defineEmits<{
+  (event: 'change', page: number): void
+}>();
 
 const props = withDefaults(defineProps<Props>(), {
   page: 1,
   pageSize: 20,
 });
-
-const emit = defineEmits<{
-  change: [page: number]
-}>();
 
 const { t } = useI18n();
 const pageCount = computed(() => Math.ceil(props.totalResults / props.pageSize));
