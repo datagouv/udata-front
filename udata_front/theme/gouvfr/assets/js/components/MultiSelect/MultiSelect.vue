@@ -4,8 +4,6 @@
       <label :for="id" :title="explanation">
         {{ placeholder }}
         <Required :required="required" />
-        {{ placeholder }}
-        <Required :required="required" />
         <span v-if="explanation" class="fr-icon-information-line" aria-hidden="true"></span>
         <span class="fr-hint-text" v-if="hintText">{{ hintText }}</span>
       </label>
