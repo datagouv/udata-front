@@ -4,7 +4,7 @@
  * Lots of variables here are probably useless for the front-end
  */
 
-import { User } from "@etalab/data.gouv.fr-components";
+import type { User } from "@etalab/data.gouv.fr-components";
 import type { Primitive } from "@sentry/types";
 
 /**
@@ -36,19 +36,21 @@ const userEl = document.querySelector<HTMLElement>("meta[name=current-user]");
 /**
  * The current user extracted from the header
  */
-export const user: User = {
-  id: userEl?.getAttribute("content") || "",
-  slug: userEl?.dataset.slug,
-  first_name: userEl?.dataset.first_name || "",
-  last_name: userEl?.dataset.last_name || "",
-  avatar: userEl?.dataset.avatar,
-  roles: userEl?.dataset.roles?.split(",") || [],
-};
+export const user: User | null = userEl ? {
+  id: userEl.getAttribute("content") || "",
+  slug: userEl.dataset.slug,
+  page: "/users/" + userEl.dataset.slug,
+  first_name: userEl.dataset.first_name || "",
+  last_name: userEl.dataset.last_name || "",
+  avatar: userEl.dataset.avatar,
+  avatar_thumbnail: userEl.dataset.avatar_thumbnail,
+  roles: userEl.dataset.roles?.split(",") || [],
+} : null;
 
 /**
  * Map debug features on Webpack DEBUG flag
  */
-export const debug = import.meta.env.DEV; //TODO : handle this, no more webpack
+export const debug = import.meta.env.DEV;
 
 export const defaultLang = "en";
 
@@ -122,6 +124,54 @@ export const schema_documentation_url = _meta("schema-documentation-url");
  * The schema validata URL
  */
 export const schema_validata_url = _meta("schema-validata-url");
+
+/**
+ * The schema publishing url
+ */
+export const schema_publishing_url = _meta("schema-publishing-url");
+
+/**
+ * The demo server URL
+ */
+export const demo_server_url = _meta("demo-server-url");
+
+/**
+ * The demo server name
+ */
+export const demo_server_name = _meta("demo-server-name");
+
+/**
+ * The publishing form feedback URL
+ */
+export const publishing_form_feedback_url = _meta("publishing-form-feedback-url");
+
+/**
+ * The API documentation external link
+ */
+
+export const api_doc_external_link = _meta("api-doc-external-link");
+
+/**
+ * The harvesting guide url
+ */
+
+export const guides_harvesting_url = _meta("guides-harvesting-url");
+
+/**
+ * The harvesting guide url
+ */
+
+export const support_url = _meta("support-url");
+
+/**
+ * The catalog service URL
+ */
+export const catalog_url = _meta("catalog-url");
+
+/**
+ * The description length required to pass the quality score check
+ */
+export const quality_description_length = _meta("quality-description-length");
 
 /**
  * The data search form URL
@@ -235,7 +285,13 @@ export default {
   debug,
   lang,
   title,
+  catalog_url,
   csrf_token,
+  demo_server_url,
+  demo_server_name,
+  api_doc_external_link,
+  guides_harvesting_url,
+  support_url,
   data_search_feedback_form_url,
   api_root,
   api_2_root,
@@ -244,8 +300,10 @@ export default {
   static_root,
   admin_root,
   auth_url,
+  publishing_form_feedback_url,
   schema_catalog_url,
   schema_documentation_url,
+  schema_publishing_url,
   schema_validata_url,
   guides_quality_url,
   sentry,
@@ -259,4 +317,5 @@ export default {
   resources_min_count_to_show_search,
   markdown,
   read_only_enabled,
+  quality_description_length,
 };

@@ -5,17 +5,14 @@
       <ResourceAccordionLoader />
     </div>
     <div v-else>
-      <!-- TODO: move to <Well> component when available -->
-      <div class="fr-mb-2w fr-px-3w well well-secondary-success">
+      <Well type="secondary" color="success" class="fr-mb-2w">
         <div class="fr-grid-row fr-grid-row--middle justify-between">
-          {{
-            $t("You are seeing a specific file of this dataset")
-          }}
+          {{ t("You are seeing a specific file of this dataset") }}
           <button class="fr-btn--close fr-btn fr-mr-0" @click.prevent="resetHash">
-            {{$t('Close')}}
+            {{ t('Close') }}
           </button>
         </div>
-      </div>
+      </Well>
       <ResourceAccordion
         v-if="resource"
         :id="'resource-' + resourceId"
@@ -32,13 +29,14 @@
 import { defineComponent, ref, watchEffect } from 'vue';
 import { useI18n } from "vue-i18n";
 import { ResourceAccordion, ResourceAccordionLoader, type Resource } from "@etalab/data.gouv.fr-components";
+import Well from "../../Ui/Well/Well.vue";
 import { useToast } from "../../../composables/useToast";
 import useIdFromHash from "../../../composables/useIdFromHash";
 import { previousResourceUrlRegExp, resourceUrlRegExp } from '../../../helpers';
 import { api } from "../../../plugins/api";
 
 export default defineComponent({
-  components: { ResourceAccordion, ResourceAccordionLoader },
+  components: { ResourceAccordion, ResourceAccordionLoader, Well },
   props: {
     canEdit: {
       type: Boolean,
@@ -104,6 +102,7 @@ export default defineComponent({
       resourceId,
       top,
       resetHash,
+      t,
     }
   },
 });

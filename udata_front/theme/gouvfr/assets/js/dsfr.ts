@@ -8,7 +8,7 @@ import type { AxisAlignment } from "./types";
 
 // @ts-ignore La propriété `dsfr` est comprise par @gouvfr/dsfr
 window.dsfr = {
-    mode: 'manual',
+  mode: 'manual',
 }
 
 /**

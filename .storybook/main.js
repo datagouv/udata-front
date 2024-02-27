@@ -5,10 +5,10 @@ import { withoutVitePlugins } from "@storybook/builder-vite";
 /** @type { import('@storybook/vue3-vite').StorybookConfig } */
 const config = {
   stories: [{
-    directory: "../udata_front/theme/*/",
+    directory: "../udata_front/theme/*/assets/",
     files: "**/*.mdx"
   }, {
-    directory: "../udata_front/theme/*/",
+    directory: "../udata_front/theme/*/assets/",
     files: "**/*.stories.@(js|jsx|ts|tsx)"
   }],
   addons: [
@@ -24,7 +24,7 @@ const config = {
     name: "@storybook/vue3-vite",
     options: {}
   },
-
+  staticDirs: ['./msw'],
   viteFinal: async config => {
     config.plugins = await withoutVitePlugins(config.plugins, ["vite:legacy", "vite:legacy-config", "vite:legacy-generate-polyfill-chunk", "vite:legacy-post-process", "vite:legacy-polyfills"]);
     return mergeConfig(config, {

@@ -12,7 +12,7 @@
           :aria-label="t('Sort discussions by')"
           @change="changeSort(currentSort)"
           v-model="currentSort"
-          class="fr-select fr-select--no-border"
+          class="fr-select fr-select--no-border fr-select--blue"
         >
           <option
             v-for="sort in sorts"
@@ -37,8 +37,7 @@
       </template>
       <template v-else>
         <div v-if="discussionId">
-          <!-- TODO: move to <Well> component when available -->
-          <div class="fr-mt-2w fr-px-3w well well-secondary-success" data-cy="threadFromURL">
+          <Well type="secondary" color="success" class="fr-mt-2w" data-cy="threadFromURL">
             <div class="fr-grid-row fr-grid-row--middle justify-between">
               {{
                 t("You are seeing a specific discussion about this dataset")
@@ -47,7 +46,7 @@
                 {{t('Close')}}
               </button>
             </div>
-          </div>
+          </Well>
           <Thread v-if="threadFromURL" :thread="threadFromURL"/>
           <button
             class="nav-link nav-link--no-icon text-decoration-none fr-link fr-mt-9v fr-link--icon-left fr-icon-arrow-right-s-line"
@@ -90,6 +89,7 @@ import ThreadCreate from "./ThreadCreate/ThreadCreate.vue";
 import Thread from "./Thread/Thread.vue";
 import Loader from "./Thread/Loader.vue";
 import ThreadCreateButton from "./ThreadCreate/ThreadCreateButton.vue";
+import Well from "../Ui/Well/Well.vue";
 import { useI18n } from "vue-i18n";
 import { api } from "../../plugins/api";
 import { useToast } from "../../composables/useToast";

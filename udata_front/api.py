@@ -68,6 +68,7 @@ class CaptchEtatAPI(API):
             req = requests.get(f'{captchetat_url}/simple-captcha-endpoint',
                                headers=headers,
                                params=args)
+            req.raise_for_status()
         except requests.exceptions.RequestException:
             abort(500, description='Catptcha internal error')
 

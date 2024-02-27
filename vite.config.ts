@@ -1,12 +1,13 @@
-import { defineConfig } from 'vite';
+import { defineConfig, type UserConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import copy from 'rollup-plugin-copy';
 import legacy from '@vitejs/plugin-legacy';
+import fs from 'node:fs';
 import { resolve, dirname } from 'node:path';
+import readline from 'node:readline';
 import { fileURLToPath } from 'url';
 import { globSync } from 'glob';
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite';
-import projectInformation from "./package.json";
 
 /**
  * Get theme folder name
@@ -28,9 +29,31 @@ export function getTheme(): string {
   return theme;
 }
 
-// https://vitejs.dev/config/
-export default defineConfig((_config) => {
-  let theme = getTheme();
+export async function getVersion(version: string): Promise<string | null> {
+  if(version) {
+    return version;
+  }
+  const fileName = globSync('*.egg-info/PKG-INFO');
+  if(fileName.length > 0) {
+    const fileStream = fs.createReadStream(fileName[0]);
+    const rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity,
+    });
+    const pattern = 'Version: ';
+    for await (const line of rl) {
+      if(line.startsWith(pattern)) {
+        version = line.substring(pattern.length);
+        rl.close();
+      }
+    }
+  }
+  return version;
+}
+
+export async function getConfig(): Promise<UserConfig> {
+  const theme = getTheme();
+  let version = await getVersion(process.env.buildno);
 
   return {
     base: `/_themes/${theme}/`,
@@ -49,6 +72,8 @@ export default defineConfig((_config) => {
         targets: [
           { src: `udata_front/theme/${theme}/assets/img`, dest: `udata_front/theme/${theme}/static/` },
           { src: "node_modules/systemjs/dist/s.min.js", dest: `udata_front/theme/${theme}/static/js/` },
+          { src: "node_modules/leaflet/dist/leaflet.js", dest: `udata_front/theme/${theme}/static/js/` },
+          { src: "node_modules/leaflet/dist/leaflet.css", dest: `udata_front/theme/${theme}/static/js/` },
         ],
         hook: 'writeBundle'
       }),
@@ -68,8 +93,8 @@ export default defineConfig((_config) => {
         external: ['vue', 'vue-content-loader'],
         output: {
           dir: `./udata_front/theme/${theme}/static/`,
-          entryFileNames: `js/[name].${projectInformation.version}.js`,
-          chunkFileNames: `js/[name].${projectInformation.version}.js`,
+          entryFileNames: `js/[name].${version}.js`,
+          chunkFileNames: `js/[name].${version}.js`,
           assetFileNames: `assets/[name].[ext]`,
           // Provide global variables to use in the UMD build
           // for externalized deps
@@ -81,4 +106,7 @@ export default defineConfig((_config) => {
       }
     }
   };
-});
+}
+
+// https://vitejs.dev/config/
+export default defineConfig(getConfig());

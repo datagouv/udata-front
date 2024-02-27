@@ -31,7 +31,8 @@
                     suggestUrl="/organizations/suggest/"
                     entityUrl="/organizations/"
                     :values="facets.organization"
-                    :onChange="handleFacetChange('organization')"
+                    @change="(value: string) => handleFacetChange('organization', value)"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -41,8 +42,9 @@
                     :allOption="t('All tags')"
                     suggestUrl="/tags/suggest/"
                     :values="facets.tag"
-                    :onChange="handleFacetChange('tag')"
+                    @change="(value: string) => handleFacetChange('tag', value)"
                     :minimumCharacterBeforeSuggest="2"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -50,9 +52,10 @@
                     :placeholder="t('Formats')"
                     :searchPlaceholder="t('Search a format...')"
                     :allOption="t('All formats')"
-                    listUrl="/datasets/extensions/"
+                    :listUrl="allowedExtensionsUrl"
                     :values="facets.format"
-                    :onChange="handleFacetChange('format')"
+                    @change="(value: string) => handleFacetChange('format', value)"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -61,15 +64,17 @@
                     :explanation="t('Licenses define reuse rules for published datasets. See page data.gouv.fr/licences')"
                     :searchPlaceholder="t('Search a license...')"
                     :allOption="t('All licenses')"
-                    listUrl="/datasets/licenses/"
+                    :listUrl="licensesUrl"
                     :values="facets.license"
-                    :onChange="handleFacetChange('license')"
+                    @change="(value: string) => handleFacetChange('license', value)"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12">
-                  <SchemaFilter
+                  <SchemaSelect
                     :values="facets.schema"
-                    :onChange="handleFacetChange('schema')"
+                    @change="(value: string) => handleFacetChange('schema', value)"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -81,7 +86,8 @@
                     suggestUrl="/spatial/zones/suggest/"
                     entityUrl="/spatial/zone/"
                     :values="facets.geozone"
-                    :onChange="handleFacetChange('geozone')"
+                    @change="(value: string) => handleFacetChange('geozone', value)"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12">
@@ -92,7 +98,8 @@
                     :allOption="t('All granularities')"
                     listUrl="/spatial/granularities/"
                     :values="facets.granularity"
-                    :onChange="handleFacetChange('granularity')"
+                    @change="(value: string) => handleFacetChange('granularity', value)"
+                    :isBlue="true"
                   />
                 </div>
                 <div class="fr-col-12 fr-mb-3w text-align-center" v-if="isFiltered || downloadLink">
@@ -128,7 +135,7 @@
             <div class="fr-col">
                 <select
                   id="sort-search"
-                  class="fr-select"
+                  class="fr-select fr-select--blue"
                   name="sort"
                   v-model="searchSort"
                   @change="handleSortChange"
@@ -192,7 +199,7 @@
                 {{ t("Try to reset filters to widen your search.") }}<br/>
                 {{ t("You can also give us more details with our feedback form.") }}
               </p>
-              <template #actions>
+              <template v-slot:actions>
                 <button @click="resetForm" class="fr-btn fr-btn--secondary">
                   {{ t("Reset filters") }}
                 </button>
@@ -211,22 +218,24 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from "vue";
 import { useI18n } from 'vue-i18n';
-import axios, { CancelTokenSource } from "axios";
+import axios, { type CancelTokenSource } from "axios";
 import { generateCancelToken, apiv2 } from "../../../plugins/api";
 import { useToast } from "../../../composables/useToast";
 import useSearchUrl from "../../../composables/useSearchUrl";
 import SearchInput from "../search-input.vue";
 import DatasetCard from "../../dataset/card-lg.vue";
 import Loader from "../../dataset/loader.vue";
-import SchemaFilter from "../schema-filter.vue";
+import SchemaSelect from "../../SchemaSelect/SchemaSelect.vue";
 import { Pagination } from "@etalab/data.gouv.fr-components";
-import MultiSelect from "../multi-select.vue";
+import MultiSelect from "../../MultiSelect/MultiSelect.vue";
 import ActionCard from "../../Form/ActionCard/ActionCard.vue";
 import { data_search_feedback_form_url, search_autocomplete_debounce } from "../../../config";
 import { debounce } from "../../../composables/useDebouncedRef";
 import franceWithMagnifyingGlassIcon from "../../../../../templates/svg/illustrations/france_with_magnifying_glass.svg";
 import magnifyingGlassIcon from "../../../../../templates/svg/illustrations/magnifying_glass.svg";
 import type { Dataset } from "../../../types";
+import { getAllowedExtensionsUrl } from "../../../api/resources";
+import { getLicensesUrl } from "../../../api/licenses";
 
 type Props = {
   downloadLink?: string,
@@ -258,12 +267,14 @@ type Facets = {
 
 const { t } = useI18n();
 const { toast } = useToast();
-
 /**
  * Update search params from URL on page load for deep linking
  */
 const url = new URL(window.location.href);
 const params = new URLSearchParams(url.search);
+
+const allowedExtensionsUrl = getAllowedExtensionsUrl();
+const licensesUrl = getLicensesUrl();
 
 /**
  * Search query
@@ -273,7 +284,7 @@ const queryString = ref('');
 /**
  * Reuse url of the query
  */
-const { reuseUrl } = useSearchUrl(queryString);
+const {reuseUrl} = useSearchUrl(queryString);
 
 /**
  * Query sort
@@ -391,19 +402,17 @@ const handleSearchChange = (input: string) => {
 /**
  * Called on every facet selector change, updates the `facets.xxx` object then searches with new values
  */
-const handleFacetChange = (facet: keyof Facets) => {
-  return (values: string) => {
-    if(values) {
-        facets.value[facet] = values;
-      } else {
-        facets.value[facet] = undefined;
-    }
-    if (props.organization) {
-      facets.value.organization = props.organization;
-    }
-    currentPage.value = 1;
-    search();
-  };
+const handleFacetChange = (facet: keyof Facets, values: string) => {
+  if(values) {
+    facets.value[facet] = values;
+  } else {
+    facets.value[facet] = undefined;
+  }
+  if (props.organization) {
+    facets.value.organization = props.organization;
+  }
+  currentPage.value = 1;
+  search();
 };
 
 /**

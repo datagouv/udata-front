@@ -13,7 +13,8 @@ function InitSentry(app: App) {
       ignoreErrors: [
         'Auth required',
         'Network Error',
-        'ResizeObserver loop limit exceeded'
+        'ResizeObserver loop limit exceeded',
+        'ResizeObserver loop completed with undelivered notifications.',
       ],
     })
     Sentry.setTags(sentry.tags)

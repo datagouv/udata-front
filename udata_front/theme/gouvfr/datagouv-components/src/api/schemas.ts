@@ -19,19 +19,14 @@ export type RegisteredSchema = {
   versions: Array<SchemaVersion>;
 }
 
-export type UnknownSchema = {
-  url: string;
-}
-
-export type SelectedSchema = {
-  name: string;
-  version?: string;
-}
-
 /**
  * A schema associated with a resource.
  */
-export type Schema = SelectedSchema | UnknownSchema | {};
+export type Schema = {
+  name?: string
+  url ?: string
+  version ?: string
+} | null;
 
 export interface ValidataError {
   code: string;
@@ -53,7 +48,7 @@ let catalogRequest: Promise<Array<RegisteredSchema>> | null = null;
 /**
  * Get Schema Catalog
  */
-export default function getCatalog() {
+export function getCatalog() {
   if(!config.schema_catalog_url) {
     catalogRequest = Promise.resolve([]);
   }

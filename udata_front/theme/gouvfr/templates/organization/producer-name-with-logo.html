@@ -17,7 +17,9 @@
                 {{organization_name_with_certificate(organization)}}
             </a>
         {% else %}
+        <a class="fr-link" href="{{ url_for('users.show', user=organization) }}">
             {{ organization.fullname }}
+        </a>
         {% endif %}
         </p>
 </div>

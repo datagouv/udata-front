@@ -6,6 +6,7 @@ import { setupI18n, setupI18nWithExistingInstance } from './helpers/i18n';
 import { getRandomId } from "@gouvminint/vue-dsfr";
 
 export type { Organization, Owned, Resource, User };
+export * from "./api";
 export * from "./components";
 export * from "./composables";
 export * from "./config";

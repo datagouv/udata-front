@@ -108,6 +108,11 @@ export default defineComponent({
               }
             },
           },
+          layout: {
+            padding: {
+                top: 1.5 // half border width
+            }
+          },
         },
       });
     });

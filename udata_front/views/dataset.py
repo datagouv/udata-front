@@ -10,9 +10,9 @@ from udata.core.dataset.permissions import ResourceEditPermission, DatasetEditPe
 from udata.core.site.models import current_site
 
 from udata_front.theme import render as render_template
-from udata.sitemap import sitemap
+from udata_front.views.base import DetailView, LoginOnlyView, SearchView
 from udata.i18n import I18nBlueprint, gettext as _, ngettext
-from udata_front.views.base import DetailView, SearchView
+from udata.sitemap import sitemap
 
 
 blueprint = I18nBlueprint('datasets', __name__, url_prefix='/datasets')
@@ -99,6 +99,11 @@ class DatasetDetailView(DatasetView, DetailView):
         return context
 
 
+@blueprint.route('/publishing-form/', endpoint='publishing-form')
+class PublishingFormView(LoginOnlyView):
+    template_name = 'dataset/publishing-form.html'
+
+
 @blueprint.route('/<dataset:dataset>/followers/', endpoint='followers')
 class DatasetFollowersView(DatasetView, DetailView):
     template_name = 'dataset/followers.html'
@@ -160,7 +165,7 @@ def group_resources_by_schema(resources):
     """Group a list of `resources` by `schema`"""
     groups = dict()
     for resource in resources:
-        if 'name' in resource.schema:
-            if len(resource.schema) > 0 and resource.schema['name'] not in groups:
-                groups[resource.schema['name']] = resource.schema
+        if resource.schema and resource.schema.name:
+            if resource.schema.name not in groups:
+                groups[resource.schema.name] = resource.schema
     return groups

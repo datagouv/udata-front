@@ -2,8 +2,61 @@
 
 ## Current (in progress)
 
+- Nothing yet
+
+## 3.5.3 (2024-02-22)
+
+- Show a map of datasets' spatial coverage [#354](https://github.com/etalab/udata-front/pull/354)
+- Fix redirect user to auth page [#357](https://github.com/etalab/udata-front/pull/357)
+- Fix tests factories for `HarvestSource`, `backend` is now required [udata#2962](https://github.com/opendatateam/udata/pull/2962)
+- Fix schema is not longer a `dict` [#361](https://github.com/etalab/udata-front/pull/361) [udata#2949](https://github.com/opendatateam/udata/pull/2949)
+
+## 3.5.2 (2024-02-15)
+
+- Show a button to mark as no spam a discussion or a message [#352](https://github.com/etalab/udata-front/pull/352)
+
+## 3.5.1 (2024-02-05)
+
+- Fix vue runtime errors [#343](https://github.com/etalab/udata-front/pull/343)
+- New featured topic : agriculture [#344](https://github.com/etalab/udata-front/pull/344)
+- Create data.gouv.fr-components NPM package and move some `gouvfr` components to it [#324](https://github.com/etalab/udata-front/pull/324)[#350](https://github.com/etalab/udata-front/pull/350)
+- Setup storybook for data.gouv.fr-components [#346](https://github.com/etalab/udata-front/pull/346)
+
+## 3.5.0, 3.4.0 and 3.3.0 (2024-01-23)
+
+> **Important** <br>
+> These versions contain an invalid js build and are [yanked](https://pypi.org/help/#yanked) from pypi.
+> The update to the next version is mandatory to have a valid js build.
+
+- Fix dependencies according to udata's Flask-Babel migration [#300](https://github.com/etalab/udata-front/pull/300)
+- User pages are back [#338](https://github.com/etalab/udata-front/pull/338)
+
+## 3.2.12 (2023-12-15)
+
+- Fix support menu link [#335](https://github.com/etalab/udata-front/pull/335)
+
+## 3.2.11 (2023-12-08)
+
+- Remove parents, children, etc. from territory views [#328](https://github.com/etalab/udata-front/pull/328)
+- Add publishing form [#266](https://github.com/etalab/udata-front/pull/266) [dependabot/36](https://github.com/etalab/udata-front/security/dependabot/36) [#331](https://github.com/etalab/udata-front/pull/331)
+- New featured topics : culture and education [#332](https://github.com/etalab/udata-front/pull/332)
+- Fix territory sitemap [#334](https://github.com/etalab/udata-front/pull/334)
+- Add header-case to validation url [#333](https://github.com/etalab/udata-front/pull/333)
+
+## 3.2.10 (2023-12-01)
+
+- Ignore another ResizeObserver error [#321](https://github.com/etalab/udata-front/pull/321)
+- Fixed ol not appearing in descriptions [#322](https://github.com/etalab/udata-front/pull/322)
+- Fix copy discussion link [#323](https://github.com/etalab/udata-front/pull/323)
+- Add text-transform-none style and use lowercase k as unit [#325](https://github.com/etalab/udata-front/pull/325)
+
+## 3.2.9 (2023-11-21)
+
 - Update build dependencies [#309](https://github.com/etalab/udata-front/pull/309)
 - Add read-more to discussions [#310](https://github.com/etalab/udata-front/pull/310)
+- New footer with newsletter [#311](https://github.com/etalab/udata-front/pull/311) [#316](https://github.com/etalab/udata-front/pull/316)
+- Add metric components and hooks [#260](https://github.com/etalab/udata-front/pull/260) [#313](https://github.com/etalab/udata-front/pull/313) [#314](https://github.com/etalab/udata-front/pull/314)
+- Add raise_for_status on captchetat request [#318](https://github.com/etalab/udata-front/pull/318)
 
 ## 3.2.8 (2023-10-26)
 

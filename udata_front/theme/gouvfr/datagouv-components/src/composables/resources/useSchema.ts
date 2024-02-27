@@ -1,6 +1,6 @@
 import { useI18n } from 'vue-i18n';
 import { ref, computed } from "vue";
-import getCatalog from "../../api/schemas";
+import { getCatalog } from "../../api/schemas";
 import { config } from "../../config";
 import { useToast } from "../useToast";
 import type { Resource } from "../../types/resources";
@@ -24,10 +24,10 @@ export default function useSchema(resource: Resource) {
     }).finally(() => loading.value = false);
 
   const schemaName = computed(() => {
-    if("name" in resource.schema) {
+    if(resource.schema && resource.schema.name) {
       return resource.schema.name;
     }
-    if("url" in resource.schema) {
+    if(resource.schema && resource.schema.url) {
       return resource.schema.url;
     }
     return "";
@@ -40,11 +40,11 @@ export default function useSchema(resource: Resource) {
   const documentationUrl = computed(() => `${config.schema_documentation_url}${schemaName.value}/`);
 
   const validationUrl = computed(() => {
-    if(!authorizeValidation || !("name" in resource.schema)) {
+    if(!authorizeValidation || !(resource.schema && resource.schema.name)) {
       return undefined;
     }
     let schemaPath: SchemaPath = {'schema_name': `schema-datagouvfr.${resource.schema.name}`};
-    if("version" in resource.schema) {
+    if(resource.schema && resource.schema.version) {
       const schemaVersion = resource.schema.version;
       const versionUrl = schema.value?.versions.find(version => version.version_name === schemaVersion)?.schema_url;
       if(versionUrl) {
@@ -54,6 +54,7 @@ export default function useSchema(resource: Resource) {
     const query = new URLSearchParams({
       'input': 'url',
       'url': resource.url,
+      'header-case': 'on',
       ...schemaPath,
     }).toString();
     return `${config.schema_validata_url}/table-schema?${query}`;

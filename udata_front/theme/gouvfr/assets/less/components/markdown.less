@@ -99,6 +99,16 @@ Content on the site can be styled with Markdown. Ready made styles are provided 
         }
     }
 
+    ol {
+        padding-left: @spacing-xl;
+        list-style-type: decimal;
+
+        ol {
+            margin-top: @spacing-xs;
+            margin-bottom: @spacing-xs;
+        }
+    }
+
     blockquote {
         margin-left: 0;
         .filet;

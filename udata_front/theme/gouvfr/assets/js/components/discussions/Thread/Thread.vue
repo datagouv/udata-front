@@ -6,19 +6,20 @@
       </p>
       <h3 class="fr-col fr-mx-3v fr-mx-md-0 fr-h6 fr-mb-0">{{ thread.title }}</h3>
       <div class="fr-col-auto text-align-right">
+        <MarkAsNoSpam :url="`discussions/${thread.id}/spam`" :spam="thread.spam" class="fr-mr-3v" />
         <button
           :id="thread.id + '-copy'"
           :data-clipboard-text="discussionExternalUrl"
           class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-right fr-icon-links-fill"
         >
           {{$t('Copy discussion permalink')}}
-      </button>
+        </button>
       </div>
     </header>
     <div>
       <transition-group name="list">
         <article
-          v-for="comment in currentDiscussion"
+          v-for="(comment, index) in currentDiscussion"
           v-if="!collapsed"
           class="thread-comment fr-py-3w fr-px-3w fr-pr-5w"
         >
@@ -34,6 +35,7 @@
                   <p class="fr-my-0">{{ comment.content }}</p>
                 </div>
               </ReadMore>
+              <MarkAsNoSpam :url="`discussions/${thread.id}/comments/${index}/spam`" :spam="comment.spam" class="fr-mt-3v" />
             </div>
           </div>
         </article>
@@ -77,6 +79,7 @@ import Avatar from "../Avatar/Avatar.vue";
 import Author from "../Author/Author.vue";
 import ReadMore from "../../ReadMore/ReadMore.vue";
 import ThreadReply from "../ThreadReply/ThreadReply.vue";
+import MarkAsNoSpam from "../../MarkAsNoSpam/MarkAsNoSpam.vue";
 import { read_only_enabled } from "../../../config";
 import { formatDate } from "@etalab/data.gouv.fr-components";
 import { computed, ref } from "vue";

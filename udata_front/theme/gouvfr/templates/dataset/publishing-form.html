@@ -1,0 +1,32 @@
+{% extends theme('layouts/1-column.html') %}
+{% from theme('macros/breadcrumb.html') import breadcrumb with context %}
+
+{% set meta = {
+    'title': _("Publishing Form"),
+    'description': _("%(site)s dataset publishing form", site=config['SITE_TITLE']),
+} %}
+
+{% set section_class = 'bg-grey-50' %}
+{% set container_class = 'vuejs' %}
+
+{% block breadcrumb %}
+{% cache cache_duration, 'dataset-breadcrumb', g.lang_code %}
+        <li>
+            <a class="fr-breadcrumb__link" href="{{ url_for('datasets.list') }}">
+                {{ _('Datasets') }}
+            </a>
+        </li>
+        <li>
+            <a class="fr-breadcrumb__link" aria-current="page">
+                {{ _('Publishing Form') }}
+            </a>
+        </li>
+    {% endcache %}
+{% endblock %}
+
+{% block main_content %}
+    <publishing-form
+        redirect-draft-url="{{ url_for('admin.index', path='dataset/', _external=True) }}"
+        class="fr-pb-10w"
+    ></publishing-form>
+{% endblock %}
