@@ -145,4 +145,17 @@ export type Reuse = Owned & {
 
 export type AxisAlignment = "start" | "center" | "end";
 
+export type SpatialZones = {
+code: string;
+id: string;
+level: string;
+name: string;
+uri: string;
+};
+
+export type SpatialGranularities = {
+id: string;
+name: string
+};
+
 export default {};

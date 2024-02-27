@@ -218,6 +218,7 @@
                 @change="(value) => dataset.license = value"
                 :allOption="$t('Select a license')"
                 :addAllOption="false"
+                :groups="licensesGroups"
               />
             </LinkedToAccordion>
           </fieldset>
@@ -270,7 +271,7 @@
               class="fr-fieldset__element"
             >
               <div class="fr-grid-row fr-grid-row--gutters">
-                <div class="fr-col-12 fr-col-md-6">
+                <div class="fr-col-12">
                   <MultiSelect
                     :placeholder="$t('Spatial coverage')"
                     :searchPlaceholder="$t('Search a spatial coverage...')"
@@ -282,13 +283,15 @@
                     :allOption="$t('e.g. France')"
                     :addAllOption="false"
                     :multiple="true"
+                    helperLabel="Insee : "
+                    :onSuggest="formatSpatialZones"
                   />
                 </div>
-                <div class="fr-col-12 fr-col-md-6">
+                <div class="fr-col-12">
                   <MultiSelect
                     :placeholder="$t('Spatial granularity')"
                     :searchPlaceholder="$t('Search a granularity...')"
-                    listUrl="/spatial/granularities/"
+                    :initialOptions="granularities"
                     :values="dataset.spatial.granularity"
                     @change="(value) => dataset.spatial.granularity = value"
                     :hasWarning="fieldHasWarning('spatial_information')"
@@ -326,7 +329,7 @@ import Well from "../../components/Ui/Well/Well.vue";
 import useUid from "../../composables/useUid";
 import useFunctionalState from '../../composables/form/useFunctionalState';
 import editIcon from "../../../../templates/svg/illustrations/edit.svg";
-import { quality_description_length, title } from "../../config";
+import { license_groups_options, quality_description_length, title } from "../../config";
 import { useI18n } from 'vue-i18n';
 import { getLicensesUrl } from '../../api/licenses';
 import { getFrequenciesUrl } from '../../api/datasets';
@@ -343,6 +346,11 @@ export default defineComponent({
     steps: {
       type: Array,
       required: true,
+    },
+    granularities: {
+      /** @type {import("vue").PropType<import("../../types").SpatialGranularities>} */
+      type: Object,
+      required: true
     }
   },
   setup(props, { emit }) {
@@ -360,6 +368,26 @@ export default defineComponent({
 
     const frequenciesUrl = getFrequenciesUrl();
     const licensesUrl = getLicensesUrl();
+    const licensesGroups = license_groups_options.map(([name, values]) => ({
+      name,
+      values
+    }));
+    const formatSpatialZones = (data) => {
+      const suggestions = data.map(item => {
+      const matchingGranularity = props.granularities.find(granularity => granularity.id === item.level);
+      if (matchingGranularity) {
+        return {
+          ...item,
+          description: matchingGranularity.name,
+        };
+      } else {
+        return {
+          ...item,
+        };
+      }
+    });
+    return suggestions;
+    }
 
     const notUnknown = not(t("The value must be different than unknown."), sameAs("unknown"));
     const tagsRequired = requiredWithCustomMessage(t("Adding tags helps improve the SEO of your data."));
@@ -436,9 +464,11 @@ export default defineComponent({
       editIcon,
       frequenciesUrl,
       licensesUrl,
+      licensesGroups,
       state,
       fieldHasError,
       fieldHasWarning,
+      formatSpatialZones,
       getErrorText,
       getWarningText,
       submit,

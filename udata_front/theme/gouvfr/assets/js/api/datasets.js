@@ -68,3 +68,10 @@ export function publishDataset(dataset) {
 export function getFrequenciesUrl () {
   return getLocalizedUrl("datasets/frequencies/");
 }
+
+/**
+ * @returns {Promise<Array<any>>}
+*/
+export function getSpatialGranularities () {
+  return api.get("/spatial/granularities").then(resp => resp.data);
+}
