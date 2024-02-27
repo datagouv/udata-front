@@ -4,7 +4,7 @@
  * Lots of variables here are probably useless for the front-end
  */
 
-import { User } from "@etalab/data.gouv.fr-components";
+import type { User } from "@etalab/data.gouv.fr-components";
 import type { Primitive } from "@sentry/types";
 
 /**
@@ -35,22 +35,22 @@ const userEl = document.querySelector<HTMLElement>("meta[name=current-user]");
 
 /**
  * The current user extracted from the header
- * @type {import("./types").User | null}
  */
-export const user: User = {
-  id: userEl?.getAttribute("content") || "",
-  slug: userEl?.dataset.slug,
-  first_name: userEl?.dataset.first_name || "",
-  last_name: userEl?.dataset.last_name || "",
-  avatar: userEl?.dataset.avatar,
-  avatar_thumbnail: userEl?.dataset.avatar_thumbnail,
-  roles: userEl?.dataset.roles?.split(",") || [],
-};
+export const user: User | null = userEl ? {
+  id: userEl.getAttribute("content") || "",
+  slug: userEl.dataset.slug,
+  page: "/users/" + userEl.dataset.slug,
+  first_name: userEl.dataset.first_name || "",
+  last_name: userEl.dataset.last_name || "",
+  avatar: userEl.dataset.avatar,
+  avatar_thumbnail: userEl.dataset.avatar_thumbnail,
+  roles: userEl.dataset.roles?.split(",") || [],
+} : null;
 
 /**
  * Map debug features on Webpack DEBUG flag
  */
-export const debug = import.meta.env.DEV; //TODO : handle this, no more webpack
+export const debug = import.meta.env.DEV;
 
 export const defaultLang = "en";
 
@@ -267,6 +267,7 @@ export const markdown = _jsonMeta("markdown-config");
  * License groups options configuration.
  */
 export const license_groups_options = _jsonMeta("license-groups-options");
+
 
 /**
  * Whether the 'read only mode' feature is enabled or not.

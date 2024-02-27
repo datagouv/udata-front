@@ -1,8 +1,6 @@
 import { getLocalizedUrl } from "../i18n";
-import {api} from "../plugins/api";
+import { api } from "../plugins/api";
 
-
-let licenses = null;
 let licensesRequest = null;
 
 export function getLicensesUrl() {
@@ -18,6 +16,5 @@ export default function fetchLicenses() {
     return licensesRequest;
   }
   return licensesRequest = api.get(getLicensesUrl())
-  .then((resp) => resp.data)
-  .then((data) => licenses = data);
+  .then((resp) => resp.data);
 }

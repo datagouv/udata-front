@@ -4,6 +4,8 @@
       <label :for="id" :title="explanation">
         {{ placeholder }}
         <Required :required="required" />
+        {{ placeholder }}
+        <Required :required="required" />
         <span v-if="explanation" class="fr-icon-information-line" aria-hidden="true"></span>
         <span class="fr-hint-text" v-if="hintText">{{ hintText }}</span>
       </label>
@@ -15,8 +17,8 @@
         :required="required"
         :multiple="multiple"
       >
-        <template v-if="groups">
-          <template v-for="group in groups">
+      <template v-if="groups">
+        <template v-for="group in groups">
             <optgroup :label="group.name">
               <template v-for="option in displayedOptions" :key="option.value">
                 <option
@@ -181,7 +183,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const { t } = useI18n();
-    const toast = useToast();
+    const { toast } = useToast();
     const { id } = useUid('multiselect');
     const errorTextId = computed(() => id + "-desc-error");
     const validTextId = computed(() => id + "-desc-valid");
@@ -286,38 +288,38 @@ export default defineComponent({
        * @type {import("axios").AxiosResponse<{data: Array}|Array>}
        */
       return api.get(props.listUrl)
-        .then(resp => {
-          let data = resp.data;
-          if(!Array.isArray(data)) {
-            data = data.data;
-          }
-          if (props.groups) {
-            const groupData = data.map(option => {
-              const matchingGroup = props.groups.find(group => group.values.some(groupValue => groupValue.value === option.id))
-              if (matchingGroup) {
-                const matchingGroupValue = matchingGroup.values.find(groupValue => groupValue.value === option.id);
-                if (matchingGroupValue) {
-                  return {
-                    ...option,
-                    group: matchingGroup.name,
-                    description: matchingGroupValue.description || null,
-                    recommended: matchingGroupValue.recommended,
-                    code: matchingGroupValue.code
-                  };
-                }
+      .then(resp => {
+        let data = resp.data;
+        if(!Array.isArray(data)) {
+          data = data.data;
+        }
+        if (props.groups) {
+          const groupData = data.map(option => {
+            const matchingGroup = props.groups.find(group => group.values.some(groupValue => groupValue.value === option.id))
+            if (matchingGroup) {
+              const matchingGroupValue = matchingGroup.values.find(groupValue => groupValue.value === option.id);
+              if (matchingGroupValue) {
+                return {
+                  ...option,
+                  group: matchingGroup.name,
+                  description: matchingGroupValue.description || null,
+                  recommended: matchingGroupValue.recommended,
+                  code: matchingGroupValue.code
+                };
               }
-              return option;
-            });
-            return mapToOption(groupData);
-          } else {
-            return mapToOption(data);
-          }
-        }).catch((error) => {
-          if (!axios.isCancel(error)) {
-            toast.error(t("Error getting {type}.", {type: props.placeholder}));
-          }
-          return [];
-        });
+            }
+            return option;
+          });
+          return mapToOption(groupData);
+        } else {
+          return mapToOption(data);
+        }
+      }).catch((error) => {
+        if (!axios.isCancel(error)) {
+          toast.error(t("Error getting {type}.", {type: props.placeholder}));
+        }
+        return [];
+      });
     };
 
     /**
@@ -325,7 +327,7 @@ export default defineComponent({
      * @param {Array} data
      * @returns {Array<import("../../types").MultiSelectOption>}
      **/
-    const mapToOption = (data) => data.map((obj) => {
+     const mapToOption = (data) => data.map((obj) => {
       return {
         label: obj.name ?? obj.title ?? obj.text ?? obj?.properties?.name ?? obj.label ?? obj,
         value: obj.id ?? obj.text ?? obj.value ?? obj,
@@ -369,17 +371,17 @@ export default defineComponent({
           return props.onSuggest ? props.onSuggest(resp.data) : resp.data;
         })
         .then((suggestions) => {
-            const addQToSuggestion = props.addNewOption && !suggestions.some(suggestion => suggestion.text === q);
-            if (addQToSuggestion) {
-                suggestions.push({ text: q });
-            }
-            return mapToOption(suggestions);
+          const addQToSuggestion = props.addNewOption && !suggestions.some(suggestion => suggestion.text === q);
+          if (addQToSuggestion) {
+              suggestions.push({ text: q });
+          }
+          return mapToOption(suggestions);
         })
         .catch((error) => {
-            if (!axios.isCancel(error)) {
-                toast.error(t("Error getting {type}.", { type: props.placeholder }));
-            }
-            return /** @type {Array<import("../../types").MultiSelectOption>} */ ([]);
+          if (!axios.isCancel(error)) {
+            toast.error(t("Error getting {type}.", { type: props.placeholder }));
+          }
+          return /** @type {Array<import("../../types").MultiSelectOption>} */ ([]);
         }
       );
     };

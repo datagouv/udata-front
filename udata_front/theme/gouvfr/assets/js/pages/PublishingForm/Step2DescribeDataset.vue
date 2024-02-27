@@ -372,7 +372,6 @@ export default defineComponent({
       name,
       values
     }));
-
     const formatSpatialZones = (data) => {
       const suggestions = data.map(item => {
       const matchingGranularity = props.granularities.find(granularity => granularity.id === item.level);

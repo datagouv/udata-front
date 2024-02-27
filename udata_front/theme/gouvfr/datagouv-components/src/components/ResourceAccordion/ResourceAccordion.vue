@@ -387,8 +387,8 @@ const tabListRef = templateRef<HTMLUListElement | null>("tabListRef");
 const explore = getComponentsForHook("explore");
 const structure = getComponentsForHook("data-structure");
 
-const schemaName = computed(() => "name" in props.resource.schema ? props.resource.schema.name : "");
-const schemaUrl = computed(() => "url" in props.resource.schema ? props.resource.schema.url : "");
+const schemaName = computed(() => props.resource.schema ? props.resource.schema.name : "");
+const schemaUrl = computed(() => props.resource.schema ? props.resource.schema.url : "");
 
 const hasSchema = computed(() => schemaName.value || schemaUrl.value);
 const hasExplore = computed(() => explore.length > 0 && config.explorable_resources && config.explorable_resources.includes(props.resource.id));
