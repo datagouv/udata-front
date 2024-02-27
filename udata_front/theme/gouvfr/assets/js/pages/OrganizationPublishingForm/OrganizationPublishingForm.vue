@@ -70,10 +70,6 @@ const organization = ref<Organization>({
 /** @type {import("vue").Ref<Array<string>>} */
 const errors = ref([]);
 
-/**
- *
- * @param {number | null} step
- */
 const moveToStep = (step: number | null) => {
   if(containerRef.value) {
     containerRef.value.scrollIntoView({
@@ -89,8 +85,7 @@ const createOrganizationAndMoveToNextStep = async (org: Organization, file: any)
   errors.value = [];
   let promiseSucceded = true;
   try {
-    const result = await createOrganization(org);
-    organization.value = result;
+    organization.value = await createOrganization(org);
     if (file.value !== null) {
       const resp = await uploadLogo(organization.value.id, file.value[0]);
       

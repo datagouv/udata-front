@@ -9,11 +9,7 @@ export function createOrganization(organization: Organization) {
 }
 
 export function uploadLogo(organizationId: string, file: any) {
-  const apiForm = {
-    file: file
-  };
-
   return api.postForm(`organizations/${organizationId}/logo`, {
-    ...apiForm,
+    file: file
   });
 }
