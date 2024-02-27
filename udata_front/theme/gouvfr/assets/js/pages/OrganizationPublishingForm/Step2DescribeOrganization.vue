@@ -52,6 +52,9 @@
             <p class="fr-m-0">
               {{ $t("Please indicate here what your organization does and what mission it fulfills. Add any information that will allow users to contact you: email address, mailing address, Twitter account, etc.") }}
             </p>
+            <Well class="fr-mt-1w" v-if="fieldHasWarning('description')" color="orange-terre-battue">
+              {{ getWarningText("description") }}
+            </Well>
           </Accordion>
           <Accordion
             :title= "$t('Provide a website')"
@@ -323,10 +326,11 @@
     };
 
   watch(() => organization.business_number_id, (newValue) => {
-    if (newValue.length === 14) {
+    let siret = newValue.replace(/\s/g,'')
+    if (siret.length === 14) {
       axios.get("https://recherche-entreprises.api.gouv.fr/search", {
         params: {
-          q: newValue
+          q: siret
         }
       })
       .then((res) => res.data)
