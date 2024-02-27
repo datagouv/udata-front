@@ -75,11 +75,15 @@ export type NewDiscussion = {
   subject: Subject;
 };
 
-export type CreateDiscussion = (discussion: NewDiscussion) => Promise<any>
+export type CreateDiscussion = (discussion: NewDiscussion) => Promise<any>;
 
-export type CreateComment = (comment: string) => Promise<any>
+export type CreateComment = (comment: string) => Promise<any>;
 
-export type Discussion = Array<{content: string, posted_by: User, posted_on: string}>;
+export type Spam = {
+  status?: string;
+}
+
+export type Discussion = Array<{content: string, posted_by: User, posted_on: string, spam?: Spam}>;
 
 export type Thread = {
   id: string;
@@ -88,6 +92,7 @@ export type Thread = {
   url: string;
   closed: string;
   closed_by: User;
+  spam?: Spam;
 };
 
 export type Sort = {
