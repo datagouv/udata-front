@@ -128,7 +128,7 @@ metrics: { discussions: number; followers: number; reuses: number; views: number
 
 export type AxisAlignment = "start" | "center" | "end";
 
-export type SpatialZones = {
+export type SpatialZone = {
 code: string;
 id: string;
 level: string;
@@ -136,9 +136,9 @@ name: string;
 uri: string;
 };
 
-export type SpatialGranularities = {
+export type SpatialGranularity = {
 id: string;
-name: string
+name: string;
 };
 
 export default {};

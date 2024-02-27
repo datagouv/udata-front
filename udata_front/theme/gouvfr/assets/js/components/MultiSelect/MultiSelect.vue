@@ -170,8 +170,8 @@ export default defineComponent({
       default: '',
     },
     groups: {
-      /** @type {import("vue").PropType<Array<string> | string>} */
-      type: [String, Array],
+      /** @type {import("vue").PropType<Array<string>>} */
+      type: Array,
       default: null
     },
     onSuggest: {
