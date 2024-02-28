@@ -28,7 +28,6 @@ import Step2DescribeOrganization from './Step2DescribeOrganization.vue';
 import Step3CompleteTheOrganization from './Step3CompleteTheOrganization.vue';
 import { title } from '../../config';
 import { createOrganization, uploadLogo } from '../../api/organizations';
-import { useFilesUpload } from '../../composables/form/useFilesUpload';
 import { Organization } from '../../types';
 
 const { t } = useI18n();

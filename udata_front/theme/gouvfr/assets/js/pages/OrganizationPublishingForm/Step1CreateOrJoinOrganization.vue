@@ -20,7 +20,7 @@
             />
           </div>
           <div class="fr-col-12 fr-col-lg-3 fr-grid-row fr-grid-row--right">
-            <p class="fr-text--sm fr-px-1v fr-col-auto">{{ $t('or') }}</p>
+            <p class="fr-text--sm fr-px-2v fr-col-auto">{{ $t('or') }}</p>
             <button class="fr-btn fr-col-auto" @click="$emit('start')">
               {{ $t("Create an organization") }}
             </button>
