@@ -1,7 +1,7 @@
 <template>
-  <div class="fr-accordions-group">
+  <dt class="fr-text--sm fr-my-0 fr-text--bold">
     <slot></slot>
-  </div>
+  </dt>
 </template>
 
 <script setup lang="ts">
