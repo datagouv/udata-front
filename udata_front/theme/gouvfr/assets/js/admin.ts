@@ -13,6 +13,8 @@ import { admin_root, explorable_resources, schema_catalog_url, schema_documentat
 import Api from "./plugins/api.ts";
 import Auth from "./plugins/auth.ts";
 import InitSentry from "./sentry.ts";
+import Datasets from "./pages/Admin/Datasets/Datasets.vue";
+import Reuses from "./pages/Admin/Reuses/Reuses.vue";
 import Me from "./pages/Admin/Me/Me.vue";
 
 setupComponents({
@@ -29,6 +31,13 @@ setupComponents({
 
 const routes: Array<RouteRecordRaw> = [
   { path: '/me', component: Me },
+  {
+    path: '/organizations/:oid',
+    children: [
+      { path: 'datasets', component: Datasets, props: true, name: "organization-datasets" },
+      { path: 'reuses', component: Reuses, props: true, name: "organization-reuses" },
+    ],
+  },
 ];
 
 const router = createRouter({
