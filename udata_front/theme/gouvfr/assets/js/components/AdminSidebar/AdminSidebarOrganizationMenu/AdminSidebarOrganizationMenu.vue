@@ -1,7 +1,7 @@
 <template>
   <li
     class="fr-sidemenu__item"
-    :class="{'fr-sidemenu__item--active': props.isOpened}"
+    :class="{'fr-sidemenu__item--active': isOpened}"
   >
     <button
       class="fr-sidemenu__btn"
@@ -25,12 +25,12 @@
         <AdminSidebarLink
           :iconHtml="DatabaseIcon"
           :label="t('Datasets')"
-          to="/datasets"
+          :to="{name: 'organization-datasets', params: {oid: organization.id}}"
         />
         <AdminSidebarLink
           icon="fr-icon-line-chart-line"
           :label="t('Reuses')"
-          to="/reuses"
+          :to="{name: 'organization-reuses', params: {oid: organization.id}}"
         />
       </ul>
     </div>
