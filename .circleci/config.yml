@@ -264,6 +264,9 @@ jobs:
       - attach_workspace:
           at: .
       - run:
+          name: Prepare udata.cfg file with udata-front plugin
+          command: cp .lighthouseci/front-plugin-udata.cfg udata.cfg
+      - run:
           name: Generate udata fixtures
           command: |
             pip install --force-reinstall --no-deps -r requirements/udata.in
@@ -282,9 +285,6 @@ jobs:
       - run:
           name: Install lighthouse
           command: sudo npm install -g @lhci/cli@0.10.x
-      - run:
-          name: Prepare udata.cfg file with udata-front plugin
-          command: cp .lighthouseci/front-plugin-udata.cfg udata.cfg
       - run:
           name: Run lighthouse
           command: npm run lighthouse
