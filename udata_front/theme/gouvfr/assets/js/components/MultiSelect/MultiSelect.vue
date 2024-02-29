@@ -177,6 +177,10 @@ export default defineComponent({
     onSuggest: {
       type: Function,
       default: null
+    },
+    showDescription: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props, { emit }) {
@@ -333,16 +337,11 @@ export default defineComponent({
         hidden: obj.hidden,
         selected: !!obj.selected,
         helper: obj?.code ? props.helperLabel + obj.code : obj?.helper,
-        description: obj?.description ?? '',
+        description: props.showDescription ? (obj?.description ?? '') : '',
         group: obj?.group,
         recommended: obj?.recommended
       };
     });
-
-    /**
-     * @typedef Suggestion
-     * @property {string} text
-     */
 
     /**
      * Get options from suggest API
