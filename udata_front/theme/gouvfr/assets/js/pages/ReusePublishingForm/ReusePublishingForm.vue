@@ -18,8 +18,8 @@ import { useFilesUpload } from '../../composables/form/useFilesUpload';
 export default defineComponent({
   components: { Step1DescribeReuse },
   props: {
-    organization: {
-      /** @type {import("vue").PropType<import("../../types").Organization>} */
+    reuse: {
+      /** @type {import("vue").PropType<import("../../types").Reuse>} */
       type: Object,
     },
     owner: {

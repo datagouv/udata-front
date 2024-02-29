@@ -13,6 +13,10 @@ export function getReuseTypesUrl() {
   return getLocalizedUrl("reuses/types/");
 }
 
+export function getReuseTopicsUrl() {
+  return getLocalizedUrl("reuses/topics/");
+}
+
 export function fetchReuseTypes() {
   if (reuseTypesRequest) {
     return reuseTypesRequest;

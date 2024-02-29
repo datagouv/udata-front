@@ -19,7 +19,7 @@
                 :state="state.title"
               >
                 <p class="fr-m-0">
-                  {{ $t("The title of your dataset should be as precise and specific as possible.") }} <br/>
+                  {{ $t("The title of your reuse should be as precise and specific as possible.") }} <br/>
                   {{ $t("It should also correspond to the vocabulary used by users.") }} <br/>
                   {{ $t("They often search for data in a search engine.") }}
                 </p>
@@ -30,7 +30,7 @@
                 :state="state.url"
               >
                 <p class="fr-m-0">
-                  {{ $t("You have the option to add an acronym to your dataset. The letters that make up this acronym do not need to be separated by periods.") }}
+                  {{ $t("You have the option to add an acronym to your reuse. The letters that make up this acronym do not need to be separated by periods.") }}
                 </p>
               </Accordion>
               <Accordion
@@ -40,7 +40,7 @@
               >
                 <div class="markdown fr-m-0">
                   <p class="fr-m-0">
-                    {{ $t(`The description of your dataset allows to obtain information about the content and structure of the published resources. You can provide:`) }}
+                    {{ $t(`The description of your reuse allows to obtain information about the content and structure of the published resources. You can provide:`) }}
                   </p>
                   <ul class="fr-mt-3v">
                     <li>{{ $t("A list of the files available ;") }}</li>
@@ -48,12 +48,12 @@
                     <li>{{ $t("The update frequency.") }}</li>
                   </ul>
                   <ul class="fr-mt-3v">
-                    <li>{{ $t("Motivations for creating the dataset ;") }}</li>
-                    <li>{{ $t("The composition of the dataset ;") }}</li>
+                    <li>{{ $t("Motivations for creating the reuse ;") }}</li>
+                    <li>{{ $t("The composition of the reuse ;") }}</li>
                     <li>{{ $t("The data collection process ;") }}</li>
                     <li>{{ $t("Data preprocessing ;") }}</li>
-                    <li>{{ $t("Dataset dissemination ;") }}</li>
-                    <li>{{ $t("Dataset maintenance ;") }}</li>
+                    <li>{{ $t("reuse dissemination ;") }}</li>
+                    <li>{{ $t("reuse maintenance ;") }}</li>
                     <li>{{ $t("Legal and ethical considerations.") }}</li>
                   </ul>
                   <Well class="fr-mt-1w" v-if="fieldHasWarning('type')" color="orange-terre-battue">
@@ -67,7 +67,7 @@
                 :state="state.theme"
               >
                 <p class="fr-m-0">
-                  {{ $t("Tags characterize your dataset. They are public and improve the dataset's search engine optimization during a user search.") }}
+                  {{ $t("Tags characterize your reuse. They are public and improve the reuse's search engine optimization during a user search.") }}
                 </p>
                 <Well class="fr-mt-1w" v-if="fieldHasWarning('theme')" color="orange-terre-battue">
                   {{ getWarningText("theme") }}
@@ -79,7 +79,7 @@
                 :state="state.description"
               >
                 <p class="fr-m-0">
-                  {{ $t("Licenses define the rules for reuse. By choosing a reuse license, you ensure that the published dataset will be reused according to the usage conditions you have defined.") }}
+                  {{ $t("Licenses define the rules for reuse. By choosing a reuse license, you ensure that the published reuse will be reused according to the usage conditions you have defined.") }}
                 </p>
                 <Well class="fr-mt-1w" v-if="fieldHasWarning('description')" color="orange-terre-battue">
                   {{ getWarningText("description") }}
@@ -142,7 +142,7 @@
                   :placeholder="$t('Check the identity with which you want to publish')"
                   :searchPlaceholder="$t('Select an organization')"
                   suggestUrl="/tags/suggest/"
-                  :values="dataset.tags"
+                  :values="reuse.tags"
                   :addNewOption="true"
                 />
               </div>
@@ -162,7 +162,7 @@
                   :aria-describedby="nameReuseAccordionId"
                   :label="$t('Reuse name')"
                   :required="true"
-                  v-model="dataset.title"
+                  v-model="reuse.title"
                   :hasError="fieldHasError('title')"
                   :hasWarning="fieldHasWarning('title')"
                   :errorText="getErrorText('title')"
@@ -178,7 +178,7 @@
                   :label="$t('Link')"
                   :placeholder="$t('https://...')"
                   :required="true"
-                  v-model="dataset.link"
+                  v-model="reuse.link"
                 />
               </LinkedToAccordion>
               <LinkedToAccordion
@@ -188,12 +188,10 @@
               >
               <MultiSelect
                   :required="true"
-                  :minimumCharacterBeforeSuggest="2"
                   :placeholder="$t('Type')"
                   :searchPlaceholder="$t('Select a type')"
                   :listUrl="typesUrl"
-                  :values="dataset.type"
-                  :addNewOption="true"
+                  :values="reuse.type"
                 />
               </LinkedToAccordion>
               <LinkedToAccordion
@@ -203,14 +201,10 @@
               >
                 <MultiSelect
                   :required="true"
-                  :minimumCharacterBeforeSuggest="2"
-                  @change="(value) => dataset.theme = value"
                   :placeholder="$t('Theme')"
                   :searchPlaceholder="$t('Select a theme...')"
-                  suggestUrl="/tags/suggest/"
-                  :values="dataset.theme"
-                  :hasWarning="fieldHasWarning('theme')"
-                  :addNewOption="true"
+                  :listUrl="topicsUrl"
+                  :values="reuse.theme"
                 />
               </LinkedToAccordion>
               <LinkedToAccordion
@@ -222,7 +216,7 @@
                   :label="$t('Description')"
                   :required="true"
                   type="textarea"
-                  v-model="dataset.description"
+                  v-model="reuse.description"
                   :hasError="fieldHasError('description')"
                   :hasWarning="fieldHasWarning('description')"
                   :errorText="getErrorText('description')"
@@ -235,11 +229,11 @@
               >
                 <MultiSelect
                   :minimumCharacterBeforeSuggest="2"
-                  @change="(value) => dataset.tags = value"
+                  @change="(value) => reuse.tags = value"
                   :placeholder="$t('Tags')"
                   :searchPlaceholder="$t('Search a tag...')"
                   suggestUrl="/tags/suggest/"
-                  :values="dataset.tags"
+                  :values="reuse.tags"
                   :hasWarning="fieldHasWarning('tags')"
                   :multiple="true"
                   :addNewOption="true"
@@ -283,17 +277,15 @@
   import editIcon from "../../../../templates/svg/illustrations/edit.svg";
   import { quality_description_length, title } from "../../config";
   import { useI18n } from 'vue-i18n';
-  import { getLicensesUrl } from '../../api/licenses';
-  import { getFrequenciesUrl } from '../../api/datasets';
-  import { getReuseTypesUrl } from '../../api/reuses';
+  import { getReuseTypesUrl, getReuseTopicsUrl } from '../../api/reuses';
   import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
   
   export default defineComponent({
     components: { Accordion, AccordionGroup, Container, InputGroup, LinkedToAccordion, MultiSelect, Stepper, Well, Sidemenu, MultiSelect, UploadGroup },
     emits: ["next"],
     props: {
-      originalDataset: {
-        /** @type {import("vue").PropType<import("../../types").NewDataset>} */
+      originalReuse: {
+        /** @type {import("vue").PropType<import("../../types").Reuse>} */
         type: Object,
         required: true
       },
@@ -312,10 +304,8 @@
       const { id: addTagsAccordionId } = useUid("accordion");
       const { id: addImageCoverageAccordionId } = useUid("accordion");
   
-      const dataset = reactive({...props.originalDataset});
-  
-      const frequenciesUrl = getFrequenciesUrl();
-      const licensesUrl = getLicensesUrl();
+      const reuse = reactive({...props.originalReuse});
+      const topicsUrl = getReuseTopicsUrl();
       const typesUrl = getReuseTypesUrl();
   
       const notUnknown = not(t("The value must be different than unknown."), sameAs("unknown"));
@@ -342,7 +332,7 @@
         image: { required },
       };
   
-      const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(dataset, requiredRules, warningRules);
+      const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(reuse, requiredRules, warningRules);
   
       /**
        * @type {import("vue").ComputedRef<Record<string, import("../../types").PublishingFormAccordionState>>}
@@ -374,7 +364,7 @@
       const submit = () => {
         validateRequiredRules().then(valid => {
           if(valid) {
-            emit("next", dataset);
+            emit("next", reuse);
           }
         });
       };
@@ -387,10 +377,9 @@
         addDescriptionAccordionId,
         addTagsAccordionId,
         addImageCoverageAccordionId,
-        dataset,
+        reuse,
         editIcon,
-        frequenciesUrl,
-        licensesUrl,
+        topicsUrl,
         typesUrl,
         state,
         fieldHasError,
