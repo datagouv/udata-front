@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Update sentry configuration to ignore aborted requests [#368](https://github.com/etalab/udata-front/pull/368)
 
 ## 3.5.3 (2024-02-22)
 
