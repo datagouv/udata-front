@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix structure tab not shown [#369](https://github.com/etalab/udata-front/pull/369)
 
 ## 3.5.3 (2024-02-22)
 
