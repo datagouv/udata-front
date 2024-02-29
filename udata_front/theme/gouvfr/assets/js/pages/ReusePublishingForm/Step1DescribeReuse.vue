@@ -191,7 +191,7 @@
                   :minimumCharacterBeforeSuggest="2"
                   :placeholder="$t('Type')"
                   :searchPlaceholder="$t('Select a type')"
-                  suggestUrl="/tags/suggest/"
+                  :listUrl="typesUrl"
                   :values="dataset.type"
                   :addNewOption="true"
                 />
@@ -285,7 +285,8 @@
   import { useI18n } from 'vue-i18n';
   import { getLicensesUrl } from '../../api/licenses';
   import { getFrequenciesUrl } from '../../api/datasets';
-import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
+  import { getReuseTypesUrl } from '../../api/reuses';
+  import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
   
   export default defineComponent({
     components: { Accordion, AccordionGroup, Container, InputGroup, LinkedToAccordion, MultiSelect, Stepper, Well, Sidemenu, MultiSelect, UploadGroup },
@@ -315,6 +316,7 @@ import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
   
       const frequenciesUrl = getFrequenciesUrl();
       const licensesUrl = getLicensesUrl();
+      const typesUrl = getReuseTypesUrl();
   
       const notUnknown = not(t("The value must be different than unknown."), sameAs("unknown"));
       const tagsRequired = requiredWithCustomMessage(t("Adding tags helps improve the SEO of your data."));
@@ -389,6 +391,7 @@ import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
         editIcon,
         frequenciesUrl,
         licensesUrl,
+        typesUrl,
         state,
         fieldHasError,
         fieldHasWarning,
