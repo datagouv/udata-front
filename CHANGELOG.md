@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix footer links and some translations [#366](https://github.com/etalab/udata-front/pull/366)
 
 ## 3.5.3 (2024-02-22)
 
