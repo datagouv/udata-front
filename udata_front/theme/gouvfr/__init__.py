@@ -109,7 +109,7 @@ resources_links = [
     nav.Item(_("API Portal"), None, url='https://api.gouv.fr'),
     nav.Item(_("Data schema referential"), None,
              url=current_app.config.get('SCHEMA_DOCUMENTATION_URL', '#')),
-    nav.Item(_("Open Data University"), 'gouvfr.show_page', args={'slug': 'odu/home'}),
+    nav.Item("defis.data.gouv.fr", None, url="https://defis.data.gouv.fr"),
     nav.Item(_('Portal for European data'), None, url='https://data.europa.eu'),
 ]
 
