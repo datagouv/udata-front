@@ -16,6 +16,7 @@
       v-else-if="currentStep === 2"
       :steps="steps"
       :organization="organization"
+      :errors="errors"
     />
   </div>
 </template>
@@ -82,25 +83,23 @@ const moveToStep = (step: number | null) => {
 
 const createOrganizationAndMoveToNextStep = async (org: Organization, file: any) => {
   errors.value = [];
-  let promiseSucceded = true;
+  let moveToNextStep = false;
   try {
     organization.value = await createOrganization(org);
-    if (file.value !== null) {
-      const resp = await uploadLogo(organization.value.id, file.value[0]);
-      
-      if (resp.status === 200) {
-        organization.value.logo_thumbnail = resp.data.image;
-      } else {
-        promiseSucceded = false;
-      }
-    }
-    if (promiseSucceded) {
-      moveToStep(2);
-    }
+    moveToNextStep = true;
   } catch (e) {
-    console.log(e);
-    promiseSucceded = false;
-    errors.value.push(e.message)
+    errors.value.push(e.message);
+  }
+  if (file.value !== null) {
+    try {
+      const resp = await uploadLogo(organization.value.id, file.value[0]);
+      organization.value.logo_thumbnail = resp.data.image
+    } catch (e) {
+      errors.value.push("Failed to upload logo, you can upload it again in your management panel");
+    }
+  }
+  if (moveToNextStep) {
+    moveToStep(2);
   }
 };
 </script>

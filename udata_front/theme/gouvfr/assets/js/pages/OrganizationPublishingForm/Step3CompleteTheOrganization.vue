@@ -57,11 +57,19 @@
             {{ $t("Publish a dataset") }}
           </a>
         </div>
+        <Alert type="error" v-if="errors.length" class="fr-mt-2w fr-mb-2w">
+            <template #title>{{ $t("An error occured | Some errors occured", errors.length) }}</template>
+            <ul v-if="errors.length > 1">
+              <li v-for="error in errors">{{ error }}</li>
+            </ul>
+            <p v-else> {{ errors[0] }}</p>
+          </Alert>
       </Container>
     </div>
   </template>
   
   <script setup lang="ts">
+  import Alert from '../../components/Alert/Alert.vue';
   import Container from '../../components/Ui/Container/Container.vue';
   import Stepper from '../../components/Form/Stepper/Stepper.vue';
   import Well from "../../components/Ui/Well/Well.vue";
@@ -73,6 +81,7 @@
   const props = defineProps<{
     organization: Organization;
     steps: Array<any>;
+    errors: Array<any>;
   }>();
   </script>
   
