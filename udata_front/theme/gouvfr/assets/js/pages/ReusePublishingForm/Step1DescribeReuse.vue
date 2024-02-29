@@ -19,9 +19,7 @@
                 :state="state.title"
               >
                 <p class="fr-m-0">
-                  {{ $t("The title of your reuse should be as precise and specific as possible.") }} <br/>
-                  {{ $t("It should also correspond to the vocabulary used by users.") }} <br/>
-                  {{ $t("They often search for data in a search engine.") }}
+                  {{ $t("Prefer a title that allows understanding of the use made of the data rather than the name of the website or application (\"Search Engine for Company Agreements\" rather than \"\" for example).") }}
                 </p>
               </Accordion>
               <Accordion
@@ -30,7 +28,7 @@
                 :state="state.url"
               >
                 <p class="fr-m-0">
-                  {{ $t("You have the option to add an acronym to your reuse. The letters that make up this acronym do not need to be separated by periods.") }}
+                  {{ $t("Enter the link of the page on which the reuse is visible. Point directly to the reuse itself rather than a homepage. Make sure the link is stable over time.") }}
                 </p>
               </Accordion>
               <Accordion
@@ -40,22 +38,8 @@
               >
                 <div class="markdown fr-m-0">
                   <p class="fr-m-0">
-                    {{ $t(`The description of your reuse allows to obtain information about the content and structure of the published resources. You can provide:`) }}
+                    {{ $t('Please indicate the type under which to categorize the reuse (API, application, news article, visualization, etc.).') }}
                   </p>
-                  <ul class="fr-mt-3v">
-                    <li>{{ $t("A list of the files available ;") }}</li>
-                    <li>{{ $t("A description of the file format ;") }}</li>
-                    <li>{{ $t("The update frequency.") }}</li>
-                  </ul>
-                  <ul class="fr-mt-3v">
-                    <li>{{ $t("Motivations for creating the reuse ;") }}</li>
-                    <li>{{ $t("The composition of the reuse ;") }}</li>
-                    <li>{{ $t("The data collection process ;") }}</li>
-                    <li>{{ $t("Data preprocessing ;") }}</li>
-                    <li>{{ $t("reuse dissemination ;") }}</li>
-                    <li>{{ $t("reuse maintenance ;") }}</li>
-                    <li>{{ $t("Legal and ethical considerations.") }}</li>
-                  </ul>
                   <Well class="fr-mt-1w" v-if="fieldHasWarning('type')" color="orange-terre-battue">
                     {{ getWarningText("type") }}
                   </Well>
@@ -67,7 +51,7 @@
                 :state="state.theme"
               >
                 <p class="fr-m-0">
-                  {{ $t("Tags characterize your reuse. They are public and improve the reuse's search engine optimization during a user search.") }}
+                  {{ $t("Choose the theme associated with your reuse.") }}
                 </p>
                 <Well class="fr-mt-1w" v-if="fieldHasWarning('theme')" color="orange-terre-battue">
                   {{ getWarningText("theme") }}
@@ -79,7 +63,7 @@
                 :state="state.description"
               >
                 <p class="fr-m-0">
-                  {{ $t("Licenses define the rules for reuse. By choosing a reuse license, you ensure that the published reuse will be reused according to the usage conditions you have defined.") }}
+                  {{ $t("You can provide information about the method of creating the reuse, what the reuse allows to do or show, or tell more about yourself and the context of this reuse. It is preferable to maintain a neutral tone: if the reuse resembles too much like a promotional message, we may delete it.") }}
                 </p>
                 <Well class="fr-mt-1w" v-if="fieldHasWarning('description')" color="orange-terre-battue">
                   {{ getWarningText("description") }}
@@ -91,7 +75,7 @@
                 :state="state.tags"
               >
                 <p class="fr-m-0">
-                  {{ $t("The update frequency corresponds to how often you plan to update the published data. This update frequency is only indicative.") }}
+                  {{ $t("Keywords appear on the presentation page and improve search engine optimization when a user is searching. From each keyword, you can obtain a list of reuses for which the keyword has also been assigned.") }}
                 </p>
                 <Well class="fr-mt-1w" v-if="fieldHasWarning('tags')" color="orange-terre-battue">
                   {{ getWarningText("tags") }}
@@ -103,8 +87,7 @@
                 :state="state.image"
               >
                 <p class="fr-m-0">
-                  {{ $t("The temporal coverage indicates the time range of the published data.") }} <br/>
-                  {{ $t("For example : from 2012 to 2015.") }}
+                  {{ $t("If your reuse takes the form of a graphical representation, you can provide a preview to other users through an image or screenshot. This image will appear in the \"Reuses\" section of the associated dataset page. When relevant, screenshots are more effective in conveying what the reuse is about, so they are preferable to logos or illustrations, for example.") }}
                 </p>
                 <Well class="fr-mt-1w" v-if="fieldHasWarning('image')" color="orange-terre-battue">
                   {{ getWarningText("image") }}
@@ -262,7 +245,7 @@
   
   <script>
   import { computed, defineComponent, reactive } from 'vue';
-  import { minLengthWarning, not, required, requiredWithCustomMessage, sameAs } from '../../i18n';
+  import { minLengthWarning, not, required, requiredWithCustomMessage } from '../../i18n';
   import Accordion from '../../components/Accordion/Accordion.vue';
   import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
   import Container from '../../components/Ui/Container/Container.vue';
@@ -308,10 +291,7 @@
       const topicsUrl = getReuseTopicsUrl();
       const typesUrl = getReuseTypesUrl();
   
-      const notUnknown = not(t("The value must be different than unknown."), sameAs("unknown"));
       const tagsRequired = requiredWithCustomMessage(t("Adding tags helps improve the SEO of your data."));
-      const temporalCoverageRequired = requiredWithCustomMessage(t("You did not provide the temporal coverage."));
-      const spatialGranularityRequired = requiredWithCustomMessage(t("You have not specified the spatial granularity."));
   
       const requiredRules = {
         title: { required },
