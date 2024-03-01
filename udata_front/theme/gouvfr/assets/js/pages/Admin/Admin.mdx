@@ -1,0 +1,19 @@
+import { Meta } from '@storybook/blocks';
+
+import * as AdminStories from './Admin.stories';
+
+<Meta of={AdminStories} />
+
+# Admin
+
+The administration is a beta page in WIP status to port the old udata admin to udata-front.
+
+## How to use ?
+
+The administration is a separate entry file. It is included in the `beta/admin` template.
+
+## Contributing
+
+You should start your development of a new page in the `pages/Admin` folder by creating a subfolder.
+Work on your page and add relevant stories and interactions.
+Use `msw` parameters to catch requests before they are sent to mock the responses.
