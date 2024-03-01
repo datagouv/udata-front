@@ -1,4 +1,6 @@
+import type { Preview, StoryContext, StoryFn } from '@storybook/vue3';
 import { initialize, mswDecorator } from 'msw-storybook-addon';
+import { defineComponent } from 'vue';
 
 /*
  * Initializes MSW
@@ -14,8 +16,7 @@ initialize({
   }
 });
 
-/** @type { import('@storybook/vue3').Preview } */
-const preview = {
+const preview: Preview = {
   decorators: [mswDecorator],
   parameters: {
     actions: { argTypesRegex: "^on[A-Z].*" },

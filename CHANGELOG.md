@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Fix footer links and some translations [#366](https://github.com/etalab/udata-front/pull/366)
+- Show error when dataset discussion from url doesn't exist [#367](https://github.com/etalab/udata-front/pull/367)
 
 ## 3.5.3 (2024-02-22)
 
