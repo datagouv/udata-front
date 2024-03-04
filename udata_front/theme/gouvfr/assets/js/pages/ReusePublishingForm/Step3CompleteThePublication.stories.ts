@@ -1,5 +1,5 @@
 import Step3CompleteThePublication from './Step3CompleteThePublication.vue';
-import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
+import * as Stepper from '../../components/Form/Stepper/StepperReuse.stories';
 
 
 export default {
@@ -55,7 +55,7 @@ const originalReuse = {
 const args = {
   originalReuse,
   feedbackUrl: "https://demo.data.gouv.fr/fr/datasets/?q=feedback",
-  steps: Stepper.StepperOnSecondStep.args.steps,
+  steps: Stepper.StepperOnFirstStep.args.steps,
   redirectDraftUrl: "https://demo.data.gouv.fr/fr/datasets/?q=draft",
 };
 
