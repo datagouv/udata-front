@@ -53,8 +53,6 @@ function toggleSort() {
 th {
   padding: 0.34375rem !important;
   text-transform: uppercase;
-  border: 1px solid var(--grey-850-200);
-  border-bottom: 0;
 }
 .fr-btn--sm[class*=" fr-icon-"]:not([class*=fr-btn--icon-]) {
   padding-left: 0.25rem;

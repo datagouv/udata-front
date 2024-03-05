@@ -11,6 +11,11 @@
   --max-lines: 2;
 }
 
+.fr-table table :deep(th) {
+  border: 1px solid var(--grey-850-200);
+  border-bottom: 0;
+}
+
 .fr-table table :deep(td) {
   padding: 0.5rem 0.34375rem !important;
   border: 1px solid var(--grey-850-200);
@@ -20,5 +25,11 @@
 .fr-table table :deep(*) {
   font-size: 0.75rem;
   line-height: var(--lh);
+}
+
+.fr-table :deep(tbody), .fr-table :deep(thead) {
+  background-color: var(--background-default-grey);
+  --hover: var(--background-default-grey-hover);
+  --active: var(--background-default-grey-active);
 }
 </style>
