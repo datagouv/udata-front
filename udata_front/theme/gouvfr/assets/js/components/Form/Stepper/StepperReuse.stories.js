@@ -1,7 +1,7 @@
 import Stepper from './Stepper.vue';
 
 export default {
-  title: 'Components/Stepper',
+  title: 'Components/StepperReuse',
   component: Stepper,
 };
 
@@ -45,6 +45,6 @@ export const StepperOnThirdStep = {
     }),
     args: {
       ...args,
-      currentStep: 1,
+      currentStep: 2,
     },
   };

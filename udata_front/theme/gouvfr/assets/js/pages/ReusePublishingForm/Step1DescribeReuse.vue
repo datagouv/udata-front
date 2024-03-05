@@ -119,7 +119,7 @@
                 </h2>
               </legend>
               <div class="fr-fieldset__element">
-                <MultiSelect
+                <!--<MultiSelect
                   :required="true"
                   :minimumCharacterBeforeSuggest="2"
                   :placeholder="$t('Check the identity with which you want to publish')"
@@ -127,7 +127,24 @@
                   suggestUrl="/tags/suggest/"
                   :values="reuse.tags"
                   :addNewOption="true"
-                />
+                />-->
+                <div class="fr-col bg-contrast-grey text-align-center fr-p-2v">
+                  <p class="fr-text--md fr-text--bold fr-mb-n3v">You belong to no organization</p>
+                  <p class="fr-text--sm fr-text--bold fr-mb-n4v">You publish in your own name</p>
+                  <p class="fr-text--sm">We advise you to publish under an organization if it's a professional activity</p>
+                  <div class="fr-grid-row fr-grid-row--middle fr-pb-3v">
+                    <div class="fr-col-6">
+                      <button class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500" @click="">
+                        {{ $t("Join an organization") }}
+                      </button>
+                    </div>
+                    <div class="fr-col-6">
+                      <button class="fr-btn" @click="">
+                        {{ $t("Create an organization") }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </fieldset>
             <fieldset class="fr-fieldset" aria-labelledby="description-legend">
@@ -227,6 +244,7 @@
                 :accordion="addImageAccordionId"
                 @blur="vWarning$.image.$touch"
               >
+                <p>{{ $t('Cover picture') }}</p>
                 <UploadGroup
                   label="Test"
                 />
