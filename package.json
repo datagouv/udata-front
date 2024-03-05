@@ -6,7 +6,7 @@
     "name": "Etalab"
   },
   "scripts": {
-    "dev": "vite build --watch",
+    "dev": "vite build --watch --config vite.config.dev.ts",
     "start": "npm run dev",
     "build": "vite build",
     "test": "cypress run",
