@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Show error when dataset discussion from url doesn't exist [#367](https://github.com/etalab/udata-front/pull/367)
+- Hide quality score on "work in progress" backends [#370](https://github.com/etalab/udata-front/pull/370)
 
 ## 3.5.3 (2024-02-22)
 
