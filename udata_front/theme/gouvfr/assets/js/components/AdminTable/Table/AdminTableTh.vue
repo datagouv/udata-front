@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import type { SortDirection } from "../../types";
+import type { SortDirection } from "../../../types";
 export type AdminTableThProps = {
   sortable?: boolean;
   sorted?: SortDirection;
