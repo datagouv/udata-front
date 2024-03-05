@@ -36,7 +36,7 @@ async function getConfig(): Promise<UserConfig> {
           },
           {
             src: "node_modules/vue-content-loader/dist/vue-content-loader.es.js",
-            dest: `udata_front/theme/${theme}/static/js/vue-content-loader.es.${version}.js`,
+            dest: `udata_front/theme/${theme}/static/js/`,
             rename: `vue-content-loader.es.${version}.js`,
           },
         ],
