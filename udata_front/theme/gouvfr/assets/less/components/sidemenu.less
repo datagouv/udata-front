@@ -50,6 +50,11 @@ You can use sidemenus from DSFR. You can find documented usage on [DSFR document
 
 @import (less) "@gouvfr/dsfr/dist/component/sidemenu/sidemenu.css";
 
+
+.fr-sidemenu__btn[aria-expanded=true] {
+    --hover: @background-action-low-blue-cumulus-hover;
+    --active: @background-action-low-blue-cumulus-active;
+}
 // Data.gouv customization
 .fr-sidemenu--no-border .fr-sidemenu__inner {
     box-shadow: none;

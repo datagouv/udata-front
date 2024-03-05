@@ -32,7 +32,6 @@
     "@conciergerie.dev/vue-toaster": "^2.4.0",
     "@etalab/data.gouv.fr-components": "^1.13.7",
     "@etalab/udata-front-plugins-helper": "1.1.0",
-    "@gouvfr/dsfr": "~1.9.2",
     "@intlify/unplugin-vue-i18n": "^1.5.0",
     "@lhci/cli": "^0.10.0",
     "@sentry/tracing": "^6.10.0",
@@ -87,6 +86,7 @@
   },
   "license": "LGPL-2.1-only",
   "dependencies": {
+    "@gouvfr/dsfr": "^1.11.1",
     "leaflet": "^1.9.4"
   }
 }

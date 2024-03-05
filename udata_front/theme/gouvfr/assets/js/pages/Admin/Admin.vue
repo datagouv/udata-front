@@ -19,32 +19,19 @@
             </button>
             <div class="fr-collapse" :id="menuId">
               <ul class="fr-sidemenu__list">
-                <li class="fr-sidemenu__item">
-                  <button
-                    class="fr-sidemenu__btn border-bottom border-default-grey"
-                    aria-expanded="false"
-                    :aria-controls="profilId"
-                  >
-                    <Avatar
-                      :user="user"
-                      :size="24"
-                      :rounded="true"
-                    />
-                    <p class="fr-mx-1v">{{ t('My Profil') }}</p>
-                  </button>
-                  <div class="fr-collapse" :id="profilId">
-                    <AdminSidebarLink
-                      icon="fr-icon-account-circle-line"
-                      :label="t('Me')"
-                      to="/me"
-                    />
-                  </div>
-                </li>
-                <AdminSidebarOrganizationMenu
+                <AdminSidebarMenu
+                  v-if="user"
+                  :user="user"
+                  :is-opened="isOpened(user.id)"
+                  @open="open(user)"
+                />
+                <AdminSidebarMenu
                   v-if="me"
                   v-for="organization in me.organizations"
                   :organization="organization"
-                  :is-opened="isCurrent(organization.id)"
+                  :is-opened="isOpened(organization.id)"
+                  @open="() => open(organization)"
+                  @click="() => setCurrentOrganization(organization)"
                 />
               </ul>
             </div>
@@ -59,32 +46,38 @@
 </template>
 
 <script setup lang="ts">
-import { getRandomId } from "@etalab/data.gouv.fr-components";
+import { type Organization, getRandomId, User } from "@etalab/data.gouv.fr-components";
 import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import Avatar from "../../components/discussions/Avatar/Avatar.vue";
-import AdminSidebarLink from "../../components/AdminSidebar/AdminSidebarLink/AdminSidebarLink.vue";
-import AdminSidebarOrganizationMenu from "../../components/AdminSidebar/AdminSidebarOrganizationMenu/AdminSidebarOrganizationMenu.vue";
+import AdminSidebarMenu from "../../components/AdminSidebar/AdminSidebarMenu/AdminSidebarMenu.vue";
+import { useCurrentOrganization } from "../../composables/admin/useCurrentOrganization";
 import { user } from "../../config";
 import type { Me } from "../../types";
 import { fetchMe } from "../../api/me";
+import { useRouter } from "vue-router";
 
 const { t } = useI18n();
 
 const menuId = getRandomId("menu");
-const profilId = getRandomId("profil-submenu");
 const me = ref<Me | null>(null);
-
 const opened = ref<string | null>(null);
+const { setCurrentOrganization } = useCurrentOrganization();
+const router = useRouter();
 
-function isCurrent(id: string) {
+function isOpened(id: string) {
   return id === opened.value;
+}
+
+function open(organization: Organization | User) {
+  opened.value = organization.id;
 }
 
 onMounted(async () => {
   me.value = await fetchMe();
   if(me.value.organizations.length > 0) {
-    opened.value = me.value.organizations[0].id;
+    open(me.value.organizations[0]);
+    router.replace({name: "organization-datasets", params: {oid: me.value.organizations[0].id}})
+    setCurrentOrganization(me.value.organizations[0]);
   }
 });
 </script>
