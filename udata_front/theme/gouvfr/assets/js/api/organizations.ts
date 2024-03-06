@@ -1,6 +1,6 @@
 import { toValue } from "vue";
 import { api } from "../plugins/api";
-import { Organization } from "../types";
+import type { Organization } from "../types";
 
 export function createOrganization(organization: Organization) {
   return api.post("organizations/", {

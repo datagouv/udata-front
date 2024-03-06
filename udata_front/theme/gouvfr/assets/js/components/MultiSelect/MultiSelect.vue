@@ -262,7 +262,7 @@ export default defineComponent({
       hidden: obj.hidden,
       selected: !!obj.selected,
       link: obj.page,
-      linkText: obj.linkText ?? "See the organization"
+      linkText: obj.linkText ?? "Open link"
     }));
 
     /**

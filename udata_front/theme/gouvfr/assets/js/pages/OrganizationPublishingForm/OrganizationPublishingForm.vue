@@ -23,7 +23,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { templateRef } from '@vueuse/core';
 import Step1CreateOrJoinOrganization from "./Step1CreateOrJoinOrganization.vue";
 import Step2DescribeOrganization from './Step2DescribeOrganization.vue';
 import Step3CompleteTheOrganization from './Step3CompleteTheOrganization.vue';
@@ -37,8 +36,7 @@ const steps = [t("Publish data on {site}", {site: title}), t("Describe your orga
 
 const currentStep = ref(0);
 
-/** @type {import("vue").Ref<HTMLDivElement | null>} */
-const containerRef = templateRef('containerRef');
+const containerRef = ref<HTMLDivElement | null>(null);
 
 const organization = ref<Organization>({
   acronym: "",
@@ -67,8 +65,7 @@ const organization = ref<Organization>({
   url: ""
 });
 
-/** @type {import("vue").Ref<Array<string>>} */
-const errors = ref([]);
+const errors = ref<Array<string>>([]);
 
 const moveToStep = (step: number | null) => {
   if(containerRef.value) {

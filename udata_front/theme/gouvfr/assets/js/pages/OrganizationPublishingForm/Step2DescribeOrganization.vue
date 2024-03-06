@@ -4,74 +4,74 @@
     <div class="fr-grid-row">
       <Sidemenu
         class="fr-col-12 fr-col-md-5"
-        :buttonText="$t('Help')"
+        :buttonText="t('Help')"
         :onRight="true"
         :fixed="true"
       >
         <template #title>
           <span class="fr-icon--sm fr-icon-question-line" aria-hidden="true"></span>
-          {{ $t('Help') }}
+          {{ t('Help') }}
         </template>
         <AccordionGroup>
           <Accordion
-            :title= "$t('Naming your organization')"
+            :title= "t('Naming your organization')"
             :id="nameOrganizationAccordionId"
             :state="state.name"
           >
             <p class="fr-m-0">
-              {{ $t("The public name of your organization.") }} <br/>
+              {{ t("The public name of your organization.") }} <br/>
             </p>
           </Accordion>
           <Accordion
-            :title= "$t('Why provide a SIRET number?')"
+            :title= "t('Why provide a SIRET number?')"
             :id="addSiretAccordionId"
             :state="state.business_number_id"
           >
             <p class="fr-m-0">
-              {{ $t("A SIRET number will allow us to assign a type to your organization (administrations, collectivities, companies, etc.) and will facilitate your certification.") }} <br/>
-              {{ $t("Please note that all administrations have a SIRET number.") }} <br/>
-              {{ $t("You can find your SIRET sur l’Annuaire des Entreprises.") }}
+              {{ t("A SIRET number will allow us to assign a type to your organization (administrations, collectivities, companies, etc.) and will facilitate your certification.") }} <br/>
+              {{ t("Please note that all administrations have a SIRET number.") }} <br/>
+              {{ t("You can find your SIRET sur l’Annuaire des Entreprises.") }}
             </p>
           </Accordion>
           <Accordion
-            :title= "$t('Choose an acronym')"
+            :title= "t('Choose an acronym')"
             :id="addAcronymAccordionId"
             :state="state.acronym"
           >
             <div class="markdown fr-m-0">
               <p class="fr-m-0">
-                {{ $t('The acronym of your organization, if it exists.') }}
+                {{ t('The acronym of your organization, if it exists.') }}
               </p>
             </div>
           </Accordion>
           <Accordion
-            :title= "$t('Write a Good Description')"
+            :title= "t('Write a Good Description')"
             :id="addDescriptionAccordionId"
             :state="state.description"
           >
             <p class="fr-m-0">
-              {{ $t("Please indicate here what your organization does and what mission it fulfills. Add any information that will allow users to contact you: email address, mailing address, Twitter account, etc.") }}
+              {{ t("Please indicate here what your organization does and what mission it fulfills. Add any information that will allow users to contact you: email address, mailing address, Twitter account, etc.") }}
             </p>
             <Well class="fr-mt-1w" v-if="fieldHasWarning('description')" color="orange-terre-battue">
               {{ getWarningText("description") }}
             </Well>
           </Accordion>
           <Accordion
-            :title= "$t('Provide a website')"
+            :title= "t('Provide a website')"
             :id="addWebsiteAccordionId"
             :state="state.url"
           >
             <p class="fr-m-0">
-              {{ $t("If your organization has a website, please provide its URL.") }}
+              {{ t("If your organization has a website, please provide its URL.") }}
             </p>
           </Accordion>
           <Accordion
-            :title= "$t('Choose the right logo')"
+            :title= "t('Choose the right logo')"
             :id="addLogoAccordionId"
             :state="state.logo"
           >
             <p class="fr-m-0">
-              {{ $t("If your organization has a logo or a profile picture, please upload it here. To upload a logo, click on the \"Choose a file from your computer\" button. The following image formats are accepted: png, jpg/jpeg.") }}
+              {{ t("If your organization has a logo or a profile picture, please upload it here. To upload a logo, click on the \"Choose a file from your computer\" button. The following image formats are accepted: png, jpg/jpeg.") }}
             </p>
             <Well class="fr-mt-1w" v-if="fieldHasWarning('frequency')" color="orange-terre-battue">
               {{ getWarningText("frequency") }}
@@ -91,15 +91,15 @@
                 <img :src="editIcon" alt="" />
               </div>
               <div class="fr-col">
-                <p class="fr-m-0 fr-text--bold">{{ $t('What is an organization?') }}</p>
-                <p class="fr-m-0 fr-text--xs">{{ $t('An organization is an entity in which many users can collaborate. The datasets published under the organization can be edited by its members.') }}</p>
+                <p class="fr-m-0 fr-text--bold">{{ t('What is an organization?') }}</p>
+                <p class="fr-m-0 fr-text--xs">{{ t('An organization is an entity in which many users can collaborate. The datasets published under the organization can be edited by its members.') }}</p>
               </div>
             </div>
           </Well>
           <fieldset class="fr-fieldset" aria-labelledby="description-legend">
             <legend class="fr-fieldset__legend" id="description-legend">
               <h2 class="subtitle subtitle--uppercase fr-mb-3v">
-                {{ $t("Description") }}
+                {{ t("Description") }}
               </h2>
             </legend>
             <LinkedToAccordion
@@ -109,7 +109,7 @@
             >
               <InputGroup
                 :aria-describedby="nameOrganizationAccordionId"
-                :label="$t('Name')"
+                :label="t('Name')"
                 :required="true"
                 v-model="organization.name"
                 :hasError="fieldHasError('name')"
@@ -122,11 +122,11 @@
               :accordion="addSiretAccordionId"
             >
               <InputGroup
-                :label="$t('SIRET Number')"
+                :label="t('SIRET Number')"
                 v-model="organization.business_number_id"
                 :hasError="fieldHasError('business_number_id')"
                 :hasWarning="fieldHasWarning('business_number_id')"
-                :errorText="$t('This SIRET is not valid')"
+                :errorText="t('This SIRET is not valid')"
               />
             </LinkedToAccordion>
             <div v-if="checkOrga.exists !== null" class="fr-col fr-mx-2v fr-mb-2v bg-contrast-grey text-align-center">
@@ -147,7 +147,7 @@
               :accordion="addAcronymAccordionId"
             >
             <InputGroup
-                :label="$t('Acronym')"
+                :label="t('Acronym')"
                 v-model="organization.acronym"
               />
             </LinkedToAccordion>
@@ -157,7 +157,7 @@
               @blur="vWarning$.description.$touch"
             >
             <InputGroup
-                :label="$t('Description')"
+                :label="t('Description')"
                 :required="true"
                 type="textarea"
                 v-model="organization.description"
@@ -171,7 +171,7 @@
               :accordion="addWebsiteAccordionId"
             >
             <InputGroup
-                :label="$t('Website')"
+                :label="t('Website')"
                 v-model="organization.url"
                 :hasError="fieldHasError('url')"
                 :hasWarning="fieldHasWarning('url')"
@@ -183,20 +183,20 @@
               :accordion="addLogoAccordionId"
               @blur="vWarning$.acronym.$touch"
             >
-              <p>{{ $t('Logo') }}</p>
+              <p>{{ t('Logo') }}</p>
               <UploadGroup
-                :label="$t('Logo')"
-                :title="$t('Logo')"
+                :label="t('Logo')"
+                :title="t('Logo')"
                 hintText="Max size: 4Mo. Accepted formats: JPG, JPEG, PNG"
                 accept=".jpeg, .jpg, .png"
                 :isValid="file"
-                :validText="$t('Your file is valid')"
+                :validText="t('Your file is valid')"
                 @change="addFiles"
               />
             </LinkedToAccordion>
           </fieldset>
           <Alert type="error" v-if="errors.length" class="fr-mt-n2w fr-mb-2w">
-            <template #title>{{ $t("An error occured | Some errors occured", errors.length) }}</template>
+            <template #title>{{ t("An error occured | Some errors occured", errors.length) }}</template>
             <ul v-if="errors.length > 1">
               <li v-for="error in errors">{{ error }}</li>
             </ul>
@@ -204,7 +204,7 @@
           </Alert>
           <div class="fr-grid-row fr-grid-row--right">
             <button class="fr-btn" @click="submit">
-              {{ $t("Next") }}
+              {{ t("Next") }}
             </button>
           </div>
         </Container>
@@ -230,9 +230,10 @@
   import useFunctionalState from '../../composables/form/useFunctionalState';
   import editIcon from "../../../../templates/svg/illustrations/edit.svg";
   import { quality_description_length, } from "../../config";
-  import { Organization } from '../../types';
+  import { Organization, PublishingFormAccordionState } from '../../types';
   import axios from 'axios';
   import { url } from '@vuelidate/validators';
+  import { useI18n } from 'vue-i18n';
 
   const props = defineProps<{
     organization: Organization,
@@ -250,6 +251,8 @@
   const { id: addSiretAccordionId } = useUid("accordion");
   const { id: addWebsiteAccordionId } = useUid("accordion");
   const { id: addLogoAccordionId } = useUid("accordion");
+
+  const { t } = useI18n();
 
   const organization = reactive({...props.organization});
   const file = ref(null);
@@ -283,10 +286,7 @@
 
   const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(organization, requiredRules, warningRules);
 
-  /**
-   * @type {import("vue").ComputedRef<Record<string, import("../../types").PublishingFormAccordionState>>}
-   */
-  const state = computed(() => {
+  const state = computed<Record<string, PublishingFormAccordionState>>(() => {
     return {
       acronym: vWarning$.value.acronym.$dirty ? "info" : "disabled",
       business_number_id: getFunctionalState(vWarning$.value.business_number_id.$dirty, v$.value.business_number_id.$invalid, vWarning$.value.business_number_id.$error),
@@ -297,17 +297,9 @@
     };
   });
 
-  /**
-   *
-   * @param {string} field
-   */
-  const fieldHasError = (field) => hasError(state, field);
+  const fieldHasError = (field: string) => hasError(state, field);
 
-  /**
-   *
-   * @param {string} field
-   */
-  const fieldHasWarning = (field) => hasWarning(state, field);
+  const fieldHasWarning = (field: string) => hasWarning(state, field);
 
   const submit = () => {
     validateRequiredRules().then(valid => {

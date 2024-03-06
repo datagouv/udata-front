@@ -3,8 +3,8 @@
     <Stepper :steps="props.steps" :currentStep="0"/>
     <Container>
       <ActionCard
-        :title="$t('Join an Organization')"
-        :content="$t('An organization is an entity in which many users can collaborate. The published datasets on the organization\'s name can be edited by its members', {site: title})"
+        :title="t('Join an Organization')"
+        :content="t('An organization is an entity in which many users can collaborate. The published datasets on the organization\'s name can be edited by its members', {site: title})"
         :icon="schemaIcon"
         :stretchHeight="true"
       >
@@ -12,17 +12,17 @@
         <div class="fr-col-12 fr-grid-row fr-grid-row--middle">
           <div class="fr-col-12 fr-col-lg-9 fr-pb-2v">
             <MultiSelect
-              :searchPlaceholder="$t('Search an organization...')"
-              :allOption="$t('All organizations')"
+              :searchPlaceholder="t('Search an organization...')"
+              :allOption="t('All organizations')"
               suggestUrl="/organizations/suggest/"
               entityUrl="/organizations/"
               values=""
             />
           </div>
           <div class="fr-col-12 fr-col-lg-3 fr-grid-row fr-grid-row--right">
-            <p class="fr-text--sm fr-px-2v fr-col-auto">{{ $t('or') }}</p>
+            <p class="fr-text--sm fr-px-2v fr-col-auto">{{ t('or') }}</p>
             <button class="fr-btn fr-col-auto" @click="$emit('start')">
-              {{ $t("Create an organization") }}
+              {{ t("Create an organization") }}
             </button>
           </div>
         </div>
@@ -39,10 +39,13 @@ import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Container from '../../components/Ui/Container/Container.vue';
 import { title } from "../../config";
 import schemaIcon from "../../../../templates/svg/illustrations/schema.svg";
+import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{
   steps: Array<any>;
 }>();
+
+const { t } = useI18n();
 
 const emits = defineEmits(["start"]);
 </script>

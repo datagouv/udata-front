@@ -12,8 +12,8 @@
               <img :src="successIcon" alt="" />
             </div>
             <div class="fr-col">
-              <p class="fr-m-0 fr-text--bold">{{ $t('Your organization is created !') }}</p>
-              <p class="fr-m-0 fr-text--xs">{{ $t('You can now publish content or incite members to join your organization.') }}</p>
+              <p class="fr-m-0 fr-text--bold">{{ t('Your organization is created !') }}</p>
+              <p class="fr-m-0 fr-text--xs">{{ t('You can now publish content or incite members to join your organization.') }}</p>
             </div>
           </div>
         </Well>
@@ -48,17 +48,17 @@
         </article>
         <div class="fr-grid-row fr-grid-row--right">
           <a href="" class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v">
-            {{ $t("Manage the organization") }}
+            {{ t("Manage the organization") }}
           </a>
           <a href="" class="fr-btn fr-mr-3v">
-            {{ $t("Publish a reuse") }}
+            {{ t("Publish a reuse") }}
           </a>
           <a href="" class="fr-btn">
-            {{ $t("Publish a dataset") }}
+            {{ t("Publish a dataset") }}
           </a>
         </div>
         <Alert type="error" v-if="errors.length" class="fr-mt-2w fr-mb-2w">
-            <template #title>{{ $t("An error occured | Some errors occured", errors.length) }}</template>
+            <template #title>{{ t("An error occured | Some errors occured", errors.length) }}</template>
             <ul v-if="errors.length > 1">
               <li v-for="error in errors">{{ error }}</li>
             </ul>
@@ -77,11 +77,14 @@
   import successIcon from "../../../../templates/svg/illustrations/success.svg";
   import { excerpt } from "../../helpers";
   import { Organization } from '../../types';
+  import { useI18n } from 'vue-i18n';
 
   const props = defineProps<{
     organization: Organization;
     steps: Array<any>;
     errors: Array<any>;
   }>();
+
+  const { t } = useI18n();
   </script>
   

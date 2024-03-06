@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/vue3';
 import type { Organization } from '../../types';
 import Step2DescribeOrganization from './Step2DescribeOrganization.vue';
 import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
-//import { user } from '../../config';
 
 
 const meta = {
