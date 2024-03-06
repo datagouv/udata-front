@@ -1,5 +1,5 @@
 <template>
-  <div class="fr-container--fluid">
+  <div>
     <Breadcrumb>
       <li>
         <router-link class="fr-breadcrumb__link" to="/">

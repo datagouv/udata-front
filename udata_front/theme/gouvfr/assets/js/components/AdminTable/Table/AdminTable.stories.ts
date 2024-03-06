@@ -2,11 +2,8 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import AdminBadge from "../../AdminBadge/AdminBadge.vue";
 import AdminContentWithTooltip from "../../AdminContentWithTooltip/AdminContentWithTooltip.vue";
 import AdminTable from "./AdminTable.vue";
-import AdminTableBody from "./AdminTableBody.vue";
 import AdminTableTd from "./AdminTableTd.vue";
-import AdminTableThead from "./AdminTableThead.vue";
 import AdminTableTh from "./AdminTableTh.vue";
-import AdminTableTr from "./AdminTableTr.vue";
 import QualityScoreTooltip from "../../dataset/QualityScore/QualityScoreTooltip/QualityScoreTooltip.vue";
 import { CardLGWithOrganizationLogo } from "../../dataset/CardLG.stories";
 
@@ -19,12 +16,12 @@ export default meta;
 
 export const DatasetsTable: StoryObj<typeof meta> = {
   render: (args) => ({
-    components: { AdminBadge, AdminContentWithTooltip, AdminTable, AdminTableBody, AdminTableTd, AdminTableThead, AdminTableTh, AdminTableTr, QualityScoreTooltip },
+    components: { AdminBadge, AdminContentWithTooltip, AdminTable, AdminTableTd, AdminTableTh, QualityScoreTooltip },
     setup() {
       return { args, CardLGWithOrganizationLogo };
     },
     template: ` <AdminTable>
-                  <AdminTableThead>
+                  <thead>
                     <tr>
                         <AdminTableTh :sortable="true" scope="col">title of the dataset</AdminTableTh>
                         <AdminTableTh scope="col">status</AdminTableTh>
@@ -48,9 +45,9 @@ export const DatasetsTable: StoryObj<typeof meta> = {
                           <span class="fr-icon--sm fr-icon-star-s-line" aria-hidden="true"></span>
                         </AdminTableTh>
                     </tr>
-                  </AdminTableThead>
-                  <AdminTableBody>
-                    <AdminTableTr>
+                  </thead>
+                  <tbody>
+                    <Tr>
                         <AdminTableTd>
                           <AdminContentWithTooltip>
                             <a class="fr-link" href="#">
@@ -88,8 +85,8 @@ export const DatasetsTable: StoryObj<typeof meta> = {
                         <AdminTableTd>
                           412
                         </AdminTableTd>
-                    </AdminTableTr>
-                    <AdminTableTr>
+                    </Tr>
+                    <Tr>
                       <AdminTableTd>
                         <AdminContentWithTooltip>
                           <a class="fr-link" href="#">
@@ -98,7 +95,7 @@ export const DatasetsTable: StoryObj<typeof meta> = {
                         </AdminContentWithTooltip>
                       </AdminTableTd>
                       <AdminTableTd>
-                        <AdminBadge type="info">Public</AdminBadge>
+                        <AdminBadge>Private</AdminBadge>
                       </AdminTableTd>
                       <AdminTableTd>
                         07/05/2016
@@ -135,8 +132,8 @@ export const DatasetsTable: StoryObj<typeof meta> = {
                       <AdminTableTd>
                         412
                       </AdminTableTd>
-                    </AdminTableTr>
-                    <AdminTableTr>
+                    </Tr>
+                    <Tr>
                       <AdminTableTd>
                         <AdminContentWithTooltip>
                           <a class="fr-link" href="#">
@@ -174,8 +171,8 @@ export const DatasetsTable: StoryObj<typeof meta> = {
                       <AdminTableTd>
                         412
                       </AdminTableTd>
-                    </AdminTableTr>
-                    <AdminTableTr>
+                    </Tr>
+                    <Tr>
                       <AdminTableTd>
                         <AdminContentWithTooltip>
                           <a class="fr-link" href="#">
@@ -217,8 +214,8 @@ export const DatasetsTable: StoryObj<typeof meta> = {
                       <AdminTableTd>
                         412
                       </AdminTableTd>
-                    </AdminTableTr>
-                  </AdminTableBody>
+                    </Tr>
+                  </tbody>
                 </AdminTable>`,
   }),
   args: {},

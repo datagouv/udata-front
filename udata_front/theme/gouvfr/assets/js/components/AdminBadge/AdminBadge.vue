@@ -1,6 +1,5 @@
 <template>
   <p class="fr-badge" :class="{
-    'fr-badge--beige-gris-galet': !type || type === 'default',
     'fr-badge--blue-cumulus': type === 'info',
     'fr-badge--error fr-badge--no-icon': type === 'error',
     'fr-badge--warning fr-badge--no-icon': type === 'warning',

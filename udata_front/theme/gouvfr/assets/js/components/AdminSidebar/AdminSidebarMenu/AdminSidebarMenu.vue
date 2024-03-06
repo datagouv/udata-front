@@ -129,20 +129,20 @@ watchPostEffect(() => {
   background-color: var(--background-alt-grey-active);
 }
 
-.fr-sidemenu__btn[aria-current] {
+.fr-sidemenu__btn[aria-current]:not([aria-current=false]) {
   background-color: var(--background-default-grey);
   color: var(--text-default-grey);
 }
 
-.fr-sidemenu__btn[aria-current]::before {
+.fr-sidemenu__btn[aria-current]:not([aria-current=false])::before {
   width: 0;
 }
 
-.fr-sidemenu__btn[aria-current]:hover {
+.fr-sidemenu__btn[aria-current]:not([aria-current=false]):hover {
   background-color: var(--hover-tint);
 }
 
-.fr-sidemenu__btn[aria-current]:active {
+.fr-sidemenu__btn[aria-current]:not([aria-current=false]):active {
   background-color: var(--active-tint);
 }
 

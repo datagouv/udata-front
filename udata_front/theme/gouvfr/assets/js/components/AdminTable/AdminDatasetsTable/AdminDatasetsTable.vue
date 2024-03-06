@@ -1,6 +1,6 @@
 <template>
   <AdminTable>
-    <AdminTableThead>
+    <thead>
       <tr>
         <AdminTableTh
           :sortable="true"
@@ -75,9 +75,9 @@
           </Tooltip>
         </AdminTableTh>
       </tr>
-    </AdminTableThead>
-    <AdminTableBody>
-      <AdminTableTr v-for="dataset in datasets" :key="dataset.id">
+    </thead>
+    <tbody>
+      <tr v-for="dataset in datasets" :key="dataset.id">
         <AdminTableTd>
           <AdminContentWithTooltip>
             <a class="fr-link" :href="getDatasetLinkToAdmin(dataset)">
@@ -115,8 +115,8 @@
         <AdminTableTd class="monospace">
           {{ summarize(dataset.metrics.followers) }}
         </AdminTableTd>
-      </AdminTableTr>
-    </AdminTableBody>
+      </tr>
+    </tbody>
   </AdminTable>
 </template>
 <script setup lang="ts">
@@ -127,11 +127,8 @@ import { useI18n } from 'vue-i18n';
 import AdminBadge from "../../AdminBadge/AdminBadge.vue";
 import AdminContentWithTooltip from "../../AdminContentWithTooltip/AdminContentWithTooltip.vue";
 import AdminTable from "../Table/AdminTable.vue";
-import AdminTableBody from "../Table/AdminTableBody.vue";
 import AdminTableTd from "../Table/AdminTableTd.vue";
-import AdminTableThead from "../Table/AdminTableThead.vue";
 import AdminTableTh from "../Table/AdminTableTh.vue";
-import AdminTableTr from "../Table/AdminTableTr.vue";
 import Tooltip from '../../Tooltip/Tooltip.vue';
 import QualityScoreTooltip from "../../dataset/QualityScore/QualityScoreTooltip/QualityScoreTooltip.vue";
 import { metrics_api } from '../../../plugins/api';

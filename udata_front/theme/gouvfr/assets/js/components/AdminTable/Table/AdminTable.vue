@@ -11,9 +11,19 @@
   --max-lines: 2;
 }
 
+.fr-table table {
+  display: table;
+}
+
 .fr-table table :deep(th) {
   border: 1px solid var(--grey-850-200);
   border-bottom: 0;
+}
+
+.fr-table table :deep(tbody tr:nth-child(even)) {
+  background-color: var(--background-alt-grey);
+  --hover: var(--background-alt-grey-hover);
+  --active: var(--background-alt-grey-active);
 }
 
 .fr-table table :deep(td) {
