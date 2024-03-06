@@ -6,14 +6,14 @@ export type Component = {
   component: VueComponent;
   module?: string;
   name?: string;
-}
+};
 
 export type Messages = Record<Locale, DefineLocaleMessage>;
 
 export type UdataFrontTranslation = {
   messages: Messages;
   module?: string;
-}
+};
 
 export type Components = Record<string, Array<Component>>;
 export type UdataFrontTranslations = Array<UdataFrontTranslation>;
@@ -21,12 +21,12 @@ export type UdataFrontTranslations = Array<UdataFrontTranslation>;
 export type UdataFrontNamespace = {
   components: Components;
   translations: UdataFrontTranslations;
-}
+};
 
 const udata_front: UdataFrontNamespace = globalThis.udata_front ?? {
   components: {},
   translations: [],
-}
+};
 
 export function reset() {
   udata_front.components = {};
