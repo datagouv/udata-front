@@ -81,8 +81,8 @@
 
   const props = defineProps<{
     organization: Organization;
-    steps: Array<any>;
-    errors: Array<any>;
+    steps: Array<string>;
+    errors: Array<string>;
   }>();
 
   const { t } = useI18n();

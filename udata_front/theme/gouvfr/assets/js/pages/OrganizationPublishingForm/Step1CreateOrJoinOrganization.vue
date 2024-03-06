@@ -42,10 +42,12 @@ import schemaIcon from "../../../../templates/svg/illustrations/schema.svg";
 import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{
-  steps: Array<any>;
+  steps: Array<string>;
 }>();
 
 const { t } = useI18n();
 
-const emits = defineEmits(["start"]);
+const emits = defineEmits<{
+  (event: 'start'): void,
+}>();
 </script>

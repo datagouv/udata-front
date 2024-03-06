@@ -237,8 +237,8 @@
 
   const props = defineProps<{
     organization: Organization,
-    steps: Array<any>
-    errors: Array<any>,
+    steps: Array<string>
+    errors: Array<string>,
   }>();
 
   const emit = defineEmits<{
@@ -264,7 +264,7 @@
     exists: null as boolean | null
   });
 
-  const checkBusinessId = (value) => {
+  function checkBusinessId(value: string) {
     return !value || checkOrga.value.exists;
   };
 
@@ -297,11 +297,15 @@
     };
   });
 
-  const fieldHasError = (field: string) => hasError(state, field);
+  function fieldHasError(field: string) {
+    return hasError(state, field);
+  };
 
-  const fieldHasWarning = (field: string) => hasWarning(state, field);
+  function fieldHasWarning(field: string) {
+    return hasWarning(state, field);
+  }
 
-  const submit = () => {
+  function submit() {
     validateRequiredRules().then(valid => {
       if(valid) {
         emit("next", organization, file);
@@ -309,13 +313,13 @@
     });
   };
 
-  /**
-   *
-   * @param {Array<import("../../types").NewDatasetFile>} newFiles
-   */
-    const addFiles = (newFile) => {
-      file.value = newFile;
-    };
+/**
+ *
+ * @param {Array<import("../../types").NewDatasetFile>} newFiles
+ */
+  function addFiles(newFile) {
+    file.value = newFile;
+  };
 
   watch(() => organization.business_number_id, (newValue) => {
     let siret = newValue.replace(/\s/g,'')

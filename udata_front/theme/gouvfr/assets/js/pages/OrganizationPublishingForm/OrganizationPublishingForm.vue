@@ -78,7 +78,7 @@ const moveToStep = (step: number | null) => {
   }
 };
 
-const createOrganizationAndMoveToNextStep = async (org: Organization, file: any) => {
+async function createOrganizationAndMoveToNextStep(org: Organization, file: any) {
   errors.value = [];
   let moveToNextStep = false;
   try {
