@@ -22,6 +22,7 @@
           v-for="(comment, index) in currentDiscussion"
           v-if="!collapsed"
           class="thread-comment fr-py-3w fr-px-3w fr-pr-5w"
+          :key="`comment-${thread.id}-${index}`"
         >
           <div class="fr-grid-row fr-grid-row--gutters">
             <Avatar class="fr-col-auto" :user="comment.posted_by"/>
