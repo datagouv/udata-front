@@ -128,7 +128,7 @@ uri: string;
 slug: string;
 quality: Quality;
 metrics: { discussions: number; followers: number; reuses: number; views: number; };
-harvest: Harvest;
+harvest: Harvest | null;
 };
 
 export type Reuse = Owned & {
