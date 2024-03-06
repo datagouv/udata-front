@@ -93,6 +93,10 @@ export type Quality = {
   update_fulfilled_in_time: boolean;
 }
 
+export type Harvest = {
+  backend: string;
+}
+
 export type NewDataset = Owned & {
 title: string;
 acronym: string;
@@ -124,6 +128,7 @@ uri: string;
 slug: string;
 quality: Quality;
 metrics: { discussions: number; followers: number; reuses: number; views: number; };
+harvest: Harvest | null;
 };
 
 export type Reuse = Owned & {
