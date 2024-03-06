@@ -108,7 +108,8 @@
                 </div>
                 <div class="fr-col">
                   <p class="fr-m-0 fr-text--bold">{{ $t('What is a reuse?') }}</p>
-                  <p class="fr-m-0 fr-text--xs">{{ $t('A reuse is an exemple of public data\'s usage') }}</p>
+                  <p class="fr-m-0 fr-text--xs">{{ $t('A reuse is an exemple of public data\'s usage.') }}</p>
+                  <p class="fr-m-0 fr-text--xs">{{ $t('Publishing a reuse can allow you to gain visibility and start start a dialogue with the dataset producer.') }}</p>
                 </div>
               </div>
             </Well>
