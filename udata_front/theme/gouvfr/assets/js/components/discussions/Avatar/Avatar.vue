@@ -1,6 +1,7 @@
 <template>
   <div class="avatar">
     <img
+      :class="{'rounded-circle border border-default-grey': rounded}"
       :src="avatarUrl"
       :width="size"
       :height="size"
@@ -9,27 +10,20 @@
     />
   </div>
 </template>
-
-<script>
+<script lang="ts">
+import type { User } from "@etalab/data.gouv.fr-components";
+export type AvatarProps = {
+  user: User,
+  rounded?: boolean,
+  size?: number,
+};
+</script>
+<script setup lang="ts">
 import useUserAvatar from "../../../composables/useUserAvatar";
 
-export default {
-  props: {
-    user: {
-      /** @type {import("vue").PropType<import("@etalab/data.gouv.fr-components").User>} */
-      type: Object,
-      required: true,
-    },
-    size: {
-      type: Number,
-      default: 40,
-    },
-  },
-  setup(props) {
-    const avatarUrl = useUserAvatar(props.user, props.size);
-    return {
-      avatarUrl,
-    }
-  },
-};
+const props = withDefaults(defineProps<AvatarProps>(), {
+  rounded: false,
+  size: 40,
+});
+const avatarUrl = useUserAvatar(props.user, props.size);
 </script>
