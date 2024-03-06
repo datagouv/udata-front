@@ -111,7 +111,7 @@
   import { api } from '../../plugins/api';
   import cardLg from '../../components/dataset/card-lg.vue';
   import DeleteButton from '../../components/utils/DeleteButton/DeleteButton.vue';
-import { Input } from '../../components/Form/InputGroup/InputGroup.stories';
+  import { Input } from '../../components/Form/InputGroup/InputGroup.stories';
   
   export default defineComponent({
     components: { Accordion, AccordionGroup, Alert, ButtonLoader, Container, FileCard, InputGroup, LinkedToAccordion, MultiSelect, Sidemenu, Stepper, UploadModalButton, Well, cardLg, DeleteButton, Input },

@@ -1,261 +1,222 @@
 <template>
-    <div ref="containerRef">
-        <Step1DescribeReuse
-        v-if="currentStep === 0"
-        />
-    </div>
+  <div ref="containerRef">
+    <Step1DescribeReuse
+      v-if="currentStep === 0"
+      :steps="steps"
+      @next="updateReuseAndMoveToNextStep"
+    />
+    <Step2AddDatasets
+      v-else-if="currentStep === 1"
+      :steps="steps"
+    />
+    <Step3CompleteThePublication
+      v-else-if="currentStep === 2"
+      :steps="steps"
+    />
+  </div>
 </template>
 
-<script>
-import { computed, defineComponent, ref, toValue } from 'vue';
+<script setup lang="ts">
+import { ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { templateRef, useEventListener } from '@vueuse/core';
 import Step1DescribeReuse from './Step1DescribeReuse.vue';
-import { publishing_form_feedback_url, title, user } from '../../config';
+import Step2AddDatasets from './Step2AddDatasets.vue';
+import Step3CompleteThePublication from './Step3CompleteThePublication.vue';
+import { publishing_form_feedback_url, user } from '../../config';
 import { createDataset, publishDataset } from '../../api/datasets';
 import { useFilesUpload } from '../../composables/form/useFilesUpload';
+import { Reuse, Organization, User } from '../../types';
 
-export default defineComponent({
-  components: { Step1DescribeReuse },
-  props: {
-    reuse: {
-      /** @type {import("vue").PropType<import("../../types").Reuse>} */
-      type: Object,
-    },
-    owner: {
-      /** @type {import("vue").PropType<import("../../types").User>} */
-      type: Object,
-    },
-    redirectDraftUrl: {
-      type: String,
-      required: true,
-    },
-  },
-  setup(props) {
-    const { t } = useI18n();
+const props = defineProps<{
+  organization?: Organization,
+  reuse?: Reuse,
+  owner?: User,
+  redirectDraftUrl: string
+}>();
+  
+const { t } = useI18n();
 
-    const { files, updateFiles, uploadFiles } = useFilesUpload();
+const { files, updateFiles, uploadFiles } = useFilesUpload();
 
-    const steps = [t("Publish data on {site}", {site: title}), t("Describe your dataset"), t("Add files"), t("Complete your publishing")];
+const steps = [t("Describe your reuse"), t("Add datasets"), t("Complete your publishing")];
 
-    const currentStep = ref(0);
+const currentStep = ref(0);
 
-    /** @type {import("vue").Ref<HTMLDivElement | null>} */
-    const containerRef = templateRef('containerRef');
+/** @type {import("vue").Ref<HTMLDivElement | null>} */
+const containerRef = templateRef('containerRef');
 
-    /** @type {import("../../types").Owned} */
-    let owned;
+/** @type {import("../../types").Owned} */
+let owned;
 
-    if(props.organization) {
-      owned = /** @type {import("../../types").OwnedByOrganization} */( {
-      organization: props.organization,
-      owner: undefined,
+if(props.organization) {
+  owned = /** @type {import("../../types").OwnedByOrganization} */( {
+  organization: props.organization,
+  owner: undefined,
+});
+} else {
+  owned = {
+    organization: undefined,
+    owner: /** @type {import("../../types").User} */(props.owner ? props.owner : user),
+  };
+}
+
+/** @type {import("vue").Ref<import("../../types").Reuse>} */
+const reuse = ref({
+  title: "",
+  description: "",
+  tags: [],
+  page: "",
+  private: false,
+  datasets: [],
+  image: "",
+  image_thumbnail: "",
+  slug: "",
+  topic: "",
+  type: "",
+  ...owned,
+});
+
+/** @type {import("vue").Ref<import("../../types").Reuse | null>} */
+const savedReuse = ref(null);
+
+/** @type {import("vue").Ref<string | null>} */
+const draftUrl = ref(null);
+
+/** @type {import("vue").Ref<Array<string>>} */
+const errors = ref([]);
+
+/** @type {import("vue").Ref<import("../../types").NewDatasetFile | null>} */
+const editedFile = ref(null);
+
+/** @type {import("vue").Ref<number | null>} */
+const editedIndex = ref(null);
+
+/**
+ *
+ * @param {number | null} step
+ */
+const moveToStep = (step = null, saveToHistory = true) => {
+  if(containerRef.value) {
+    containerRef.value.scrollIntoView({
+      behavior: "smooth"
     });
-    } else {
-      owned = {
-        organization: undefined,
-        owner: /** @type {import("../../types").User} */(props.owner ? props.owner : user),
-      };
+  }
+  if(step !== null) {
+    currentStep.value = step;
+    if(saveToHistory) {
+      let url = new URL(window.location.href);
+      const targetHash = `#/step-${step + 1}`;
+      url.hash = targetHash;
+      window.history.pushState(null, "", url);
     }
+  }
+};
 
-    /** @type {import("vue").Ref<import("../../types").NewDataset>} */
-    const dataset = ref({
-      archived: false,
-      page: "",
-      title: "",
-      acronym: "",
-      description: "",
-      tags: null,
-      license: "",
-      frequency: "",
-      temporal_coverage: "",
-      frequency_date: null,
-      private: true,
-      spatial: {
-        zones: [],
-        granularity: "",
-      },
-      quality: {
-        all_resources_available: false,
-        dataset_description_quality: false,
-        has_open_format: false,
-        has_resources: false,
-        license: false,
-        resources_documentation: false,
-        score: 0,
-        spatial: false,
-        temporal_coverage: false,
-        update_frequency: false,
-        update_fulfilled_in_time: false,
-      },
-      ...owned,
-    });
+/**
+ *
+ * @param {import("vue").MaybeRefOrGetter<import("../../types").Reuse>} updatedReuse
+ */
+const updateReuse = (updatedReuse) => reuse.value = toValue(updatedReuse);
 
-    /** @type {import("vue").Ref<import("../../types").Dataset | null>} */
-    const savedDataset = ref(null);
+/**
+ *
+ * @param {import("vue").MaybeRefOrGetter<import("../../types").Reuse>} updatedReuse
+ */
+const updateDatasetAndMoveToNextStep = (updatedReuse) => {
+  updateReuse(updatedReuse);
+  moveToStep(1);
+};
 
-    /** @type {import("vue").Ref<string | null>} */
-    const draftUrl = ref(null);
+/**
+ *
+ * @param {import("vue").MaybeRefOrGetter<import("../../types").NewDataset>} reuse
+ */
+const createOrReturnReuse = (reuse) => {
+  if(savedDReuse.value) {
+    return Promise.resolve(savedReuse.value);
+  }
+  return createDataset(reuse);
+}
 
-    const datasetLoading = ref(false);
-
-    const loading = computed(() => files.value.reduce((loading, file) => loading || file.state === "loading", datasetLoading.value));
-
-    /** @type {import("vue").Ref<Array<string>>} */
-    const errors = ref([]);
-
-    /** @type {import("vue").Ref<import("../../types").NewDatasetFile | null>} */
-    const editedFile = ref(null);
-
-    /** @type {import("vue").Ref<number | null>} */
-    const editedIndex = ref(null);
-
-    /**
-     *
-     * @param {number | null} step
-     */
-    const moveToStep = (step = null, saveToHistory = true) => {
-      if(containerRef.value) {
-        containerRef.value.scrollIntoView({
-          behavior: "smooth"
-        });
-      }
-      if(step !== null) {
-        currentStep.value = step;
-        if(saveToHistory) {
-          let url = new URL(window.location.href);
-          const targetHash = `#/step-${step + 1}`;
-          url.hash = targetHash;
-          window.history.pushState(null, "", url);
+/**
+ *
+ * @param {import("vue").MaybeRefOrGetter<Array<import("../../types").NewDatasetFile>>} files
+ */
+const updateFilesAndMoveToNextStep = (files) => {
+  updateFiles(files);
+  errors.value = [];
+  datasetLoading.value = true;
+  createOrReturnDataset(dataset).then(datasetFromApi => {
+    savedDataset.value = datasetFromApi;
+    draftUrl.value = props.redirectDraftUrl + savedDataset.value.id;
+    uploadFiles(savedDataset.value.id)
+    .then(results => {
+      let allPromisesSucceded = true;
+      for (let result of results) {
+        if(result.status === "rejected") {
+          allPromisesSucceded = false;
+          errors.value.push(result.reason);
         }
       }
-    };
-
-    /**
-     *
-     * @param {import("vue").MaybeRefOrGetter<import("../../types").NewDataset>} updatedDataset
-     */
-    const updateDataset = (updatedDataset) => dataset.value = toValue(updatedDataset);
-
-    /**
-     *
-     * @param {import("vue").MaybeRefOrGetter<import("../../types").NewDataset>} updatedDataset
-     */
-    const updateDatasetAndMoveToNextStep = (updatedDataset) => {
-      updateDataset(updatedDataset);
-      moveToStep(2);
-    };
-
-    /**
-     *
-     * @param {import("vue").MaybeRefOrGetter<import("../../types").NewDataset>} dataset
-     */
-    const createOrReturnDataset = (dataset) => {
-      if(savedDataset.value) {
-        return Promise.resolve(savedDataset.value);
-      }
-      return createDataset(dataset);
-    }
-
-    /**
-     *
-     * @param {import("vue").MaybeRefOrGetter<Array<import("../../types").NewDatasetFile>>} files
-     */
-    const updateFilesAndMoveToNextStep = (files) => {
-      updateFiles(files);
-      errors.value = [];
-      datasetLoading.value = true;
-      createOrReturnDataset(dataset).then(datasetFromApi => {
-        savedDataset.value = datasetFromApi;
-        draftUrl.value = props.redirectDraftUrl + savedDataset.value.id;
-        uploadFiles(savedDataset.value.id)
-        .then(results => {
-          let allPromisesSucceded = true;
-          for (let result of results) {
-            if(result.status === "rejected") {
-              allPromisesSucceded = false;
-              errors.value.push(result.reason);
-            }
-          }
-          if(allPromisesSucceded) {
-            moveToStep(3);
-          }
-        });
-      }).catch(e => console.log(e))
-      .finally(() => datasetLoading.value = false);
-    }
-
-    const redirectToPublicUrl = () => {
-      if(savedDataset.value) {
-        publishDataset(savedDataset.value).then((dataset) => window.open(dataset.page, "_self"));
-      }
-    };
-
-    /**
-     *
-     * @param {Array<import("../../types").NewDatasetFile>} resources
-     * @param {number} index
-     */
-    const editFile = (resources, index) => {
-      updateFiles(resources);
-      editedFile.value = files.value[index];
-      editedIndex.value = index;
-      moveToStep();
-    };
-
-    /**
-     *
-     * @param {import("../../types").NewDatasetFile} file
-     */
-    const updateEditedFile = (file) => {
-      editedFile.value = toValue(file);
-      if(editedFile.value) {
-        const filesToUpdate = [...toValue(files)];
-        filesToUpdate[editedIndex.value || 0] = editedFile.value;
-        updateFiles(filesToUpdate);
-      }
-      editedFile.value = null;
-      editedIndex.value = null;
-      moveToStep();
-    }
-
-    useEventListener(window, 'hashchange', (evt) => {
-      const hash = window.location.hash;
-      const step = hash.substring(7);
-      const parsedStep = parseInt(step, 10) - 1|| 0;
-      const dontSave = false;
-      if(editedFile.value && typeof editedIndex.value === "number") {
-        if(!editedFile.value.title || !editedFile.value.format) {
-          const filesToUpdate = [...toValue(files)];
-          filesToUpdate.splice(editedIndex.value, 1);
-          updateFiles(filesToUpdate);
-        }
-        editedFile.value = null;
-        editedIndex.value = null;
-        moveToStep();
-      } else {
-        moveToStep(parsedStep, dontSave);
+      if(allPromisesSucceded) {
+        moveToStep(3);
       }
     });
+  }).catch(e => console.log(e))
+  .finally(() => datasetLoading.value = false);
+}
 
-    return {
-      currentStep,
-      dataset,
-      draftUrl,
-      editFile,
-      editedFile,
-      errors,
-      files,
-      loading,
-      moveToStep,
-      publishing_form_feedback_url,
-      redirectToPublicUrl,
-      savedDataset,
-      steps,
-      updateDatasetAndMoveToNextStep,
-      updateEditedFile,
-      updateFilesAndMoveToNextStep,
-    };
+const redirectToPublicUrl = () => {
+  if(savedReuse.value) {
+    publishDataset(savedReuse.value).then((reuse) => window.open(reuse.page, "_self"));
+  }
+};
+
+/**
+ *
+ * @param {Array<import("../../types").NewDatasetFile>} resources
+ * @param {number} index
+ */
+const editFile = (resources, index) => {
+  updateFiles(resources);
+  editedFile.value = files.value[index];
+  editedIndex.value = index;
+  moveToStep();
+};
+
+/**
+ *
+ * @param {import("../../types").NewDatasetFile} file
+ */
+const updateEditedFile = (file) => {
+  editedFile.value = toValue(file);
+  if(editedFile.value) {
+    const filesToUpdate = [...toValue(files)];
+    filesToUpdate[editedIndex.value || 0] = editedFile.value;
+    updateFiles(filesToUpdate);
+  }
+  editedFile.value = null;
+  editedIndex.value = null;
+  moveToStep();
+}
+
+useEventListener(window, 'hashchange', (evt) => {
+  const hash = window.location.hash;
+  const step = hash.substring(7);
+  const parsedStep = parseInt(step, 10) - 1|| 0;
+  const dontSave = false;
+  if(editedFile.value && typeof editedIndex.value === "number") {
+    if(!editedFile.value.title || !editedFile.value.format) {
+      const filesToUpdate = [...toValue(files)];
+      filesToUpdate.splice(editedIndex.value, 1);
+      updateFiles(filesToUpdate);
+    }
+    editedFile.value = null;
+    editedIndex.value = null;
+    moveToStep();
+  } else {
+    moveToStep(parsedStep, dontSave);
   }
 });
 </script>
