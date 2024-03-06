@@ -70,7 +70,6 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const dataset = reactive({...props.originalDataset, private: false});
-    console.log(dataset)
     const submit = () => {
       emit("redirectToPublicUrl");
     };
