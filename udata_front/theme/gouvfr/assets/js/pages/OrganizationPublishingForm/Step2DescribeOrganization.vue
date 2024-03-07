@@ -320,7 +320,6 @@
   watch(() => organization.business_number_id, (newValue) => {
     let siret = newValue.replace(/\s/g,'')
     if (siret.length === 14) {
-      console.log(config.search_siren)
       axios.get(config.search_siren, {
         params: {
           q: siret

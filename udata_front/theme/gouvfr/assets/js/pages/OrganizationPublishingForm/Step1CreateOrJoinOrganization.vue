@@ -16,7 +16,8 @@
               :allOption="t('All organizations')"
               suggestUrl="/organizations/suggest/"
               entityUrl="/organizations/"
-              values=""
+              hasLink="true"
+              :linkText="t('See organization')"
             />
           </div>
           <div class="fr-col-12 fr-col-lg-3 fr-grid-row fr-grid-row--right">
