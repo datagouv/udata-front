@@ -1,14 +1,17 @@
 import { rest } from 'msw';
 import OrganizationPublishingForm from './OrganizationPublishingForm.vue';
+import type { Meta, StoryObj } from "@storybook/vue3";
 
-export default {
+const meta = {
   title: 'Pages/OrganizationPublishingForm/Form',
   component: OrganizationPublishingForm,
-};
+} satisfies Meta<typeof OrganizationPublishingForm>;
+
+export default meta;
 
 const args = {};
 
-export const Form = {
+export const Form: StoryObj<typeof meta> = {
   parameters: {
     msw: [
       rest.post('*/api/1/organizations/', async (req, res, ctx) => {
@@ -35,7 +38,7 @@ export const Form = {
   args,
 };
 
-export const FormWithFailedRequests = {
+export const FormWithFailedRequests: StoryObj<typeof meta> = {
   parameters: {
     msw: [
       rest.post('*/api/1/organizations/', async (req, res, ctx) => {
