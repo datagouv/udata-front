@@ -229,7 +229,7 @@
   import useUid from "../../composables/useUid";
   import useFunctionalState from '../../composables/form/useFunctionalState';
   import editIcon from "../../../../templates/svg/illustrations/edit.svg";
-  import { quality_description_length, } from "../../config";
+  import config, { quality_description_length, search_siren } from "../../config";
   import { Organization, PublishingFormAccordionState } from '../../types';
   import axios from 'axios';
   import { url } from '@vuelidate/validators';
@@ -242,7 +242,7 @@
   }>();
 
   const emit = defineEmits<{
-    (event: 'next', organization: Organization, file: Array<any>): void,
+    (event: 'next', organization: Organization, file: File): void,
   }>();
 
   const { id: nameOrganizationAccordionId } = useUid("accordion");
@@ -255,7 +255,7 @@
   const { t } = useI18n();
 
   const organization = reactive({...props.organization});
-  const file = ref(null);
+  const file = ref<File | null>(null);
 
   const checkOrga = ref({
     name: '',
@@ -313,18 +313,15 @@
     });
   };
 
-/**
- *
- * @param {Array<import("../../types").NewDatasetFile>} newFiles
- */
-  function addFiles(newFile) {
+  function addFiles(newFile: File) {
     file.value = newFile;
   };
 
   watch(() => organization.business_number_id, (newValue) => {
     let siret = newValue.replace(/\s/g,'')
     if (siret.length === 14) {
-      axios.get("https://recherche-entreprises.api.gouv.fr/search", {
+      console.log(config.search_siren)
+      axios.get(config.search_siren, {
         params: {
           q: siret
         }
