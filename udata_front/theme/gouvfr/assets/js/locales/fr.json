@@ -354,5 +354,10 @@
   "Publish a reuse": "",
   "This SIRET is not valid": "",
   "Your file is valid": "",
-  "Mark as no spam": "Marquer comme non spam"
+  "Mark as no spam": "Marquer comme non spam",
+  "See organization": "",
+  "The SIREN n° {number} is matching": "",
+  "Public Service": "",
+  "No organization found matching this SIRET on annuaire.data.gouv.fr": "",
+  "If your organization has a logo or a profile picture, please upload it here. To upload a logo, click on the \\\"Choose a file from your computer\\\" button. The following image formats are accepted: png, jpg/jpeg.": ""
 }

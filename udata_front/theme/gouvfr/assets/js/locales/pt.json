@@ -354,5 +354,10 @@
   "Publish a reuse": "",
   "This SIRET is not valid": "",
   "Your file is valid": "",
-  "Mark as no spam": "Mark as no spam"
+  "Mark as no spam": "Mark as no spam",
+  "See organization": "",
+  "An organization is an entity in which many users can collaborate. The datasets published under the organization can be edited by its members.": "",
+  "The SIREN n° {number} is matching": "",
+  "Public Service": "",
+  "No organization found matching this SIRET on annuaire.data.gouv.fr": ""
 }

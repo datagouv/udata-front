@@ -131,15 +131,15 @@
             </LinkedToAccordion>
             <div v-if="checkOrga.exists !== null" class="fr-col fr-mx-2v fr-mb-2v bg-contrast-grey text-align-center">
               <div v-if="checkOrga.exists">
-                <p>Le SIREN n° {{ checkOrga.siren }} correspond à</p>
+                <p>{{ t('The SIREN n° {number} is matching', { number: checkOrga.siren }) }}</p>
                 <p>{{ checkOrga.name }}</p>
                 <p v-if="checkOrga.isPublicService">
                   <span class="fr-icon-bank-line" aria-hidden="true"></span>
-                  Service public
+                  {{ t('Public Service') }}
                 </p>
               </div>
               <div v-else>
-                <p>No organization found matching this SIRET</p>
+                <p>{{ t('No organization found matching this SIRET on annuaire.data.gouv.fr') }}</p>
               </div>
             </div>
             <LinkedToAccordion
