@@ -87,144 +87,85 @@
       </div>
     </div>
   </template>
-  <script>
-  import { computed, defineComponent, ref } from 'vue';
-  import { useI18n } from 'vue-i18n';
-  import Accordion from '../../components/Accordion/Accordion.vue';
-  import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
-  import Alert from '../../components/Alert/Alert.vue';
-  import ButtonLoader from '../../components/Form/ButtonLoader.vue';
-  import Container from '../../components/Ui/Container/Container.vue';
-  import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
-  import FileCard from '../../components/Form/FileCard/FileCard.vue';
-  import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
-  import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
-  import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
-  import Stepper from '../../components/Form/Stepper/Stepper.vue';
-  import UploadModalButton from '../../components/Form/UploadGroup/UploadModalButton.vue';
-  import Well from "../../components/Ui/Well/Well.vue";
-  import useUid from "../../composables/useUid";
-  import useFunctionalState from '../../composables/form/useFunctionalState';
-  import { requiredWithCustomMessage, withMessage } from '../../i18n';
-  import editIcon from "../../../../templates/svg/illustrations/edit.svg";
-  import { isLoading, isLoaded } from "../../api/resources";
-  import { api } from '../../plugins/api';
-  import cardLg from '../../components/dataset/card-lg.vue';
-  import DeleteButton from '../../components/utils/DeleteButton/DeleteButton.vue';
-  import { Input } from '../../components/Form/InputGroup/InputGroup.stories';
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import Accordion from '../../components/Accordion/Accordion.vue';
+import Container from '../../components/Ui/Container/Container.vue';
+import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
+import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
+import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
+import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
+import Stepper from '../../components/Form/Stepper/Stepper.vue';
+import Well from "../../components/Ui/Well/Well.vue";
+import useUid from "../../composables/useUid";
+import useFunctionalState from '../../composables/form/useFunctionalState';
+import { requiredWithCustomMessage, withMessage } from '../../i18n';
+import { api } from '../../plugins/api';
+import cardLg from '../../components/dataset/card-lg.vue';
+import { Dataset } from '@etalab/data.gouv.fr-components';
   
-  export default defineComponent({
-    components: { Accordion, AccordionGroup, Alert, ButtonLoader, Container, FileCard, InputGroup, LinkedToAccordion, MultiSelect, Sidemenu, Stepper, UploadModalButton, Well, cardLg, DeleteButton, Input },
-    emits: ["editFile", "next"],
-    props: {
-      errors: {
-        type: Array,
-        required: true,
-      },
-      loading: {
-        type: Boolean,
-        default: false,
-      },
-      steps: {
-        type: Array,
-        required: true,
-      },
-      originalDatasets: {
-        /** @type {import("vue").PropType<Readonly<Array<import("../../types").NewDataset>>>} */
-        type: Array,
-        required: true,
-      }
-    },
-    setup(props, { emit }) {
-      const { t } = useI18n();
-      const { id: addDatasetsAccordionId } = useUid("accordion");
-  
-      const datasets = ref([...props.originalDatasets]);
-  
-      const datasetRequired = requiredWithCustomMessage(t("At least one dataset is required."));
+const props = defineProps<{
+  errors: Array<string>,
+  loading?: Boolean,
+  steps: Array<string>
+  reuse: Reuse
+  originalDatasets: Array<Dataset>
+}>();
 
-      const requiredRules = {
-        datasets: { datasetRequired },
-      };
+const emit = defineEmits<{
+  (event: 'next', datasets: Array<Dataset>): void,
+}>();
+
+const { t } = useI18n();
+const { id: addDatasetsAccordionId } = useUid("accordion");
+
+const datasets = ref([...props.originalDatasets]);
+
+const datasetRequired = requiredWithCustomMessage(t("At least one dataset is required."));
+
+const requiredRules = {
+  datasets: { datasetRequired },
+};
+
+const warningRules = {
+  datasets: { datasetRequired },
+};
+
+const { getFunctionalState, getWarningText, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState({ datasets }, requiredRules, warningRules);
+
+const addDataset = async (datasetId: string) => {
+  console.log(datasetId);
+  let newDataset = await api.get('datasets/' + datasetId);
+  console.log(newDataset.data);
+  datasets.value.push(newDataset.data);
+  console.log(datasets.value);
+};
+
+const removeDataset = (index: number) => datasets.value.splice(index, 1);
+
+/**
+ * @type {import("vue").ComputedRef<Record<string, import("../../types").AccordionFunctionalState>>}
+ */
+const state = computed(() => {
+  return {
+    datasets: getFunctionalState(vWarning$.value.datasets.$dirty, v$.value.datasets.$invalid, vWarning$.value.datasets.$error),
+  };
+});
   
-      const warningRules = {
-        datasets: { datasetRequired },
-      };
-  
-      const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState({ datasets }, requiredRules, warningRules);
-  
-      /**
-       *
-       * @param {string} datasetId
-       */
-      const addDataset = async (datasetId) => {
-        console.log(datasetId);
-        let newDataset = await api.get('datasets/' + datasetId);
-        console.log(newDataset.data);
-        datasets.value.push(newDataset.data);
-        console.log(datasets.value);
-      };
-  
-      /**
-       *
-       * @param {number} index
-       */
-      const removeDataset = (index) => datasets.value.splice(index, 1);
-  
-      /**
-       * @type {import("vue").ComputedRef<Record<string, import("../../types").AccordionFunctionalState>>}
-       */
-      const state = computed(() => {
-        return {
-          datasets: getFunctionalState(vWarning$.value.datasets.$dirty, v$.value.datasets.$invalid, vWarning$.value.datasets.$error),
-        };
-      });
-  
-      const touch = () => {
-        v$.value.datasets.$touch();
-        vWarning$.value.datasets.$touch();
-      };
-  
-      const submit = () => {
-        validateRequiredRules().then(validated => {
-          if(validated) {
-            emit("next", files);
-          }
-        });
-      };
-  
-      /**
-       *
-       * @param {string} field
-       */
-      const fieldHasError = (field) => hasError(state, field);
-  
-      /**
-       *
-       * @param {string} field
-       */
-      const fieldHasWarning = (field) => hasWarning(state, field);
-  
-      return {
-        addDataset,
-        datasets,
-        editIcon,
-        getErrorText,
-        getFunctionalState,
-        getWarningText,
-        isLoaded,
-        isLoading,
-        addDatasetsAccordionId,
-        removeDataset,
-        state,
-        fieldHasError,
-        fieldHasWarning,
-        submit,
-        touch,
-        v$,
-        vWarning$,
-      };
-    },
+const touch = () => {
+  v$.value.datasets.$touch();
+  vWarning$.value.datasets.$touch();
+};
+
+const submit = () => {
+  validateRequiredRules().then(validated => {
+    if(validated) {
+      emit("next", datasets);
+    }
   });
-  </script>
+};
+
+const fieldHasWarning = (field: string) => hasWarning(state, field);
+</script>
   

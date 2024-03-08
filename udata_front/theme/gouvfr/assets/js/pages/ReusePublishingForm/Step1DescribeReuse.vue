@@ -204,7 +204,7 @@
             </LinkedToAccordion>
             <LinkedToAccordion
               class="fr-fieldset__element"
-              :accordion="useThemeAccordionId"
+              :accordion="addThemeAccordionId"
               @blur="vWarning$.theme.$touch"
             >
               <MultiSelect
@@ -292,7 +292,7 @@ import Well from "../../components/Ui/Well/Well.vue";
 import useUid from "../../composables/useUid";
 import useFunctionalState from '../../composables/form/useFunctionalState';
 import editIcon from "../../../../templates/svg/illustrations/edit.svg";
-import { quality_description_length, title } from "../../config";
+import { quality_description_length } from "../../config";
 import { getReuseTypesUrl, getReuseTopicsUrl } from '../../api/reuses';
 import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
 import { Reuse } from '../../types';
@@ -303,7 +303,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (event: 'next', reuse: Reuse, file: Array<any>): void,
+  (event: 'next', reuse: Reuse, file: File): void,
 }>();
 
 const { id: nameReuseAccordionId } = useUid("accordion");
@@ -315,7 +315,7 @@ const { id: addTagsAccordionId } = useUid("accordion");
 const { id: addImageAccordionId } = useUid("accordion");
 
 const reuse = reactive({...props.originalReuse});
-const file = ref(null);
+const file = ref<File | null>(null);
 const topicsUrl = getReuseTopicsUrl();
 const typesUrl = getReuseTypesUrl();
 
@@ -340,9 +340,6 @@ const warningRules = {
 
 const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(reuse, requiredRules, warningRules);
 
-/**
- * @type {import("vue").ComputedRef<Record<string, import("../../types").PublishingFormAccordionState>>}
- */
 const state = computed(() => {
   return {
     title: getFunctionalState(vWarning$.value.title.$dirty, v$.value.title.$invalid, vWarning$.value.title.$error),
@@ -355,19 +352,11 @@ const state = computed(() => {
   };
 });
 
-/**
- *
- * @param {string} field
- */
-const fieldHasError = (field) => hasError(state, field);
+const fieldHasError = (field: string) => hasError(state, field);
 
-/**
- *
- * @param {string} field
- */
-const fieldHasWarning = (field) => hasWarning(state, field);
+const fieldHasWarning = (field: string) => hasWarning(state, field);
 
-const addFiles = (newFile) => {
+const addFiles = (newFile: File) => {
   file.value = newFile;
 };
 

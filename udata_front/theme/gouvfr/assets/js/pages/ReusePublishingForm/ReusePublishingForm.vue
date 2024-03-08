@@ -2,8 +2,9 @@
   <div ref="containerRef">
     <Step1DescribeReuse
       v-if="currentStep === 0"
+      :originalReuse="reuse"
       :steps="steps"
-      @next="updateReuseAndMoveToNextStep"
+      @next="createReuseAndMoveToNextStep"
     />
     <Step2AddDatasets
       v-else-if="currentStep === 1"
@@ -24,9 +25,10 @@ import Step1DescribeReuse from './Step1DescribeReuse.vue';
 import Step2AddDatasets from './Step2AddDatasets.vue';
 import Step3CompleteThePublication from './Step3CompleteThePublication.vue';
 import { publishing_form_feedback_url, user } from '../../config';
-import { createDataset, publishDataset } from '../../api/datasets';
+import { createReuse, uploadLogo } from '../../api/reuses';
 import { useFilesUpload } from '../../composables/form/useFilesUpload';
 import { Reuse, Organization, User } from '../../types';
+import { Owned } from '@etalab/data.gouv.fr-components';
 
 const props = defineProps<{
   organization?: Organization,
@@ -43,26 +45,23 @@ const steps = [t("Describe your reuse"), t("Add datasets"), t("Complete your pub
 
 const currentStep = ref(0);
 
-/** @type {import("vue").Ref<HTMLDivElement | null>} */
-const containerRef = templateRef('containerRef');
+const containerRef = ref<HTMLDivElement | null>(null);
 
-/** @type {import("../../types").Owned} */
-let owned;
+let owned: Owned;
 
 if(props.organization) {
   owned = /** @type {import("../../types").OwnedByOrganization} */( {
   organization: props.organization,
-  owner: undefined,
+  owner: null,
 });
 } else {
   owned = {
-    organization: undefined,
-    owner: /** @type {import("../../types").User} */(props.owner ? props.owner : user),
+    organization: null,
+    owner: <User>(props.owner ? props.owner : user),
   };
 }
 
-/** @type {import("vue").Ref<import("../../types").Reuse>} */
-const reuse = ref({
+const reuse = ref<Reuse>({
   title: "",
   description: "",
   tags: [],
@@ -74,29 +73,24 @@ const reuse = ref({
   slug: "",
   topic: "",
   type: "",
-  ...owned,
+  organization: null,
+  owner: null,
+  id: '',
+  deleted: false,
+  last_update: ''
 });
 
-/** @type {import("vue").Ref<import("../../types").Reuse | null>} */
-const savedReuse = ref(null);
+const savedReuse = ref<Reuse | null>(null);
 
-/** @type {import("vue").Ref<string | null>} */
-const draftUrl = ref(null);
+const draftUrl = ref<string | null>(null);
 
-/** @type {import("vue").Ref<Array<string>>} */
-const errors = ref([]);
+const errors = ref<Array<string>>([]);
 
-/** @type {import("vue").Ref<import("../../types").NewDatasetFile | null>} */
-const editedFile = ref(null);
+const editedFile = ref<File | null>(null);
 
-/** @type {import("vue").Ref<number | null>} */
-const editedIndex = ref(null);
+const editedIndex = ref<Number | null>(null);
 
-/**
- *
- * @param {number | null} step
- */
-const moveToStep = (step = null, saveToHistory = true) => {
+const moveToStep = (step: number, saveToHistory = true) => {
   if(containerRef.value) {
     containerRef.value.scrollIntoView({
       behavior: "smooth"
@@ -113,37 +107,40 @@ const moveToStep = (step = null, saveToHistory = true) => {
   }
 };
 
-/**
- *
- * @param {import("vue").MaybeRefOrGetter<import("../../types").Reuse>} updatedReuse
- */
-const updateReuse = (updatedReuse) => reuse.value = toValue(updatedReuse);
+const updateReuse = (updatedReuse: Reuse) => reuse.value = toValue(updatedReuse);
 
-/**
- *
- * @param {import("vue").MaybeRefOrGetter<import("../../types").Reuse>} updatedReuse
- */
-const updateDatasetAndMoveToNextStep = (updatedReuse) => {
-  updateReuse(updatedReuse);
-  moveToStep(1);
+async function createReuseAndMoveToNextStep(reuse: Reuse, file: File) {
+  errors.value = [];
+  let moveToNextStep = false;
+  try {
+    reuse.value = await createReuse(reuse);
+    moveToNextStep = true;
+  } catch (e) {
+    errors.value.push(e.message);
+  }
+  try {
+    const resp = await uploadLogo(reuse.value.id, file.value[0]);
+    reuse.value.logo_thumbnail = resp.data.image
+  } catch (e) {
+    errors.value.push("Failed to upload logo, you can upload it again in your management panel");
+  }
+  if (moveToNextStep) {
+    moveToStep(1);
+  }
 };
 
-/**
- *
- * @param {import("vue").MaybeRefOrGetter<import("../../types").NewDataset>} reuse
- */
-const createOrReturnReuse = (reuse) => {
-  if(savedDReuse.value) {
+const createOrReturnReuse = (reuse: Reuse) => {
+  if(savedReuse.value) {
     return Promise.resolve(savedReuse.value);
   }
-  return createDataset(reuse);
+  return createReuse(reuse);
 }
 
 /**
  *
  * @param {import("vue").MaybeRefOrGetter<Array<import("../../types").NewDatasetFile>>} files
  */
-const updateFilesAndMoveToNextStep = (files) => {
+const updateFileAndMoveToNextStep = (file: File) => {
   updateFiles(files);
   errors.value = [];
   datasetLoading.value = true;
