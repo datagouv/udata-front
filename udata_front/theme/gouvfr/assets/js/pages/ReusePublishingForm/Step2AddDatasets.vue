@@ -108,8 +108,8 @@ import { Dataset } from '@etalab/data.gouv.fr-components';
 const props = defineProps<{
   errors: Array<string>,
   loading?: Boolean,
-  steps: Array<string>
-  reuse: Reuse
+  steps: Array<string>,
+  reuse: Reuse,
   originalDatasets: Array<Dataset>
 }>();
 

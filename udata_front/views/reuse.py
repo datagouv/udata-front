@@ -1,7 +1,7 @@
 from flask import abort, request, url_for, make_response
 from feedgenerator.django.utils.feedgenerator import Atom1Feed
 
-from udata_front.views.base import SearchView, DetailView
+from udata_front.views.base import SearchView, DetailView, LoginOnlyView
 from udata.i18n import I18nBlueprint, gettext as _
 from udata.models import Follow
 from udata.sitemap import sitemap
@@ -109,6 +109,9 @@ class ReuseDetailView(ReuseView, DetailView):
 
         return context
 
+@blueprint.route('/publishing-form/', endpoint='publishing-form')
+class ReusePublishingFormView(LoginOnlyView):
+    template_name = 'reuse/publishing-form.html'
 
 @sitemap.register_generator
 def sitemap_urls():

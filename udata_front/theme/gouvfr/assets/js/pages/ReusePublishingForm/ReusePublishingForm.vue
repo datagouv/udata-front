@@ -9,10 +9,16 @@
     <Step2AddDatasets
       v-else-if="currentStep === 1"
       :steps="steps"
+      :reuse="reuse"
+      :errors="errors"
+      :originalDatasets="[]"
     />
     <Step3CompleteThePublication
       v-else-if="currentStep === 2"
       :steps="steps"
+      feedbackUrl=""
+      redirectDraftUrl=""
+      :originalReuse="reuse"
     />
   </div>
 </template>
@@ -50,18 +56,18 @@ const containerRef = ref<HTMLDivElement | null>(null);
 let owned: Owned;
 
 if(props.organization) {
-  owned = /** @type {import("../../types").OwnedByOrganization} */( {
-  organization: props.organization,
-  owner: null,
-});
+  owned = ( {
+    organization: props.organization,
+    owner: null,
+  });
 } else {
   owned = {
     organization: null,
-    owner: <User>(props.owner ? props.owner : user),
+    owner: (props.owner ? props.owner : user),
   };
 }
 
-const reuse = ref<Reuse>({
+const reuse = ref({
   title: "",
   description: "",
   tags: [],
@@ -110,6 +116,7 @@ const moveToStep = (step: number, saveToHistory = true) => {
 const updateReuse = (updatedReuse: Reuse) => reuse.value = toValue(updatedReuse);
 
 async function createReuseAndMoveToNextStep(reuse: Reuse, file: File) {
+  console.log('Hey')
   errors.value = [];
   let moveToNextStep = false;
   try {
@@ -136,10 +143,6 @@ const createOrReturnReuse = (reuse: Reuse) => {
   return createReuse(reuse);
 }
 
-/**
- *
- * @param {import("vue").MaybeRefOrGetter<Array<import("../../types").NewDatasetFile>>} files
- */
 const updateFileAndMoveToNextStep = (file: File) => {
   updateFiles(files);
   errors.value = [];
@@ -170,23 +173,7 @@ const redirectToPublicUrl = () => {
   }
 };
 
-/**
- *
- * @param {Array<import("../../types").NewDatasetFile>} resources
- * @param {number} index
- */
-const editFile = (resources, index) => {
-  updateFiles(resources);
-  editedFile.value = files.value[index];
-  editedIndex.value = index;
-  moveToStep();
-};
-
-/**
- *
- * @param {import("../../types").NewDatasetFile} file
- */
-const updateEditedFile = (file) => {
+const updateEditedFile = (file: File) => {
   editedFile.value = toValue(file);
   if(editedFile.value) {
     const filesToUpdate = [...toValue(files)];

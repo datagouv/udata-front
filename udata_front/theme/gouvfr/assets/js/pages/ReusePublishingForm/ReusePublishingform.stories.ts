@@ -13,17 +13,14 @@ const args = {
 export const Form = {
   parameters: {
     msw: [
-      rest.post('*/api/1/datasets/', async (req, res, ctx) => {
+      rest.post('*/api/1/reuses/', async (req, res, ctx) => {
         /** @type {import("../../types").NewDataset} */
         const body = await req.json();
         /** @type {import("../../types").Dataset} */
-        const dataset = {...body, id: "someId", last_update: new Date()};
-        return res(ctx.delay(), ctx.json(dataset));
+        const reuse = {...body, id: "someId", last_update: new Date()};
+        return res(ctx.delay(), ctx.json(reuse));
       }),
-      rest.post('*/api/1/datasets/:datasetId/upload', async (req, res, ctx) => {
-        return res(ctx.delay(), ctx.json({success: true}));
-      }),
-      rest.post('*/api/1/datasets/:datasetId/resources', async (req, res, ctx) => {
+      rest.post('*/api/1/reuses/:reuseId/image', async (req, res, ctx) => {
         return res(ctx.delay(), ctx.json({success: true}));
       }),
     ],
@@ -43,18 +40,15 @@ export const Form = {
 export const FormWithFailedRequests = {
   parameters: {
     msw: [
-      rest.post('*/api/1/datasets/', async (req, res, ctx) => {
-        /** @type {import("../../types").NewDataset} */
+      rest.post('*/api/1/reuses/', async (req, res, ctx) => {
+        /** @type {import("../../types").NewReuse} */
         const body = await req.json();
-        /** @type {import("../../types").Dataset} */
-        const dataset = {...body, id: "someId", last_update: new Date()};
-        return res(ctx.delay(), ctx.json(dataset));
+        /** @type {import("../../types").Reuse} */
+        const reuse = {...body, id: "someId", last_update: new Date()};
+        return res(ctx.delay(), ctx.json(reuse));
       }),
-      rest.post('*/api/1/datasets/:datasetId/upload', async (req, res, ctx) => {
+      rest.post('*/api/1/reuses/:reuseId/image', async (req, res, ctx) => {
         return res(ctx.delay(), ctx.status(400), ctx.json({error: "Chunk size mismatch"}));
-      }),
-      rest.post('*/api/1/datasets/:datasetId/resources', async (req, res, ctx) => {
-        return res(ctx.delay(), ctx.status(400, "This endpoint only supports remote resources"));
       }),
     ],
   },

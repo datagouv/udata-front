@@ -254,15 +254,14 @@
             <LinkedToAccordion
               class="fr-fieldset__element"
               :accordion="addImageAccordionId"
-              @blur="vWarning$.image.$touch"
             >
               <p>{{ $t('Cover picture') }}</p>
               <UploadGroup
                 hintText="Max size: 4Mo. Accepted formats: JPG, JPEG, PNG"
                 accept=".jpeg, .jpg, .png"
-                :isValid="file"
+                :isValid="image"
                 :validText="$t('Your file is valid')"
-                @change="addFiles"
+                @change="addImage"
               />
             </LinkedToAccordion>
           </fieldset>
@@ -296,16 +295,18 @@ import { quality_description_length } from "../../config";
 import { getReuseTypesUrl, getReuseTopicsUrl } from '../../api/reuses';
 import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
 import { Reuse } from '../../types';
+import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{
-  originalReuse: Reuse,
+  originalReuse,
   steps: Array<any>,
 }>();
 
 const emit = defineEmits<{
-  (event: 'next', reuse: Reuse, file: File): void,
+  (event: 'next', reuse: Reuse, image: File): void,
 }>();
 
+const { t } = useI18n();
 const { id: nameReuseAccordionId } = useUid("accordion");
 const { id: addLinkAccordionId } = useUid("accordion");
 const { id: addTypeAccordionId } = useUid("accordion");
@@ -315,7 +316,7 @@ const { id: addTagsAccordionId } = useUid("accordion");
 const { id: addImageAccordionId } = useUid("accordion");
 
 const reuse = reactive({...props.originalReuse});
-const file = ref<File | null>(null);
+const image = ref<File | null>(null);
 const topicsUrl = getReuseTopicsUrl();
 const typesUrl = getReuseTypesUrl();
 
@@ -325,7 +326,6 @@ const requiredRules = {
   type: { required },
   theme: { required },
   description: { required },
-  image: { required },
 };
 
 const warningRules = {
@@ -335,7 +335,6 @@ const warningRules = {
   theme: { required },
   description: {required, minLengthValue: minLengthWarning(quality_description_length), },
   tags: {},
-  image: { required },
 };
 
 const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(reuse, requiredRules, warningRules);
@@ -348,24 +347,21 @@ const state = computed(() => {
     theme: getFunctionalState(vWarning$.value.theme.$dirty, v$.value.theme.$invalid, vWarning$.value.theme.$error),
     description: getFunctionalState(vWarning$.value.description.$dirty, v$.value.description.$invalid, vWarning$.value.description.$error),
     tags: getFunctionalState(vWarning$.value.tags.$dirty, false, vWarning$.value.tags.$error),
-    image: getFunctionalState(vWarning$.value.image.$dirty, v$.value.image.$invalid, vWarning$.value.image.$error),
-  };
+    };
 });
 
 const fieldHasError = (field: string) => hasError(state, field);
 
 const fieldHasWarning = (field: string) => hasWarning(state, field);
 
-const addFiles = (newFile: File) => {
-  file.value = newFile;
+const addImage = (newImage: File) => {
+  image.value = newImage;
 };
 
 const submit = () => {
   validateRequiredRules().then(valid => {
     if(valid) {
-      emit("next", reuse, file);
-    } else {
-      console.log(reuse)
+      emit("next", reuse, image);
     }
   });
 };
