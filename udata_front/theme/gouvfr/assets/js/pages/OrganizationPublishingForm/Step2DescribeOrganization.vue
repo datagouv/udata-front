@@ -108,6 +108,7 @@
               @blur="vWarning$.name.$touch"
             >
               <InputGroup
+                data-testid="nameInput"
                 :aria-describedby="nameOrganizationAccordionId"
                 :label="t('Name')"
                 :required="true"
@@ -122,6 +123,7 @@
               :accordion="addSiretAccordionId"
             >
               <InputGroup
+                data-testid="siretInput"
                 :label="t('SIRET Number')"
                 v-model="organization.business_number_id"
                 :hasError="fieldHasError('business_number_id')"
@@ -147,6 +149,7 @@
               :accordion="addAcronymAccordionId"
             >
             <InputGroup
+                data-testid="acronymInput"
                 :label="t('Acronym')"
                 v-model="organization.acronym"
               />
@@ -157,6 +160,7 @@
               @blur="vWarning$.description.$touch"
             >
             <InputGroup
+                data-testid="descriptionInput"
                 :label="t('Description')"
                 :required="true"
                 type="textarea"
@@ -171,6 +175,7 @@
               :accordion="addWebsiteAccordionId"
             >
             <InputGroup
+                data-testid="websiteInput"
                 :label="t('Website')"
                 v-model="organization.url"
                 :hasError="fieldHasError('url')"
@@ -203,7 +208,7 @@
             <p v-else> {{ errors[0] }}</p>
           </Alert>
           <div class="fr-grid-row fr-grid-row--right">
-            <button class="fr-btn" @click="submit">
+            <button class="fr-btn" data-testid="submitButton" @click="submit">
               {{ t("Next") }}
             </button>
           </div>
