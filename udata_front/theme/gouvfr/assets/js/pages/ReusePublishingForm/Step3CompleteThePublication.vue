@@ -55,6 +55,7 @@ import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Well from "../../components/Ui/Well/Well.vue";
 import successIcon from "../../../../templates/svg/illustrations/success.svg";
 import ReuseCard from '../../components/Reuse/Reuse.vue';
+import Loader from '../../components/Reuse/reuseLoader.vue';
   
 const props = defineProps<{
   feedbackUrl: string,

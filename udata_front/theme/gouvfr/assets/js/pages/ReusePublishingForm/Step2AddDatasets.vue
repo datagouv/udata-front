@@ -78,7 +78,7 @@
               </LinkedToAccordion>
             </fieldset>
             <div class="fr-grid-row fr-grid-row--right">
-              <button class="fr-btn" @click="">
+              <button class="fr-btn" @click="submit">
                 {{ $t("Next") }}
               </button>
             </div>
@@ -88,7 +88,7 @@
     </div>
   </template>
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import Container from '../../components/Ui/Container/Container.vue';
@@ -122,6 +122,8 @@ const { id: addDatasetsAccordionId } = useUid("accordion");
 
 const datasets = ref([...props.originalDatasets]);
 
+const reuse = ref(props.reuse)
+
 const datasetRequired = requiredWithCustomMessage(t("At least one dataset is required."));
 
 const requiredRules = {
@@ -135,11 +137,8 @@ const warningRules = {
 const { getFunctionalState, getWarningText, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState({ datasets }, requiredRules, warningRules);
 
 const addDataset = async (datasetId: string) => {
-  console.log(datasetId);
   let newDataset = await api.get('datasets/' + datasetId);
-  console.log(newDataset.data);
   datasets.value.push(newDataset.data);
-  console.log(datasets.value);
 };
 
 const removeDataset = (index: number) => datasets.value.splice(index, 1);
@@ -161,7 +160,12 @@ const touch = () => {
 const submit = () => {
   validateRequiredRules().then(validated => {
     if(validated) {
-      emit("next", datasets);
+      console.log(datasets)
+      toValue(datasets).forEach(dataset => {
+        reuse.value.datasets.push(dataset.id);
+      });
+      console.log(reuse)
+      emit("next", reuse);
     }
   });
 };

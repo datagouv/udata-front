@@ -22,6 +22,7 @@ import Toggletip from "./components/utils/Toggletip/Toggletip.vue";
 import UserDatasetList from "./components/UserDatasetList/UserDatasetList.vue";
 import UserReuseList from "./components/UserReuseList/UserReuseList.vue";
 import PublishingForm from "./pages/PublishingForm/PublishingForm.vue";
+import ReusePublishingForm from "./pages/ReusePublishingForm/ReusePublishingForm.vue";
 
 import "./components/vanilla/tabs.js";
 import "./components/vanilla/accordion.js";
@@ -75,6 +76,7 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("chart", Chart);
   app.component("toggletip", Toggletip);
   app.component("publishing-form", PublishingForm);
+  app.component('reuse-publishing-form', ReusePublishingForm);
   app.component("user-dataset-list", UserDatasetList);
   app.component("user-reuse-list", UserReuseList);
 

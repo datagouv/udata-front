@@ -47,14 +47,14 @@
             </Accordion>
             <Accordion
               :title= "$t('Choose a theme')"
-              :id="addThemeAccordionId"
-              :state="state.theme"
+              :id="addTopicAccordionId"
+              :state="state.topic"
             >
               <p class="fr-m-0">
                 {{ $t("Choose the theme associated with your reuse.") }}
               </p>
-              <Well class="fr-mt-1w" v-if="fieldHasWarning('theme')" color="orange-terre-battue">
-                {{ getWarningText("theme") }}
+              <Well class="fr-mt-1w" v-if="fieldHasWarning('topic')" color="orange-terre-battue">
+                {{ getWarningText("topic") }}
               </Well>
             </Accordion>
             <Accordion
@@ -120,29 +120,34 @@
               </h2>
             </legend>
             <div class="fr-fieldset__element">
-              <!--<MultiSelect
-                :required="true"
-                :minimumCharacterBeforeSuggest="2"
-                :placeholder="$t('Check the identity with which you want to publish')"
-                :searchPlaceholder="$t('Select an organization')"
-                suggestUrl="/tags/suggest/"
-                :values="reuse.tags"
-                :addNewOption="true"
-              />-->
-              <div class="fr-col bg-contrast-grey text-align-center fr-p-2v">
-                <p class="fr-text--md fr-text--bold fr-mb-n3v">You belong to no organization</p>
-                <p class="fr-text--sm fr-text--bold fr-mb-n4v">You publish in your own name</p>
-                <p class="fr-text--sm">We advise you to publish under an organization if it's a professional activity</p>
-                <div class="fr-grid-row fr-grid-row--middle fr-pb-3v">
-                  <div class="fr-col-6">
-                    <button class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500" @click="">
-                      {{ $t("Join an organization") }}
-                    </button>
-                  </div>
-                  <div class="fr-col-6">
-                    <button class="fr-btn" @click="">
-                      {{ $t("Create an organization") }}
-                    </button>
+              <div v-if="hasOrganizations">
+                <MultiSelect
+                  :required="true"
+                  :minimumCharacterBeforeSuggest="2"
+                  :placeholder="$t('Check the identity with which you want to publish')"
+                  :searchPlaceholder="$t('Select an organization')"
+                  :initialOptions="organizations"
+                  :values="userOrganization"
+                  @change="(value) => userOrganization = value"
+                  :addNewOption="true"
+                />
+              </div>
+              <div v-else>
+                <div class="fr-col bg-contrast-grey text-align-center fr-p-2v">
+                  <p class="fr-text--md fr-text--bold fr-mb-n3v">You belong to no organization</p>
+                  <p class="fr-text--sm fr-text--bold fr-mb-n4v">You publish in your own name</p>
+                  <p class="fr-text--sm">We advise you to publish under an organization if it's a professional activity</p>
+                  <div class="fr-grid-row fr-grid-row--middle fr-pb-3v">
+                    <div class="fr-col-6">
+                      <button class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500" @click="">
+                        {{ $t("Join an organization") }}
+                      </button>
+                    </div>
+                    <div class="fr-col-6">
+                      <button class="fr-btn" @click="">
+                        {{ $t("Create an organization") }}
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -204,19 +209,19 @@
             </LinkedToAccordion>
             <LinkedToAccordion
               class="fr-fieldset__element"
-              :accordion="addThemeAccordionId"
-              @blur="vWarning$.theme.$touch"
+              :accordion="addTopicAccordionId"
+              @blur="vWarning$.topic.$touch"
             >
               <MultiSelect
                 :required="true"
                 :placeholder="$t('Theme')"
                 :searchPlaceholder="$t('Select a theme...')"
                 :listUrl="topicsUrl"
-                :values="reuse.theme"
-                @change="(value) => reuse.theme = value"
-                :hasError="fieldHasError('theme')"
-                :hasWarning="fieldHasWarning('theme')"
-                :errorText="getErrorText('theme')"
+                :values="reuse.topic"
+                @change="(value) => reuse.topic = value"
+                :hasError="fieldHasError('topic')"
+                :hasWarning="fieldHasWarning('topic')"
+                :errorText="getErrorText('topic')"
               />
             </LinkedToAccordion>
             <LinkedToAccordion
@@ -265,6 +270,13 @@
               />
             </LinkedToAccordion>
           </fieldset>
+          <Alert type="error" v-if="errors.length" class="fr-mt-n2w fr-mb-2w">
+            <template #title>{{ t("An error occured | Some errors occured", errors.length) }}</template>
+            <ul v-if="errors.length > 1">
+              <li v-for="error in errors">{{ error }}</li>
+            </ul>
+            <p v-else> {{ errors[0] }}</p>
+          </Alert>
           <div class="fr-grid-row fr-grid-row--right">
             <button class="fr-btn" @click="submit">
               {{ $t("Next") }}
@@ -277,7 +289,7 @@
 </template>
   
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue';
+import { computed, reactive, ref, toValue } from 'vue';
 import { minLengthWarning, not, required, requiredWithCustomMessage } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -296,10 +308,13 @@ import { getReuseTypesUrl, getReuseTopicsUrl } from '../../api/reuses';
 import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
 import { Reuse } from '../../types';
 import { useI18n } from 'vue-i18n';
+import { getUser } from '../../api/user';
+import Alert from '../../components/Alert/Alert.vue';
 
 const props = defineProps<{
-  originalReuse,
+  originalReuse: any,
   steps: Array<any>,
+  errors: Array<string>,
 }>();
 
 const emit = defineEmits<{
@@ -310,21 +325,34 @@ const { t } = useI18n();
 const { id: nameReuseAccordionId } = useUid("accordion");
 const { id: addLinkAccordionId } = useUid("accordion");
 const { id: addTypeAccordionId } = useUid("accordion");
-const { id: addThemeAccordionId } = useUid("accordion");
+const { id: addTopicAccordionId } = useUid("accordion");
 const { id: addDescriptionAccordionId } = useUid("accordion");
 const { id: addTagsAccordionId } = useUid("accordion");
 const { id: addImageAccordionId } = useUid("accordion");
 
 const reuse = reactive({...props.originalReuse});
 const image = ref<File | null>(null);
+const userOrganization = ref();
 const topicsUrl = getReuseTopicsUrl();
 const typesUrl = getReuseTypesUrl();
+
+const organizations = ref([]);
+const hasOrganizations = computed(() => organizations.value.length > 0);
+
+(async () => {
+  try {
+    const me = await getUser();
+    organizations.value = me.organizations;
+  } catch (error) {
+    console.error('Error:', error);
+  }
+})();
 
 const requiredRules = {
   title: { required },
   url: { required },
   type: { required },
-  theme: { required },
+  topic: { required },
   description: { required },
 };
 
@@ -332,7 +360,7 @@ const warningRules = {
   title: { required },
   url: { required },
   type: { required },
-  theme: { required },
+  topic: { required },
   description: {required, minLengthValue: minLengthWarning(quality_description_length), },
   tags: {},
 };
@@ -344,7 +372,7 @@ const state = computed(() => {
     title: getFunctionalState(vWarning$.value.title.$dirty, v$.value.title.$invalid, vWarning$.value.title.$error),
     url: getFunctionalState(vWarning$.value.url.$dirty, v$.value.url.$invalid, vWarning$.value.url.$error),
     type: getFunctionalState(vWarning$.value.type.$dirty, v$.value.type.$invalid, vWarning$.value.type.$error),
-    theme: getFunctionalState(vWarning$.value.theme.$dirty, v$.value.theme.$invalid, vWarning$.value.theme.$error),
+    topic: getFunctionalState(vWarning$.value.topic.$dirty, v$.value.topic.$invalid, vWarning$.value.topic.$error),
     description: getFunctionalState(vWarning$.value.description.$dirty, v$.value.description.$invalid, vWarning$.value.description.$error),
     tags: getFunctionalState(vWarning$.value.tags.$dirty, false, vWarning$.value.tags.$error),
     };
@@ -361,6 +389,10 @@ const addImage = (newImage: File) => {
 const submit = () => {
   validateRequiredRules().then(valid => {
     if(valid) {
+      if (userOrganization) {
+        reuse.organization = toValue(userOrganization);
+        reuse.owner = null;
+      }
       emit("next", reuse, image);
     }
   });
