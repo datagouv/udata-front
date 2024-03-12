@@ -259,6 +259,7 @@
             <LinkedToAccordion
               class="fr-fieldset__element"
               :accordion="addImageAccordionId"
+              @blur="vWarning$.image.$touch"
             >
               <p>{{ $t('Cover picture') }}</p>
               <UploadGroup
@@ -344,7 +345,6 @@ const typesUrl = getReuseTypesUrl();
 const organizations = ref([]);
 const hasOrganizations = computed(() => organizations.value.length > 0);
 const hasImage = () => {
-  console.log(image)
   return !!image;
 };
 
