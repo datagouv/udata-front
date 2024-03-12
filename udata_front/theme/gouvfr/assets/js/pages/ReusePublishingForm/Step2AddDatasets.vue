@@ -42,12 +42,12 @@
               </legend>
               <div v-for="(dataset, index) in datasets" :key="dataset.id">
                 <div class="fr-grid-row fr-grid-row--center">
-                  <div class="fr-col-10">
-                    <cardLg
+                  <div class="fr-col-11">
+                    <CardSm
                       :dataset="dataset"
                     />
                   </div>
-                  <div class="fr-col-2 fr-m-auto fr-p-auto">
+                  <div class="fr-col-1 fr-my-auto fr-ml-auto justify-center flex">
                     <button
                       type="button"
                       class="fr-btn fr-btn--sm fr-btn--tertiary fr-icon-delete-line"
@@ -102,7 +102,7 @@ import useUid from "../../composables/useUid";
 import useFunctionalState from '../../composables/form/useFunctionalState';
 import { requiredWithCustomMessage, withMessage } from '../../i18n';
 import { api } from '../../plugins/api';
-import cardLg from '../../components/dataset/card-lg.vue';
+import CardSm from '../../components/dataset/CardSm.vue';
 import { Dataset } from '@etalab/data.gouv.fr-components';
   
 const props = defineProps<{
@@ -171,4 +171,4 @@ const submit = () => {
 
 const fieldHasWarning = (field: string) => hasWarning(state, field);
 </script>
-  
+  ../../components/dataset/CardSM.vue

@@ -2,7 +2,7 @@
     <ContentLoader
       viewBox="0 0 350 350"
       :speed="2"
-      primaryColor="#f3f3f3"
+      primaryColor="#EEEEEE"
       secondaryColor="#ecebeb"
     >
     <rect x="0" y="0" rx="0" ry="0" width="350" height="200" /> 
