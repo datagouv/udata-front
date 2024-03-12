@@ -266,6 +266,8 @@
                 accept=".jpeg, .jpg, .png"
                 :isValid="image"
                 :validText="$t('Your file is valid')"
+                :hasError="fieldHasError('image')"
+                :errorText="getErrorText('image')"
                 @change="addImage"
               />
             </LinkedToAccordion>
@@ -315,8 +317,8 @@ import { Organization } from '@etalab/data.gouv.fr-components';
 
 const props = defineProps<{
   originalReuse: any,
-  steps: Array<any>,
-  errors: Array<string>,
+  steps: Array<String>,
+  errors: Array<String>,
 }>();
 
 const emit = defineEmits<{
@@ -333,6 +335,7 @@ const { id: addTagsAccordionId } = useUid("accordion");
 const { id: addImageAccordionId } = useUid("accordion");
 
 const reuse = reactive({...props.originalReuse});
+const errors = reactive({...props.errors})
 const image = ref<File | null>(null);
 const userOrganization = ref<Organization>();
 const topicsUrl = getReuseTopicsUrl();
@@ -340,6 +343,10 @@ const typesUrl = getReuseTypesUrl();
 
 const organizations = ref([]);
 const hasOrganizations = computed(() => organizations.value.length > 0);
+const hasImage = () => {
+  console.log(image)
+  return !!image;
+};
 
 (async () => {
   try {
@@ -356,6 +363,7 @@ const requiredRules = {
   type: { required },
   topic: { required },
   description: { required },
+  image: { hasImage  }
 };
 
 const warningRules = {
@@ -365,6 +373,7 @@ const warningRules = {
   topic: { required },
   description: {required, minLengthValue: minLengthWarning(quality_description_length), },
   tags: {},
+  image: { hasImage }
 };
 
 const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(reuse, requiredRules, warningRules);
@@ -377,7 +386,8 @@ const state = computed<Record<string, PublishingFormAccordionState>>(() => {
     topic: getFunctionalState(vWarning$.value.topic.$dirty, v$.value.topic.$invalid, vWarning$.value.topic.$error),
     description: getFunctionalState(vWarning$.value.description.$dirty, v$.value.description.$invalid, vWarning$.value.description.$error),
     tags: getFunctionalState(vWarning$.value.tags.$dirty, false, vWarning$.value.tags.$error),
-    };
+    image: getFunctionalState(vWarning$.value.image.$dirty, v$.value.image.$invalid, vWarning$.value.image.$error),
+  };
 });
 
 const fieldHasError = (field: string) => hasError(state, field);
