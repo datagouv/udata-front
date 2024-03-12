@@ -136,8 +136,11 @@ const warningRules = {
 const { getFunctionalState, getWarningText, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState({ datasets }, requiredRules, warningRules);
 
 const addDataset = async (datasetId: string) => {
-  let newDataset = await api.get('datasets/' + datasetId);
-  datasets.value.push(newDataset.data);
+  const existingDataset = datasets.value.find(dataset => dataset.id === datasetId);
+  if (!existingDataset) {
+    let newDataset = await api.get('datasets/' + datasetId);
+    datasets.value.push(newDataset.data);
+  }
 };
 
 const removeDataset = (index: number) => datasets.value.splice(index, 1);
