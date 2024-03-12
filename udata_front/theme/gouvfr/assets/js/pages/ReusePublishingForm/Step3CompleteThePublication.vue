@@ -19,13 +19,13 @@
       </Well>
       <ul ref="listRef" class="fr-grid-row fr-grid-row--gutters fr-mb-2v">
         <li class="fr-col-12 fr-col-md-4">
-          <Loader />
+          <Loader style="background-color: #FAFAFA" />
         </li>
         <li class="fr-col-12 fr-col-md-4">
           <ReuseCard :reuse="reuse" />
         </li>
         <li class="fr-col-12 fr-col-md-4">
-          <Loader />
+          <Loader style="background-color: #FAFAFA"/>
         </li>
       </ul>
       <div class="fr-grid-row justify-between">
@@ -55,7 +55,7 @@ import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Well from "../../components/Ui/Well/Well.vue";
 import successIcon from "../../../../templates/svg/illustrations/success.svg";
 import ReuseCard from '../../components/Reuse/Reuse.vue';
-import Loader from '../../components/Reuse/reuseLoader.vue';
+import Loader from '../../components/Reuse/ReuseLoader.vue';
   
 const props = defineProps<{
   feedbackUrl: string,

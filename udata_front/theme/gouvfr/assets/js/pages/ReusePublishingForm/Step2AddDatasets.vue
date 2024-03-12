@@ -109,8 +109,7 @@ const props = defineProps<{
   errors: Array<string>,
   loading?: Boolean,
   steps: Array<string>,
-  reuse: Reuse,
-  originalDatasets: Array<Dataset>
+  reuse: Reuse
 }>();
 
 const emit = defineEmits<{
@@ -120,7 +119,7 @@ const emit = defineEmits<{
 const { t } = useI18n();
 const { id: addDatasetsAccordionId } = useUid("accordion");
 
-const datasets = ref([...props.originalDatasets]);
+const datasets = ref([]);
 
 const reuse = ref(props.reuse)
 

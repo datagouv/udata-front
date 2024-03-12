@@ -12,7 +12,6 @@
       :steps="steps"
       :reuse="reuse"
       :errors="errors"
-      :originalDatasets="[]"
       @next="updateReuseAndMoveToNextStep"
     />
     <Step3CompleteThePublication
@@ -47,7 +46,7 @@ const { t } = useI18n();
 
 const steps = [t("Describe your reuse"), t("Add datasets"), t("Complete your publishing")];
 
-const currentStep = ref(0);
+const currentStep = ref<Number>(0);
 
 const containerRef = ref<HTMLDivElement | null>(null);
 
@@ -77,9 +76,6 @@ const reuse = ref({
   type: "",
   ...owned
 });
-
-const file = ref<File | null>(null)
-console.log(user)
 
 const savedReuse = ref<Reuse | null>(null);
 

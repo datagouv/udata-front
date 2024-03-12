@@ -306,10 +306,12 @@ import editIcon from "../../../../templates/svg/illustrations/edit.svg";
 import { quality_description_length } from "../../config";
 import { getReuseTypesUrl, getReuseTopicsUrl } from '../../api/reuses';
 import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
-import { Reuse } from '../../types';
+import { PublishingFormAccordionState, Reuse } from '../../types';
 import { useI18n } from 'vue-i18n';
 import { getUser } from '../../api/user';
 import Alert from '../../components/Alert/Alert.vue';
+import { url } from '@vuelidate/validators';
+import { Organization } from '@etalab/data.gouv.fr-components';
 
 const props = defineProps<{
   originalReuse: any,
@@ -332,7 +334,7 @@ const { id: addImageAccordionId } = useUid("accordion");
 
 const reuse = reactive({...props.originalReuse});
 const image = ref<File | null>(null);
-const userOrganization = ref();
+const userOrganization = ref<Organization>();
 const topicsUrl = getReuseTopicsUrl();
 const typesUrl = getReuseTypesUrl();
 
@@ -350,7 +352,7 @@ const hasOrganizations = computed(() => organizations.value.length > 0);
 
 const requiredRules = {
   title: { required },
-  url: { required },
+  url: { required, url },
   type: { required },
   topic: { required },
   description: { required },
@@ -358,7 +360,7 @@ const requiredRules = {
 
 const warningRules = {
   title: { required },
-  url: { required },
+  url: { required, url },
   type: { required },
   topic: { required },
   description: {required, minLengthValue: minLengthWarning(quality_description_length), },
@@ -367,7 +369,7 @@ const warningRules = {
 
 const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(reuse, requiredRules, warningRules);
 
-const state = computed(() => {
+const state = computed<Record<string, PublishingFormAccordionState>>(() => {
   return {
     title: getFunctionalState(vWarning$.value.title.$dirty, v$.value.title.$invalid, vWarning$.value.title.$error),
     url: getFunctionalState(vWarning$.value.url.$dirty, v$.value.url.$invalid, vWarning$.value.url.$error),
