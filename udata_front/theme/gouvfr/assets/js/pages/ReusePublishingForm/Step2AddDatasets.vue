@@ -40,20 +40,18 @@
                   {{ $t("Associated datasets") }}
                 </h2>
               </legend>
-              <div v-for="(dataset, index) in datasets" :key="dataset.id">
-                <div class="fr-grid-row fr-grid-row--center">
-                  <div class="fr-col-11">
-                    <CardSm
-                      :dataset="dataset"
-                    />
-                  </div>
-                  <div class="fr-col-1 fr-my-auto fr-ml-auto justify-center flex">
-                    <button
-                      type="button"
-                      class="fr-btn fr-btn--sm fr-btn--tertiary fr-icon-delete-line"
-                      @click="removeDataset(index)"
-                    ></button>
-                  </div>
+              <div class="fr-grid-row fr-grid-row--center w-100" v-for="(dataset, index) in datasets" :key="dataset.id">
+                <div class="fr-col">
+                  <CardSm
+                    :dataset="dataset"
+                  />
+                </div>
+                <div class="fr-col-1 fr-my-auto fr-ml-auto justify-center flex">
+                  <button
+                    type="button"
+                    class="fr-btn fr-btn--sm fr-btn--tertiary fr-icon-delete-line"
+                    @click="removeDataset(index)"
+                  ></button>
                 </div>
               </div>
               <LinkedToAccordion
@@ -109,7 +107,8 @@ const props = defineProps<{
   errors: Array<string>,
   loading?: Boolean,
   steps: Array<string>,
-  reuse: Reuse
+  reuse: Reuse,
+  originalDatasets: Array<any>
 }>();
 
 const emit = defineEmits<{
@@ -119,7 +118,7 @@ const emit = defineEmits<{
 const { t } = useI18n();
 const { id: addDatasetsAccordionId } = useUid("accordion");
 
-const datasets = ref([]);
+const datasets = ref([...props.originalDatasets]);
 
 const reuse = ref(props.reuse)
 
@@ -174,4 +173,3 @@ const submit = () => {
 
 const fieldHasWarning = (field: string) => hasWarning(state, field);
 </script>
-  ../../components/dataset/CardSM.vue

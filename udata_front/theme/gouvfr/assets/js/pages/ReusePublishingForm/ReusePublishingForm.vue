@@ -12,6 +12,7 @@
       :steps="steps"
       :reuse="reuse"
       :errors="errors"
+      :originalDatasets="originalDatasets"
       @next="updateReuseAndMoveToNextStep"
     />
     <Step3CompleteThePublication
@@ -40,6 +41,7 @@ const props = defineProps<{
   reuse?: Reuse,
   owner?: Owned,
   redirectDraftUrl: string
+  originalDatasets?: Array<any>
 }>();
   
 const { t } = useI18n();

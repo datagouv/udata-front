@@ -52,7 +52,7 @@
             </span>
             <span class="text-mention-grey">{{ $t('Updated {date}', {date: formatRelativeIfRecentDate(dataset.last_update)}) }}</span>
           </p>
-          <div class="fr-m-0 fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
+          <div class="fr-mx-0 fr-mt-n2v fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
             <div class="fr-grid-row fr-grid-row--middle fr-hidden flex-sm dash-after text-grey-500 not-enlarged">
               <p class="fr-m-0 fr-mr-1v text-mention-grey fr-text--sm" :id="id">
                 {{$t('Metadata quality:')}}
