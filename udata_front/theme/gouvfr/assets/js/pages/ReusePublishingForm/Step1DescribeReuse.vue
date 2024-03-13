@@ -336,7 +336,6 @@ const { id: addTagsAccordionId } = useUid("accordion");
 const { id: addImageAccordionId } = useUid("accordion");
 
 const reuse = reactive({...props.originalReuse});
-const errors = reactive({...props.errors})
 const image = ref<File | null>(null);
 const userOrganization = ref<Organization>();
 const topicsUrl = getReuseTopicsUrl();

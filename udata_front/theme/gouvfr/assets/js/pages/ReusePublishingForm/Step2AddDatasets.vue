@@ -75,6 +75,13 @@
                 />
               </LinkedToAccordion>
             </fieldset>
+            <Alert type="error" v-if="errors.length" class="fr-mt-n2w fr-mb-2w">
+              <template #title>{{ t("An error occured | Some errors occured", errors.length) }}</template>
+              <ul v-if="errors.length > 1">
+                <li v-for="error in errors">{{ error }}</li>
+              </ul>
+              <p v-else> {{ errors[0] }}</p>
+            </Alert>
             <div class="fr-grid-row fr-grid-row--right">
               <button class="fr-btn" @click="submit">
                 {{ $t("Next") }}
@@ -86,7 +93,7 @@
     </div>
   </template>
 <script setup lang="ts">
-import { computed, ref, toValue } from 'vue';
+import { computed, reactive, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import Container from '../../components/Ui/Container/Container.vue';
