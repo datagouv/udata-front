@@ -344,7 +344,7 @@ const typesUrl = getReuseTypesUrl();
 const organizations = ref([]);
 const hasOrganizations = computed(() => organizations.value.length > 0);
 const hasImage = () => {
-  return !!image;
+  return image.value !== null;
 };
 
 (async () => {
@@ -362,7 +362,7 @@ const requiredRules = {
   type: { required },
   topic: { required },
   description: { required },
-  image: { hasImage  }
+  image: { custom: hasImage  }
 };
 
 const warningRules = {
@@ -372,7 +372,7 @@ const warningRules = {
   topic: { required },
   description: {required, minLengthValue: minLengthWarning(quality_description_length), },
   tags: {},
-  image: { hasImage }
+  image: { custom: hasImage }
 };
 
 const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(reuse, requiredRules, warningRules);
