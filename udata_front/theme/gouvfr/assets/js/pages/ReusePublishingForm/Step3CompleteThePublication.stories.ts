@@ -1,11 +1,13 @@
+import type { Meta, StoryObj } from '@storybook/vue3';
 import Step3CompleteThePublication from './Step3CompleteThePublication.vue';
 import * as Stepper from '../../components/Form/Stepper/StepperReuse.stories';
 
-
-export default {
+const meta = {
   title: 'Pages/ReusePublishingForm/Step3',
   component: Step3CompleteThePublication,
-};
+} satisfies Meta<typeof Step3CompleteThePublication>;
+
+export default meta;
 
 const originalReuse = {
   badges: [],
@@ -54,12 +56,12 @@ const originalReuse = {
 
 const args = {
   originalReuse,
-  feedbackUrl: "https://demo.data.gouv.fr/fr/datasets/?q=feedback",
+  feedbackUrl: "https://demo.data.gouv.fr/fr/reuses/?q=feedback",
   steps: Stepper.StepperOnFirstStep.args.steps,
-  redirectDraftUrl: "https://demo.data.gouv.fr/fr/datasets/?q=draft",
+  redirectDraftUrl: "https://demo.data.gouv.fr/fr/reuses/?q=draft",
 };
 
-export const Step3 = {
+export const Step3: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Step3CompleteThePublication },
     setup() {

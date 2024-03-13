@@ -1,19 +1,21 @@
+import type { Meta, StoryObj } from '@storybook/vue3';
 import { rest } from 'msw';
 import Step1DescribeReuse from './Step1DescribeReuse.vue';
 import * as Stepper from '../../components/Form/Stepper/StepperReuse.stories';
 
-
-export default {
+const meta = {
   title: 'Pages/ReusePublishingForm/Step1',
   component: Step1DescribeReuse,
-};
+} satisfies Meta<typeof Step1DescribeReuse>;
+
+export default meta;
 
 const args = {
   steps: Stepper.StepperOnFirstStep.args.steps,
   errors: [],
 };
 
-export const Step1WithNoOrganizations = {
+export const Step1WithNoOrganizations: StoryObj<typeof meta> = {
   parameters: {
     msw: [
       rest.get('*/api/1/me', async (req, res, ctx) => {
@@ -33,7 +35,7 @@ export const Step1WithNoOrganizations = {
   args,
 };
 
-export const Step1WithOrganizations = {
+export const Step1WithOrganizations: StoryObj<typeof meta> = {
   parameters: {
     msw: [
       rest.get('*/api/1/me', async (req, res, ctx) => {

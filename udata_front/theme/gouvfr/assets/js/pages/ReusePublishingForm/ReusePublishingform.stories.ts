@@ -1,11 +1,14 @@
+import type { Meta, StoryObj } from '@storybook/vue3';
 import { rest } from 'msw';
 import { user } from '../../config';
 import ReusePublishingForm from './ReusePublishingForm.vue';
 
-export default {
+const meta = {
   title: 'Pages/ReusePublishingForm/Form',
   component: ReusePublishingForm,
-};
+} satisfies Meta<typeof ReusePublishingForm>;
+
+export default meta;
 
 const organization = {
   acronym: null,
@@ -21,10 +24,10 @@ const organization = {
 };
 
 const args = {
-  redirectDraftUrl: "https://demo.data.gouv.fr/fr/datasets/?q=draft",
+  redirectDraftUrl: "https://demo.data.gouv.fr/fr/reuses/?q=draft",
 };
 
-export const FormWithNoOrganizations = {
+export const FormWithNoOrganizations: StoryObj<typeof meta> = {
   parameters: {
     msw: [
       rest.get('*/api/1/me', async (req, res, ctx) => {
@@ -59,7 +62,7 @@ export const FormWithNoOrganizations = {
   args,
 };
 
-export const FormWithOrganizations = {
+export const FormWithOrganizations: StoryObj<typeof meta> = {
   parameters: {
     msw: [
       rest.get('*/api/1/me', async (req, res, ctx) => {
@@ -97,7 +100,7 @@ export const FormWithOrganizations = {
   args,
 };
 
-export const FormWithFailedRequests = {
+export const FormWithFailedRequests: StoryObj<typeof meta> = {
   parameters: {
     msw: [
       rest.get('*/api/1/me', async (req, res, ctx) => {

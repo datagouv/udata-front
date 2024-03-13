@@ -113,7 +113,6 @@ async function createReuseAndMoveToNextStep(newReuse: Reuse, newFile: File) {
   }
   try {
     const resp = await uploadLogo(reuse.value.id, newFile.value[0]);
-    console.log(resp.data)
     reuse.value.image = resp.data.image
   } catch (e) {
     errors.value.push("Failed to upload logo, you can upload it again in your management panel");

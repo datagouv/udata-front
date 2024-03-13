@@ -1,11 +1,14 @@
+import type { Meta, StoryObj } from '@storybook/vue3';
 import Step2AddDatasets from './Step2AddDatasets.vue';
 import * as Stepper from '../../components/Form/Stepper/StepperReuse.stories';
 import { user } from '../../config';
 
-export default {
+const meta = {
   title: 'Pages/ReusePublishingForm/Step2',
   component: Step2AddDatasets,
-};
+} satisfies Meta<typeof Step2AddDatasets>;
+
+export default meta;
 
 const args = {
   steps: Stepper.StepperOnSecondStep.args.steps,
@@ -51,7 +54,7 @@ const args = {
   errors: [],
 };
 
-export const Step2 = {
+export const Step2: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Step2AddDatasets },
     setup() {
