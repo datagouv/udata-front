@@ -34,9 +34,7 @@ export const FormWithNoOrganizations: StoryObj<typeof meta> = {
         return res(ctx.delay(), ctx.json({organizations: []}));
       }),
       rest.post('*/api/1/reuses/', async (req, res, ctx) => {
-        /** @type {import("../../types").NewDataset} */
         const body = await req.json();
-        /** @type {import("../../types").Dataset} */
         const reuse = {...body, id: "someId", last_update: new Date(), owner: user};
         return res(ctx.delay(), ctx.json(reuse));
       }),

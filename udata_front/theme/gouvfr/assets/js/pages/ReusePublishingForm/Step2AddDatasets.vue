@@ -72,7 +72,12 @@
                 <InputGroup
                   :label="$t('Link to the dataset')"
                   :placeholder="'https://...'"
+                  v-model="linkedDataset"
+                  @change="getLinkedDataset"
                 />
+                <div v-if="datasetNotFound" class="fr-col bg-contrast-grey text-align-center fr-p-2v">
+                  <p class="fr-text--md fr-text--bold">{{ t('No dataset associated to that link has been found') }}</p>
+                </div>
               </LinkedToAccordion>
             </fieldset>
             <Alert type="error" v-if="errors.length" class="fr-mt-n2w fr-mb-2w">
@@ -126,8 +131,9 @@ const { t } = useI18n();
 const { id: addDatasetsAccordionId } = useUid("accordion");
 
 const datasets = ref([...props.originalDatasets]);
-
 const reuse = ref(props.reuse)
+const linkedDataset = ref<String>("")
+const datasetNotFound = ref<Boolean>(false)
 
 const datasetRequired = requiredWithCustomMessage(t("At least one dataset is required."));
 
@@ -159,6 +165,27 @@ const state = computed(() => {
     datasets: getFunctionalState(vWarning$.value.datasets.$dirty, v$.value.datasets.$invalid, vWarning$.value.datasets.$error),
   };
 });
+
+const getLinkedDataset = async () => {
+  datasetNotFound.value = false;
+  let regex = /\/datasets\//;
+  if (regex.test(linkedDataset.value)) {
+    let datasetsIndex = linkedDataset.value.indexOf("/datasets/") + "/datasets/".length;
+    let substringAfterDatasets = linkedDataset.value.substring(datasetsIndex);
+    let modifiedSubstring = substringAfterDatasets.replace(/-/g, " ");
+    if (modifiedSubstring.endsWith("/")) {
+        modifiedSubstring = modifiedSubstring.slice(0, -1);
+    }
+    try {
+      let newDatasetId = await api.get('datasets/?q=' + modifiedSubstring).then(resp => resp.data.data[0].id);
+      addDataset(newDatasetId);
+    } catch {
+      datasetNotFound.value = true;
+    }
+  } else {
+    datasetNotFound.value = true;
+  }
+}
   
 const touch = () => {
   v$.value.datasets.$touch();
