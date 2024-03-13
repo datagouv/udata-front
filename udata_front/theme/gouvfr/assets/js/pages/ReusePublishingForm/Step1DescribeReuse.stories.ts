@@ -10,6 +10,7 @@ export default {
 
 const args = {
   steps: Stepper.StepperOnFirstStep.args.steps,
+  errors: [],
 };
 
 export const Step1WithNoOrganizations = {

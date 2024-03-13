@@ -12,7 +12,7 @@
       :steps="steps"
       :reuse="reuse"
       :errors="errors"
-      :originalDatasets="originalDatasets"
+      :originalDatasets="[]"
       @next="updateReuseAndMoveToNextStep"
     />
     <Step3CompleteThePublication
@@ -83,7 +83,7 @@ const savedReuse = ref<Reuse | null>(null);
 
 const draftUrl = ref<string | null>(null);
 
-const errors = ref<Array<string>>([]);
+const errors = ref<Array<String>>([]);
 
 const moveToStep = (step: number, saveToHistory = true) => {
   if(containerRef.value) {
@@ -113,7 +113,8 @@ async function createReuseAndMoveToNextStep(newReuse: Reuse, newFile: File) {
   }
   try {
     const resp = await uploadLogo(reuse.value.id, newFile.value[0]);
-    reuse.value.logo_thumbnail = resp.data.image
+    console.log(resp.data)
+    reuse.value.image = resp.data.image
   } catch (e) {
     errors.value.push("Failed to upload logo, you can upload it again in your management panel");
   }

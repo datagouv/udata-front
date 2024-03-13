@@ -1,20 +1,10 @@
 import Step2AddDatasets from './Step2AddDatasets.vue';
 import * as Stepper from '../../components/Form/Stepper/StepperReuse.stories';
-import UploadModalButton from '../../components/Form/UploadGroup/UploadModalButton.stories';
-import { withActions } from '@storybook/addon-actions/decorator';
 import { user } from '../../config';
 
 export default {
   title: 'Pages/ReusePublishingForm/Step2',
   component: Step2AddDatasets,
-  parameters: {
-    actions: {
-      handles: [
-        ...UploadModalButton.parameters.actions.handles,
-      ],
-    },
-  },
-  decorators: [withActions],
 };
 
 const args = {

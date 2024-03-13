@@ -108,7 +108,7 @@ const props = defineProps<{
   loading?: Boolean,
   steps: Array<string>,
   reuse: Reuse,
-  originalDatasets: Array<any>
+  originalDatasets?: Array<any>
 }>();
 
 const emit = defineEmits<{
@@ -161,11 +161,9 @@ const touch = () => {
 const submit = () => {
   validateRequiredRules().then(validated => {
     if(validated) {
-      console.log(datasets)
       toValue(datasets).forEach(dataset => {
         reuse.value.datasets.push(dataset.id);
       });
-      console.log(reuse)
       emit("next", reuse);
     }
   });
