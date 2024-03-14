@@ -128,7 +128,7 @@
                   :searchPlaceholder="$t('Select an organization')"
                   :initialOptions="organizations"
                   :values="userOrganization"
-                  @change="(value) => userOrganization = value"
+                  @change="(value: Organization) => userOrganization = value"
                   :addNewOption="true"
                 />
               </div>
@@ -201,7 +201,7 @@
                 :searchPlaceholder="$t('Select a type')"
                 :listUrl="typesUrl"
                 :values="reuse.type"
-                @change="(value) => reuse.type = value"
+                @change="(value: string) => reuse.type = value"
                 :hasError="fieldHasError('type')"
                 :hasWarning="fieldHasWarning('type')"
                 :errorText="getErrorText('type')"
@@ -218,7 +218,7 @@
                 :searchPlaceholder="$t('Select a theme...')"
                 :listUrl="topicsUrl"
                 :values="reuse.topic"
-                @change="(value) => reuse.topic = value"
+                @change="(value: string) => reuse.topic = value"
                 :hasError="fieldHasError('topic')"
                 :hasWarning="fieldHasWarning('topic')"
                 :errorText="getErrorText('topic')"
@@ -246,7 +246,7 @@
             >
               <MultiSelect
                 :minimumCharacterBeforeSuggest="2"
-                @change="(value) => reuse.tags = value"
+                @change="(value: Array<string>) => reuse.tags = value"
                 :placeholder="$t('Tags')"
                 :searchPlaceholder="$t('Search a tag...')"
                 suggestUrl="/tags/suggest/"
@@ -317,7 +317,7 @@ import { url } from '@vuelidate/validators';
 import { Organization } from '@etalab/data.gouv.fr-components';
 
 const props = defineProps<{
-  originalReuse: any,
+  originalReuse: Reuse,
   steps: Array<String>,
   errors: Array<String>,
 }>();
@@ -335,14 +335,14 @@ const { id: addDescriptionAccordionId } = useUid("accordion");
 const { id: addTagsAccordionId } = useUid("accordion");
 const { id: addImageAccordionId } = useUid("accordion");
 
-const reuse = reactive({...props.originalReuse});
+const reuse = reactive<Reuse>({...props.originalReuse});
 const image = ref<File | null>(null);
 const userOrganization = ref<Organization>();
 const topicsUrl = getReuseTopicsUrl();
 const typesUrl = getReuseTypesUrl();
 
-const organizations = ref([]);
-const hasOrganizations = computed(() => organizations.value.length > 0);
+const organizations = ref<Array<Organization>>([]);
+const hasOrganizations = computed<Boolean>(() => organizations.value.length > 0);
 const hasImage = () => {
   return image.value !== null;
 };
