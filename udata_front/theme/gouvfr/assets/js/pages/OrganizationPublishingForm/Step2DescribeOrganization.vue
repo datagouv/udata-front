@@ -141,7 +141,7 @@
                 </p>
               </div>
               <div v-else>
-                <p>{{ t('No organization found matching this SIRET on annuaire.data.gouv.fr') }}</p>
+                <p>{{ t('No organization found matching this SIRET on recherche-entreprises.api.gouv.fr') }}</p>
               </div>
             </div>
             <LinkedToAccordion
@@ -269,12 +269,18 @@
     exists: null as boolean | null
   });
 
-  function checkBusinessId(value: string) {
-    return !value || checkOrga.value.exists;
+  const checkBusinessId = () => {
+    if (organization.business_number_id.length == 0) {
+      return true;
+    } else if (organization.business_number_id.length == 14 && checkOrga.value.exists) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   const requiredRules = {
-    business_number_id: { checkBusinessId },
+    business_number_id: { custom: checkBusinessId },
     description: { required },
     name: { required },
     url: { url },
@@ -282,7 +288,7 @@
 
   const warningRules = {
     acronym: {},
-    business_number_id: { checkBusinessId },
+    business_number_id: { custom: checkBusinessId },
     description: {required, minLengthValue: minLengthWarning(quality_description_length) },
     logo: {},
     name: { required },

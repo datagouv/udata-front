@@ -57,7 +57,7 @@
             {{ t("Publish a dataset") }}
           </a>
         </div>
-        <Alert type="error" v-if="errors.length" class="fr-mt-2w fr-mb-2w">
+        <Alert type="error" v-if="errors?.length" class="fr-mt-2w fr-mb-2w">
             <template #title>{{ t("An error occured | Some errors occured", errors.length) }}</template>
             <ul v-if="errors.length > 1">
               <li v-for="error in errors">{{ error }}</li>
@@ -82,7 +82,7 @@
   const props = defineProps<{
     organization: Organization;
     steps: Array<string>;
-    errors: Array<string>;
+    errors?: Array<string>;
   }>();
 
   const { t } = useI18n();

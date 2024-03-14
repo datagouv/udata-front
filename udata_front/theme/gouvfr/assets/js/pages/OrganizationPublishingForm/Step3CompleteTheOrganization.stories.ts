@@ -13,6 +13,8 @@ export default meta;
 
 const organization = Step2.Step2.args.organization;
 organization.logo_thumbnail = "https://picsum.photos/200";
+organization.name = 'My organization';
+organization.description = 'This is the provided description'
 
 const args = {
   organization,
