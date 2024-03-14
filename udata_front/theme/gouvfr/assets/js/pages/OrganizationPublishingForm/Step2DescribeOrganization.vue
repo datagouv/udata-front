@@ -141,7 +141,7 @@
                 </p>
               </div>
               <div v-else>
-                <p>{{ t('No organization found matching this SIRET on recherche-entreprises.api.gouv.fr') }}</p>
+                <p>{{ t('No organization found matching this SIRET on annuaire-entreprises.data.gouv.fr') }}</p>
               </div>
             </div>
             <LinkedToAccordion
