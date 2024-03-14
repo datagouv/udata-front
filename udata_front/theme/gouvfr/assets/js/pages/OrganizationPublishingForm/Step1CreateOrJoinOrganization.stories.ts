@@ -17,7 +17,7 @@ const meta = {
 export default meta
 
 const args = {
-  steps: Stepper.StepperOnFirstStep.args.steps,
+  steps: Stepper.StepperOrgaOnFirstStep.argsOrga.steps,
 };
 
 export const Step1: StoryObj<typeof meta> = {

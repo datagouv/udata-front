@@ -10,6 +10,11 @@ const args = {
   currentStep: 0,
 };
 
+const argsOrga = {
+  steps: ["Publish data on data.gouv.fr", "Describe your organization", "Finalize your organization"],
+  currentStep: 0,
+}
+
 export const StepperOnFirstStep = {
   render: (args) => ({
     components: { Stepper },
@@ -31,6 +36,31 @@ export const StepperOnSecondStep = {
   }),
   args: {
     ...args,
+    currentStep: 1,
+  },
+};
+
+export const StepperOrgaOnFirstStep = {
+  render: (args) => ({
+    components: { Stepper },
+    setup() {
+      return { args };
+    },
+    template: '<Stepper v-bind="args" />',
+  }),
+  argsOrga,
+};
+
+export const StepperOrgaOnSecondStep = {
+  render: (args) => ({
+    components: { Stepper },
+    setup() {
+      return { args };
+    },
+    template: '<Stepper v-bind="args" />',
+  }),
+  args: {
+    ...argsOrga,
     currentStep: 1,
   },
 };

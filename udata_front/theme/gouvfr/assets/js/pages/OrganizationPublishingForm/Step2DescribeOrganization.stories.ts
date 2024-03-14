@@ -47,7 +47,7 @@ const organization: Organization = {
 
 const args = {
   organization,
-  steps: Stepper.StepperOnSecondStep.args.steps,
+  steps: Stepper.StepperOrgaOnSecondStep.args.steps,
   errors: []
 };
 

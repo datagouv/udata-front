@@ -18,7 +18,7 @@ organization.description = 'This is the provided description'
 
 const args = {
   organization,
-  steps: Stepper.StepperOnSecondStep.args.steps,
+  steps: Stepper.StepperOrgaOnSecondStep.args.steps,
 };
 
 export const Step3: StoryObj<typeof meta> = {

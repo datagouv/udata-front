@@ -1,4 +1,4 @@
-import { toValue } from "vue";
+import { Ref, toValue } from "vue";
 import { api } from "../plugins/api";
 import type { Organization } from "../types";
 
@@ -7,7 +7,7 @@ type UploadLogoResponse = {
   success: boolean;
 };
 
-export function createOrganization(organization: Organization) {
+export function createOrganization(organization: Ref<Organization>) {
   return api.post<Organization>("organizations/", {
     ...toValue(organization),
   }).then(resp => resp.data);
