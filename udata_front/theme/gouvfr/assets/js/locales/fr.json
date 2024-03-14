@@ -359,5 +359,20 @@
   "The SIREN n° {number} is matching": "",
   "Public Service": "",
   "No organization found matching this SIRET on annuaire.data.gouv.fr": "",
-  "If your organization has a logo or a profile picture, please upload it here. To upload a logo, click on the \\\"Choose a file from your computer\\\" button. The following image formats are accepted: png, jpg/jpeg.": ""
+  "If your organization has a logo or a profile picture, please upload it here. To upload a logo, click on the \\\"Choose a file from your computer\\\" button. The following image formats are accepted: png, jpg/jpeg.": "",
+  "Datasets": "",
+  "Reuses": "",
+  "You're here:": "",
+  "You are seeing a specific discussion about this dataset.": "",
+  "This discussion doesn't exist or was deleted.": "",
+  "Administration menu": "",
+  "Open menu": "",
+  "My Profil": "",
+  "Me": "",
+  "Administration": "",
+  "This is a WIP page": "",
+  "You can manage your datasets on the current admin.": "",
+  "You can edit your profil on the current admin.": "",
+  "You can manage your reuses on the current admin.": "",
+  "No organization found matching this SIRET on annuaire-entreprises.data.gouv.fr": ""
 }
