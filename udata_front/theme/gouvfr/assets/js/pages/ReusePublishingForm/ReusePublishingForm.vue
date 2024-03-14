@@ -18,15 +18,14 @@
     <Step3CompleteThePublication
       v-else-if="currentStep === 2"
       :steps="steps"
-      feedbackUrl=""
-      redirectDraftUrl=""
+      :feedbackUrl="publishing_form_feedback_url"
       :originalReuse="reuse"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, toValue } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Step1DescribeReuse from './Step1DescribeReuse.vue';
 import Step2AddDatasets from './Step2AddDatasets.vue';
@@ -34,14 +33,14 @@ import Step3CompleteThePublication from './Step3CompleteThePublication.vue';
 import { publishing_form_feedback_url, user } from '../../config';
 import { createReuse, updateReuse, uploadLogo } from '../../api/reuses';
 import { Reuse } from '../../types';
-import { Owned } from '@etalab/data.gouv.fr-components';
+import { Dataset, Organization, Owned } from '@etalab/data.gouv.fr-components';
 
 const props = defineProps<{
-  organization?: Array<any>,
+  organization?: Array<Organization>,
   reuse?: Reuse,
   owner?: Owned,
   redirectDraftUrl: string
-  originalDatasets?: Array<any>
+  originalDatasets?: Array<Dataset>
 }>();
   
 const { t } = useI18n();
@@ -78,10 +77,6 @@ const reuse = ref({
   type: "",
   ...owned
 });
-
-const savedReuse = ref<Reuse | null>(null);
-
-const draftUrl = ref<string | null>(null);
 
 const errors = ref<Array<String>>([]);
 
@@ -137,4 +132,3 @@ async function updateReuseAndMoveToNextStep(newReuse: Reuse) {
   }
 };
 </script>
->

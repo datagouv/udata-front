@@ -36,7 +36,7 @@
           {{ $t('Give us your feedback on the publishing form') }}
         </a>
         <div class="fr-grid-row fr-grid-row--right">
-          <a :href="redirectDraftUrl" class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v">
+          <a href="" class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v">
             {{ $t("Save as draft") }}
           </a>
           <button @click="submit" class="fr-btn">
@@ -56,10 +56,10 @@ import Well from "../../components/Ui/Well/Well.vue";
 import successIcon from "../../../../templates/svg/illustrations/success.svg";
 import ReuseCard from '../../components/Reuse/Reuse.vue';
 import Loader from '../../components/Reuse/ReuseLoader.vue';
+import { Reuse } from '../../types';
   
 const props = defineProps<{
   feedbackUrl: string,
-  redirectDraftUrl: string,
   originalReuse: Reuse,
   steps: Array<any>,
 }>();

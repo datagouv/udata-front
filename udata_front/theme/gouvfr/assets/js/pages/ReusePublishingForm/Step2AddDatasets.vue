@@ -114,13 +114,14 @@ import { requiredWithCustomMessage, withMessage } from '../../i18n';
 import { api } from '../../plugins/api';
 import CardSm from '../../components/dataset/CardSm.vue';
 import { Dataset } from '@etalab/data.gouv.fr-components';
+import { Reuse } from '../../types';
   
 const props = defineProps<{
   errors: Array<string>,
   loading?: Boolean,
   steps: Array<string>,
   reuse: Reuse,
-  originalDatasets?: Array<any>
+  originalDatasets?: Array<Dataset>
 }>();
 
 const emit = defineEmits<{
@@ -168,16 +169,19 @@ const state = computed(() => {
 
 const getLinkedDataset = async () => {
   datasetNotFound.value = false;
-  let regex = /\/datasets\//;
+  const regex = /\/datasets\//;
+  
   if (regex.test(linkedDataset.value)) {
-    let datasetsIndex = linkedDataset.value.indexOf("/datasets/") + "/datasets/".length;
-    let substringAfterDatasets = linkedDataset.value.substring(datasetsIndex);
-    let modifiedSubstring = substringAfterDatasets.replace(/-/g, " ");
+    const datasetsIndex = linkedDataset.value.indexOf("/datasets/") + "/datasets/".length;
+    let modifiedSubstring = linkedDataset.value.substring(datasetsIndex).replace(/-/g, " ");
+    
     if (modifiedSubstring.endsWith("/")) {
-        modifiedSubstring = modifiedSubstring.slice(0, -1);
+      modifiedSubstring = modifiedSubstring.slice(0, -1);
     }
+    
     try {
-      let newDatasetId = await api.get('datasets/?q=' + modifiedSubstring).then(resp => resp.data.data[0].id);
+      const resp = await api.get('datasets/?q=' + modifiedSubstring);
+      const newDatasetId = resp.data.data[0].id;
       addDataset(newDatasetId);
     } catch {
       datasetNotFound.value = true;
