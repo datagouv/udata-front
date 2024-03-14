@@ -110,9 +110,11 @@ class OrganizationDetailView(SearchView, OrgView, DetailView):
         })
         return context
 
+
 @blueprint.route('/publishing-form/', endpoint='publishing-form')
 class OrganizationPublishingFormView(LoginOnlyView):
     template_name = 'organization/publishing-form.html'
+
 
 @blueprint.route('/<org:org>/dashboard/', endpoint='dashboard')
 def organization_dashboard(org):

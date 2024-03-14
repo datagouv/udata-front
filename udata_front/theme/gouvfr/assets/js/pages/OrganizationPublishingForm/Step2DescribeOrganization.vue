@@ -234,7 +234,7 @@
   import useUid from "../../composables/useUid";
   import useFunctionalState from '../../composables/form/useFunctionalState';
   import editIcon from "../../../../templates/svg/illustrations/edit.svg";
-  import config, { quality_description_length, search_siren } from "../../config";
+  import config, { quality_description_length, search_siren_url } from "../../config";
   import { Organization, PublishingFormAccordionState } from '../../types';
   import axios from 'axios';
   import { url } from '@vuelidate/validators';
@@ -331,7 +331,7 @@
   watch(() => organization.business_number_id, (newValue) => {
     let siret = newValue.replace(/\s/g,'')
     if (siret.length === 14) {
-      axios.get(config.search_siren, {
+      axios.get(config.search_siren_url, {
         params: {
           q: siret
         }

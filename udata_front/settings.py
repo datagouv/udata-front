@@ -79,4 +79,4 @@ NEWSLETTER_SUBSCRIPTION_URL = 'https://f.info.data.gouv.fr/f/lp/infolettre-data-
 METRICS_API = None
 
 # recherche-entreprises.api.gouv.fr
-SEARCH_SIREN = 'https://recherche-entreprises.api.gouv.fr/search'
+SEARCH_SIREN_URL = 'https://recherche-entreprises.api.gouv.fr/search'

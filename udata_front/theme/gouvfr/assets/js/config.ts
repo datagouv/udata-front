@@ -280,7 +280,7 @@ export const search_autocomplete_debounce = _jsonMeta("search-autocomplete-debou
 
 export const explorable_resources: Array<string> = _jsonMeta("explorable-resources") || [];
 
-export const search_siren = _meta("search-siren");
+export const search_siren_url = _meta("search-siren-url");
 
 export default {
   user,
@@ -320,5 +320,5 @@ export default {
   markdown,
   read_only_enabled,
   quality_description_length,
-  search_siren,
+  search_siren_url,
 };

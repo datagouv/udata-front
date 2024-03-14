@@ -306,7 +306,6 @@ export default defineComponent({
           if(addQToSuggestion) {
             suggestions.push({text: q});
           }
-          console.log(mapToOption(suggestions))
           return mapToOption(suggestions);
         })
         .catch((error) => {
@@ -362,7 +361,6 @@ export default defineComponent({
           }
         }
       }
-      console.log(newOptions)
       return mapToOption(newOptions);
     }
 
