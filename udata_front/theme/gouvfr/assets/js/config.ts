@@ -282,6 +282,8 @@ export const explorable_resources: Array<string> = _jsonMeta("explorable-resourc
 
 export const search_siren_url = _meta("search-siren-url");
 
+export const quality_metadata_backend_ignore: Array<string> = _jsonMeta("quality-metadata-backend-ignore") || [];
+
 export default {
   user,
   debug,
@@ -321,4 +323,5 @@ export default {
   read_only_enabled,
   quality_description_length,
   search_siren_url,
+  quality_metadata_backend_ignore,
 };

@@ -1,31 +1,34 @@
-import Avatar from "./Avatar.vue";
+import type { Meta, StoryObj } from "@storybook/vue3";
+import Avatar, {type AvatarProps} from "./Avatar.vue";
 
-export default {
+const meta =  {
   title: 'Components/Discussions/Avatar',
   component: Avatar,
-};
+} satisfies Meta<typeof Avatar>;
 
-const args = {
-  /** @type {import("@etalab/data.gouv.fr-components").User} */
+export default meta;
+
+const args : AvatarProps = {
   user: {
     id: "someUserId",
     first_name: "John",
-    last_name: "Doe"
+    last_name: "Doe",
+    page: "https://www.dev.data.gouv.fr",
   },
 };
 
 
-const userWithAvatarArgs = {
-  /** @type {import("@etalab/data.gouv.fr-components").User} */
+const userWithAvatarArgs: AvatarProps = {
   user: {
     id: "someUserId",
     first_name: "John",
     last_name: "Doe",
     avatar: "https://dev-static.data.gouv.fr/avatars/0d/aebc1b126b410aa73701fde285dd76-100.jpg",
+    page: "https://www.dev.data.gouv.fr",
   },
 };
 
-export const DefaultIdenticonAvatar = {
+export const DefaultIdenticonAvatar: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Avatar },
     setup() {
@@ -37,7 +40,7 @@ export const DefaultIdenticonAvatar = {
 };
 
 
-export const StaticAvatar = {
+export const StaticAvatar: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Avatar },
     setup() {

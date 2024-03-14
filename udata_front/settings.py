@@ -80,3 +80,6 @@ METRICS_API = None
 
 # recherche-entreprises.api.gouv.fr
 SEARCH_SIREN_URL = 'https://recherche-entreprises.api.gouv.fr/search'
+
+# Metadata quality is hidden for datasets harvested from these backends
+QUALITY_METADATA_BACKEND_IGNORE = []
