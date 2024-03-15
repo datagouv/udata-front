@@ -87,6 +87,8 @@
   },
   "license": "LGPL-2.1-only",
   "dependencies": {
+    "@storybook/test": "^8.0.0",
+    "D": "^1.0.0",
     "leaflet": "^1.9.4"
   }
 }

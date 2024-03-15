@@ -32,6 +32,11 @@
           :label="t('Reuses')"
           :to="{name: 'organization-reuses', params: {oid: organization.id}}"
         />
+        <AdminSidebarLink
+          icon="fr-icon-line-chart-line"
+          :label="t('Members')"
+          :to="{name: 'organization-members', params: {oid: organization.id}}"
+        />
       </ul>
     </div>
   </li>

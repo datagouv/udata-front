@@ -114,6 +114,11 @@ html[data-fr-js] [data-show-no-js], html[data-fr-js=true] [data-show-no-js] {
         color: @text-default-warning;
     }
 
+    &.well-error {
+        background: @background-contrast-error;
+        color: @text-default-error;
+    }
+
     &.well-blue-cumulus {
         background: @background-contrast-blue-cumulus;
         color: @text-label-blue-cumulus;
@@ -137,6 +142,11 @@ html[data-fr-js] [data-show-no-js], html[data-fr-js=true] [data-show-no-js] {
     &.well-secondary-warning {
         .well-warning;
         border: 1px solid @border-plain-warning;
+    }
+
+    &.well-secondary-error {
+        .well-error;
+        border: 1px solid @border-plain-error;
     }
 
     &.well-secondary-grey-100 {

@@ -52,7 +52,7 @@
         </nav>
       </div>
       <div class="fr-col-12 fr-col-md-8 fr-col-lg-9 fr-col-xl-10 h-100 fr-px-2w">
-        <router-view></router-view>
+        <router-view :key="route.fullPath"></router-view>
       </div>
     </div>
   </div>
@@ -68,8 +68,10 @@ import AdminSidebarOrganizationMenu from "../../components/AdminSidebar/AdminSid
 import { user } from "../../config";
 import type { Me } from "../../types";
 import { fetchMe } from "../../api/me";
+import { useRoute } from "vue-router";
 
 const { t } = useI18n();
+const route = useRoute();
 
 const menuId = getRandomId("menu");
 const profilId = getRandomId("profil-submenu");
@@ -84,7 +86,11 @@ function isCurrent(id: string) {
 onMounted(async () => {
   me.value = await fetchMe();
   if(me.value.organizations.length > 0) {
-    opened.value = me.value.organizations[0].id;
+    if(route.params.oid) {
+      opened.value = route.params.oid as string;
+    } else {
+      opened.value = me.value.organizations[0].id;
+    }
   }
 });
 </script>
