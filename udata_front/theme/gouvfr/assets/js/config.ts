@@ -35,23 +35,22 @@ const userEl = document.querySelector<HTMLElement>("meta[name=current-user]");
 
 /**
  * The current user extracted from the header
- * @type {import("./types").User | null}
  */
-export const user: User = {
-  id: userEl?.getAttribute("content") || "",
-  slug: userEl?.dataset.slug,
-  page: "/users/" + userEl?.dataset.slug,
-  first_name: userEl?.dataset.first_name || "",
-  last_name: userEl?.dataset.last_name || "",
-  avatar: userEl?.dataset.avatar,
-  avatar_thumbnail: userEl?.dataset.avatar_thumbnail,
-  roles: userEl?.dataset.roles?.split(",") || [],
-};
+export const user: User | null = userEl ? {
+  id: userEl.getAttribute("content") || "",
+  slug: userEl.dataset.slug,
+  page: "/users/" + userEl.dataset.slug,
+  first_name: userEl.dataset.first_name || "",
+  last_name: userEl.dataset.last_name || "",
+  avatar: userEl.dataset.avatar,
+  avatar_thumbnail: userEl.dataset.avatar_thumbnail,
+  roles: userEl.dataset.roles?.split(",") || [],
+} : null;
 
 /**
  * Map debug features on Webpack DEBUG flag
  */
-export const debug = import.meta.env.DEV; //TODO : handle this, no more webpack
+export const debug = import.meta.env.DEV;
 
 export const defaultLang = "en";
 
@@ -281,6 +280,8 @@ export const search_autocomplete_debounce = _jsonMeta("search-autocomplete-debou
 
 export const explorable_resources: Array<string> = _jsonMeta("explorable-resources") || [];
 
+export const quality_metadata_backend_ignore: Array<string> = _jsonMeta("quality-metadata-backend-ignore") || [];
+
 export default {
   user,
   debug,
@@ -319,4 +320,5 @@ export default {
   markdown,
   read_only_enabled,
   quality_description_length,
+  quality_metadata_backend_ignore,
 };
