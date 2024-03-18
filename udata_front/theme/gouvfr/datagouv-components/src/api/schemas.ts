@@ -1,7 +1,5 @@
-import axios from "axios";
 import type { AxiosResponse } from "axios";
-import { config } from "../config";
-
+import { api } from "./api";
 /**
  * A schema version.
  */
