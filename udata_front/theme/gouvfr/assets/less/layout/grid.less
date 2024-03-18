@@ -1,80 +1,13 @@
-/*
----
-name: Grid
-category: 1 - Layout
----
-
-## Grid system
-
-Use DSFR grid `.fr-grid-row`.
-
-**It's very easy !**
-
-### Containers
-
-`.fr-container` class is a 78rem-wide (1248px) centered container.
-
-### Rows
-
-Use `.fr-grid-row` from DSFR.
-
-### Utilities
-
-`.w-100` can be used to apply a 100% width to an element. `w-auto` does the same for the `auto` value.
-`.mw-100` applies `max-width: 100%` to any element.
-`.no-wrap` applies `flex-wrap: nowrap`.
-
-
-### Vertical alignement
-
-By default, blocks on the same row will take up an equal height. You can opt for a different behaviour by using the `.fr-grid-row--top`, `.fr-grid-row--middle` and `.fr-grid-row--bottom` classes on the `.fr-grid-row` div.
-When you need to alter the alignment of one item you can use `.self-stretch`, `.self-start`, `.self-end`, and `.self-center`,
-
-```grid-valign.html
-<div class="fr-container">
-    <div class="fr-grid-row fr-grid-row--middle">
-        <div class="fr-col-6 bg-blue-300"><div style="min-height: 200px">Huge block</div></div>
-        <div class="fr-col-3 bg-blue-300">Smoll centered block</div>
-        <div class="fr-col-3 bg-blue-300 self-end">Smoll block at the bottom</div>
-    </div>
-</div>
-```
-
-### Horizontal alignement
-Sometimes you also need to specify an horizontal alignment for some items in a row, you can use `.justify-start`, `.justify-end`, `.justify-center`, `.justify-between`, `.justify-around`, and `.justify-evenly`
-
-```grid-halign.html
-<div class="fr-container--fluid">
-    <div class="fr-grid-row justify-between">
-        <div class="fr-col-3 bg-blue-300">Evenly spaced blocks</div>
-        <div class="fr-col-3 bg-blue-300">Evenly spaced blocks</div>
-        <div class="fr-col-3 bg-blue-300 self-end">Evenly spaced blocks</div>
-    </div>
-</div>
-```
-
-### Fluid grids
-
-Sometimes you need to occupy the available space fully, you can use `.fr-container--fluid` to still have a grid available to you when needed.
-
-```grid-fluid.html
-<div class="fr-container--fluid">
-    <div class="fr-grid-row">
-        <div class="fr-col bg-blue-300">3 blocks</div>
-        <div class="fr-col bg-blue-300">3 blocks</div>
-        <div class="fr-col bg-blue-300">3 blocks</div>
-    </div>
-</div>
-```
-
-*/
-
 .block {
     display: block;
 }
 
 .inline {
     display: inline !important;
+}
+
+.inline-block {
+    display: inline-block;
 }
 
 .relative {

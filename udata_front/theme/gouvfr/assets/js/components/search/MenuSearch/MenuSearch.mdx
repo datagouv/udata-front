@@ -1,0 +1,17 @@
+import { Canvas, Controls, Meta } from '@storybook/blocks';
+
+import * as MenuSearchStories from './MenuSearch.stories';
+
+<Meta of={MenuSearchStories} />
+
+# Menu Search
+
+The menu search component.
+
+It's an input working like a [combobox](https://www.w3.org/TR/wai-aria-practices/#combobox) and based on a [WAI-ARIA Authoring Practices 1.2 example](https://www.w3.org/TR/wai-aria-practices/examples/combobox/combobox-autocomplete-list.html).
+
+<Canvas of={MenuSearchStories.DefaultMenuSearch} />
+
+## Props
+
+<Controls />

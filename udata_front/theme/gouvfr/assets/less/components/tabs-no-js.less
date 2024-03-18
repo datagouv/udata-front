@@ -1,0 +1,11 @@
+.fr-tabs {
+    &:not([data-fr-js-tabs-group]) {
+        display: block;
+    }
+    & > .fr-tabs__panel:not([data-fr-js-tab-panel]) {
+        left: 0;
+        &:not(.fr-tabs__panel--selected) {
+            visibility: visible;
+        }
+    }
+}

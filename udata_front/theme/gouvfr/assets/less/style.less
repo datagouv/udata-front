@@ -4,10 +4,12 @@
 @import (less) "@gouvfr/dsfr/dist/scheme/scheme.css";
 @import (less) "@gouvfr/dsfr/dist/component/modal/modal.css";
 @import (less) "@gouvfr/dsfr/dist/component/sidemenu/sidemenu.css";
-
+@import (inline) "@etalab/data.gouv.fr-components/dist/style.css";
 
 // Reset powered by normalize + postCSS-normalize
 @import (optional, inline) "sanitize.css";
+
+@import "./variables.less";
 
 // Marianne Font
 @import "./font.less";
@@ -24,16 +26,17 @@
 
 // Layout
 @import "./layout/grid.less";
-@import "./layout/responsive.less";
-@import "./layout/rhythm.less";
 
 // Components
+@import (less) "@gouvfr/dsfr/dist/component/accordion/accordion.css";
 @import "./components/accordion.less";
 @import "./components/alert.less";
 @import "./components/animations.less";
 @import "./components/badge.less";
 @import "./components/breadcrumbs.less";
 @import "./components/borders.less";
+@import (less) "@gouvfr/dsfr/dist/component/button/button.css";
+@import (less) "@gouvfr/dsfr/dist/component/connect/connect.css";
 @import "./components/buttons.less";
 @import "./components/callout.less";
 @import "./components/card.less";
@@ -54,7 +57,11 @@
 @import "./components/stepper.less";
 @import "./components/summary.less";
 @import "./components/rangepicker.less";
+@import (less) "@gouvfr/dsfr/dist/component/tab/tab.css";
 @import "./components/tabs.less";
+@import "./components/tabs-home.less";
+@import "./components/tabs-no-js.less";
+@import "./components/tabs-full-page.less";
 @import "./components/table.less";
 @import "./components/tags.less";
 @import "./components/tile.less";
@@ -63,6 +70,7 @@
 @import "./components/well.less";
 
 // Specific style for non-UI-Kit stuff
+@import "./specific/buttons-venti.less";
 @import "./specific/header.less";
 @import "./specific/hero.less";
 @import "./specific/footer.less";

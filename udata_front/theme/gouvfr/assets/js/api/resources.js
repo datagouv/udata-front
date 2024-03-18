@@ -4,27 +4,8 @@ import { lang } from '../config';
 import { getLocalizedUrl } from '../i18n';
 
 /**
- * @typedef {Object} ResourceRest
- * @property {string} id
- * @property {Object} created_at
- * @property {Object} description
- * @property {Object} extras
- * @property {Object} harvest
- * @property {number} filesize
- * @property {string} filetype
- * @property {string?} format
- * @property {string} last_modified
- * @property {string} last_update
- * @property {string} preview_url
- * @property {Object} schema
- * @property {string} url
- *
- * @typedef {import("../types").Owned & ResourceRest} Resource
- */
-
-/**
  * @typedef {Object} ResourceApiWrapper
- * @property {Array<Resource>} data
+ * @property {Array<import("@etalab/data.gouv.fr-components").Resource>} data
  * @property {string | null} next_page
  * @property {number} page
  * @property {number} page_size

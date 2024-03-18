@@ -146,6 +146,7 @@
   "Select an option": "Sélectionner une option",
   "Step {n} of {count}": "Étape {n} sur {count}",
   "Next Step:": "Étape suivante :",
+  "If you want to do tests, use {demo_server}.": "Si vous souhaitez réaliser des tests, rendez-vous sur {demo_server}.",
   "Publishing type": "Type de publication",
   "Publish a dataset": "Publier un jeu de données",
   "Administration or public society, everybody can publish on {site} !": "Administrations ou société civile, tout le monde peut publier sur {site} !",
@@ -158,7 +159,6 @@
   "See API documentation": "Consulter la documentation de l’API",
   "Learn more about harvesting": "En savoir plus sur le moissonnage",
   "Contact us": "Nous écrire",
-  "If you want to do tests, use {demo_server}.": "Si vous souhaitez réaliser des tests, rendez-vous sur {demo_server}.",
   "Select lower bound:": "Début",
   "Select upper bound:": "Fin",
   "Are you an administration and do you want to catalog your data ?": "Vous êtes une administration et souhaitez cataloguer vos données ?",
@@ -192,6 +192,7 @@
   "The value must be equal to the ${otherName} value": "La valeur doit être égale à la valeur de ${otherName}",
   "License": "Licence",
   "Remove file": "Supprimer le fichier",
+  "Edit file": "Éditer le fichier",
   "Drag and drop files": "Glissez et déposez des fichiers",
   "or": "ou",
   "Browse": "Parcourir",
@@ -315,5 +316,12 @@
   "Publish the correct file types": "Publier les bons types de fichiers",
   "The formats must be:": "Les formats doivent être :",
   "It is possible to identify an existing data schema by visiting the {schema} website, that references a list of existing data schema.": "Il est possible d'identifier un schéma de données déjà existant en consultant le site {schema}, qui référence une liste de schémas de données existants.",
-  "Edit file": "Éditer le fichier"
+  "{n} datasets": "{n} jeux de données | {n} jeu de donnée | {n} jeux de données",
+  " by ": " par ",
+  "Search for data": "Rechercher des données",
+  "{n} downloads": "{n} téléchargements",
+  "Are you sure ?": "Êtes-vous sûr ?",
+  "The content will be permanently deleted.": "Le contenu sera définitivement supprimé.",
+  "An error occured during the deletion.": "Une erreur s'est produite lors de la suppression.",
+  "Mark as no spam": "Marquer comme non spam"
 }

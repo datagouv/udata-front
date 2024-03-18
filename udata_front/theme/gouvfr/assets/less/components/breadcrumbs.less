@@ -40,3 +40,7 @@ Breadcrumbs allow a user to see where it is in a website.
 
 // tabs from dsfr
 @import (less) "@gouvfr/dsfr/dist/component/breadcrumb/breadcrumb.css";
+
+.fr-breadcrumb__link:not(button):not([href]) {
+    &:extend(.fr-breadcrumb__link[aria-current]:not(button):not([href]));
+}

@@ -2,7 +2,40 @@
 
 ## Current (in progress)
 
+- Show error when dataset discussion from url doesn't exist [#367](https://github.com/etalab/udata-front/pull/367)
+- Hide quality score on "work in progress" backends [#370](https://github.com/etalab/udata-front/pull/370)
+- Add a new vite config for development [#372](https://github.com/etalab/udata-front/pull/372)
+- Fix structure tab not shown [#369](https://github.com/etalab/udata-front/pull/369)
+- Update sentry configuration to ignore aborted requests [#368](https://github.com/etalab/udata-front/pull/368)
+- Fix CI not using udata release when needed [#363](https://github.com/etalab/udata-front/pull/363)
 - Use udata schema endpoint [#336](https://github.com/etalab/udata-front/pull/336)
+
+## 3.5.3 (2024-02-22)
+
+- Show a map of datasets' spatial coverage [#354](https://github.com/etalab/udata-front/pull/354)
+- Fix redirect user to auth page [#357](https://github.com/etalab/udata-front/pull/357)
+- Fix tests factories for `HarvestSource`, `backend` is now required [udata#2962](https://github.com/opendatateam/udata/pull/2962)
+- Fix schema is not longer a `dict` [#361](https://github.com/etalab/udata-front/pull/361) [udata#2949](https://github.com/opendatateam/udata/pull/2949)
+
+## 3.5.2 (2024-02-15)
+
+- Show a button to mark as no spam a discussion or a message [#352](https://github.com/etalab/udata-front/pull/352)
+
+## 3.5.1 (2024-02-05)
+
+- Fix vue runtime errors [#343](https://github.com/etalab/udata-front/pull/343)
+- New featured topic : agriculture [#344](https://github.com/etalab/udata-front/pull/344)
+- Create data.gouv.fr-components NPM package and move some `gouvfr` components to it [#324](https://github.com/etalab/udata-front/pull/324)[#350](https://github.com/etalab/udata-front/pull/350)
+- Setup storybook for data.gouv.fr-components [#346](https://github.com/etalab/udata-front/pull/346)
+
+## 3.5.0, 3.4.0 and 3.3.0 (2024-01-23)
+
+> **Important** <br>
+> These versions contain an invalid js build and are [yanked](https://pypi.org/help/#yanked) from pypi.
+> The update to the next version is mandatory to have a valid js build.
+
+- Fix dependencies according to udata's Flask-Babel migration [#300](https://github.com/etalab/udata-front/pull/300)
+- User pages are back [#338](https://github.com/etalab/udata-front/pull/338)
 
 ## 3.2.12 (2023-12-15)
 
