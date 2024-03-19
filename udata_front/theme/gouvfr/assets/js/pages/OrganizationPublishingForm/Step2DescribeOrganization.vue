@@ -198,6 +198,9 @@
                 :validText="t('Your file is valid')"
                 @change="addFiles"
               />
+              <div class="text-align-center">
+                <img class="fr-col fr-mx-2v fr-mb-2v" ref="imagePreview" width="300px" />
+              </div>
             </LinkedToAccordion>
           </fieldset>
           <Alert type="error" v-if="errors.length" class="fr-mt-n2w fr-mb-2w">
@@ -234,7 +237,7 @@
   import useUid from "../../composables/useUid";
   import useFunctionalState from '../../composables/form/useFunctionalState';
   import organizationIcon from "../../../../templates/svg/illustrations/organization.svg";
-  import config, { quality_description_length, search_siren_url } from "../../config";
+  import config, { quality_description_length } from "../../config";
   import { Organization, PublishingFormAccordionState } from '../../types';
   import axios from 'axios';
   import { url } from '@vuelidate/validators';
@@ -261,6 +264,7 @@
 
   const organization = reactive({...props.organization});
   const file = ref<File | null>(null);
+  const imagePreview = ref<HTMLImageElement | null>(null);
 
   const checkOrga = ref({
     name: '',
@@ -326,6 +330,11 @@
 
   function addFiles(newFile: File) {
     file.value = newFile;
+    console.log(newFile)
+    if (imagePreview.value) {
+      imagePreview.value.src = URL.createObjectURL(file.value[0]);
+      console.log(imagePreview)
+    }
   };
 
   watch(() => organization.business_number_id, (newValue) => {
@@ -350,6 +359,6 @@
     } else {
       checkOrga.value.exists = null;
     }
-  })
+  });
 </script>
   
