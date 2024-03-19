@@ -11,7 +11,7 @@ const args = {
 };
 
 const argsOrga = {
-  steps: ["Publish data on data.gouv.fr", "Describe your organization", "Finalize your organization"],
+  steps: ["Create or join an organization on data.gouv.fr", "Describe your organization", "Finalize your organization"],
   currentStep: 0,
 }
 

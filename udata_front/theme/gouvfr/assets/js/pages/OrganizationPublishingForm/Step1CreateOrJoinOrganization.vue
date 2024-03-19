@@ -1,11 +1,11 @@
 <template>
   <div class="fr-container">
     <Stepper :steps="props.steps" :currentStep="0"/>
-    <Container>
+    <Container class="fr-mb-6v">
       <ActionCard
         :title="t('Join an Organization')"
         :content="t('An organization is an entity in which many users can collaborate. The published datasets on the organization\'s name can be edited by its members', {site: title})"
-        :icon="schemaIcon"
+        :icon="organizationIcon"
         :stretchHeight="true"
       >
       <template #actions>
@@ -39,7 +39,7 @@ import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Container from '../../components/Ui/Container/Container.vue';
 import { title } from "../../config";
-import schemaIcon from "../../../../templates/svg/illustrations/schema.svg";
+import organizationIcon from "../../../../templates/svg/illustrations/organization.svg";
 import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{

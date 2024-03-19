@@ -32,7 +32,7 @@ import { Organization } from '../../types';
 
 const { t } = useI18n();
 
-const steps = [t("Publish data on {site}", {site: title}), t("Describe your organization"), t("Finalize your organization")];
+const steps = [t("Create or join an organization on {site}", {site: title}), t("Describe your organization"), t("Finalize your organization")];
 
 const currentStep = ref(0);
 

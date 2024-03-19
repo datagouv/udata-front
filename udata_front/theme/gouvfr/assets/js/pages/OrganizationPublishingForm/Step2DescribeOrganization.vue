@@ -30,7 +30,7 @@
             <p class="fr-m-0">
               {{ t("A SIRET number will allow us to assign a type to your organization (administrations, collectivities, companies, etc.) and will facilitate your certification.") }} <br/>
               {{ t("Please note that all administrations have a SIRET number.") }} <br/>
-              {{ t("You can find your SIRET sur l’Annuaire des Entreprises.") }}
+              {{ t("You can find your SIRET on ") }}<a class="text-decoration-underline" href="https://annuaire-entreprises.data.gouv.fr/" target="_blank">{{ t("l’Annuaire des Entreprises.") }}</a>
             </p>
           </Accordion>
           <Accordion
@@ -88,7 +88,7 @@
           >
             <div class="fr-grid-row">
               <div class="fr-col-auto fr-mr-3v">
-                <img :src="editIcon" alt="" />
+                <img :src="organizationIcon" alt="" />
               </div>
               <div class="fr-col">
                 <p class="fr-m-0 fr-text--bold">{{ t('What is an organization?') }}</p>
@@ -233,7 +233,7 @@
   import Well from "../../components/Ui/Well/Well.vue";
   import useUid from "../../composables/useUid";
   import useFunctionalState from '../../composables/form/useFunctionalState';
-  import editIcon from "../../../../templates/svg/illustrations/edit.svg";
+  import organizationIcon from "../../../../templates/svg/illustrations/organization.svg";
   import config, { quality_description_length, search_siren_url } from "../../config";
   import { Organization, PublishingFormAccordionState } from '../../types';
   import axios from 'axios';
