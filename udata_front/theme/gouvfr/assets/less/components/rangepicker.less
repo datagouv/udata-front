@@ -1,0 +1,35 @@
+.rangepicker {
+    &.rangepicker--selected {
+        background-image: none;
+        .rangepicker__button {
+            color: @grey-500;
+        }
+    }
+    position: relative;
+    padding: 0;
+    .rangepicker__hint, .rangepicker__button {
+        padding: 0.5rem 2.5rem 0.5rem 1rem;
+        color: @text-mention-grey;
+    }
+    .clear {
+        position: absolute;
+        right: 0.5rem;
+        top: 50%;
+        padding: 0;
+        margin-top: -11px;
+    }
+
+    .v3dp__datepicker {
+        .v3dp__input_wrapper {
+            display: none;
+        }
+    }
+}
+
+.v3dp__datepicker {
+    .v3dp__divider {
+        padding: 0;
+    }
+    --vdp-selected-bg-color: @blue-400;
+    --vdp-hover-bg-color: @blue-300;
+}

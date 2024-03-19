@@ -64,7 +64,7 @@ You can change this behaviour by using the `filet-currentcolor` class that will 
     border-radius: 0;
 }
 
-@defaultBorder: 1px solid @grey-200;
+@defaultBorder: 1px solid @border-default-grey;
 
 .border {
     border: @defaultBorder;
@@ -90,8 +90,24 @@ You can change this behaviour by using the `filet-currentcolor` class that will 
     border-top: @defaultBorder;
 }
 
+.border-2 {
+    border-width: 2px;
+}
+
+.border-dashed {
+    border-style: dashed;
+}
+
 .border-default-grey {
     border-color: @border-default-grey;
+}
+
+.border-plain-error {
+    border-color: @border-plain-error;
+}
+
+.border-blue-400 {
+    border-color: @blue-400;
 }
 
 each(@dsfr-breakpoints, .(@bk, @_k, @_i) {

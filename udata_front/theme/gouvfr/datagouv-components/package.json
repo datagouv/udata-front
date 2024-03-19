@@ -1,0 +1,64 @@
+{
+  "name": "@etalab/data.gouv.fr-components",
+  "version": "1.8.2",
+  "description": "reusable components to show content from data.gouv.fr",
+  "type": "module",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "module": "./dist/data-gouv-fr-components.js",
+  "types": "./dist/data-gouv-fr-components.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "i18n:report": "vue-i18n-extract report --vueFiles './src/**/*.?(ts|js|vue)' --languageFiles './src/locales/*.json' --separator '^'",
+    "i18n:extract": "npm run i18n:report -- --add",
+    "preversion": "npm run build && npm run i18n:report && npm run build-storybook",
+    "update-version": "npm version --no-git-tag-version",
+    "publish-stable": "npm publish --access public",
+    "publish-next": "npm run publish-stable -- --tag next",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "vue": "^3.3.8"
+  },
+  "peerDependencies": {
+    "@gouvfr/dsfr": "~1.9.2"
+  },
+  "devDependencies": {
+    "@conciergerie.dev/vue-toaster": "^2.4.5-0",
+    "@etalab/udata-front-plugins-helper": "^1.1.0",
+    "@gouvminint/vue-dsfr": "^5.2.0",
+    "@intlify/unplugin-vue-i18n": "^1.5.0",
+    "@storybook/addon-essentials": "^7.6.7",
+    "@storybook/addon-interactions": "^7.6.7",
+    "@storybook/addon-links": "^7.6.7",
+    "@storybook/blocks": "^7.6.7",
+    "@storybook/manager-api": "^7.6.7",
+    "@storybook/test": "^7.6.7",
+    "@storybook/theming": "^7.6.7",
+    "@storybook/vue3": "^7.6.7",
+    "@storybook/vue3-vite": "^7.6.7",
+    "@vitejs/plugin-vue": "^4.4.1",
+    "@vueuse/core": "^10.6.1",
+    "clipboard": "^2.0.11",
+    "dayjs": "^1.11.10",
+    "less": "^4.2.0",
+    "markdown-it": "^13.0.2",
+    "popmotion": "^8.7.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "^7.6.7",
+    "vite": "^4.5.2",
+    "vite-plugin-dts": "^3.6.3",
+    "vue-content-loader": "^2.0.1",
+    "vue-i18n": "^9.8.0",
+    "vue-i18n-extract": "^2.0.7"
+  },
+  "author": "Etalab",
+  "license": "MIT",
+  "repository": "https://github.com/etalab/udata-front"
+}

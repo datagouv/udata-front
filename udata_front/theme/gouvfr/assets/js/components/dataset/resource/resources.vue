@@ -19,7 +19,7 @@
     </div>
     <transition mode="out-in">
       <div v-if="loading">
-        <Loader v-for="i in pageSize" class="fr-mt-2w" />
+        <ResourceAccordionLoader v-for="i in pageSize" class="fr-mt-2w" />
       </div>
       <div v-else>
         <p
@@ -29,14 +29,13 @@
         >
           {{ $t("{count} results", totalResults) }}
         </p>
-        <Resource
+        <ResourceAccordion
           v-for="resource in resources"
           :id="'resource-' + resource.id"
           :datasetId="datasetId"
           :isCommunityResource="isCommunityResources"
           :resource="resource"
           :canEdit="getCanEdit(resource)"
-          :typeLabel="typeLabel"
         />
         <p v-if="!totalResults">
           {{$t('No files match your search.')}}
@@ -54,12 +53,11 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
 import { useI18n } from 'vue-i18n';
-import { onMounted, ref, computed, defineComponent, watch } from 'vue';
-import Loader from "./loader.vue";
+import { onMounted, ref, computed, defineComponent } from 'vue';
 import { Pagination } from "@etalab/udata-front-plugins-helper";
-import Resource from "./resource.vue";
+import { ResourceAccordion, ResourceAccordionLoader, type Resource } from "@etalab/data.gouv.fr-components";
 import SearchBar from "../../utils/search-bar.vue";
 import config from "../../../config";
 import { useToast } from "../../../composables/useToast";
@@ -74,9 +72,9 @@ import { previousResourceUrlRegExp, resourceUrlRegExp } from '../../../helpers';
 export default defineComponent({
   name: "resources",
   components: {
-    Loader,
     Pagination,
-    Resource,
+    ResourceAccordion,
+    ResourceAccordionLoader,
     SearchBar,
   },
   props: {
@@ -111,12 +109,11 @@ export default defineComponent({
   },
   setup(props) {
     const { t } = useI18n();
-    const toast = useToast();
+    const { toast } = useToast();
     const { id: resourceIdFromHash } = useIdFromHash([resourceUrlRegExp, previousResourceUrlRegExp]);
     const currentPage = ref(1);
 
-    /** @type {import("vue").Ref<Array<import("../../../api/resources").Resource>>} */
-    const resources = ref([]);
+    const resources = ref<Array<Resource>>([]);
     const pageSize = config.resources_default_page_size;
     const newResourceAdminUrl = new URL(document.location.origin + config.admin_root + "community-resource/new/");
     const params = new URLSearchParams({dataset_id: props.datasetId});
@@ -126,8 +123,7 @@ export default defineComponent({
     const totalResults = ref(0);
     const loading = ref(true);
 
-    /** @type {import("vue").Ref<HTMLElement | null>} */
-    const top = ref(null);
+    const top = ref<HTMLElement | null>(null);
     const search = ref('');
     const isCommunityResources = ref(props.type === "community");
     const showSearch = computed(() => !isCommunityResources.value && firstResults.value > config.resources_min_count_to_show_search);
@@ -142,7 +138,7 @@ export default defineComponent({
       if (scroll && top.value) {
         top.value.scrollIntoView({ behavior: "smooth" });
       }
-      let fetchData;
+      let fetchData: Promise<import("../../../api/resources").ResourceApiWrapper>;
       if(isCommunityResources.value) {
         fetchData = fetchDatasetCommunityResources(props.datasetId, page, pageSize);
       } else {
@@ -169,12 +165,12 @@ export default defineComponent({
         });
     };
 
-    const changePage = (index, scroll = true) => {
+    const changePage = (index: number, scroll = true) => {
       currentPage.value = index;
       return loadPage(index, scroll);
     };
 
-    const getCanEdit = (resource) => {
+    const getCanEdit = (resource: Resource) => {
       if(props.canEdit) {
         return props.canEdit;
       }

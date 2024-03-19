@@ -1,0 +1,9 @@
+{% macro delete_btn(obj, class=None) %}
+{% set basename = obj.__class__.__name__|lower %}
+<div class="fr-col-auto vuejs">
+    <delete-button
+        url="{{ url_for('api.{0}'.format(basename), user=obj, _external=True) }}"
+    >
+    </delete-button>
+</div>
+{% endmacro %}

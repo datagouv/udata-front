@@ -1,0 +1,72 @@
+{% cache cache_duration, 'newsletter', g.lang_code|default(config.DEFAULT_LANGUAGE)|string %}
+<div class="fr-follow">
+    <div class="fr-container">
+        <div class="fr-grid-row">
+            <div class="fr-col-12 fr-col-md-8 flex">
+                <div class="fr-col-auto fr-mr-5v">
+                    {% include theme('svg/illustrations/newspaper.svg') %}
+                </div>
+                <div class="fr-follow__newsletter fr-col">
+                    <div>
+                        <p class="fr-h4">{{ _("Subscribe to our newsletter") }}</p>
+                        <p class="fr-text--lg fr-text--alt f-italic">{{
+                            _("To stay up to date about {site} and open data news, subscribe to our newsletter and follow our events.")
+                                .format(site=current_site.title)
+                        }}</p>
+                    </div>
+                    <div>
+                        <a
+                            class="fr-btn fr-mr-2w"
+                            title="{{ _('Subscribe to our newsletter') }}"
+                            href="{{ config.NEWSLETTER_SUBSCRIPTION_URL }}"
+                        >
+                            {{ _("Subscribe") }}
+                        </a>
+                        <a
+                            class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500"
+                            title="{{ _('Subscribe to our newsletter') }}"
+                            href="{{ url_for('gouvfr.show_page', slug='webinaires') }}"
+                        >
+                            {{ _("See our next events") }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="fr-col-12 fr-col-md-4">
+                <div class="fr-follow__social">
+                    <p class="fr-h5">{{ _("Follow us") }}
+                        <br> {{ _("on social media") }}
+                    </p>
+                    <ul class="fr-links-group">
+                        <li>
+                            <a class="fr-link" title="{{_('Twitter - new tab')}}" href="https://twitter.com/datagouvfr" target="_blank">
+                                <span class="fr-icon-twitter-line fr-mr-1w" aria-hidden="true"></span> Twitter
+                            </a>
+                        </li>
+                        <li>
+                            <a class="fr-link" title="{{_('Linkedin - new tab')}}" href="https://www.linkedin.com/company/data-gouv-fr/" target="_blank">
+                                <span class="fr-icon-linkedin-box-line fr-mr-1w" aria-hidden="true"></span> Linkedin
+                            </a>
+                        </li>
+                        <li>
+                            <a class="fr-link" title="_('Mastodon - new tab')" href="https://social.numerique.gouv.fr/@datagouvfr" target="_blank">
+                                <span class="fr-icon-mastodon-line fr-mr-1w" aria-hidden="true"></span>  Mastodon
+                            </a>
+                        </li>
+                        <li>
+                            <a class="fr-link" title="_('Github - new tab')" href="https://github.com/etalab/data.gouv.fr" target="_blank">
+                                <span class="fr-icon-github-line fr-mr-1w" aria-hidden="true"></span> Github
+                            </a>
+                        </li>
+                        <li>
+                            <a class="fr-link" title="{{_('RSS - new tab')}}" href="{{ url_for('datasets.recent_feed') }}" target="_blank">
+                                <span class="fr-icon-rss-line fr-mr-1w" aria-hidden="true"></span> RSS
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endcache %}

@@ -65,7 +65,10 @@
                         <ul class="fr-btns-group">
                             {% if current_user.is_authenticated %}
                                 <li>
-                                    <div class="fr-btn fr-icon-svg fr-icon--sm fr-grid-row text-grey-500">
+                                    <a
+                                        href="{{ url_for('users.show', user=current_user) }}"
+                                        class="fr-btn fr-icon-svg fr-icon--sm fr-grid-row"
+                                    >
                                         <img
                                             src="{{ current_user|avatar_url(24) }}"
                                             width="24"
@@ -75,7 +78,7 @@
                                             class="fr-mr-1w rounded-circle"
                                         />
                                         {{ current_user.fullname }}
-                                    </div>
+                                    </a>
                                 </li>
                                 <li>
                                     <a
@@ -116,31 +119,29 @@
                                 </li>
                                 {% endif %}
                             {% endif %}
-                            <li>
-                                <a
-                                    href="{{ config['FEEDBACK_FORM_URL'] }}"
-                                    class="fr-btn fr-icon-lightbulb-line"
-                                >
-                                    {{ _('Give us your feedback') }}
-                                </a>
-                            </li>
                         </ul>
                     </div>
                     <div class="fr-header__search fr-modal" id="modal-search">
                         <div class="fr-container fr-container-lg--fluid relative overflow-visible">
                             <button class="fr-btn--close fr-btn" aria-controls="modal-search">{{ _('Close') }}</button>
                             <form action="/datasets">
-                                <div class="fr-search-bar vuejs" id="search" role="search" aria-label="{{  _('Search for data') }}">
-                                    <label class="fr-label" for="search-input" id="search-label">
-                                        {{  _('Search for data') }}
-                                    </label>
+                                <div class="fr-grid-row vuejs">
                                     <menu-search></menu-search>
-                                    <noscript class="fr-col fr-grid-row">
+                                </div>
+                                <noscript class="fr-grid-row">
+                                    <div
+                                        id="no-script-search-bar"
+                                        class="fr-search-bar"
+                                        role="search"
+                                    >
+                                        <label class="fr-label" for="no-script-search-bar-input" id="no-script-search-bar-label">
+                                        {{ _('Search for data') }}
+                                        </label>
                                         <input
                                             class="fr-input fr-col"
                                             placeholder="{{  _('Search for data') }}"
                                             type="search"
-                                            id="search-input"
+                                            id="no-script-search-bar-input"
                                             name="q"
                                         />
                                         <button
@@ -151,7 +152,6 @@
                                             {{  _('Search for data') }}
                                         </button>
                                     </noscript>
-                                </div>
                             </form>
                         </div>
                     </div>

@@ -27,12 +27,35 @@
 <meta name="schema-catalog-url" content="{{ config.SCHEMA_CATALOG_URL }}" />
 <meta name="schema-documentation-url" content="{{ config.SCHEMA_DOCUMENTATION_URL }}" />
 <meta name="schema-validata-url" content="{{ config.SCHEMA_GOUVFR_VALIDATA_URL }}" />
+<meta name="schema-publishing-url" content="{{ config.SCHEMA_PUBLISHING_URL }}" />
+{% endif %}
+{% if config.DEMO_SERVER_URL %}
+<meta name="demo-server-url" content="{{ config.DEMO_SERVER_URL }}" />
+<meta name="demo-server-name" content="{{ config.DEMO_SERVER_NAME }}" />
+{% endif %}
+{% if config.PUBLISHING_FORM_FEEDBACK_URL %}
+<meta name="publishing-form-feedback-url" content="{{ config.PUBLISHING_FORM_FEEDBACK_URL }}" />
+{% endif %}
+{% if config.API_DOC_EXTERNAL_LINK %}
+<meta name="api-doc-external-link" content="{{ config.API_DOC_EXTERNAL_LINK }}" />
+{% endif %}
+{% if config.GUIDES_HARVESTING_URL %}
+<meta name="guides-harvesting-url" content="{{ config.GUIDES_HARVESTING_URL }}" />
+{% endif %}
+{% if config.SUPPORT_URL %}
+<meta name="support-url" content="{{ config.SUPPORT_URL }}" />
+{% endif %}
+{% if config.CATALOG_URL %}
+<meta name="catalog-url" content="{{ config.CATALOG_URL }}" />
+{% endif %}
+{% if config.QUALITY_DESCRIPTION_LENGTH %}
+<meta name="quality-description-length" content="{{ config.QUALITY_DESCRIPTION_LENGTH }}" />
 {% endif %}
 <meta name="github" content="{{ config.SITE_GITHUB_URL }}" />
 <meta name="guides-quality-url" content="{{config.GUIDES_QUALITY_URL}}" />
-<meta name="js-config-dataset-url" content="{{ url_for('datasets.list') }}" />
-<meta name="js-config-organization-url" content="{{ url_for('organizations.list') }}" />
-<meta name="js-config-reuse-url" content="{{ url_for('reuses.list') }}" />
+<meta name="dataset-url" content="{{ url_for('datasets.list') }}" />
+<meta name="organization-url" content="{{ url_for('organizations.list') }}" />
+<meta name="reuse-url" content="{{ url_for('reuses.list') }}" />
 {{ i18n_alternate_links() }}
 {% if config.SENTRY_PUBLIC_DSN %}
 <meta name="sentry" content="{{config.SENTRY_PUBLIC_DSN}}"
@@ -52,7 +75,8 @@
     data-first_name="{{ current_user.first_name }}"
     data-last_name="{{ current_user.last_name }}"
     data-roles="{{ current_user.roles|join(',') }}"
-    data-avatar="{{ current_user|avatar_url(150) }}"
+    data-avatar="{{ current_user.avatar }}"
+    data-avatar_thumbnail="{{ current_user|avatar_url(150) }}"
 />
 {% endif %}
 
@@ -75,6 +99,8 @@
     'MAX_LENGTH': config.TAG_MAX_LENGTH,
 }|tojson|urlencode }}" />
 <meta name="read-only-enabled" content="{{ 'true' if config.READ_ONLY_MODE else 'false' }}">
+
+<meta name="quality-metadata-backend-ignore" content="{{ config.QUALITY_METADATA_BACKEND_IGNORE|tojson|urlencode }}" />
 
 {% if json_ld %}
 <script id="json_ld" type="application/ld+json">{{ json_ld|embedded_json_ld }}</script>

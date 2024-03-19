@@ -1,6 +1,7 @@
 {% extends theme('raw.html') %}
 
 {% block body %}
+    {% include theme("banners/feedback.html") %}
     {% include theme("header.html") with context %}
     {% set messages = get_flashed_messages() %}
     {% set login_required = request.args.get('login_required') %}

@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file=requirements/udata.pip requirements/udata.in
 #
-amqp==5.1.1
+amqp==5.2.0
     # via
     #   kombu
     #   udata
@@ -16,7 +16,7 @@ appdirs==1.4.4
     # via
     #   udata
     #   urlextract
-attrs==21.2.0
+attrs==23.2.0
     # via
     #   jsonschema
     #   udata
@@ -24,13 +24,13 @@ authlib==0.14.3
     # via udata
 awesome-slugify==1.6.5
     # via udata
-babel==2.8.0
+babel==2.12.1
     # via
-    #   flask-babelex
+    #   flask-babel
     #   udata
 bcrypt==3.1.7
     # via udata
-billiard==4.1.0
+billiard==4.2.0
     # via
     #   celery
     #   udata
@@ -48,7 +48,7 @@ boto3==1.26.102
     # via
     #   flask-storage
     #   udata
-botocore==1.29.104
+botocore==1.29.165
     # via
     #   boto3
     #   s3transfer
@@ -63,11 +63,11 @@ celery==5.3.1
     #   udata
 celerybeat-mongo==0.2.0
     # via udata
-certifi==2021.5.30
+certifi==2024.2.2
     # via
     #   requests
     #   udata
-cffi==1.15.1
+cffi==1.16.0
     # via
     #   bcrypt
     #   cryptography
@@ -83,6 +83,7 @@ click==8.1.2
     #   click-plugins
     #   click-repl
     #   flask
+    #   geomet
     #   udata
 click-didyoumean==0.3.0
     # via
@@ -100,12 +101,12 @@ cryptography==2.8
     # via
     #   authlib
     #   udata
-dnspython==2.1.0
+dnspython==2.6.1
     # via
     #   email-validator
     #   pymongo
     #   udata
-email-validator==1.1.3
+email-validator==2.1.1
     # via
     #   flask-security-too
     #   udata
@@ -118,7 +119,7 @@ faker==3.0.0
     #   udata
 flask==2.1.2
     # via
-    #   flask-babelex
+    #   flask-babel
     #   flask-caching
     #   flask-cdn
     #   flask-cors
@@ -134,7 +135,7 @@ flask==2.1.2
     #   flask-storage
     #   flask-wtf
     #   udata
-flask-babelex==0.9.4
+flask-babel==4.0.0
     # via udata
 flask-caching==2.0.2
     # via udata
@@ -175,6 +176,8 @@ flask-wtf==1.0.1
     #   udata
 geojson==2.5.0
     # via udata
+geomet==1.1.0
+    # via udata
 html2text==2019.9.26
     # via udata
 idna==2.10
@@ -183,7 +186,7 @@ idna==2.10
     #   requests
     #   udata
     #   urlextract
-isodate==0.6.0
+isodate==0.6.1
     # via
     #   rdflib
     #   udata
@@ -196,7 +199,7 @@ itsdangerous==2.1.2
 jinja2==3.1.2
     # via
     #   flask
-    #   flask-babelex
+    #   flask-babel
     #   udata
 jmespath==1.0.1
     # via
@@ -211,6 +214,8 @@ kombu[redis]==5.3.1
     # via
     #   celery
     #   udata
+langdetect==1.0.9
+    # via udata
 lxml==4.9.3
     # via udata
 markupsafe==2.1.2
@@ -231,7 +236,7 @@ msgpack==0.6.2
     # via udata
 netaddr==0.7.19
     # via udata
-packaging==23.1
+packaging==24.0
     # via
     #   bleach
     #   udata
@@ -244,11 +249,11 @@ pillow==9.2.0
     #   flask-storage
     #   pydenticon
     #   udata
-prompt-toolkit==3.0.39
+prompt-toolkit==3.0.43
     # via
     #   click-repl
     #   udata
-pycparser==2.20
+pycparser==2.21
     # via
     #   cffi
     #   udata
@@ -259,11 +264,11 @@ pymongo==4.3.3
     #   celerybeat-mongo
     #   mongoengine
     #   udata
-pyparsing==2.4.7
+pyparsing==3.1.2
     # via
     #   rdflib
     #   udata
-pyrsistent==0.18.0
+pyrsistent==0.20.0
     # via
     #   jsonschema
     #   udata
@@ -273,9 +278,9 @@ python-dateutil==2.8.2
     #   celery
     #   faker
     #   udata
-pytz==2019.3
+pytz==2024.1
     # via
-    #   babel
+    #   flask-babel
     #   flask-restx
     #   udata
 rdflib==6.0.0
@@ -284,13 +289,13 @@ redis==4.5.2
     # via
     #   kombu
     #   udata
-regex==2021.8.3
+regex==2023.12.25
     # via
     #   awesome-slugify
     #   udata
 requests==2.24.0
     # via udata
-s3transfer==0.6.0
+s3transfer==0.6.2
     # via
     #   boto3
     #   udata
@@ -305,26 +310,25 @@ six==1.16.0
     #   flask-cors
     #   isodate
     #   jsonschema
+    #   langdetect
     #   python-dateutil
     #   udata
     #   wtforms-json
 speaklater==1.3
-    # via
-    #   flask-babelex
-    #   udata
+    # via udata
 stringdist==1.0.9
     # via udata
 text-unidecode==1.3
     # via
     #   faker
     #   udata
-tlds==2021080800
+tlds==2024030600
     # via udata
-tzdata==2023.3
+tzdata==2024.1
     # via
     #   celery
     #   udata
-udata @ git+https://github.com/maudetes/udata.git@chore/upgrade-python
+udata @ git+https://github.com/opendatateam/udata.git@python3.11
     # via -r requirements/udata.in
 ujson==1.35
     # via udata
@@ -334,7 +338,7 @@ unidecode==0.4.21
     # via
     #   awesome-slugify
     #   udata
-uritools==3.0.2
+uritools==4.0.2
     # via
     #   udata
     #   urlextract
@@ -345,7 +349,7 @@ urllib3==1.25.11
     #   botocore
     #   requests
     #   udata
-vine==5.0.0
+vine==5.1.0
     # via
     #   amqp
     #   celery
@@ -353,7 +357,7 @@ vine==5.0.0
     #   udata
 voluptuous==0.11.7
     # via udata
-wcwidth==0.2.6
+wcwidth==0.2.13
     # via
     #   prompt-toolkit
     #   udata
@@ -377,8 +381,6 @@ wtforms[email]==3.0.1
 wtforms-json==0.3.5
     # via udata
 xmltodict==0.12.0
-    # via udata
-zxcvbn==4.4.28
     # via udata
 
 # The following packages are considered to be unsafe in a requirements file:

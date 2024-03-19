@@ -3,6 +3,7 @@
 {% from theme('macros/quality_score.html') import quality_score %}
 
 {% macro quality_score_with_warning_below(dataset, class) %}
+{% set show_quality_score = not(dataset.harvest and dataset.harvest.backend in config.QUALITY_METADATA_BACKEND_IGNORE) %}
 <section aria-labelledby="metadata-quality">
     <div class="fr-grid-row fr-grid-row--middle fr-ml-n1v">
         {% call quality_score_toggletip(dataset, "fr-btn fr-btn--tertiary-no-outline fr-btn--secondary-grey-500 fr-icon-info-line") %}
@@ -13,6 +14,12 @@
         </h2>
     </div>
     {{quality_score(dataset.quality.score, "w-100")}}
+    {% if not show_quality_score %}
+    <div class="text-mention-grey fr-text--sm fr-my-1v">
+        <span class="fr-icon-warning-line fr-icon--sm" aria-hidden="true"></span>
+        {{_("Metadata quality may be misleading since metadata info may have been lost from original source. We're currently working on improving this.")}}
+    </div>
+    {% else %}
     {{quality_item_warning(
         dataset.quality.dataset_description_quality,
         _("Data description empty"),
@@ -53,5 +60,6 @@
         _("Some files are unavailable"),
         "fr-my-1v"
     )}}
+    {% endif %}
 </section>
 {% endmacro %}

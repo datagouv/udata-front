@@ -2,44 +2,41 @@
 <section ref="top" v-if="resourceId">
   <transition mode="out-in">
     <div v-if="loading">
-      <Loader />
+      <ResourceAccordionLoader />
     </div>
     <div v-else>
-      <!-- TODO: move to <Well> component when available -->
-      <div class="fr-mb-2w fr-px-3w well well-secondary-success">
+      <Well type="secondary" color="success" class="fr-mb-2w">
         <div class="fr-grid-row fr-grid-row--middle justify-between">
-          {{
-            $t("You are seeing a specific file of this dataset")
-          }}
+          {{ t("You are seeing a specific file of this dataset") }}
           <button class="fr-btn--close fr-btn fr-mr-0" @click.prevent="resetHash">
-            {{$t('Close')}}
+            {{ t('Close') }}
           </button>
         </div>
-      </div>
-      <Resource
+      </Well>
+      <ResourceAccordion
+        v-if="resource"
         :id="'resource-' + resourceId"
         :datasetId="datasetId"
         :expandedOnMount="true"
         :resource="resource"
         :canEdit="canEdit"
-        :typeLabel="typeLabel"
       />
     </div>
   </transition>
 </section>
 </template>
-<script>
+<script lang="ts">
 import { defineComponent, ref, watchEffect } from 'vue';
 import { useI18n } from "vue-i18n";
-import Loader from "./loader.vue";
-import Resource from "./resource.vue";
+import { ResourceAccordion, ResourceAccordionLoader, type Resource } from "@etalab/data.gouv.fr-components";
+import Well from "../../Ui/Well/Well.vue";
 import { useToast } from "../../../composables/useToast";
 import useIdFromHash from "../../../composables/useIdFromHash";
 import { previousResourceUrlRegExp, resourceUrlRegExp } from '../../../helpers';
 import { api } from "../../../plugins/api";
 
 export default defineComponent({
-  components: { Loader, Resource },
+  components: { ResourceAccordion, ResourceAccordionLoader, Well },
   props: {
     canEdit: {
       type: Boolean,
@@ -49,23 +46,17 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    typeLabel: {
-      type: String,
-      required: true,
-    },
   },
   setup(props) {
-    const {t} = useI18n();
-    const toast = useToast();
+    const { t } = useI18n();
+    const { toast } = useToast();
 
-    /** @type {import("vue").Ref<import("../../../api/resources").Resource | null>} */
-    const resource = ref(null);
+    const resource = ref<Resource | null>(null);
     const loading = ref(true);
 
     const { id: resourceId, resetHash } = useIdFromHash([resourceUrlRegExp, previousResourceUrlRegExp]);
 
-    /** @type {import("vue").Ref<HTMLElement | null>} */
-    const top = ref(null);
+    const top = ref<HTMLElement | null>(null);
 
     const loadFileFromHash = () => {
       if(!resourceId.value) return;
@@ -111,6 +102,7 @@ export default defineComponent({
       resourceId,
       top,
       resetHash,
+      t,
     }
   },
 });

@@ -1,6 +1,9 @@
 {% cache cache_duration, 'dataset-card-lg', dataset.id|string, g.lang_code %}
 {% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate %}
 {% from theme('macros/quality_score_inline.html') import quality_score_inline %}
+
+{% set show_quality_score = not(dataset.harvest and dataset.harvest.backend in config.QUALITY_METADATA_BACKEND_IGNORE) %}
+
 <article class="fr-my-3w fr-p-3w border border-default-grey fr-enlarge-link" style="z-index: {{loop.length - loop.index0 + 1}}">
     {% if dataset.private or dataset.archived %}
     <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v">
@@ -65,7 +68,11 @@
                         </a>
                     </span>
                 {% elif dataset.owner %}
-                    {{owner_name(dataset)}}
+                <span class="not-enlarged">
+                    <a class="fr-link" href="{{ url_for('users.show', user=dataset.owner) }}">
+                        {{owner_name(dataset)}}
+                    </a>
+                </span>
                 {% endif %}
             </p>
             {% endif %}
@@ -73,7 +80,9 @@
                 {{ dataset.description|mdstrip(300) }}
             </p>
             <div class="fr-mb-0 text-mention-grey fr-grid-row fr-grid-row--middle">
-                {{quality_score_inline(dataset, "fr-hidden fr-unhidden-sm dash-after")}}
+                {% if show_quality_score %}
+                    {{quality_score_inline(dataset, "fr-hidden fr-unhidden-sm dash-after text-grey-500")}}
+                {% endif %}
                 <p class="fr-m-0">
                     {{ _('Updated %(date)s', date=dataset.last_update|format_based_on_date) }}
                 </p>
