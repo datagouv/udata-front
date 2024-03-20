@@ -9,16 +9,18 @@
         :stretchHeight="true"
       >
       <template #actions>
-        <div class="fr-col-12 fr-grid-row fr-grid-row--middle">
+        <div class="fr-col-12 fr-grid-row fr-grid-row--middle relative">
           <div class="fr-col-12 fr-col-lg-9 fr-pb-2v">
             <ElementSearch
             />
           </div>
-          <div class="fr-col-12 fr-col-lg-3 fr-grid-row fr-grid-row--right">
-            <p class="fr-text--sm fr-px-2v fr-col-auto">{{ t('or') }}</p>
-            <button class="fr-btn fr-col-auto" @click="$emit('start')">
-              {{ t("Create an organization") }}
-            </button>
+          <div class="fr-col-12 fr-col-lg-3" style="position: absolute; right: 0; top: 0;">
+            <div class="fr-grid-row fr-grid-row--right">
+              <p class="fr-text--sm fr-px-2v fr-col-auto">{{ t('or') }}</p>
+              <button class="fr-btn fr-col-auto" @click="$emit('start')">
+                {{ t("Create an organization") }}
+              </button>
+            </div>
           </div>
         </div>
       </template>
