@@ -11,13 +11,7 @@
       <template #actions>
         <div class="fr-col-12 fr-grid-row fr-grid-row--middle">
           <div class="fr-col-12 fr-col-lg-9 fr-pb-2v">
-            <MultiSelect
-              :searchPlaceholder="t('Search an organization...')"
-              :allOption="t('All organizations')"
-              suggestUrl="/organizations/suggest/"
-              entityUrl="/organizations/"
-              hasLink="true"
-              :linkText="t('See organization')"
+            <ElementSearch
             />
           </div>
           <div class="fr-col-12 fr-col-lg-3 fr-grid-row fr-grid-row--right">
@@ -35,7 +29,7 @@
   
 <script setup lang="ts">
 import ActionCard from '../../components/Form/ActionCard/ActionCard.vue';
-import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
+import ElementSearch from '../../components/search/ElementSearch/ElementSearch.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Container from '../../components/Ui/Container/Container.vue';
 import { title } from "../../config";

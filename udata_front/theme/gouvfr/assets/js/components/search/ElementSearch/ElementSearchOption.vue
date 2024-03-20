@@ -1,10 +1,16 @@
 <template>
-  <div class="fr-grid-row fr-grid-row--gutters justify-between w-100">
-    <div class="fr-col fr-display-flex fr-align-items-center">
-      <img v-if="logo" :src="logo" alt="Organization Logo" height="50" class="fr-mr-2w" />
+  <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
+    <div class="fr-col fr-display-flex justify-center">
+      <img v-if="logo" :src="logo" alt="Organization Logo" height="50" class="fr-mx-1w" />
+      <Placeholder
+        v-else
+        type="organization"
+        :size="50"
+        class="fr-mx-1w"
+      />
       <span class="fr-name">{{ name }}</span>
     </div>
-    <div class="fr-col fr-display-flex fr-align-items-center fr-justify-content-end">
+    <div class="fr-col-auto fr-display-flex text-align-right justify-center fr-my-auto">
       <a target="_blank" :href="link">{{ t('See Organization') }}</a>
     </div>
   </div>
@@ -12,16 +18,15 @@
 
   
 <script setup lang="ts">
-import { defineProps } from 'vue';
+import { computed, defineProps } from 'vue';
 import { useI18n } from 'vue-i18n';
+import Placeholder from '../../utils/placeholder.vue';
 const { t } = useI18n();
 
-type Props = {
-  logo: string;
+const props = defineProps<{
+  logo?: string;
   name: string;
   link: string;
-};
-
-const props = defineProps<Props>();
+}>();
 </script>
   

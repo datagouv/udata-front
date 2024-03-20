@@ -1,15 +1,11 @@
 <template>
-  <div
-    :id="id"
-    class="fr-col fr-search-bar wrap"
-    role="search"
-  >
+  <div :id="id" class="fr-col fr-search-bar wrap" role="search">
     <label class="fr-label" :for="inputId" :id="labelId">
       {{ t('Search for data') }}
     </label>
     <input
-      class="fr-input fr-col"
-      :placeholder="t('Search')"
+      class="fr-input fr-col-12"
+      :placeholder="t('Search an organization on data.gouv.fr')"
       ref="input"
       autocomplete="off"
       role="combobox"
@@ -23,29 +19,18 @@
       v-model="q"
       @click.stop.capture="showAndSelectIfQuery"
       @keydown="handleKeyDown"
-      @keydown.enter.prevent="searchSelectedOption"
       @blur="handleFocusOut"
+      @focus="showAndFocus"
     />
-    <button
-      type="button"
-      ref="button"
-      class="fr-btn"
-      tabindex="-1"
-      :aria-controls="uid"
-      :aria-expanded="expanded"
-      @click.prevent.stop.capture="showAndFocus"
-    >
-      {{  t('Search') }}
-    </button>
     <div
-      class="fr-menu fr-collapse autocomplete"
+      class="fr-collapse autocomplete w-100 fr-mt-1w"
       :id="uid"
       ref="list"
       role="listbox"
       :aria-labelledby="labelId"
       @mousedown.prevent
     >
-      <ul class="fr-menu__list" role="listbox">
+      <ul class="w-100" role="listbox">
         <li
           v-for="(option, index) in options"
           :key="option.id"
@@ -53,12 +38,13 @@
           role="option"
           :aria-selected="selectedIndex === index"
         >
-          <ElementSearchOption :logo="option.image_url" :name="option.name" :link="option.link"/>
+          <ElementSearchOption :logo="option.image_url" :name="option.name" :link="option.page"/>
         </li>
       </ul>
     </div>
   </div>
 </template>
+
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from "vue";
@@ -69,7 +55,7 @@ import useUid from "../../../composables/useUid";
 import { api } from "../../../plugins/api";
 
 const { t } = useI18n();
-const { handleKeyPressForCollapse, expanded, uid, show, hide, registerBackgroundEvent, removeBackgroundEvent } = useCollapse();
+const { expanded, uid, show, hide, registerBackgroundEvent, removeBackgroundEvent } = useCollapse();
 const q = ref('');
 const { id } = useUid("search");
 const inputId = computed(() => `${id}-input`);
@@ -78,19 +64,26 @@ const labelId = computed(() => `${id}-label`);
 const options = ref<Array<any>>([]);
 const selectedIndex = ref(-1);
 
+const onClickOutside = (event) => {
+  if (!event.target.closest(`#${id}`) && expanded.value) {
+    hide();
+  }
+};
+
 onMounted(async () => {
   await fetchOptions();
   registerBackgroundEvent(input, list, button);
+  document.addEventListener('click', onClickOutside);
 });
 
-onUnmounted(() => removeBackgroundEvent());
+onUnmounted(() => {
+  document.removeEventListener('click', onClickOutside);
+  removeBackgroundEvent()
+});
 
 async function fetchOptions() {
-  // Make API call to fetch options
   try {
-    console.log(q.value)
     const response = await api.get('/organizations/suggest/', { params: { q: q.value, size: 50 } });
-    console.log(response.data)
     options.value = response.data.map((option: any) => ({
       ...option,
       id: option.id
@@ -105,6 +98,7 @@ const button = ref<HTMLElement | null>(null);
 const list = ref<HTMLElement | null>(null);
 
 const showAndFocus = () => {
+  console.log('Hey')
   if (!expanded.value) {
     input.value?.focus();
     showAndSelectIfQuery();
@@ -121,17 +115,25 @@ const showAndSelectIfQuery = () => {
 }
 
 const handleKeyDown = (e: KeyboardEvent) => {
-  if (e.key === "ArrowDown") {
-    e.preventDefault(); // Prevent default scrolling behavior
-    selectNextOption();
-  } else if (e.key === "ArrowUp") {
-    e.preventDefault(); // Prevent default scrolling behavior
-    selectPreviousOption();
-  } else {
-    showAndSelectIfQuery();
-    handleKeyPressForCollapse(e);
+  switch (e.key) {
+    case "ArrowDown":
+      e.preventDefault();
+      selectNextOption();
+      break;
+    case "ArrowUp":
+      e.preventDefault();
+      selectPreviousOption();
+      break;
+    case "Enter":
+      e.preventDefault();
+      console.log('Enter')
+      searchSelectedOption();
+      break;
+    default:
+      showAndSelectIfQuery();
+      break;
   }
-}
+};
 
 const handleFocusOut = () => {
   hide();
@@ -140,7 +142,7 @@ const handleFocusOut = () => {
 const searchSelectedOption = () => {
   const selectedOption = options.value[selectedIndex.value];
   if (selectedOption) {
-    window.location.href = selectedOption.link;
+    window.open(selectedOption.page, '_blank');
   }
 };
 
