@@ -36,5 +36,19 @@
   "An error occurred while fetching schemas": "An error occurred while fetching schemas",
   "B": "B",
   "today": "today",
-  "on {date}": "on {date}"
+  "on {date}": "on {date}",
+  "Informations": "",
+  "License": "",
+  "Temporality": "",
+  "Creation": "",
+  "Frequency": "",
+  "Last update": "",
+  "Spatial coverage": "",
+  "Territorial coverage": "",
+  "Granularity of territorial coverage": "",
+  "Integrate on your website": "",
+  "Extras": "",
+  "See extras": "",
+  "Harvest": "",
+  "See harvest": ""
 }
