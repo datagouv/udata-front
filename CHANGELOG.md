@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 3.5.4 (2024-03-20)
 
 - Fix footer links and some translations [#366](https://github.com/etalab/udata-front/pull/366)
