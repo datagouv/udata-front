@@ -47,7 +47,7 @@
           </div>
         </article>
         <div class="fr-grid-row fr-grid-row--right">
-          <a href="" class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v">
+          <a :href="organization.page" class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v">
             {{ t("Manage the organization") }}
           </a>
           <a href="" class="fr-btn fr-mr-3v">

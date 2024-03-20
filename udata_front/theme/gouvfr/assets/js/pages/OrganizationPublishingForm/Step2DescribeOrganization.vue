@@ -330,10 +330,8 @@
 
   function addFiles(newFile: File) {
     file.value = newFile;
-    console.log(newFile)
     if (imagePreview.value) {
       imagePreview.value.src = URL.createObjectURL(file.value[0]);
-      console.log(imagePreview)
     }
   };
 

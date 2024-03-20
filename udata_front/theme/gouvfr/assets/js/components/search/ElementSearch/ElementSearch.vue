@@ -98,7 +98,6 @@ const button = ref<HTMLElement | null>(null);
 const list = ref<HTMLElement | null>(null);
 
 const showAndFocus = () => {
-  console.log('Hey')
   if (!expanded.value) {
     input.value?.focus();
     showAndSelectIfQuery();
@@ -126,7 +125,6 @@ const handleKeyDown = (e: KeyboardEvent) => {
       break;
     case "Enter":
       e.preventDefault();
-      console.log('Enter')
       searchSelectedOption();
       break;
     default:

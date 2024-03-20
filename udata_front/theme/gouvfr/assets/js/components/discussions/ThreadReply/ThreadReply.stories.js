@@ -7,7 +7,6 @@ export default {
 
 const args = {
   onSubmit: (value) => {
-    console.log(value);
     return Promise.resolve(value);
   },
 };
@@ -33,7 +32,6 @@ export const ErrorDuringReply = {
   }),
   args: {
     onSubmit (comment) {
-      console.log(comment);
       return Promise.reject("Reject Story");
     }
   },

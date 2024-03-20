@@ -16,5 +16,5 @@ export function createOrganization(organization: Ref<Organization>) {
 export function uploadLogo(organizationId: string, file: File) {
   return api.postForm<UploadLogoResponse>(`organizations/${organizationId}/logo`, {
     file: file
-  });
+  }).then(resp => resp.data);
 }
