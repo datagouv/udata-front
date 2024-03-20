@@ -36,10 +36,10 @@
           {{ $t('Give us your feedback on the publishing form') }}
         </a>
         <div class="fr-grid-row fr-grid-row--right">
-          <a href="" class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v">
+          <button @click="draft" class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v">
             {{ $t("Save as draft") }}
-          </a>
-          <button @click="submit" class="fr-btn">
+          </button>
+          <button @click="publish" class="fr-btn">
             {{ $t("Publish the reuse") }}
           </button>
         </div>
@@ -64,10 +64,18 @@ const props = defineProps<{
   steps: Array<any>,
 }>();
 
+const emit = defineEmits<{
+  (event: 'update', reuse: Reuse): void,
+}>();
 
-const reuse = reactive({...props.originalReuse, private: false});
-const submit = () => {
-  emit("redirectToPublicUrl");
+const reuse = reactive({...props.originalReuse});
+const draft = () => {
+  reuse.private = true
+  emit("update", reuse);
+}
+const publish = () => {
+  reuse.private = false
+  emit("update", reuse);
 };
 
 </script>

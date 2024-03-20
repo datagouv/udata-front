@@ -20,6 +20,7 @@
       :steps="steps"
       :feedbackUrl="publishing_form_feedback_url"
       :originalReuse="reuse"
+      @update="updateReuse"
     />
   </div>
 </template>
@@ -131,4 +132,12 @@ async function updateReuseAndMoveToNextStep(newReuse: Reuse) {
     moveToStep(2)
   }
 };
+
+async function updateReuse(reuse: Reuse) {
+  try {
+    reuse.value = await updateReuse(reuse);
+  } catch (e) {
+    errors.value.push(e.message);
+  }
+}
 </script>

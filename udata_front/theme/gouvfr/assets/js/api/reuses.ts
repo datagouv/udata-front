@@ -42,8 +42,8 @@ export function createReuse(reuse: Reuse) {
   }).then(resp => resp.data);
 }
 
-export function updateReuse(reuse: Reuse) {
-  return api.put<Reuse>(`reuses/${reuse.value.id}`, {
+export function updateReuse(reuse) {
+  return api.put(`reuses/${reuse.id}`, {
     ...toValue(reuse),
   }).then(resp => resp.data);
 }
