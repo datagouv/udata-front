@@ -323,5 +323,19 @@
   "Are you sure ?": "Êtes-vous sûr ?",
   "The content will be permanently deleted.": "Le contenu sera définitivement supprimé.",
   "An error occured during the deletion.": "Une erreur s'est produite lors de la suppression.",
-  "Mark as no spam": "Marquer comme non spam"
+  "Mark as no spam": "Marquer comme non spam",
+  "Datasets": "Jeux de données",
+  "Reuses": "Réutilisations",
+  "You're here:": "Vous êtes ici :",
+  "You are seeing a specific discussion about this dataset.": "Vous consultez une discussion spécifique sur ce jeu de données.",
+  "This discussion doesn't exist or was deleted.": "Cette discussion n'existe pas ou a été supprimée.",
+  "Administration menu": "Menu d'administration",
+  "Open menu": "Ouvrir le menu",
+  "My Profil": "Mon profil",
+  "Me": "Moi",
+  "Administration": "Administration",
+  "This is a WIP page": "Ceci est une page en cours de refonte",
+  "You can manage your datasets on the current admin.": "Vous pouvez gérer vos jeux de données sur l'administration actuelle.",
+  "You can edit your profil on the current admin.": "Vous pouvez modifier votre profil sur l'administration actuelle.",
+  "You can manage your reuses on the current admin.": "Vous pouvez gérer vos réutilisations sur l'administration actuelle."
 }
