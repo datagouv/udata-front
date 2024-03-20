@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 3.5.4 (2024-03-20)
 
 - Fix footer links and some translations [#366](https://github.com/etalab/udata-front/pull/366)
 - Show error when dataset discussion from url doesn't exist [#367](https://github.com/etalab/udata-front/pull/367)
