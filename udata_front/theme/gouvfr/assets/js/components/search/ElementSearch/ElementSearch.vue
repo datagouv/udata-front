@@ -86,7 +86,8 @@ async function fetchOptions() {
     const response = await api.get('/organizations/suggest/', { params: { q: q.value, size: 50 } });
     options.value = response.data.map((option: any) => ({
       ...option,
-      id: option.id
+      id: option.id,
+      page: `${option.page}/#/information/membres`
     }));
   } catch (error) {
     console.error('Error fetching options:', error);
