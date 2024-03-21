@@ -287,9 +287,17 @@ export default defineComponent({
       if (!props.listUrl) return options.value;
 
       /**
-       * @type {import("axios").AxiosResponse<{data: Array}|Array>}
+       * @typedef {object} Data
+       * @property {string} id
+       * @property {String} title
        */
-      return api.get(props.listUrl)
+
+      /**
+       * @type {Promise<import("axios").AxiosResponse<Array<Data> | {data: Array<Data> }>>}
+       */
+      const request = api.get(props.listUrl)
+      console.log(request)
+      return request
       .then(resp => {
         let data = resp.data;
         if(!Array.isArray(data)) {
@@ -297,7 +305,6 @@ export default defineComponent({
         }
         if (props.groups) {
           const groupData = data.map(option => {
-            console.log(option)
             const matchingGroup = props.groups.find(group => group.values.some(groupValue => groupValue.value === option.id))
             if (matchingGroup) {
               const matchingGroupValue = matchingGroup.values.find(groupValue => groupValue.value === option.id);
