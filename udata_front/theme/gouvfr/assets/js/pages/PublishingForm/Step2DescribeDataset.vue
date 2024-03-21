@@ -369,7 +369,7 @@ export default defineComponent({
 
     const frequenciesUrl = getFrequenciesUrl();
     const licensesUrl = getLicensesUrl();
-    const licensesGroups = license_groups_options.map(([name, values]) => ({
+    const licensesGroups = license_groups_options?.map(([name, values]) => ({
       name,
       values
     }));

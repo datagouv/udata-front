@@ -170,7 +170,7 @@ export default defineComponent({
       default: '',
     },
     groups: {
-      /** @type {import("vue").PropType<Array<string>>} */
+      /** @type {import("vue").PropType<Array<{name: string, values: Array<{code: string, description: string, recommended: boolean, value: string}>}>>} */
       type: Array,
       default: null
     },
@@ -297,6 +297,7 @@ export default defineComponent({
         }
         if (props.groups) {
           const groupData = data.map(option => {
+            console.log(option)
             const matchingGroup = props.groups.find(group => group.values.some(groupValue => groupValue.value === option.id))
             if (matchingGroup) {
               const matchingGroupValue = matchingGroup.values.find(groupValue => groupValue.value === option.id);
