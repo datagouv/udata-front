@@ -16,14 +16,10 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - 0f:6a:bf:3e:f5:85:d5:41:ca:77:ef:85:7f:f8:b5:9e
-      # FIXME: do we need this? ${CIRCLE_BRANCH} seems ok
-      - run:
-          name: Get the base reference branch
-          command: export BASE_BRANCH=$(base_branch)
       - restore_cache:
           keys:
           - py-cache-v16-{{ arch }}-{{ .Branch }}
-          - py-cache-v16-{{ arch }}-{{ .Environment.BASE_BRANCH }}
+          - py-cache-v16-{{ arch }}-{{ .Environment.CIRCLE_BRANCH }}{{ .Environment.CIRCLE_TAG }}
       - run:
           name: Create venv and install pip-tools
           # FIXME: For now, we fix setuptools due to https://github.com/etalab/data.gouv.fr/issues/1041
@@ -152,14 +148,11 @@ jobs:
       - run:
           name: Compute JS dependencies key
           command: cat .nvmrc package.json > js.deps
-      - run:
-          name: Get the base reference branch
-          command: export BASE_BRANCH=$(base_branch)
       - restore_cache:
           keys:
             - js-cache-{{ arch }}-{{ checksum "js.deps" }}
             - js-cache-{{ arch }}-{{ .Branch }}
-            - js-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
+            - js-cache-{{ arch }}-{{ .Environment.CIRCLE_BRANCH }}{{ .Environment.CIRCLE_TAG }}
       - run:
           name: Install NodeJS and dependencies
           command: nvm install && npm ci
@@ -190,14 +183,11 @@ jobs:
       - run:
           name: Compute JS dependencies key
           command: cat udata-front-plugins-helper/package.json > helper-js.deps
-      - run:
-          name: Get the base reference branch
-          command: export BASE_BRANCH=$(base_branch)
       - restore_cache:
           keys:
             - js-cache-{{ arch }}-{{ checksum "helper-js.deps" }}
             - js-cache-{{ arch }}-{{ .Branch }}
-            - js-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
+            - js-cache-{{ arch }}-{{ .Environment.CIRCLE_BRANCH }}{{ .Environment.CIRCLE_TAG }}
       - run:
           name: Install NodeJS and dependencies
           command: npm ci
