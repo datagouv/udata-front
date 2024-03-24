@@ -20,7 +20,7 @@
       :steps="steps"
       :feedbackUrl="publishing_form_feedback_url"
       :originalReuse="reuse"
-      @update="updateReuse"
+      @update="updateReuseDatas"
     />
   </div>
 </template>
@@ -66,7 +66,7 @@ if(props.organization) {
   };
 }
 
-const reuse = ref({
+const reuse = ref<Reuse>({
   title: "",
   description: "",
   tags: null,
@@ -133,7 +133,7 @@ async function updateReuseAndMoveToNextStep(newReuse: Reuse) {
   }
 };
 
-async function updateReuse(reuse: Reuse) {
+async function updateReuseDatas(reuse: Reuse) {
   try {
     reuse.value = await updateReuse(reuse);
   } catch (e) {
