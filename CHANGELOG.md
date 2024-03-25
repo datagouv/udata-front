@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Move pagination to datagouv-components [#365](https://github.com/etalab/udata-front/pull/365)
 
 ## 3.5.4 (2024-03-20)
 
