@@ -2,6 +2,7 @@
 import { ResourceAccordion, Well } from "../src";
 import { ref } from "vue";
 import type { Resource } from "../src";
+import editIcon from "../../templates/svg/illustrations/edit.svg";
 
 const resource = ref<Resource>({
     checksum: {type: "sha1", value: "54d0f3a4847c546c1cc4865f5ca54a1f8fc3f9af"},
