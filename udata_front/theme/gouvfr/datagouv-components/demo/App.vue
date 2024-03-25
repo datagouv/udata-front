@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { type DatasetV2, InformationPanel, type License, type Quality, type Resource, ResourceAccordion } from "../src";
 import { ref } from "vue";
+import { DsfrTabs, DsfrTabContent } from "@gouvminint/vue-dsfr";
 
 const resource = ref<Resource>({
     checksum: {type: "sha1", value: "54d0f3a4847c546c1cc4865f5ca54a1f8fc3f9af"},
@@ -181,6 +182,21 @@ test.. test... test..... test?..... test!....
     id: "cc-by",
     maintainer: null,
   }
+
+  const tabTitles = [
+    {
+      title: "Tab 1",
+      tabId: "tab-0",
+      panelId: "tab-content-0"
+    },
+    {
+      title: "Tab 2",
+      tabId: "tab-1",
+      panelId: "tab-content-1"
+    },
+  ];
+
+  let selectedTabIndex = 1;
 </script>
 
 <template>
@@ -190,4 +206,27 @@ test.. test... test..... test?..... test!....
   <ResourceAccordion dataset-id="someId" :resource="resource" :expanded-on-mount="false" />
   <ResourceAccordion dataset-id="someId" :resource="resourceWithoutSchema" :expanded-on-mount="false" />
   <InformationPanel :dataset="dataset" :license="license" />
+  <DsfrTabs
+    class="fr-mt-2w"
+    tab-list-name="Test List"
+    :tab-titles="tabTitles"
+    :initial-selected-index="0"
+    :selected-tab-index="selectedTabIndex"
+    @select-tab="(idx) => (selectedTabIndex = idx)"
+  >
+    <DsfrTabContent
+      panel-id="tab-content-0"
+      tab-id="tab-0"
+      :selected="selectedTabIndex === 0"
+    >
+      <h1>Test</h1>
+    </DsfrTabContent>
+    <DsfrTabContent
+      panel-id="tab-content-1"
+      tab-id="tab-1"
+      :selected="selectedTabIndex === 1"
+    >
+    <InformationPanel :dataset="dataset" :license="license" />
+    </DsfrTabContent>
+  </DsfrTabs>
 </template>
