@@ -196,7 +196,7 @@ test.. test... test..... test?..... test!....
     },
   ];
 
-  let selectedTabIndex = 1;
+  const selectedTabIndex = ref(0);
 </script>
 
 <template>
