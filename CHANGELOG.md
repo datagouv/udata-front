@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Move Well to datagouv-components [#382](https://github.com/etalab/udata-front/pull/382)
 
 ## 3.5.4 (2024-03-20)
 
