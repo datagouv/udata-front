@@ -66,7 +66,7 @@
             </div>
         </div>
     </div>
-    <article v-if="hasExtras()">
+    <div v-if="hasExtras()">
         <header
             class="fr-grid-row fr-grid-row--middle fr-pb-3w fr-mb-3w border-bottom border-default-grey"
             :class="{'border-bottom': !extrasExpanded}"
@@ -104,8 +104,8 @@
                 </div>
             </div>
         </div>
-    </article>
-    <article v-if="props.dataset?.harvest">
+    </div>
+    <div v-if="props.dataset?.harvest">
         <header
             class="fr-grid-row fr-grid-row--middle fr-pb-3w fr-mb-3w border-bottom border-default-grey"
             :class="{'border-bottom': !harvestExpanded}"
@@ -143,7 +143,7 @@
                 </div>
             </div>
         </div>
-    </article>
+    </div>
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
