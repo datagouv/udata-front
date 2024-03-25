@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type DatasetV2, InformationPanel, License, Quality, Resource, ResourceAccordion } from "../src";
+import { type DatasetV2, InformationPanel, type License, type Quality, type Resource, ResourceAccordion } from "../src";
 import { ref } from "vue";
 
 const resource = ref<Resource>({
