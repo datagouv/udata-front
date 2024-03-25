@@ -1,10 +1,12 @@
-import Well, { WellProps } from './Well.vue';
+import Well from '.';
+import type { WellProps } from './Well.vue';
 import editIcon from "../../../../templates/svg/illustrations/edit.svg";
 import type { Meta, StoryObj } from '@storybook/vue3';
 
 const meta = {
   title: 'Ui/Well',
   component: Well,
+  tags: ['autodocs'],
   argTypes: {
     type: {
       options: [
@@ -22,6 +24,13 @@ const meta = {
       ],
       control: 'select',
     }
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: "This component is a simple container with a colored background and some padding.",
+      },
+    },
   },
 } satisfies Meta<typeof Well>;
 
