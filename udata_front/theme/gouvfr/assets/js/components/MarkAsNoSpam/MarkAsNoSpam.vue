@@ -8,15 +8,14 @@
   </button>
 </template>
 <script lang="ts">
+import type { Spam } from "../../types";
 export type MarkAsNoSpamProps = {
   url: string,
   // These undefined are not mandatory, there're here
   // to prevent bugs during the migration because
   // some old objects could have no `spam` element.
   // We may add a migration in the future to set them on all old objects
-  spam: {
-    status: string | undefined
-  } | undefined
+  spam: Spam | undefined
 };
 </script>
 <script setup lang="ts">
