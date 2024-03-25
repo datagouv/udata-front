@@ -61,3 +61,15 @@ a:not([href]) {
     --li-bottom: 0;
     --text-spacing: 1em 0;
 }
+
+.fr-pagination {
+    a {
+        color: inherit;
+        &:not([href]) {
+            cursor: not-allowed;
+        }
+    }
+    li::before {
+        content: none;
+    }
+}

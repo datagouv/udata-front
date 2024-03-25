@@ -10,7 +10,7 @@
         <a class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-add-line fr-btn--icon-left"
           :href="newResourceAdminPath"
         >
-          {{ $t('Add a community resource') }}
+          {{ t('Add a community resource') }}
         </a>
       </div>
     </div>
@@ -19,7 +19,7 @@
     </div>
     <transition mode="out-in">
       <div v-if="loading">
-        <ResourceAccordionLoader v-for="i in pageSize" class="fr-mt-2w" />
+        <ResourceAccordionLoader v-for="_i in pageSize" class="fr-mt-2w" />
       </div>
       <div v-else>
         <p
@@ -27,7 +27,7 @@
           class="fr-py-3v fr-my-0 fr-text--sm border-default-grey border-bottom"
           role="status"
         >
-          {{ $t("{count} results", totalResults) }}
+          {{ t("{count} results", totalResults) }}
         </p>
         <ResourceAccordion
           v-for="resource in resources"
@@ -38,7 +38,7 @@
           :canEdit="getCanEdit(resource)"
         />
         <p v-if="!totalResults">
-          {{$t('No files match your search.')}}
+          {{ t('No files match your search.') }}
         </p>
         <Pagination
           class="fr-mt-3w"
@@ -46,18 +46,17 @@
           :page="currentPage"
           :page-size="pageSize"
           :total-results="totalResults"
-          :change-page="changePage"
+          @change="changePage"
         />
       </div>
     </transition>
   </section>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import { onMounted, ref, computed, defineComponent } from 'vue';
-import { Pagination } from "@etalab/udata-front-plugins-helper";
-import { ResourceAccordion, ResourceAccordionLoader, type Resource } from "@etalab/data.gouv.fr-components";
+import { onMounted, ref, computed } from 'vue';
+import { ResourceAccordion, ResourceAccordionLoader, type Resource, Pagination } from "@etalab/data.gouv.fr-components";
 import SearchBar from "../../utils/search-bar.vue";
 import config from "../../../config";
 import { useToast } from "../../../composables/useToast";
@@ -69,150 +68,108 @@ import {
 import useIdFromHash from '../../../composables/useIdFromHash';
 import { previousResourceUrlRegExp, resourceUrlRegExp } from '../../../helpers';
 
-export default defineComponent({
-  name: "resources",
-  components: {
-    Pagination,
-    ResourceAccordion,
-    ResourceAccordionLoader,
-    SearchBar,
-  },
-  props: {
-    canEdit: {
-      type: Boolean,
-      default: false,
-    },
-    canEditResources: {
-      type: Object,
-      default:() => ({}),
-    },
-    datasetId: {
-      type: String,
-      required: true,
-    },
-    showTotal: {
-      type: Boolean,
-      default: true,
-    },
-    type: {
-      type: String,
-      required: true,
-    },
-    typeLabel: {
-      type: String,
-      required: true,
-    },
-    firstGroup: {
-      type: Boolean,
-      default: true,
-    }
-  },
-  setup(props) {
-    const { t } = useI18n();
-    const { toast } = useToast();
-    const { id: resourceIdFromHash } = useIdFromHash([resourceUrlRegExp, previousResourceUrlRegExp]);
-    const currentPage = ref(1);
+type Props = {
+  canEdit?: boolean,
+  canEditResources?: Record<string, boolean>,
+  datasetId: string,
+  showTotal?: boolean,
+  type: string,
+  typeLabel: string,
+  firstGroup?: boolean,
+};
 
-    const resources = ref<Array<Resource>>([]);
-    const pageSize = config.resources_default_page_size;
-    const newResourceAdminUrl = new URL(document.location.origin + config.admin_root + "community-resource/new/");
-    const params = new URLSearchParams({dataset_id: props.datasetId});
-    newResourceAdminUrl.search = params.toString();
-    const newResourceAdminPath = newResourceAdminUrl.toString();
-    const firstResults = ref(0);
-    const totalResults = ref(0);
-    const loading = ref(true);
-
-    const top = ref<HTMLElement | null>(null);
-    const search = ref('');
-    const isCommunityResources = ref(props.type === "community");
-    const showSearch = computed(() => !isCommunityResources.value && firstResults.value > config.resources_min_count_to_show_search);
-    const DONT_SCROLL = false;
-
-    const filteredResults = computed(() => firstResults.value != totalResults.value);
-
-    // We can pass the second function parameter "scroll" to true if we want to scroll to the top of the resources section
-    // This is useful for pagination buttons
-    const loadPage = (page = 1, scroll = false) => {
-      loading.value = true;
-      if (scroll && top.value) {
-        top.value.scrollIntoView({ behavior: "smooth" });
-      }
-      let fetchData: Promise<import("../../../api/resources").ResourceApiWrapper>;
-      if(isCommunityResources.value) {
-        fetchData = fetchDatasetCommunityResources(props.datasetId, page, pageSize);
-      } else {
-        fetchData = fetchDatasetResources(props.datasetId, props.type, page, pageSize, search.value);
-      }
-
-      return fetchData
-        .then((data) => {
-          if (data.data) {
-            resources.value = data.data;
-            totalResults.value = data.total;
-          }
-          return data.total || 0;
-        })
-        .catch(() => {
-          toast.error(
-            t("An error occurred while fetching resources")
-          );
-          resources.value = [];
-          return 0;
-        })
-        .finally(() => {
-          loading.value = false;
-        });
-    };
-
-    const changePage = (index: number, scroll = true) => {
-      currentPage.value = index;
-      return loadPage(index, scroll);
-    };
-
-    const getCanEdit = (resource: Resource) => {
-      if(props.canEdit) {
-        return props.canEdit;
-      }
-      return props.canEditResources[resource.id];
-    }
-
-    if(!isCommunityResources.value) {
-      bus.on(RESOURCES_SEARCH, ({type, value}) => {
-        if(type === props.type) {
-          search.value = value;
-          changePage(1, DONT_SCROLL);
-        }
-      });
-    }
-
-    /**
-     * First resource load can append when the component is mounted, on page load without hash
-     * Or it can be triggered when a page load with a hash and the hash is later deleted.
-     */
-    const firstLoad = () => {
-      changePage(1, DONT_SCROLL).then(results => firstResults.value = results);
-    };
-
-    onMounted(() => firstLoad());
-
-    return {
-      changePage,
-      currentPage,
-      filteredResults,
-      firstResults,
-      getCanEdit,
-      isCommunityResources,
-      loading,
-      newResourceAdminPath,
-      pageSize,
-      resourceIdFromHash,
-      resources,
-      RESOURCES_SEARCH,
-      showSearch,
-      top,
-      totalResults,
-    };
-  }
+const props = withDefaults(defineProps<Props>(), {
+  canEdit: false,
+  canEditResources: () => ({}),
+  firstGroup: true,
+  showTotal: true,
 });
+
+const { t } = useI18n();
+const { toast } = useToast();
+const { id: resourceIdFromHash } = useIdFromHash([resourceUrlRegExp, previousResourceUrlRegExp]);
+const currentPage = ref(1);
+
+const resources = ref<Array<Resource>>([]);
+const pageSize = config.resources_default_page_size;
+const newResourceAdminUrl = new URL(document.location.origin + config.admin_root + "community-resource/new/");
+const params = new URLSearchParams({dataset_id: props.datasetId});
+newResourceAdminUrl.search = params.toString();
+const newResourceAdminPath = newResourceAdminUrl.toString();
+const firstResults = ref(0);
+const totalResults = ref(0);
+const loading = ref(true);
+
+const top = ref<HTMLElement | null>(null);
+const search = ref('');
+const isCommunityResources = ref(props.type === "community");
+const showSearch = computed(() => !isCommunityResources.value && firstResults.value > config.resources_min_count_to_show_search);
+const DONT_SCROLL = false;
+
+const filteredResults = computed(() => firstResults.value != totalResults.value);
+
+// We can pass the second function parameter "scroll" to true if we want to scroll to the top of the resources section
+// This is useful for pagination buttons
+const loadPage = (page = 1, scroll = false) => {
+  loading.value = true;
+  if (scroll && top.value) {
+    top.value.scrollIntoView({ behavior: "smooth" });
+  }
+  let fetchData: Promise<import("../../../api/resources").ResourceApiWrapper>;
+  if(isCommunityResources.value) {
+    fetchData = fetchDatasetCommunityResources(props.datasetId, page, pageSize);
+  } else {
+    fetchData = fetchDatasetResources(props.datasetId, props.type, page, pageSize, search.value);
+  }
+
+  return fetchData
+    .then((data) => {
+      if (data.data) {
+        resources.value = data.data;
+        totalResults.value = data.total;
+      }
+      return data.total || 0;
+    })
+    .catch(() => {
+      toast.error(
+        t("An error occurred while fetching resources")
+      );
+      resources.value = [];
+      return 0;
+    })
+    .finally(() => {
+      loading.value = false;
+    });
+};
+
+const changePage = (index: number, scroll = true) => {
+  currentPage.value = index;
+  return loadPage(index, scroll);
+};
+
+const getCanEdit = (resource: Resource) => {
+  if(props.canEdit) {
+    return props.canEdit;
+  }
+  return props.canEditResources[resource.id];
+}
+
+if(!isCommunityResources.value) {
+  bus.on(RESOURCES_SEARCH, ({type, value}) => {
+    if(type === props.type) {
+      search.value = value;
+      changePage(1, DONT_SCROLL);
+    }
+  });
+}
+
+/**
+ * First resource load can append when the component is mounted, on page load without hash
+ * Or it can be triggered when a page load with a hash and the hash is later deleted.
+ */
+const firstLoad = () => {
+  changePage(1, DONT_SCROLL).then(results => firstResults.value = results);
+};
+
+onMounted(() => firstLoad());
 </script>
