@@ -100,10 +100,10 @@ const collapsed = ref(!!props.thread.closed);
 
 const discussionUrl = computed(() => "discussions/" + props.thread.id);
 
-const discussionExternalUrl = () => {
+const discussionExternalUrl = computed(() => {
   const hash = "#/" + discussionUrl.value;
   return window.location.origin + window.location.pathname + hash;
-}
+});
 
 const displayForm = () => {
   auth();
