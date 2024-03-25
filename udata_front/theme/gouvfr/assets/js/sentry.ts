@@ -13,6 +13,7 @@ function InitSentry(app: App) {
       ignoreErrors: [
         'Auth required',
         'Network Error',
+        'Request aborted',
         'ResizeObserver loop limit exceeded',
         'ResizeObserver loop completed with undelivered notifications.',
       ],

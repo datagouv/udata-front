@@ -40,7 +40,7 @@
           <Well type="secondary" color="success" class="fr-mt-2w" data-cy="threadFromURL">
             <div class="fr-grid-row fr-grid-row--middle justify-between">
               {{
-                t("You are seeing a specific discussion about this dataset")
+                t("You are seeing a specific discussion about this dataset.")
               }}
               <button class="fr-btn--close fr-btn fr-mr-0" @click.prevent="resetHash">
                 {{t('Close')}}
@@ -48,6 +48,9 @@
             </div>
           </Well>
           <Thread v-if="threadFromURL" :thread="threadFromURL"/>
+          <Well v-else type="secondary" color="warning" class="fr-mt-2w">
+            {{ $t("This discussion doesn't exist or was deleted.") }}
+          </Well>
           <button
             class="nav-link nav-link--no-icon text-decoration-none fr-link fr-mt-9v fr-link--icon-left fr-icon-arrow-right-s-line"
             @click.prevent="resetHash"

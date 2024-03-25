@@ -1,4 +1,4 @@
-import type { Owned, Resource, User } from "@etalab/data.gouv.fr-components";
+import type { Organization, Owned, Resource, User } from "@etalab/data.gouv.fr-components";
 
 export type MultiSelectOption = {
   label: string;
@@ -114,6 +114,10 @@ export type Quality = {
   update_fulfilled_in_time: boolean;
 }
 
+export type Harvest = {
+  backend: string;
+}
+
 export type NewDataset = Owned & {
 title: string;
 acronym: string;
@@ -145,6 +149,7 @@ uri: string;
 slug: string;
 quality: Quality;
 metrics: { discussions: number; followers: number; reuses: number; views: number; };
+harvest: Harvest | null;
 };
 
 export type UiDataset = Omit<Dataset, 'last_modified'> & {
@@ -167,6 +172,21 @@ export type Reuse = Owned & {
   type: string;
   last_update: string;
 };
+
+export type Me = User & {
+  about: string,
+  active: boolean,
+  apikey: string | null,
+  metrics: {
+    datasets: number,
+    followers: number,
+    following: number,
+    reuses: number,
+  },
+  organizations: Array<Organization>,
+  since: string,
+  website: string,
+}
 
 export type AxisAlignment = "start" | "center" | "end";
 

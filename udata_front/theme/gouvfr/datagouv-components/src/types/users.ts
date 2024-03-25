@@ -3,8 +3,8 @@ export type User = {
   slug?: string;
   first_name: string;
   last_name: string;
-  avatar?: string;
+  avatar?: string | null;
   page: string;
-  avatar_thumbnail?: string;
+  avatar_thumbnail?: string | null;
   roles?: Array<string>;
 }
