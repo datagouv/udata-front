@@ -125,7 +125,20 @@ test.. test... test..... test?..... test!....
       zones: [],
       granularity: "other"
     },
-    extras: {},
+    extras: {
+      "analysis:checksum": "0e367f91ba1f8b82db36c919185948dcc4cc7c1f",
+      "analysis:content-length": 639100,
+      "analysis:last-modified-at": "2024-03-25T08:35:45+00:00",
+      "analysis:last-modified-detection": "last-modified-header",
+      "analysis:mime-type": "text/plain",
+      "analysis:parsing:finished_at": "2024-03-25T09:16:13.598201+00:00",
+      "analysis:parsing:started_at": "2024-03-25T09:16:08.602954+00:00",
+      "check:available": true,
+      "check:date": "2024-03-25T08:37:11.016079+00:00",
+      "check:headers:content-type": "text/csv",
+      "check:status": 200,
+      "check:timeout": false
+    },
     created_at: "2023-10-26T13:34:50.156000+00:00",
     last_modified: "2023-12-07T16:51:02.937000+00:00",
     last_update: "2023-11-03T08:55:42.847000+00:00",
