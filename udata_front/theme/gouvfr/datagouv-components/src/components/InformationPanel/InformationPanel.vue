@@ -153,7 +153,7 @@ import { toggleAccordion } from "../../helpers/toggleAccordion";
 import { formatDate } from '../../helpers/index';
 import { getGranularity, fetchGranularities } from '../../api/granularity';
 import { getFrequencies, fetchFrequencies } from '../../api/frequency';
-import useOEmbed from '../../composables/useOEmbed'
+import useOEmbed from '../../composables/useOEmbed';
 import type { Frequencies } from '../../types/frequency';
 import type { Granularities } from '../../types/granularity';
 import type { License } from '../../types/licenses';
@@ -193,4 +193,4 @@ onMounted(() => {
   fetchGranularities().then(foundGranularities => granularities.value = foundGranularities);
   fetchFrequencies().then(foundFrequencies => frequencies.value = foundFrequencies);
  });
-</script>../../composables/useOEmbed
+</script>

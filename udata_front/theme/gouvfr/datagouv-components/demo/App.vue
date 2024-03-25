@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type DatasetV2, InformationPanel, License, Resource, ResourceAccordion } from "../src";
+import { type DatasetV2, InformationPanel, License, Quality, Resource, ResourceAccordion } from "../src";
 import { ref } from "vue";
 
 const resource = ref<Resource>({
@@ -77,7 +77,7 @@ test.. test... test..... test?..... test!....
     url: "https://static.data.gouv.fr/resources/indice-de-reparabilite-organisation-ribimex/20231115-104022/data.csv"
   });
 
-  const quality = {
+  const quality : Quality = {
     all_resources_available: false,
     dataset_description_quality: false,
     has_open_format: true,

@@ -31,7 +31,7 @@ import "./components/vanilla/sort-search.js";
 import handleUpdateUrlButtons from "./components/vanilla/update-url.js";
 
 import i18n from "./i18n.ts";
-import { admin_root, explorable_resources, schema_catalog_url, schema_documentation_url, schema_validata_url, title } from "./config.ts";
+import { admin_root, api_root, api_2_root, explorable_resources, schema_catalog_url, schema_documentation_url, schema_validata_url, title, } from "./config.ts";
 import Api from "./plugins/api.ts";
 import EventBus from "./plugins/eventbus.ts";
 import Auth from "./plugins/auth.ts";
@@ -39,6 +39,8 @@ import InitSentry from "./sentry.ts";
 
 setupComponents({
   admin_root,
+  api_root,
+  api_2_root,
   default_lang: i18n.global.locale.value,
   explorable_resources,
   only_locales: i18n.global.locale.value,
