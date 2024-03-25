@@ -37,10 +37,10 @@
   "B": "B",
   "today": "today",
   "on {date}": "on {date}",
-  "Pagination": "",
-  "First page": "",
-  "Previous page": "",
-  "Page {nb}": "",
-  "Next page": "",
-  "Last page": ""
+  "Pagination": "Pagination",
+  "First page": "First page",
+  "Previous page": "Previous page",
+  "Page {nb}": "Page {nb}",
+  "Next page": "Next page",
+  "Last page": "Last page"
 }
