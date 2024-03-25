@@ -1,7 +1,7 @@
 export type License = {
-alternate_titles: string[];
-alternate_urls: string[];
-flags: string[];
+alternate_titles: Array<string>;
+alternate_urls: Array<string>;
+flags: Array<string>;
 id: string;
 maintainer: null | string;
 title: string;

@@ -153,7 +153,7 @@ import { toggleAccordion } from "../../helpers/toggleAccordion";
 import { formatDate } from '../../helpers/index';
 import { getGranularity, fetchGranularities } from '../../api/granularity';
 import { getFrequencies, fetchFrequencies } from '../../api/frequency';
-import useOEmbed from '../../composables/useEmbed'
+import useOEmbed from '../../composables/useOEmbed'
 import type { Frequencies } from '../../types/frequency';
 import type { Granularities } from '../../types/granularity';
 import type { License } from '../../types/licenses';
@@ -163,11 +163,11 @@ const props = defineProps<{
 }>();
 const embedText = useOEmbed('dataset', props.dataset.id);
 const extrasExpanded = ref(false);
-const extrasRef = ref(null);
+const extrasRef = ref<HTMLDivElement | null>(null);
 const granularities = ref<Granularities>([]);
 const frequencies = ref<Frequencies>([]);
 const harvestExpanded = ref(false);
-const harvestRef = ref(null);
+const harvestRef = ref<HTMLDivElement | null>(null);
 const textAreaRef = ref<HTMLTextAreaElement | null>(null);
 const selectContent = () => {
   if (textAreaRef.value) {
@@ -193,4 +193,4 @@ onMounted(() => {
   fetchGranularities().then(foundGranularities => granularities.value = foundGranularities);
   fetchFrequencies().then(foundFrequencies => frequencies.value = foundFrequencies);
  });
-</script>
+</script>../../composables/useOEmbed
