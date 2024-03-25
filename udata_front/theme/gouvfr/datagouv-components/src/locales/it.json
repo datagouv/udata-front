@@ -36,5 +36,11 @@
   "An error occurred while fetching schemas": "An error occurred while fetching schemas",
   "B": "B",
   "today": "today",
-  "on {date}": "on {date}"
+  "on {date}": "on {date}",
+  "Pagination": "Pagination",
+  "First page": "First page",
+  "Previous page": "Previous page",
+  "Page {nb}": "Page {nb}",
+  "Next page": "Next page",
+  "Last page": "Last page"
 }
