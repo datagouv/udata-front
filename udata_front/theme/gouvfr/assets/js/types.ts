@@ -8,10 +8,6 @@ export type MultiSelectOption = {
   selected?: boolean;
 }
 
-export type WellType = "primary" | "secondary";
-
-export type Weight = "light" | "regular" | "semi-bold" | "bold" | "heavy";
-
 export type AlertSize = "sm" | "md";
 
 export type AlertType = FormFunctionalState | DSFRInfoState;

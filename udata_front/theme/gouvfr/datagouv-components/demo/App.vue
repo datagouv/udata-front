@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ResourceAccordion } from "../src";
+import { ResourceAccordion, Well } from "../src";
 import { ref } from "vue";
 import type { Resource } from "../src";
 
@@ -85,5 +85,18 @@ test.. test... test..... test?..... test!....
   </h1>
   <ResourceAccordion dataset-id="someId" :resource="resource" :expanded-on-mount="false" />
   <ResourceAccordion dataset-id="someId" :resource="resourceWithoutSchema" :expanded-on-mount="false" />
-
+  <Well color="blue-cumulus" weight="regular" class="fr-my-2w">
+    <div class="fr-grid-row">
+      <div class="fr-col-auto fr-mr-3v">
+        <img :src="editIcon" alt="" />
+      </div>
+      <div class="fr-col">
+        <p class="fr-m-0 fr-text--bold">What is a dataset?</p>
+        <p class="fr-m-0 fr-text--xs">On udata-front, a dataset is a set of files.</p>
+      </div>
+    </div>
+  </Well>
+  <Well class="fr-my-2w">
+    Simple Well
+  </Well>
 </template>

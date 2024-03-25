@@ -1,0 +1,45 @@
+.fr-alert p {
+    margin: var(--text-spacing);
+}
+
+html[data-fr-js] [data-show-no-js], html[data-fr-js=true] [data-show-no-js] {
+    display: none;
+}
+
+[data-show-no-js] {
+    opacity: 0;
+    height: 0;
+    animation: fadeIn 0.5s;
+    animation-delay: 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        height: 0;
+    }
+    to {
+        opacity: 1;
+        height: 100%;
+    }
+}
+
+.fr-notice--warning .fr-notice__body {
+    &:extend(.fr-icon-warning-line);
+    &:extend([class^="fr-icon-"]);
+}
+
+.fr-notice--warning .fr-notice__body::before {
+    &:extend(.fr-icon-warning-line::before);
+    &:extend([class^="fr-icon-"]::before);
+}
+
+.fr-notice--warning {
+    background-color: var(--background-contrast-warning);
+
+    --idle: transparent;
+    --hover: var(--background-contrast-warning-hover);
+    --active: var(--background-contrast-warning-active);
+    color: var(--text-default-warning);
+}

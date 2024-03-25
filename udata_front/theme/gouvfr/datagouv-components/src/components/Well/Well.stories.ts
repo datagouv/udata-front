@@ -1,7 +1,8 @@
-import Well from './Well.vue';
-import editIcon from "../../../../../templates/svg/illustrations/edit.svg";
+import Well, { WellProps } from './Well.vue';
+import editIcon from "../../../../templates/svg/illustrations/edit.svg";
+import type { Meta, StoryObj } from '@storybook/vue3';
 
-export default {
+const meta = {
   title: 'Ui/Well',
   component: Well,
   argTypes: {
@@ -22,13 +23,15 @@ export default {
       control: 'select',
     }
   },
-};
+} satisfies Meta<typeof Well>;
 
-const args = {
+export default meta;
+
+const args: WellProps = {
   type: "primary",
 };
 
-export const SimpleWell = {
+export const SimpleWell: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Well },
     setup() {
@@ -43,16 +46,16 @@ export const SimpleWell = {
   args,
 };
 
-const argsRegular = {
+const argsRegular: WellProps = {
   color: "blue-cumulus",
   weight: "regular"
 };
 
-export const WellWithImg = {
+export const WellWithImg: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Well },
     setup() {
-      return { args: argsRegular, editIcon };
+      return { args, editIcon };
     },
     template: ` <Well v-bind="args">
                     <div class="fr-grid-row">
@@ -66,5 +69,5 @@ export const WellWithImg = {
                     </div>
                   </Well>`,
   }),
-  args,
+  args: argsRegular,
 }

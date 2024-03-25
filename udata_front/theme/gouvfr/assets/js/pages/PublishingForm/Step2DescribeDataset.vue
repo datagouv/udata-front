@@ -312,6 +312,7 @@
 </template>
 
 <script>
+import { Well } from "@etalab/data.gouv.fr-components";
 import { computed, defineComponent, reactive } from 'vue';
 import { minLengthWarning, not, required, requiredWithCustomMessage, sameAs } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
@@ -322,7 +323,6 @@ import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToA
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
-import Well from "../../components/Ui/Well/Well.vue";
 import useUid from "../../composables/useUid";
 import useFunctionalState from '../../composables/form/useFunctionalState';
 import editIcon from "../../../../templates/svg/illustrations/edit.svg";
