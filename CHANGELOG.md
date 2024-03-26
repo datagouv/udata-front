@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add codes and optgroups in Multiselect to display Insee codes and Licence groups [#347] (https://github.com/etalab/udata-front/pull/347)
 
 ## 3.5.3 (2024-02-22)
 
