@@ -1,0 +1,34 @@
+import { Canvas, Controls, Meta } from '@storybook/blocks';
+import * as Toggletip from './Toggletip.stories';
+
+<Meta of={Toggletip} />
+
+# Toggletip
+
+A toggletip is a tooltip that is activated on click and not on hover / focus.
+This allows a better UX for users with touch screens, screen readers and keyboard navigation.
+
+<Canvas of={Toggletip.SimpleToggletip} />
+
+## Accessibility
+
+The component is based on the [disclosure pattern](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/).
+
+It contains a button with the attributes :
+- `aria-expanded` to indicate if the toggletip is shown
+- `aria-controls` to link to the toggletip
+
+The toggletip is placed directly after the button in the tab sequence so that it works with assistive technologies that doesn't handle `aria-controls`.
+
+The toggletip is shown on click only and it's hidden :
+- on focus out of the button or toggletip
+- on esc keypress
+- on click outside the toggletip
+
+Another way of implemented a toggletip is with a [live region feature](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions).
+
+The disclosure pattern was chosen because it allows the toggletip content to be already present on page but hidden for all type of users.
+
+## Props
+
+<Controls />
