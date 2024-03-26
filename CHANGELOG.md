@@ -2,9 +2,10 @@
 
 ## Current (in progress)
 
-- Move pagination to datagouv-components [#365](https://github.com/etalab/udata-front/pull/365)
+- Move Pagination to datagouv-components [#365](https://github.com/etalab/udata-front/pull/365)
 - Fix release CI [#380](https://github.com/etalab/udata-front/pull/380)
-- Add stories to resource component [#364](https://github.com/etalab/udata-front/pull/364)
+- Add stories to Resource component [#364](https://github.com/etalab/udata-front/pull/364)
+- Move Well to datagouv-components [#382](https://github.com/etalab/udata-front/pull/382)
 
 ## 3.5.4 (2024-03-20)
 

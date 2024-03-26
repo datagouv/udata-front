@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { Pagination, ResourceAccordion } from "../src";
+import { Pagination, ResourceAccordion, Well } from "../src";
 import { ref } from "vue";
 import type { Resource } from "../src";
+import editIcon from "../../templates/svg/illustrations/edit.svg";
 
 const resource = ref<Resource>({
     checksum: {type: "sha1", value: "54d0f3a4847c546c1cc4865f5ca54a1f8fc3f9af"},
@@ -85,5 +86,19 @@ test.. test... test..... test?..... test!....
   </h1>
   <ResourceAccordion dataset-id="someId" :resource="resource" :expanded-on-mount="false" />
   <ResourceAccordion dataset-id="someId" :resource="resourceWithoutSchema" :expanded-on-mount="false" />
+  <Well color="blue-cumulus" weight="regular" class="fr-my-2w">
+    <div class="fr-grid-row">
+      <div class="fr-col-auto fr-mr-3v">
+        <img :src="editIcon" alt="" />
+      </div>
+      <div class="fr-col">
+        <p class="fr-m-0 fr-text--bold">What is a dataset?</p>
+        <p class="fr-m-0 fr-text--xs">On udata-front, a dataset is a set of files.</p>
+      </div>
+    </div>
+  </Well>
+  <Well class="fr-my-2w">
+    Simple Well
+  </Well>
   <Pagination class="fr-mt-3v" :total-results="52" @change="p => console.log(p)" />
 </template>
