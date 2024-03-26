@@ -19,7 +19,7 @@
                             <span class="fr-icon-image-line fr-icon--lg"></span>
                             {{ t('Add an image') }}
                         </h1>
-                        <p>{{ t("Paste a link of your image to add it to your description. You can also provide a textual alternative for an informative image and a title.") }}</p>
+                        <p>{{ t("Paste a link of your image to add it to your description. It is recommended to also provide a textual alternative for an informative image and a title.") }}</p>
                         <RequiredExplanation />
                         <InputGroup
                           :label="t('Image link')"
