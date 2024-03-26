@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ResourceAccordion, Well } from "../src";
+import { Pagination, ResourceAccordion, Well } from "../src";
 import { ref } from "vue";
 import type { Resource } from "../src";
 import editIcon from "../../templates/svg/illustrations/edit.svg";
@@ -100,4 +100,5 @@ test.. test... test..... test?..... test!....
   <Well class="fr-my-2w">
     Simple Well
   </Well>
+  <Pagination class="fr-mt-3v" :total-results="52" @change="p => console.log(p)" />
 </template>

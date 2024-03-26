@@ -2,6 +2,7 @@
   <a
     :href="adminUrl"
     class="fr-btn fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-icon--sm"
+    data-testid="edit-button"
   >
     {{ t("Edit file") }}
   </a>
