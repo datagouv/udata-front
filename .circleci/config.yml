@@ -16,14 +16,9 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - 0f:6a:bf:3e:f5:85:d5:41:ca:77:ef:85:7f:f8:b5:9e
-      # FIXME: do we need this? ${CIRCLE_BRANCH} seems ok
-      - run:
-          name: Get the base reference branch
-          command: export BASE_BRANCH=$(base_branch)
       - restore_cache:
           keys:
-          - py-cache-v16-{{ arch }}-{{ .Branch }}
-          - py-cache-v16-{{ arch }}-{{ .Environment.BASE_BRANCH }}
+          - py-cache-v16-{{ arch }}-{{ .Branch }}{{ .Environment.CIRCLE_TAG }}
       - run:
           name: Create venv and install pip-tools
           # FIXME: For now, we fix setuptools due to https://github.com/etalab/data.gouv.fr/issues/1041
@@ -69,6 +64,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
+          - requirements
           - venv
 
   python:
@@ -118,7 +114,7 @@ jobs:
                   source set_env_builno.sh
                   inv egg-info --buildno ${BUILDNO}
       - save_cache:
-          key: py-cache-v16-{{ arch }}-{{ .Branch }}
+          key: py-cache-v16-{{ arch }}-{{ .Branch }}{{ .Environment.CIRCLE_TAG }}
           paths:
           - venv
       - run:
@@ -151,14 +147,10 @@ jobs:
       - run:
           name: Compute JS dependencies key
           command: cat .nvmrc package.json > js.deps
-      - run:
-          name: Get the base reference branch
-          command: export BASE_BRANCH=$(base_branch)
       - restore_cache:
           keys:
             - js-cache-{{ arch }}-{{ checksum "js.deps" }}
-            - js-cache-{{ arch }}-{{ .Branch }}
-            - js-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
+            - js-cache-{{ arch }}-{{ .Branch }}{{ .Environment.CIRCLE_TAG }}
       - run:
           name: Install NodeJS and dependencies
           command: nvm install && npm ci
@@ -167,7 +159,7 @@ jobs:
           paths:
           - node_modules
       - save_cache:
-          key: js-cache-{{ arch }}-{{ .Branch }}
+          key: js-cache-{{ arch }}-{{ .Branch }}{{ .Environment.CIRCLE_TAG }}
           paths:
           - node_modules
       - run:
@@ -189,14 +181,10 @@ jobs:
       - run:
           name: Compute JS dependencies key
           command: cat udata-front-plugins-helper/package.json > helper-js.deps
-      - run:
-          name: Get the base reference branch
-          command: export BASE_BRANCH=$(base_branch)
       - restore_cache:
           keys:
             - js-cache-{{ arch }}-{{ checksum "helper-js.deps" }}
-            - js-cache-{{ arch }}-{{ .Branch }}
-            - js-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
+            - js-cache-{{ arch }}-{{ .Branch }}{{ .Environment.CIRCLE_TAG }}
       - run:
           name: Install NodeJS and dependencies
           command: npm ci
@@ -206,7 +194,7 @@ jobs:
           paths:
           - udata-front-plugins-helper/node_modules
       - save_cache:
-          key: js-cache-{{ arch }}-{{ .Branch }}
+          key: js-cache-{{ arch }}-{{ .Branch }}{{ .Environment.CIRCLE_TAG }}
           paths:
           - udata-front-plugins-helper/node_modules
       - run:

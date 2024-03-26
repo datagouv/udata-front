@@ -117,7 +117,7 @@
               </button>
             </li>
           </template>
-          <template v-if="hasSchema">
+          <template v-if="hasExplore || hasSchema">
             <li role="presentation">
               <button
                 :id="resourceStructureButtonId"

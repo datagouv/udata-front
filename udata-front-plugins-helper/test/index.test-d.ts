@@ -1,7 +1,7 @@
 import { expectTypeOf, test } from 'vitest';
 import { Component } from 'vue';
 
-import { registerComponent, Component as UdataFrontComponent, registerTranslation, getRegisteredComponents, getRegisteredComponentsForHook, getRegisteredTranslations, Translation } from "../src/hook";
+import { registerComponent, type Component as UdataFrontComponent, registerTranslation, getRegisteredComponents, getRegisteredComponentsForHook, getRegisteredTranslations, UdataFrontTranslation } from "../src/";
 
 test('registerComponent types', () => {
     expectTypeOf(registerComponent).toBeFunction();
@@ -16,7 +16,7 @@ test('registerTranslation types', () => {
     expectTypeOf(registerTranslation).toBeFunction();
     expectTypeOf(registerTranslation).parameter(0).toBeObject();
     expectTypeOf(registerTranslation).parameter(1).toMatchTypeOf<string | undefined>();
-    expectTypeOf(registerTranslation).returns.toMatchTypeOf<Translation>();
+    expectTypeOf(registerTranslation).returns.toMatchTypeOf<UdataFrontTranslation>();
 });
 
 test('getRegisteredComponents types', () => {
@@ -32,5 +32,5 @@ test('getRegisteredComponentsForHook types', () => {
 
 test('getRegisteredTranslations types', () => {
     expectTypeOf(getRegisteredTranslations).toBeFunction();
-    expectTypeOf(getRegisteredTranslations).returns.toMatchTypeOf<Array<Translation>>();
+    expectTypeOf(getRegisteredTranslations).returns.toMatchTypeOf<Array<UdataFrontTranslation>>();
 });
