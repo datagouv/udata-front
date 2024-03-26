@@ -38,9 +38,9 @@
   "today": "aujourd'hui",
   "on {date}": "le {date}",
   "Pagination": "Pagination",
-  "First page": "First page",
-  "Previous page": "Previous page",
+  "First page": "Première page",
+  "Previous page": "Page précédente",
   "Page {nb}": "Page {nb}",
-  "Next page": "Next page",
-  "Last page": "Last page"
+  "Next page": "Page suivante",
+  "Last page": "Dernière page"
 }
