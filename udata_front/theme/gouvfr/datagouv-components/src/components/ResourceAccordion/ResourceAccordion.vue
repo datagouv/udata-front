@@ -55,6 +55,7 @@
               :aria-controls="resourceContentId"
               class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-btn--secondary-grey-500"
               :class="{'fr-icon-arrow-up-s-line': expanded, 'fr-icon-arrow-down-s-line': !expanded}"
+              data-testid="expand-button"
             >
               <template v-if="expanded">
                 {{ $t('Close details') }}
@@ -116,7 +117,7 @@
               </button>
             </li>
           </template>
-          <template v-if="hasSchema">
+          <template v-if="hasExplore || hasSchema">
             <li role="presentation">
               <button
                 :id="resourceStructureButtonId"
@@ -387,8 +388,8 @@ const tabListRef = templateRef<HTMLUListElement | null>("tabListRef");
 const explore = getComponentsForHook("explore");
 const structure = getComponentsForHook("data-structure");
 
-const schemaName = computed(() => "name" in props.resource.schema ? props.resource.schema.name : "");
-const schemaUrl = computed(() => "url" in props.resource.schema ? props.resource.schema.url : "");
+const schemaName = computed(() => props.resource.schema ? props.resource.schema.name : "");
+const schemaUrl = computed(() => props.resource.schema ? props.resource.schema.url : "");
 
 const hasSchema = computed(() => schemaName.value || schemaUrl.value);
 const hasExplore = computed(() => explore.length > 0 && config.explorable_resources && config.explorable_resources.includes(props.resource.id));

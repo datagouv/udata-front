@@ -36,5 +36,11 @@
   "An error occurred while fetching schemas": "Une erreur est survenue lors de la récupération des schémas",
   "B": "o",
   "today": "aujourd'hui",
-  "on {date}": "le {date}"
+  "on {date}": "le {date}",
+  "Pagination": "Pagination",
+  "First page": "Première Page",
+  "Previous page": "Page précédente",
+  "Page {nb}": "Page {nb}",
+  "Next page": "Page suivante",
+  "Last page": "Dernière page"
 }

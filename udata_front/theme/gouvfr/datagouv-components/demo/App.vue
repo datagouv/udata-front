@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ResourceAccordion } from "../src";
+import { Pagination, ResourceAccordion, Well } from "../src";
 import { ref } from "vue";
 import type { Resource } from "../src";
+import editIcon from "../../templates/svg/illustrations/edit.svg";
 
 const resource = ref<Resource>({
     checksum: {type: "sha1", value: "54d0f3a4847c546c1cc4865f5ca54a1f8fc3f9af"},
@@ -70,7 +71,7 @@ test.. test... test..... test?..... test!....
     metrics: {views: 0},
     mime: "text/csv",
     preview_url: "https://explore.data.gouv.fr/?url=https%3A%2F%2Fwww.data.gouv.fr%2Ffr%2Fdatasets%2Fr%2Fe2bc9b7c-4598-4bdb-92c3-9109a16f288c",
-    schema: {},
+    schema: null,
     title: "tondeuse_batterie_fr.csv",
     type: "main",
     owner: { id: "someId", first_name: "john", last_name: "Doe" },
@@ -85,5 +86,19 @@ test.. test... test..... test?..... test!....
   </h1>
   <ResourceAccordion dataset-id="someId" :resource="resource" :expanded-on-mount="false" />
   <ResourceAccordion dataset-id="someId" :resource="resourceWithoutSchema" :expanded-on-mount="false" />
-
+  <Well color="blue-cumulus" weight="regular" class="fr-my-2w">
+    <div class="fr-grid-row">
+      <div class="fr-col-auto fr-mr-3v">
+        <img :src="editIcon" alt="" />
+      </div>
+      <div class="fr-col">
+        <p class="fr-m-0 fr-text--bold">What is a dataset?</p>
+        <p class="fr-m-0 fr-text--xs">On udata-front, a dataset is a set of files.</p>
+      </div>
+    </div>
+  </Well>
+  <Well class="fr-my-2w">
+    Simple Well
+  </Well>
+  <Pagination class="fr-mt-3v" :total-results="52" @change="p => console.log(p)" />
 </template>
