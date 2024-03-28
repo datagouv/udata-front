@@ -1,11 +1,14 @@
+import type { Meta, StoryObj } from '@storybook/vue3';
 import Required from './Required.vue';
 
-export default {
+const meta = {
   title: 'Ui/Required',
   component: Required,
-};
+} satisfies Meta<typeof Required>;
 
-export const RequiredLabel = {
+export default meta;
+
+export const RequiredLabel: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Required },
     setup() {
@@ -18,7 +21,7 @@ export const RequiredLabel = {
   },
 };
 
-export const NonRequiredLabel = {
+export const NonRequiredLabel: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Required },
     setup() {
