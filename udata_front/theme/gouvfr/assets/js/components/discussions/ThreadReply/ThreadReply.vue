@@ -9,16 +9,7 @@
       </div>
     </div>
     <form class="form fr-p-0" @submit.prevent="submit">
-      <i18n-t
-        keypath="Fields preceded by a star ({markup}) are required."
-        tag="p"
-        class="fr-mt-0 fr-mb-1w fr-text--xs"
-        scope="global"
-      >
-        <template #markup>
-          <span class="required-field-star">*</span>
-        </template>
-      </i18n-t>
+      <RequiredExplanation />
       <div class="fr-input-group">
         <label class="fr-label required" for="textarea">
           {{$t('Comment')}}
@@ -45,11 +36,13 @@ import { defineComponent, ref } from "vue";
 import { useToast } from "../../../composables/useToast";
 import { user } from "../../../config";
 import Author from "../Author/Author.vue";
+import RequiredExplanation from "../../Ui/RequiredExplanation/RequiredExplanation.vue";
 import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   components: {
     Author,
+    RequiredExplanation,
   },
   emits: ['close'],
   props: {
@@ -67,7 +60,7 @@ export default defineComponent({
       loading.value = true;
 
       props.onSubmit(comment.value)
-        .catch((err) => {
+        .catch((_err) => {
           toast.error(t("Error sending response"));
         })
         .finally(() => {

@@ -1,7 +1,7 @@
 import ThreadCreateButton from "./ThreadCreateButton.vue";
 
 export default {
-  title: 'Internals/Discussions/ThreadCreateButton',
+  title: 'Components/Discussions/Internals/ThreadCreateButton',
   component: ThreadCreateButton,
 };
 

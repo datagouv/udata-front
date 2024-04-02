@@ -237,6 +237,7 @@
   </div>
 </template>
 <script>
+import { Well } from "@etalab/data.gouv.fr-components";
 import { computed, defineComponent, ref } from 'vue';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -249,7 +250,6 @@ import SchemaSelect from "../../components/SchemaSelect/SchemaSelect.vue";
 import SelectGroup from '../../components/Form/SelectGroup/SelectGroup.vue';
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
-import Well from "../../components/Ui/Well/Well.vue";
 import useUid from "../../composables/useUid";
 import useFileValidation from '../../composables/form/useFileValidation';
 import { schema_documentation_url } from "../../config";

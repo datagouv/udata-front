@@ -75,8 +75,8 @@
     data-first_name="{{ current_user.first_name }}"
     data-last_name="{{ current_user.last_name }}"
     data-roles="{{ current_user.roles|join(',') }}"
-    data-avatar="{{ current_user|avatar_url(150) }}"
-    data-avatar_thumbnail="{{ current_user.avatar_thumbnail }}"
+    data-avatar="{{ current_user.avatar }}"
+    data-avatar_thumbnail="{{ current_user|avatar_url(150) }}"
 />
 {% endif %}
 
@@ -102,6 +102,8 @@
 <meta name="license-groups-options" content={{
     config.LICENSE_GROUPS|tojson|urlencode
 }} />
+
+<meta name="quality-metadata-backend-ignore" content="{{ config.QUALITY_METADATA_BACKEND_IGNORE|tojson|urlencode }}" />
 
 {% if json_ld %}
 <script id="json_ld" type="application/ld+json">{{ json_ld|embedded_json_ld }}</script>

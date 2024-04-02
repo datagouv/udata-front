@@ -18,6 +18,7 @@ const config = {
     {
       name: '@storybook/addon-styling',
     },
+    '@storybook/addon-interactions',
     path.resolve('./.storybook/load-theme-preview-preset')
   ],
   framework: {
