@@ -7,6 +7,7 @@
 - Add stories to Resource component [#364](https://github.com/etalab/udata-front/pull/364)
 - Move Well to datagouv-components [#382](https://github.com/etalab/udata-front/pull/382)
 - Add markdown editor [#351](https://github.com/etalab/udata-front/pull/351)
+- Add codes and optgroups in Multiselect to display Insee codes and Licence groups [#347] (https://github.com/etalab/udata-front/pull/347)
 
 ## 3.5.4 (2024-03-20)
 

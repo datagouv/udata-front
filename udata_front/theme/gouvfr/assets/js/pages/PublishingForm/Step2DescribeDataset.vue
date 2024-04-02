@@ -318,6 +318,7 @@
 export type Step2DescribeDatasetProps = {
   originalDataset: NewDataset,
   steps: Array<string>,
+  granularities: Array<SpatialGranularity>
 };
 </script>
 <script setup lang="ts">
@@ -339,7 +340,7 @@ import { license_groups_options, quality_description_length, title } from "../..
 import { useI18n } from 'vue-i18n';
 import { getLicensesUrl } from '../../api/licenses';
 import { getFrequenciesUrl } from '../../api/datasets';
-import { NewDataset, PublishingFormAccordionState } from '../../types';
+import { NewDataset, PublishingFormAccordionState, SpatialGranularity } from '../../types';
 
 const emit = defineEmits(["next"]);
 const props = defineProps<Step2DescribeDatasetProps>();
@@ -362,28 +363,28 @@ if(!dataset.spatial) {
   }
 }
 
-    const frequenciesUrl = getFrequenciesUrl();
-    const licensesUrl = getLicensesUrl();
-    const licensesGroups = license_groups_options?.map(([name, values]) => ({
-      name,
-      values
-    }));
-    const formatSpatialZones = (data) => {
-      const suggestions = data.map(item => {
-      const matchingGranularity = props.granularities.find(granularity => granularity.id === item.level);
-      if (matchingGranularity) {
-        return {
-          ...item,
-          description: matchingGranularity.name,
-        };
-      } else {
-        return {
-          ...item,
-        };
-      }
-    });
-    return suggestions;
-    }
+const frequenciesUrl = getFrequenciesUrl();
+const licensesUrl = getLicensesUrl();
+const licensesGroups = license_groups_options?.map(([name, values]) => ({
+  name,
+  values
+}));
+const formatSpatialZones = (data) => {
+  const suggestions = data.map(item => {
+  const matchingGranularity = props.granularities.find(granularity => granularity.id === item.level);
+  if (matchingGranularity) {
+    return {
+      ...item,
+      description: matchingGranularity.name,
+    };
+  } else {
+    return {
+      ...item,
+    };
+  }
+});
+return suggestions;
+}
 
 const notUnknown = not(t("The value must be different than unknown."), sameAs("unknown"));
 const tagsRequired = requiredWithCustomMessage(t("Adding tags helps improve the SEO of your data."));

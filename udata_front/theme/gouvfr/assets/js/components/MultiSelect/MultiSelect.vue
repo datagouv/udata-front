@@ -296,7 +296,6 @@ export default defineComponent({
        * @type {Promise<import("axios").AxiosResponse<Array<Data> | {data: Array<Data> }>>}
        */
       const request = api.get(props.listUrl)
-      console.log(request)
       return request
       .then(resp => {
         let data = resp.data;
