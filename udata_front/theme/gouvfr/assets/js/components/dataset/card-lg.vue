@@ -59,7 +59,7 @@
           v-if="show_quality_score"
           class="fr-m-0 fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
           <div class="fr-grid-row fr-grid-row--middle fr-hidden flex-sm dash-after text-grey-500 not-enlarged">
-            <Toggletip
+            <ToggleTip
               class="fr-btn fr-btn--tertiary-no-outline fr-btn--secondary-grey-500 fr-icon-info-line"
             >
               {{$t('Metadata quality:')}}
@@ -124,7 +124,7 @@
                   </a>
                 </div>
               </template>
-            </Toggletip>
+            </ToggleTip>
             <p class="fr-m-0 fr-mr-1v" :id="id">
               {{$t('Metadata quality:')}}
             </p>
@@ -163,13 +163,10 @@
 import { defineComponent, PropType } from "vue";
 import { useI18n } from "vue-i18n";
 import useLicense from "../../composables/useLicense";
-import { OrganizationNameWithCertificate, useOwnerName, formatRelativeIfRecentDate} from "@etalab/data.gouv.fr-components";
+import { OrganizationNameWithCertificate, useOwnerName, formatRelativeIfRecentDate, QualityItem, QualityScore, ToggleTip } from "@etalab/data.gouv.fr-components";
 import useUid from "../../composables/useUid";
 import Avatar from "../discussions/Avatar/Avatar.vue";
 import Placeholder from "../utils/placeholder.vue";
-import QualityScore from "./quality-score.vue";
-import Toggletip from "../utils/Toggletip/Toggletip.vue";
-import QualityItem from "./quality-item.vue";
 import { excerpt } from "../../helpers";
 import { guides_quality_url, quality_metadata_backend_ignore } from "../../config";
 import type { Dataset } from "../../types";
@@ -180,7 +177,7 @@ export default defineComponent({
     OrganizationNameWithCertificate,
     Placeholder,
     QualityScore,
-    Toggletip,
+    ToggleTip,
     QualityItem,
 },
   inheritAttrs: false,
