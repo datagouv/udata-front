@@ -2,6 +2,15 @@
 
 ## Current (in progress)
 
+- Move Pagination to datagouv-components [#365](https://github.com/etalab/udata-front/pull/365)
+- Fix release CI [#380](https://github.com/etalab/udata-front/pull/380)
+- Add stories to Resource component [#364](https://github.com/etalab/udata-front/pull/364)
+- Move Well to datagouv-components [#382](https://github.com/etalab/udata-front/pull/382)
+- Add markdown editor [#351](https://github.com/etalab/udata-front/pull/351)
+
+## 3.5.4 (2024-03-20)
+
+- Fix footer links and some translations [#366](https://github.com/etalab/udata-front/pull/366)
 - Show error when dataset discussion from url doesn't exist [#367](https://github.com/etalab/udata-front/pull/367)
 - Hide quality score on "work in progress" backends [#370](https://github.com/etalab/udata-front/pull/370)
 - Add a new vite config for development [#372](https://github.com/etalab/udata-front/pull/372)

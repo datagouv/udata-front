@@ -50,5 +50,11 @@
   "Extras": "Extras",
   "See extras": "See extras",
   "Harvest": "Harvest",
-  "See harvest": "See harvest"
+  "See harvest": "See harvest",
+  "Pagination": "Pagination",
+  "First page": "First page",
+  "Previous page": "Previous page",
+  "Page {nb}": "Page {nb}",
+  "Next page": "Next page",
+  "Last page": "Last page"
 }
