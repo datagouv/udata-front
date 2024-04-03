@@ -294,7 +294,7 @@
                     :searchPlaceholder="$t('Search a granularity...')"
                     :initialOptions="granularities"
                     :values="dataset.spatial?.granularity"
-                    @change="(value: string) => dataset.spatial ? dataset.spatial.granularity = value : dataset.spatial = {granularity: value}"
+                    @change="setGranularity"
                     :hasWarning="fieldHasWarning('spatial_information')"
                     :allOption="$t('Select an option')"
                     :addAllOption="false"
@@ -340,7 +340,7 @@ import { license_groups_options, quality_description_length, title } from "../..
 import { useI18n } from 'vue-i18n';
 import { getLicensesUrl } from '../../api/licenses';
 import { getFrequenciesUrl } from '../../api/datasets';
-import { NewDataset, PublishingFormAccordionState, SpatialGranularity } from '../../types';
+import type { NewDataset, PublishingFormAccordionState, SpatialGranularity } from '../../types';
 
 const emit = defineEmits(["next"]);
 const props = defineProps<Step2DescribeDatasetProps>();
@@ -358,8 +358,8 @@ const { id: addSpatialInformationAccordionId } = useUid("accordion");
 const dataset = reactive({...props.originalDataset});
 if(!dataset.spatial) {
   dataset.spatial = {
-    zones: undefined,
-    granularity: undefined,
+    zones: null,
+    granularity: null,
   }
 }
 
@@ -428,6 +428,14 @@ const state = computed<Record<string, PublishingFormAccordionState>>(() => {
 const fieldHasError = (field: string) => hasError(state, field);
 
 const fieldHasWarning = (field: string) => hasWarning(state, field);
+
+function setGranularity(value: string) {
+  if (this.dataset.spatial) {
+    this.dataset.spatial.granularity = value;
+  } else {
+    this.dataset.spatial = { granularity: value };
+  }
+};
 
 function submit() {
   validateRequiredRules().then(valid => {
