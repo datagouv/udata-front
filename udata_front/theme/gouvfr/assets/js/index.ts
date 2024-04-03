@@ -78,7 +78,7 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("user-reuse-list", UserReuseList);
 
   // @ts-ignore unset delimiters used in html templates to prevent injections using {{ }}
-  app.config.compilerOptions.delimiters = ["[[[[[", "]]]]]"];
+  app.config.compilerOptions.delimiters = ["", ""];
 
   app.mount(el);
 };
