@@ -10,6 +10,9 @@ const meta = {
     docs: {
       description: {
         component: "The Information Panel displays various informations about a dataset."
+      },
+      toc: {
+        disable :true
       }
     }
   },
