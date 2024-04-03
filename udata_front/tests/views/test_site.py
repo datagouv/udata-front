@@ -116,7 +116,6 @@ class SiteViewsTest(GouvfrFrontTestCase):
             self.assertIn(str(dataset.id), ids)
         self.assertNotIn(str(hidden_dataset.id), ids)
 
-
     @pytest.mark.usefixtures('instance_path')
     def test_datasets_csv_w_export_csv_feature(self):
         # no export generated, 404
