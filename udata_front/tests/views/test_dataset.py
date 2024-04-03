@@ -6,7 +6,7 @@ from flask import url_for
 
 from udata.core.dataset.factories import (
     ResourceFactory, DatasetFactory, LicenseFactory, CommunityResourceFactory,
-    VisibleDatasetFactory
+    DatasetFactory
 )
 from udata.core.user.factories import UserFactory
 from udata.core.organization.factories import OrganizationFactory
@@ -21,7 +21,7 @@ class DatasetBlueprintTest(GouvfrFrontTestCase):
 
     def test_render_display(self):
         '''It should render the dataset page'''
-        dataset = VisibleDatasetFactory()
+        dataset = DatasetFactory()
         url = url_for('datasets.show', dataset=dataset)
         response = self.get(url)
         self.assert200(response)
