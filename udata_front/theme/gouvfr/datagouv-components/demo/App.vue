@@ -2,6 +2,7 @@
 import { Pagination, ResourceAccordion, QualityComponent, QualityComponentInline, QualityItem, QualityScore, ReadMore, ToggleTip, Well } from "../src";
 import { ref } from "vue";
 import type { Resource } from "../src";
+import type { Quality } from "../src/types/datasets";
 import editIcon from "../../templates/svg/illustrations/edit.svg";
 
 const resource = ref<Resource>({
@@ -79,7 +80,7 @@ test.. test... test..... test?..... test!....
     url: "https://static.data.gouv.fr/resources/indice-de-reparabilite-organisation-ribimex/20231115-104022/data.csv"
   });
 
-  const quality = {
+  const quality = ref<Quality>({
     all_resources_available: false,
     dataset_description_quality: false,
     has_open_format: true,
@@ -91,7 +92,7 @@ test.. test... test..... test?..... test!....
     temporal_coverage: false,
     update_frequency: false,
     update_fulfilled_in_time: false,
-  };
+  });
   const id = "12";
 </script>
 
