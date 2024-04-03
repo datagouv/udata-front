@@ -4,7 +4,9 @@ import feedparser
 
 from flask import url_for
 
-from udata.core.dataset.factories import ResourceFactory, DatasetFactory, LicenseFactory, CommunityResourceFactory
+from udata.core.dataset.factories import (
+    ResourceFactory, DatasetFactory, LicenseFactory, CommunityResourceFactory,
+)
 from udata.core.user.factories import UserFactory
 from udata.core.organization.factories import OrganizationFactory
 from udata.models import Follow
