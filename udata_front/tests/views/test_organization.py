@@ -276,6 +276,7 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
             for _ in range(3)
         ]
         not_org_dataset = DatasetFactory(resources=[ResourceFactory()])
+        hidden_dataset = DatasetFactory(private=True)
 
         response = self.get(
             url_for('organizations.datasets_resources_csv', org=org))
@@ -309,6 +310,7 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
                 self.assertIn((str(dataset.id), str(resource.id)), ids)
 
         dataset_ids = set(row[0] for row in rows)
+        self.assertNotIn(str(hidden_dataset.id), dataset_ids)
         self.assertNotIn(str(not_org_dataset.id), dataset_ids)
 
 

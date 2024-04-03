@@ -88,6 +88,7 @@ class SiteViewsTest(GouvfrFrontTestCase):
         self.app.config['EXPORT_CSV_MODELS'] = []
         datasets = [DatasetFactory(resources=[ResourceFactory()])
                     for _ in range(5)]
+        hidden_dataset = DatasetFactory(private=True)
 
         response = self.get(url_for('site.datasets_csv'))
 
@@ -113,6 +114,8 @@ class SiteViewsTest(GouvfrFrontTestCase):
         self.assertEqual(len(rows), len(datasets))
         for dataset in datasets:
             self.assertIn(str(dataset.id), ids)
+        self.assertNotIn(str(hidden_dataset.id), ids)
+
 
     @pytest.mark.usefixtures('instance_path')
     def test_datasets_csv_w_export_csv_feature(self):
@@ -136,6 +139,7 @@ class SiteViewsTest(GouvfrFrontTestCase):
             for _ in range(6)]
         datasets = [DatasetFactory(resources=[ResourceFactory()])
                     for _ in range(3)]
+        hidden_dataset = DatasetFactory(private=True)
 
         response = self.get(
             url_for(
@@ -167,6 +171,7 @@ class SiteViewsTest(GouvfrFrontTestCase):
             self.assertIn(str(dataset.id), ids)
         for dataset in datasets:
             self.assertNotIn(str(dataset.id), ids)
+        self.assertNotIn(str(hidden_dataset.id), ids)
 
     def test_resources_csv(self):
         self.app.config['EXPORT_CSV_MODELS'] = []
