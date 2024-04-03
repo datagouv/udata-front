@@ -77,7 +77,7 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("user-dataset-list", UserDatasetList);
   app.component("user-reuse-list", UserReuseList);
 
-  // @ts-ignore unset delimiters used in html templates to prevent injections using {{ }}
+  // @ts-ignore disable delimiters used in html templates see [#386](https://github.com/etalab/udata-front/pull/386) for more details
   app.config.compilerOptions.delimiters = ["", ""];
 
   app.mount(el);
