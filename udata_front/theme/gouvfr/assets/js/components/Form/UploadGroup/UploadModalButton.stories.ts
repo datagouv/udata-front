@@ -1,8 +1,9 @@
 import UploadModalButton from './UploadModalButton.vue';
 import UploadModalStories from "./UploadModal.stories";
 import { withActions } from '@storybook/addon-actions/decorator';
+import type { Meta, StoryObj } from '@storybook/vue3';
 
-export default {
+const meta = {
   title: 'Components/UploadModalButton',
   component: UploadModalButton,
   parameters: {
@@ -14,7 +15,9 @@ export default {
     },
   },
   decorators: [withActions],
-};
+} satisfies Meta<typeof UploadModalButton>;
+
+export default meta;
 
 const args = {
   disabled: false,
@@ -27,7 +30,7 @@ const args = {
   validText: "The field is valid !",
 };
 
-export const Upload = {
+export const Upload: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { UploadModalButton },
     setup() {
@@ -39,7 +42,7 @@ export const Upload = {
 };
 
 
-export const UploadDisabled = {
+export const UploadDisabled: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { UploadModalButton },
     setup() {
@@ -53,7 +56,7 @@ export const UploadDisabled = {
   },
 };
 
-export const UploadHasError = {
+export const UploadHasError: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { UploadModalButton },
     setup() {
@@ -67,7 +70,7 @@ export const UploadHasError = {
   },
 };
 
-export const UploadSuccessState = {
+export const UploadSuccessState: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { UploadModalButton },
     setup() {
@@ -81,7 +84,7 @@ export const UploadSuccessState = {
   },
 };
 
-export const UploadMultiple = {
+export const UploadMultiple: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { UploadModalButton },
     setup() {

@@ -1,14 +1,25 @@
-import Step2DescribeDataset from './Step2DescribeDataset.vue';
+import { withActions } from '@storybook/addon-actions/decorator';
+import { expect } from '@storybook/jest';
+import type { Meta, StoryObj } from '@storybook/vue3';
+import Step2DescribeDataset, { Step2DescribeDatasetProps } from './Step2DescribeDataset.vue';
 import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
 import { user } from '../../config';
+import { NewDataset } from '../../types';
+import { userEvent, waitFor, within } from '@storybook/testing-library';
 
 
-export default {
+const meta = {
   title: 'Pages/PublishingForm/Step2',
   component: Step2DescribeDataset,
-};
+  decorators: [withActions],
+  argTypes: {
+    onNext: { action: true },
+  }
+} satisfies Meta<typeof Step2DescribeDataset>;
 
-const originalDataset = {
+export default meta;
+
+const originalDataset: NewDataset = {
   title: "My new dataset",
   archived: false,
   private: false,
@@ -25,6 +36,7 @@ const originalDataset = {
     granularity: "",
   },
   owner: user,
+  organization: null,
   quality: {
     all_resources_available: true,
     dataset_description_quality: true,
@@ -40,12 +52,22 @@ const originalDataset = {
   },
 };
 
-const args = {
+const args: Step2DescribeDatasetProps = {
   originalDataset,
   steps: Stepper.StepperOnSecondStep.args.steps,
 };
 
-export const Step2 = {
+export const Step2: StoryObj<typeof meta> = {
+  play: async ({ args, canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    await waitFor(() => expect(canvas.getByTestId("markdown-editor")).toBeDefined());
+
+    await step('Click on next', async () => {
+      await userEvent.click(canvas.getByRole("button", {name: "Next"}));
+    });
+
+    await waitFor(() => expect(args.onNext).toHaveBeenCalled());
+  },
   render: (args) => ({
     components: { Step2DescribeDataset },
     setup() {

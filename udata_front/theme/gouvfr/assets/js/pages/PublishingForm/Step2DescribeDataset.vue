@@ -142,7 +142,7 @@
               </div>
             </div>
           </Well>
-          <fieldset class="fr-fieldset" aria-labelledby="description-legend">
+          <fieldset class="fr-fieldset min-width-0" aria-labelledby="description-legend">
             <legend class="fr-fieldset__legend" id="description-legend">
               <h2 class="subtitle subtitle--uppercase fr-mb-3v">
                 {{ $t("Description") }}
@@ -174,14 +174,14 @@
               />
             </LinkedToAccordion>
             <LinkedToAccordion
-              class="fr-fieldset__element"
+              class="fr-fieldset__element min-width-0"
               :accordion="writeAGoodDescriptionAccordionId"
               @blur="vWarning$.description.$touch"
             >
               <InputGroup
                 :label="$t('Description')"
                 :required="true"
-                type="textarea"
+                type="markdown"
                 v-model="dataset.description"
                 :hasError="fieldHasError('description')"
                 :hasWarning="fieldHasWarning('description')"
@@ -195,7 +195,7 @@
             >
               <MultiSelect
                 :minimumCharacterBeforeSuggest="2"
-                @change="(value) => dataset.tags = value"
+                @change="(value: Array<string>) => dataset.tags = value"
                 :placeholder="$t('Tags')"
                 :searchPlaceholder="$t('Search a tag...')"
                 suggestUrl="/tags/suggest/"
@@ -215,7 +215,7 @@
                 :searchPlaceholder="$t('Search a license...')"
                 :listUrl="licensesUrl"
                 :values="dataset.license"
-                @change="(value) => dataset.license = value"
+                @change="(value: string) => dataset.license = value"
                 :allOption="$t('Select a license')"
                 :addAllOption="false"
               />
@@ -237,7 +237,7 @@
                 :searchPlaceholder="$t('Search a frequency...')"
                 :listUrl="frequenciesUrl"
                 :values="dataset.frequency"
-                @change="(value) => dataset.frequency = value"
+                @change="(value: string) => dataset.frequency = value"
                 :required="true"
                 :hasError="fieldHasError('frequency')"
                 :hasWarning="fieldHasWarning('frequency')"
@@ -276,8 +276,8 @@
                     :searchPlaceholder="$t('Search a spatial coverage...')"
                     suggestUrl="/spatial/zones/suggest/"
                     entityUrl="/spatial/zone/"
-                    :values="dataset.spatial.zones"
-                    @change="(value) => dataset.spatial.zones = value"
+                    :values="dataset.spatial?.zones"
+                    @change="(value: Array<string>) => dataset.spatial ? dataset.spatial.zones = value : dataset.spatial = {zones: value}"
                     :hasWarning="fieldHasWarning('spatial_information')"
                     :allOption="$t('e.g. France')"
                     :addAllOption="false"
@@ -289,8 +289,8 @@
                     :placeholder="$t('Spatial granularity')"
                     :searchPlaceholder="$t('Search a granularity...')"
                     listUrl="/spatial/granularities/"
-                    :values="dataset.spatial.granularity"
-                    @change="(value) => dataset.spatial.granularity = value"
+                    :values="dataset.spatial?.granularity"
+                    @change="(value: string) => dataset.spatial ? dataset.spatial.granularity = value : dataset.spatial = {granularity: value}"
                     :hasWarning="fieldHasWarning('spatial_information')"
                     :allOption="$t('Select an option')"
                     :addAllOption="false"
@@ -310,10 +310,15 @@
     </div>
   </div>
 </template>
-
-<script>
+<script lang="ts">
+export type Step2DescribeDatasetProps = {
+  originalDataset: NewDataset,
+  steps: Array<string>,
+};
+</script>
+<script setup lang="ts">
 import { Well } from "@etalab/data.gouv.fr-components";
-import { computed, defineComponent, reactive } from 'vue';
+import { computed, reactive } from 'vue';
 import { minLengthWarning, not, required, requiredWithCustomMessage, sameAs } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -330,122 +335,80 @@ import { quality_description_length, title } from "../../config";
 import { useI18n } from 'vue-i18n';
 import { getLicensesUrl } from '../../api/licenses';
 import { getFrequenciesUrl } from '../../api/datasets';
+import { NewDataset, PublishingFormAccordionState } from '../../types';
 
-export default defineComponent({
-  components: { Accordion, AccordionGroup, Container, InputGroup, LinkedToAccordion, MultiSelect, Stepper, Well, Sidemenu },
-  emits: ["next"],
-  props: {
-    originalDataset: {
-      /** @type {import("vue").PropType<import("../../types").NewDataset>} */
-      type: Object,
-      required: true
-    },
-    steps: {
-      type: Array,
-      required: true,
-    }
+const emit = defineEmits(["next"]);
+const props = defineProps<Step2DescribeDatasetProps>();
+
+const { t } = useI18n();
+const { id: nameDatasetAccordionId } = useUid("accordion");
+const { id: addAcronymAccordionId } = useUid("accordion");
+const { id: writeAGoodDescriptionAccordionId } = useUid("accordion");
+const { id: useTagsAccordionId } = useUid("accordion");
+const { id: selectLicenseAccordionId } = useUid("accordion");
+const { id: chooseFrequencyAccordionId } = useUid("accordion");
+const { id: addTemporalCoverageAccordionId } = useUid("accordion");
+const { id: addSpatialInformationAccordionId } = useUid("accordion");
+
+const dataset = reactive({...props.originalDataset});
+if(!dataset.spatial) {
+  dataset.spatial = {
+    zones: undefined,
+    granularity: undefined,
+  }
+}
+
+const frequenciesUrl = getFrequenciesUrl();
+const licensesUrl = getLicensesUrl();
+
+const notUnknown = not(t("The value must be different than unknown."), sameAs("unknown"));
+const tagsRequired = requiredWithCustomMessage(t("Adding tags helps improve the SEO of your data."));
+const temporalCoverageRequired = requiredWithCustomMessage(t("You did not provide the temporal coverage."));
+const spatialGranularityRequired = requiredWithCustomMessage(t("You have not specified the spatial granularity."));
+
+const requiredRules = {
+  description: { required },
+  frequency: { required },
+  title: { required },
+};
+
+const warningRules = {
+  acronym: {},
+  description: {required, minLengthValue: minLengthWarning(parseInt(quality_description_length ?? "0"))},
+  frequency: { required, notUnknown },
+  license: { required },
+  spatial: {
+    granularity: { required: spatialGranularityRequired },
   },
-  setup(props, { emit }) {
-    const { t } = useI18n();
-    const { id: nameDatasetAccordionId } = useUid("accordion");
-    const { id: addAcronymAccordionId } = useUid("accordion");
-    const { id: writeAGoodDescriptionAccordionId } = useUid("accordion");
-    const { id: useTagsAccordionId } = useUid("accordion");
-    const { id: selectLicenseAccordionId } = useUid("accordion");
-    const { id: chooseFrequencyAccordionId } = useUid("accordion");
-    const { id: addTemporalCoverageAccordionId } = useUid("accordion");
-    const { id: addSpatialInformationAccordionId } = useUid("accordion");
+  tags: { required: tagsRequired },
+  temporal_coverage: { required: temporalCoverageRequired },
+  title: { required },
+};
 
-    const dataset = reactive({...props.originalDataset});
+const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(dataset, requiredRules, warningRules);
 
-    const frequenciesUrl = getFrequenciesUrl();
-    const licensesUrl = getLicensesUrl();
-
-    const notUnknown = not(t("The value must be different than unknown."), sameAs("unknown"));
-    const tagsRequired = requiredWithCustomMessage(t("Adding tags helps improve the SEO of your data."));
-    const temporalCoverageRequired = requiredWithCustomMessage(t("You did not provide the temporal coverage."));
-    const spatialGranularityRequired = requiredWithCustomMessage(t("You have not specified the spatial granularity."));
-
-    const requiredRules = {
-      description: { required },
-      frequency: { required },
-      title: { required },
-    };
-
-    const warningRules = {
-      acronym: {},
-      description: {required, minLengthValue: minLengthWarning(quality_description_length), },
-      frequency: { required, notUnknown },
-      license: { required },
-      spatial: {
-        granularity: { required: spatialGranularityRequired },
-      },
-      tags: { required: tagsRequired },
-      temporal_coverage: { required: temporalCoverageRequired },
-      title: { required },
-    };
-
-    const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(dataset, requiredRules, warningRules);
-
-    /**
-     * @type {import("vue").ComputedRef<Record<string, import("../../types").PublishingFormAccordionState>>}
-     */
-    const state = computed(() => {
-      return {
-        acronym: vWarning$.value.acronym.$dirty ? "info" : "disabled",
-        title: getFunctionalState(vWarning$.value.title.$dirty, v$.value.title.$invalid, vWarning$.value.title.$error),
-        description: getFunctionalState(vWarning$.value.description.$dirty, v$.value.description.$invalid, vWarning$.value.description.$error),
-        tags: getFunctionalState(vWarning$.value.tags.$dirty, false, vWarning$.value.tags.$error),
-        license: getFunctionalState(vWarning$.value.license.$dirty, false, vWarning$.value.license.$error),
-        frequency: getFunctionalState(vWarning$.value.frequency.$dirty, v$.value.frequency.$invalid, vWarning$.value.frequency.$error),
-        temporal_coverage: getFunctionalState(vWarning$.value.temporal_coverage.$dirty, false, vWarning$.value.temporal_coverage.$error),
-        spatial_information: getFunctionalState(vWarning$.value.spatial.granularity.$dirty, false, vWarning$.value.spatial.granularity.$error),
-      };
-    });
-
-    /**
-     *
-     * @param {string} field
-     */
-    const fieldHasError = (field) => hasError(state, field);
-
-    /**
-     *
-     * @param {string} field
-     */
-    const fieldHasWarning = (field) => hasWarning(state, field);
-
-    const submit = () => {
-      validateRequiredRules().then(valid => {
-        if(valid) {
-          emit("next", dataset);
-        }
-      });
-    };
-
-    return {
-      addAcronymAccordionId,
-      nameDatasetAccordionId,
-      writeAGoodDescriptionAccordionId,
-      useTagsAccordionId,
-      selectLicenseAccordionId,
-      chooseFrequencyAccordionId,
-      addTemporalCoverageAccordionId,
-      addSpatialInformationAccordionId,
-      dataset,
-      editIcon,
-      frequenciesUrl,
-      licensesUrl,
-      state,
-      fieldHasError,
-      fieldHasWarning,
-      getErrorText,
-      getWarningText,
-      submit,
-      title,
-      v$,
-      vWarning$,
-    };
-  },
+const state = computed<Record<string, PublishingFormAccordionState>>(() => {
+  return {
+    acronym: vWarning$.value.acronym.$dirty ? "info" : "disabled",
+    title: getFunctionalState(vWarning$.value.title.$dirty, v$.value.title.$invalid, vWarning$.value.title.$error),
+    description: getFunctionalState(vWarning$.value.description.$dirty, v$.value.description.$invalid, vWarning$.value.description.$error),
+    tags: getFunctionalState(vWarning$.value.tags.$dirty, false, vWarning$.value.tags.$error),
+    license: getFunctionalState(vWarning$.value.license.$dirty, false, vWarning$.value.license.$error),
+    frequency: getFunctionalState(vWarning$.value.frequency.$dirty, v$.value.frequency.$invalid, vWarning$.value.frequency.$error),
+    temporal_coverage: getFunctionalState(vWarning$.value.temporal_coverage.$dirty, false, vWarning$.value.temporal_coverage.$error),
+    spatial_information: getFunctionalState(vWarning$.value.spatial.granularity.$dirty, false, vWarning$.value.spatial.granularity.$error),
+  };
 });
+
+const fieldHasError = (field: string) => hasError(state, field);
+
+const fieldHasWarning = (field: string) => hasWarning(state, field);
+
+function submit() {
+  validateRequiredRules().then(valid => {
+    if(valid) {
+      emit("next", dataset);
+    }
+  });
+};
 </script>

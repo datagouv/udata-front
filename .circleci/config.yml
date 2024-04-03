@@ -136,10 +136,7 @@ jobs:
 
   assets:
     docker:
-      # TODO make an image based on 2-alpine w/ nvm and phantom deps
-      - image: udata/circleci:py3
-    environment:
-       BASH_ENV: /root/.bashrc
+      - image: cimg/python:3.9.18-node
     steps:
       - checkout
       - attach_workspace:
@@ -153,7 +150,7 @@ jobs:
             - js-cache-{{ arch }}-{{ .Branch }}{{ .Environment.CIRCLE_TAG }}
       - run:
           name: Install NodeJS and dependencies
-          command: nvm install && npm ci
+          command: npm ci
       - save_cache:
           key: js-cache-{{ arch }}-{{ checksum "js.deps" }}
           paths:
@@ -165,9 +162,7 @@ jobs:
       - run:
           name: Compile assets
           command: |
-            nvm use
             npm run build
-
       - persist_to_workspace:
           root: .
           paths:

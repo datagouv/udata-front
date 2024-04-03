@@ -2,7 +2,7 @@ import UploadModal from './UploadModal.vue';
 import { withActions } from '@storybook/addon-actions/decorator';
 
 export default {
-  title: 'Components/UploadModal',
+  title: 'Components/UploadModalButton/Internals/UploadModal',
   component: UploadModal,
   parameters: {
     actions: {
