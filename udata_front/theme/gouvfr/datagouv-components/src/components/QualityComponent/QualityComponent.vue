@@ -1,6 +1,6 @@
 <template>
     <div class="fr-grid-row fr-grid-row--middle fr-ml-n1v">
-    <ToggleTip
+    <Toggletip
         class="fr-btn fr-btn--tertiary-no-outline fr-btn--secondary-grey-500 fr-icon-info-line"
     >
         {{$t('Metadata quality:')}}
@@ -65,7 +65,7 @@
                 </a>
             </div>
         </template>
-    </ToggleTip>
+    </Toggletip>
     <p class="fr-m-0 fr-mr-1v">
         {{$t('Metadata quality:')}}
     </p>
@@ -112,7 +112,7 @@
 import { QualityScore}  from '../QualityScore/';
 import { QualityItem } from '../QualityItem/';
 import { QualityItemWarning } from '../QualityItemWarning/';
-import { ToggleTip } from '../ToggleTip/';
+import { Toggletip } from '../Toggletip/';
 import { config } from '../../config';
 import type { Quality } from '../../types/datasets';
 defineProps<{

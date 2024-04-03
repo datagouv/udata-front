@@ -4,14 +4,6 @@ import { ReadMore } from ".";
 const meta = {
   title: 'Components/ReadMore',
   component: ReadMore,
-  tags: ['autodocs'],
-  parameters: {
-    docs: {
-      description: {
-        component: "The ReadMore component hides a long text and allow to display / hide it when you click on the associated button."
-      }
-    }
-  },
 } satisfies Meta<typeof ReadMore>;
 
 export default meta;

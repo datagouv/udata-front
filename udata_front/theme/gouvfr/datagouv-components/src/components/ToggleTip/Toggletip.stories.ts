@@ -1,14 +1,14 @@
+import type { Meta, StoryObj } from '@storybook/vue3';
 import Toggletip from './Toggletip.vue';
 
-export default {
+const meta = {
   title: 'Components/Toggletip',
   component: Toggletip,
-};
+} satisfies Meta<typeof Toggletip>;
 
-const args = {
-};
+export default meta;
 
-export const SimpleToggletip = {
+export const SimpleToggletip: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Toggletip },
     setup() {
@@ -19,5 +19,5 @@ export const SimpleToggletip = {
                   <template v-slot:toggletip>This is shown in the toggletip</template>
                 </Toggletip>`,
   }),
-  args,
+  args: {},
 };

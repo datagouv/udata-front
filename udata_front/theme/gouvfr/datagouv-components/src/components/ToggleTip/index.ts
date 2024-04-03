@@ -1,3 +1,3 @@
 import "../toggletip.less";
-import ToggleTip from "./ToggleTip.vue";
-export { ToggleTip };
+import Toggletip from "./Toggletip.vue";
+export { Toggletip };
