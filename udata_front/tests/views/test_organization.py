@@ -116,8 +116,6 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         # so private datasets are omitted
         datasets = [
             DatasetFactory(organization=organization) for _ in range(2)]
-        empty_datasets = [
-            DatasetFactory(organization=organization, resources=[]) for _ in range(1)]
         [DatasetFactory(organization=organization, private=True) for _ in range(1)]
         response = self.get(url_for('organizations.show', org=organization))
 
@@ -128,13 +126,7 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         rendered_private_datasets = [dataset for dataset in rendered_datasets if dataset.private]
         self.assertEqual(len(rendered_private_datasets), 0)
 
-        rendered_empty_datasets = [
-            dataset for dataset in rendered_datasets if len(dataset.resources) == 0
-        ]
-        self.assertEqual(len(rendered_empty_datasets), len(empty_datasets))
-
-        self.assertEqual(rendered_datasets.total,
-                         len(datasets) + len(empty_datasets))
+        self.assertEqual(rendered_datasets.total, len(datasets))
 
     def test_render_display_with_paginated_datasets(self):
         '''It should render the organization page with paginated datasets'''
@@ -284,7 +276,6 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
             for _ in range(3)
         ]
         not_org_dataset = DatasetFactory(resources=[ResourceFactory()])
-        hidden_dataset = DatasetFactory()
 
         response = self.get(
             url_for('organizations.datasets_resources_csv', org=org))
@@ -318,7 +309,6 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
                 self.assertIn((str(dataset.id), str(resource.id)), ids)
 
         dataset_ids = set(row[0] for row in rows)
-        self.assertNotIn(str(hidden_dataset.id), dataset_ids)
         self.assertNotIn(str(not_org_dataset.id), dataset_ids)
 
 

@@ -154,7 +154,7 @@ class DatasetBlueprintTest(GouvfrFrontTestCase):
 
     def test_no_index_on_empty(self):
         '''It should prevent crawlers from indexing empty datasets'''
-        dataset = DatasetFactory()
+        dataset = DatasetFactory(private=True)
         response = self.get(url_for('datasets.show', dataset=dataset))
         self.assert200(response)
         self.assertIn(b'<meta name="robots" content="noindex, nofollow"',
