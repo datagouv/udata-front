@@ -119,4 +119,3 @@ defineProps<{
     quality: Quality
 }>();
 </script>
-../QualityItem
