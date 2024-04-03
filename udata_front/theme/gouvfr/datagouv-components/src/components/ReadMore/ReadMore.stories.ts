@@ -1,11 +1,22 @@
-import ReadMore from "./ReadMore.vue";
+import type { Meta, StoryObj } from '@storybook/vue3';
+import { ReadMore } from ".";
 
-export default {
+const meta = {
   title: 'Components/ReadMore',
   component: ReadMore,
-};
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: "The ReadMore component hides a long text and allow to display / hide it when you click on the associated button."
+      }
+    }
+  },
+} satisfies Meta<typeof ReadMore>;
 
-export const DefaultReadMore = {
+export default meta;
+
+export const DefaultReadMore: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { ReadMore },
     setup() {
@@ -21,7 +32,7 @@ export const DefaultReadMore = {
   args: {},
 };
 
-export const NoReadMoreOnSmallContent = {
+export const NoReadMoreOnSmallContent: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { ReadMore },
     setup() {
