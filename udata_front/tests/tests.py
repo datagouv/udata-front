@@ -11,7 +11,7 @@ from feedgen.feed import FeedGenerator
 from feedgenerator.django.utils.feedgenerator import Atom1Feed
 
 from udata.core.dataset.factories import (
-    DatasetFactory, LicenseFactory, DatasetFactory
+    DatasetFactory, LicenseFactory
 )
 from udata.core.reuse.factories import ReuseFactory
 from udata.core.organization.factories import OrganizationFactory

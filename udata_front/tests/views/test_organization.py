@@ -12,7 +12,7 @@ from udata.frontend import csv
 from udata.core.badges.factories import badge_factory
 
 from udata.core.reuse.factories import ReuseFactory, VisibleReuseFactory
-from udata.core.dataset.factories import DatasetFactory, DatasetFactory, ResourceFactory
+from udata.core.dataset.factories import DatasetFactory, ResourceFactory
 from udata.core.discussions.factories import DiscussionFactory
 from udata.core.organization.factories import OrganizationFactory
 from udata.core.user.factories import UserFactory, AdminFactory
