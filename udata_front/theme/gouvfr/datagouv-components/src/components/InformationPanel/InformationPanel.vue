@@ -192,5 +192,5 @@ const hasExtras = () => {
 onMounted(() => {
   fetchGranularities().then(foundGranularities => granularities.value = foundGranularities);
   fetchFrequencies().then(foundFrequencies => frequencies.value = foundFrequencies);
- });
+});
 </script>
