@@ -1,7 +1,7 @@
 import Threads from "./Threads.vue";
 
 export default {
-  title: 'Components/Discussions/Threads',
+  title: 'Components/Discussions',
   component: Threads,
 };
 

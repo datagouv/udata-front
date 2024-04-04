@@ -4,11 +4,14 @@
  * We use a manual mode to load all our vue instances before starting the DSFR engine.
  */
 
+/// <reference types="vite/client" />
+
 import type { AxisAlignment } from "./types";
 
 // @ts-ignore La propriété `dsfr` est comprise par @gouvfr/dsfr
 window.dsfr = {
   mode: 'manual',
+  verbose: import.meta.env.DEV,
 }
 
 /**
