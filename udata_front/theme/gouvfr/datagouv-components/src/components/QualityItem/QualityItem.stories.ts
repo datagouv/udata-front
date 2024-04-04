@@ -8,7 +8,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: "The Quality, mostly used as a part of the Quality Component, displays a message acording to a boolean."
+        component: "The Quality Item, mostly used as a part of the Quality Component, displays a message acording to a boolean."
       }
     }
   },
