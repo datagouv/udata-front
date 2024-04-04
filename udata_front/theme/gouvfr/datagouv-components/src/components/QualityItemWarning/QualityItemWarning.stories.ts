@@ -16,7 +16,7 @@ const meta = {
 
 export default meta;
 
-export const QualityItemPassed: StoryObj<typeof meta> = {
+export const QualityWarning: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { QualityItemWarning },
     setup() {
