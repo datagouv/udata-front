@@ -286,6 +286,7 @@
                     :multiple="true"
                     helperLabel="Insee : "
                     :onSuggest="formatSpatialZones"
+                    :showDescription="true"
                   />
                 </div>
                 <div class="fr-col-12">
