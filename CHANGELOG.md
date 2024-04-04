@@ -7,6 +7,7 @@
 - Add stories to Resource component [#364](https://github.com/etalab/udata-front/pull/364)
 - Move Well to datagouv-components [#382](https://github.com/etalab/udata-front/pull/382)
 - Add markdown editor [#351](https://github.com/etalab/udata-front/pull/351)
+- Componentize quality component [#385](https://github.com/etalab/udata-front/pull/385)
 
 ## 3.5.4 (2024-03-20)
 
