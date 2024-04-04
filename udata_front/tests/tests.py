@@ -11,7 +11,7 @@ from feedgen.feed import FeedGenerator
 from feedgenerator.django.utils.feedgenerator import Atom1Feed
 
 from udata.core.dataset.factories import (
-    DatasetFactory, LicenseFactory, VisibleDatasetFactory
+    DatasetFactory, LicenseFactory
 )
 from udata.core.reuse.factories import ReuseFactory
 from udata.core.organization.factories import OrganizationFactory
@@ -481,7 +481,7 @@ class SpdTest:
     def test_render_with_data(self, client):
         for i in range(3):
             badge = Badge(kind=SPD)
-            VisibleDatasetFactory(badges=[badge])
+            DatasetFactory(badges=[badge])
         response = client.get(url_for('gouvfr.spd'))
         assert200(response)
 
@@ -667,7 +667,7 @@ class SpatialTerritoriesApiTest:
         paca, bdr, arles = create_geozones_fixtures()
         organization = OrganizationFactory()
         for _ in range(3):
-            VisibleDatasetFactory(
+            DatasetFactory(
                 organization=organization,
                 spatial=SpatialCoverageFactory(zones=[paca.id]))
 
@@ -680,7 +680,7 @@ class SpatialTerritoriesApiTest:
         paca, bdr, arles = create_geozones_fixtures()
         organization = OrganizationFactory()
         for _ in range(3):
-            VisibleDatasetFactory(
+            DatasetFactory(
                 organization=organization,
                 spatial=SpatialCoverageFactory(zones=[paca.id]))
 
@@ -693,7 +693,7 @@ class SpatialTerritoriesApiTest:
         paca, bdr, arles = create_geozones_fixtures()
         organization = OrganizationFactory()
         for _ in range(3):
-            VisibleDatasetFactory(
+            DatasetFactory(
                 organization=organization,
                 spatial=SpatialCoverageFactory(zones=[paca.id]))
 
@@ -705,7 +705,7 @@ class SpatialTerritoriesApiTest:
         paca, bdr, arles = create_geozones_fixtures()
         organization = OrganizationFactory()
         for _ in range(3):
-            VisibleDatasetFactory(
+            DatasetFactory(
                 organization=organization,
                 spatial=SpatialCoverageFactory(zones=[bdr.id]))
 
@@ -718,7 +718,7 @@ class SpatialTerritoriesApiTest:
         paca, bdr, arles = create_geozones_fixtures()
         organization = OrganizationFactory()
         for _ in range(3):
-            VisibleDatasetFactory(
+            DatasetFactory(
                 organization=organization,
                 spatial=SpatialCoverageFactory(zones=[arles.id]))
 
