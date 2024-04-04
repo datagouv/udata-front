@@ -4,9 +4,8 @@ from datetime import datetime
 
 from flask import url_for
 
-from udata.models import (
-    Organization, Member, Follow, CERTIFIED, PUBLIC_SERVICE
-)
+from udata.models import Organization, Member, Follow
+from udata.core.organization.constants import CERTIFIED, PUBLIC_SERVICE
 
 from udata.frontend import csv
 from udata.core.badges.factories import badge_factory
