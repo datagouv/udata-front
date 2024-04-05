@@ -29,7 +29,6 @@ import "./components/vanilla/clipboard.js";
 import "./components/vanilla/dialog.js";
 import "./components/vanilla/sort-search.js";
 import handleUpdateUrlButtons from "./components/vanilla/update-url.js";
-
 import i18n from "./i18n.ts";
 import { admin_root, explorable_resources, schema_catalog_url, schema_documentation_url, schema_validata_url, title } from "./config.ts";
 import Api from "./plugins/api.ts";
@@ -78,8 +77,8 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("user-dataset-list", UserDatasetList);
   app.component("user-reuse-list", UserReuseList);
 
-  // @ts-ignore unset delimiters used in html templates to prevent injections using {{ }}
-  app.config.compilerOptions.delimiters = [];
+  // @ts-ignore disable delimiters used in html templates see [#386](https://github.com/etalab/udata-front/pull/386) for more details
+  app.config.compilerOptions.delimiters = ["", ""];
 
   app.mount(el);
 };

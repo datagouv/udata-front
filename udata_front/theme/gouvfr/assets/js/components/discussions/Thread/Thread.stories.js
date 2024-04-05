@@ -2,7 +2,7 @@ import Loading from "./Loader.vue";
 import Thread from "./Thread.vue";
 
 export default {
-  title: 'Components/Discussions/Thread',
+  title: 'Components/Discussions/Internals/Thread',
   component: Thread,
 };
 

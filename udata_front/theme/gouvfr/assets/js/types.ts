@@ -8,10 +8,6 @@ export type MultiSelectOption = {
   selected?: boolean;
 }
 
-export type WellType = "primary" | "secondary";
-
-export type Weight = "light" | "regular" | "semi-bold" | "bold" | "heavy";
-
 export type AlertSize = "sm" | "md";
 
 export type AlertType = FormFunctionalState | DSFRInfoState;
@@ -77,9 +73,30 @@ export type NewDiscussion = {
   subject: Subject;
 };
 
-export type CreateDiscussion = (discussion: NewDiscussion) => Promise<any>
+export type CreateDiscussion = (discussion: NewDiscussion) => Promise<any>;
 
-export type CreateComment = (comment: string) => Promise<any>
+export type CreateComment = (comment: string) => Promise<any>;
+
+export type Spam = {
+  status?: string;
+}
+
+export type Discussion = Array<{content: string, posted_by: User, posted_on: string, spam?: Spam}>;
+
+export type Thread = {
+  id: string;
+  discussion: Discussion;
+  title: string;
+  url: string;
+  closed: string;
+  closed_by: User;
+  spam?: Spam;
+};
+
+export type Sort = {
+  name: string,
+  key: string
+}
 
 export type Quality = {
   all_resources_available: boolean;
@@ -93,6 +110,10 @@ export type Quality = {
   temporal_coverage: boolean;
   update_frequency: boolean;
   update_fulfilled_in_time: boolean;
+}
+
+export type Harvest = {
+  backend: string;
 }
 
 export type NewDataset = Owned & {
@@ -126,6 +147,11 @@ uri: string;
 slug: string;
 quality: Quality;
 metrics: { discussions: number; followers: number; reuses: number; views: number; };
+harvest: Harvest | null;
+};
+
+export type UiDataset = Omit<Dataset, 'last_modified'> & {
+  last_modified: Date;
 };
 
 export type Reuse = Owned & {
