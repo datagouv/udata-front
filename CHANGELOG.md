@@ -3,7 +3,7 @@
 ## Current (in progress)
 
 - Move Pagination to datagouv-components [#365](https://github.com/etalab/udata-front/pull/365)
-- Fix release CI [#380](https://github.com/etalab/udata-front/pull/380)
+- Fix release CI [#380](https://github.com/etalab/udata-front/pull/380) [#384](https://github.com/etalab/udata-front/pull/384)
 - Add stories to Resource component [#364](https://github.com/etalab/udata-front/pull/364)
 - Move Well to datagouv-components [#382](https://github.com/etalab/udata-front/pull/382)
 - Add markdown editor [#351](https://github.com/etalab/udata-front/pull/351)
