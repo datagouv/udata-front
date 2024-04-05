@@ -17,6 +17,7 @@
 - Add a new vite config for development [#372](https://github.com/etalab/udata-front/pull/372)
 - Fix structure tab not shown [#369](https://github.com/etalab/udata-front/pull/369)
 - Update sentry configuration to ignore aborted requests [#368](https://github.com/etalab/udata-front/pull/368)
+- Update constants imports from `.models` to `.constants` [#375](https://github.com/etalab/udata-front/pull/375)
 - Fix CI not using udata release when needed [#363](https://github.com/etalab/udata-front/pull/363)
 
 ## 3.5.3 (2024-02-22)

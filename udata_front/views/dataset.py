@@ -4,7 +4,8 @@ from flask import abort, request, url_for, redirect, make_response
 from feedgenerator.django.utils.feedgenerator import Atom1Feed
 
 from udata.models import Reuse, Follow
-from udata.core.dataset.models import Dataset, RESOURCE_TYPES, get_resource
+from udata.core.dataset.models import Dataset, get_resource
+from udata.core.dataset.constants import RESOURCE_TYPES
 from udata.core.dataset.search import DatasetSearch
 from udata.core.dataset.permissions import ResourceEditPermission, DatasetEditPermission
 from udata.core.site.models import current_site
