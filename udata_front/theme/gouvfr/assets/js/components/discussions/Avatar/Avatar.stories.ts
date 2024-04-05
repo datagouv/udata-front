@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import Avatar, {type AvatarProps} from "./Avatar.vue";
 
-const meta =  {
-  title: 'Components/Discussions/Avatar',
+const meta = {
+  title: 'Components/Avatar',
   component: Avatar,
 } satisfies Meta<typeof Avatar>;
 

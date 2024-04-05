@@ -1,0 +1,44 @@
+@import (inline) 'prosemirror-view/style/prosemirror.css';
+@import (inline) 'prosemirror-tables/style/tables.css';
+
+.editor__container {
+    .bg-alt-grey;
+    .fr-px-2w;
+    .fr-py-1w;
+    .rounded-xxs;
+    --hover: @grey-100;
+
+    .editor pre {
+        background: @grey-125;
+    }
+
+    .editor code {
+        color: @grey-400;
+    }
+
+    .editor .fr-table tbody {
+        background-color: @grey-100;
+        tr:nth-child(odd) {
+            background-color: @grey-125;
+        }
+    }
+    .editor.ProseMirror .selectedCell:after {
+        background-color: @blue-300;
+        opacity: 0.4;
+    }
+}
+
+.editor {
+    .fr-mx-auto;
+    .fr-my-0;
+    .markdown;
+    min-height: 27rem;
+    .fr-table table {
+        overflow: visible;
+    }
+    & > .link-edit {
+        & > .input-area {
+            width: 200px;
+        }
+    }
+}

@@ -39,10 +39,10 @@
 </template>
 
 <script>
+import { Well } from "@etalab/data.gouv.fr-components";
 import { defineComponent, reactive } from 'vue';
 import Container from '../../components/Ui/Container/Container.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
-import Well from "../../components/Ui/Well/Well.vue";
 import CardLg from '../../components/dataset/card-lg.vue';
 import successIcon from "../../../../templates/svg/illustrations/success.svg";
 

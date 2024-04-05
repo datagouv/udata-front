@@ -1,7 +1,7 @@
 import Author from "./Author.vue";
 
 export default {
-  title: 'Components/Discussions/Author',
+  title: 'Components/Discussions/Internals/Author',
   component: Author,
 };
 

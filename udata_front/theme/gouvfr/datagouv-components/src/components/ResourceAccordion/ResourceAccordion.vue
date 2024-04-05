@@ -55,6 +55,7 @@
               :aria-controls="resourceContentId"
               class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-btn--secondary-grey-500"
               :class="{'fr-icon-arrow-up-s-line': expanded, 'fr-icon-arrow-down-s-line': !expanded}"
+              data-testid="expand-button"
             >
               <template v-if="expanded">
                 {{ $t('Close details') }}

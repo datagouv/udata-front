@@ -4,8 +4,8 @@ import { toValue } from "vue";
 /**
  *
  * @template {Record<string, object>} T
- * @template {Record<string, object>} U
- * @param {import("vue").UnwrapNestedRefs<object>} data
+ * @template {T} U
+ * @param {import("vue").MaybeRef<{ [key in keyof U]: any; }>} data
  * @param {T} requiredRules
  * @param {U} warningRules
  * @param {string | boolean} scope
