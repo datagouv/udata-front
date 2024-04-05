@@ -20,6 +20,7 @@
         {{ t("{n} requests", {n: membershipRequests.length}) }}
       </h2>
       <MembershipRequest
+        class="fr-mb-4w"
         v-for="request in membershipRequests"
         :key="request.id"
         :loading="loading"
@@ -30,7 +31,7 @@
         @refuse="refuse"
       />
     </template>
-    <h2 class="subtitle subtitle--uppercase fr-mt-2w">
+    <h2 class="subtitle subtitle--uppercase fr-mt-2w fr-mb-1v">
       {{ t("{n} members", {n: members.length}) }}
     </h2>
     <div class="fr-table fr-table--layout-fixed">
@@ -39,7 +40,7 @@
           <tr>
             <th scope="col">{{ t("Members") }}</th>
             <th scope="col">{{ t("Status") }}</th>
-            <th scope="col">{{ t("Action") }}</th>
+            <th scope="col" v-if="isAdmin">{{ t("Action") }}</th>
           </tr>
         </thead>
         <tbody>
@@ -48,7 +49,7 @@
             <td>
               <p class="fr-badge">{{ getRoleLabel(member.role) }}</p>
             </td>
-            <td>
+            <td v-if="isAdmin">
               <button
                 class="fr-btn fr-btn--sm fr-btn--tertiary-no-outline fr-icon-pencil-line"
                 data-fr-opened="false"
@@ -148,7 +149,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { acceptRequest, formatRolesAsOptions, getOrganization, getPendingMemberships, getRoles, refuseRequest, removeMember, updateMemberRole } from "../../../api/organizations";
 import AdminDangerZone from "../../../components/AdminDangerZone/AdminDangerZone.vue";
@@ -158,6 +159,7 @@ import SelectGroup, { type Option } from "../../../components/Form/SelectGroup/S
 import MembershipRequest from "../../../components/MembershipRequest/MembershipRequest.vue";
 import type { EditingMember, Member, MemberRole, PendingMembershipRequest } from "../../../types";
 import { useToast } from "../../../composables/useToast";
+import { user } from "../../../config";
 
 const props = defineProps<{oid: string}>();
 
@@ -166,6 +168,8 @@ const { t } = useI18n();
 const { toast } = useToast();
 
 const membershipRequests = ref<Array<PendingMembershipRequest>>([]);
+
+const isAdmin = computed(() => members.value.some(member => member.user.id === user?.id && member.role === "admin"));
 
 const roles = ref<Array<Option>>([]);
 
@@ -266,8 +270,13 @@ async function refuse(id: string, comment: string) {
   }
 }
 
+watchEffect(() => {
+  if(isAdmin.value) {
+    getPendingMemberships(props.oid).then(requests => membershipRequests.value = requests);
+  }
+});
+
 onMounted(() => {
-  getPendingMemberships(props.oid).then(requests => membershipRequests.value = requests);
   getRoles().then(formatRolesAsOptions).then(options => roles.value = options);
   updateMembers();
 });
