@@ -115,37 +115,37 @@ export type Harvest = {
 }
 
 export type NewDataset = Owned & {
-title: string;
-acronym: string;
-archived: boolean;
-description: string;
-tags: Array<string> | null;
-license: string;
-frequency: string;
-temporal_coverage: string;
-frequency_date: Date | null;
-page: string;
-private: boolean;
-quality?: Quality;
-spatial: {
-zones?: Array<string>;
-granularity?: string;
-} | null;
+  title: string;
+  acronym: string;
+  archived: boolean;
+  description: string;
+  tags: Array<string> | null;
+  license: string;
+  frequency: string;
+  temporal_coverage: string;
+  frequency_date: Date | null;
+  page: string;
+  private: boolean;
+  quality?: Quality;
+  spatial: {
+    zones?: Array<string>;
+    granularity?: string;
+  } | null;
 };
 
 export type Dataset = NewDataset & {
-id: string;
-page: string;
-resources: Array<Resource>;
-community_resources: Array<Resource>;
-created_at: string;
-last_modified: string;
-last_update: string;
-uri: string;
-slug: string;
-quality: Quality;
-metrics: { discussions: number; followers: number; reuses: number; views: number; };
-harvest: Harvest | null;
+  id: string;
+  page: string;
+  resources: Array<Resource>;
+  community_resources: Array<Resource>;
+  created_at: string;
+  last_modified: string;
+  last_update: string;
+  uri: string;
+  slug: string;
+  quality: Quality;
+  metrics: { discussions: number; followers: number; reuses: number; views: number; };
+  harvest: Harvest | null;
 };
 
 export type UiDataset = Omit<Dataset, 'last_modified'> & {
@@ -187,16 +187,16 @@ export type Me = User & {
 export type AxisAlignment = "start" | "center" | "end";
 
 export type SpatialZone = {
-code: string;
-id: string;
-level: string;
-name: string;
-uri: string;
+  code: string;
+  id: string;
+  level: string;
+  name: string;
+  uri: string;
 };
 
 export type SpatialGranularity = {
-id: string;
-name: string;
+  id: string;
+  name: string;
 };
 
 export default {};
