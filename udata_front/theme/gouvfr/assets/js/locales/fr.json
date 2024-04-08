@@ -386,5 +386,7 @@
   "Refuse request": "",
   "An error occurred while removing this member.": "",
   "Pagination": "",
-  "Page {nb}": ""
+  "Page {nb}": "",
+  "An error occurred while accepting this membership.": "",
+  "An error occurred while refusing this membership.": ""
 }
