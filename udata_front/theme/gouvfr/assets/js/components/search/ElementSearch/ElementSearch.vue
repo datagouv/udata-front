@@ -98,7 +98,7 @@ const input = ref<HTMLElement | null>(null);
 const button = ref<HTMLElement | null>(null);
 const list = ref<HTMLElement | null>(null);
 
-const showAndFocus = () => {
+function showAndFocus () { 
   if (!expanded.value) {
     input.value?.focus();
     showAndSelectIfQuery();
