@@ -42,10 +42,10 @@ const emit = defineEmits<{
 const { t } = useI18n();
 
 function toggleSort() {
-  if(props.sorted === "asc") {
-    return emit("sort", "desc");
+  if(props.sorted === "desc") {
+    return emit("sort", "asc");
   }
-  return emit("sort", "asc");
+  return emit("sort", "desc");
 }
 </script>
 
