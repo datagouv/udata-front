@@ -6,7 +6,6 @@ from flask import url_for
 
 from udata.core.dataset.factories import (
     ResourceFactory, DatasetFactory, LicenseFactory, CommunityResourceFactory,
-    VisibleDatasetFactory
 )
 from udata.core.user.factories import UserFactory
 from udata.core.organization.factories import OrganizationFactory
@@ -21,7 +20,7 @@ class DatasetBlueprintTest(GouvfrFrontTestCase):
 
     def test_render_display(self):
         '''It should render the dataset page'''
-        dataset = VisibleDatasetFactory()
+        dataset = DatasetFactory()
         url = url_for('datasets.show', dataset=dataset)
         response = self.get(url)
         self.assert200(response)
@@ -153,9 +152,9 @@ class DatasetBlueprintTest(GouvfrFrontTestCase):
         response = self.get(url_for('datasets.show', dataset=dataset))
         self.assert200(response)
 
-    def test_no_index_on_empty(self):
+    def test_no_index_on_archived(self):
         '''It should prevent crawlers from indexing empty datasets'''
-        dataset = DatasetFactory()
+        dataset = DatasetFactory(archived=datetime.utcnow())
         response = self.get(url_for('datasets.show', dataset=dataset))
         self.assert200(response)
         self.assertIn(b'<meta name="robots" content="noindex, nofollow"',
