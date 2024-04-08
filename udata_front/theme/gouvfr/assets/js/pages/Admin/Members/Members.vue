@@ -253,6 +253,8 @@ async function accept(id: string) {
     await acceptRequest(props.oid, id);
     promises.push(updateMemberships());
     promises.push(updateMembers());
+  } catch(e) {
+    toast.error(t("An error occurred while accepting this membership."));
   } finally {
     Promise.all(promises).finally(() => loading.value = false);
   }
@@ -265,6 +267,8 @@ async function refuse(id: string, comment: string) {
     await refuseRequest(props.oid, id, comment);
     promises.push(updateMemberships());
     promises.push(updateMembers());
+  } catch(e) {
+    toast.error(t("An error occurred while refusing this membership."));
   } finally {
     Promise.all(promises).finally(() => loading.value = false);
   }
