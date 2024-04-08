@@ -1,7 +1,7 @@
 import { withActions } from '@storybook/addon-actions/decorator';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { within, waitFor, userEvent } from '@storybook/testing-library';
-import { expect } from '@storybook/jest';
+import { expect } from '@storybook/test';
 import Step1CreateOrJoinOrganization from './Step1CreateOrJoinOrganization.vue';
 import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
 

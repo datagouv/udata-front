@@ -238,19 +238,20 @@
   import useFunctionalState from '../../composables/form/useFunctionalState';
   import organizationIcon from "../../../../templates/svg/illustrations/organization.svg";
   import config, { quality_description_length } from "../../config";
-  import { Organization, PublishingFormAccordionState } from '../../types';
+  import { PublishingFormAccordionState } from '../../types';
+  import type { NewOrganization } from '@etalab/data.gouv.fr-components';
   import axios from 'axios';
   import { url } from '@vuelidate/validators';
   import { useI18n } from 'vue-i18n';
 
   const props = defineProps<{
-    organization: Organization,
+    organization: NewOrganization,
     steps: Array<string>
     errors: Array<string>,
   }>();
 
   const emit = defineEmits<{
-    (event: 'next', organization: Organization, file: File): void,
+    (event: 'next', organization: NewOrganization, file: File): void,
   }>();
 
   const { id: nameOrganizationAccordionId } = useUid("accordion");

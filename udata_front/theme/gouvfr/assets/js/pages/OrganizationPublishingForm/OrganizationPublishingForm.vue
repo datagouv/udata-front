@@ -67,15 +67,13 @@ const organization = ref<Organization>({
 
 const errors = ref<Array<string>>([]);
 
-const moveToStep = (step: number | null) => {
+const moveToStep = (step: number) => {
   if(containerRef.value) {
     containerRef.value.scrollIntoView({
       behavior: "smooth"
     });
   }
-  if(step !== null) {
-    currentStep.value = step;
-  }
+  currentStep.value = step;
 };
 
 async function createOrganizationAndMoveToNextStep(org: Organization, file: File) {

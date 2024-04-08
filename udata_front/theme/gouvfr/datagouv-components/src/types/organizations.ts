@@ -1,3 +1,12 @@
+import { User } from "..";
+
+export type MemberRole = "admin" | "editor";
+
+export type Member = {
+  role: MemberRole;
+  user: User;
+};
+
 export type NewOrganization = {
   acronym: string | null,
   name: string,
@@ -14,7 +23,7 @@ export type Organization = NewOrganization & {
   deleted: string | null;
   logo: string;
   logo_thumbnail: string;
-  members: Array<any>
+  members: Array<Member>
   metrics: { datasets: number; followers: number; members: number; reuses: number; views: number; };
   page: string;
   slug: string;
