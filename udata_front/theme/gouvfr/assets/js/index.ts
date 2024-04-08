@@ -20,7 +20,7 @@ import Captcha from "./components/utils/captcha.vue";
 import UserDatasetList from "./components/UserDatasetList/UserDatasetList.vue";
 import UserReuseList from "./components/UserReuseList/UserReuseList.vue";
 import PublishingForm from "./pages/PublishingForm/PublishingForm.vue";
-import { ReadMore, ToggleTip } from "@etalab/data.gouv.fr-components";
+import { ReadMore, Toggletip } from "@etalab/data.gouv.fr-components";
 
 import "./components/vanilla/tabs.js";
 import "./components/vanilla/accordion.js";
@@ -71,7 +71,7 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("dataset-resource-from-hash", ResourceFromHash);
   app.component("captcha", Captcha);
   app.component("chart", Chart);
-  app.component("toggletip", ToggleTip);
+  app.component("toggletip", Toggletip);
   app.component("publishing-form", PublishingForm);
   app.component("user-dataset-list", UserDatasetList);
   app.component("user-reuse-list", UserReuseList);
