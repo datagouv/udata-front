@@ -38,7 +38,7 @@
           role="option"
           :aria-selected="selectedIndex === index"
         >
-          <ElementSearchOption :logo="option.image_url" :name="option.name" :link="option.page"/>
+          <OrganizationSearchOption :logo="option.image_url" :name="option.name" :link="option.page"/>
         </li>
       </ul>
     </div>
@@ -50,9 +50,10 @@
 import { ref, computed, onMounted, onUnmounted, watch } from "vue";
 import { useI18n } from 'vue-i18n';
 import { useCollapse } from "../../../composables/useCollapse";
-import ElementSearchOption from "./ElementSearchOption.vue";
+import OrganizationSearchOption from "./OrganizationSearchOption.vue";
 import useUid from "../../../composables/useUid";
 import { api } from "../../../plugins/api";
+import type { Organization } from "@etalab/data.gouv.fr-components";
 
 const { t } = useI18n();
 const { expanded, uid, show, hide, registerBackgroundEvent, removeBackgroundEvent } = useCollapse();
@@ -84,10 +85,10 @@ onUnmounted(() => {
 async function fetchOptions() {
   try {
     const response = await api.get('/organizations/suggest/', { params: { q: q.value, size: 50 } });
-    options.value = response.data.map((option: any) => ({
+    options.value = response.data.map((option: Organization) => ({
       ...option,
       id: option.id,
-      page: `${option.page}/#/information/membres`
+      page: `${option.page}#/information/membres`
     }));
   } catch (error) {
     console.error('Error fetching options:', error);

@@ -11,8 +11,7 @@
       <template #actions>
         <div class="fr-col-12 fr-grid-row fr-grid-row--middle relative">
           <div class="fr-col-12 fr-col-lg-9 fr-pb-2v">
-            <ElementSearch
-            />
+            <OrganizationSearch />
           </div>
           <div class="fr-col-12 fr-col-lg-3" style="position: absolute; right: 0; top: 0;">
             <div class="fr-grid-row fr-grid-row--right">
@@ -31,7 +30,7 @@
   
 <script setup lang="ts">
 import ActionCard from '../../components/Form/ActionCard/ActionCard.vue';
-import ElementSearch from '../../components/search/ElementSearch/ElementSearch.vue';
+import OrganizationSearch from '../../components/search/OrganizationSearch/OrganizationSearch.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Container from '../../components/Ui/Container/Container.vue';
 import { title } from "../../config";
