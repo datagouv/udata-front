@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Pagination, ResourceAccordion, QualityComponent, QualityComponentInline, QualityItem, QualityScore, ReadMore, ToggleTip, Well } from "../src";
+import { Pagination, ResourceAccordion, QualityComponent, QualityComponentInline, QualityItem, QualityScore, ReadMore, Toggletip, Well } from "../src";
 import { ref } from "vue";
 import type { Resource } from "../src";
 import type { Quality } from "../src/types/datasets";
@@ -105,7 +105,7 @@ test.. test... test..... test?..... test!....
 
   <QualityScore :score="0.5" class="w-100"></QualityScore>
   <QualityItem :passed="true" message-passed="Oui" message-failed="Non"></QualityItem>
-  <ToggleTip>
+  <Toggletip>
     Toggle
     <template #toggletip>
       <h5 class="fr-text--sm fr-my-0">
@@ -113,7 +113,7 @@ test.. test... test..... test?..... test!....
       </h5>
       <QualityItem :passed="true" message-passed="Oui" message-failed="Non"></QualityItem>
     </template>
-  </ToggleTip>
+  </Toggletip>
   <QualityComponent 
     :quality="quality"
   ></QualityComponent>
