@@ -237,7 +237,7 @@ export default defineComponent({
        */
       return api.get(props.listUrl)
       .then(resp => {
-        let data = resp.data
+        let data = resp.data;
         if(!Array.isArray(data)) {
           data = data.data;
         }
@@ -260,7 +260,7 @@ export default defineComponent({
       value: obj.id ?? obj.text ?? obj.value ?? obj,
       image: obj.logo_thumbnail ?? obj.logo ?? obj.image_url ?? obj.image,
       hidden: obj.hidden,
-      selected: !!obj.selected
+      selected: !!obj.selected,
     }));
 
     /**

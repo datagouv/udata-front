@@ -119,7 +119,7 @@ export default defineComponent({
     onMounted(() => registerBackgroundEvent(input, list, button));
     onUnmounted(() => removeBackgroundEvent());
 
-    function showAndFocus () { 
+    const showAndFocus = () => {
       if(!expanded.value) {
         input.value?.focus();
         showAndSelectIfQuery();
