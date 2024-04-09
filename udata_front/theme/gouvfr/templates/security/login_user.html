@@ -24,6 +24,13 @@
                         {{ forms.render_single_field(login_user_form.email)}}
                         {{ forms.render_single_field(login_user_form.password)}}
                         {{ forms.render_boolean_field(login_user_form.remember)}}
+                        <div class="fr-checkbox-group">
+                            <input id="accept_conditions" type="checkbox" name="accept_conditions" required />
+                            <label class="fr-label" for="accept_conditions">
+                                <span>{{ _('I have read and accept <a href="%(url)s"> the terms and conditions of the service.</a>', url=url_for('site.terms')) }}</span>
+                            </label>
+                        </div>
+                        <br>
                         <button type="submit" class="fr-btn">{{ _('Log in') }}</button>
                         <div class="fr-mt-3w">
                             <p class="fr-text--sm fr-mb-3v">
