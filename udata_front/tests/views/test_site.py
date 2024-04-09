@@ -88,7 +88,7 @@ class SiteViewsTest(GouvfrFrontTestCase):
         self.app.config['EXPORT_CSV_MODELS'] = []
         datasets = [DatasetFactory(resources=[ResourceFactory()])
                     for _ in range(5)]
-        hidden_dataset = DatasetFactory()
+        hidden_dataset = DatasetFactory(private=True)
 
         response = self.get(url_for('site.datasets_csv'))
 
@@ -138,7 +138,7 @@ class SiteViewsTest(GouvfrFrontTestCase):
             for _ in range(6)]
         datasets = [DatasetFactory(resources=[ResourceFactory()])
                     for _ in range(3)]
-        hidden_dataset = DatasetFactory()
+        hidden_dataset = DatasetFactory(private=True)
 
         response = self.get(
             url_for(

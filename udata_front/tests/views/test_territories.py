@@ -1,7 +1,7 @@
 import pytest
 from flask import url_for
 
-from udata.core.dataset.factories import VisibleDatasetFactory
+from udata.core.dataset.factories import DatasetFactory
 from udata.core.organization.factories import OrganizationFactory
 from udata.core.spatial.factories import SpatialCoverageFactory
 from udata.models import Member
@@ -66,7 +66,7 @@ class TerritoriesTest(GouvfrFrontTestCase):
 
     def test_towns_with_other_datasets(self):
         organization = OrganizationFactory()
-        VisibleDatasetFactory.create_batch(
+        DatasetFactory.create_batch(
             3, organization=organization,
             spatial=SpatialCoverageFactory(zones=[self.arles.id]))
         response = self.client.get(
@@ -88,7 +88,7 @@ class TerritoriesTest(GouvfrFrontTestCase):
 
     def test_counties_with_other_datasets(self):
         organization = OrganizationFactory()
-        VisibleDatasetFactory.create_batch(
+        DatasetFactory.create_batch(
             3, organization=organization,
             spatial=SpatialCoverageFactory(zones=[self.bdr.id]))
         response = self.client.get(
@@ -110,7 +110,7 @@ class TerritoriesTest(GouvfrFrontTestCase):
 
     def test_regions_with_other_datasets(self):
         organization = OrganizationFactory()
-        VisibleDatasetFactory.create_batch(
+        DatasetFactory.create_batch(
             3, organization=organization,
             spatial=SpatialCoverageFactory(zones=[self.paca.id]))
         response = self.client.get(
@@ -133,7 +133,7 @@ class TerritoriesTest(GouvfrFrontTestCase):
     def test_towns_with_other_datasets_logged_in(self):
         self.login()
         organization = OrganizationFactory()
-        VisibleDatasetFactory.create_batch(
+        DatasetFactory.create_batch(
             3, organization=organization,
             spatial=SpatialCoverageFactory(zones=[self.arles.id]))
         response = self.client.get(
@@ -150,7 +150,7 @@ class TerritoriesTest(GouvfrFrontTestCase):
     def test_counties_with_other_datasets_logged_in(self):
         self.login()
         organization = OrganizationFactory()
-        VisibleDatasetFactory.create_batch(
+        DatasetFactory.create_batch(
             3, organization=organization,
             spatial=SpatialCoverageFactory(zones=[self.bdr.id]))
         response = self.client.get(
@@ -167,7 +167,7 @@ class TerritoriesTest(GouvfrFrontTestCase):
     def test_regions_with_other_datasets_logged_in(self):
         self.login()
         organization = OrganizationFactory()
-        VisibleDatasetFactory.create_batch(
+        DatasetFactory.create_batch(
             3, organization=organization,
             spatial=SpatialCoverageFactory(zones=[self.paca.id]))
         response = self.client.get(
@@ -185,7 +185,7 @@ class TerritoriesTest(GouvfrFrontTestCase):
         user = self.login()
         member = Member(user=user, role='admin')
         organization = OrganizationFactory(members=[member])
-        VisibleDatasetFactory.create_batch(
+        DatasetFactory.create_batch(
             3, organization=organization,
             spatial=SpatialCoverageFactory(zones=[self.arles.id]))
         response = self.client.get(
@@ -209,7 +209,7 @@ class TerritoriesTest(GouvfrFrontTestCase):
         user = self.login()
         member = Member(user=user, role='admin')
         organization = OrganizationFactory(members=[member])
-        VisibleDatasetFactory.create_batch(
+        DatasetFactory.create_batch(
             3, organization=organization,
             spatial=SpatialCoverageFactory(zones=[self.bdr.id]))
         response = self.client.get(
@@ -233,7 +233,7 @@ class TerritoriesTest(GouvfrFrontTestCase):
         user = self.login()
         member = Member(user=user, role='admin')
         organization = OrganizationFactory(members=[member])
-        VisibleDatasetFactory.create_batch(
+        DatasetFactory.create_batch(
             3, organization=organization,
             spatial=SpatialCoverageFactory(zones=[self.paca.id]))
         response = self.client.get(
@@ -254,7 +254,7 @@ class TerritoriesTest(GouvfrFrontTestCase):
 
     def test_with_town_datasets(self):
         organization = OrganizationFactory(zone=self.arles.id)
-        VisibleDatasetFactory.create_batch(
+        DatasetFactory.create_batch(
             3, organization=organization,
             spatial=SpatialCoverageFactory(zones=[self.arles.id]))
         response = self.client.get(
@@ -276,7 +276,7 @@ class TerritoriesTest(GouvfrFrontTestCase):
 
     def test_with_county_datasets(self):
         organization = OrganizationFactory(zone=self.bdr.id)
-        VisibleDatasetFactory.create_batch(
+        DatasetFactory.create_batch(
             3, organization=organization,
             spatial=SpatialCoverageFactory(zones=[self.bdr.id]))
         response = self.client.get(
@@ -298,7 +298,7 @@ class TerritoriesTest(GouvfrFrontTestCase):
 
     def test_with_region_datasets(self):
         organization = OrganizationFactory(zone=self.paca.id)
-        VisibleDatasetFactory.create_batch(
+        DatasetFactory.create_batch(
             3, organization=organization,
             spatial=SpatialCoverageFactory(zones=[self.paca.id]))
         response = self.client.get(
@@ -322,7 +322,7 @@ class TerritoriesTest(GouvfrFrontTestCase):
         lr, occitanie = create_old_new_regions_fixtures()
         for region in [lr, occitanie]:
             organization = OrganizationFactory(zone=region.id)
-            VisibleDatasetFactory.create_batch(
+            DatasetFactory.create_batch(
                 3, organization=organization,
                 spatial=SpatialCoverageFactory(zones=[region.id]))
         response = self.client.get(

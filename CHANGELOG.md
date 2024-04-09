@@ -3,10 +3,11 @@
 ## Current (in progress)
 
 - Move Pagination to datagouv-components [#365](https://github.com/etalab/udata-front/pull/365)
-- Fix release CI [#380](https://github.com/etalab/udata-front/pull/380)
+- Fix release CI [#380](https://github.com/etalab/udata-front/pull/380) [#384](https://github.com/etalab/udata-front/pull/384)
 - Add stories to Resource component [#364](https://github.com/etalab/udata-front/pull/364)
 - Move Well to datagouv-components [#382](https://github.com/etalab/udata-front/pull/382)
 - Add markdown editor [#351](https://github.com/etalab/udata-front/pull/351)
+- Upgrade vue dependency [#386](https://github.com/etalab/udata-front/pull/386)
 - Componentize quality component [#385](https://github.com/etalab/udata-front/pull/385)
 
 ## 3.5.4 (2024-03-20)
@@ -17,6 +18,7 @@
 - Add a new vite config for development [#372](https://github.com/etalab/udata-front/pull/372)
 - Fix structure tab not shown [#369](https://github.com/etalab/udata-front/pull/369)
 - Update sentry configuration to ignore aborted requests [#368](https://github.com/etalab/udata-front/pull/368)
+- Update constants imports from `.models` to `.constants` [#375](https://github.com/etalab/udata-front/pull/375)
 - Fix CI not using udata release when needed [#363](https://github.com/etalab/udata-front/pull/363)
 
 ## 3.5.3 (2024-02-22)
