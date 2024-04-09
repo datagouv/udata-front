@@ -1,7 +1,7 @@
 import ThreadReply from "./ThreadReply.vue";
 
 export default {
-  title: 'Internals/Discussions/ThreadReply',
+  title: 'Components/Discussions/Internals/ThreadReply',
   component: ThreadReply,
 };
 

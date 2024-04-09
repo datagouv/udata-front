@@ -62,13 +62,15 @@ Similar to the contextual text color classes, easily set the background of an el
 
 */
 
+@import "../variables.less";
+
 each(@colors, {
     .text-@{value} {
         color: @@value !important;
     }
 
     .bg-@{value} {
-        background-color: @@value;
+        background-color: @@value !important;
         --hover-tint: @@value;
         --active-tint: @@value;
     }

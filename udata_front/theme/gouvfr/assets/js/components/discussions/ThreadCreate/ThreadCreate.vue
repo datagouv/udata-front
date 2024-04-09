@@ -15,16 +15,7 @@
       </div>
       <div class="thread-comment fr-pb-3w fr-px-3w">
         <form class="form fr-p-0" @submit.prevent="submit">
-          <i18n-t
-            keypath="Fields preceded by a star ({markup}) are required."
-            tag="p"
-            class="fr-mt-0 fr-mb-1w fr-text--xs"
-            scope="global"
-          >
-            <template #markup>
-              <span class="required-field-star">*</span>
-            </template>
-          </i18n-t>
+          <RequiredExplanation />
           <div class="fr-input-group">
             <label for="thread-title" class="fr-label required">
               {{ $t("Title") }}
@@ -74,13 +65,15 @@ import { user } from "../../../config";
 import Author from "../Author/Author.vue";
 import ThreadCreateButton from "./ThreadCreateButton.vue";
 import type { NewDiscussion } from "../../../types";
+import RequiredExplanation from "../../Ui/RequiredExplanation/RequiredExplanation.vue";
 
 export default defineComponent({
   expose: ["displayForm"],
   components: {
     ThreadCreateButton,
     Author,
-  },
+    RequiredExplanation,
+},
   props: {
     showCreateButton: {
       type: Boolean,

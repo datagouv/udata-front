@@ -4,15 +4,14 @@ from datetime import datetime
 
 from flask import url_for
 
-from udata.models import (
-    Organization, Member, Follow, CERTIFIED, PUBLIC_SERVICE
-)
+from udata.models import Organization, Member, Follow
+from udata.core.organization.constants import CERTIFIED, PUBLIC_SERVICE
 
 from udata.frontend import csv
 from udata.core.badges.factories import badge_factory
 
 from udata.core.reuse.factories import ReuseFactory, VisibleReuseFactory
-from udata.core.dataset.factories import DatasetFactory, VisibleDatasetFactory, ResourceFactory
+from udata.core.dataset.factories import DatasetFactory, ResourceFactory
 from udata.core.discussions.factories import DiscussionFactory
 from udata.core.organization.factories import OrganizationFactory
 from udata.core.user.factories import UserFactory, AdminFactory
@@ -67,7 +66,7 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         '''It should render the organization page with some datasets'''
         organization = OrganizationFactory()
         datasets = [
-            VisibleDatasetFactory(organization=organization) for _ in range(3)]
+            DatasetFactory(organization=organization) for _ in range(3)]
         response = self.get(url_for('organizations.show', org=organization))
 
         self.assert200(response)
@@ -77,12 +76,12 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
     def test_render_display_with_private_assets_only_member(self):
         '''It should render the organization page without private assets'''
         organization = OrganizationFactory()
-        datasets = [VisibleDatasetFactory(organization=organization)
+        datasets = [DatasetFactory(organization=organization)
                     for _ in range(2)]
         reuses = [VisibleReuseFactory(organization=organization)
                   for _ in range(2)]
         for _ in range(2):
-            VisibleDatasetFactory(organization=organization, private=True)
+            DatasetFactory(organization=organization, private=True)
             ReuseFactory(organization=organization, datasets=[])  # Empty asset
             VisibleReuseFactory(organization=organization, private=True)
         response = self.get(url_for('organizations.show', org=organization))
@@ -115,10 +114,8 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         # We show indexable datasets on the organisation page
         # so private datasets are omitted
         datasets = [
-            VisibleDatasetFactory(organization=organization) for _ in range(2)]
-        empty_datasets = [
-            DatasetFactory(organization=organization, resources=[]) for _ in range(1)]
-        [VisibleDatasetFactory(organization=organization, private=True) for _ in range(1)]
+            DatasetFactory(organization=organization) for _ in range(2)]
+        [DatasetFactory(organization=organization, private=True) for _ in range(1)]
         response = self.get(url_for('organizations.show', org=organization))
 
         self.assert200(response)
@@ -128,20 +125,14 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         rendered_private_datasets = [dataset for dataset in rendered_datasets if dataset.private]
         self.assertEqual(len(rendered_private_datasets), 0)
 
-        rendered_empty_datasets = [
-            dataset for dataset in rendered_datasets if len(dataset.resources) == 0
-        ]
-        self.assertEqual(len(rendered_empty_datasets), len(empty_datasets))
-
-        self.assertEqual(rendered_datasets.total,
-                         len(datasets) + len(empty_datasets))
+        self.assertEqual(rendered_datasets.total, len(datasets))
 
     def test_render_display_with_paginated_datasets(self):
         '''It should render the organization page with paginated datasets'''
         organization = OrganizationFactory()
         datasets_len = 21
         for _ in range(datasets_len):
-            VisibleDatasetFactory(organization=organization)
+            DatasetFactory(organization=organization)
         response = self.get(url_for('organizations.show', org=organization))
 
         self.assert200(response)
@@ -154,7 +145,7 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         second_page_len = 1
         datasets_len = 21
         for _ in range(datasets_len):
-            VisibleDatasetFactory(organization=organization)
+            DatasetFactory(organization=organization)
         response = self.get(url_for('organizations.show', org=organization, page=2))
 
         self.assert200(response)
@@ -284,7 +275,7 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
             for _ in range(3)
         ]
         not_org_dataset = DatasetFactory(resources=[ResourceFactory()])
-        hidden_dataset = DatasetFactory()
+        hidden_dataset = DatasetFactory(private=True)
 
         response = self.get(
             url_for('organizations.datasets_resources_csv', org=org))

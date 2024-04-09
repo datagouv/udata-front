@@ -8,10 +8,6 @@ export type MultiSelectOption = {
   selected?: boolean;
 }
 
-export type WellType = "primary" | "secondary";
-
-export type Weight = "light" | "regular" | "semi-bold" | "bold" | "heavy";
-
 export type AlertSize = "sm" | "md";
 
 export type AlertType = FormFunctionalState | DSFRInfoState;
@@ -75,9 +71,30 @@ export type NewDiscussion = {
   subject: Subject;
 };
 
-export type CreateDiscussion = (discussion: NewDiscussion) => Promise<any>
+export type CreateDiscussion = (discussion: NewDiscussion) => Promise<any>;
 
-export type CreateComment = (comment: string) => Promise<any>
+export type CreateComment = (comment: string) => Promise<any>;
+
+export type Spam = {
+  status?: string;
+}
+
+export type Discussion = Array<{content: string, posted_by: User, posted_on: string, spam?: Spam}>;
+
+export type Thread = {
+  id: string;
+  discussion: Discussion;
+  title: string;
+  url: string;
+  closed: string;
+  closed_by: User;
+  spam?: Spam;
+};
+
+export type Sort = {
+  name: string,
+  key: string
+}
 
 export type Quality = {
   all_resources_available: boolean;
@@ -98,59 +115,42 @@ export type Harvest = {
 }
 
 export type NewDataset = Owned & {
-title: string;
-acronym: string;
-archived: boolean;
-description: string;
-tags: Array<string> | null;
-license: string;
-frequency: string;
-temporal_coverage: string;
-frequency_date: Date | null;
-page: string;
-private: boolean;
-quality?: Quality;
-spatial: {
-zones?: Array<string>;
-granularity?: string;
+  title: string;
+  acronym: string;
+  archived: boolean;
+  description: string;
+  tags: Array<string> | null;
+  license: string;
+  frequency: string;
+  temporal_coverage: string;
+  frequency_date: Date | null;
+  page: string;
+  private: boolean;
+  quality?: Quality;
+  spatial: {
+  zones?: Array<string>;
+  granularity?: string;
 } | null;
 };
 
 export type Dataset = NewDataset & {
-id: string;
-page: string;
-resources: Array<Resource>;
-community_resources: Array<Resource>;
-created_at: string;
-last_modified: string;
-last_update: string;
-uri: string;
-slug: string;
-quality: Quality;
-metrics: { discussions: number; followers: number; reuses: number; views: number; };
-harvest: Harvest | null;
+  id: string;
+  page: string;
+  resources: Array<Resource>;
+  community_resources: Array<Resource>;
+  created_at: string;
+  last_modified: string;
+  last_update: string;
+  uri: string;
+  slug: string;
+  quality: Quality;
+  metrics: { discussions: number; followers: number; reuses: number; views: number; };
+  harvest: Harvest | null;
 };
 
-export type Organization = {
-id: string;
-acronym: string;
-badges: Array<any>;
-business_number_id: string;
-created_at: string;
-last_modified: string;
-last_update: string;
-deleted: string | null;
-description: string;
-logo: string;
-logo_thumbnail: string;
-members: Array<any>
-metrics: { datasets: number; followers: number; members: number; reuses: number; views: number; };
-name: string;
-page: string;
-slug: string;
-uri: string;
-url: string;
-}
+export type UiDataset = Omit<Dataset, 'last_modified'> & {
+  last_modified: Date;
+};
 
 export type Reuse = Owned & {
   id: string;

@@ -37,6 +37,7 @@ bower
 /static/
 node_modules
 /udata_front/theme/*/static/
+!/**/src/*.d.ts
 
 # Installer logs
 pip-log.txt
