@@ -119,6 +119,7 @@ watchPostEffect(() => {
 .fr-sidemenu__btn {
   background-color: var(--background-alt-grey);
   border-bottom: 1px solid var(--border-default-grey);
+  color: var(--text-action-high-blue-cumulus);
 }
 
 .fr-sidemenu__btn:hover {
