@@ -232,14 +232,13 @@
   import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
   import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
   import Stepper from '../../components/Form/Stepper/Stepper.vue';
-  import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue'
-  import Well from "../../components/Ui/Well/Well.vue";
+  import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
   import useUid from "../../composables/useUid";
   import useFunctionalState from '../../composables/form/useFunctionalState';
   import organizationIcon from "../../../../templates/svg/illustrations/organization.svg";
   import config, { quality_description_length } from "../../config";
   import { PublishingFormAccordionState } from '../../types';
-  import type { NewOrganization } from '@etalab/data.gouv.fr-components';
+  import type { NewOrganization, Well } from '@etalab/data.gouv.fr-components';
   import axios from 'axios';
   import { url } from '@vuelidate/validators';
   import { useI18n } from 'vue-i18n';

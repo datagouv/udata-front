@@ -72,7 +72,7 @@
   import Alert from '../../components/Alert/Alert.vue';
   import Container from '../../components/Ui/Container/Container.vue';
   import Stepper from '../../components/Form/Stepper/Stepper.vue';
-  import Well from "../../components/Ui/Well/Well.vue";
+  import { Well } from "@etalab/data.gouv.fr-components";
   import Placeholder from '../../components/utils/placeholder.vue';
   import successIcon from "../../../../templates/svg/illustrations/success.svg";
   import { excerpt } from "../../helpers";
