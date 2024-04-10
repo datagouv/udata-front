@@ -17,6 +17,8 @@
       :steps="steps"
       :organization="organization"
       :errors="errors"
+      :datasetLink="datasetAdminUrl"
+      :reuseLink="reuseAdminUrl"
     />
   </div>
 </template>
@@ -26,13 +28,16 @@ import { useI18n } from 'vue-i18n';
 import Step1CreateOrJoinOrganization from "./Step1CreateOrJoinOrganization.vue";
 import Step2DescribeOrganization from './Step2DescribeOrganization.vue';
 import Step3CompleteTheOrganization from './Step3CompleteTheOrganization.vue';
-import { title } from '../../config';
+import { title, admin_root } from '../../config';
 import { createOrganization, uploadLogo } from '../../api/organizations';
 import { Organization } from '../../types';
 
 const { t } = useI18n();
 
 const steps = [t("Create or join an organization on {site}", {site: title}), t("Describe your organization"), t("Finalize your organization")];
+
+const reuseAdminUrl = `${admin_root}reuse/new/`;
+const datasetAdminUrl = `${admin_root}dataset/new/`;
 
 const currentStep = ref(0);
 

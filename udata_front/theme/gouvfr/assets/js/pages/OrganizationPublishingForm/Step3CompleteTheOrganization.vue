@@ -50,10 +50,10 @@
           <a :href="organization.page" class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v">
             {{ t("Manage the organization") }}
           </a>
-          <a href="" class="fr-btn fr-mr-3v">
+          <a :href="reuseLink" class="fr-btn fr-mr-3v">
             {{ t("Publish a reuse") }}
           </a>
-          <a href="" class="fr-btn">
+          <a :href="datasetLink" class="fr-btn">
             {{ t("Publish a dataset") }}
           </a>
         </div>
@@ -83,6 +83,8 @@
     organization: Organization;
     steps: Array<string>;
     errors?: Array<string>;
+    datasetLink: string;
+    reuseLink: string;
   }>();
 
   const { t } = useI18n();
