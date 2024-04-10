@@ -238,7 +238,8 @@
   import organizationIcon from "../../../../templates/svg/illustrations/organization.svg";
   import config, { quality_description_length } from "../../config";
   import { PublishingFormAccordionState } from '../../types';
-  import type { NewOrganization, Well } from '@etalab/data.gouv.fr-components';
+  import { Well } from '@etalab/data.gouv.fr-components';
+  import type { NewOrganization } from '@etalab/data.gouv.fr-components';
   import axios from 'axios';
   import { url } from '@vuelidate/validators';
   import { useI18n } from 'vue-i18n';
