@@ -159,7 +159,7 @@ import SelectGroup, { type Option } from "../../../components/Form/SelectGroup/S
 import MembershipRequest from "../../../components/MembershipRequest/MembershipRequest.vue";
 import type { EditingMember, Member, MemberRole, PendingMembershipRequest } from "../../../types";
 import { useToast } from "../../../composables/useToast";
-import { user } from "../../../config";
+import { user, userIsAdmin } from "../../../config";
 
 const props = defineProps<{oid: string}>();
 
@@ -169,7 +169,7 @@ const { toast } = useToast();
 
 const membershipRequests = ref<Array<PendingMembershipRequest>>([]);
 
-const isAdmin = computed(() => members.value.some(member => member.user.id === user?.id && member.role === "admin"));
+const isAdmin = computed(() => userIsAdmin || members.value.some(member => member.user.id === user?.id && member.role === "admin"));
 
 const roles = ref<Array<Option>>([]);
 

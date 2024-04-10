@@ -47,6 +47,8 @@ export const user: User | null = userEl ? {
   roles: userEl.dataset.roles?.split(",") || [],
 } : null;
 
+export const userIsAdmin: boolean = user?.roles?.includes("admin") ?? false;
+
 /**
  * Map debug features on Webpack DEBUG flag
  */
@@ -284,6 +286,7 @@ export const quality_metadata_backend_ignore: Array<string> = _jsonMeta("quality
 
 export default {
   user,
+  userIsAdmin,
   debug,
   lang,
   title,
