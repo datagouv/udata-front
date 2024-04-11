@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3';
 import { QualityComponentInline } from '.';
 
 const meta = {
-  title: "Components/Quality Component Inline",
+  title: "Components/Quality/Quality Component Inline",
   component: QualityComponentInline,
   tags: ['autodocs'],
   parameters: {

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3';
 import { QualityScore } from '.';
 
 const meta = {
-  title: "Components/Quality Score",
+  title: "Components/Quality/Internals/Quality Score",
   component: QualityScore,
   tags: ['autodocs'],
   parameters: {

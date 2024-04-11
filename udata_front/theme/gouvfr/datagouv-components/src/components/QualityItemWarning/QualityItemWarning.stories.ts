@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3';
 import { QualityItemWarning } from '.';
 
 const meta = {
-  title: "Components/Quality Item Warning",
+  title: "Components/Quality/Internals/Quality Item Warning",
   component: QualityItemWarning,
   tags: ['autodocs'],
   parameters: {
