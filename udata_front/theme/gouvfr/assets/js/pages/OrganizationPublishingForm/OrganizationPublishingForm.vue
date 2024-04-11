@@ -30,7 +30,7 @@ import Step2DescribeOrganization from './Step2DescribeOrganization.vue';
 import Step3CompleteTheOrganization from './Step3CompleteTheOrganization.vue';
 import { title, admin_root } from '../../config';
 import { createOrganization, uploadLogo } from '../../api/organizations';
-import { Organization } from '../../types';
+import { type NewOrganization } from '@etalab/data.gouv.fr-components';
 
 const { t } = useI18n();
 
@@ -43,7 +43,7 @@ const currentStep = ref(0);
 
 const containerRef = ref<HTMLDivElement | null>(null);
 
-const organization = ref<Organization>({
+const organization = ref<NewOrganization>({
   acronym: "",
   badges: [],
   business_number_id: "",
@@ -81,7 +81,7 @@ const moveToStep = (step: number) => {
   currentStep.value = step;
 };
 
-async function createOrganizationAndMoveToNextStep(org: Organization, file: File) {
+async function createOrganizationAndMoveToNextStep(org: NewOrganization, file: File) {
   errors.value = [];
   let moveToNextStep = false;
   try {
