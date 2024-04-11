@@ -207,29 +207,6 @@ test.. test... test..... test?..... test!....
   <ResourceAccordion dataset-id="someId" :resource="resource" :expanded-on-mount="false" />
   <ResourceAccordion dataset-id="someId" :resource="resourceWithoutSchema" :expanded-on-mount="false" />
   <InformationPanel :dataset="dataset" :license="license" />
-  <DsfrTabs
-    class="fr-mt-2w"
-    tab-list-name="Test List"
-    :tab-titles="tabTitles"
-    :initial-selected-index="0"
-    :selected-tab-index="selectedTabIndex"
-    @select-tab="(idx) => (selectedTabIndex = idx)"
-  >
-    <DsfrTabContent
-      panel-id="tab-content-0"
-      tab-id="tab-0"
-      :selected="selectedTabIndex === 0"
-    >
-      <h1>Test</h1>
-    </DsfrTabContent>
-    <DsfrTabContent
-      panel-id="tab-content-1"
-      tab-id="tab-1"
-      :selected="selectedTabIndex === 1"
-    >
-    <InformationPanel :dataset="dataset" :license="license" />
-    </DsfrTabContent>
-  </DsfrTabs>
   <Well color="blue-cumulus" weight="regular" class="fr-my-2w">
     <div class="fr-grid-row">
       <div class="fr-col-auto fr-mr-3v">
