@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import Toggletip from './Toggletip.vue';
+import { Toggletip } from '.';
 
 const meta = {
   title: 'Components/Toggletip',
