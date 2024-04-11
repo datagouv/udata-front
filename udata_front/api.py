@@ -1,4 +1,4 @@
-from flask import current_app, json, make_response, abort
+from flask import current_app, make_response, abort
 
 import logging
 import requests
