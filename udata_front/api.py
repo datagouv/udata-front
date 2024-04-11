@@ -72,11 +72,6 @@ class CaptchEtatAPI(API):
         except requests.exceptions.RequestException:
             abort(500, description='Catptcha internal error')
 
-        if args['get'] in ['image', 'sound']:
-            resp = make_response(bytes(req.content))
-            resp.headers['Content-Type'] = 'image/*' if args['get'] == 'image' else 'audio/x-wav'
-            return resp
-        if args['get'] == "p":
-            return json.loads(req.content)
-
-        return req.content
+        resp = make_response(bytes(req.content))
+        resp.headers['Content-Type'] = req.headers.get('Content-Type')
+        return resp
