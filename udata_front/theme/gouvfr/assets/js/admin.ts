@@ -31,7 +31,7 @@ setupComponents({
 });
 
 const routes: Array<RouteRecordRaw> = [
-  { path: '/me', component: Me },
+  { path: '/me', component: Me, name: "me" },
   {
     path: '/organizations/:oid',
     children: [

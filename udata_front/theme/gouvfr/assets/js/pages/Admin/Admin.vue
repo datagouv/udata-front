@@ -62,7 +62,7 @@ const route = useRoute();
 
 const menuId = getRandomId("menu");
 const me = ref<Me | null>(null);
-const opened = ref<string | null>(null);
+const opened = ref<string>();
 const { setCurrentOrganization } = useCurrentOrganization();
 const router = useRouter();
 
@@ -76,13 +76,24 @@ function open(organization: Organization | User) {
 
 onMounted(async () => {
   me.value = await fetchMe();
-  if(me.value.organizations.length > 0) {
+  // When we are on "admin/#/", shows the first organization page, this could be removed when we have an admin "home" page
+  if(!route.name) {
+    if(me.value.organizations.length > 0) {
+      router.replace({name: "organization-datasets", params: {oid: me.value.organizations[0].id}})
+    } else {
+      router.replace({name: "me"});
+    }
+  }
+  // Opens the menu on "My Profil", this logic will change when we add more pages to this section
+  if(route.name === "me") {
+    opened.value = user?.id;
+    // On another page, opens the 
+  } else if(me.value.organizations.length > 0) {
     let organization = me.value.organizations[0];
     if(route.params.oid) {
       organization = me.value.organizations.find(organization => organization.id === route.params.oid) ?? organization;
     }
     open(organization);
-    router.replace({name: "organization-datasets", params: {oid: organization.id}})
     setCurrentOrganization(organization);
   }
 });
