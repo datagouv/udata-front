@@ -12,6 +12,9 @@
         </router-link>
       </li>
       <li>
+        <a class="fr-breadcrumb__link" aria-current="page">
+          {{ t('Members') }}
+        </a>
       </li>
     </Breadcrumb>
     <h1 class="fr-h1 fr-mb-2w">{{ t("Members") }}</h1>
@@ -157,9 +160,10 @@ import Avatar from "../../../components/discussions/Avatar/Avatar.vue";
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
 import SelectGroup, { type Option } from "../../../components/Form/SelectGroup/SelectGroup.vue";
 import MembershipRequest from "../../../components/MembershipRequest/MembershipRequest.vue";
-import type { EditingMember, Member, MemberRole, PendingMembershipRequest } from "../../../types";
+import { useCurrentOrganization } from "../../../composables/admin/useCurrentOrganization";
 import { useToast } from "../../../composables/useToast";
 import { user, userIsAdmin } from "../../../config";
+import type { EditingMember, Member, MemberRole, PendingMembershipRequest } from "../../../types";
 
 const props = defineProps<{oid: string}>();
 
@@ -173,8 +177,7 @@ const isAdmin = computed(() => userIsAdmin || members.value.some(member => membe
 
 const roles = ref<Array<Option>>([]);
 
-// TODO : use `useCurrentOrganization` when merged
-const currentOrganization = {name: "SomeName"};
+const { currentOrganization } = useCurrentOrganization();
 
 const members = ref<Array<EditingMember>>([]);
 
