@@ -86,7 +86,7 @@
           </AdminContentWithTooltip>
         </AdminTableTd>
         <AdminTableTd>
-        <AdminBadge :type="dataset.private ? 'default' : 'info'">{{ dataset.private ? t('Private') : t('Public') }}</AdminBadge>
+          <AdminBadge :type="getStatusType(dataset)">{{ getStatusLabel(dataset) }}</AdminBadge>
         </AdminTableTd>
         <AdminTableTd>
           {{ formatDate(dataset.created_at) }}
@@ -132,9 +132,9 @@ import AdminTableTh from "../Table/AdminTableTh.vue";
 import Tooltip from '../../Tooltip/Tooltip.vue';
 import QualityScoreTooltip from "../../dataset/QualityScore/QualityScoreTooltip/QualityScoreTooltip.vue";
 import { metrics_api } from '../../../plugins/api';
-import { admin_root } from '../../../config';
+import { admin_root, lang } from '../../../config';
 import { summarize } from '../../../helpers';
-import { DatasetSortedBy, SortDirection } from '../../../types';
+import type { AdminBadgeState, DatasetSortedBy, SortDirection } from '../../../types';
 
 const emit = defineEmits<{
   (event: 'sort', sort: string): void
@@ -144,11 +144,32 @@ defineProps<{
   datasets: Array<Dataset | DatasetV2>
 }>();
 
+const { t } = useI18n();
+
 const metrics = ref<Record<string, number>>({});
 const sort = ref<SortDirection>('desc');
 const sortedBy = ref<DatasetSortedBy>('created');
 
-const { t } = useI18n();
+type DatasetStatuses = "deleted" | "archived" | "private" | "public";
+
+const datasetStatusBadge: Record<DatasetStatuses, {label: string, type: AdminBadgeState}> = {
+  deleted: {
+    label: t("Deleted"),
+    type: "error",
+  },
+  archived: {
+    label: t("Archived"),
+    type: "warning",
+  },
+  private: {
+    label: t("Private"),
+    type: "default",
+  },
+  public: {
+    label: t("Public"),
+    type: "info"
+  }
+}
 
 function updateSort(column: DatasetSortedBy, direction: SortDirection) {
   sort.value = direction;
@@ -186,6 +207,26 @@ function getMetrics(dataset: Dataset | DatasetV2) {
     metrics.value[dataset.id] = response.data.data[0]?.monthly_download_resource ?? 0;
   });
   return metrics.value[dataset.id];
+}
+
+function getStatus(dataset: Dataset | DatasetV2) {
+  if (dataset.deleted) {
+      return datasetStatusBadge.deleted;
+  } else if (dataset.archived) {
+      return datasetStatusBadge.archived;
+  } else if (dataset.private) {
+      return datasetStatusBadge.private;
+  } else {
+      return datasetStatusBadge.public;
+  }
+}
+
+function getStatusType(dataset: Dataset | DatasetV2): AdminBadgeState {
+  return getStatus(dataset).type;
+}
+
+function getStatusLabel(dataset: Dataset | DatasetV2) {
+  return getStatus(dataset).label;
 }
 
 </script>
