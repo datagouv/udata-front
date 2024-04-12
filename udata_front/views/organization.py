@@ -90,7 +90,7 @@ class OrganizationDetailView(SearchView, OrgView, DetailView):
 
         reuses = Reuse.objects(
             organization=self.organization).order_by(
-            '-metrics.reuses', '-metrics.followers')
+            '-created_at')
 
         followers = (Follow.objects.followers(self.organization)
                      .order_by('follower.fullname'))

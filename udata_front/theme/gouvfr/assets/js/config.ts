@@ -264,6 +264,12 @@ export const resources_min_count_to_show_search = _jsonMeta("resources-min-count
 export const markdown = _jsonMeta("markdown-config");
 
 /**
+ * License groups options configuration.
+ */
+export const license_groups_options = _jsonMeta("license-groups-options");
+
+
+/**
  * Whether the 'read only mode' feature is enabled or not.
  */
  export const read_only_enabled = _jsonMeta('read-only-enabled');
@@ -318,6 +324,7 @@ export default {
   resources_default_page_size,
   resources_min_count_to_show_search,
   markdown,
+  license_groups_options,
   read_only_enabled,
   quality_description_length,
   quality_metadata_backend_ignore,
