@@ -49,10 +49,12 @@ class ApiTest(WebTestMixin):
         rmock.post(self.oauth_token_url(), json={"access_token": "some_token", "expires_in": 3600})
         rmock.get(
             self.captchetat_url() + "?get=html&c=" + style,
-            text=f"some HTML with {style} and {self.captcha_id}"
+            text=f"some HTML with {style} and {self.captcha_id}",
+            headers={"Content-Type": "text/html;charset=utf-8"}
         )
         response = self.get(url_for('apiv2.captchetat', get='html', c=style))
         self.assert200(response)
+        assert response.content_type == "text/html;charset=utf-8"
         snippet = response.data.decode('utf8')
         assert style in snippet
         assert self.captcha_id in snippet
@@ -65,9 +67,11 @@ class ApiTest(WebTestMixin):
         rmock.post(self.oauth_token_url(), json={"access_token": "some_token", "expires_in": 3600})
         content = bytes("some string", 'UTF-8')
         rmock.get(f"{self.captchetat_url()}?get=image&c={style}&t={self.captcha_id}",
-                  content=content)
+                  content=content,
+                  headers={"Content-Type": "image/png"})
         response = self.get(url_for('apiv2.captchetat', get='image', c=style, t=self.captcha_id))
         self.assert200(response)
+        assert response.content_type == "image/png"
         assert content in bytes(response.data)
 
     @pytest.mark.options(CAPTCHETAT_OAUTH_BASE_URL=oauth_url)
@@ -78,7 +82,8 @@ class ApiTest(WebTestMixin):
         rmock.post(self.oauth_token_url(), json={"access_token": "some_token", "expires_in": 3600})
         content = bytes(10)
         rmock.get(f"{self.captchetat_url()}?get=sound&c={style}&t={self.captcha_id}",
-                  content=content)
+                  content=content,
+                  headers={"Content-Type": "audio/x-wav"})
         response = self.get(
             url_for('apiv2.captchetat', get='sound', c=style, t=self.captcha_id),
             content_type="audio/*"
@@ -93,7 +98,9 @@ class ApiTest(WebTestMixin):
         '''It should return json additional data from the service.'''
         rmock.post(self.oauth_token_url(), json={"access_token": "some_token", "expires_in": 3600})
         json = {"hs": "some_id", "sp": "another_id"}
-        rmock.get(f"{self.captchetat_url()}?get=p&c={style}&t={self.captcha_id}", json=json)
+        rmock.get(f"{self.captchetat_url()}?get=p&c={style}&t={self.captcha_id}",
+                  json=json,
+                  headers={"Content-Type": "application/json"})
         response = self.get(url_for('apiv2.captchetat', get='p', c=style, t=self.captcha_id))
         self.assert200(response)
         assert response.content_type == "application/json"
