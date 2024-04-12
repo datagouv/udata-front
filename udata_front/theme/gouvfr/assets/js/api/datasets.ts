@@ -2,6 +2,7 @@ import { type MaybeRefOrGetter, toValue } from "vue";
 import { api } from "../plugins/api";
 import { getLocalizedUrl } from "../i18n";
 import type { Dataset, NewDataset, Owned } from "@etalab/data.gouv.fr-components";
+import type { SpatialGranularity } from "../types";
 
 export type DatasetToUpload = Owned & {
   title: string;
@@ -64,4 +65,8 @@ export function getOrganizationDatasets(oid: string, page: number, pageSize: num
   return api.get<GetOrganizationDatasetsData>(getLocalizedUrl(`organizations/${oid}/datasets/`), {
     params: { sort, page_size: pageSize, page }
   }).then(resp => resp.data);
+}
+
+export function getSpatialGranularities () {
+  return api.get<Array<SpatialGranularity>>(getLocalizedUrl("spatial/granularities/")).then(resp => resp.data);
 }
