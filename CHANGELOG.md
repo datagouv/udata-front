@@ -8,6 +8,9 @@
 - Move Well to datagouv-components [#382](https://github.com/etalab/udata-front/pull/382)
 - Add markdown editor [#351](https://github.com/etalab/udata-front/pull/351)
 - Upgrade vue dependency [#386](https://github.com/etalab/udata-front/pull/386)
+- Add codes and optgroups in Multiselect to display Insee codes and Licence groups [#347] (https://github.com/etalab/udata-front/pull/347)
+- Order Organization's reuses by publishing date [#390](https://github.com/etalab/udata-front/pull/390)
+- Fix failing captchEtat responses [#392](https://github.com/etalab/udata-front/pull/392)
 - Add datasets admin page [#371](https://github.com/etalab/udata-front/pull/371)
 
 ## 3.5.4 (2024-03-20)

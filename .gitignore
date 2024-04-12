@@ -71,3 +71,4 @@ cypress/screenshots
 .lighthouseci/*.html
 
 storybook-static/
+venv/pyvenv.cfg
