@@ -39,7 +39,7 @@
         </nav>
       </div>
       <div class="fr-col-12 fr-col-md-8 fr-col-lg-9 fr-col-xl-10 h-100 fr-px-2w">
-        <router-view class="fr-container--fluid"></router-view>
+        <router-view :key="route.fullPath" class="fr-container--fluid"></router-view>
       </div>
     </div>
   </div>
@@ -55,8 +55,10 @@ import { user } from "../../config";
 import type { Me } from "../../types";
 import { fetchMe } from "../../api/me";
 import { useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 
 const { t } = useI18n();
+const route = useRoute();
 
 const menuId = getRandomId("menu");
 const me = ref<Me | null>(null);
@@ -75,9 +77,13 @@ function open(organization: Organization | User) {
 onMounted(async () => {
   me.value = await fetchMe();
   if(me.value.organizations.length > 0) {
-    open(me.value.organizations[0]);
-    router.replace({name: "organization-datasets", params: {oid: me.value.organizations[0].id}})
-    setCurrentOrganization(me.value.organizations[0]);
+    let organization = me.value.organizations[0];
+    if(route.params.oid) {
+      organization = me.value.organizations.find(organization => organization.id === route.params.oid) ?? organization;
+    }
+    open(organization);
+    router.replace({name: "organization-datasets", params: {oid: organization.id}})
+    setCurrentOrganization(organization);
   }
 });
 </script>

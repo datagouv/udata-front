@@ -1,5 +1,5 @@
 import { withActions } from '@storybook/addon-actions/decorator';
-import { expect } from '@storybook/jest';
+import { expect } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Step2DescribeDataset, { Step2DescribeDatasetProps } from './Step2DescribeDataset.vue';
 import * as Stepper from '../../components/Form/Stepper/Stepper.stories';

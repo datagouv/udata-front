@@ -43,108 +43,73 @@
     </p>
   </div>
 </template>
+<script lang="ts">
+export type Option = {
+  label: string;
+  value: string;
+  disabled?: boolean;
+  hidden?: boolean;
+  selected?: boolean;
+};
 
-<script>
-import { computed, defineComponent } from 'vue';
+export type SelectGroupProps = {
+  disabled?: boolean,
+  errorText?: string,
+  hasError?: boolean,
+  hintText?: string,
+  isValid?: boolean,
+  label: string,
+  modelValue?: string,
+  options: Array<Option>,
+  required?: boolean,
+  validText?: string,
+};
+</script>
+<script setup lang="ts">
+import { computed } from 'vue';
 import useUid from '../../../composables/useUid';
 import Required from '../../Ui/Required/Required.vue';
 
-/**
- * @typedef {Object} Option
- * @property {string} label - Label (display) of the option
- * @property {string} value - Value (id) of the option
- * @property {boolean} disabled - if the option is disabled
- * @property {boolean} hidden - if the option is hidden
- * @property {boolean} selected - if the option is selected
- */
+const emit = defineEmits<{
+  (event: 'update:modelValue', id: string): void
+}>();
 
-export default defineComponent({
-  components: { Required },
-  emits: ['update:modelValue'],
-  props: {
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    errorText: {
-      type: String,
-      default: "",
-    },
-    hasError: {
-      type: Boolean,
-      default: false,
-    },
-    hintText: {
-      type: String,
-      default: "",
-    },
-    isValid: {
-      type: Boolean,
-      default: false,
-    },
-    label: {
-      type: String,
-      required: true,
-    },
-    modelValue: {
-      type: String,
-      default: undefined,
-    },
-    options: {
-      /** @type {import("vue").PropType<Array<Option>>} */
-      type: Array,
-      required: true,
-    },
-    required: {
-      type: Boolean,
-      default: false
-    },
-    validText: {
-      type: String,
-      default: "",
-    },
-  },
-  setup(props, { emit }) {
-    const { id } = useUid("select");
-
-    const errorTextId = computed(() => id + "-desc-error");
-    const validTextId = computed(() => id + "-desc-valid");
-    const ariaDescribedBy = computed(() => {
-      let describedBy = "";
-      if (props.isValid) {
-        describedBy += " " + validTextId;
-      }
-      else if (props.hasError) {
-        describedBy += " " + errorTextId;
-      }
-      return describedBy;
-    });
-
-    const selectGroupClass = computed(() => {
-      return {
-        'fr-select-group--disabled': props.disabled,
-        'fr-select-group--error': props.hasError,
-        'fr-select-group--valid': props.isValid
-      };
-    });
-
-    /**
-     *
-     * @param {Event} event
-     */
-    const change = (event) => {
-      const target = /** @type {HTMLSelectElement | null} */ (event.target);
-      emit('update:modelValue', target?.value);
-    }
-
-    return {
-      ariaDescribedBy,
-      change,
-      errorTextId,
-      id,
-      selectGroupClass,
-      validTextId,
-    };
-  },
+const props = withDefaults(defineProps<SelectGroupProps>(), {
+  disabled: false,
+  errorText: "",
+  hasError: false,
+  hintText: "",
+  isValid: false,
+  modelValue: undefined,
+  required: false,
+  validText: "",
 });
+
+const { id } = useUid("select");
+
+const errorTextId = computed(() => id + "-desc-error");
+const validTextId = computed(() => id + "-desc-valid");
+const ariaDescribedBy = computed(() => {
+  let describedBy = "";
+  if (props.isValid) {
+    describedBy += " " + validTextId;
+  }
+  else if (props.hasError) {
+    describedBy += " " + errorTextId;
+  }
+  return describedBy;
+});
+
+const selectGroupClass = computed(() => {
+  return {
+    'fr-select-group--disabled': props.disabled,
+    'fr-select-group--error': props.hasError,
+    'fr-select-group--valid': props.isValid
+  };
+});
+
+const change = (event: Event) => {
+  const target = event.target as HTMLSelectElement | null;
+  emit('update:modelValue', target?.value ?? "");
+}
 </script>
