@@ -27,7 +27,7 @@ defineProps<AdminSidebarLinkProps>();
   padding: 0.25rem 0.375rem;
 }
 
-.fr-sidemenu__link[aria-current]::before {
+.fr-sidemenu__link[aria-current]:not([aria-current=false])::before {
   width: 0;
 }
 

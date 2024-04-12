@@ -1,0 +1,18 @@
+import { Canvas, Controls, Meta } from '@storybook/blocks';
+
+import * as AdminContentWithTooltipStories from './AdminContentWithTooltip.stories';
+
+<Meta of={AdminContentWithTooltipStories} />
+
+# Content With Tooltip
+
+In size-constrained container, we may have text hidden due to clamping or text overflowing.
+To work around this issue, the content is also shown in a tooltip on screen size below XL (< 1100px).
+
+<Canvas of={AdminContentWithTooltipStories.ContentWithTooltip} />
+
+Note : Tooltip position is odd on doc page (due to iframe). Check story for a real example.
+
+## Props
+
+<Controls />

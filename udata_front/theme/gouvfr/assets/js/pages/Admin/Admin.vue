@@ -3,7 +3,7 @@
     <div class="fr-grid-row h-100 bg-grey-50">
       <div class="fr-col-12 fr-col-md-4 fr-col-lg-3 fr-col-xl-2">
         <nav
-          class="fr-sidemenu"
+          class="fr-sidemenu fr-pr-0"
           :aria-label="t('Administration menu')"
         >
           <div
@@ -19,32 +19,19 @@
             </button>
             <div class="fr-collapse" :id="menuId">
               <ul class="fr-sidemenu__list">
-                <li class="fr-sidemenu__item">
-                  <button
-                    class="fr-sidemenu__btn border-bottom border-default-grey"
-                    aria-expanded="false"
-                    :aria-controls="profilId"
-                  >
-                    <Avatar
-                      :user="user"
-                      :size="24"
-                      :rounded="true"
-                    />
-                    <p class="fr-mx-1v">{{ t('My Profil') }}</p>
-                  </button>
-                  <div class="fr-collapse" :id="profilId">
-                    <AdminSidebarLink
-                      icon="fr-icon-account-circle-line"
-                      :label="t('Me')"
-                      to="/me"
-                    />
-                  </div>
-                </li>
-                <AdminSidebarOrganizationMenu
+                <AdminSidebarMenu
+                  v-if="user"
+                  :user="user"
+                  :is-opened="isOpened(user.id)"
+                  @open="open(user)"
+                />
+                <AdminSidebarMenu
                   v-if="me"
                   v-for="organization in me.organizations"
                   :organization="organization"
-                  :is-opened="isCurrent(organization.id)"
+                  :is-opened="isOpened(organization.id)"
+                  @open="() => open(organization)"
+                  @click="() => setCurrentOrganization(organization)"
                 />
               </ul>
             </div>
@@ -52,45 +39,62 @@
         </nav>
       </div>
       <div class="fr-col-12 fr-col-md-8 fr-col-lg-9 fr-col-xl-10 h-100 fr-px-2w">
-        <router-view :key="route.fullPath"></router-view>
+        <router-view :key="route.fullPath" class="fr-container--fluid"></router-view>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { getRandomId } from "@etalab/data.gouv.fr-components";
+import { type Organization, getRandomId, User } from "@etalab/data.gouv.fr-components";
 import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import Avatar from "../../components/discussions/Avatar/Avatar.vue";
-import AdminSidebarLink from "../../components/AdminSidebar/AdminSidebarLink/AdminSidebarLink.vue";
-import AdminSidebarOrganizationMenu from "../../components/AdminSidebar/AdminSidebarOrganizationMenu/AdminSidebarOrganizationMenu.vue";
+import AdminSidebarMenu from "../../components/AdminSidebar/AdminSidebarMenu/AdminSidebarMenu.vue";
+import { useCurrentOrganization } from "../../composables/admin/useCurrentOrganization";
 import { user } from "../../config";
 import type { Me } from "../../types";
 import { fetchMe } from "../../api/me";
+import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
 
 const { t } = useI18n();
 const route = useRoute();
 
 const menuId = getRandomId("menu");
-const profilId = getRandomId("profil-submenu");
 const me = ref<Me | null>(null);
+const opened = ref<string>();
+const { setCurrentOrganization } = useCurrentOrganization();
+const router = useRouter();
 
-const opened = ref<string | null>(null);
-
-function isCurrent(id: string) {
+function isOpened(id: string) {
   return id === opened.value;
+}
+
+function open(organization: Organization | User) {
+  opened.value = organization.id;
 }
 
 onMounted(async () => {
   me.value = await fetchMe();
-  if(me.value.organizations.length > 0) {
-    if(route.params.oid) {
-      opened.value = route.params.oid as string;
+  // When we are on "admin/#/", shows the first organization page, this could be removed when we have an admin "home" page
+  if(!route.name) {
+    if(me.value.organizations.length > 0) {
+      router.replace({name: "organization-datasets", params: {oid: me.value.organizations[0].id}})
     } else {
-      opened.value = me.value.organizations[0].id;
+      router.replace({name: "me"});
     }
+  }
+  // Opens the menu on "My Profil", this logic will change when we add more pages to this section
+  if(route.name === "me") {
+    opened.value = user?.id;
+    // On another page, opens the 
+  } else if(me.value.organizations.length > 0) {
+    let organization = me.value.organizations[0];
+    if(route.params.oid) {
+      organization = me.value.organizations.find(organization => organization.id === route.params.oid) ?? organization;
+    }
+    open(organization);
+    setCurrentOrganization(organization);
   }
 });
 </script>

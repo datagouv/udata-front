@@ -33,6 +33,17 @@ const meta = {
               "page": "http://dev.local:7000/en/organizations/data-gouv-fr/",
               "slug": "data-gouv-fr",
               "uri": "http://dev.local:7000/api/1/organizations/data-gouv-fr/"
+            },
+            {
+              "acronym": null,
+              "badges": [],
+              "id": "6481e3f7959723cf9f8bc98a",
+              "logo": "https://dev-static.data.gouv.fr/avatars/dd/0525c5aa524398877c90f2611880df.jpg",
+              "logo_thumbnail": "https://dev-static.data.gouv.fr/avatars/dd/0525c5aa524398877c90f2611880df-100.jpg",
+              "name": "Cour d'appel de Metz",
+              "page": "http://dev.local:7000/en/organizations/cour-dappel-de-metz/",
+              "slug": "cour-dappel-de-metz",
+              "uri": "http://dev.local:7000/api/1/organizations/cour-dappel-de-metz/"
             }
           ],
           "page": "http://dev.local:7000/en/users/nicolas-kempf-1/",
