@@ -18,10 +18,13 @@ const only_locales = ref(import.meta.env.VITE_ONLY_LOCALES);
 
 const default_lang = ref(import.meta.env.VITE_DEFAULT_LANG);
 
+const guides_quality_url = ref(import.meta.env.VITE_GUIDES_QUALITY_URL);
+
 const localConfig = reactive({
     admin_root,
     default_lang,
     explorable_resources,
+    guides_quality_url,
     only_locales,
     schema_catalog_url,
     schema_documentation_url,
@@ -37,6 +40,7 @@ const setupComponents = (config: Partial<typeof localConfig>) => {
     admin_root.value = mergedConfig.admin_root;
     default_lang.value = mergedConfig.default_lang;
     explorable_resources.value = mergedConfig.explorable_resources;
+    guides_quality_url.value = mergedConfig.guides_quality_url;
     only_locales.value = mergedConfig.only_locales;
     schema_catalog_url.value = mergedConfig.schema_catalog_url;
     schema_documentation_url.value = mergedConfig.schema_documentation_url;
