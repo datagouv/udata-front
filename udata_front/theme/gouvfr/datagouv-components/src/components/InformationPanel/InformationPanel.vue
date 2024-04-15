@@ -45,9 +45,9 @@
         <h2 class="subtitle subtitle--uppercase">{{ $t('Spatial coverage') }}</h2>
         <div class="fr-text--sm fr-m-0">
             <div class="fr-grid-row fr-grid-row--gutters">
-                <div class="fr-col-12 fr-col-sm-6 fr-col-md-4">
+                <div v-if="zone" class="fr-col-12 fr-col-sm-6 fr-col-md-4">
                     <h3 class="subtitle fr-mb-1v">{{ $t('Territorial coverage') }}</h3>
-                    <p class="fr-text--sm fr-m-0 text-mention-grey ">France</p>
+                    <p class="fr-text--sm fr-m-0 text-mention-grey">{{ zone }}</p>
                 </div>
                 <div v-if="props.dataset.spatial?.granularity" class="fr-col-12 fr-col-sm-6 fr-col-md-4">
                     <h3 class="subtitle fr-mb-1v">{{ $t('Granularity of territorial coverage') }}</h3>
@@ -153,6 +153,7 @@ import { toggleAccordion } from "../../helpers/toggleAccordion";
 import { formatDate } from '../../helpers/index';
 import { getGranularity, fetchGranularities } from '../../api/granularity';
 import { getFrequencies, fetchFrequencies } from '../../api/frequency';
+import { fetchZone } from '../../api/zones';
 import useOEmbed from '../../composables/useOEmbed';
 import type { Frequencies } from '../../types/frequency';
 import type { Granularities } from '../../types/granularity';
@@ -166,31 +167,45 @@ const extrasExpanded = ref(false);
 const extrasRef = ref<HTMLDivElement | null>(null);
 const granularities = ref<Granularities>([]);
 const frequencies = ref<Frequencies>([]);
+const zone = ref<string | null>(null)
 const harvestExpanded = ref(false);
 const harvestRef = ref<HTMLDivElement | null>(null);
 const textAreaRef = ref<HTMLTextAreaElement | null>(null);
-const selectContent = () => {
+function selectContent() {
   if (textAreaRef.value) {
     textAreaRef.value.select();
   }
 };
-const expand = () => {
+
+function expand() {
   harvestExpanded.value = !harvestExpanded.value;
   if(harvestRef.value) {
     toggleAccordion(harvestRef.value, harvestExpanded.value);
   }
-}
-const extrasExpand = () => {
+};
+
+function extrasExpand() {
   extrasExpanded.value = !extrasExpanded.value;
   if(extrasRef.value) {
     toggleAccordion(extrasRef.value, extrasExpanded.value);
   }
-}
-const hasExtras = () => {
-    return Object.keys(props.dataset.extras).length > 0;
-}
+};
+
+function hasExtras() {
+  return Object.keys(props.dataset.extras).length > 0;
+};
+
+function setZone() {
+  if (props.dataset.spatial?.zones?.length > 0) {
+    fetchZone(props.dataset.spatial.zones[0]).then(foundZone => zone.value = foundZone);
+  } else {
+    zone.value = null;
+  }
+};
+
 onMounted(() => {
   fetchGranularities().then(foundGranularities => granularities.value = foundGranularities);
   fetchFrequencies().then(foundFrequencies => frequencies.value = foundFrequencies);
+  setZone();
 });
 </script>

@@ -65,7 +65,7 @@ const dataset : DatasetV2 = {
     ods_geo: true
   },
   spatial: {
-    zones: [],
+    zones: ["country:fr"],
     granularity: "other"
   },
   extras: {

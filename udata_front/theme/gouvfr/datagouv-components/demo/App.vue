@@ -124,7 +124,9 @@ test.. test... test..... test?..... test!....
       ods_geo: true
     },
     spatial: {
-      zones: [],
+      zones: [
+        'country:fr'
+      ],
       granularity: "other"
     },
     extras: {
