@@ -347,7 +347,6 @@
   "Remove member from the organization": "Retirer le membre de l'organisation",
   "Be careful, this action can't be reverse.": "Attention, cette action ne peut pas être annulée.",
   "Remove member": "Retirer le membre",
-  "An error occurred while update member role.": "Une erreur s'est produite lors de la mise à jour du rôle du membre.",
   "Add an image": "Ajouter une image",
   "Paste a link of your image to add it to your description. It is recommended to also provide a textual alternative for an informative image and a title.": "Collez un lien de votre image pour l'ajouter à votre description. Il est recommandé de fournir également une alternative textuelle pour une image informative et un titre.",
   "Image link": "Lien de l'image",
@@ -388,5 +387,6 @@
   "Pagination": "Pagination",
   "Page {nb}": "Page {nb}",
   "An error occurred while accepting this membership.": "Une erreur est survenue lors de l'acceptation de cette demande.",
-  "An error occurred while refusing this membership.": "Une erreur est survenue lors de la suppression de cette demande."
+  "An error occurred while refusing this membership.": "Une erreur est survenue lors de la suppression de cette demande.",
+  "An error occurred while updating the member role.": "An error occurred while updating the member role."
 }
