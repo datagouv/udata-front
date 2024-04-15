@@ -132,7 +132,7 @@ import AdminTableTh from "../Table/AdminTableTh.vue";
 import Tooltip from '../../Tooltip/Tooltip.vue';
 import QualityScoreTooltip from "../../dataset/QualityScore/QualityScoreTooltip/QualityScoreTooltip.vue";
 import { metrics_api } from '../../../plugins/api';
-import { admin_root, lang } from '../../../config';
+import { admin_root } from '../../../config';
 import { summarize } from '../../../helpers';
 import type { AdminBadgeState, DatasetSortedBy, SortDirection } from '../../../types';
 
