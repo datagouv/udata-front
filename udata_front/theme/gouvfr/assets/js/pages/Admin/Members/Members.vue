@@ -204,7 +204,7 @@ async function updateRole(member: EditingMember) {
     updateMembers();
     closeModal(member.user.id);
   } catch (e) {
-    toast.error(t("An error occurred while update member role."));
+    toast.error(t("An error occurred while updating the member role."));
   } finally {
     loading.value = false;
   }
