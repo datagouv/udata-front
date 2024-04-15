@@ -345,7 +345,7 @@
   "Role of the member": "Rôle du membre",
   "Validate": "Valider",
   "Remove member from the organization": "Retirer le membre de l'organisation",
-  "Be careful, this action can't be reverse.": "Attention, cette action ne peut pas être annuler.",
+  "Be careful, this action can't be reverse.": "Attention, cette action ne peut pas être annulée.",
   "Remove member": "Retirer le membre",
   "An error occurred while update member role.": "Une erreur s'est produite lors de la mise à jour du rôle du membre.",
   "Add an image": "Ajouter une image",
@@ -381,12 +381,12 @@
   "Align center": "Centrer",
   "Align right": "Aligner à droite",
   "Refuse membership request": "Refuser la demande d'adhésion",
-  "You can provide the refusal reason:": "You can provide the refusal reason:",
-  "Cancel": "Cancel",
-  "Refuse request": "Refuse request",
-  "An error occurred while removing this member.": "An error occurred while removing this member.",
+  "You can provide the refusal reason:": "Vous pouvez fournir le motif de refus :",
+  "Cancel": "Annuler",
+  "Refuse request": "Refuser la demande",
+  "An error occurred while removing this member.": "Une erreur est survenue lors de la suppression de ce membre.",
   "Pagination": "Pagination",
   "Page {nb}": "Page {nb}",
-  "An error occurred while accepting this membership.": "An error occurred while accepting this membership.",
-  "An error occurred while refusing this membership.": "An error occurred while refusing this membership."
+  "An error occurred while accepting this membership.": "Une erreur est survenue lors de l'acceptation de cette demande.",
+  "An error occurred while refusing this membership.": "Une erreur est survenue lors de la suppression de cette demande."
 }
