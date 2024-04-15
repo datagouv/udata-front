@@ -2,7 +2,6 @@
 import { type DatasetV2, InformationPanel, type License, Pagination, type Quality, QualityComponent, QualityComponentInline, QualityItem, QualityScore, ReadMore, type Resource, ResourceAccordion, Toggletip, Well } from "../src";
 import { ref } from "vue";
 import { DsfrTabs, DsfrTabContent } from "@gouvminint/vue-dsfr";
-import type { Quality } from "../src/types/datasets";
 import editIcon from "../../templates/svg/illustrations/edit.svg";
 
 const resource = ref<Resource>({
@@ -92,7 +91,7 @@ test.. test... test..... test?..... test!....
     temporal_coverage: false,
     update_frequency: false,
     update_fulfilled_in_time: false,
-  };
+  });
 
   const dataset : DatasetV2 = {
     id: "653a6afa18f9f98d2ffdadee",
@@ -174,6 +173,7 @@ test.. test... test..... test?..... test!....
       uri: "https://demo.data.gouv.fr/api/1/organizations/test-meteo-france/"
     }
   };
+
   const license : License = {
     title: "Licence Ouverte",
     url: "https://www.etalab.gouv.fr/wp-content/uploads/2014/05/Licence_Ouverte.pdf",
@@ -201,7 +201,6 @@ test.. test... test..... test?..... test!....
   ];
 
   const selectedTabIndex = ref(0);
-  });
   const id = "12";
 </script>
 
