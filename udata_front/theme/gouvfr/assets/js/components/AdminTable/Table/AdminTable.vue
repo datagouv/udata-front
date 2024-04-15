@@ -5,14 +5,19 @@
     </table>
   </div>
 </template>
-<style scoped>
+<style lang="less" scoped>
+
+@import "../../../../less/variables.less";
+
+@media @dsfr-query-lg {
+  .fr-table table {
+    display: table;
+  }
+}
+
 .fr-table {
   --lh: 1.125rem;
   --max-lines: 2;
-}
-
-.fr-table table {
-  display: table;
 }
 
 .fr-table table :deep(th) {
