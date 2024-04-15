@@ -9,6 +9,7 @@
       v-else-if="currentStep === 1"
       :originalDataset="dataset"
       :steps="steps"
+      :granularities="granularities"
       @next="updateDatasetAndMoveToNextStep"
     />
     <template v-else-if="currentStep === 2">
@@ -39,7 +40,7 @@
   </div>
 </template>
 <script>
-import { computed, defineComponent, ref, toValue } from 'vue';
+import { computed, defineComponent, onMounted, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { templateRef, useEventListener } from '@vueuse/core';
 import Step1PublishingType from "./Step1PublishingType.vue";
@@ -48,7 +49,7 @@ import Step3AddFiles from './Step3AddFiles.vue';
 import Step3UpdateFileMetadata from "./Step3UpdateFileMetadata.vue";
 import Step4CompleteThePublication from "./Step4CompleteThePublication.vue";
 import { publishing_form_feedback_url, title, user } from '../../config';
-import { createDataset, publishDataset } from '../../api/datasets';
+import { createDataset, getSpatialGranularities, publishDataset } from '../../api/datasets';
 import { useFilesUpload } from '../../composables/form/useFilesUpload';
 
 export default defineComponent({
@@ -71,6 +72,9 @@ export default defineComponent({
     const { t } = useI18n();
 
     const { files, updateFiles, uploadFiles } = useFilesUpload();
+
+    /** @type {import("vue").Ref<Array<import("../../types").SpatialGranularity>>} */
+    const granularities = ref([]);
 
     const steps = [t("Publish data on {site}", {site: title}), t("Describe your dataset"), t("Add files"), t("Complete your publishing")];
 
@@ -166,6 +170,15 @@ export default defineComponent({
         }
       }
     };
+
+    onMounted(async () => {
+      try {
+        const granularitiesValue = await getSpatialGranularities();
+        granularities.value = granularitiesValue;
+      } catch(error) {
+        console.error("Error fetching granularities:", error);
+      }
+    });
 
     /**
      *
@@ -282,6 +295,7 @@ export default defineComponent({
       editedFile,
       errors,
       files,
+      granularities,
       loading,
       moveToStep,
       publishing_form_feedback_url,

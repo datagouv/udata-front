@@ -23,6 +23,28 @@ const args = {
   values: null,
 };
 
+const argsWithExtraDatas = {
+  placeholder: "Complex select with extra datas",
+  searchPlaceholder: "Type to search",
+  emptyPlaceholder: "Select an option",
+  allOption: "Select something",
+  initialOptions: Promise.resolve([
+    {
+      label: "Option 1",
+      value: "Option 1",
+      helper: "Insee: 53350",
+      description: "French region"
+    },
+    {
+      label: "Option 2",
+      value: "Option 2",
+      helper: "Insee: 12005",
+      description: "French department"
+    },
+  ]),
+  values: null,
+};
+
 export const SimpleMultiSelect = {
   render: (args) => ({
     components: { MultiSelect },
@@ -123,5 +145,18 @@ export const MultipleMultiSelect = {
     multiple: true,
     values: [],
     addAllOption: false,
+  },
+};
+
+export const SimpleMultiSelectWithHelperAndDescription = {
+  render: (args) => ({
+    components: { MultiSelect },
+    setup() {
+      return { args };
+    },
+    template: '<MultiSelect v-bind="args"/>',
+  }),
+  args: {
+    ...argsWithExtraDatas,
   },
 };

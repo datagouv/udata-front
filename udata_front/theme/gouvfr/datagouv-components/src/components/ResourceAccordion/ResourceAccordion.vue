@@ -177,7 +177,7 @@
             :tabindex="resourceStructureTabIndex"
             v-show="resourceStructureSelected"
           >
-            <component v-if="expanded" v-for="dataStructure in structure" :is="dataStructure.component" :resource="resource"/>
+            <component v-if="expanded && hasExplore" v-for="dataStructure in structure" :is="dataStructure.component" :resource="resource"/>
             <hr class="fr-my-5v fr-p-1v" v-if="hasExplore && hasSchema"/>
             <template v-if="hasSchema">
               <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle">
