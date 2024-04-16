@@ -24,25 +24,9 @@ const organization: NewOrganization = {
   acronym: "",
   description: "",
   url: "",
-  id: "",
-  badges: [],
-  created_at: "",
-  last_modified: "",
-  last_update: "",
   logo: "",
   logo_thumbnail: "",
   page: "",
-  deleted: "",
-  members: [],
-  metrics: {
-    datasets: 0,
-    followers: 0,
-    members: 0,
-    reuses: 0,
-    views: 0
-  },
-  slug: "",
-  uri: ""
 };
 
 const args = {

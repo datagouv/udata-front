@@ -47,13 +47,14 @@
 
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watch } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useI18n } from 'vue-i18n';
 import { useCollapse } from "../../../composables/useCollapse";
 import OrganizationSearchOption from "./OrganizationSearchOption.vue";
 import useUid from "../../../composables/useUid";
 import { api } from "../../../plugins/api";
 import type { Organization } from "@etalab/data.gouv.fr-components";
+import { watchDebounced } from "@vueuse/core";
 
 const { t } = useI18n();
 const { expanded, uid, show, hide, registerBackgroundEvent, removeBackgroundEvent } = useCollapse();
@@ -62,7 +63,7 @@ const { id } = useUid("search");
 const inputId = computed(() => `${id}-input`);
 const labelId = computed(() => `${id}-label`);
 
-const options = ref<Array<any>>([]);
+const options = ref<Array<Organization>>([]);
 const selectedIndex = ref(-1);
 
 const onClickOutside = (event) => {
@@ -108,14 +109,14 @@ function showAndFocus () {
   }
 }
 
-const showAndSelectIfQuery = () => {
+function showAndSelectIfQuery() {
   if (q.value && options.value.length > 0) {
     show();
     selectedIndex.value = 0;
   }
 }
 
-const handleKeyDown = (e: KeyboardEvent) => {
+function handleKeyDown(e: KeyboardEvent) {
   switch (e.key) {
     case "ArrowDown":
       e.preventDefault();
@@ -135,30 +136,30 @@ const handleKeyDown = (e: KeyboardEvent) => {
   }
 };
 
-const handleFocusOut = () => {
+function handleFocusOut() {
   hide();
 };
 
-const searchSelectedOption = () => {
+function searchSelectedOption() {
   const selectedOption = options.value[selectedIndex.value];
   if (selectedOption) {
     window.open(selectedOption.page, '_blank');
   }
 };
 
-const selectNextOption = () => {
+function selectNextOption() {
   if (options.value.length === 0) return;
   selectedIndex.value = (selectedIndex.value + 1) % options.value.length;
 };
 
-const selectPreviousOption = () => {
+function selectPreviousOption() {
   if (options.value.length === 0) return;
   selectedIndex.value = (selectedIndex.value - 1 + options.value.length) % options.value.length;
 };
 
-watch(q, async (newValue, oldValue) => {
+watchDebounced(q, async (newValue, oldValue) => {
   if (newValue !== oldValue) {
-    await fetchOptions(); 
+    await fetchOptions();
   }
-});
+}, { debounce: 300 });
 </script>

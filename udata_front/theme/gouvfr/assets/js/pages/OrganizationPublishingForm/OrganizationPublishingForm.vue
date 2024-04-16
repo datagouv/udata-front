@@ -44,30 +44,13 @@ const currentStep = ref(0);
 const containerRef = ref<HTMLDivElement | null>(null);
 
 const organization = ref<NewOrganization>({
-  acronym: "",
-  badges: [],
+  name: "",
   business_number_id: "",
-  created_at: "",
-  deleted: null,
+  acronym: "",
   description: "",
-  id: "",
-  last_modified: "",
-  last_update: "",
+  url: "",
   logo: "",
   logo_thumbnail: "",
-  members: [],
-  metrics: {
-    datasets: 0,
-    followers: 0,
-    members: 0,
-    reuses: 0,
-    views: 0,
-  },
-  name: "",
-  page: "",
-  slug: "",
-  uri: "",
-  url: ""
 });
 
 const errors = ref<Array<string>>([]);
