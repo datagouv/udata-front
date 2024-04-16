@@ -167,7 +167,7 @@ const extrasExpanded = ref(false);
 const extrasRef = ref<HTMLDivElement | null>(null);
 const granularities = ref<Granularities>([]);
 const frequencies = ref<Frequencies>([]);
-const zone = ref<string | null>(null)
+const zone = ref<string | null>(null);
 const harvestExpanded = ref(false);
 const harvestRef = ref<HTMLDivElement | null>(null);
 const textAreaRef = ref<HTMLTextAreaElement | null>(null);
@@ -198,8 +198,6 @@ function hasExtras() {
 function setZone() {
   if (props.dataset.spatial?.zones?.length > 0) {
     fetchZone(props.dataset.spatial.zones[0]).then(foundZone => zone.value = foundZone);
-  } else {
-    zone.value = null;
   }
 };
 

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { type DatasetV2, InformationPanel, type License, Pagination, type Quality, QualityComponent, QualityComponentInline, QualityItem, QualityScore, ReadMore, type Resource, ResourceAccordion, Toggletip, Well } from "../src";
 import { ref } from "vue";
-import { DsfrTabs, DsfrTabContent } from "@gouvminint/vue-dsfr";
 import editIcon from "../../templates/svg/illustrations/edit.svg";
 
 const resource = ref<Resource>({
