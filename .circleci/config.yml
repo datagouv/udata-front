@@ -9,7 +9,7 @@ jobs:
 
   deps:
     docker:
-      - image: udata/circleci:py3.11
+      - image: udata/circleci:py3.11-bookworm
     steps:
       - checkout
       # needed to commit changed *.pip files if needed
@@ -67,7 +67,7 @@ jobs:
 
   python:
     docker:
-      - image: udata/circleci:py3.11
+      - image: udata/circleci:py3.11-bookworm
       - image: mongo:6.0.4
       - image: redis:alpine
     environment:
@@ -135,7 +135,7 @@ jobs:
   assets:
     docker:
       # TODO make an image based on 2-alpine w/ nvm and phantom deps
-      - image: udata/circleci:py3.11
+      - image: udata/circleci:py3.11-bookworm
     environment:
        BASH_ENV: /root/.bashrc
     steps:
@@ -200,7 +200,7 @@ jobs:
 
   cypress:
     docker:
-      - image: cimg/python:3.10.13-browsers
+      - image: cimg/python:3.11-browsers
       - image: mongo:6.0.4
       - image: redis:alpine
     steps:
@@ -239,7 +239,7 @@ jobs:
 
   lighthouse:
     docker:
-      - image: cimg/python:3.10.13-browsers
+      - image: cimg/python:3.11-browsers
       - image: mongo:6.0.4
       - image: redis:alpine
     steps:
@@ -278,7 +278,7 @@ jobs:
 
   dist:
     docker:
-      - image: udata/circleci:py3.11
+      - image: udata/circleci:py3.11-bookworm
     environment:
        BASH_ENV: /root/.bashrc
     steps:
@@ -309,7 +309,7 @@ jobs:
 
   publish:
     docker:
-      - image: udata/circleci:py3.11
+      - image: udata/circleci:py3.11-bookworm
     steps:
       - attach_workspace:
           at: .
