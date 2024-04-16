@@ -59,96 +59,12 @@
               <p class="fr-badge">{{ getRoleLabel(member.role) }}</p>
             </td>
             <td v-if="isAdmin">
-              <button
-                class="fr-btn fr-btn--sm fr-btn--tertiary-no-outline fr-icon-pencil-line"
-                data-fr-opened="false"
-                :aria-controls="getModalId(member.user.id)"
-              >
-                {{ t("Edit") }}
-              </button>
-              <Teleport to="body">
-                <dialog
-                  :aria-labelledby="getModalTitleId(member.user.id)"
-                  role="dialog"
-                  :id="getModalId(member.user.id)"
-                  class="fr-modal"
-                >
-                  <div class="fr-container fr-container--fluid fr-container-md">
-                    <div class="fr-grid-row fr-grid-row--center">
-                      <div class="fr-col-12 fr-col-md-8">
-                        <div class="fr-modal__body">
-                          <div class="fr-modal__header">
-                            <button
-                              class="fr-btn--close fr-btn"
-                              :title="t('Close the modal dialog')"
-                              :aria-controls="getModalId(member.user.id)"
-                            >
-                              {{ t("Close") }}
-                            </button>
-                          </div>
-                          <div class="fr-modal__content">
-                            <h1
-                              :id="getModalTitleId(member.user.id)"
-                              class="fr-modal__title fr-mb-2w"
-                            >
-                              {{ t("Edit member") }}
-                            </h1>
-                            <p class="fr-grid-row fr-grid-row--middle fr-text--bold fr-mb-2w">
-                              <Avatar
-                                class="fr-mr-1v"
-                                :user="member.user"
-                                :rounded="true"
-                                :size="24"
-                              />
-                              {{ member.user.first_name }} {{ member.user.last_name }}
-                            </p>
-                            <form
-                              class="fr-grid-row fr-grid-row--gutters fr-grid-row--bottom"
-                              @submit.prevent="updateRole(member)"
-                            >
-                              <div class="fr-col">
-                                <SelectGroup
-                                  :label="t('Role of the member')"
-                                  v-if="roles.length > 0"
-                                  :model-value="member.role"
-                                  @update:model-value="(newRole) => member.newRole = (newRole as MemberRole)"
-                                  :options="getRolesWithSelected(member.role)"
-                                />
-                              </div>
-                              <div class="fr-col-auto">
-                                <button
-                                  class="fr-btn"
-                                  type="submit"
-                                  :disabled="loading"
-                                >
-                                  {{ t("Validate") }}
-                                </button>
-                              </div>
-                            </form>
-                            <AdminDangerZone
-                              class="fr-mt-2w"
-                            >
-                              <div class="fr-col">
-                                <p class="fr-m-0 text-grey-500">{{ t('Remove member from the organization') }}</p>
-                                <p class="fr-m-0 fr-text--xs text-default-error">{{ t("Be careful, this action can't be reverse.") }}</p>
-                              </div>
-                              <div class="fr-col-auto">
-                                <button
-                                  class="fr-btn fr-btn--secondary fr-btn--secondary--error fr-btn--icon-left fr-icon-logout-box-r-line"
-                                  :disabled="loading"
-                                  @click="removeMemberFromOrganization(member)"
-                                >
-                                  {{ t('Remove member') }}
-                                </button>
-                              </div>
-                            </AdminDangerZone>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </dialog>
-              </Teleport>
+              <AdminEditMemberButton
+                :member="member"
+                :oid="oid"
+                :roles="roles"
+                @member-updated="updateMembers"
+              />
             </td>
           </tr>
         </tbody>
@@ -160,13 +76,12 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
-import { acceptRequest, formatRolesAsOptions, getOrganization, getPendingMemberships, getRoles, refuseRequest, removeMember, updateMemberRole } from "../../../api/organizations";
-import AdminDangerZone from "../../../components/AdminDangerZone/AdminDangerZone.vue";
-import Avatar from "../../../components/discussions/Avatar/Avatar.vue";
+import { acceptRequest, formatRolesAsOptions, getOrganization, getPendingMemberships, getRoles, refuseRequest } from "../../../api/organizations";
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
-import SelectGroup, { type Option } from "../../../components/Form/SelectGroup/SelectGroup.vue";
+import { type Option } from "../../../components/Form/SelectGroup/SelectGroup.vue";
+import AdminEditMemberButton from "../../../components/AdminEditMember/AdminEditMemberButton.vue";
 import AdminMembershipRequest from "../../../components/AdminMembershipRequest/AdminMembershipRequest.vue";
-import type { EditingMember, Member, MemberRole, PendingMembershipRequest } from "../../../types";
+import type { EditingMember, MemberRole, PendingMembershipRequest } from "../../../types";
 import { useToast } from "../../../composables/useToast";
 import { user, userIsAdmin } from "../../../config";
 
@@ -189,60 +104,8 @@ const members = ref<Array<EditingMember>>([]);
 
 const loading = ref(false);
 
-function getModalId(id: string) {
-  return "fr-modal-user-" + id;
-}
-
-function getModalTitleId(id: string) {
-  return "fr-modal-title-user-" + id;
-}
-
-function closeModal(memberId: string) {
-  const modal = document.getElementById(getModalId(memberId));
-  globalThis.dsfr(modal).modal.conceal();
-}
-
-async function updateRole(member: EditingMember) {
-  if(!member.newRole) {
-    closeModal(member.user.id);
-    return;
-  }
-  try {
-    loading.value = true;
-    await updateMemberRole(props.oid, member.user.id, member.newRole);
-    updateMembers();
-    closeModal(member.user.id);
-  } catch (e) {
-    toast.error(t("An error occurred while update member role."));
-  } finally {
-    loading.value = false;
-  }
-}
-
-async function removeMemberFromOrganization(member: Member) {
-  try {
-    loading.value = true;
-    await removeMember(props.oid, member.user.id);
-    updateMembers();
-  } catch (e) {
-    toast.error(t("An error occurred while removing this member."));
-  } finally {
-    loading.value = false;
-  }
-}
-
 function getRoleLabel(role: MemberRole) {
   return roles.value.find(memberRole => memberRole.value === role)?.label ?? role;
-}
-
-function getRolesWithSelected(role: MemberRole) {
-  return roles.value.map(memberRole => {
-    const updatedMemberRole = {...memberRole};
-    if(updatedMemberRole.value === role) {
-      updatedMemberRole.selected = true;
-    }
-    return updatedMemberRole;
-  });
 }
 
 async function updateMembers() {
