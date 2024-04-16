@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 3.5.5 (2024-04-16)
 
 - Add beta admin member page [#374](https://github.com/etalab/udata-front/pull/374)
