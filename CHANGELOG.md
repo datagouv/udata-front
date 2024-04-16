@@ -2,6 +2,28 @@
 
 ## Current (in progress)
 
+- Nothing yet
+
+## 3.5.5 (2024-04-16)
+
+- Add beta admin member page [#374](https://github.com/etalab/udata-front/pull/374)
+- Move Pagination to datagouv-components [#365](https://github.com/etalab/udata-front/pull/365)
+- Add stories to Resource component [#364](https://github.com/etalab/udata-front/pull/364)
+- Move Well to datagouv-components [#382](https://github.com/etalab/udata-front/pull/382)
+- Add markdown editor [#351](https://github.com/etalab/udata-front/pull/351)
+- Componentize quality component [#385](https://github.com/etalab/udata-front/pull/385)
+- Add codes and optgroups in Multiselect to display Insee codes and Licence groups [#347] (https://github.com/etalab/udata-front/pull/347)
+- Fix datastructure display in ResourceAccordion [#389](https://github.com/etalab/udata-front/pull/389)
+- Order Organization's reuses by publishing date [#390](https://github.com/etalab/udata-front/pull/390)
+- Upgrade vue dependency [#386](https://github.com/etalab/udata-front/pull/386)
+- Fix failing captchEtat responses [#392](https://github.com/etalab/udata-front/pull/392)
+- Fix release CI [#380](https://github.com/etalab/udata-front/pull/380) [#384](https://github.com/etalab/udata-front/pull/384)
+- Update constants imports from `.models` to `.constants` [#375](https://github.com/etalab/udata-front/pull/375)
+- Fix rename of VisibleDatasetFactory [#387](https://github.com/etalab/udata-front/pull/387)
+
+## 3.5.4 (2024-03-20)
+
+- Fix footer links and some translations [#366](https://github.com/etalab/udata-front/pull/366)
 - Show error when dataset discussion from url doesn't exist [#367](https://github.com/etalab/udata-front/pull/367)
 - Hide quality score on "work in progress" backends [#370](https://github.com/etalab/udata-front/pull/370)
 - Add a new vite config for development [#372](https://github.com/etalab/udata-front/pull/372)

@@ -1,0 +1,29 @@
+meter.quality-score {
+    background: none;
+    .border;
+    .border-default-grey;
+    border-radius: 8px;
+    height: 10px;
+    vertical-align: baseline;
+    &::-webkit-meter-bar {
+        height: 10px;
+        background: whiteSmoke;
+        border-radius: 8px;
+    }
+    &::-moz-meter-bar {
+        background: whiteSmoke;
+        border-radius: 8px;
+    }
+    &::-webkit-meter-suboptimum-value {
+        background-color: @grey-300;
+    }
+    &:-moz-meter-sub-optimum::-moz-meter-bar {
+        background-color: @grey-300;
+    }
+    &::-webkit-meter-optimum-value {
+        background-color: #27A658;;
+    }
+    &:-moz-meter-optimum::-moz-meter-bar {
+        background-color: #27A658;;
+    }
+}

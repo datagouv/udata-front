@@ -55,6 +55,7 @@
               :aria-controls="resourceContentId"
               class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-btn--secondary-grey-500"
               :class="{'fr-icon-arrow-up-s-line': expanded, 'fr-icon-arrow-down-s-line': !expanded}"
+              data-testid="expand-button"
             >
               <template v-if="expanded">
                 {{ $t('Close details') }}
@@ -176,7 +177,7 @@
             :tabindex="resourceStructureTabIndex"
             v-show="resourceStructureSelected"
           >
-            <component v-if="expanded" v-for="dataStructure in structure" :is="dataStructure.component" :resource="resource"/>
+            <component v-if="expanded && hasExplore" v-for="dataStructure in structure" :is="dataStructure.component" :resource="resource"/>
             <hr class="fr-my-5v fr-p-1v" v-if="hasExplore && hasSchema"/>
             <template v-if="hasSchema">
               <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle">

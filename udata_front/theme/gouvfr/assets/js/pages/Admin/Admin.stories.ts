@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import Admin from './Admin.vue';
 import type { Meta, StoryObj } from "@storybook/vue3";
-import type { Me } from '../../types';
+import type { Me, PendingMembershipRequest } from '../../types';
 
 const meta = {
   title: 'Pages/Admin',
@@ -43,6 +43,45 @@ const meta = {
           "website": "https://www.data.gouv.fr"
         };
         return res(ctx.delay(), ctx.json(me));
+      }),
+      rest.get("*/api/1/organizations/*/membership", async (_req, res, ctx) => {
+        const requests: Array<PendingMembershipRequest> = [
+          {
+              "comment": "justice et patriotisme information et suivie des affaires class\u00e9s r\u00e9ouverture ",
+              "created": "2018-08-15T09:13:15.453000+00:00",
+              "id": "873971df-f993-49a0-ada9-6a99ef863399",
+              "status": "pending",
+              "user": {
+                  "avatar": null,
+                  "avatar_thumbnail": null,
+                  "class": "User",
+                  "first_name": "175.1",
+                  "id": "58122e87c751df389fc562c7",
+                  "last_name": "M.",
+                  "page": "http://dev.local:7000/en/users/1751-m/",
+                  "slug": "1751-m",
+                  "uri": "http://dev.local:7000/api/1/users/1751-m/"
+              }
+          },
+          {
+              "comment": "j'aimerai signaler les pratiques d'un b\u00e9n\u00e9ficiaire des num\u00e9ros \u00e0 valeurs ajout\u00e9s (num\u00e9ros surtax\u00e9s pour le service voyance et astrologie)",
+              "created": "2019-05-31T05:34:29.480000+00:00",
+              "id": "02f988ae-1da4-46e8-ae43-4295d177c6cb",
+              "status": "pending",
+              "user": {
+                  "avatar": null,
+                  "avatar_thumbnail": null,
+                  "class": "User",
+                  "first_name": "some",
+                  "id": "5cf09b5b8b4c415c7833ca14",
+                  "last_name": "user",
+                  "page": "http://dev.local:7000/en/users/some-user/",
+                  "slug": "some-user",
+                  "uri": "http://dev.local:7000/api/1/users/some-user/"
+              }
+          }
+      ];
+        return res(ctx.delay(), ctx.json(requests));
       }),
     ]
   },

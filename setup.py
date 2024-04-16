@@ -12,10 +12,9 @@ def file_content(filename):
 
 
 def get_requirements():
-    '''Return content of pip requirements file with very custom logic'''
-    reqs = file_content(os.path.join('requirements', 'udata.pip')).splitlines()
-    # keep only the ref to udata, unpinned if not udata==xxx
-    reqs = [r for r in reqs if r.strip().startswith('udata==')] or ['udata']
+    '''Return content of pip requirement file and add udata'''
+    # unpinned udata requirement
+    reqs = ['udata']
     reqs += file_content(os.path.join('requirements', 'install.pip')).splitlines()
     return reqs
 

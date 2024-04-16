@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
 import {api, apiv2} from "../plugins/api";
-import { lang } from '../config';
 import { getLocalizedUrl } from '../i18n';
 
 /**

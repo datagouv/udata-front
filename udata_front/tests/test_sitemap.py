@@ -1,4 +1,4 @@
-from udata.core.dataset.factories import VisibleDatasetFactory
+from udata.core.dataset.factories import DatasetFactory
 from udata.core.organization.factories import OrganizationFactory
 from udata.core.post.factories import PostFactory
 from udata.core.reuse.factories import VisibleReuseFactory
@@ -48,7 +48,7 @@ class SitemapTest:
 
     def test_datasets_within_sitemap(self, sitemap):
         '''It should return a dataset list from the sitemap.'''
-        datasets = VisibleDatasetFactory.create_batch(3)
+        datasets = DatasetFactory.create_batch(3)
 
         sitemap.fetch()
 
