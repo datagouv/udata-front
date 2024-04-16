@@ -64,5 +64,9 @@
   "Previous page": "Previous page",
   "Page {nb}": "Page {nb}",
   "Next page": "Next page",
-  "Last page": "Last page"
+  "Last page": "Last page",
+  "Private": "Private",
+  "Archived": "Archived",
+  "{n} reuses": "{n} reuses",
+  "{n} favorites": "{n} favorites"
 }
