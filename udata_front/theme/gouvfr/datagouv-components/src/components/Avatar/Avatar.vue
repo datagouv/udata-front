@@ -14,7 +14,7 @@
 import useUserAvatar from "../../composables/useUserAvatar";
 type Props = {
     user: Object,
-    size: number
+    size?: number
 }
 const props = withDefaults(defineProps<Props>(), {
   size: 40,
