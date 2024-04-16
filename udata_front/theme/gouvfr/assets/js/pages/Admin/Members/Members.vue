@@ -14,7 +14,16 @@
       <li>
       </li>
     </Breadcrumb>
-    <h1 class="fr-h1 fr-mb-2w">{{ t("Members") }}</h1>
+    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle justify-center">
+      <div class="fr-col-12 fr-col-md">
+        <h1 class="fr-h1 fr-mb-2w">{{ t("Members") }}</h1>
+      </div>
+      <div class="fr-col-auto">
+        <button class="fr-btn fr-btn--sm fr-btn--icon-left fr-icon-add-line">
+          {{ t("Add member") }}
+        </button>
+      </div>
+    </div>
     <template v-if="membershipRequests.length">
       <h2 class="subtitle subtitle--uppercase">
         {{ t("{n} requests", {n: membershipRequests.length}) }}
