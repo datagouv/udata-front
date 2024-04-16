@@ -66,7 +66,7 @@
             </div>
         </div>
     </div>
-    <div v-if="hasExtras()">
+    <div v-if="hasExtras">
         <header
             class="fr-grid-row fr-grid-row--middle fr-pb-3w fr-mb-3w border-bottom border-default-grey"
             :class="{'border-bottom': !extrasExpanded}"
@@ -146,7 +146,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import type { Dataset, DatasetV2 } from "../../types/datasets";
 import CopyButton from "../CopyButton/CopyButton.vue";
 import { toggleAccordion } from "../../helpers/toggleAccordion";
@@ -171,6 +171,9 @@ const zone = ref<string | null>(null);
 const harvestExpanded = ref(false);
 const harvestRef = ref<HTMLDivElement | null>(null);
 const textAreaRef = ref<HTMLTextAreaElement | null>(null);
+
+const hasExtras = computed(() => Object.keys(props.dataset.extras).length > 0);
+
 function selectContent() {
   if (textAreaRef.value) {
     textAreaRef.value.select();
@@ -189,10 +192,6 @@ function extrasExpand() {
   if(extrasRef.value) {
     toggleAccordion(extrasRef.value, extrasExpanded.value);
   }
-};
-
-function hasExtras() {
-  return Object.keys(props.dataset.extras).length > 0;
 };
 
 function setZone() {
