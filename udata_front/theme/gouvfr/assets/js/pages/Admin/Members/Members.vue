@@ -19,7 +19,7 @@
       <h2 class="subtitle subtitle--uppercase">
         {{ t("{n} requests", {n: membershipRequests.length}) }}
       </h2>
-      <MembershipRequest
+      <AdminMembershipRequest
         class="fr-mb-4w"
         v-for="request in membershipRequests"
         :key="request.id"
@@ -156,7 +156,7 @@ import AdminDangerZone from "../../../components/AdminDangerZone/AdminDangerZone
 import Avatar from "../../../components/discussions/Avatar/Avatar.vue";
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
 import SelectGroup, { type Option } from "../../../components/Form/SelectGroup/SelectGroup.vue";
-import MembershipRequest from "../../../components/MembershipRequest/MembershipRequest.vue";
+import AdminMembershipRequest from "../../../components/AdminMembershipRequest/AdminMembershipRequest.vue";
 import type { EditingMember, Member, MemberRole, PendingMembershipRequest } from "../../../types";
 import { useToast } from "../../../composables/useToast";
 import { user, userIsAdmin } from "../../../config";
