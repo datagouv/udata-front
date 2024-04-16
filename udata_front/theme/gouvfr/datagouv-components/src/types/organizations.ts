@@ -8,11 +8,11 @@ export type Member = {
 };
 
 export type NewOrganization = {
-  acronym: string | null,
-  name: string,
+  acronym: string | null;
+  name: string;
   business_number_id: string;
   description: string;
-  url: string,
+  url: string;
 }
 
 export type Organization = NewOrganization & {
@@ -23,10 +23,10 @@ export type Organization = NewOrganization & {
   deleted: string | null;
   logo: string;
   logo_thumbnail: string;
-  members: Array<Member>
+  members: Array<Member>;
   metrics: { datasets: number; followers: number; members: number; reuses: number; views: number; };
   page: string;
   slug: string;
   uri: string;
-  badges: Array<{kind: string}>
+  badges: Array<{kind: string}>;
 }

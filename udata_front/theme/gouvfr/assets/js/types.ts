@@ -128,9 +128,9 @@ export type NewDataset = Owned & {
   private: boolean;
   quality?: Quality;
   spatial: {
-  zones?: Array<string>;
-  granularity?: string;
-} | null;
+    zones?: Array<string>;
+    granularity?: string;
+  } | null;
 };
 
 export type Dataset = NewDataset & {
