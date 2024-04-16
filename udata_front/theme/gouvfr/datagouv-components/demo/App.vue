@@ -132,8 +132,8 @@ const dataset : DatasetV2 = {
   organization: {
     id: "some_id",
     acronym: null,
-    logo: "https://demo-static.data.gouv.fr/avatars/a2/b135634de04fb8a76c8ec3100e5e4b.png",
-    logo_thumbnail:"https://demo-static.data.gouv.fr/avatars/a2/b135634de04fb8a76c8ec3100e5e4b-100.png",
+    logo: "https://demo-static.data.gouv.fr/avatars/92/6284d057ca4279af35e9b62bc62639-100.png",
+    logo_thumbnail:"https://demo-static.data.gouv.fr/avatars/92/6284d057ca4279af35e9b62bc62639-100.png",
     page: "https://demo.data.gouv.fr/fr/organizations/test-meteo-france/",
     badges: [],
     name: "[TEST] Météo France",

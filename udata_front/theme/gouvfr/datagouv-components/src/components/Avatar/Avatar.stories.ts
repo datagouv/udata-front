@@ -14,18 +14,18 @@ const args = {
     id: "someUserId",
     first_name: "John",
     last_name: "Doe"
-  },
+  } as User,
 };
 
 
 const userWithAvatarArgs = {
-  /** @type {import("@etalab/data.gouv.fr-components").User} */
   user: {
     id: "someUserId",
     first_name: "John",
     last_name: "Doe",
-    avatar: "https://dev-static.data.gouv.fr/avatars/0d/aebc1b126b410aa73701fde285dd76-100.jpg",
-  },
+    avatar: "https://demo-static.data.gouv.fr/avatars/92/6284d057ca4279af35e9b62bc62639-100.png",
+    avatar_thumbnail: "https://demo-static.data.gouv.fr/avatars/92/6284d057ca4279af35e9b62bc62639-100.png",
+  } as User,
 };
 
 export const DefaultIdenticonAvatar: StoryObj<typeof meta> = {

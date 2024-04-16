@@ -1,16 +1,8 @@
 import { config } from "../config";
+import { User } from "../types/users";
 
-/**
- *
- * @param {import("@etalab/data.gouv.fr-components").User} user
- * @param {number} size
- */
-export default function useUserAvatar(user, size) {
-  /**
-   *
-   * @param {string} id
-   * @param {number} size
-   */
-  const getIdenticon = (id, size) => `${config.api_root}avatars/${id}/${size}`;
+export default function useUserAvatar(user: User, size: number) {
+  const getIdenticon = (id: string, size: number) => `${config.api_root}avatars/${id}/${size}`;
+  console.log(user.avatar_thumbnail || getIdenticon(user.id, size))
   return user.avatar_thumbnail || getIdenticon(user.id, size);
 }
