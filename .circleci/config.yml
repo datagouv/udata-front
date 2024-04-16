@@ -135,9 +135,7 @@ jobs:
   assets:
     docker:
       # TODO make an image based on 2-alpine w/ nvm and phantom deps
-      - image: udata/circleci:py3.11-bookworm
-    environment:
-       BASH_ENV: /root/.bashrc
+      - image: cimg/python:3.11-node
     steps:
       - checkout
       - attach_workspace:
