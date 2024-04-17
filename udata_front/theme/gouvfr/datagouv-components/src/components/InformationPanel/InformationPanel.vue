@@ -30,7 +30,7 @@
                 </div>                  
                 <div class="fr-col-12 fr-col-sm-6 fr-col-md-4">
                     <h3 class="subtitle fr-mb-1v">{{ $t('Frequency') }}</h3>
-                    <p class="fr-text--sm fr-m-0 text-mention-grey ">{{ getFrequencies(frequencies, props.dataset.frequency) }}</p>
+                    <p class="fr-text--sm fr-m-0 text-mention-grey ">{{ frequency }}</p>
                 </div>
             </div>
             <div class="fr-grid-row fr-grid-row--gutters">
@@ -51,7 +51,7 @@
                 </div>
                 <div v-if="props.dataset.spatial?.granularity" class="fr-col-12 fr-col-sm-6 fr-col-md-4">
                     <h3 class="subtitle fr-mb-1v">{{ $t('Granularity of territorial coverage') }}</h3>
-                    <p class="fr-text--sm fr-m-0 text-mention-grey ">{{ getGranularity(granularities, props.dataset.spatial?.granularity) }}</p>
+                    <p class="fr-text--sm fr-m-0 text-mention-grey ">{{ granularity }}</p>
                 </div>                  
             </div>
         </div>
@@ -165,8 +165,8 @@ const props = defineProps<{
 const embedText = useOEmbed('dataset', props.dataset.id);
 const extrasExpanded = ref(false);
 const extrasRef = ref<HTMLDivElement | null>(null);
-const granularities = ref<Granularities>([]);
-const frequencies = ref<Frequencies>([]);
+const granularity = ref<string | null>(null);
+const frequency = ref<string | null>(null);
 const zone = ref<string | null>(null);
 const harvestExpanded = ref(false);
 const harvestRef = ref<HTMLDivElement | null>(null);
@@ -195,14 +195,24 @@ function extrasExpand() {
 };
 
 function setZone() {
-  if (props.dataset.spatial?.zones?.length > 0) {
+  if (props.dataset.spatial?.zones && props.dataset.spatial?.zones?.length > 0) {
     fetchZone(props.dataset.spatial.zones[0]).then(foundZone => zone.value = foundZone);
   }
 };
 
+function setGranularity(granularities: Granularities) {
+  if (props.dataset.spatial?.granularity) {
+    granularity.value = getGranularity(granularities, props.dataset.spatial?.granularity);
+  }
+};
+
+function setFrequency(frequencies: Frequencies) {
+  frequency.value = getFrequencies(frequencies, props.dataset.frequency);
+};
+
 onMounted(() => {
-  fetchGranularities().then(foundGranularities => granularities.value = foundGranularities);
-  fetchFrequencies().then(foundFrequencies => frequencies.value = foundFrequencies);
+  fetchGranularities().then(foundGranularities => setGranularity(foundGranularities));
+  fetchFrequencies().then(foundFrequencies => setFrequency(foundFrequencies));
   setZone();
 });
 </script>
