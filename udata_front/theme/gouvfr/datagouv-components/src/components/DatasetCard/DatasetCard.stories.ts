@@ -3,7 +3,7 @@ import { DatasetCard } from ".";
 import type { DatasetV2 } from '../..';
 
 const meta = {
-  title: 'Components/Components/DatasetCard',
+  title: 'Components/DatasetCard',
   component: DatasetCard,
   tags: ['autodocs'],
   parameters: {
