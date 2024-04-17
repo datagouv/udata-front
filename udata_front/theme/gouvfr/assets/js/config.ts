@@ -87,8 +87,6 @@ export const unchecked_types = _jsonMeta("unchecked-types");
 export const api_root = _meta("api-root");
 export const api_2_root = _meta("api-2-root");
 
-export const metrics_api_root = _meta("metrics-api");
-
 /**
  * The API Swagger specifications URL
  */
@@ -308,7 +306,6 @@ export default {
   data_search_feedback_form_url,
   api_root,
   api_2_root,
-  metrics_api_root,
   api_specs,
   theme_static,
   static_root,

@@ -107,7 +107,7 @@
           {{ summarize(dataset.metrics.views) }}
         </AdminTableTd>
         <AdminTableTd class="monospace">
-          {{ summarize(getMetrics(dataset)) }}
+          {{ summarize(dataset.metrics.downloads ?? 0) }}
         </AdminTableTd>
         <AdminTableTd class="monospace">
           {{ summarize(dataset.metrics.reuses) }}
@@ -131,7 +131,6 @@ import AdminTableTd from "../Table/AdminTableTd.vue";
 import AdminTableTh from "../Table/AdminTableTh.vue";
 import Tooltip from '../../Tooltip/Tooltip.vue';
 import QualityScoreTooltip from "../../dataset/QualityScore/QualityScoreTooltip/QualityScoreTooltip.vue";
-import { metrics_api } from '../../../plugins/api';
 import { admin_root } from '../../../config';
 import { summarize } from '../../../helpers';
 import type { AdminBadgeState, DatasetSortedBy, SortDirection } from '../../../types';
@@ -146,7 +145,6 @@ defineProps<{
 
 const { t } = useI18n();
 
-const metrics = ref<Record<string, number>>({});
 const sort = ref<SortDirection>('desc');
 const sortedBy = ref<DatasetSortedBy>('created');
 
@@ -193,20 +191,6 @@ function getFilesCount(dataset: Dataset | DatasetV2) {
 
 function getDatasetLinkToAdmin(dataset: Dataset | DatasetV2) {
   return admin_root + `dataset/${dataset.id}/`;
-}
-
-function getMetrics(dataset: Dataset | DatasetV2) {
-  if(metrics.value[dataset.id]) {
-    return metrics.value[dataset.id];
-  }
-  if(!metrics_api) { return 0; }
-  metrics_api.get("datasets/data/", {params: {
-    metric_month__sort: 'desc',
-    dataset_id__exact: dataset.id,
-  }}).then(response => {
-    metrics.value[dataset.id] = response.data.data[0]?.monthly_download_resource ?? 0;
-  });
-  return metrics.value[dataset.id];
 }
 
 function getStatus(dataset: Dataset | DatasetV2) {

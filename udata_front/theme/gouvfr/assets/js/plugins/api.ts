@@ -1,5 +1,5 @@
 import axios from "axios";
-import { api_root, api_2_root, metrics_api_root } from "../config";
+import { api_root, api_2_root } from "../config";
 import type { App } from "vue";
 
 const CancelToken = axios.CancelToken;
@@ -19,10 +19,6 @@ export const api = axios.create({
 export const apiv2 = axios.create({
   baseURL: api_2_root_absolute,
 });
-
-export const metrics_api = metrics_api_root ? axios.create({
-  baseURL: metrics_api_root,
-}) : null;
 
 export const install = (app: App) => {
   app.config.globalProperties.$api = api;
