@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- **breaking change** Migrate to Python 3.11 [#376](https://github.com/etalab/udata-front/pull/376)
 
 ## 3.5.5 (2024-04-16)
 
