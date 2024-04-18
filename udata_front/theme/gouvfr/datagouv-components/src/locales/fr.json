@@ -67,6 +67,6 @@
   "Read less": "Lire moins",
   "Private": "Privé",
   "Archived": "Archivé",
-  "{n} reuses": "{n} reuses",
-  "{n} favorites": "{n} favoris"
+  "{n} reuses": "{n} réutilisations | {n} réutilisation | {n} réutilisations",
+  "{n} favorites": "{n} favoris | {n} favori | {n} favoris"
 }
