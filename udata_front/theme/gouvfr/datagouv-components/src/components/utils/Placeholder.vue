@@ -1,13 +1,3 @@
-<!--
--
-name: Placeholder
-category: 5 - Interactions
--
-# Placeholder
-A very simple component that takes a `type` (dataset, reuse, post...) and an optional `src`. If `src` is defined, it simply displays the image (and all props passed are passed to the image).
-However, if `src` is undefined, it falls back to a placeholder. Don't forget to pass the `alt` prop !
--->
-
 <template>
   <img
     loading="lazy"

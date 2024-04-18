@@ -64,6 +64,7 @@ const args = {
     private: false,
     spatial: null,
     badges: [],
+    owner: null,
     organization: {
       id: "some_id",
       acronym: null,
