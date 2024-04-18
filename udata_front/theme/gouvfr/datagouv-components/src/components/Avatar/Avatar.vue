@@ -19,6 +19,5 @@ type Props = {
 const props = withDefaults(defineProps<Props>(), {
   size: 40,
 });
-console.log(props)
 const avatarUrl = useUserAvatar(props.user, props.size);
 </script>
