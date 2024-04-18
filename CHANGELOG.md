@@ -14,6 +14,7 @@
 - Order Organization's reuses by publishing date [#390](https://github.com/etalab/udata-front/pull/390)
 - Fix failing captchEtat responses [#392](https://github.com/etalab/udata-front/pull/392)
 - Add beta admin member page [#374](https://github.com/etalab/udata-front/pull/374)
+- Add beta admin "add member" modale [#398](https://github.com/etalab/udata-front/pull/398)
 
 ## 3.5.4 (2024-03-20)
 
