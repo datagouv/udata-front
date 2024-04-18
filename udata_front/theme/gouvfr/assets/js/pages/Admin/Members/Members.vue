@@ -19,9 +19,11 @@
         <h1 class="fr-h1 fr-mb-2w">{{ t("Members") }}</h1>
       </div>
       <div class="fr-col-auto">
-        <button class="fr-btn fr-btn--sm fr-btn--icon-left fr-icon-add-line">
-          {{ t("Add member") }}
-        </button>
+        <AdminAddMemberButton
+          :oid="oid"
+          :roles="roles"
+          @member-added="updateMembers"
+        />
       </div>
     </div>
     <template v-if="membershipRequests.length">
@@ -84,6 +86,7 @@ import AdminMembershipRequest from "../../../components/AdminMembershipRequest/A
 import type { EditingMember, MemberRole, PendingMembershipRequest } from "../../../types";
 import { useToast } from "../../../composables/useToast";
 import { user, userIsAdmin } from "../../../config";
+import AdminAddMemberButton from "../../../components/AdminAddMember/AdminAddMemberButton.vue";
 
 const props = defineProps<{oid: string}>();
 

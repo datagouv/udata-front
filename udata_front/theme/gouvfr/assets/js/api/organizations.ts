@@ -57,3 +57,10 @@ export function refuseRequest(oid: string, requestId: string, comment: string) {
   })
     .then(resp => resp.data);
 }
+
+export function addMember(oid: string, userId: string, role: MemberRole) {
+  return api.post<Member>(`organizations/${oid}/member/${userId}`, {
+    role,
+  })
+    .then(resp => resp.data);
+}
