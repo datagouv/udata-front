@@ -5,6 +5,14 @@ import type { User } from "../../types/users";
 const meta = {
   title: 'Components/Discussions/Avatar',
   component: Avatar,
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: "The avatar component display the avatar image of an user"
+      }
+    }
+  },
 } satisfies Meta<typeof Avatar>;
 
 export default meta;
