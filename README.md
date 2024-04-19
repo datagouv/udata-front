@@ -2,12 +2,12 @@
     <img src="https://user-images.githubusercontent.com/60264344/134811326-27109632-f653-4025-9786-482824635994.png">
 </p>
 <p align="center">
-    <i>Udata customizations for data.gouv.fr made by Etalab</i>
+    <i>Add a front-end to udata</i>
     <br>
     <br>
-    <img src="https://img.shields.io/github/contributors/etalab/udata-front">
-    <img src="https://img.shields.io/github/license/etalab/udata-front">
-    <img src="https://img.shields.io/github/commit-activity/m/etalab/udata-front">
+    <img src="https://img.shields.io/github/contributors/datagouv/udata-front">
+    <img src="https://img.shields.io/github/license/datagouv/udata-front">
+    <img src="https://img.shields.io/github/commit-activity/m/datagouv/udata-front">
 </p>
 
 - [Notes on this repo](#notes-on-this-repo)
