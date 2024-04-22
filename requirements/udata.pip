@@ -232,8 +232,6 @@ mongoengine==0.27.0
     #   celerybeat-mongo
     #   flask-mongoengine
     #   udata
-msgpack==0.6.2
-    # via udata
 netaddr==0.7.19
     # via udata
 packaging==24.0
@@ -299,8 +297,6 @@ s3transfer==0.6.2
     # via
     #   boto3
     #   udata
-simplejson==3.17.0
-    # via udata
 six==1.16.0
     # via
     #   bcrypt
@@ -328,12 +324,8 @@ tzdata==2024.1
     # via
     #   celery
     #   udata
-udata @ git+https://github.com/opendatateam/udata.git@python3.11
+udata @ git+https://github.com/opendatateam/udata.git
     # via -r requirements/udata.in
-ujson==1.35
-    # via udata
-unicodecsv==0.14.1
-    # via udata
 unidecode==0.4.21
     # via
     #   awesome-slugify
@@ -379,8 +371,6 @@ wtforms[email]==3.0.1
     #   udata
     #   wtforms-json
 wtforms-json==0.3.5
-    # via udata
-xmltodict==0.12.0
     # via udata
 
 # The following packages are considered to be unsafe in a requirements file:
