@@ -10,7 +10,7 @@
     :id="modalId"
     :oid="oid"
     :roles="roles"
-    @member-updated="$emit('memberAdded')"
+    @member-added="$emit('memberAdded')"
   />
 </template>
 
