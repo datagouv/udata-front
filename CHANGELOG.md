@@ -20,6 +20,8 @@
 - Fix release CI [#380](https://github.com/etalab/udata-front/pull/380) [#384](https://github.com/etalab/udata-front/pull/384)
 - Update constants imports from `.models` to `.constants` [#375](https://github.com/etalab/udata-front/pull/375)
 - Fix rename of VisibleDatasetFactory [#387](https://github.com/etalab/udata-front/pull/387)
+- Add beta admin member page [#374](https://github.com/etalab/udata-front/pull/374)
+- Add Administration Panel to datagouv-components [#378] (https://github.com/etalab/udata-front/pull/378)
 
 ## 3.5.4 (2024-03-20)
 
