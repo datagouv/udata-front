@@ -46,6 +46,7 @@
                   <div class="fr-btns-group fr-btns-group--right fr-btns-group--sm fr-btns-group--inline-lg fr-btns-group--icon-left">
                     <button
                       class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500"
+                      type="button"
                       @click="closeModal"
                       :disabled="loading"
                     >
