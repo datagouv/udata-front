@@ -52,6 +52,12 @@
   "Harvest": "Harvest",
   "See harvest": "See harvest",
   "Metadata quality:": "Metadata quality",
+  "Pagination": "Pagination",
+  "First page": "First page",
+  "Previous page": "Previous page",
+  "Page {nb}": "Page {nb}",
+  "Next page": "Next page",
+  "Last page": "Last page",
   "Data description filled": "Data description filled",
   "Data description empty": "Data description empty",
   "Files documented": "Files documented",
@@ -72,11 +78,5 @@
   "Learn more about this indicator - opens a new window": "Learn more about this indicator - opens a new window",
   "Learn more about this indicator": "Learn more about this indicator",
   "Read less": "Read less",
-  "Read more": "Read more",
-  "Pagination": "Pagination",
-  "First page": "First page",
-  "Previous page": "Previous page",
-  "Page {nb}": "Page {nb}",
-  "Next page": "Next page",
-  "Last page": "Last page"
+  "Read more": "Read more"
 }
