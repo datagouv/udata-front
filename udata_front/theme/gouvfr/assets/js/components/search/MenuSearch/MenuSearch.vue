@@ -109,14 +109,11 @@ export default defineComponent({
       },
     ]);
 
-    const { expanded, handleFocusOut, handleKeyDown, isSelected, registerBackgroundEvent, removeBackgroundEvent, selected, selectedOption, showAndSelectIfQuery, uid} = useDropdown(options);
-
     const input = ref<HTMLElement | null>(null);
-    const button = ref<HTMLElement | null>(null);
     const list = ref<HTMLElement | null>(null);
+    const button = ref<HTMLElement | null>(null);
 
-    onMounted(() => registerBackgroundEvent(input, list, button));
-    onUnmounted(() => removeBackgroundEvent());
+    const { expanded, handleFocusOut, handleKeyDown, isSelected, selected, selectedOption, showAndSelectIfQuery, uid} = useDropdown(options, input, list, button);
 
     const showAndFocus = () => {
       if(!expanded.value) {

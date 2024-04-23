@@ -64,8 +64,6 @@ const labelId = computed(() => `${id}-label`);
 const options = ref<Array<Organization>>([]);
 const selectedIndex = ref(-1);
 
-const { expanded, handleFocusOut, handleKeyDown, isSelected, registerBackgroundEvent, removeBackgroundEvent, selectedOption, showAndSelectIfQuery, uid} = useDropdown(options);
-
 async function fetchOptions() {
   try {
     const response = await api.get('/organizations/suggest/', { params: { q: q.value, size: 50 } });
@@ -83,8 +81,7 @@ const input = ref<HTMLElement | null>(null);
 const list = ref<HTMLElement | null>(null);
 const button = ref<HTMLElement | null>(null);
 
-onMounted(() => registerBackgroundEvent(input, list, button));
-onUnmounted(() => removeBackgroundEvent());
+const { expanded, handleFocusOut, handleKeyDown, isSelected, selectedOption, showAndSelectIfQuery, uid} = useDropdown(options, input, list, button);
 
 const searchSelectedOption = () => {
   if(selectedOption.value) {

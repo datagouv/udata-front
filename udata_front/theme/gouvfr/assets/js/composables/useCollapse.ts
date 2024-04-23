@@ -7,7 +7,7 @@ export function useCollapse() {
   const {KEYCODES} = useKeyCodes();
   uid += 1;
   const collapseId = `collaspe-${uid}`;
-  const expanded = ref<boolean>(false);
+  const expanded = ref(false);
 
   const show = () => expanded.value = true;
 
