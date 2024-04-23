@@ -6,7 +6,7 @@
     <input
       class="fr-input fr-col-12"
       :placeholder="t('Search an organization on data.gouv.fr')"
-      ref="input"
+      ref="inputRef"
       autocomplete="off"
       role="combobox"
       aria-autocomplete="list"
@@ -25,7 +25,7 @@
     <div
       class="fr-collapse autocomplete w-100 fr-mt-1w"
       :id="uid"
-      ref="list"
+      ref="listRef"
       role="listbox"
       :aria-labelledby="labelId"
     >
@@ -46,7 +46,7 @@
 
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from "vue";
+import { ref, computed } from "vue";
 import { useI18n } from 'vue-i18n';
 import OrganizationSearchOption from "./OrganizationSearchOption.vue";
 import useUid from "../../../composables/useUid";
@@ -77,11 +77,7 @@ async function fetchOptions() {
   }
 };
 
-const input = ref<HTMLElement | null>(null);
-const list = ref<HTMLElement | null>(null);
-const button = ref<HTMLElement | null>(null);
-
-const { expanded, handleFocusOut, handleKeyDown, isSelected, selectedOption, showAndSelectIfQuery, uid} = useDropdown(options, input, list, button);
+const { expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, selectedOption, showAndSelectIfQuery, uid} = useDropdown(options);
 
 const searchSelectedOption = () => {
   if(selectedOption.value) {

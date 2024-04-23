@@ -10,7 +10,7 @@
     <input
       class="fr-input fr-col"
       :placeholder="t('Search')"
-      ref="input"
+      ref="inputRef"
       autocomplete="off"
       role="combobox"
       aria-autocomplete="list"
@@ -28,7 +28,7 @@
     />
     <button
       type="button"
-      ref="button"
+      ref="buttonRef"
       class="fr-btn"
       tabindex="-1"
       :aria-controls="uid"
@@ -40,7 +40,7 @@
     <div
       class="fr-menu fr-collapse autocomplete"
       :id="uid"
-      ref="list"
+      ref="listRef"
       role="listbox"
       :aria-labelledby="labelId"
       @mousedown.prevent
@@ -61,7 +61,7 @@
 </template>
 
 <script lang="ts">
-import {ref, defineComponent, onMounted, onUnmounted, ComputedRef, computed} from "vue";
+import {ref, defineComponent, ComputedRef, computed} from "vue";
 import { useI18n } from 'vue-i18n';
 import MenuSearchOption from "./MenuSearchOption.vue";
 import datasetIcon from "../../../../../templates/svg/search/dataset.svg";
@@ -109,11 +109,7 @@ export default defineComponent({
       },
     ]);
 
-    const input = ref<HTMLElement | null>(null);
-    const list = ref<HTMLElement | null>(null);
-    const button = ref<HTMLElement | null>(null);
-
-    const { expanded, handleFocusOut, handleKeyDown, isSelected, selected, selectedOption, showAndSelectIfQuery, uid} = useDropdown(options, input, list, button);
+    const { buttonRef, expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, selected, selectedOption, showAndSelectIfQuery, uid} = useDropdown(options);
 
     const showAndFocus = () => {
       if(!expanded.value) {
@@ -131,16 +127,16 @@ export default defineComponent({
     };
 
     return {
-      button,
+      buttonRef,
       expanded,
       handleFocusOut,
       handleKeyDown: (e: KeyboardEvent) => handleKeyDown(e, q),
       id,
-      input,
+      inputRef,
       inputId,
       labelId,
       isSelected,
-      list,
+      listRef,
       options,
       q,
       searchSelectedOption,
