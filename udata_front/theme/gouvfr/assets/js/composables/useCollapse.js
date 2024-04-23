@@ -41,7 +41,7 @@ export function useCollapse() {
     if (
       !input.contains(event.target) &&
       !list.contains(event.target) &&
-      !button.contains(event.target)
+      (button === null || !button.contains(event.target))
     ) {
       hide();
     }

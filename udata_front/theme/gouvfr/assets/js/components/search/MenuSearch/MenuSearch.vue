@@ -61,7 +61,7 @@
 </template>
 
 <script lang="ts">
-import {ref, defineComponent,reactive, onMounted, onUnmounted, ComputedRef, computed} from "vue";
+import {ref, defineComponent, onMounted, onUnmounted, ComputedRef, computed} from "vue";
 import { useI18n } from 'vue-i18n';
 import MenuSearchOption from "./MenuSearchOption.vue";
 import datasetIcon from "../../../../../templates/svg/search/dataset.svg";
@@ -88,7 +88,7 @@ export default defineComponent({
     const inputId = computed(() => `${id}-input`);
     const labelId = computed(() => `${id}-label`);
 
-    const options = reactive<Array<MenuOption>>([
+    const options = ref<Array<MenuOption>>([
       {
         id: "dataset-option",
         icon: datasetIcon,
@@ -131,7 +131,7 @@ export default defineComponent({
       if(selectedOption.value) {
         window.location.href = selectedOption.value.link;
       }
-    }
+    };
 
     return {
       button,

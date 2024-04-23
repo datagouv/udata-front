@@ -3,7 +3,7 @@ import useKeyCodes from "./useKeyCodes";
 
 /**
  * @template {{id: string}} T
- * @param {T[]} options
+ * @param {import("vue").Ref} options
  */
 export default function useActiveDescendant(options) {
   const {KEYCODES} = useKeyCodes();
@@ -12,7 +12,7 @@ export default function useActiveDescendant(options) {
   const selected = ref();
 
   /** @type {import("vue").Ref<T | undefined>} */
-  const selectedOption = computed(() => options.find(option => option.id === selected.value));
+  const selectedOption = computed(() => options.value.find(option => option.id === selected.value));
 
   /**
    *
@@ -33,7 +33,7 @@ export default function useActiveDescendant(options) {
   };
 
   const focusOut = () => {
-    selected.value = null;
+    selected.value = undefined;
   };
 
   /**
@@ -41,15 +41,15 @@ export default function useActiveDescendant(options) {
    * @param {number} position
    */
   const selectAtPosition = (position) => {
-    select(options[position].id);
+    select(options.value[position].id);
   }
 
   const selectNextOption = () => {
     let selectedPosition = 0;
     if(selected.value) {
-      selectedPosition = options.findIndex(option => option.id === selected.value);
+      selectedPosition = options.value.findIndex(option => option.id === selected.value);
       selectedPosition++;
-      if(selectedPosition === options.length) {
+      if(selectedPosition === options.value.length) {
         selectedPosition = 0;
       }
     }
@@ -57,10 +57,10 @@ export default function useActiveDescendant(options) {
   }
 
   const selectPreviousOption = () => {
-    const lastOptionPosition = options.length - 1;
+    const lastOptionPosition = options.value.length - 1;
     let selectedPosition = lastOptionPosition;
     if(selected.value) {
-      selectedPosition = options.findIndex(option => option.id === selected.value);
+      selectedPosition = options.value.findIndex(option => option.id === selected.value);
       selectedPosition--;
       if(selectedPosition < 0) {
         selectedPosition = lastOptionPosition;
