@@ -406,7 +406,7 @@ export default defineComponent({
         return option;
       });
       if(props.allOption) {
-        const existingAllOption = options.value.find(option => !option.value);
+        const existingAllOption = newOptions.find(option => !option.value);
         if(!existingAllOption) {
           newOptions.unshift({
             label: props.allOption,
@@ -565,6 +565,19 @@ export default defineComponent({
       }
     };
 
+     /**
+     * Register event listener to trigger on reset event
+     */
+     const registerTriggerOnReset = () => {
+      if(selectRef.value) {
+        if(props.multiple) {
+          selected.value = [];
+        } else {
+          selected.value = null;
+        }
+      }
+    };
+
     const updateStylesAndEvents = () => {
       updatePopupStyle();
       updateSelectStyle();
@@ -616,6 +629,8 @@ export default defineComponent({
       if(selectRef.value) {
         selectRef.value.removeEventListener('change', registerTriggerOnChange);
         selectRef.value.addEventListener('change', registerTriggerOnChange);
+        selectRef.value.removeEventListener('reset', registerTriggerOnReset);
+        selectRef.value.addEventListener('reset', registerTriggerOnReset);
       }
     };
 
