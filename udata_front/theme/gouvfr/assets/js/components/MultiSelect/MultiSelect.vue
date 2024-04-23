@@ -48,7 +48,7 @@
             </template>
         </template>
         <template v-else>
-          <option 
+          <option
             v-for="option in displayedOptions"
             :key="option.value"
             :value="option.value"
@@ -74,7 +74,7 @@
 
 <script>
 import {defineComponent, ref, computed, onMounted, onUpdated, reactive, unref, watch, toValue} from "vue";
-import Select from "@conciergerie.dev/select-a11y";
+import Select from "@datagouv/select-a11y";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
 import {api, generateCancelToken} from "../../plugins/api";
@@ -263,7 +263,7 @@ export default defineComponent({
 
     /**
      * SelectA11y instance
-     * @type {import("vue").Ref<import("@conciergerie.dev/select-a11y").Select | null>}
+     * @type {import("vue").Ref<import("@datagouv/select-a11y").Select | null>}
      */
     const selectA11y = ref(null);
 
