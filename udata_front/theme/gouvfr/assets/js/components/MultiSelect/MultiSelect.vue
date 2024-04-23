@@ -650,9 +650,15 @@ export default defineComponent({
       }
     };
 
-    watch(() => props.values, () => {
-      let value = unref(normalizeValues(props.values));
-      selectA11y.value?.selectOptionSilently(value);
+    watch(() => props.values, async () => {
+      await fillSelectedFromValues();
+      if(Array.isArray(selected.value)) {
+        for(const value of selected.value) {
+          selectA11y.value?.selectOptionSilently(value);
+        }
+      } else {
+        selectA11y.value?.selectOptionSilently(selected.value ?? "");
+      }
     });
 
     const fillOptionsAndValues = suggestAndMapToOption()
