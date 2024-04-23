@@ -63,13 +63,12 @@
 <script lang="ts">
 import {ref, defineComponent,reactive, onMounted, onUnmounted, ComputedRef, computed} from "vue";
 import { useI18n } from 'vue-i18n';
-import { useCollapse } from "../../../composables/useCollapse";
 import MenuSearchOption from "./MenuSearchOption.vue";
 import datasetIcon from "../../../../../templates/svg/search/dataset.svg";
 import reuseIcon from "../../../../../templates/svg/search/reuse.svg";
 import organizationIcon from "../../../../../templates/svg/search/organization.svg";
 import useSearchUrl from "../../../composables/useSearchUrl";
-import useActiveDescendant from "../../../composables/useActiveDescendant";
+import { useDropdown } from "../../../composables/useDropdown";
 import useUid from "../../../composables/useUid";
 
 type MenuOption = {
@@ -83,7 +82,6 @@ export default defineComponent({
   components: { MenuSearchOption },
   setup() {
     const { t } = useI18n();
-    const { handleKeyPressForCollapse, expanded, uid, show, hide, registerBackgroundEvent, removeBackgroundEvent } = useCollapse();
     const q = ref('');
     const { datasetUrl, reuseUrl, organizationUrl } = useSearchUrl(q);
     const { id } = useUid("search");
@@ -110,7 +108,8 @@ export default defineComponent({
         link: organizationUrl,
       },
     ]);
-    const { handleKeyPressForActiveDescendant, select, selected, selectedOption, isSelected, focusOut, NOT_MOVED_YET, ALREADY_MOVED_DOWN } = useActiveDescendant(options);
+
+    const { expanded, focusOut, handleKeyPressForActiveDescendant, handleKeyPressForCollapse, hide, isSelected, registerBackgroundEvent, removeBackgroundEvent, select, selected, selectedOption, show, uid, NOT_MOVED_YET, ALREADY_MOVED_DOWN } = useDropdown(options);
 
     const input = ref<HTMLElement | null>(null);
     const button = ref<HTMLElement | null>(null);
