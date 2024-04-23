@@ -1,31 +1,23 @@
-import {ref, computed} from "vue";
+import {ref, computed, Ref} from "vue";
 import useKeyCodes from "./useKeyCodes";
 
-/**
- * @template {{id: string}} T
- * @param {import("vue").Ref} options
- */
-export default function useActiveDescendant(options) {
+interface Option {
+  id: string;
+  [key: string]: string | number | boolean | undefined;
+}
+
+export default function useActiveDescendant(options: Ref<Option[]>) {
+
   const {KEYCODES} = useKeyCodes();
 
-  /** @type {import("vue").Ref<string | undefined>} */
-  const selected = ref();
+  const selected = ref<string | undefined>();
 
   /** @type {import("vue").Ref<T | undefined>} */
   const selectedOption = computed(() => options.value.find(option => option.id === selected.value));
 
-  /**
-   *
-   * @param {string | null} id
-   * @returns {boolean}
-   */
-  const isSelected = (id) => selected.value === id;
+  const isSelected = (id: string | null) => selected.value === id;
 
-  /**
-   *
-   * @param {?string} id
-   */
-  const select = (id = null) => {
+  const select = (id: string | null = null) => {
     if(id === null) {
       return selectAtPosition(0);
     }
@@ -36,11 +28,7 @@ export default function useActiveDescendant(options) {
     selected.value = undefined;
   };
 
-  /**
-   * Select option at position
-   * @param {number} position
-   */
-  const selectAtPosition = (position) => {
+  const selectAtPosition = (position: number) => {
     select(options.value[position].id);
   }
 
@@ -56,7 +44,7 @@ export default function useActiveDescendant(options) {
     selectAtPosition(selectedPosition);
   }
 
-  const selectPreviousOption = () => {
+  const selectPreviousOption = (): void => {
     const lastOptionPosition = options.value.length - 1;
     let selectedPosition = lastOptionPosition;
     if(selected.value) {
@@ -69,12 +57,7 @@ export default function useActiveDescendant(options) {
     selectAtPosition(selectedPosition);
   }
 
-  /**
-   *
-   * @param {KeyboardEvent} key
-   * @param {boolean} alreadyMovedDown
-   */
-  const handleKeyPressForActiveDescendant = (key, alreadyMovedDown = false) => {
+  const handleKeyPressForActiveDescendant = (key: KeyboardEvent, alreadyMovedDown: boolean = false): void => {
     switch (key.keyCode) {
       case KEYCODES.DOWN:
         if(!alreadyMovedDown && !key.altKey) {

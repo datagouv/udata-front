@@ -81,8 +81,9 @@ async function fetchOptions() {
 
 const input = ref<HTMLElement | null>(null);
 const list = ref<HTMLElement | null>(null);
+const button = ref<HTMLElement | null>(null);
 
-onMounted(() => registerBackgroundEvent(input, list, null));
+onMounted(() => registerBackgroundEvent(input, list, button));
 onUnmounted(() => removeBackgroundEvent());
 
 const searchSelectedOption = () => {
