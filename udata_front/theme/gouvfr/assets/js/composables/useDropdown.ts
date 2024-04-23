@@ -26,7 +26,7 @@ export function useDropdown(options: Ref) {
   function handleFocusOut() {
     focusOut();
     hide();
-  }
+  };
 
   return {
     expanded,
