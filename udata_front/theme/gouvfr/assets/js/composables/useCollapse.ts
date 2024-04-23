@@ -7,7 +7,7 @@ export function useCollapse() {
   const {KEYCODES} = useKeyCodes();
   uid += 1;
   const collapseId = `collaspe-${uid}`;
-  const expanded = ref(false);
+  const expanded = ref<boolean>(false);
 
   const show = () => expanded.value = true;
 
@@ -15,9 +15,9 @@ export function useCollapse() {
 
   const toggle = () => expanded.value = !expanded.value;
 
-  let registeredEventHandler = null;
+  let registeredEventHandler: ((event: PointerEvent) => void) | null = null;
 
-  const registerBackgroundEvent = (inputRef, listRef, buttonRef) => {
+  const registerBackgroundEvent = (inputRef: HTMLElement | null, listRef: HTMLElement | null, buttonRef: HTMLElement | null): void => {
     const input = unref(inputRef);
     const list = unref(listRef);
     const button = unref(buttonRef);
@@ -29,29 +29,27 @@ export function useCollapse() {
     );
   }
 
-  const removeBackgroundEvent = () => {
-    document.body.addEventListener(
-      'pointerup',
-      registeredEventHandler,
-      true
-    );
-  }
+  const removeBackgroundEvent = (): void => {
+    if (registeredEventHandler) {
+      document.body.removeEventListener('pointerup', registeredEventHandler, true);
+    }
+  };
 
-  const onBackgroundPointerUp = (input, list, button) => (event) => {
-    if (
-      !input.contains(event.target) &&
-      !list.contains(event.target) &&
-      (button === null || !button.contains(event.target))
-    ) {
+  const onBackgroundPointerUp = (input: HTMLElement | null, list: HTMLElement | null, button: HTMLElement | null) => (event: PointerEvent): void => {
+    const isTargetOutside = (element: HTMLElement | null, target: Node): boolean => {
+      return element ? !element.contains(target) : true;
+    };
+  
+    const eventTarget = event.target as Node;
+  
+    if (isTargetOutside(input, eventTarget) &&
+        isTargetOutside(list, eventTarget) &&
+        isTargetOutside(button, eventTarget)) {
       hide();
     }
   }
 
-  /**
-   *
-   * @param {KeyboardEvent} key
-   */
-  const handleKeyPressForCollapse = (key) => {
+  const handleKeyPressForCollapse = (key: KeyboardEvent): void => {
     switch (key.keyCode) {
       case KEYCODES.ALT:
       case KEYCODES.CTRL:

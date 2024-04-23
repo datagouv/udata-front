@@ -1,6 +1,6 @@
 import { useCollapse } from './useCollapse';
 import useActiveDescendant from './useActiveDescendant';
-import { Ref } from 'vue';
+import type { Ref } from 'vue';
 
 export function useDropdown(options: Ref) {
   const { expanded, handleKeyPressForCollapse, hide, registerBackgroundEvent, removeBackgroundEvent, show, uid } = useCollapse();
@@ -46,6 +46,6 @@ export function useDropdown(options: Ref) {
     showAndSelectIfQuery,
     uid,
     NOT_MOVED_YET,
-    ALREADY_MOVED_DOWN
+    ALREADY_MOVED_DOWN,
   };
 };
