@@ -77,13 +77,7 @@ async function fetchOptions() {
   }
 };
 
-const { expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, selectedOption, showAndSelectIfQuery, uid} = useDropdown(options);
-
-const searchSelectedOption = () => {
-  if(selectedOption.value) {
-    window.location.href = selectedOption.value.page;
-  }
-};
+const { expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, searchSelectedOption, showAndSelectIfQuery, uid} = useDropdown(options, q);
 
 function handleKeyDownEvent(e: KeyboardEvent) {
   handleKeyDown(e, q);

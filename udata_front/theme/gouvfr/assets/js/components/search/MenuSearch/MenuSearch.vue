@@ -109,22 +109,7 @@ export default defineComponent({
       },
     ]);
 
-    const { buttonRef, expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, selected, selectedOption, showAndSelectIfQuery, uid} = useDropdown(options);
-
-    const showAndFocus = () => {
-      if(!expanded.value) {
-        input.value?.focus();
-        showAndSelectIfQuery(q);
-      } else {
-        searchSelectedOption();
-      }
-    };
-
-    const searchSelectedOption = () => {
-      if(selectedOption.value) {
-        window.location.href = selectedOption.value.link;
-      }
-    };
+    const { buttonRef, expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, searchSelectedOption, selected, showAndFocus, showAndSelectIfQuery, uid} = useDropdown(options, q);
 
     return {
       buttonRef,

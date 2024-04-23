@@ -2,7 +2,7 @@ import { ref, type Ref, onMounted, onUnmounted } from 'vue';
 import { useCollapse } from './useCollapse';
 import useActiveDescendant from './useActiveDescendant';
 
-export function useDropdown(options: Ref) {
+export function useDropdown(options: Ref, q: Ref<string>) {
   const inputRef = ref<HTMLElement | null>(null);
   const listRef = ref<HTMLElement | null>(null);
   const buttonRef = ref<HTMLElement | null>(null);
@@ -14,6 +14,25 @@ export function useDropdown(options: Ref) {
     if(q.value) {
       show();
       select(selected.value);
+    }
+  };
+
+  function showAndFocus() {
+    if(expanded.value) {
+      searchSelectedOption();
+    } else {
+      inputRef.value?.focus();
+      showAndSelectIfQuery(q);
+    }
+  };
+
+  function searchSelectedOption() {
+    if(selectedOption.value) {
+      if (selectedOption.value.link !== undefined) {
+        window.location.href = selectedOption.value.link;
+      } else {
+        window.location.href = selectedOption.value.page;
+      }
     }
   };
 
@@ -54,10 +73,11 @@ export function useDropdown(options: Ref) {
     listRef,
     registerBackgroundEvent,
     removeBackgroundEvent,
+    searchSelectedOption,
     select,
     selected,
-    selectedOption,
     show,
+    showAndFocus,
     showAndSelectIfQuery,
     uid,
     NOT_MOVED_YET,
