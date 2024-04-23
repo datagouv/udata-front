@@ -109,7 +109,7 @@ export default defineComponent({
       },
     ]);
 
-    const { expanded, focusOut, handleKeyPressForActiveDescendant, handleKeyPressForCollapse, hide, isSelected, registerBackgroundEvent, removeBackgroundEvent, select, selected, selectedOption, show, uid, NOT_MOVED_YET, ALREADY_MOVED_DOWN } = useDropdown(options);
+    const { expanded, handleFocusOut, handleKeyDown, isSelected, registerBackgroundEvent, removeBackgroundEvent, selected, selectedOption, showAndSelectIfQuery, uid} = useDropdown(options);
 
     const input = ref<HTMLElement | null>(null);
     const button = ref<HTMLElement | null>(null);
@@ -121,32 +121,10 @@ export default defineComponent({
     const showAndFocus = () => {
       if(!expanded.value) {
         input.value?.focus();
-        showAndSelectIfQuery();
+        showAndSelectIfQuery(q);
       } else {
         searchSelectedOption();
       }
-    }
-
-    const showAndSelectIfQuery = () => {
-      if(q.value) {
-        show();
-        select(selected.value);
-      }
-    }
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      showAndSelectIfQuery();
-      let moved = NOT_MOVED_YET;
-      if(!expanded.value) {
-        moved = ALREADY_MOVED_DOWN;
-      }
-      handleKeyPressForCollapse(e);
-      handleKeyPressForActiveDescendant(e, moved);
-    }
-
-    const handleFocusOut = () => {
-      focusOut();
-      hide();
     };
 
     const searchSelectedOption = () => {
@@ -159,7 +137,7 @@ export default defineComponent({
       button,
       expanded,
       handleFocusOut,
-      handleKeyDown,
+      handleKeyDown: (e: KeyboardEvent) => handleKeyDown(e, q),
       id,
       input,
       inputId,
