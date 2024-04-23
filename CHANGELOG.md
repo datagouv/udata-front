@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - **breaking change** Migrate to Python 3.11 [#376](https://github.com/etalab/udata-front/pull/376)
+- Fix api urls locked on dev.data.gouv.fr [#401](https://github.com/datagouv/udata-front/pull/401)
 
 ## 3.5.5 (2024-04-16)
 
