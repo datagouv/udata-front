@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 4.0.0 (2024-04-23)
 
 - **breaking change** Migrate to Python 3.11 [#376](https://github.com/etalab/udata-front/pull/376)
