@@ -36,7 +36,7 @@ export function useDropdown(options: Ref, q: Ref<string>) {
     }
   };
 
-  function handleKeyDown(e: KeyboardEvent, q: Ref<string>) {
+  function handleKeyDown(e: KeyboardEvent) {
     showAndSelectIfQuery(q);
     let moved = NOT_MOVED_YET;
     if (!expanded.value) {

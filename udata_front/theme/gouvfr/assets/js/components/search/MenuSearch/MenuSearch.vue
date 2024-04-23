@@ -115,7 +115,7 @@ export default defineComponent({
       buttonRef,
       expanded,
       handleFocusOut,
-      handleKeyDown: (e: KeyboardEvent) => handleKeyDown(e, q),
+      handleKeyDown: (e: KeyboardEvent) => handleKeyDown(e),
       id,
       inputRef,
       inputId,

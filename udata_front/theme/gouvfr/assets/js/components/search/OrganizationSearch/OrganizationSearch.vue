@@ -18,7 +18,7 @@
       name="q"
       v-model="q"
       @click.stop.capture="showAndSelectIfQuery"
-      @keydown="handleKeyDownEvent"
+      @keydown="handleKeyDown"
       @keypress.enter.prevent="searchSelectedOption"
       @blur="handleFocusOut"
     />
@@ -78,10 +78,6 @@ async function fetchOptions() {
 };
 
 const { expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, searchSelectedOption, showAndSelectIfQuery, uid} = useDropdown(options, q);
-
-function handleKeyDownEvent(e: KeyboardEvent) {
-  handleKeyDown(e, q);
-}
 
 watchDebounced(q, async (newValue, oldValue) => {
   if (newValue !== oldValue) {
