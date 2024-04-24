@@ -1,12 +1,10 @@
-import { ref, unref } from 'vue'
+import { Ref, ref, unref } from 'vue'
 import useKeyCodes from "./useKeyCodes";
-
-let uid = 0;
+import { getRandomId } from '@etalab/data.gouv.fr-components';
 
 export function useCollapse() {
   const {KEYCODES} = useKeyCodes();
-  uid += 1;
-  const collapseId = `collaspe-${uid}`;
+  const collapseId = getRandomId("collapse");
   const expanded = ref(false);
 
   const show = () => expanded.value = true;
@@ -17,7 +15,7 @@ export function useCollapse() {
 
   let registeredEventHandler: ((event: PointerEvent) => void) | null = null;
 
-  const registerBackgroundEvent = (inputRef: HTMLElement | null, listRef: HTMLElement | null, buttonRef: HTMLElement | null): void => {
+  const registerBackgroundEvent = (inputRef: Ref<HTMLElement> | null, listRef: Ref<HTMLElement> | null, buttonRef: Ref<HTMLElement> | null) => {
     const input = unref(inputRef);
     const list = unref(listRef);
     const button = unref(buttonRef);
@@ -35,7 +33,7 @@ export function useCollapse() {
     }
   };
 
-  const onBackgroundPointerUp = (input: HTMLElement | null, list: HTMLElement | null, button: HTMLElement | null) => (event: PointerEvent): void => {
+  const onBackgroundPointerUp = (input: HTMLElement | null, list: HTMLElement | null, button: HTMLElement | null) => (event: PointerEvent) => {
     const isTargetOutside = (element: HTMLElement | null, target: Node): boolean => {
       return element ? !element.contains(target) : true;
     };
@@ -49,7 +47,7 @@ export function useCollapse() {
     }
   }
 
-  const handleKeyPressForCollapse = (key: KeyboardEvent): void => {
+  const handleKeyPressForCollapse = (key: KeyboardEvent) => {
     switch (key.keyCode) {
       case KEYCODES.ALT:
       case KEYCODES.CTRL:

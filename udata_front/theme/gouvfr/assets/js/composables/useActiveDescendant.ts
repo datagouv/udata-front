@@ -44,7 +44,7 @@ export default function useActiveDescendant(options: Ref<Option[]>) {
     selectAtPosition(selectedPosition);
   }
 
-  const selectPreviousOption = (): void => {
+  const selectPreviousOption = () => {
     const lastOptionPosition = options.value.length - 1;
     let selectedPosition = lastOptionPosition;
     if(selected.value) {
@@ -57,7 +57,7 @@ export default function useActiveDescendant(options: Ref<Option[]>) {
     selectAtPosition(selectedPosition);
   }
 
-  const handleKeyPressForActiveDescendant = (key: KeyboardEvent, alreadyMovedDown: boolean = false): void => {
+  const handleKeyPressForActiveDescendant = (key: KeyboardEvent, alreadyMovedDown = false) => {
     switch (key.keyCode) {
       case KEYCODES.DOWN:
         if(!alreadyMovedDown && !key.altKey) {
