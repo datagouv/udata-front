@@ -1,8 +1,8 @@
-import { ref, type Ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, MaybeRefOrGetter, toValue } from 'vue';
 import { useCollapse } from './useCollapse';
 import useActiveDescendant from './useActiveDescendant';
 
-export function useDropdown(options: Ref, q: Ref<string>) {
+export function useDropdown(options: MaybeRefOrGetter, q: MaybeRefOrGetter<string>) {
   const inputRef = ref<HTMLElement | null>(null);
   const listRef = ref<HTMLElement | null>(null);
   const buttonRef = ref<HTMLElement | null>(null);
@@ -10,8 +10,8 @@ export function useDropdown(options: Ref, q: Ref<string>) {
   const { expanded, handleKeyPressForCollapse, hide, registerBackgroundEvent, removeBackgroundEvent, show, uid } = useCollapse();
   const { focusOut, handleKeyPressForActiveDescendant, isSelected, select, selected, selectedOption, NOT_MOVED_YET, ALREADY_MOVED_DOWN } = useActiveDescendant(options);
 
-  function showAndSelectIfQuery(q: Ref<string>) {
-    if(q.value) {
+  function showAndSelectIfQuery(q: MaybeRefOrGetter<string>) {
+    if(toValue(q)) {
       show();
       select(selected.value);
     }

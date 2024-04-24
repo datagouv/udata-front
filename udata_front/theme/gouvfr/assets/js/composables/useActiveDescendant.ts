@@ -1,4 +1,4 @@
-import {ref, computed, Ref} from "vue";
+import {ref, computed, Ref, MaybeRefOrGetter, toValue} from "vue";
 import useKeyCodes from "./useKeyCodes";
 
 interface Option {
@@ -6,13 +6,13 @@ interface Option {
   [key: string]: string | number | boolean | undefined;
 }
 
-export default function useActiveDescendant(options: Ref<Option[]>) {
+export default function useActiveDescendant(options: MaybeRefOrGetter<Option[]>) {
 
   const {KEYCODES} = useKeyCodes();
 
   const selected = ref<string | undefined>();
 
-  const selectedOption = computed<Option | undefined>(() => options.value.find(option => option.id === selected.value));
+  const selectedOption = computed<Option | undefined>(() => toValue(options).find(option => option.id === selected.value));
 
   const isSelected = (id: string | null) => selected.value === id;
 
@@ -28,15 +28,15 @@ export default function useActiveDescendant(options: Ref<Option[]>) {
   };
 
   const selectAtPosition = (position: number) => {
-    select(options.value[position].id);
+    select(toValue(options)[position].id);
   }
 
   const selectNextOption = () => {
     let selectedPosition = 0;
     if(selected.value) {
-      selectedPosition = options.value.findIndex(option => option.id === selected.value);
+      selectedPosition = toValue(options).findIndex(option => option.id === selected.value);
       selectedPosition++;
-      if(selectedPosition === options.value.length) {
+      if(selectedPosition === toValue(options).length) {
         selectedPosition = 0;
       }
     }
@@ -44,10 +44,10 @@ export default function useActiveDescendant(options: Ref<Option[]>) {
   }
 
   const selectPreviousOption = () => {
-    const lastOptionPosition = options.value.length - 1;
+    const lastOptionPosition = toValue(options).length - 1;
     let selectedPosition = lastOptionPosition;
     if(selected.value) {
-      selectedPosition = options.value.findIndex(option => option.id === selected.value);
+      selectedPosition = toValue(options).findIndex(option => option.id === selected.value);
       selectedPosition--;
       if(selectedPosition < 0) {
         selectedPosition = lastOptionPosition;

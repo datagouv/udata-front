@@ -1,4 +1,4 @@
-import { Ref, ref, unref } from 'vue'
+import { MaybeRefOrGetter, Ref, ref, toValue } from 'vue'
 import useKeyCodes from "./useKeyCodes";
 import { getRandomId } from '@etalab/data.gouv.fr-components';
 
@@ -15,10 +15,10 @@ export function useCollapse() {
 
   let registeredEventHandler: ((event: PointerEvent) => void) | null = null;
 
-  const registerBackgroundEvent = (inputRef: Ref<HTMLElement> | null, listRef: Ref<HTMLElement> | null, buttonRef: Ref<HTMLElement> | null) => {
-    const input = unref(inputRef);
-    const list = unref(listRef);
-    const button = unref(buttonRef);
+  const registerBackgroundEvent = (inputRef: MaybeRefOrGetter<HTMLElement> | null, listRef: MaybeRefOrGetter<HTMLElement> | null, buttonRef: MaybeRefOrGetter<HTMLElement> | null) => {
+    const input = toValue(inputRef);
+    const list = toValue(listRef);
+    const button = toValue(buttonRef);
     registeredEventHandler = onBackgroundPointerUp(input, list, button);
     document.body.addEventListener(
       'pointerup',
