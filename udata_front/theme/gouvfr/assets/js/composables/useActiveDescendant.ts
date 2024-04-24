@@ -12,12 +12,11 @@ export default function useActiveDescendant(options: Ref<Option[]>) {
 
   const selected = ref<string | undefined>();
 
-  /** @type {import("vue").Ref<T | undefined>} */
-  const selectedOption = computed(() => options.value.find(option => option.id === selected.value));
+  const selectedOption = computed<Option | undefined>(() => options.value.find(option => option.id === selected.value));
 
   const isSelected = (id: string | null) => selected.value === id;
 
-  const select = (id: string | null = null) => {
+  const select = (id?: string) => {
     if(id === null) {
       return selectAtPosition(0);
     }

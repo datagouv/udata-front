@@ -25,7 +25,7 @@ export function useCollapse() {
       registeredEventHandler,
       true
     );
-  }
+  };
 
   const removeBackgroundEvent = (): void => {
     if (registeredEventHandler) {
@@ -33,19 +33,18 @@ export function useCollapse() {
     }
   };
 
+  const isTargetOutside = (element: HTMLElement | null, target: Node): boolean => {
+    return element ? !element.contains(target) : true;
+  };
+
   const onBackgroundPointerUp = (input: HTMLElement | null, list: HTMLElement | null, button: HTMLElement | null) => (event: PointerEvent) => {
-    const isTargetOutside = (element: HTMLElement | null, target: Node): boolean => {
-      return element ? !element.contains(target) : true;
-    };
-  
     const eventTarget = event.target as Node;
-  
     if (isTargetOutside(input, eventTarget) &&
         isTargetOutside(list, eventTarget) &&
         isTargetOutside(button, eventTarget)) {
       hide();
     }
-  }
+  };
 
   const handleKeyPressForCollapse = (key: KeyboardEvent) => {
     switch (key.keyCode) {
@@ -72,5 +71,5 @@ export function useCollapse() {
     registerBackgroundEvent,
     removeBackgroundEvent,
     handleKeyPressForCollapse,
-  }
+  };
 }
