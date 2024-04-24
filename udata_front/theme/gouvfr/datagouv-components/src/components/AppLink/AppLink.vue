@@ -5,7 +5,6 @@
   <router-link
     v-else
     v-bind="$props"
-
   >
     <slot></slot>
   </router-link>
