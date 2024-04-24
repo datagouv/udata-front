@@ -8,6 +8,7 @@
 
 - **breaking change** Migrate to Python 3.11 [#376](https://github.com/etalab/udata-front/pull/376)
 - Fix api urls locked on dev.data.gouv.fr [#401](https://github.com/datagouv/udata-front/pull/401)
+- Fix an error that blocks datasets search filters reset [#402](https://github.com/datagouv/udata-front/pull/402)
 
 ## 3.5.5 (2024-04-16)
 
