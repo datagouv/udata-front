@@ -520,7 +520,7 @@ export default defineComponent({
       let selectedPromise = null;
       if (value && props.entityUrl) {
         selectedPromise = api
-          .get(props.entityUrl + value)
+          .get(`${props.entityUrl}${value}/`)
           .then((resp) => resp.data)
           .then((data) => mapToOption([data]))
           .then((entities) => entities[0]?.label ?? value)
