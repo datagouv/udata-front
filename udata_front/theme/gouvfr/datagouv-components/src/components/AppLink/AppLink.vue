@@ -17,7 +17,9 @@ withDefaults(defineProps<RouterLinkProps>(), {
   ariaCurrentValue: "page",
 });
 const router = inject(routerKey, null);
+console.log(router);
 const attrs = useAttrs();
+console.log(attrs)
 const externalAttrs = !router ? { ...attrs, target: attrs.target || "_blank" } : {};
 function isExternalLink(link: RouteLocationRaw): link is string {
   return !router || (typeof link === 'string' && link.startsWith('http'));

@@ -33,6 +33,19 @@ export const SimpleExternalLink: StoryObj<typeof meta> = {
   args,
 };
 
+export const SimpleExternalLinkInNewWindow: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { AppLink },
+    setup() {
+      return { args };
+    },
+    template: `<AppLink to="https://www.data.gouv.fr" target="_blank">
+                Link test
+              </AppLink>`,
+  }),
+  args,
+};
+
 export const SimpleInternalLinks: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { AppLink },
@@ -46,7 +59,7 @@ export const SimpleInternalLinks: StoryObj<typeof meta> = {
                 <AppLink to="/about">
                   About
                 </AppLink>
-                <AppLink to="https://www.data.gouv.fr">
+                <AppLink to="https://www.data.gouv.fr" target="_blank">
                   External Site
                 </AppLink>
               </div>

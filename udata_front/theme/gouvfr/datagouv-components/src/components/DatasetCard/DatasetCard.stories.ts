@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
+import { vueRouter } from 'storybook-vue3-router';
 import { DatasetCard } from ".";
 import type { DatasetV2 } from '../..';
 
@@ -80,10 +81,9 @@ const dataset: DatasetV2 = {
 const args = {
   dataset: dataset,
   datasetUrl: "/datasets/6571faa17f46a65ee05c4d17",
-  organizationUrl: "/organizations/another-url-easier-to-distinguish"
 };
 
-export const SimpleDatasetCard: StoryObj<typeof meta> = {
+export const DatasetCardWithDatasetUrl: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { DatasetCard },
     setup() {
@@ -92,4 +92,45 @@ export const SimpleDatasetCard: StoryObj<typeof meta> = {
     template: `<DatasetCard v-bind="args"/>`,
   }),
   args,
+};
+
+export const DatasetCardWithDatasetAndOrganizationUrl: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCard },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCard v-bind="args"/>`,
+  }),
+  args: {
+    ...args,
+    organizationUrl: "/organizations/another-url-easier-to-distinguish"
+  },
+};
+
+export const RouterDatasetCardWithDatasetUrl: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCard },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCard v-bind="args"/>`,
+  }),
+  decorators: [vueRouter()],
+  args,
+};
+
+export const RouterDatasetCardWithDatasetAndOrganizationUrl: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCard },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCard v-bind="args"/>`,
+  }),
+  decorators: [vueRouter()],
+  args: {
+    ...args,
+    organizationUrl: "/organizations/another-url-easier-to-distinguish"
+  },
 };
