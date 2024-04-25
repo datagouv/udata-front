@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- use vue-toaster from `@datagouv` scope on NPM [#403](https://github.com/datagouv/udata-front/pull/403)
 
 ## 4.0.0 (2024-04-23)
 
