@@ -2,7 +2,7 @@ import { ref, onMounted, onUnmounted, MaybeRefOrGetter, toValue } from 'vue';
 import { useCollapse } from './useCollapse';
 import useActiveDescendant from './useActiveDescendant';
 
-export function useDropdown(options: MaybeRefOrGetter, q: MaybeRefOrGetter<string>) {
+export function useDropdown(options: MaybeRefOrGetter, q: MaybeRefOrGetter<string>, linkKey: string) {
   const inputRef = ref<HTMLElement | null>(null);
   const listRef = ref<HTMLElement | null>(null);
   const buttonRef = ref<HTMLElement | null>(null);
@@ -28,11 +28,8 @@ export function useDropdown(options: MaybeRefOrGetter, q: MaybeRefOrGetter<strin
 
   function searchSelectedOption() {
     if(selectedOption.value) {
-      if (selectedOption.value.link !== undefined) {
-        window.location.href = selectedOption.value.link;
-      } else {
-        window.location.href = selectedOption.value.page;
-      }
+      const navigationUrl = selectedOption.value[linkKey];
+      window.location.href = navigationUrl;
     }
   };
 

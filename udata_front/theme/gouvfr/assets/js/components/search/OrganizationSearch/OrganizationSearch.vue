@@ -77,7 +77,7 @@ async function fetchOptions() {
   }
 };
 
-const { expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, searchSelectedOption, showAndSelectIfQuery, uid} = useDropdown(options, q);
+const { expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, searchSelectedOption, showAndSelectIfQuery, uid} = useDropdown(options, q, "page");
 
 watchDebounced(q, async (newValue, oldValue) => {
   if (newValue !== oldValue) {

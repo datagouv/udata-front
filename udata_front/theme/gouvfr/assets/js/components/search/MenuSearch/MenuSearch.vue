@@ -109,7 +109,7 @@ export default defineComponent({
       },
     ]);
 
-    const { buttonRef, expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, searchSelectedOption, selected, showAndFocus, showAndSelectIfQuery, uid} = useDropdown(options, q);
+    const { buttonRef, expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, searchSelectedOption, selected, showAndFocus, showAndSelectIfQuery, uid} = useDropdown(options, q, "link");
 
     return {
       buttonRef,
