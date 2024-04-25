@@ -121,8 +121,9 @@ nav.Bar('gouvfr_resources', resources_links)
 
 footer_links = [
     nav.Item(_('Licences'), 'gouvfr.show_page', args={'slug': 'legal/licences'}),
-    nav.Item(_('Terms of use'), 'site.terms'),
+    nav.Item(_('Terms of use'), 'gouvfr.show_page', args={'slug': 'legal/cgu'}),
     nav.Item(_('Tracking and privacy'), 'gouvfr.suivi'),
+    nav.Item(_('Legal notice'), 'gouvfr.show_page', args={'slug': 'legal/legal-notice'}),
     nav.Item(_('Accessibility: partially compliant'),
              'gouvfr.show_page', args={'slug': 'legal/accessibility'}),
 ]
