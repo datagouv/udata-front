@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3';
 import { vueRouter } from 'storybook-vue3-router';
 import { DatasetCard } from ".";
 import type { DatasetV2 } from '../..';
+import TestComponent from "./TestComponent.vue"
 
 const meta = {
   title: 'Components/DatasetCard',
@@ -17,6 +18,17 @@ const meta = {
 } satisfies Meta<typeof DatasetCard>;
 
 export default meta;
+
+const datasetRoutes = [
+  {
+    path: '/datasets/:id',
+    component: TestComponent
+  },
+  {
+    path: '/organizations/:id',
+    component: TestComponent
+  }
+]
 
 const dataset: DatasetV2 = {
   id: "653a6afa18f9f98d2ffdadee",
@@ -114,9 +126,9 @@ export const RouterDatasetCardWithDatasetUrl: StoryObj<typeof meta> = {
     setup() {
       return { args };
     },
-    template: `<DatasetCard v-bind="args"/>`,
+    template: `<DatasetCard v-bind="args"/><router-view></router-view>`,
   }),
-  decorators: [vueRouter()],
+  decorators: [vueRouter(datasetRoutes)],
   args,
 };
 
@@ -126,9 +138,9 @@ export const RouterDatasetCardWithDatasetAndOrganizationUrl: StoryObj<typeof met
     setup() {
       return { args };
     },
-    template: `<DatasetCard v-bind="args"/>`,
+    template: `<DatasetCard v-bind="args"/><router-view></router-view>`,
   }),
-  decorators: [vueRouter()],
+  decorators: [vueRouter(datasetRoutes)],
   args: {
     ...args,
     organizationUrl: "/organizations/another-url-easier-to-distinguish"
