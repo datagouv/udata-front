@@ -1,5 +1,5 @@
 <template>
-  <a v-if="isExternalLink(to)" v-bind="$attrs" :href="to" target="_blank">
+  <a v-if="isExternalLink(to)" v-bind="externalAttrs" :href="to">
     <slot></slot>
   </a>
   <router-link
@@ -11,12 +11,14 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from 'vue';
+import { inject, useAttrs } from 'vue';
 import { RouterLink, type RouterLinkProps, type RouteLocationRaw, routerKey } from 'vue-router';
 withDefaults(defineProps<RouterLinkProps>(), {
   ariaCurrentValue: "page",
 });
 const router = inject(routerKey, null);
+const attrs = useAttrs();
+const externalAttrs = !router ? { ...attrs, target: attrs.target || "_blank" } : {};
 function isExternalLink(link: RouteLocationRaw): link is string {
   return !router || (typeof link === 'string' && link.startsWith('http'));
 }
