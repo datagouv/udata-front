@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { AppLink } from ".";
+import { vueRouter } from 'storybook-vue3-router';
 
 const meta = {
   title: 'Components/AppLink',
@@ -18,13 +19,41 @@ export default meta;
 
 const args = {};
 
-export const SimpleAppLink: StoryObj<typeof meta> = {
+export const SimpleExternalLink: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { AppLink },
     setup() {
       return { args };
     },
-    template: `<AppLink v-bind="args"/>`,
+    template: `<AppLink to="https://www.data.gouv.fr">
+                Link test
+              </AppLink>`,
   }),
   args,
 };
+
+export const SimpleInternalLinks: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { AppLink },
+    setup() {
+      return { args };
+    },
+    template: `<div style="display: flex; gap: 1em">
+                <AppLink to="/">
+                  Home
+                </AppLink>
+                <AppLink to="/about">
+                  About
+                </AppLink>
+                <AppLink to="https://www.data.gouv.fr">
+                  External Site
+                </AppLink>
+              </div>
+              <router-view />`,
+  }),
+  args,
+};
+
+SimpleInternalLinks.decorators = [
+  vueRouter()
+];
