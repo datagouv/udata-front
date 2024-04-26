@@ -132,7 +132,7 @@ nav.Bar('gouvfr_footer', footer_links)
 
 NETWORK_LINKS = [
     ('legifrance.gouv.fr', 'https://legifrance.gouv.fr'),
-    ('info.gouv.fr', 'https://www.info.gouv.fr/'),
+    ('info.gouv.fr', 'https://www.info.gouv.fr'),
     ('service-public.fr', 'https://www.service-public.fr'),
 ]
 
