@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 4.0.2 (2024-04-26)
 
 - Update footer [#405](https://github.com/datagouv/udata-front/pull/405)
 
