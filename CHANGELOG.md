@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Update footer [#405](https://github.com/datagouv/udata-front/pull/405)
 
 ## 4.0.1 (2024-04-26)
 
