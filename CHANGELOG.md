@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Update footer
 
 ## 4.0.0 (2024-04-23)
 
