@@ -58,7 +58,10 @@ export const SimpleInternalLinks: StoryObj<typeof meta> = {
                 <AppLink to="/about">
                   About
                 </AppLink>
-                <AppLink to="https://www.data.gouv.fr" target="_blank">
+                <AppLink to="/about" target="_blank">
+                  About
+                </AppLink>
+                <AppLink to="https://www.data.gouv.fr">
                   External Site
                 </AppLink>
               </div>

@@ -20,8 +20,13 @@ const router = inject(routerKey, null);
 const attrs = useAttrs();
 const externalAttrs = { ...attrs, ...( !router ? { target: attrs.target } : {} ) };
 function isExternalLink(link: RouteLocationRaw): link is string {
-  return !router || (typeof link === 'string' && link.startsWith('http'));
+  if (router) {
+    if (typeof link === 'string' && link.startsWith('http')) {
+      externalAttrs.target = "_blank";
+    } else {
+      return false;
+    }
+  }
+  return true;
 }
-console.log("No router: " + !router)
-console.log(externalAttrs)
 </script>
