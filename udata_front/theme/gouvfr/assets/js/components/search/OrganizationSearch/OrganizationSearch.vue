@@ -70,14 +70,15 @@ async function fetchOptions() {
     options.value = response.data.map((option: Organization) => ({
       ...option,
       id: option.id,
-      page: `${option.page}#/information/membres`
+      page: `${option.page}#/information/membres`,
+      link: option.page
     }));
   } catch (error) {
     console.error('Error fetching options:', error);
   }
 };
 
-const { expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, searchSelectedOption, showAndSelectIfQuery, uid} = useDropdown(options, q, "page");
+const { expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, searchSelectedOption, showAndSelectIfQuery, uid} = useDropdown(options, q);
 
 watchDebounced(q, async (newValue, oldValue) => {
   if (newValue !== oldValue) {
