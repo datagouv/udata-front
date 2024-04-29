@@ -1,6 +1,6 @@
 import { ref, watchEffect, toValue, type MaybeRefOrGetter } from 'vue';
 import { Organization } from '../../types/organizations';
-import { isType, hasBadge, PUBLIC_SERVICE } from './useOrganizationType';
+import { isType, hasBadge, PUBLIC_SERVICE, LOCAL_AUTHORITY } from './useOrganizationType';
 
 export const CERTIFIED = "certified";
 
@@ -12,7 +12,7 @@ export default function useOrganizationCertified(organizationRef: MaybeRefOrGett
       organizationCertified.value = false;
       return;
     }
-    organizationCertified.value = isType(organization, PUBLIC_SERVICE) && hasBadge(organization, CERTIFIED);
+    organizationCertified.value = hasBadge(organization, CERTIFIED) && (isType(organization, PUBLIC_SERVICE) || isType(organization, LOCAL_AUTHORITY));
   });
 
   return {

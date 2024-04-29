@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import OrganizationNameWithCertificate from '.';
-import { CERTIFIED, PUBLIC_SERVICE } from '../../composables/organizations/useOrganizationCertified';
+import { OrganizationNameWithCertificate } from '.';
+import { CERTIFIED } from '../../composables/organizations/useOrganizationCertified';
+import { PUBLIC_SERVICE } from '../../composables/organizations/useOrganizationType';
 
 const meta = {
-  title: "Components/Organization Name With Certificate",
+  title: "Components/Organizations/Organization Name With Certificate",
   component: OrganizationNameWithCertificate,
   tags: ['autodocs'],
   parameters: {
