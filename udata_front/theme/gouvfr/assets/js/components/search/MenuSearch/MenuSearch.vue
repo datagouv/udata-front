@@ -60,8 +60,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import {ref, defineComponent, ComputedRef, computed} from "vue";
+<script setup lang="ts">
+import {ref, ComputedRef, computed} from "vue";
 import { useI18n } from 'vue-i18n';
 import MenuSearchOption from "./MenuSearchOption.vue";
 import datasetIcon from "../../../../../templates/svg/search/dataset.svg";
@@ -78,59 +78,33 @@ type MenuOption = {
   link: ComputedRef<string>;
 }
 
-export default defineComponent({
-  components: { MenuSearchOption },
-  setup() {
-    const { t } = useI18n();
-    const q = ref('');
-    const { datasetUrl, reuseUrl, organizationUrl } = useSearchUrl(q);
-    const { id } = useUid("search");
-    const inputId = computed(() => `${id}-input`);
-    const labelId = computed(() => `${id}-label`);
+const { t } = useI18n();
+const q = ref('');
+const { datasetUrl, reuseUrl, organizationUrl } = useSearchUrl(q);
+const { id } = useUid("search");
+const inputId = computed(() => `${id}-input`);
+const labelId = computed(() => `${id}-label`);
 
-    const options = ref<Array<MenuOption>>([
-      {
-        id: "dataset-option",
-        icon: datasetIcon,
-        type: t('datasets'),
-        link: datasetUrl,
-      },
-      {
-        id: "reuse-option",
-        icon: reuseIcon,
-        type: t('reuses'),
-        link: reuseUrl,
-      },
-      {
-        id: "organization-option",
-        icon: organizationIcon,
-        type: t('organizations'),
-        link: organizationUrl,
-      },
-    ]);
-
-    const { buttonRef, expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, searchSelectedOption, selected, showAndFocus, showAndSelectIfQuery, uid} = useDropdown(options, q, "link");
-
-    return {
-      buttonRef,
-      expanded,
-      handleFocusOut,
-      handleKeyDown: (e: KeyboardEvent) => handleKeyDown(e),
-      id,
-      inputRef,
-      inputId,
-      labelId,
-      isSelected,
-      listRef,
-      options,
-      q,
-      searchSelectedOption,
-      selected,
-      showAndFocus,
-      showAndSelectIfQuery,
-      t,
-      uid,
-    }
+const options = ref<Array<MenuOption>>([
+  {
+    id: "dataset-option",
+    icon: datasetIcon,
+    type: t('datasets'),
+    link: datasetUrl,
   },
-});
+  {
+    id: "reuse-option",
+    icon: reuseIcon,
+    type: t('reuses'),
+    link: reuseUrl,
+  },
+  {
+    id: "organization-option",
+    icon: organizationIcon,
+    type: t('organizations'),
+    link: organizationUrl,
+  },
+]);
+
+const { buttonRef, expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, searchSelectedOption, selected, showAndFocus, showAndSelectIfQuery, uid} = useDropdown(options, q, "link");
 </script>
