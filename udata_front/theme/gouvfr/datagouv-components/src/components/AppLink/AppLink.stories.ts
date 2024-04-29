@@ -5,7 +5,6 @@ import { vueRouter } from 'storybook-vue3-router';
 const meta = {
   title: 'Components/AppLink',
   component: AppLink,
-  decorators: [vueRouter()],
   tags: ['autodocs'],
   parameters: {
     docs: {
@@ -65,5 +64,6 @@ export const SimpleInternalLinks: StoryObj<typeof meta> = {
               </div>
               <router-view />`,
   }),
+  decorators: [vueRouter()],
   args,
 };

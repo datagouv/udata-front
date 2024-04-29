@@ -111,7 +111,6 @@ const props = withDefaults(defineProps<Props>(), {
   style: () => ({}),
   showMetrics: true,
 });
-console.log(props)
 const { t } = useI18n();
 const ownerName = useOwnerName(props.dataset);
 </script>
