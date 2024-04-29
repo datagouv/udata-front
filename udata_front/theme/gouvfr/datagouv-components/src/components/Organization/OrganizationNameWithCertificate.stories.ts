@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { OrganizationNameWithCertificate } from '.';
 import { CERTIFIED } from '../../composables/organizations/useOrganizationCertified';
-import { PUBLIC_SERVICE } from '../../composables/organizations/useOrganizationType';
+import { ASSOCIATION, LOCAL_AUTHORITY, PUBLIC_SERVICE } from '../../composables/organizations/useOrganizationType';
 
 const meta = {
   title: "Components/Organizations/Organization Name With Certificate",
@@ -18,31 +18,32 @@ const meta = {
 
 export default meta;
 
-export const CertifiedOrganization: StoryObj<typeof meta> = {
-    render: (args) => ({
-      components: { OrganizationNameWithCertificate },
-      setup() {
-        return { args };
-      },
-      template: '<OrganizationNameWithCertificate v-bind="args" />',
-    }),
-    args: {
-      organization: {
-        id: "someId",
-        acronym: null,
-        name: 'My Organization',
-        uri: '',
-        slug: '',
-        page: '',
-        logo: '',
-        logo_thumbnail: '',
-        badges: [{kind: CERTIFIED}, {kind: PUBLIC_SERVICE}]
-      }
-    }
-  };
+const organization = {
+  id: "someId",
+  acronym: null,
+  name: 'My Organization',
+  uri: '',
+  slug: '',
+  page: '',
+  logo: '',
+  logo_thumbnail: '',
+  badges: [{kind: CERTIFIED}, {kind: PUBLIC_SERVICE}]
+}
 
+export const CertifiedPlublicServiceName: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { OrganizationNameWithCertificate },
+    setup() {
+      return { args };
+    },
+    template: '<OrganizationNameWithCertificate v-bind="args" />',
+  }),
+  args: {
+    organization,
+  }
+};
 
-export const Organization: StoryObj<typeof meta> = {
+export const CertifiedLocalAuthorityName: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { OrganizationNameWithCertificate },
     setup() {
@@ -52,15 +53,72 @@ export const Organization: StoryObj<typeof meta> = {
   }),
   args: {
     organization: {
-      id: "someId",
-      acronym: null,
-      name: 'My Organization',
-      uri: '',
-      slug: '',
-      page: '',
-      logo: '',
-      logo_thumbnail: '',
-      badges: []
+      ...organization,
+      badges: [{kind: CERTIFIED}, {kind: LOCAL_AUTHORITY}]
+    },
+  }
+};
+
+export const PlublicServiceName: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { OrganizationNameWithCertificate },
+    setup() {
+      return { args };
+    },
+    template: '<OrganizationNameWithCertificate v-bind="args" />',
+  }),
+  args: {
+    organization: {
+      ...organization,
+      badges: [{kind: PUBLIC_SERVICE}]
+    },
+  }
+};
+
+export const LocalAuthorityName: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { OrganizationNameWithCertificate },
+    setup() {
+      return { args };
+    },
+    template: '<OrganizationNameWithCertificate v-bind="args" />',
+  }),
+  args: {
+    organization: {
+      ...organization,
+      badges: [{kind: LOCAL_AUTHORITY}]
+    },
+  }
+};
+
+export const AssociationName: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { OrganizationNameWithCertificate },
+    setup() {
+      return { args };
+    },
+    template: '<OrganizationNameWithCertificate v-bind="args" />',
+  }),
+  args: {
+    organization: {
+      ...organization,
+      badges: [{kind: ASSOCIATION}]
+    },
+  }
+};
+
+export const OrganizationWithoutBadges: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { OrganizationNameWithCertificate },
+    setup() {
+      return { args };
+    },
+    template: '<OrganizationNameWithCertificate v-bind="args" />',
+  }),
+  args: {
+    organization: {
+      ...organization,
+      badges: [],
     }
   }
 };
