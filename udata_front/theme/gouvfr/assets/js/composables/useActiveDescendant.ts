@@ -1,7 +1,7 @@
 import {ref, computed, Ref, MaybeRefOrGetter, toValue} from "vue";
 import useKeyCodes from "./useKeyCodes";
 
-interface Option {
+type Option = {
   id: string;
   [key: string]: string | number | boolean | undefined;
 }

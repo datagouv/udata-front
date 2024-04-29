@@ -2,7 +2,7 @@ import { ref, onMounted, onUnmounted, MaybeRefOrGetter, toValue } from 'vue';
 import { useCollapse } from './useCollapse';
 import useActiveDescendant from './useActiveDescendant';
 
-interface Option {
+type Option = {
   id: string;
   [key: string]: string | number | boolean | undefined;
 }

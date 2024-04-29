@@ -76,7 +76,7 @@ type MenuOption = {
   icon: string;
   type: string;
   link: ComputedRef<string>;
-}
+};
 
 const { t } = useI18n();
 const q = ref('');
