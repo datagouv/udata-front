@@ -11,22 +11,25 @@
 </template>
 
 <script setup lang="ts">
-import { inject, useAttrs } from 'vue';
-import { RouterLink, type RouterLinkProps, type RouteLocationRaw, routerKey } from 'vue-router';
-withDefaults(defineProps<RouterLinkProps>(), {
+import { computed, inject, useAttrs } from 'vue';
+import { RouterLink, type RouterLinkProps, routerKey } from 'vue-router';
+const props = withDefaults(defineProps<{ to: string } & RouterLinkProps>(), {
   ariaCurrentValue: "page",
 });
 const router = inject(routerKey, null);
 const attrs = useAttrs();
-const externalAttrs = { ...attrs, ...( !router ? { target: attrs.target } : {} ) };
-function isExternalLink(link: RouteLocationRaw): link is string {
+const externalAttrs = computed(() => {
   if (router) {
-    if (typeof link === 'string' && link.startsWith('http')) {
-      externalAttrs.target = "_blank";
-    } else {
-      return false;
+    if (typeof props.to === 'string' && props.to.startsWith('http')) {
+      return { ...attrs, target: "_blank" };
     }
+    return attrs;
+  } else {
+    return { ...attrs, target: attrs.target };
   }
-  return true;
+});
+
+function isExternalLink(link: string): boolean {
+  return !router || typeof link === 'string' && link.startsWith('http');
 }
 </script>
