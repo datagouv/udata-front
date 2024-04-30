@@ -106,6 +106,17 @@ export const DatasetCardWithDatasetUrl: StoryObj<typeof meta> = {
   args,
 };
 
+export const DatasetCardWithNoQualityScore: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCard },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCard v-bind="args" :showQualityScore="false"/>`,
+  }),
+  args,
+};
+
 export const DatasetCardWithDatasetAndOrganizationUrl: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { DatasetCard },

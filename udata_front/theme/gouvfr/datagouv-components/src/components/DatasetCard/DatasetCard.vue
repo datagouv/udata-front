@@ -56,7 +56,7 @@
         <p class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm overflow-wrap-anywhere">
           {{ excerpt(dataset.description, 160) }}
         </p>
-        <div class="fr-m-0 fr-grid-row fr-grid-row--middle">
+        <div v-if="showQualityScore" class="fr-m-0 fr-grid-row fr-grid-row--middle">
           <QualityComponentInline :quality="dataset.quality" :class="`fr-hidden flex-sm dash-after`" />
           <p class=fr-m-0>{{ $t('Updated {date}', {date: formatRelativeIfRecentDate(dataset.last_update)}) }}</p>
         </div>
@@ -104,11 +104,13 @@ type Props = {
   datasetUrl: RouteLocationRaw,
   organizationUrl?: RouteLocationRaw,
   style?: StyleValue,
+  showQualityScore?: boolean,
   showMetrics?: boolean,
 }
 const props = withDefaults(defineProps<Props>(), {
   organizationUrl: "",
   style: () => ({}),
+  showQualityScore: true,
   showMetrics: true,
 });
 const { t } = useI18n();

@@ -12,8 +12,8 @@
 
 <script setup lang="ts">
 import { computed, inject, useAttrs } from 'vue';
-import { RouterLink, type RouterLinkProps, routerKey } from 'vue-router';
-const props = withDefaults(defineProps<{ to: string } & RouterLinkProps>(), {
+import { RouterLink, type RouterLinkProps, routerKey, RouteLocationRaw } from 'vue-router';
+const props = withDefaults(defineProps<{ to: RouteLocationRaw } & RouterLinkProps>(), {
   ariaCurrentValue: "page",
 });
 const router = inject(routerKey, null);
