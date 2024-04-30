@@ -9,7 +9,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: "The AppLink blablabla."
+        component: "The AppLink component is designed to handle navigation links within our application, with or without vue-router."
       }
     }
   },

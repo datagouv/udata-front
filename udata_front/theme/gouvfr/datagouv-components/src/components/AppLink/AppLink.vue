@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import { computed, inject, useAttrs } from 'vue';
-import { RouterLink, type RouterLinkProps, routerKey, RouteLocationRaw } from 'vue-router';
+import { RouterLink, type RouterLinkProps, routerKey, type RouteLocationRaw } from 'vue-router';
 const props = withDefaults(defineProps<{ to: RouteLocationRaw } & RouterLinkProps>(), {
   ariaCurrentValue: "page",
 });
