@@ -13,12 +13,14 @@
           <div class="fr-col-12 fr-col-lg-9 fr-pb-2v">
             <OrganizationSearch />
           </div>
-          <div class="fr-col-12 fr-col-lg-3" style="position: absolute; right: 0; top: 0;">
-            <div class="fr-grid-row fr-grid-row--right">
-              <p class="fr-text--sm fr-px-2v fr-col-auto">{{ t('or') }}</p>
-              <button class="fr-btn fr-col-auto" @click="$emit('start')">
-                {{ t("Create an organization") }}
-              </button>
+          <div class="fr-col-12 fr-col-lg-3 fr-ml-auto">
+            <div class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
+              <p class="fr-col-auto fr-ml-3v fr-m-0">{{ t('or') }}</p>
+              <div class="fr-col-auto fr-ml-3v fr-m-0">
+                <button class="fr-btn fr-col-auto" @click="$emit('start')">
+                  {{ t("Create an organization") }}
+                </button>
+              </div>
             </div>
           </div>
         </div>
