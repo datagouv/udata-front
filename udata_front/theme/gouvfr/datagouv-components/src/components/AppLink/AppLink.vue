@@ -18,16 +18,10 @@ const props = withDefaults(defineProps<{ to: string } & RouterLinkProps>(), {
 });
 const router = inject(routerKey, null);
 const attrs = useAttrs();
-const externalAttrs = computed(() => {
-  if (router) {
-    if (typeof props.to === 'string' && props.to.startsWith('http')) {
-      return { ...attrs, target: "_blank" };
-    }
-    return attrs;
-  } else {
-    return { ...attrs, target: attrs.target };
-  }
-});
+const externalAttrs = computed(() => ({
+  ...attrs,
+  target: router ? "_blank" : attrs.target
+}));
 
 function isExternalLink(link: string): boolean {
   return !router || typeof link === 'string' && link.startsWith('http');
