@@ -1,18 +1,18 @@
-import {ref, computed, Ref, MaybeRefOrGetter, toValue} from "vue";
+import {ref, computed, MaybeRefOrGetter, toValue} from "vue";
 import useKeyCodes from "./useKeyCodes";
 
-type Option = {
+export type OptionWithId = {
   id: string;
-  [key: string]: string | number | boolean | undefined;
+  link: string;
 }
 
-export default function useActiveDescendant(options: MaybeRefOrGetter<Option[]>) {
+export default function useActiveDescendant<T extends OptionWithId>(options: MaybeRefOrGetter<Array<T>>) {
 
   const {KEYCODES} = useKeyCodes();
 
   const selected = ref<string | undefined>();
 
-  const selectedOption = computed<Option | undefined>(() => toValue(options).find(option => option.id === selected.value));
+  const selectedOption = computed<T | undefined>(() => toValue(options).find(option => option.id === selected.value));
 
   const isSelected = (id: string | null) => selected.value === id;
 

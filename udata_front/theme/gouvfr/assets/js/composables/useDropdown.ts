@@ -1,13 +1,9 @@
 import { ref, onMounted, onUnmounted, MaybeRefOrGetter, toValue } from 'vue';
 import { useCollapse } from './useCollapse';
 import useActiveDescendant from './useActiveDescendant';
+import type { OptionWithId } from './useActiveDescendant';
 
-type Option = {
-  id: string;
-  [key: string]: string | number | boolean | undefined;
-}
-
-export function useDropdown(options: MaybeRefOrGetter<Option[]>, q: MaybeRefOrGetter<string>) {
+export function useDropdown<T extends OptionWithId>(options: MaybeRefOrGetter<Array<T>>, q: MaybeRefOrGetter<string>) {
   const inputRef = ref<HTMLElement | null>(null);
   const listRef = ref<HTMLElement | null>(null);
   const buttonRef = ref<HTMLElement | null>(null);
