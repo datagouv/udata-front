@@ -1,6 +1,7 @@
 import { CopyButton } from "./CopyButton";
 import InformationPanel from "./InformationPanel";
-import { OrganizationNameWithCertificate, OrganizationTypeIcon } from "./Organization";
+import { OrganizationNameWithCertificate } from "./Organization";
+import { OwnerType, OwnerTypeIcon } from "./Owner";
 import Pagination from "./Pagination";
 import { ResourceAccordion, Loader as ResourceAccordionLoader } from "./ResourceAccordion";
 import { QualityItem } from "./QualityItem";
@@ -12,4 +13,4 @@ import { QualityComponentInline } from "./QualityComponentInline"
 import { ReadMore } from "./ReadMore"
 import Well from "./Well";
 
-export { CopyButton, InformationPanel, OrganizationNameWithCertificate, OrganizationTypeIcon, Pagination, QualityComponent, QualityComponentInline, QualityItem, QualityItemWarning, QualityScore, ReadMore, ResourceAccordion, ResourceAccordionLoader, Toggletip, Well };
+export { CopyButton, InformationPanel, OrganizationNameWithCertificate, OwnerType, OwnerTypeIcon, Pagination, QualityComponent, QualityComponentInline, QualityItem, QualityItemWarning, QualityScore, ReadMore, ResourceAccordion, ResourceAccordionLoader, Toggletip, Well };

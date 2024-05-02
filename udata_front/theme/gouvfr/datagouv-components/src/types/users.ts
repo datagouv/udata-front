@@ -8,3 +8,5 @@ export type User = {
   avatar_thumbnail?: string | null;
   roles?: Array<string>;
 }
+
+export type UserType = "user";

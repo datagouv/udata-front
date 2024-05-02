@@ -8,10 +8,20 @@ export const LOCAL_AUTHORITY = "Local authority";
 
 export type OrganizationTypes = typeof PUBLIC_SERVICE | typeof ASSOCIATION | typeof COMPANY | typeof LOCAL_AUTHORITY;
 
+/**
+ * Checks if the organization has the provided type
+ * @param organizationRef the organization
+ * @param type the organization type
+ */
 export function isType(organizationRef: MaybeRefOrGetter<Organization>, type: OrganizationTypes) {
   return hasBadge(organizationRef, type);
 }
 
+/**
+ * Checks if the organization has the provided badge
+ * @param organizationRef the organization
+ * @param kind the badge
+ */
 export function hasBadge(organizationRef: MaybeRefOrGetter<Organization>, kind: string) {
   return toValue(organizationRef).badges.some(badge => badge.kind === kind);
 }
