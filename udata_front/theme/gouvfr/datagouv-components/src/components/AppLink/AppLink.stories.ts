@@ -19,6 +19,19 @@ export default meta;
 
 const args = {};
 
+export const SimpleInternalLink: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { AppLink },
+    setup() {
+      return { args };
+    },
+    template: `<AppLink to="/datasets/6571faa17f46a65ee05c4d17">
+                Link test
+              </AppLink>`,
+  }),
+  args,
+};
+
 export const SimpleExternalLink: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { AppLink },
