@@ -342,7 +342,7 @@
       axios.get(config.search_siren_url, {
         params: {
           q: siret,
-          mtm_campaign: "publier-data-gouv"
+          mtm_campaign: "udata-front"
         }
       })
       .then((res) => res.data)
