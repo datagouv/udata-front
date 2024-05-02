@@ -30,8 +30,8 @@ export type NewDataset = Owned & {
   private: boolean;
   quality?: Quality;
   spatial: {
-  zones?: Array<string>;
-  granularity?: string;
+    zones?: Array<string>;
+    granularity?: string;
   } | null;
 };
 
@@ -55,8 +55,9 @@ export type Dataset = NewDataset & {
   slug: string;
   quality: Quality;
   metrics: { discussions: number; followers: number; reuses: number; views: number; };
+  harvest: Record<string, any>
+  extras: Record<string, any>
 };
-
 
 export type DatasetV2 = NewDataset & Omit<Dataset, 'resources' | 'community_resources'> & {
   resources: Rel;
