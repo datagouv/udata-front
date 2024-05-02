@@ -341,7 +341,8 @@
     if (siret.length === 14) {
       axios.get(config.search_siren_url, {
         params: {
-          q: siret
+          q: siret,
+          mtm_campaign: "publier-data-gouv"
         }
       })
       .then((res) => res.data)
