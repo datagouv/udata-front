@@ -196,6 +196,37 @@ jobs:
           working_directory: ./udata-front-plugins-helper
           command: npm run preversion
 
+  datagouv_components:
+    docker:
+      - image: cimg/node:lts
+    environment:
+      PATH: udata_front/theme/gouvfr/datagouv-components
+    steps:
+      - checkout
+      - run:
+          name: Compute JS dependencies key
+          command: cat ${PATH}/package.json > helper-js.deps
+      - restore_cache:
+          keys:
+            - js-cache-{{ arch }}-{{ checksum "helper-js.deps" }}
+            - js-cache-{{ arch }}-{{ .Branch }}{{ .Environment.CIRCLE_TAG }}
+      - run:
+          name: Install NodeJS and dependencies
+          command: npm ci
+          working_directory: $PATH
+      - save_cache:
+          key: js-cache-{{ arch }}-{{ checksum "helper-js.deps" }}
+          paths:
+          - ${PATH}/node_modules
+      - save_cache:
+          key: js-cache-{{ arch }}-{{ .Branch }}{{ .Environment.CIRCLE_TAG }}
+          paths:
+          - ${PATH}/node_modules
+      - run:
+          name: Compile and test package
+          working_directory: $PATH
+          command: npm run preversion
+
   cypress:
     docker:
       - image: cimg/python:3.11-browsers
@@ -342,6 +373,10 @@ workflows:
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
+      - datagouv_components:
+          filters:
+            tags:
+              only: /datagouv-components-v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
       - cypress:
           requires:
             - deps
