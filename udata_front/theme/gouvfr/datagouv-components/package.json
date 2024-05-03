@@ -40,6 +40,7 @@
     "@storybook/jest": "^0.2.3",
     "@storybook/manager-api": "^7.6.7",
     "@storybook/test": "^7.6.17",
+    "@storybook/testing-library": "^0.2.2",
     "@storybook/theming": "^7.6.7",
     "@storybook/vue3": "^7.6.7",
     "@storybook/vue3-vite": "^7.6.7",
