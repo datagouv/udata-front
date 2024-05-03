@@ -199,32 +199,30 @@ jobs:
   datagouv_components:
     docker:
       - image: cimg/node:lts
-    environment:
-      WD_PATH: udata_front/theme/gouvfr/datagouv-components
+    working_directory: udata_front/theme/gouvfr/datagouv-components
     steps:
-      - checkout
+      - checkout:
+        path: ../../../
       - run:
           name: Compute JS dependencies key
-          command: cat ${WD_PATH}/package.json > helper-js.deps
+          command: cat package.json > components-js.deps
       - restore_cache:
           keys:
-            - js-cache-{{ arch }}-{{ checksum "helper-js.deps" }}
+            - js-cache-{{ arch }}-{{ checksum "components-js.deps" }}
             - js-cache-{{ arch }}-{{ .Branch }}{{ .Environment.CIRCLE_TAG }}
       - run:
           name: Install NodeJS and dependencies
           command: npm ci
-          working_directory: $WD_PATH
       - save_cache:
-          key: js-cache-{{ arch }}-{{ checksum "helper-js.deps" }}
+          key: js-cache-{{ arch }}-{{ checksum "components-js.deps" }}
           paths:
-          - ${WD_PATH}/node_modules
+          - node_modules
       - save_cache:
           key: js-cache-{{ arch }}-{{ .Branch }}{{ .Environment.CIRCLE_TAG }}
           paths:
-          - ${WD_PATH}/node_modules
+          - node_modules
       - run:
           name: Compile and test package
-          working_directory: $WD_PATH
           command: npm run preversion
 
   cypress:
