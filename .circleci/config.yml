@@ -199,7 +199,7 @@ jobs:
   datagouv_components:
     docker:
       - image: cimg/node:lts
-    working_directory: udata_front/theme/gouvfr/datagouv-components
+    working_directory: ./udata_front/theme/gouvfr/datagouv-components
     steps:
       - checkout:
           path: ../../../
