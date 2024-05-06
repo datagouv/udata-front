@@ -225,6 +225,30 @@ jobs:
           command: npm run preversion
           working_directory: ./udata_front/theme/gouvfr/datagouv-components
 
+  publish_datagouv_components:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - run:
+          name: Install NodeJS and dependencies
+          command: npm ci
+          working_directory: ./udata_front/theme/gouvfr/datagouv-components
+      - deploy:
+          name: Publish on NPM
+          working_directory: ./udata_front/theme/gouvfr/datagouv-components
+          command: |
+             if [[ $CIRCLE_TAG ]]; then
+                # This is a tagged release
+                npm run publish-stable
+                npm version --no-git-tag-version prerelease --preid=dev
+                npm run publish-dev
+            else
+                # This is a simple development build
+                npm version --no-git-tag-version --allow-same-version $(npm view @datagouv/components@dev version)
+                npm version --no-git-tag-version prerelease --preid=dev
+                npm run publish-dev
+            fi
+
   cypress:
     docker:
       - image: cimg/python:3.11-browsers
@@ -374,7 +398,14 @@ workflows:
       - datagouv_components:
           filters:
             tags:
-              only: /datagouv-components-v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
+              only: /@datagouv/components@[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
+      - publish_datagouv_components:
+          filters:
+            branches:
+              only:
+                - master
+            tags:
+              only: /@datagouv/components@[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
       - cypress:
           requires:
             - deps

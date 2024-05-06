@@ -18,7 +18,7 @@
     "preversion": "npm run build && npm run i18n:report && npm run build-storybook",
     "update-version": "npm version --no-git-tag-version",
     "publish-stable": "npm publish --access public",
-    "publish-next": "npm run publish-stable -- --tag next",
+    "publish-dev": "npm run publish-stable -- --tag=dev",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
