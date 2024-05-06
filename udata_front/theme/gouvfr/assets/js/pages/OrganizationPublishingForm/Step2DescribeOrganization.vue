@@ -177,6 +177,7 @@
             <InputGroup
                 data-testid="websiteInput"
                 :label="t('Website')"
+                type="url"
                 v-model="organization.url"
                 :hasError="fieldHasError('url')"
                 :hasWarning="fieldHasWarning('url')"
