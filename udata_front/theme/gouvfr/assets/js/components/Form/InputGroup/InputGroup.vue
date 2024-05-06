@@ -131,15 +131,14 @@ defineExpose({ id });
 const errorTextId = computed(() => id + "-desc-error");
 const validTextId = computed(() => id + "-desc-valid");
 const ariaDescribedBy = computed(() => {
-  console.log(props)
+  let describedBy = props.ariaDescribedby ? props.ariaDescribedby + " " : "";
   if (props.isValid) {
-    return validTextId.value;
+    describedBy += validTextId.value;
   }
   else if (props.hasError) {
-    return errorTextId.value;
-  } else {
-    return props.ariaDescribedby;
+    describedBy += errorTextId.value;
   }
+  return describedBy;
 });
 
 const inputGroupClass = computed(() => {
