@@ -23,7 +23,7 @@
       @blur="handleFocusOut"
     />
     <div
-      class="fr-collapse autocomplete w-100 fr-mt-1w"
+      class="fr-collapse autocomplete w-100 fr-mt-1w shadow"
       :id="uid"
       ref="listRef"
       role="listbox"
@@ -86,3 +86,9 @@ watchDebounced(q, async (newValue, oldValue) => {
   }
 }, { debounce: 300 });
 </script>
+
+<style scoped>
+  .shadow {
+    box-shadow: 0px 4px 2px var(--border-default-grey);
+  }
+</style>
