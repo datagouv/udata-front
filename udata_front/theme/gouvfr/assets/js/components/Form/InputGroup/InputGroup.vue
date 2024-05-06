@@ -78,6 +78,7 @@ export type InputValue = string | undefined | null;
 export type AllowedInputType = "date" | "markdown" | "range" | "textarea" | InputTypeHTMLAttribute;
 
 export type InputGroupProps = {
+  ariaDescribedby?: string,
   disabled?: boolean,
   errorText?: string,
   hasError?: boolean,
@@ -110,6 +111,7 @@ const emit = defineEmits<{
 }>();
 
 const props = withDefaults(defineProps<InputGroupProps>(), {
+  ariaDescribedby: "",
   disabled: false,
   errorText: "",
   hasError: false,
@@ -129,14 +131,15 @@ defineExpose({ id });
 const errorTextId = computed(() => id + "-desc-error");
 const validTextId = computed(() => id + "-desc-valid");
 const ariaDescribedBy = computed(() => {
-  let describedBy = "";
+  console.log(props)
   if (props.isValid) {
-    describedBy += " " + validTextId.value;
+    return validTextId.value;
   }
   else if (props.hasError) {
-    describedBy += " " + errorTextId.value;
+    return errorTextId.value;
+  } else {
+    return props.ariaDescribedby;
   }
-  return describedBy;
 });
 
 const inputGroupClass = computed(() => {

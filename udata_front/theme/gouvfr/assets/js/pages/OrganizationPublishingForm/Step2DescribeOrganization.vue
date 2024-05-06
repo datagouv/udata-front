@@ -124,6 +124,7 @@
             >
               <InputGroup
                 data-testid="siretInput"
+                :aria-describedby="addSiretAccordionId"
                 :label="t('SIRET Number')"
                 v-model="organization.business_number_id"
                 :hasError="fieldHasError('business_number_id')"
@@ -150,6 +151,7 @@
             >
             <InputGroup
                 data-testid="acronymInput"
+                :aria-describedby="addAcronymAccordionId"
                 :label="t('Acronym')"
                 v-model="organization.acronym"
               />
@@ -161,6 +163,7 @@
             >
             <InputGroup
                 data-testid="descriptionInput"
+                :aria-describedby="addDescriptionAccordionId"
                 :label="t('Description')"
                 :required="true"
                 type="textarea"
@@ -176,6 +179,7 @@
             >
             <InputGroup
                 data-testid="websiteInput"
+                :aria-describedby="addDescriptionAccordionId"
                 :label="t('Website')"
                 type="url"
                 v-model="organization.url"
