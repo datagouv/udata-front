@@ -402,5 +402,6 @@
   "Manage the organization": "Manage the organization",
   "Publish a reuse": "Publish a reuse",
   "Pagination": "Pagination",
-  "Page {nb}": "Page {nb}"
+  "Page {nb}": "Page {nb}",
+  "The SIRET n° {number} is matching": "The SIRET n° {number} is matching"
 }
