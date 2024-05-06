@@ -131,10 +131,10 @@ const validTextId = computed(() => id + "-desc-valid");
 const ariaDescribedBy = computed(() => {
   let describedBy = "";
   if (props.isValid) {
-    describedBy += " " + validTextId;
+    describedBy += " " + validTextId.value;
   }
   else if (props.hasError) {
-    describedBy += " " + errorTextId;
+    describedBy += " " + errorTextId.value;
   }
   return describedBy;
 });
