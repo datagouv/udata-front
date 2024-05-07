@@ -1,4 +1,4 @@
-import { MaybeRefOrGetter, toValue } from "vue";
+import { type MaybeRefOrGetter, toValue } from "vue";
 import { api } from "../plugins/api";
 import { getLocalizedUrl } from "../i18n";
 import type { Member, MemberRole, OrganizationV1, PendingMembershipRequest } from "../types";
