@@ -14,7 +14,7 @@
       :aria-expanded="expanded"
       :id="inputId"
       data-cy="search-input"
-      :aria-activedescendant="options[selectedIndex]?.id"
+      :aria-activedescendant="selected"
       name="q"
       v-model="q"
       @click.stop.capture="showAndSelectIfQuery"
@@ -78,7 +78,7 @@ async function fetchOptions() {
   }
 };
 
-const { expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, searchSelectedOption, showAndSelectIfQuery, uid} = useDropdown(options, q);
+const { expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, selected, searchSelectedOption, showAndSelectIfQuery, uid} = useDropdown(options, q);
 
 watchDebounced(q, async (newValue, oldValue) => {
   if (newValue !== oldValue) {

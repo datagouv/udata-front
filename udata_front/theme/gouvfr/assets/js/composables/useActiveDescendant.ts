@@ -17,7 +17,7 @@ export default function useActiveDescendant<T extends OptionWithId>(options: May
   const isSelected = (id: string | null) => selected.value === id;
 
   const select = (id?: string) => {
-    if(id === null) {
+    if(id === undefined) {
       return selectAtPosition(0);
     }
     selected.value = id;
@@ -28,7 +28,9 @@ export default function useActiveDescendant<T extends OptionWithId>(options: May
   };
 
   const selectAtPosition = (position: number) => {
-    select(toValue(options)[position].id);
+    if (toValue(options)[position]) {
+      select(toValue(options)[position].id);
+    }
   }
 
   const selectNextOption = () => {
