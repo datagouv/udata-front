@@ -78,11 +78,10 @@
 <script setup lang="ts">
 import Avatar from "../Avatar/Avatar.vue";
 import Author from "../Author/Author.vue";
-import ReadMore from "../../ReadMore/ReadMore.vue";
 import ThreadReply from "../ThreadReply/ThreadReply.vue";
 import MarkAsNoSpam from "../../MarkAsNoSpam/MarkAsNoSpam.vue";
 import { read_only_enabled } from "../../../config";
-import { formatDate } from "@etalab/data.gouv.fr-components";
+import { formatDate, ReadMore } from "@etalab/data.gouv.fr-components";
 import { computed, ref } from "vue";
 import { auth } from "../../../plugins/auth";
 import { api } from "../../../plugins/api";

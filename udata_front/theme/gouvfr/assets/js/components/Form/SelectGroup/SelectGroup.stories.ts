@@ -1,9 +1,12 @@
+import type { Meta, StoryObj } from '@storybook/vue3';
 import SelectGroup from './SelectGroup.vue';
 
-export default {
+const meta = {
   title: 'Components/SelectGroup',
   component: SelectGroup,
-};
+} satisfies Meta<typeof SelectGroup>;
+
+export default meta;
 
 const args = {
   disabled: false,
@@ -20,7 +23,7 @@ const args = {
   validText: "The field is valid !",
 };
 
-export const Select = {
+export const Select: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { SelectGroup },
     setup() {
@@ -31,7 +34,7 @@ export const Select = {
   args,
 };
 
-export const SelectWithError = {
+export const SelectWithError: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { SelectGroup },
     setup() {
@@ -45,7 +48,7 @@ export const SelectWithError = {
   },
 };
 
-export const SelectSuccessState = {
+export const SelectSuccessState: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { SelectGroup },
     setup() {
@@ -59,7 +62,7 @@ export const SelectSuccessState = {
   },
 };
 
-export const DisabledSelect = {
+export const DisabledSelect: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { SelectGroup },
     setup() {

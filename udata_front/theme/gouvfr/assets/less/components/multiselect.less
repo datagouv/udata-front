@@ -1,4 +1,4 @@
-@import (less) "@conciergerie.dev/select-a11y/dist/style.css";
+@import (less) "@datagouv/select-a11y/dist/style.css";
 .multiselect {
     &[data-selected=true] .select-a11y .select-a11y-button {
         color: @grey-500;
@@ -43,6 +43,7 @@
         }
         .select-a11y-suggestion {
             .fr-p-1w;
+            align-items: start;
             &:hover, &:focus {
                 background: @grey-100;
             }
@@ -56,9 +57,25 @@
                 .border-top;
             }
         }
+        .select-a11y-suggestion__description {
+            margin-top: 0.25rem;
+            font-size: 0.75rem;
+            color: @grey-400;
+            line-height: 1rem;
+        }
+        .select-a11y-suggestion__helper {
+            margin-top: 0.25rem;
+            font-size: 0.875rem;
+            line-height: 1.3rem;
+        }
         .select-a11y-suggestion__image {
             .logo;
             .fr-p-1v;
+        }
+        .select-a11y-suggestion__label {
+            font-size: 0.875rem;
+            color: @grey-400;
+            line-height: 1.3rem;
         }
         .select-a11y__selected-list {
             padding: 0.1rem 2.5rem calc(0.1rem + 2px) 1rem;
@@ -89,6 +106,13 @@
                 &:extend(.fr-icon-delete-line::before);
                 &:extend(button.fr-tag--dismiss.fr-tag--sm::after);
             }
+        }
+        div[role="presentation"] {
+            text-transform: uppercase;
+            background-color: @grey-50;
+            border-bottom: 1px solid @grey-200;
+            font-weight: bold;
+            padding: 0.5rem;
         }
     }
 }

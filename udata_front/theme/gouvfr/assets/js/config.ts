@@ -47,6 +47,8 @@ export const user: User | null = userEl ? {
   roles: userEl.dataset.roles?.split(",") || [],
 } : null;
 
+export const userIsAdmin: boolean = user?.roles?.includes("admin") ?? false;
+
 /**
  * Map debug features on Webpack DEBUG flag
  */
@@ -264,6 +266,12 @@ export const resources_min_count_to_show_search = _jsonMeta("resources-min-count
 export const markdown = _jsonMeta("markdown-config");
 
 /**
+ * License groups options configuration.
+ */
+export const license_groups_options = _jsonMeta("license-groups-options");
+
+
+/**
  * Whether the 'read only mode' feature is enabled or not.
  */
  export const read_only_enabled = _jsonMeta('read-only-enabled');
@@ -286,6 +294,7 @@ export const quality_metadata_backend_ignore: Array<string> = _jsonMeta("quality
 
 export default {
   user,
+  userIsAdmin,
   debug,
   lang,
   title,
@@ -320,6 +329,7 @@ export default {
   resources_default_page_size,
   resources_min_count_to_show_search,
   markdown,
+  license_groups_options,
   read_only_enabled,
   quality_description_length,
   search_siren_url,

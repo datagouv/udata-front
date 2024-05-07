@@ -218,6 +218,8 @@
                 @change="(value: string) => dataset.license = value"
                 :allOption="$t('Select a license')"
                 :addAllOption="false"
+                :groups="licensesGroups"
+                :showDescription="true"
               />
             </LinkedToAccordion>
           </fieldset>
@@ -270,7 +272,7 @@
               class="fr-fieldset__element"
             >
               <div class="fr-grid-row fr-grid-row--gutters">
-                <div class="fr-col-12 fr-col-md-6">
+                <div class="fr-col-12">
                   <MultiSelect
                     :placeholder="$t('Spatial coverage')"
                     :searchPlaceholder="$t('Search a spatial coverage...')"
@@ -282,15 +284,18 @@
                     :allOption="$t('e.g. France')"
                     :addAllOption="false"
                     :multiple="true"
+                    helperLabel="Insee : "
+                    :onSuggest="formatSpatialZones"
+                    :showDescription="true"
                   />
                 </div>
-                <div class="fr-col-12 fr-col-md-6">
+                <div class="fr-col-12">
                   <MultiSelect
                     :placeholder="$t('Spatial granularity')"
                     :searchPlaceholder="$t('Search a granularity...')"
-                    listUrl="/spatial/granularities/"
+                    :initialOptions="granularities"
                     :values="dataset.spatial?.granularity"
-                    @change="(value: string) => dataset.spatial ? dataset.spatial.granularity = value : dataset.spatial = {granularity: value}"
+                    @change="setGranularity"
                     :hasWarning="fieldHasWarning('spatial_information')"
                     :allOption="$t('Select an option')"
                     :addAllOption="false"
@@ -314,6 +319,7 @@
 export type Step2DescribeDatasetProps = {
   originalDataset: NewDataset,
   steps: Array<string>,
+  granularities: Array<SpatialGranularity>
 };
 </script>
 <script setup lang="ts">
@@ -331,11 +337,11 @@ import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import useUid from "../../composables/useUid";
 import useFunctionalState from '../../composables/form/useFunctionalState';
 import editIcon from "../../../../templates/svg/illustrations/edit.svg";
-import { quality_description_length, title } from "../../config";
+import { license_groups_options, quality_description_length, title } from "../../config";
 import { useI18n } from 'vue-i18n';
 import { getLicensesUrl } from '../../api/licenses';
 import { getFrequenciesUrl } from '../../api/datasets';
-import { NewDataset, PublishingFormAccordionState } from '../../types';
+import type { NewDataset, PublishingFormAccordionState, SpatialGranularity } from '../../types';
 
 const emit = defineEmits(["next"]);
 const props = defineProps<Step2DescribeDatasetProps>();
@@ -353,13 +359,33 @@ const { id: addSpatialInformationAccordionId } = useUid("accordion");
 const dataset = reactive({...props.originalDataset});
 if(!dataset.spatial) {
   dataset.spatial = {
-    zones: undefined,
-    granularity: undefined,
+    zones: null,
+    granularity: null,
   }
 }
 
 const frequenciesUrl = getFrequenciesUrl();
 const licensesUrl = getLicensesUrl();
+const licensesGroups = license_groups_options?.map(([name, values]) => ({
+  name,
+  values
+}));
+const formatSpatialZones = (data) => {
+  const suggestions = data.map(item => {
+  const matchingGranularity = props.granularities.find(granularity => granularity.id === item.level);
+  if (matchingGranularity) {
+    return {
+      ...item,
+      description: matchingGranularity.name,
+    };
+  } else {
+    return {
+      ...item,
+    };
+  }
+});
+return suggestions;
+}
 
 const notUnknown = not(t("The value must be different than unknown."), sameAs("unknown"));
 const tagsRequired = requiredWithCustomMessage(t("Adding tags helps improve the SEO of your data."));
@@ -403,6 +429,14 @@ const state = computed<Record<string, PublishingFormAccordionState>>(() => {
 const fieldHasError = (field: string) => hasError(state, field);
 
 const fieldHasWarning = (field: string) => hasWarning(state, field);
+
+function setGranularity(value: string) {
+  if (this.dataset.spatial) {
+    this.dataset.spatial.granularity = value;
+  } else {
+    this.dataset.spatial = { granularity: value };
+  }
+};
 
 function submit() {
   validateRequiredRules().then(valid => {
