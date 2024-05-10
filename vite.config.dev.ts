@@ -44,6 +44,7 @@ async function getConfig(): Promise<UserConfig> {
       }),
     ],
     build: {
+      minify: false,
       rollupOptions: {
         input: [
           `udata_front/theme/${theme}/assets/js/index.ts`,

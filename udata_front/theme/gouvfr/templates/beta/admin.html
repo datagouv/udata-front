@@ -1,5 +1,10 @@
 {% extends theme('raw.html') %}
 
+{% set meta = {
+    'title': _("Administration panel"),
+    'description': _("%(site)s administration panel", site=config['SITE_TITLE']),
+} %}
+
 {% block extra_css %}
 <link href="{{ theme_static('assets/admin.css') }}" rel="stylesheet">
 {% endblock %}

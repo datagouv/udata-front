@@ -1,0 +1,24 @@
+import { Canvas, Controls, Meta } from '@storybook/blocks';
+
+import * as MarkdownEditorStories from './MarkdownEditor.stories';
+
+<Meta of={MarkdownEditorStories} />
+
+# Markdown Editor
+
+A full fledged Markdown editor with WYSIWYG for ease of use and GFM for added capabilities.
+
+It allows :
+- basic text formatting (titles, **bold** and *italic*)
+- table and table management (add / move / align / remove row, add / move / align / remove column)
+- adding link on text
+- adding image
+- lists
+- code block
+- quote
+
+<Canvas of={MarkdownEditorStories.SimpleMarkdownEditor} />
+
+## Props
+
+<Controls />

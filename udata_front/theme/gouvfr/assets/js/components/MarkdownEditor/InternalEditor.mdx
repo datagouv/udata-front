@@ -1,0 +1,86 @@
+import { Canvas, Controls, Meta } from '@storybook/blocks';
+
+import * as InternalEditorStories from './InternalEditor.stories';
+
+<Meta of={InternalEditorStories} />
+
+# Internal Editor
+
+This is where we defined all our logic and interface.
+
+## Architecture overview
+
+The `<MarkdownEditor>` is simply a component that wraps this one in different required providers.
+
+We use `@milkdown` to make most of the work about markdown and convertion between markdown and prosemirror.
+We also use `@prosemirror-adapter/vue` to allow us to mount Vue components when we add plugins to prosemirror.
+
+Finally, we use various milkdown plugins to provide basic markdown functionalities.
+
+The top menu interface is coded in the `<InternalEditor>`.
+The commands called when a user presses a button is coming from ready-made plugins or custom ones.
+
+The custom plugins are located in the `Milkdown` folder.
+The `Prosemirror` folder contains prosemirror-only logic, extracted from our milkdown plugins.
+
+## Breakdown of each custom plugin
+
+### dsfrColumnResizingPlugin
+
+We want to display DSFR styled tables in our markdown content.
+
+To do this, we had to use a custom plugin to follow the DSFR mark-up and wrap the `<table>` element in a `<div>`.
+Doing so, the DSFR js script mutates some attributes of the table and its children.
+We had to exclude these to prosemirror mutation changes to avoid a conflict between both changes detection.
+
+All this custom logic is tailored to prosemirror so it's located in `ProseMirror/DSFRTableView.ts`.
+There is only a simple plugin wrapper in `Milkdown/dsfrColumnResizingPlugin.ts`.
+
+### LinkEdit
+
+We want to assist user to add links to the editor so they don't have to type markdown syntax.
+To do this, we show a tooltip to the user allowing them to paste their link.
+
+This plugin contains 5 files :
+- `index.ts` exports the other files.
+- `configureEditTooltip.ts` makes the link between the LinkEditTooltip component and Milkdown.
+- `LinkEditTooltip.ts` creates mildown contexts and an instance of the milkdown tooltip plugin.
+- `LinkEditTooltip.vue` is the component shown inside the milkdown tooltip. It's mounted once when the editor launch.
+- `inserLink.ts` is the command that show the tooltip.
+
+### LinkPreview
+
+We want to assist user to edit existing links in the editor.
+To do this, we show a tooltip to the user allowing them to edit or remove their link.
+
+This plugin contains 6 files :
+- `index.ts` exports the other files.
+- `configurePreviewTooltip.ts` makes the link between the LinkPreviewTooltip component and Milkdown.
+- `LinkPreviewTooltip.ts` creates mildown contexts and an instance of the milkdown tooltip plugin.
+- `LinkPreviewTooltip.vue` is the component shown inside the milkdown tooltip. It's mounted once when the editor launch.
+- `shouldShowPreview.ts` is the internal logic to know if the preview tooltip should be displayed or not.
+- `useLinkPreview.ts` is a composable to keep track of the current link to preview. This is done to allow vue to watch it and trigger changes.
+
+The `configurePreviewTooltip` adds DOM event listeners to prosemirror. It allows us to check if the user is hovering a link.
+
+### TableSelector
+
+We want to allow a user to manage rows and columns after adding a table.
+To do this, we show decorations around the left and top cells.
+A user can click on them to show tooltips or drag them to reorder them.
+
+This plugin contains 2 files :
+- `tableSelectorPlugin` creates a new milkdown plugin and add decorations around the selected table.
+- `TableSelectorWidget.vue` is the vue component displayed as decoration.
+
+Note : decoration is the prosemirror term to DOM elements that aren't part of the document.
+
+### TableTooltip
+
+When a user clicks on a table selector, we want to show them with abilities to :
+- add row / column before
+- delete the current row / column
+- add row / column after
+- change the column alignment
+
+To do this, there is a tooltip responsible for showing the correct buttons based on the table selector clicked.

@@ -163,13 +163,10 @@
 import { defineComponent, PropType } from "vue";
 import { useI18n } from "vue-i18n";
 import useLicense from "../../composables/useLicense";
-import { OrganizationNameWithCertificate, useOwnerName, formatRelativeIfRecentDate} from "@etalab/data.gouv.fr-components";
+import { OrganizationNameWithCertificate, useOwnerName, formatRelativeIfRecentDate, QualityItem, QualityScore, Toggletip } from "@etalab/data.gouv.fr-components";
 import useUid from "../../composables/useUid";
 import Avatar from "../discussions/Avatar/Avatar.vue";
 import Placeholder from "../utils/placeholder.vue";
-import QualityScore from "./quality-score.vue";
-import Toggletip from "../utils/Toggletip/Toggletip.vue";
-import QualityItem from "./quality-item.vue";
 import { excerpt } from "../../helpers";
 import { guides_quality_url, quality_metadata_backend_ignore } from "../../config";
 import type { Dataset } from "../../types";

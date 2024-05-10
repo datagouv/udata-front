@@ -13,7 +13,7 @@
       :page="currentPage"
       :pageSize="pageSize"
       :totalResults="totalResults"
-      :changePage="changePage"
+      @change="changePage"
       class="fr-mt-2w"
     />
   </template>
@@ -34,7 +34,7 @@ const defaultPageSize = 20;
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Pagination } from '@etalab/udata-front-plugins-helper';
+import { Pagination } from '@etalab/data.gouv.fr-components';
 import Loader from "./loader.vue";
 import CardMD from './CardMD.vue';
 

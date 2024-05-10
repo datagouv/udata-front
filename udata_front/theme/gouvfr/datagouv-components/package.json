@@ -1,6 +1,6 @@
 {
   "name": "@etalab/data.gouv.fr-components",
-  "version": "1.8.2",
+  "version": "1.9.0",
   "description": "reusable components to show content from data.gouv.fr",
   "type": "module",
   "files": [
@@ -34,11 +34,12 @@
     "@gouvminint/vue-dsfr": "^5.2.0",
     "@intlify/unplugin-vue-i18n": "^1.5.0",
     "@storybook/addon-essentials": "^7.6.7",
-    "@storybook/addon-interactions": "^7.6.7",
+    "@storybook/addon-interactions": "^7.6.17",
     "@storybook/addon-links": "^7.6.7",
     "@storybook/blocks": "^7.6.7",
+    "@storybook/jest": "^0.2.3",
     "@storybook/manager-api": "^7.6.7",
-    "@storybook/test": "^7.6.7",
+    "@storybook/test": "^7.6.17",
     "@storybook/theming": "^7.6.7",
     "@storybook/vue3": "^7.6.7",
     "@storybook/vue3-vite": "^7.6.7",
@@ -60,5 +61,5 @@
   },
   "author": "Etalab",
   "license": "MIT",
-  "repository": "https://github.com/etalab/udata-front"
+  "repository": "https://github.com/datagouv/udata-front"
 }

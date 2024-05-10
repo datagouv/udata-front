@@ -62,19 +62,21 @@ Similar to the contextual text color classes, easily set the background of an el
 
 */
 
+@import "../variables.less";
+
 each(@colors, {
     .text-@{value} {
         color: @@value !important;
     }
 
     .bg-@{value} {
-        background-color: @@value;
+        background-color: @@value !important;
         --hover-tint: @@value;
         --active-tint: @@value;
     }
 });
 
-// Missing from DSFR >1.6 and overriden.
+// Missing from DSFR >1.6 and color changes.
 :root {
     --grey-850-200: #cecece;
     --success-625-425: #27A658;
@@ -82,6 +84,13 @@ each(@colors, {
     --background-alt-blue-france-hover: @background-alt-blue-cumulus-hover;
     --background-alt-blue-france-active: @background-alt-blue-cumulus-active;
     --border-default-blue-france: @border-default-blue-cumulus;
+    --text-action-high-blue-france: @blue-400;
+    --background-action-high-blue-france: @blue-400;
+    --background-action-high-blue-france-hover: @blue-400-hover;
+    --background-action-high-blue-france-active: @blue-400-active;
+    --background-active-blue-france: @blue-400;
+    --background-active-blue-france-hover: @blue-400-hover;
+    --background-active-blue-france-active: @blue-400-active;
 }
 :root[data-fr-theme=dark] {
     --grey-850-200: #3a3a3a;
