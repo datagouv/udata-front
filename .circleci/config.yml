@@ -398,14 +398,14 @@ workflows:
       - datagouv_components:
           filters:
             tags:
-              only: /@datagouv\/components@[0-9]+(\.[0-9]+)*(\.(a|b|dev|rc)\.[0-9]*)*/
+              only: /@datagouv\/components@([0-9]+(?:\.[0-9]+)*(?:-(?:a|b|dev|rc)\.[0-9]+)?)/
       - publish_datagouv_components:
           filters:
             branches:
               only:
                 - master
             tags:
-              only: /@datagouv\/components@[0-9]+(\.[0-9]+)*(\.(a|b|dev|rc)\.[0-9]*)*/
+              only: /@datagouv\/components@([0-9]+(?:\.[0-9]+)*(?:-(?:a|b|dev|rc)\.[0-9]+)?)/
       - cypress:
           requires:
             - deps
