@@ -236,7 +236,8 @@ jobs:
           working_directory: ./udata_front/theme/gouvfr/datagouv-components
       - run:
           name: Config npm registry
-          run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+          working_directory: ./udata_front/theme/gouvfr/datagouv-components
       - deploy:
           name: Publish on NPM
           working_directory: ./udata_front/theme/gouvfr/datagouv-components
