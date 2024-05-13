@@ -63,5 +63,8 @@
   },
   "author": "DINUM",
   "license": "MIT",
-  "repository": "https://github.com/datagouv/udata-front"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/datagouv/udata-front.git"
+  }
 }
