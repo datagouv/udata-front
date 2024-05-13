@@ -237,16 +237,16 @@ jobs:
           name: Publish on NPM
           working_directory: ./udata_front/theme/gouvfr/datagouv-components
           command: |
-             if [[ $CIRCLE_TAG ]]; then
-                # This is a tagged release
-                npm run publish-stable
-                npm version --no-git-tag-version prerelease --preid=dev
-                npm run publish-dev
+            if [[ $CIRCLE_TAG ]]; then
+              # This is a tagged release
+              npm run publish-stable
+              npm version --no-git-tag-version prerelease --preid=dev
+              npm run publish-dev
             else
-                # This is a simple development build
-                npm version --no-git-tag-version --allow-same-version $(npm view @datagouv/components@dev version)
-                npm version --no-git-tag-version prerelease --preid=dev
-                npm run publish-dev
+              # This is a simple development build
+              npm version --no-git-tag-version --allow-same-version $(npm view @datagouv/components@dev version)
+              npm version --no-git-tag-version prerelease --preid=dev
+              npm run publish-dev
             fi
 
   cypress:
