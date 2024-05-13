@@ -229,6 +229,7 @@ jobs:
     docker:
       - image: cimg/node:lts
     steps:
+      - checkout
       - run:
           name: Install NodeJS and dependencies
           command: npm ci
