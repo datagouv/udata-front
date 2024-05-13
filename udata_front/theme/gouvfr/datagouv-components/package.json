@@ -1,6 +1,6 @@
 {
   "name": "@datagouv/components",
-  "version": "1.0.0-dev.5",
+  "version": "1.0.0-dev.7",
   "description": "reusable components to show content from data.gouv.fr",
   "type": "module",
   "files": [
