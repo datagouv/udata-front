@@ -28,10 +28,12 @@ export default function useActiveDescendant<T extends OptionWithId>(options: May
   };
 
   const selectAtPosition = (position: number) => {
-    if (toValue(options)[position]) {
-      select(toValue(options)[position].id);
+    let optionsList = toValue(options)
+    if (optionsList[position]) {
+      select(optionsList[position].id);
     }
   }
+
 
   const selectNextOption = () => {
     let selectedPosition = 0;
