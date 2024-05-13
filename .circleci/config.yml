@@ -236,9 +236,9 @@ jobs:
           working_directory: ./udata_front/theme/gouvfr/datagouv-components
       - run:
           name: Config npm registry
-          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
           working_directory: ./udata_front/theme/gouvfr/datagouv-components
-      - deploy:
+      - run:
           name: Publish on NPM
           working_directory: ./udata_front/theme/gouvfr/datagouv-components
           command: |
@@ -369,7 +369,7 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - deploy:
+      - run:
           name: Publish on PyPI
           command: |
             source venv/bin/activate
