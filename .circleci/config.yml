@@ -234,6 +234,9 @@ jobs:
           name: Install NodeJS and dependencies
           command: npm ci
           working_directory: ./udata_front/theme/gouvfr/datagouv-components
+      - run:
+          name: Config npm registry
+          run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
       - deploy:
           name: Publish on NPM
           working_directory: ./udata_front/theme/gouvfr/datagouv-components
