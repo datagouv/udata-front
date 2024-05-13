@@ -239,13 +239,13 @@ jobs:
           command: |
             if [[ $CIRCLE_TAG ]]; then
               # This is a tagged release
-              npm run publish-stable
-              npm version --no-git-tag-version prerelease --preid=dev
+              # npm run publish-stable
+              npm run update-version -- prerelease --preid=dev
               npm run publish-dev
             else
               # This is a simple development build
-              npm version --no-git-tag-version --allow-same-version $(npm view @datagouv/components@dev version)
-              npm version --no-git-tag-version prerelease --preid=dev
+              npm run update-version -- --allow-same-version $(npm view @datagouv/components@dev version)
+              npm run update-version -- prerelease --preid=dev
               npm run publish-dev
             fi
 
