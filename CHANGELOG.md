@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Add Organization publishing form [#358](https://github.com/datagouv/udata-front/pull/358)
+- Fix an error that blocks datasets search filters reset [#402](https://github.com/datagouv/udata-front/pull/402)
 
 ## 4.0.2 (2024-04-26)
 
@@ -16,7 +17,6 @@
 
 - **breaking change** Migrate to Python 3.11 [#376](https://github.com/etalab/udata-front/pull/376)
 - Fix api urls locked on dev.data.gouv.fr [#401](https://github.com/datagouv/udata-front/pull/401)
-- Fix an error that blocks datasets search filters reset [#402](https://github.com/datagouv/udata-front/pull/402)
 
 ## 3.5.5 (2024-04-16)
 
