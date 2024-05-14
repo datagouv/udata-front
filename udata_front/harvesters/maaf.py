@@ -135,7 +135,10 @@ class MaafBackend(BaseSyncBackend):
                 if href.endswith('/'):
                     directories.append(urljoin(directory, href))
                 elif href.lower().endswith('.xml'):
-                    self.process_dataset(urljoin(directory, href))
+                    # We use the URL as `remote_id` for now, we'll be replace at the beginning of the process
+                    should_stop = self.process_dataset(urljoin(directory, href))
+                    if should_stop:
+                        return
                 else:
                     log.debug('Skip %s', href)
 
@@ -144,6 +147,7 @@ class MaafBackend(BaseSyncBackend):
         xml = self.parse_xml(response.content)
         metadata = xml['metadata']
 
+        # Replace the `remote_id` from the URL to `id`.
         item.remote_id = metadata['id']
         dataset = self.get_dataset(item.remote_id)
 
