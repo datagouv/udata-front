@@ -35,7 +35,6 @@ import ActionCard from '../../components/Form/ActionCard/ActionCard.vue';
 import OrganizationSearch from '../../components/search/OrganizationSearch/OrganizationSearch.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Container from '../../components/Ui/Container/Container.vue';
-import { title } from "../../config";
 import organizationIcon from "../../../../templates/svg/illustrations/organization.svg";
 import { useI18n } from 'vue-i18n';
 
