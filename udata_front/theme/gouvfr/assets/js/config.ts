@@ -288,6 +288,8 @@ export const search_autocomplete_debounce = _jsonMeta("search-autocomplete-debou
 
 export const explorable_resources: Array<string> = _jsonMeta("explorable-resources") || [];
 
+export const search_siren_url = _meta("search-siren-url");
+
 export const quality_metadata_backend_ignore: Array<string> = _jsonMeta("quality-metadata-backend-ignore") || [];
 
 export default {
@@ -330,5 +332,6 @@ export default {
   license_groups_options,
   read_only_enabled,
   quality_description_length,
+  search_siren_url,
   quality_metadata_backend_ignore,
 };

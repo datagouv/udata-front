@@ -10,7 +10,7 @@
     <input
       class="fr-input fr-col"
       :placeholder="t('Search')"
-      ref="input"
+      ref="inputRef"
       autocomplete="off"
       role="combobox"
       aria-autocomplete="list"
@@ -28,7 +28,7 @@
     />
     <button
       type="button"
-      ref="button"
+      ref="buttonRef"
       class="fr-btn"
       tabindex="-1"
       :aria-controls="uid"
@@ -40,7 +40,7 @@
     <div
       class="fr-menu fr-collapse autocomplete"
       :id="uid"
-      ref="list"
+      ref="listRef"
       role="listbox"
       :aria-labelledby="labelId"
       @mousedown.prevent
@@ -60,16 +60,15 @@
   </div>
 </template>
 
-<script lang="ts">
-import {ref, defineComponent,reactive, onMounted, onUnmounted, ComputedRef, computed} from "vue";
+<script setup lang="ts">
+import {ref, ComputedRef, computed} from "vue";
 import { useI18n } from 'vue-i18n';
-import { useCollapse } from "../../../composables/useCollapse";
 import MenuSearchOption from "./MenuSearchOption.vue";
 import datasetIcon from "../../../../../templates/svg/search/dataset.svg";
 import reuseIcon from "../../../../../templates/svg/search/reuse.svg";
 import organizationIcon from "../../../../../templates/svg/search/organization.svg";
 import useSearchUrl from "../../../composables/useSearchUrl";
-import useActiveDescendant from "../../../composables/useActiveDescendant";
+import { useDropdown } from "../../../composables/useDropdown";
 import useUid from "../../../composables/useUid";
 
 type MenuOption = {
@@ -77,105 +76,35 @@ type MenuOption = {
   icon: string;
   type: string;
   link: ComputedRef<string>;
-}
+};
 
-export default defineComponent({
-  components: { MenuSearchOption },
-  setup() {
-    const { t } = useI18n();
-    const { handleKeyPressForCollapse, expanded, uid, show, hide, registerBackgroundEvent, removeBackgroundEvent } = useCollapse();
-    const q = ref('');
-    const { datasetUrl, reuseUrl, organizationUrl } = useSearchUrl(q);
-    const { id } = useUid("search");
-    const inputId = computed(() => `${id}-input`);
-    const labelId = computed(() => `${id}-label`);
+const { t } = useI18n();
+const q = ref('');
+const { datasetUrl, reuseUrl, organizationUrl } = useSearchUrl(q);
+const { id } = useUid("search");
+const inputId = computed(() => `${id}-input`);
+const labelId = computed(() => `${id}-label`);
 
-    const options = reactive<Array<MenuOption>>([
-      {
-        id: "dataset-option",
-        icon: datasetIcon,
-        type: t('datasets'),
-        link: datasetUrl,
-      },
-      {
-        id: "reuse-option",
-        icon: reuseIcon,
-        type: t('reuses'),
-        link: reuseUrl,
-      },
-      {
-        id: "organization-option",
-        icon: organizationIcon,
-        type: t('organizations'),
-        link: organizationUrl,
-      },
-    ]);
-    const { handleKeyPressForActiveDescendant, select, selected, selectedOption, isSelected, focusOut, NOT_MOVED_YET, ALREADY_MOVED_DOWN } = useActiveDescendant(options);
-
-    const input = ref<HTMLElement | null>(null);
-    const button = ref<HTMLElement | null>(null);
-    const list = ref<HTMLElement | null>(null);
-
-    onMounted(() => registerBackgroundEvent(input, list, button));
-    onUnmounted(() => removeBackgroundEvent());
-
-    const showAndFocus = () => {
-      if(!expanded.value) {
-        input.value?.focus();
-        showAndSelectIfQuery();
-      } else {
-        searchSelectedOption();
-      }
-    }
-
-    const showAndSelectIfQuery = () => {
-      if(q.value) {
-        show();
-        select(selected.value);
-      }
-    }
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      showAndSelectIfQuery();
-      let moved = NOT_MOVED_YET;
-      if(!expanded.value) {
-        moved = ALREADY_MOVED_DOWN;
-      }
-      handleKeyPressForCollapse(e);
-      handleKeyPressForActiveDescendant(e, moved);
-    }
-
-    const handleFocusOut = () => {
-      focusOut();
-      hide();
-    };
-
-    const searchSelectedOption = () => {
-      if(selectedOption.value) {
-        window.location.href = selectedOption.value.link;
-      }
-    }
-
-    return {
-      button,
-      expanded,
-      handleFocusOut,
-      handleKeyDown,
-      id,
-      input,
-      inputId,
-      labelId,
-      isSelected,
-      list,
-      options,
-      q,
-      searchSelectedOption,
-      selected,
-      showAndFocus,
-      showAndSelectIfQuery,
-      t,
-      uid,
-    }
+const options = ref<Array<MenuOption>>([
+  {
+    id: "dataset-option",
+    icon: datasetIcon,
+    type: t('datasets'),
+    link: datasetUrl,
   },
-});
+  {
+    id: "reuse-option",
+    icon: reuseIcon,
+    type: t('reuses'),
+    link: reuseUrl,
+  },
+  {
+    id: "organization-option",
+    icon: organizationIcon,
+    type: t('organizations'),
+    link: organizationUrl,
+  },
+]);
+
+const { buttonRef, expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, searchSelectedOption, selected, showAndFocus, showAndSelectIfQuery, uid} = useDropdown(options, q);
 </script>
