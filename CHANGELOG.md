@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add Organization publishing form [#358](https://github.com/datagouv/udata-front/pull/358)
 
 ## 4.0.2 (2024-04-26)
 
