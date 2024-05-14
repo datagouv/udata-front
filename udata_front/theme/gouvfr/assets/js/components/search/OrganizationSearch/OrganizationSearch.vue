@@ -36,14 +36,15 @@
           :id="option.id"
           role="option"
           :aria-selected="isSelected(option.id)"
+          @mousedown.prevent="preventCollapse"
+          @click="openLink(option.link, $event)"
         >
-          <OrganizationSearchOption :logo="option.image_url" :name="option.name" :link="option.page"/>
+          <OrganizationSearchOption :logo="option.image_url" :name="option.name" :link="option.page" />
         </li>
       </ul>
     </div>
   </div>
 </template>
-
 
 <script setup lang="ts">
 import { ref, computed } from "vue";
@@ -54,8 +55,10 @@ import { api } from "../../../plugins/api";
 import type { Organization } from "@etalab/data.gouv.fr-components";
 import { watchDebounced } from "@vueuse/core";
 import { useDropdown } from "../../../composables/useDropdown";
+import { useToast } from "../../../composables/useToast";
 
 const { t } = useI18n();
+const { toast } = useToast();
 const q = ref('');
 const { id } = useUid("search");
 const inputId = computed(() => `${id}-input`);
@@ -74,11 +77,20 @@ async function fetchOptions() {
       link: option.page
     }));
   } catch (error) {
-    console.error('Error fetching options:', error);
+    toast.error(t("An error occurred while fetching the options."));
   }
 };
 
-const { expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, selected, searchSelectedOption, showAndSelectIfQuery, uid} = useDropdown(options, q);
+const { expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, selected, searchSelectedOption, showAndSelectIfQuery, uid } = useDropdown(options, q);
+
+function openLink(link: string, event: Event) {
+  event.preventDefault();
+  window.open(link, '_blank');
+};
+
+function preventCollapse(event: Event) {
+  event.preventDefault();
+};
 
 watchDebounced(q, async (newValue, oldValue) => {
   if (newValue !== oldValue) {
