@@ -9,10 +9,11 @@ from lxml import etree, html
 from voluptuous import Schema, Optional, All, Any, Lower, In, Length
 
 from udata.models import db, License, Resource, Checksum, SpatialCoverage
-from udata.harvest.backends import BaseBackend
+from udata.harvest.backends.base import BaseSyncBackend
 from udata.harvest.filters import (
     boolean, email, to_date, taglist, force_list, normalize_string, is_url
 )
+from udata.harvest.models import HarvestItem
 from udata.utils import get_by
 
 
@@ -118,11 +119,11 @@ def dictize(element):
     return element.tag, OrderedDict(extract(element)) or element.text
 
 
-class MaafBackend(BaseBackend):
+class MaafBackend(BaseSyncBackend):
     display_name = 'MAAF'
     verify_ssl = False
 
-    def initialize(self):
+    def inner_harvest(self):
         '''Parse the index pages HTML to find link to dataset descriptors'''
         directories = [self.source.url]
         while directories:
@@ -134,18 +135,18 @@ class MaafBackend(BaseBackend):
                 if href.endswith('/'):
                     directories.append(urljoin(directory, href))
                 elif href.lower().endswith('.xml'):
-                    self.add_item(urljoin(directory, href))
+                    url = urljoin(directory, href)
+                    self.process_dataset(url)
                 else:
                     log.debug('Skip %s', href)
 
-    def process(self, item):
+    def inner_process_dataset(self, item: HarvestItem):
         response = self.get(item.remote_id)
         xml = self.parse_xml(response.content)
         metadata = xml['metadata']
 
-        # Resolve and remote id from metadata
         item.remote_id = metadata['id']
-        dataset = self.get_dataset(metadata['id'])
+        dataset = self.get_dataset(item.remote_id)
 
         dataset.title = metadata['title']
         dataset.frequency = FREQUENCIES.get(metadata['frequency'], 'unknown')
