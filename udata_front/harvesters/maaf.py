@@ -9,7 +9,7 @@ from lxml import etree, html
 from voluptuous import Schema, Optional, All, Any, Lower, In, Length
 
 from udata.models import db, License, Resource, Checksum, SpatialCoverage
-from udata.harvest.backends.base import BaseSyncBackend
+from udata.harvest.backends import BaseSyncBackend
 from udata.harvest.filters import (
     boolean, email, to_date, taglist, force_list, normalize_string, is_url
 )
@@ -135,8 +135,7 @@ class MaafBackend(BaseSyncBackend):
                 if href.endswith('/'):
                     directories.append(urljoin(directory, href))
                 elif href.lower().endswith('.xml'):
-                    url = urljoin(directory, href)
-                    self.process_dataset(url)
+                    self.process_dataset(urljoin(directory, href))
                 else:
                     log.debug('Skip %s', href)
 
