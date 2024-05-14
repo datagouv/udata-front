@@ -413,6 +413,7 @@ workflows:
                 - master
             tags:
               only: /@datagouv\/components@([0-9]+(?:\.[0-9]+)*(?:-(?:a|b|dev|rc)\.[0-9]+)?)/
+          context: org-global
       - cypress:
           requires:
             - deps
