@@ -244,7 +244,7 @@ jobs:
           command: |
             if [[ $CIRCLE_TAG ]]; then
               # This is a tagged release
-              # npm run publish-stable
+              npm run publish-stable
               npm run update-version -- prerelease --preid=dev
               npm run publish-dev
             else
