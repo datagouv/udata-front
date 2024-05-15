@@ -42,7 +42,7 @@
           </slot>
         </h4>
         <p class="fr-m-0 fr-text--sm" v-if="dataset.organization || dataset.owner">
-          {{ $t('From') }}
+          {{ t('From') }}
           <template v-if="dataset.organization">
             <span class="not-enlarged" v-if="organizationUrl">
               <AppLink :to="organizationUrl" class="fr-link">
@@ -58,7 +58,7 @@
         </p>
         <div v-if="showQualityScore" class="fr-m-0 fr-grid-row fr-grid-row--middle">
           <QualityComponentInline :quality="dataset.quality" :class="`fr-hidden flex-sm dash-after`" />
-          <p class=fr-m-0>{{ $t('Updated {date}', {date: formatRelativeIfRecentDate(dataset.last_update)}) }}</p>
+          <p class=fr-m-0>{{ t('Updated {date}', {date: formatRelativeIfRecentDate(dataset.last_update)}) }}</p>
         </div>
       </div>
       <ul v-if="showMetrics" class="fr-hidden fr-unhidden-sm fr-hidden-md fr-unhidden-lg fr-col-auto fr-tags-group fr-grid-row--bottom self-center flex-direction-column">
