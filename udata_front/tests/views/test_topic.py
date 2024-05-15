@@ -1,6 +1,6 @@
 # from flask import url_for
 
-# from udata.core.dataset.factories import VisibleDatasetFactory
+# from udata.core.dataset.factories import DatasetFactory
 # from udata.core.reuse.factories import VisibleReuseFactory
 # from udata.core.topic.factories import TopicFactory
 # from udata_front.tests import GouvFrSettings
@@ -16,7 +16,7 @@
 #         with self.autoindex():
 #             reuses = [VisibleReuseFactory(tags=['tag-{0}'.format(i)])
 #                       for i in range(3)]
-#             datasets = [VisibleDatasetFactory(tags=['tag-{0}'.format(i)])
+#             datasets = [DatasetFactory(tags=['tag-{0}'.format(i)])
 #                         for i in range(3)]
 #         topic = TopicFactory(
 #             tags=['tag-0', 'tag-2'], datasets=datasets, reuses=reuses)
@@ -35,7 +35,7 @@
 #     def test_render_datasets(self):
 #         '''It should render a topic datasets page'''
 #         with self.autoindex():
-#             [VisibleDatasetFactory(tags=['tag-{0}'.format(i)])
+#             [DatasetFactory(tags=['tag-{0}'.format(i)])
 #              for i in range(3)]
 #         topic = TopicFactory(tags=['tag-0', 'tag-2'])
 

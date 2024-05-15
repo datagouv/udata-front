@@ -1,4 +1,4 @@
-import type { Owned, Resource } from "@etalab/data.gouv.fr-components";
+import { type Organization, type Owned, type Resource, type User } from "@etalab/data.gouv.fr-components";
 
 export type MultiSelectOption = {
   label: string;
@@ -7,10 +7,6 @@ export type MultiSelectOption = {
   hidden?: boolean;
   selected?: boolean;
 }
-
-export type WellType = "primary" | "secondary";
-
-export type Weight = "light" | "regular" | "semi-bold" | "bold" | "heavy";
 
 export type AlertSize = "sm" | "md";
 
@@ -75,9 +71,30 @@ export type NewDiscussion = {
   subject: Subject;
 };
 
-export type CreateDiscussion = (discussion: NewDiscussion) => Promise<any>
+export type CreateDiscussion = (discussion: NewDiscussion) => Promise<any>;
 
-export type CreateComment = (comment: string) => Promise<any>
+export type CreateComment = (comment: string) => Promise<any>;
+
+export type Spam = {
+  status?: string;
+}
+
+export type Discussion = Array<{content: string, posted_by: User, posted_on: string, spam?: Spam}>;
+
+export type Thread = {
+  id: string;
+  discussion: Discussion;
+  title: string;
+  url: string;
+  closed: string;
+  closed_by: User;
+  spam?: Spam;
+};
+
+export type Sort = {
+  name: string,
+  key: string
+}
 
 export type Quality = {
   all_resources_available: boolean;
@@ -93,37 +110,46 @@ export type Quality = {
   update_fulfilled_in_time: boolean;
 }
 
+export type Harvest = {
+  backend: string;
+}
+
 export type NewDataset = Owned & {
-title: string;
-acronym: string;
-archived: boolean;
-description: string;
-tags: Array<string> | null;
-license: string;
-frequency: string;
-temporal_coverage: string;
-frequency_date: Date | null;
-page: string;
-private: boolean;
-quality?: Quality;
-spatial: {
-zones?: Array<string>;
-granularity?: string;
-} | null;
+  title: string;
+  acronym: string;
+  archived: boolean;
+  description: string;
+  tags: Array<string> | null;
+  license: string;
+  frequency: string;
+  temporal_coverage: string;
+  frequency_date: Date | null;
+  page: string;
+  private: boolean;
+  quality?: Quality;
+  spatial: {
+    zones?: Array<string>;
+    granularity?: string;
+  } | null;
 };
 
 export type Dataset = NewDataset & {
-id: string;
-page: string;
-resources: Array<Resource>;
-community_resources: Array<Resource>;
-created_at: string;
-last_modified: string;
-last_update: string;
-uri: string;
-slug: string;
-quality: Quality;
-metrics: { discussions: number; followers: number; reuses: number; views: number; };
+  id: string;
+  page: string;
+  resources: Array<Resource>;
+  community_resources: Array<Resource>;
+  created_at: string;
+  last_modified: string;
+  last_update: string;
+  uri: string;
+  slug: string;
+  quality: Quality;
+  metrics: { discussions: number; followers: number; reuses: number; views: number; };
+  harvest: Harvest | null;
+};
+
+export type UiDataset = Omit<Dataset, 'last_modified'> & {
+  last_modified: Date;
 };
 
 export type NewReuse = Owned & {
@@ -147,6 +173,81 @@ export type Reuse = NewReuse & {
   last_update: string;
 };
 
+export type Me = User & {
+  about: string,
+  active: boolean,
+  apikey: string | null,
+  metrics: {
+    datasets: number,
+    followers: number,
+    following: number,
+    reuses: number,
+  },
+  organizations: Array<Organization>,
+  since: string,
+  website: string,
+}
+
 export type AxisAlignment = "start" | "center" | "end";
+
+export type SpatialZone = {
+  code: string;
+  id: string;
+  level: string;
+  name: string;
+  uri: string;
+};
+
+export type SpatialGranularity = {
+  id: string;
+  name: string;
+};
+export type MembershipStatus = "pending" | "accepted" | "refused";
+
+export type PendingMembershipRequest = {
+  id: string;
+  user: User;
+  status: MembershipStatus;
+  created: string;
+  comment: string;
+};
+
+export type MembershipRequest = PendingMembershipRequest & {
+  handled_on: Date;
+  handled_by: User;
+};
+
+export type RefusedMembershipRequest = MembershipRequest & {
+  refusal_comment: string;
+};
+
+export type MemberRole = "admin" | "editor";
+
+export type Member = {
+  role: MemberRole;
+  user: User;
+};
+
+export type EditingMember = Member & {
+  newRole?: MemberRole;
+};
+
+export type OrganizationV1 = Organization & {
+  business_number_id: string | null;
+  created_at: string;
+  deleted: string | null;
+  description: string;
+  extras: Record<string, any>;
+  last_modified: string;
+  members: Array<Member>;
+  metrics: {
+    datasets: number;
+    followers: number;
+    members: number;
+    reuses: number;
+    views: number;
+  };
+  url: string | null;
+}
 
 export default {};

@@ -1,0 +1,16 @@
+import { Canvas, Meta } from '@storybook/blocks';
+
+import * as RequiredExplanationStories from './RequiredExplanation.stories';
+
+<Meta of={RequiredExplanationStories} />
+
+# Required Explanation
+
+An accessibility explanation about the `*` preceding required fields.
+
+<Canvas of={RequiredExplanationStories.RequiredExplanationStory} />
+
+More details :
+- [RGAA 11.10.1](https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.10) and [glossary definition of "Indication de champ obligatoire"](https://accessibilite.numerique.gouv.fr/methode/glossaire/#indication-de-champ-obligatoire)
+- [WCAG 3.3.2](https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions) and technique [H90](https://www.w3.org/WAI/WCAG22/Techniques/html/H90.html) for more details.
+

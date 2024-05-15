@@ -1,5 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/vue3';
 import { withActions } from '@storybook/addon-actions/decorator';
+import { expect } from '@storybook/test';
+import { userEvent, waitFor, within } from '@storybook/testing-library';
+import type { Meta, StoryObj } from '@storybook/vue3';
 import { CopyButton } from '.';
 
 const meta = {
@@ -22,6 +24,15 @@ const meta = {
 export default meta;
 
 export const Primary: StoryObj<typeof meta> = {
+  play: async ({ args, canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('Copy text', async () => {
+      await userEvent.click(canvas.getByRole("button"));
+    });
+    const copiedContent = await navigator.clipboard.readText();
+    expect(args.text).toBe(copiedContent);
+  },
   render: (args) => ({
     components: { CopyButton },
     setup() {
@@ -31,8 +42,5 @@ export const Primary: StoryObj<typeof meta> = {
   }),
   args: {
     text: "someTextToCopy"
-  },
-  parameters: {
-    title: "Copy Button"
   }
 };

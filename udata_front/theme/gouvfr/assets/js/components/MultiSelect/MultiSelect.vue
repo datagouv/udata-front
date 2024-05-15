@@ -2,8 +2,8 @@
   <div class="multiselect w-100 fr-select-group" :class="selectGroupClass" ref="container" :data-selected="!!selected">
     <div>
       <label :for="id" :title="explanation">
-        {{placeholder}}
-        <Required :required="required"/>
+        {{ placeholder }}
+        <Required :required="required" />
         <span v-if="explanation" class="fr-icon-information-line" aria-hidden="true"></span>
         <span class="fr-hint-text" v-if="hintText">{{ hintText }}</span>
       </label>
@@ -15,15 +15,52 @@
         :required="required"
         :multiple="multiple"
       >
-        <option
-          v-for="option in displayedOptions"
-          :key="option.value"
-          :value="option.value"
-          :data-image="option.image"
-          :hidden="option.hidden"
-        >
-          {{option.label}}
-        </option>
+      <template v-if="groups">
+        <template v-for="group in groups">
+            <optgroup :label="group.name">
+              <template v-for="option in displayedOptions" :key="option.value">
+                <option
+                  v-if="group.name == option.group"
+                  :value="option.value"
+                  :data-image="option.image"
+                  :hidden="option.hidden"
+                  :data-helper="option.helper"
+                  :data-description="option.description"
+                  :data-show-icon="option.recommended"
+                >
+                  {{ option.label }}
+                </option>
+              </template>
+            </optgroup>
+          </template>
+          <template v-for="option in displayedOptions" :key="option.value">
+              <option
+                  v-if="!option.group"
+                  :value="option.value"
+                  :data-image="option.image"
+                  :hidden="option.hidden"
+                  :data-helper="option.helper"
+                  :data-description="option.description"
+                  :data-show-icon="option.recommended"
+                >
+                  {{ option.label }}
+                </option>
+            </template>
+        </template>
+        <template v-else>
+          <option
+            v-for="option in displayedOptions"
+            :key="option.value"
+            :value="option.value"
+            :data-image="option.image"
+            :hidden="option.hidden"
+            :data-helper="option.helper"
+            :data-description="option.description"
+            :data-show-icon="option.recommended"
+          >
+            {{ option.label }}
+          </option>
+        </template>
       </select>
     </div>
     <p :id="validTextId" class="fr-valid-text" v-if="isValid">
@@ -37,7 +74,7 @@
 
 <script>
 import {defineComponent, ref, computed, onMounted, onUpdated, reactive, unref, watch, toValue} from "vue";
-import Select from "@conciergerie.dev/select-a11y";
+import Select from "@datagouv/select-a11y";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
 import {api, generateCancelToken} from "../../plugins/api";
@@ -127,11 +164,28 @@ export default defineComponent({
     addNewOption: {
       type: Boolean,
       default: false,
+    },
+    helperLabel: {
+      type: String,
+      default: '',
+    },
+    groups: {
+      /** @type {import("vue").PropType<Array<{name: string, values: Array<{code: string, description: string, recommended: boolean, value: string}>}>>} */
+      type: Array,
+      default: null
+    },
+    onSuggest: {
+      type: Function,
+      default: null
+    },
+    showDescription: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props, { emit }) {
     const { t } = useI18n();
-    const toast = useToast();
+    const { toast } = useToast();
     const { id } = useUid('multiselect');
     const errorTextId = computed(() => id + "-desc-error");
     const validTextId = computed(() => id + "-desc-valid");
@@ -181,7 +235,7 @@ export default defineComponent({
      * Current options
      * @type {import("vue").Ref<Array<import("../../types").MultiSelectOption>>}
      */
-     const options = ref([]);
+    const options = ref([]);
 
     /**
      * Displayed Options limited to {@link maxOptionsCount}
@@ -209,7 +263,7 @@ export default defineComponent({
 
     /**
      * SelectA11y instance
-     * @type {import("vue").Ref<import("@conciergerie.dev/select-a11y").Select | null>}
+     * @type {import("vue").Ref<import("@datagouv/select-a11y").Select | null>}
      */
     const selectA11y = ref(null);
 
@@ -233,15 +287,42 @@ export default defineComponent({
       if (!props.listUrl) return options.value;
 
       /**
-       * @type {import("axios").AxiosResponse<{data: Array}|Array>}
+       * @typedef {object} Data
+       * @property {string} id
+       * @property {String} title
        */
-      return api.get(props.listUrl)
+
+      /**
+       * @type {Promise<import("axios").AxiosResponse<Array<Data> | {data: Array<Data> }>>}
+       */
+      const request = api.get(props.listUrl)
+      return request
       .then(resp => {
         let data = resp.data;
         if(!Array.isArray(data)) {
           data = data.data;
         }
-        return mapToOption(data);
+        if (props.groups) {
+          const groupData = data.map(option => {
+            const matchingGroup = props.groups.find(group => group.values.some(groupValue => groupValue.value === option.id))
+            if (matchingGroup) {
+              const matchingGroupValue = matchingGroup.values.find(groupValue => groupValue.value === option.id);
+              if (matchingGroupValue) {
+                return {
+                  ...option,
+                  group: matchingGroup.name,
+                  description: matchingGroupValue.description || null,
+                  recommended: matchingGroupValue.recommended,
+                  code: matchingGroupValue.code
+                };
+              }
+            }
+            return option;
+          });
+          return mapToOption(groupData);
+        } else {
+          return mapToOption(data);
+        }
       }).catch((error) => {
         if (!axios.isCancel(error)) {
           toast.error(t("Error getting {type}.", {type: props.placeholder}));
@@ -255,18 +336,19 @@ export default defineComponent({
      * @param {Array} data
      * @returns {Array<import("../../types").MultiSelectOption>}
      **/
-    const mapToOption = (data) => data.map((obj) => ({
-      label: obj.name ?? obj.title ?? obj.text ?? obj?.properties?.name ?? obj.label ?? obj,
-      value: obj.id ?? obj.text ?? obj.value ?? obj,
-      image: obj.logo_thumbnail ?? obj.logo ?? obj.image_url ?? obj.image,
-      hidden: obj.hidden,
-      selected: !!obj.selected,
-    }));
-
-    /**
-     * @typedef Suggestion
-     * @property {string} text
-     */
+     const mapToOption = (data) => data.map((obj) => {
+      return {
+        label: obj.name ?? obj.title ?? obj.text ?? obj?.properties?.name ?? obj.label ?? obj,
+        value: obj.id ?? obj.text ?? obj.value ?? obj,
+        image: obj.logo_thumbnail ?? obj.logo ?? obj.image_url ?? obj.image,
+        hidden: obj.hidden,
+        selected: !!obj.selected,
+        helper: obj?.code ? props.helperLabel + obj.code : obj?.helper,
+        description: props.showDescription ? (obj?.description ?? '') : '',
+        group: obj?.group,
+        recommended: obj?.recommended
+      };
+    });
 
     /**
      * Get options from suggest API
@@ -286,24 +368,26 @@ export default defineComponent({
       currentRequest.value = generateCancelToken();
       return api
         .get(props.suggestUrl, {
-          params: { q, size: maxOptionsCount },
-          cancelToken: currentRequest.value.token,
+            params: { q, size: maxOptionsCount },
+            cancelToken: currentRequest.value.token,
         })
         .then((resp) => {
-          /** @type {Array<Suggestion>} */
-          const suggestions = resp.data;
+          return props.onSuggest ? props.onSuggest(resp.data) : resp.data;
+        })
+        .then((suggestions) => {
           const addQToSuggestion = props.addNewOption && !suggestions.some(suggestion => suggestion.text === q);
-          if(addQToSuggestion) {
-            suggestions.push({text: q});
+          if (addQToSuggestion) {
+              suggestions.push({ text: q });
           }
           return mapToOption(suggestions);
         })
         .catch((error) => {
           if (!axios.isCancel(error)) {
-            toast.error(t("Error getting {type}.", {type: props.placeholder}));
+            toast.error(t("Error getting {type}.", { type: props.placeholder }));
           }
-          return /** @type {Array<import("../../types").MultiSelectOption>} */([]);
-        });
+          return /** @type {Array<import("../../types").MultiSelectOption>} */ ([]);
+        }
+      );
     };
 
     const suggestAndMapToOption = (q = '') => suggest(q).then(addAllOptionAndMapToOption);
@@ -322,7 +406,7 @@ export default defineComponent({
         return option;
       });
       if(props.allOption) {
-        const existingAllOption = options.value.find(option => !option.value);
+        const existingAllOption = newOptions.find(option => !option.value);
         if(!existingAllOption) {
           newOptions.unshift({
             label: props.allOption,
@@ -370,7 +454,7 @@ export default defineComponent({
      * @param {Array<import("../../types").MultiSelectOption>} values
      * @returns {Array<import("../../types").MultiSelectOption>}
      */
-     const setOptions = (values) => {
+    const setOptions = (values) => {
       options.value = values;
       return values;
     };
@@ -432,11 +516,11 @@ export default defineComponent({
      * @param {string | null} value
      * @returns {Promise<string | null>}
      */
-     const augmentFromValue = (value) => {
+    const augmentFromValue = (value) => {
       let selectedPromise = null;
       if (value && props.entityUrl) {
         selectedPromise = api
-          .get(props.entityUrl + value)
+          .get(`${props.entityUrl}${value}/`)
           .then((resp) => resp.data)
           .then((data) => mapToOption([data]))
           .then((entities) => entities[0]?.label ?? value)
@@ -463,7 +547,7 @@ export default defineComponent({
           }
           return "";
         });
-     }
+    }
 
     /**
      * Register event listener to trigger on change on select change event
@@ -477,6 +561,19 @@ export default defineComponent({
         } else {
           selected.value = selectRef.value.value;
           emit("change", selectRef.value.value);
+        }
+      }
+    };
+
+     /**
+     * Register event listener to trigger on reset event
+     */
+     const registerTriggerOnReset = () => {
+      if(selectRef.value) {
+        if(props.multiple) {
+          selected.value = [];
+        } else {
+          selected.value = null;
         }
       }
     };
@@ -532,6 +629,8 @@ export default defineComponent({
       if(selectRef.value) {
         selectRef.value.removeEventListener('change', registerTriggerOnChange);
         selectRef.value.addEventListener('change', registerTriggerOnChange);
+        selectRef.value.removeEventListener('reset', registerTriggerOnReset);
+        selectRef.value.addEventListener('reset', registerTriggerOnReset);
       }
     };
 
@@ -551,9 +650,15 @@ export default defineComponent({
       }
     };
 
-    watch(() => props.values, () => {
-      let value = unref(normalizeValues(props.values));
-      selectA11y.value?.selectOptionSilently(value);
+    watch(() => props.values, async () => {
+      await fillSelectedFromValues();
+      if(Array.isArray(selected.value)) {
+        for(const value of selected.value) {
+          selectA11y.value?.selectOptionSilently(value);
+        }
+      } else {
+        selectA11y.value?.selectOptionSilently(selected.value ?? "");
+      }
     });
 
     const fillOptionsAndValues = suggestAndMapToOption()

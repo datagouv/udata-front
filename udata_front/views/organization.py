@@ -5,7 +5,7 @@ from flask_security import current_user
 
 from udata import search
 from udata.frontend import csv
-from udata_front.views.base import DetailView, SearchView
+from udata_front.views.base import DetailView, LoginOnlyView, SearchView
 from udata.i18n import I18nBlueprint
 from udata.models import (
     Organization, Reuse, Dataset, Follow, Discussion
@@ -90,7 +90,7 @@ class OrganizationDetailView(SearchView, OrgView, DetailView):
 
         reuses = Reuse.objects(
             organization=self.organization).order_by(
-            '-metrics.reuses', '-metrics.followers')
+            '-created_at')
 
         followers = (Follow.objects.followers(self.organization)
                      .order_by('follower.fullname'))
@@ -109,6 +109,11 @@ class OrganizationDetailView(SearchView, OrgView, DetailView):
             'can_view': can_view,
         })
         return context
+
+
+@blueprint.route('/publishing-form/', endpoint='publishing-form')
+class OrganizationPublishingFormView(LoginOnlyView):
+    template_name = 'organization/publishing-form.html'
 
 
 @blueprint.route('/<org:org>/dashboard/', endpoint='dashboard')

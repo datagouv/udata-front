@@ -75,7 +75,7 @@ gouvfr_menu = nav.Bar('gouvfr_menu', [
 theme.menu(gouvfr_menu)
 
 opendata_links = [
-    nav.Item(_('Featured topics'), 'gouvfr.show_page', args={'slug': 'thematiques-a-la-une'}),
+    nav.Item(_('Topics'), 'gouvfr.show_page', args={'slug': 'thematiques-a-la-une'}),
     nav.Item(_('Reference Data'), 'gouvfr.show_page', args={'slug': 'spd/reference'}),
 ]
 
@@ -91,34 +91,39 @@ if export_dataset_id:
         opendata_links.append(nav.Item(_('Data catalog'), None, url=export_url))
 opendata_links.append(nav.Item(_('Follow data opening'), None,
                       url="https://ouverture.data.gouv.fr"))
+opendata_links.append(nav.Item(_('Portal for European data'), None,
+                      url="https://data.europa.eu"))
 
 nav.Bar('gouvfr_opendata', opendata_links)
 
 
 platform_links = [
     nav.Item(_('Guides'), None, url=current_app.config.get('GUIDES_URL', '#')),
-    nav.Item(_('Release notes'), 'gouvfr.show_page', args={'slug': 'nouveautes'}),
+    nav.Item(_('Roadmap and news'), 'gouvfr.show_page', args={'slug': 'nouveautes'}),
     nav.Item(_('Contact us'), None, url='https://support.data.gouv.fr'),
     nav.Item(_('Give us your feedback'), None,
              url=current_app.config.get('FEEDBACK_FORM_URL', '#')),
+    nav.Item(_('Statistics'), 'site.dashboard'),
 ]
 
 nav.Bar('gouvfr_platform', platform_links)
 
 resources_links = [
-    nav.Item(_("API Portal"), None, url='https://api.gouv.fr'),
-    nav.Item(_("Data schema referential"), None,
+    nav.Item(_("api.gouv.fr"), None, url='https://api.gouv.fr'),
+    nav.Item(_("schema.data.gouv.fr"), None,
              url=current_app.config.get('SCHEMA_DOCUMENTATION_URL', '#')),
-    nav.Item(_("Open Data University"), 'gouvfr.show_page', args={'slug': 'odu/home'}),
-    nav.Item(_('Portal for European data'), None, url='https://data.europa.eu'),
+    nav.Item("meteo.data.gouv.fr", None, url="https://meteo.data.gouv.fr"),
+    nav.Item("transport.data.gouv.fr", None, url="https://transport.data.gouv.fr"),
+    nav.Item("defis.data.gouv.fr", None, url="https://defis.data.gouv.fr"),
 ]
 
 nav.Bar('gouvfr_resources', resources_links)
 
 footer_links = [
     nav.Item(_('Licences'), 'gouvfr.show_page', args={'slug': 'legal/licences'}),
-    nav.Item(_('Terms of use'), 'site.terms'),
+    nav.Item(_('Terms of use'), 'gouvfr.show_page', args={'slug': 'legal/cgu'}),
     nav.Item(_('Tracking and privacy'), 'gouvfr.suivi'),
+    nav.Item(_('Legal notice'), 'gouvfr.show_page', args={'slug': 'legal/legal-notice'}),
     nav.Item(_('Accessibility: partially compliant'),
              'gouvfr.show_page', args={'slug': 'legal/accessibility'}),
 ]
@@ -127,7 +132,7 @@ nav.Bar('gouvfr_footer', footer_links)
 
 NETWORK_LINKS = [
     ('legifrance.gouv.fr', 'https://legifrance.gouv.fr'),
-    ('gouvernement.fr', 'https://www.gouvernement.fr'),
+    ('info.gouv.fr', 'https://www.info.gouv.fr'),
     ('service-public.fr', 'https://www.service-public.fr'),
 ]
 

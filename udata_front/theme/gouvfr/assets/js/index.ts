@@ -13,16 +13,16 @@ import Search from "./components/search/Search/Search.vue";
 import DeleteButton from "./components/utils/DeleteButton/DeleteButton.vue";
 import FeaturedButton from './components/utils/featured.vue';
 import FollowButton from "./components/utils/follow-button.vue";
-import ReadMore from "./components/ReadMore/ReadMore.vue";
 import RequestMembership from "./components/organization/request-membership.vue";
 import ResourceFromHash from "./components/dataset/resource/resourceFromHash.vue";
 import Resources from "./components/dataset/resource/resources.vue";
 import Captcha from "./components/utils/captcha.vue";
-import Toggletip from "./components/utils/Toggletip/Toggletip.vue";
 import UserDatasetList from "./components/UserDatasetList/UserDatasetList.vue";
 import UserReuseList from "./components/UserReuseList/UserReuseList.vue";
 import PublishingForm from "./pages/PublishingForm/PublishingForm.vue";
 import ReusePublishingForm from "./pages/ReusePublishingForm/ReusePublishingForm.vue";
+import OrganizationPublishingForm from "./pages/OrganizationPublishingForm/OrganizationPublishingForm.vue";
+import { ReadMore, Toggletip } from "@etalab/data.gouv.fr-components";
 
 import "./components/vanilla/tabs.js";
 import "./components/vanilla/accordion.js";
@@ -30,9 +30,8 @@ import "./components/vanilla/clipboard.js";
 import "./components/vanilla/dialog.js";
 import "./components/vanilla/sort-search.js";
 import handleUpdateUrlButtons from "./components/vanilla/update-url.js";
-
 import i18n from "./i18n.ts";
-import { admin_root, explorable_resources, schema_catalog_url, schema_documentation_url, schema_validata_url, title } from "./config.ts";
+import { admin_root, api_root, api_2_root, explorable_resources, schema_catalog_url, schema_documentation_url, schema_validata_url, title, } from "./config.ts";
 import Api from "./plugins/api.ts";
 import EventBus from "./plugins/eventbus.ts";
 import Auth from "./plugins/auth.ts";
@@ -40,6 +39,8 @@ import InitSentry from "./sentry.ts";
 
 setupComponents({
   admin_root,
+  api_root,
+  api_2_root,
   default_lang: i18n.global.locale.value,
   explorable_resources,
   only_locales: i18n.global.locale.value,
@@ -76,12 +77,13 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("chart", Chart);
   app.component("toggletip", Toggletip);
   app.component("publishing-form", PublishingForm);
-  app.component('reuse-publishing-form', ReusePublishingForm);
+  app.component("organization-publishing-form", OrganizationPublishingForm);
+  app.component("reuse-publishing-form", ReusePublishingForm);
   app.component("user-dataset-list", UserDatasetList);
   app.component("user-reuse-list", UserReuseList);
 
-  // @ts-ignore unset delimiters used in html templates to prevent injections using {{ }}
-  app.config.compilerOptions.delimiters = [];
+  // @ts-ignore disable delimiters used in html templates see [#386](https://github.com/etalab/udata-front/pull/386) for more details
+  app.config.compilerOptions.delimiters = ["", ""];
 
   app.mount(el);
 };

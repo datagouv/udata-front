@@ -1,0 +1,21 @@
+{% extends theme('raw.html') %}
+
+{% set meta = {
+    'title': _("Administration panel"),
+    'description': _("%(site)s administration panel", site=config['SITE_TITLE']),
+} %}
+
+{% block extra_css %}
+<link href="{{ theme_static('assets/admin.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    {% include theme("banners/feedback.html") %}
+    {% include theme("header.html") with context %}
+    <main class="fr-col" role="main" id="admin"></main>
+{% endblock %}
+
+{% block extra_js %}
+<script type="module-shim" src="{{ theme_static('js/admin.js', inline_burst=True, force_version=True) }}"></script>
+<script nomodule src="{{ theme_static('js/admin-legacy.js', inline_burst=True, force_version=True) }}"></script>
+{% endblock %}

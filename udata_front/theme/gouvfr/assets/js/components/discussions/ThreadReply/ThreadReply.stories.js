@@ -1,13 +1,12 @@
 import ThreadReply from "./ThreadReply.vue";
 
 export default {
-  title: 'Internals/Discussions/ThreadReply',
+  title: 'Components/Discussions/Internals/ThreadReply',
   component: ThreadReply,
 };
 
 const args = {
   onSubmit: (value) => {
-    console.log(value);
     return Promise.resolve(value);
   },
 };
@@ -33,7 +32,6 @@ export const ErrorDuringReply = {
   }),
   args: {
     onSubmit (comment) {
-      console.log(comment);
       return Promise.reject("Reject Story");
     }
   },
