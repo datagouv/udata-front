@@ -1,5 +1,5 @@
 <template>
-  <div class="fr-container--fluid h-100">
+  <div class="fr-container--fluid admin h-100">
     <div class="fr-grid-row h-100 bg-grey-50">
       <div class="fr-col-12 fr-col-md-4 fr-col-lg-3 fr-col-xl-2">
         <nav
@@ -101,29 +101,32 @@ html, body {
   height: 100%;
 }
 
-@media @dsfr-query-md {
-  .fr-sidemenu, .fr-sidemenu__inner {
-    height: 100%;
-  }
-}
-
 #app {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.fr-sidemenu {
-  padding: 0;
+.admin {
+  .fr-sidemenu {
+    padding: 0;
+  }
+
+  .fr-sidemenu .fr-sidemenu__inner {
+    padding: 0;
+    box-shadow: 1px 0 0 0 var(--border-default-grey);
+    background-color: var(--background-default-grey);
+  }
+
+  .fr-sidemenu .fr-sidemenu__item:first-child:before, .fr-sidemenu .fr-sidemenu__item:last-child:before, .fr-sidemenu .fr-sidemenu__item:before {
+    box-shadow: none;
+  }
+
+  @media @dsfr-query-md {
+    .fr-sidemenu, .fr-sidemenu__inner {
+      height: 100%;
+    }
+  }
 }
 
-.fr-sidemenu .fr-sidemenu__inner {
-  padding: 0;
-  box-shadow: 1px 0 0 0 var(--border-default-grey);
-  background-color: var(--background-default-grey);
-}
-
-.fr-sidemenu .fr-sidemenu__item:first-child:before, .fr-sidemenu .fr-sidemenu__item:last-child:before, .fr-sidemenu .fr-sidemenu__item:before {
-  box-shadow: none;
-}
 </style>
