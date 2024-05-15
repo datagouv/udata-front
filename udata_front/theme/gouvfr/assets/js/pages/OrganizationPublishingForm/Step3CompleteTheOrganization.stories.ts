@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Step3CompleteTheOrganization from './Step3CompleteTheOrganization.vue';
-import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
 import * as Step2 from './Step2DescribeOrganization.stories';
 
 
