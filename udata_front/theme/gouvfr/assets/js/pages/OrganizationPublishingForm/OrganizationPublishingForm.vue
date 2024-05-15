@@ -1,5 +1,6 @@
 <template>
-  <div ref="containerRef">
+  <div class="fr-container" ref="containerRef">
+    <Stepper :steps="steps" :currentStep="currentStep"/>
     <Step1CreateOrJoinOrganization
       v-if="currentStep === 0"
       :steps="steps"
@@ -64,18 +65,18 @@ const moveToStep = (step: number) => {
   currentStep.value = step;
 };
 
-async function createOrganizationAndMoveToNextStep(org: NewOrganization, file: File) {
+async function createOrganizationAndMoveToNextStep(org: NewOrganization, file: File | null) {
   errors.value = [];
   let moveToNextStep = false;
   try {
     organization.value = await createOrganization(org);
     moveToNextStep = true;
-  } catch (e) {
+  } catch (e: Error) {
     errors.value.push(e.message);
   }
-  if (file.value !== null) {
+  if (file) {
     try {
-      const resp = await uploadLogo(organization.value.id, file.value[0]);
+      const resp = await uploadLogo(organization.value.id, file);
       organization.value.logo_thumbnail = resp.image
     } catch (e) {
       errors.value.push("Failed to upload logo, you can upload it again in your management panel");
@@ -86,4 +87,3 @@ async function createOrganizationAndMoveToNextStep(org: NewOrganization, file: F
   }
 };
 </script>
-  

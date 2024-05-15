@@ -1,7 +1,5 @@
 <template>
-  <div class="fr-container">
-    <Stepper :steps="steps" :currentStep="1"/>
-    <div class="fr-grid-row">
+  <div class="fr-grid-row">
       <Sidemenu
         class="fr-col-12 fr-col-md-5"
         :buttonText="t('Help')"
@@ -222,10 +220,9 @@
           </div>
         </Container>
       </div>
-    </div>
   </div>
 </template>
-  
+
 <script setup lang="ts">
   import { computed, reactive, ref, watch } from 'vue';
   import { minLengthWarning, required } from '../../i18n';
@@ -236,12 +233,11 @@
   import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
   import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
   import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
-  import Stepper from '../../components/Form/Stepper/Stepper.vue';
   import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
   import useUid from "../../composables/useUid";
   import useFunctionalState from '../../composables/form/useFunctionalState';
   import organizationIcon from "../../../../templates/svg/illustrations/organization.svg";
-  import config, { quality_description_length } from "../../config";
+  import { quality_description_length, search_siren_url } from "../../config";
   import { PublishingFormAccordionState } from '../../types';
   import { Well } from '@etalab/data.gouv.fr-components';
   import type { NewOrganization } from '@etalab/data.gouv.fr-components';
@@ -251,12 +247,11 @@
 
   const props = defineProps<{
     organization: NewOrganization,
-    steps: Array<string>
     errors: Array<string>,
   }>();
 
   const emit = defineEmits<{
-    (event: 'next', organization: NewOrganization, file: File): void,
+    (event: 'next', organization: NewOrganization, file: File | null): void,
   }>();
 
   const { id: nameOrganizationAccordionId } = useUid("accordion");
@@ -299,7 +294,7 @@
   const warningRules = {
     acronym: {},
     business_number_id: { custom: checkBusinessId },
-    description: {required, minLengthValue: minLengthWarning(quality_description_length) },
+    description: {required, minLengthValue: minLengthWarning(parseInt(quality_description_length ?? "0")) },
     logo: {},
     name: { required },
     url: { url },
@@ -329,22 +324,22 @@
   function submit() {
     validateRequiredRules().then(valid => {
       if(valid) {
-        emit("next", organization, file);
+        emit("next", organization, file.value);
       }
     });
   };
 
-  function addFiles(newFile: File) {
-    file.value = newFile;
+  function addFiles(newFile: Array<File>) {
+    file.value = newFile[0];
     if (imagePreview.value) {
-      imagePreview.value.src = URL.createObjectURL(file.value[0]);
+      imagePreview.value.src = URL.createObjectURL(file.value);
     }
   };
 
   watch(() => organization.business_number_id, (newValue) => {
     let siret = newValue.replace(/\s/g,'')
-    if (siret.length === 14) {
-      axios.get(config.search_siren_url, {
+    if (search_siren_url && siret.length === 14) {
+      axios.get(search_siren_url, {
         params: {
           q: siret,
           mtm_campaign: "udata-front"
@@ -366,4 +361,3 @@
     }
   });
 </script>
-  
