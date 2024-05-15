@@ -9,8 +9,8 @@
         :stretchHeight="true"
       >
       <template #actions>
-        <div class="fr-col-12 fr-grid-row fr-grid-row--middle relative">
-          <div class="fr-col-12 fr-col-lg-9 fr-pb-2v">
+        <div class="fr-col-12 fr-grid-row fr-grid-row--top relative">
+          <div class="fr-col-12 fr-col-lg-9 fr-py-2v">
             <OrganizationSearch />
           </div>
           <div class="fr-col-12 fr-col-lg-3 fr-ml-auto">

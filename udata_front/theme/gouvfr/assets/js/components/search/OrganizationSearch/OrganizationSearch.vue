@@ -86,7 +86,7 @@ const { expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, 
 
 function openLink(link: string, event: Event) {
   event.preventDefault();
-  window.open(link, '_blank');
+  window.open(link, "_self");
 };
 
 function preventCollapse(event: Event) {
