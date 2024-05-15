@@ -1,5 +1,5 @@
 <template>
-  <article class="fr-my-3w fr-p-3w border border-default-grey fr-enlarge-link" :style="style">
+  <article class="fr-my-3w fr-p-3w border border-default-grey fr-enlarge-link" :style="props.style">
     <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v" v-if="dataset.private || dataset.archived">
       <p class="fr-badge fr-badge--mention-grey fr-mr-1w" v-if="dataset.private">
         <span class="fr-icon-lock-line" aria-hidden="true"></span>
@@ -86,7 +86,6 @@
 </template>
 
 <script setup lang="ts">
-import type { StyleValue } from "vue";
 import { useI18n } from "vue-i18n";
 import type { RouteLocationRaw } from "vue-router";
 import { formatRelativeIfRecentDate } from "../../helpers";
@@ -98,12 +97,12 @@ import { QualityComponentInline } from "../QualityComponentInline";
 import { excerpt } from "../../helpers";
 import type { Dataset, DatasetV2 } from "../../types/datasets";
 import AppLink from "../AppLink/AppLink.vue";
-defineOptions({inheritAttrs: false});
+
+//The datasetUrl and organizationUrl are separate props to allow other sites using the package to define their own dataset / organization pages
 type Props = {
   dataset: Dataset | DatasetV2,
   datasetUrl: RouteLocationRaw,
   organizationUrl?: RouteLocationRaw,
-  style?: StyleValue,
   showQualityScore?: boolean,
   showMetrics?: boolean,
 }
