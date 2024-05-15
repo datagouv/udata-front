@@ -96,7 +96,6 @@ onMounted(async () => {
 </script>
 
 <style lang="less">
-@import "../../../less/variables.less";
 html, body {
   height: 100%;
 }
@@ -107,26 +106,26 @@ html, body {
   height: 100%;
 }
 
-.admin {
-  .fr-sidemenu {
-    padding: 0;
-  }
+.fr-sidemenu .fr-sidemenu__item:first-child:before, .fr-sidemenu .fr-sidemenu__item:last-child:before, .fr-sidemenu .fr-sidemenu__item:before {
+  box-shadow: none;
+}
+</style>
+<style lang="less" scoped>
+@import "../../../less/variables.less";
 
-  .fr-sidemenu .fr-sidemenu__inner {
-    padding: 0;
-    box-shadow: 1px 0 0 0 var(--border-default-grey);
-    background-color: var(--background-default-grey);
-  }
-
-  .fr-sidemenu .fr-sidemenu__item:first-child:before, .fr-sidemenu .fr-sidemenu__item:last-child:before, .fr-sidemenu .fr-sidemenu__item:before {
-    box-shadow: none;
-  }
-
-  @media @dsfr-query-md {
-    .fr-sidemenu, .fr-sidemenu__inner {
-      height: 100%;
-    }
-  }
+.fr-sidemenu {
+  padding: 0;
 }
 
+.fr-sidemenu .fr-sidemenu__inner {
+  padding: 0;
+  box-shadow: 1px 0 0 0 @border-default-grey;
+  background-color: @white;
+}
+
+@media @dsfr-query-md {
+  .fr-sidemenu, .fr-sidemenu__inner {
+    height: 100%;
+  }
+}
 </style>
