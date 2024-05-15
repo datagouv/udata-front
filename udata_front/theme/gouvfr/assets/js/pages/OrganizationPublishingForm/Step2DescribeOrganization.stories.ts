@@ -11,7 +11,7 @@ const meta = {
   component: Step2DescribeOrganization,
   decorators: [withActions],
   argTypes: {
-    onNext: { action: true }
+    onSubmit: { action: true }
   }
 } satisfies Meta<typeof Step2DescribeOrganization>;
 
@@ -59,7 +59,7 @@ export const Step2WithInteraction: StoryObj<typeof meta> = {
     });
 
     await userEvent.click(canvas.getByTestId('submitButton'));
-    await waitFor(() => expect(args.onNext).toHaveBeenCalled());
+    await waitFor(() => expect(args.onSubmit).toHaveBeenCalled());
   },
   render: (args) => ({
     components: { Step2DescribeOrganization },

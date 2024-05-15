@@ -214,10 +214,13 @@
             <p v-else> {{ errors[0] }}</p>
           </Alert>
           <div class="fr-grid-row fr-grid-row--right">
-            <button class="fr-btn" data-testid="submitButton" @click="submit">
-              {{ t("Next") }}
-            </button>
+            <slot name="submitButton" :submit="submit">
+              <button class="fr-btn" data-testid="submitButton" @click="submit">
+                {{ t("Next") }}
+              </button>
+          </slot>
           </div>
+          <slot></slot>
         </Container>
       </div>
   </div>
@@ -251,7 +254,7 @@
   }>();
 
   const emit = defineEmits<{
-    (event: 'next', organization: NewOrganization, file: File | null): void,
+    (event: 'submit', organization: NewOrganization, file: File | null): void,
   }>();
 
   const { id: nameOrganizationAccordionId } = useUid("accordion");
@@ -324,7 +327,7 @@
   function submit() {
     validateRequiredRules().then(valid => {
       if(valid) {
-        emit("next", organization, file.value);
+        emit("submit", organization, file.value);
       }
     });
   };

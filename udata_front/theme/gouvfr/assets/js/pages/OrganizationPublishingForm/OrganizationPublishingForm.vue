@@ -11,7 +11,7 @@
       :organization="organization"
       :steps="steps"
       :errors="errors"
-      @next="createOrganizationAndMoveToNextStep"
+      @submit="createOrganizationAndMoveToNextStep"
     />
     <Step3CompleteTheOrganization
       v-else-if="currentStep === 2"
