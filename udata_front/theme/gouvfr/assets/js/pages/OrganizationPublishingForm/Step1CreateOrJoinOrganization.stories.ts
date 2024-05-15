@@ -24,7 +24,9 @@ export const Step1: StoryObj<typeof meta> = {
       return { args };
     },
     template: ` <div class="bg-grey-50 fr-p-4w">
-                  <Step1CreateOrJoinOrganization v-bind="args" />
+                  <div class="fr-container">
+                    <Step1CreateOrJoinOrganization v-bind="args" />
+                  </div>
                 </div>`,
   }),
   args,
@@ -47,7 +49,9 @@ export const Step1WithInteraction: StoryObj<typeof meta> = {
       return { args };
     },
     template: ` <div class="bg-grey-50 fr-p-4w">
-                  <Step1CreateOrJoinOrganization v-bind="args" />
+                  <div class="fr-container">
+                    <Step1CreateOrJoinOrganization v-bind="args" />
+                  </div>
                 </div>`,
   }),
   args,

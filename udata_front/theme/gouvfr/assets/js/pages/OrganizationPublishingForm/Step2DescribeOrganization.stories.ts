@@ -67,7 +67,9 @@ export const Step2WithInteraction: StoryObj<typeof meta> = {
       return { args };
     },
     template: ` <div class="bg-grey-50 fr-p-4w">
-                  <Step2DescribeOrganization v-bind="args" />
+                  <div class="fr-container">
+                    <Step2DescribeOrganization v-bind="args" />
+                  </div>
                 </div>`,
   }),
   args,

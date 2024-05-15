@@ -24,14 +24,15 @@
   </div>
 </template>
 <script setup lang="ts">
+import { type NewOrganization } from '@etalab/data.gouv.fr-components';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import Stepper from "../../components/Form/Stepper/Stepper.vue";
 import Step1CreateOrJoinOrganization from "./Step1CreateOrJoinOrganization.vue";
 import Step2DescribeOrganization from './Step2DescribeOrganization.vue';
 import Step3CompleteTheOrganization from './Step3CompleteTheOrganization.vue';
 import { title, admin_root } from '../../config';
 import { createOrganization, uploadLogo } from '../../api/organizations';
-import { type NewOrganization } from '@etalab/data.gouv.fr-components';
 
 const { t } = useI18n();
 
