@@ -80,9 +80,7 @@
   import useUid from "../../composables/useUid";
   import Avatar from "../discussions/Avatar/Avatar.vue";
   import Placeholder from "../utils/placeholder.vue";
-  import QualityScore from "./quality-score.vue";
-  import Toggletip from "../utils/Toggletip/Toggletip.vue";
-  import QualityItem from "./quality-item.vue";
+  import { QualityItem, QualityScore, Toggletip } from '@etalab/data.gouv.fr-components';
   import { excerpt } from "../../helpers";
   import { guides_quality_url } from "../../config";
   import type { Dataset } from "../../types";

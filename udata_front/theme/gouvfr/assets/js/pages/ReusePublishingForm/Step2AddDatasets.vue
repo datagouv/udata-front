@@ -107,13 +107,12 @@ import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToA
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
-import Well from "../../components/Ui/Well/Well.vue";
 import useUid from "../../composables/useUid";
 import useFunctionalState from '../../composables/form/useFunctionalState';
 import { requiredWithCustomMessage, withMessage } from '../../i18n';
 import { api } from '../../plugins/api';
 import CardSm from '../../components/dataset/CardSm.vue';
-import { Dataset } from '@etalab/data.gouv.fr-components';
+import { type Dataset, Well } from '@etalab/data.gouv.fr-components';
 import { Reuse } from '../../types';
   
 const props = defineProps<{

@@ -52,11 +52,11 @@
 import { reactive } from 'vue';
 import Container from '../../components/Ui/Container/Container.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
-import Well from "../../components/Ui/Well/Well.vue";
 import successIcon from "../../../../templates/svg/illustrations/success.svg";
 import ReuseCard from '../../components/Reuse/Reuse.vue';
 import Loader from '../../components/Reuse/ReuseLoader.vue';
-import { Reuse } from '../../types';
+import { Well } from '@etalab/data.gouv.fr-components';
+import { type Reuse } from '../../types';
   
 const props = defineProps<{
   feedbackUrl: string,

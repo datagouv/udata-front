@@ -302,7 +302,6 @@ import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToA
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
-import Well from "../../components/Ui/Well/Well.vue";
 import useUid from "../../composables/useUid";
 import useFunctionalState from '../../composables/form/useFunctionalState';
 import editIcon from "../../../../templates/svg/illustrations/edit.svg";
@@ -314,7 +313,7 @@ import { useI18n } from 'vue-i18n';
 import { getUser } from '../../api/user';
 import Alert from '../../components/Alert/Alert.vue';
 import { url } from '@vuelidate/validators';
-import { Organization } from '@etalab/data.gouv.fr-components';
+import { type Organization, Well } from '@etalab/data.gouv.fr-components';
 
 const props = defineProps<{
   originalReuse: Reuse,
