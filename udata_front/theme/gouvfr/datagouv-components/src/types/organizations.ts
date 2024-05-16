@@ -1,4 +1,4 @@
-import { User } from "..";
+import type { User } from "..";
 import type { Badges } from "./badges";
 
 export type MemberRole = "admin" | "editor";

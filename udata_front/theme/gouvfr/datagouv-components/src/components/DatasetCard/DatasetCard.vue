@@ -98,10 +98,19 @@ import { excerpt } from "../../helpers";
 import type { Dataset, DatasetV2 } from "../../types/datasets";
 import AppLink from "../AppLink/AppLink.vue";
 
-//The datasetUrl and organizationUrl are separate props to allow other sites using the package to define their own dataset / organization pages
 type Props = {
   dataset: Dataset | DatasetV2,
+  
+  /**
+   * The datasetUrl is a route location object to allow Vue Router to navigate to the details of a dataset.
+   * It is used as a separate prop to allow other sites using the package to define their own dataset pages.
+   */
   datasetUrl: RouteLocationRaw,
+
+  /**
+   * The organizationUrl is an optional route location object to allow Vue Router to navigate to the details of the organization linked to tha dataset.
+   * It is used as a separate prop to allow other sites using the package to define their own organization pages.
+   */
   organizationUrl?: RouteLocationRaw,
   showQualityScore?: boolean,
   showMetrics?: boolean,
