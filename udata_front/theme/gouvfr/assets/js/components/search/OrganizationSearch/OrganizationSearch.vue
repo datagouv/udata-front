@@ -29,6 +29,7 @@
       ref="listRef"
       role="listbox"
       :aria-labelledby="labelId"
+      @mousedown.prevent
     >
       <ul class="w-100" role="listbox">
         <li
@@ -37,8 +38,6 @@
           :id="option.id"
           role="option"
           :aria-selected="isSelected(option.id)"
-          @mousedown.prevent="preventCollapse"
-          @click="openLink(option.link, $event)"
         >
           <OrganizationSearchOption :logo="option.image_url" :name="option.name" :link="option.page" />
         </li>
@@ -87,10 +86,6 @@ const { expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, 
 function openLink(link: string, event: Event) {
   event.preventDefault();
   window.open(link, "_self");
-};
-
-function preventCollapse(event: Event) {
-  event.preventDefault();
 };
 
 watchDebounced(q, async (newValue, oldValue) => {
