@@ -1,11 +1,11 @@
 <template>
-  <div :id="id" class="fr-col fr-search-bar wrap" role="search">
+  <div :id="id" class="fr-col fr-search-bar relative wrap" role="search">
     <label class="fr-label" :for="inputId" :id="labelId">
       {{ t('Search for data') }}
     </label>
-    <span class="fr-icon-search-line"></span>
+    <span class="fr-icon-search-line" aria-hidden="true"></span>
     <input
-      class="fr-input fr-col-12"
+      class="fr-input fr-col-12 fr-pl-10v"
       :placeholder="t('Search an organization on data.gouv.fr')"
       ref="inputRef"
       autocomplete="off"
@@ -105,10 +105,6 @@ watchDebounced(q, async (newValue, oldValue) => {
     box-shadow: 0px 4px 2px var(--border-default-grey);
   }
 
-  .wrap {
-    position: relative;
-  }
-
   .fr-icon-search-line {
     position: absolute;
     left: 0.5rem;
@@ -118,9 +114,5 @@ watchDebounced(q, async (newValue, oldValue) => {
 
   .fr-icon-search-line::before {
     height: 1.25rem;
-  }
-
-  .wrap .fr-input {
-    padding-left: 2.5rem;
   }
 </style>
