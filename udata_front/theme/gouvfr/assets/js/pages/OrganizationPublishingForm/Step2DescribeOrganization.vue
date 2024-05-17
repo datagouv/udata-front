@@ -201,7 +201,7 @@
                 :validText="t('Your file is valid')"
                 @change="addFiles"
               />
-              <div class="text-align-center">
+              <div class="text-align-center" v-show="imagePreview?.src">
                 <img class="fr-col fr-mx-2v fr-mb-2v" ref="imagePreview" width="300px" />
               </div>
             </LinkedToAccordion>
@@ -227,7 +227,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, reactive, ref, watch } from 'vue';
+  import { computed, reactive, ref, watchEffect } from 'vue';
   import { minLengthWarning, required } from '../../i18n';
   import Accordion from '../../components/Accordion/Accordion.vue';
   import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -241,7 +241,7 @@
   import useFunctionalState from '../../composables/form/useFunctionalState';
   import organizationIcon from "../../../../templates/svg/illustrations/organization.svg";
   import { quality_description_length, search_siren_url } from "../../config";
-  import { PublishingFormAccordionState } from '../../types';
+  import { OrganizationV1, PublishingFormAccordionState } from '../../types';
   import { Well } from '@etalab/data.gouv.fr-components';
   import type { NewOrganization } from '@etalab/data.gouv.fr-components';
   import axios from 'axios';
@@ -249,12 +249,12 @@
   import { useI18n } from 'vue-i18n';
 
   const props = defineProps<{
-    organization: NewOrganization,
+    organization: NewOrganization | OrganizationV1,
     errors: Array<string>,
   }>();
 
   const emit = defineEmits<{
-    (event: 'submit', organization: NewOrganization, file: File | null): void,
+    (event: 'submit', submittedOrganization: typeof organization, file: File | null): void,
   }>();
 
   const { id: nameOrganizationAccordionId } = useUid("accordion");
@@ -273,14 +273,14 @@
   const checkOrga = ref({
     name: '',
     siren: '',
-    isPublicService: '',
+    isPublicService: false,
     exists: null as boolean | null
   });
 
   const checkBusinessId = () => {
-    if (organization.business_number_id.length == 0) {
+    if (!organization.business_number_id || organization.business_number_id?.length == 0) {
       return true;
-    } else if (organization.business_number_id.length == 14 && checkOrga.value.exists) {
+    } else if (organization.business_number_id?.length == 14 && checkOrga.value.exists) {
       return true;
     } else {
       return false;
@@ -318,7 +318,7 @@
 
   function fieldHasError(field: string) {
     return hasError(state, field);
-  };
+  }
 
   function fieldHasWarning(field: string) {
     return hasWarning(state, field);
@@ -330,19 +330,29 @@
         emit("submit", organization, file.value);
       }
     });
-  };
+  }
 
   function addFiles(newFile: Array<File>) {
     file.value = newFile[0];
     if (imagePreview.value) {
       imagePreview.value.src = URL.createObjectURL(file.value);
     }
-  };
+  }
 
-  watch(() => organization.business_number_id, (newValue) => {
-    let siret = newValue.replace(/\s/g,'')
-    if (search_siren_url && siret.length === 14) {
-      axios.get(search_siren_url, {
+  watchEffect(() => {
+    let siret = organization.business_number_id?.replace(/\s/g,'')
+    if (search_siren_url && siret?.length === 14) {
+      type SearchSirenResponse = {
+        total_results: number;
+        results: Array<{
+          nom_complet: string;
+          siren: string;
+          complements: {
+            est_service_public: boolean;
+          };
+        }>;
+      };
+      axios.get<SearchSirenResponse>(search_siren_url, {
         params: {
           q: siret,
           mtm_campaign: "udata-front"
@@ -358,7 +368,7 @@
           checkOrga.value.isPublicService = result.results[0].complements.est_service_public;
           checkOrga.value.exists = true;
         }
-      })
+      });
     } else {
       checkOrga.value.exists = null;
     }
