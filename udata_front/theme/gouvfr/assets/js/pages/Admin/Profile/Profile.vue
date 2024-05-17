@@ -51,10 +51,60 @@
             <button
               class="fr-btn fr-btn--secondary fr-btn--secondary--error fr-btn--icon-left fr-icon-delete-line"
               :disabled="loading"
-              @click="deleteCurrentOrganization"
+              data-fr-opened="false"
+              :aria-controls="modalId"
             >
               {{ t('Delete') }}
             </button>
+            <Teleport to="body">
+              <dialog
+                :aria-labelledby="modalTitleId"
+                role="dialog"
+                :id="modalId"
+                class="fr-modal"
+              >
+                <div class="fr-container fr-container--fluid fr-container-md">
+                  <div class="fr-grid-row fr-grid-row--center">
+                    <div class="fr-col-12 fr-col-md-8">
+                      <div class="fr-modal__body">
+                        <div class="fr-modal__header">
+                          <button
+                            class="fr-btn--close fr-btn"
+                            :title="t('Close the modal dialog')"
+                            :aria-controls="modalId"
+                          >
+                            {{ t("Close") }}
+                          </button>
+                        </div>
+                        <div class="fr-modal__content">
+                          <h1
+                            :id="modalTitleId"
+                            class="fr-modal__title fr-mb-2w"
+                          >
+                            {{ t("Are you sure you want to delete this organization ?") }}
+                          </h1>
+                          <p class="fr-text--bold">{{ t("This action can't be reverse.") }}</p>
+                          <p>{{ t("All content published with this organization will stay online, with the same URL but in an anonymous form, i.e. without being linked to a data producer.") }}</p>
+                          <p>{{ t("If you want to delete your published content too, start by deleting the contents before deleting your account.") }}</p>
+                        </div>
+                        <div class="fr-modal__footer">
+                          <div class="fr-btns-group fr-btns-group--right fr-btns-group--inline-reverse fr-btns-group--inline-lg fr-btns-group--icon-left">
+                              <button
+                                class="fr-btn fr-btn--secondary fr-btn--secondary--error"
+                                role="button"
+                                :disabled="loading"
+                                @click="deleteCurrentOrganization"
+                              >
+                                  {{ t("Delete") }}
+                              </button>
+                          </div>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </dialog>
+            </Teleport>
           </div>
         </AdminDangerZone>
       </template>
@@ -72,10 +122,13 @@ import { fetchMe } from "../../../api/me";
 import { watchEffect } from 'vue';
 import { deleteOrganization, getOrganization, updateOrganization } from '../../../api/organizations';
 import { useToast } from '../../../composables/useToast';
+import { getRandomId } from '@etalab/data.gouv.fr-components';
+import { useRouter } from 'vue-router';
 
 const { t } = useI18n();
 const { toast } = useToast();
 const props = defineProps<{oid: string}>();
+const router = useRouter();
 const me = ref<Me | null>(null);
 const form = ref<InstanceType<typeof DescribeOrganizationFrom> | null>(null);
 
@@ -83,12 +136,17 @@ const form = ref<InstanceType<typeof DescribeOrganizationFrom> | null>(null);
 const organization = ref<OrganizationV1 | null>(null);
 const errors = ref([]);
 const loading = ref(false);
+const modalId = getRandomId("modal");
+const modalTitleId = getRandomId("modalTitle");
 
 function deleteCurrentOrganization() {
   if(organization.value) {
     loading.value = true;
     deleteOrganization(organization.value.id)
-    .then(() => window.location.reload())
+    .then(() => {
+      router.replace("/");
+      window.location.reload();
+    })
     .catch(() => toast.error(t("An error occured when deleting the organization.")))
     .finally(() => loading.value = false);
   }
