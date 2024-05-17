@@ -83,6 +83,7 @@
             color="blue-cumulus"
             weight="regular"
             class="fr-mb-2w"
+            v-if="showWell"
           >
             <div class="fr-grid-row">
               <div class="fr-col-auto fr-mr-3v">
@@ -94,8 +95,8 @@
               </div>
             </div>
           </Well>
-          <fieldset class="fr-fieldset" aria-labelledby="description-legend">
-            <legend class="fr-fieldset__legend" id="description-legend">
+          <fieldset class="fr-fieldset" :aria-labelledby="legend">
+            <legend v-if="showLegend" class="fr-fieldset__legend" :id="legend">
               <h2 class="subtitle subtitle--uppercase fr-mb-3v">
                 {{ t("Description") }}
               </h2>
@@ -225,9 +226,23 @@
       </div>
   </div>
 </template>
+<script lang="ts">
+  import type { NewOrganization } from '@etalab/data.gouv.fr-components';
+  import type { OrganizationV1 } from '../../types';
 
+  export type DescribeOrganizationProps = {
+    organization: NewOrganization | OrganizationV1;
+    errors: Array<string>;
+    showLegend?: boolean;
+    showWell?: boolean;
+  };
+</script>
 <script setup lang="ts">
+  import { Well } from '@etalab/data.gouv.fr-components';
+  import { url } from '@vuelidate/validators';
+  import axios from 'axios';
   import { computed, reactive, ref, watchEffect } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import { minLengthWarning, required } from '../../i18n';
   import Accordion from '../../components/Accordion/Accordion.vue';
   import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -241,21 +256,20 @@
   import useFunctionalState from '../../composables/form/useFunctionalState';
   import organizationIcon from "../../../../templates/svg/illustrations/organization.svg";
   import { quality_description_length, search_siren_url } from "../../config";
-  import { OrganizationV1, PublishingFormAccordionState } from '../../types';
-  import { Well } from '@etalab/data.gouv.fr-components';
-  import type { NewOrganization } from '@etalab/data.gouv.fr-components';
-  import axios from 'axios';
-  import { url } from '@vuelidate/validators';
-  import { useI18n } from 'vue-i18n';
+  import { PublishingFormAccordionState } from '../../types';
 
-  const props = defineProps<{
-    organization: NewOrganization | OrganizationV1,
-    errors: Array<string>,
-  }>();
+  const props = withDefaults(defineProps<DescribeOrganizationProps>(), {
+    showLegend: true,
+    showWell: true,
+  });
 
   const emit = defineEmits<{
     (event: 'submit', submittedOrganization: typeof organization, file: File | null): void,
   }>();
+
+  const legend = "description-legend";
+
+  defineExpose({ legend });
 
   const { id: nameOrganizationAccordionId } = useUid("accordion");
   const { id: addAcronymAccordionId } = useUid("accordion");

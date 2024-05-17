@@ -17,7 +17,18 @@
         </a>
       </li>
     </Breadcrumb>
-    <DescribeOrganizationFrom v-if="organization" :organization="organization" :errors="errors" @submit="updateCurrentOrganization">
+    <h2 class="subtitle subtitle--uppercase fr-mb-5v" v-if="form" :id="form.legend">
+      {{ t("Edit profile") }}
+    </h2>
+    <DescribeOrganizationFrom
+      v-if="organization"
+      :organization="organization"
+      :errors="errors"
+      :showLegend="false"
+      :showWell="false"
+      ref="form"
+      @submit="updateCurrentOrganization"
+    >
       <template #submitButton="{ submit }">
         <button
           class="fr-btn fr-btn--icon-left fr-icon-save-line"
@@ -65,14 +76,12 @@ import { useToast } from '../../../composables/useToast';
 const { t } = useI18n();
 const { toast } = useToast();
 const props = defineProps<{oid: string}>();
-
 const me = ref<Me | null>(null);
+const form = ref<InstanceType<typeof DescribeOrganizationFrom> | null>(null);
 
 // TODO : use `useCurrentOrganization` when merged
 const organization = ref<OrganizationV1 | null>(null);
-
 const errors = ref([]);
-
 const loading = ref(false);
 
 function deleteCurrentOrganization() {
