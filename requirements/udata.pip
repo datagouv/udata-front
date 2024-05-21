@@ -39,7 +39,7 @@ bleach==3.3.1
 blinker==1.4
     # via
     #   flask-mail
-    #   flask-navigation
+    #   flask-navigation-temp-python-311
     #   flask-principal
     #   flask-security-too
     #   flask-sitemap
@@ -127,7 +127,7 @@ flask==2.1.2
     #   flask-login
     #   flask-mail
     #   flask-mongoengine
-    #   flask-navigation
+    #   flask-navigation-temp-python-311
     #   flask-principal
     #   flask-restx
     #   flask-security-too
@@ -155,7 +155,7 @@ flask-mongoengine==1.0.0
     # via
     #   flask-storage
     #   udata
-flask-navigation @ git+https://github.com/krs-novice/flask-navigation-ks.git@develop
+flask-navigation-temp-python-311==0.2.1
     # via udata
 flask-principal==0.4.0
     # via
@@ -324,7 +324,7 @@ tzdata==2024.1
     # via
     #   celery
     #   udata
-udata @ git+https://github.com/opendatateam/udata.git
+udata @ git+https://github.com/opendatateam/udata@sync_harvest_backend
     # via -r requirements/udata.in
 unidecode==0.4.21
     # via
