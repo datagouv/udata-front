@@ -1,15 +1,13 @@
+import { type MaybeRefOrGetter, computed, toValue } from 'vue';
 import code from '../../../../templates/svg/resources/code.svg';
 import archive from '../../../../templates/svg/resources/archive.svg';
 import documentation from '../../../../templates/svg/resources/documentation.svg';
 import file from '../../../../templates/svg/resources/file.svg';
 import link from '../../../../templates/svg/resources/link.svg';
 import table from '../../../../templates/svg/resources/table.svg';
-import { computed, toValue } from 'vue';
-/***
- *
- * @param {import("vue").MaybeRefOrGetter<import("../../types/resources.ts").Resource>} resource
- */
-export default function useResourceImage(resource) {
+import type { ResourceRest } from '../../types/resources';
+
+export default function useResourceImage(resource: MaybeRefOrGetter<ResourceRest>) {
   const url = computed(() => {
     const resourcValue = toValue(resource);
     switch (resourcValue.format?.trim()?.toLowerCase()) {
