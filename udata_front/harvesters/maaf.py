@@ -135,7 +135,8 @@ class MaafBackend(BaseSyncBackend):
                 if href.endswith('/'):
                     directories.append(urljoin(directory, href))
                 elif href.lower().endswith('.xml'):
-                    # We use the URL as `remote_id` for now, we'll be replace at the beginning of the process
+                    # We use the URL as `remote_id` for now, we'll be replace at
+                    # the beginning of the process
                     should_stop = self.process_dataset(urljoin(directory, href))
                     if should_stop:
                         return
