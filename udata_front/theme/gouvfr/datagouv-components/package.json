@@ -20,7 +20,7 @@
     "commit-version": "git add --all && git commit -m \"Bump version @datagouv/components@$npm_package_version\"",
     "tag-version": "git tag @datagouv/components@$npm_package_version",
     "push-version": "git push --follow-tags",
-    "commit-tag-and-push": "npm run commit-version && npm run tag-version && npm run commit-tag-and-push",
+    "commit-tag-and-push": "npm run commit-version && npm run tag-version && npm run push-version",
     "publish-stable": "npm publish --access public",
     "publish-dev": "npm run publish-stable -- --tag=dev",
     "storybook": "storybook dev -p 6006",
