@@ -1,4 +1,5 @@
-import { User } from "..";
+import type { User } from "..";
+import type { Badges } from "./badges";
 
 export type MemberRole = "admin" | "editor";
 
@@ -13,7 +14,7 @@ export type NewOrganization = {
   business_number_id: string;
   description: string;
   url: string;
-}
+};
 
 export type Organization = NewOrganization & {
   id: string;
@@ -28,5 +29,5 @@ export type Organization = NewOrganization & {
   page: string;
   slug: string;
   uri: string;
-  badges: Array<{kind: string}>;
-}
+  badges: Badges;
+};
