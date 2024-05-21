@@ -122,6 +122,7 @@ msgstr ""
 #: udata_front/theme/gouvfr/templates/organization/list.html:6
 #: udata_front/theme/gouvfr/templates/organization/list.html:17
 #: udata_front/theme/gouvfr/templates/organization/list.html:31
+#: udata_front/theme/gouvfr/templates/organization/publishing-form.html:16
 #: udata_front/theme/gouvfr/templates/user/base.html:103
 #: udata_front/theme/gouvfr/templates/user/following.html:33
 msgid "Organizations"
@@ -1087,6 +1088,8 @@ msgstr ""
 
 #: udata_front/theme/gouvfr/templates/dataset/publishing-form.html:5
 #: udata_front/theme/gouvfr/templates/dataset/publishing-form.html:21
+#: udata_front/theme/gouvfr/templates/organization/publishing-form.html:5
+#: udata_front/theme/gouvfr/templates/organization/publishing-form.html:21
 msgid "Publishing Form"
 msgstr ""
 
@@ -1708,6 +1711,11 @@ msgstr ""
 
 #: udata_front/theme/gouvfr/templates/organization/list.html:35
 msgid "Search an organization"
+msgstr ""
+
+#: udata_front/theme/gouvfr/templates/organization/publishing-form.html:6
+#, python-format
+msgid "%(site)s organization publishing form"
 msgstr ""
 
 #: udata_front/theme/gouvfr/templates/post/display.html:35

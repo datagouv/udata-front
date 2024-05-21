@@ -109,4 +109,7 @@
 <script id="json_ld" type="application/ld+json">{{ json_ld|embedded_json_ld }}</script>
 {% endif %}
 
+{% if config.SEARCH_SIREN_URL %}
+<meta name="search-siren-url" content="{{ config.SEARCH_SIREN_URL }}" />
+{% endif %}
 {% endmacro %}

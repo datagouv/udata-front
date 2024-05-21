@@ -1,5 +1,5 @@
 export type Badge = {
-    kind: string;
+  kind: string;
 };
 
 export type Badges = Array<Badge>;
