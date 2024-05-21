@@ -56,13 +56,13 @@ You should use `major`, `minor`, `patch` to let NPM compute the next version num
 
 The update triggers a project build and its tests.
 
-The updated `package.json` and `package-lock.json` must be manually committed.
-
-Then, you can make a git tag with the new version number :
+Then, you can run :
 
 ```
-npm run tag-version
+npm run commit-tag-and-push
 ```
+
+It will commit the updated files, make a new tag and push both to your remote.
 
 ### Publish a dev version
 
