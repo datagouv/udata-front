@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Step2AddDatasets from './Step2AddDatasets.vue';
-import * as Stepper from '../../components/Form/Stepper/StepperReuse.stories';
 import { user } from '../../config';
 
 const meta = {
@@ -11,7 +10,6 @@ const meta = {
 export default meta;
 
 const args = {
-  steps: Stepper.StepperOnSecondStep.args.steps,
   originalDatasets: [
     {
       title: "Another awesome dataset",

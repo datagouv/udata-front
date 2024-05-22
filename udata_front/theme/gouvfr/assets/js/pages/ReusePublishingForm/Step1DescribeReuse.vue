@@ -1,6 +1,5 @@
 <template>
-  <div class="fr-container">
-    <Stepper :steps="steps" :currentStep="0"/>
+  <Container class="fr-mb-6v">
     <div class="fr-grid-row">
       <Sidemenu
         class="fr-col-12 fr-col-md-5"
@@ -187,6 +186,7 @@
               <InputGroup
                 :aria-describedby="addLinkAccordionId"
                 :label="$t('Link')"
+                type="url"
                 :placeholder="$t('https://...')"
                 :required="true"
                 v-model="reuse.url"
@@ -293,7 +293,7 @@
         </Container>
       </div>
     </div>
-  </div>
+  </Container>
 </template>
   
 <script setup lang="ts">
@@ -306,14 +306,13 @@ import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
 import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
-import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import useUid from "../../composables/useUid";
 import useFunctionalState from '../../composables/form/useFunctionalState';
 import editIcon from "../../../../templates/svg/illustrations/edit.svg";
 import { quality_description_length } from "../../config";
 import { getReuseTypesUrl, getReuseTopicsUrl } from '../../api/reuses';
 import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
-import { Me, PublishingFormAccordionState, Reuse } from '../../types';
+import { PublishingFormAccordionState, Reuse } from '../../types';
 import { useI18n } from 'vue-i18n';
 import { getUser } from '../../api/user';
 import Alert from '../../components/Alert/Alert.vue';
@@ -322,7 +321,6 @@ import { type Organization, Well } from '@etalab/data.gouv.fr-components';
 
 const props = defineProps<{
   originalReuse: Reuse,
-  steps: Array<String>,
   errors: Array<String>,
 }>();
 

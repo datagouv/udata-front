@@ -1,104 +1,103 @@
 <template>
-    <div class="fr-container">
-      <Stepper :steps="steps" :currentStep="1"/>
-      <div class="fr-grid-row">
-        <Sidemenu
-          class="fr-col-12 fr-col-md-5"
-          :buttonText="$t('Help')"
-          :onRight="true"
-          :fixed="true"
-          :showBorder="false"
+  <Container class="fr-container">
+    <div class="fr-grid-row">
+      <Sidemenu
+        class="fr-col-12 fr-col-md-5"
+        :buttonText="$t('Help')"
+        :onRight="true"
+        :fixed="true"
+        :showBorder="false"
+      >
+        <template #title>
+          <span class="fr-icon--sm fr-icon-question-line" aria-hidden="true"></span>
+          {{ $t('Help') }}
+        </template>
+        <Accordion
+          :title= "$t('Associate datasets to your reuse')"
+          :id="addDatasetsAccordionId"
+          :state="state.datasets"
+          :opened="true"
         >
-          <template #title>
-            <span class="fr-icon--sm fr-icon-question-line" aria-hidden="true"></span>
-            {{ $t('Help') }}
-          </template>
-          <Accordion
-            :title= "$t('Associate datasets to your reuse')"
-            :id="addDatasetsAccordionId"
-            :state="state.datasets"
-            :opened="true"
-          >
-            <div class="markdown fr-m-0">
-              <p class="fr-m-0 fr-mb-1w">
-                {{ $t("By default, your reuse will be linked to the dataset that served as your starting point. But if your reuse has involved other datasets, you can associate them with your reuse at this stage.") }}
-              </p>
-              <p class="fr-m-0 fr-mb-1w">
-                {{ $t("It is important to associate all the datasets used, as this allows for understanding the intersections that were necessary and improving the visibility of your reuse.") }}
-              </p>
-            </div>
-            <Well class="fr-mt-1w" v-if="fieldHasWarning('datasets')" color="orange-terre-battue">
-              {{ getWarningText("files") }}
-            </Well>
-          </Accordion>
-        </Sidemenu>
-        <div class="fr-col-12 fr-col-md-7">
-          <Container>
-            <fieldset class="fr-fieldset min-width-0" aria-labelledby="description-legend">
-              <legend class="fr-fieldset__legend" id="description-legend">
-                <h2 class="subtitle subtitle--uppercase fr-mb-3v">
-                  {{ $t("Associated datasets") }}
-                </h2>
-              </legend>
-              <div class="fr-grid-row fr-grid-row--center w-100" v-for="(dataset, index) in datasets" :key="dataset.id">
-                <div class="fr-col">
-                  <CardSm
-                    :dataset="dataset"
-                  />
-                </div>
-                <div class="fr-col-1 fr-my-auto fr-ml-auto justify-center flex">
-                  <button
-                    type="button"
-                    class="fr-btn fr-btn--sm fr-btn--tertiary fr-icon-delete-line"
-                    @click="removeDataset(index)"
-                  ></button>
-                </div>
+          <div class="markdown fr-m-0">
+            <p class="fr-m-0 fr-mb-1w">
+              {{ $t("By default, your reuse will be linked to the dataset that served as your starting point. But if your reuse has involved other datasets, you can associate them with your reuse at this stage.") }}
+            </p>
+            <p class="fr-m-0 fr-mb-1w">
+              {{ $t("It is important to associate all the datasets used, as this allows for understanding the intersections that were necessary and improving the visibility of your reuse.") }}
+            </p>
+          </div>
+          <Well class="fr-mt-1w" v-if="fieldHasWarning('datasets')" color="orange-terre-battue">
+            {{ getWarningText("files") }}
+          </Well>
+        </Accordion>
+      </Sidemenu>
+      <div class="fr-col-12 fr-col-md-7">
+        <Container>
+          <fieldset class="fr-fieldset min-width-0" aria-labelledby="description-legend">
+            <legend class="fr-fieldset__legend" id="description-legend">
+              <h2 class="subtitle subtitle--uppercase fr-mb-3v">
+                {{ $t("Associated datasets") }}
+              </h2>
+            </legend>
+            <div class="fr-grid-row fr-grid-row--center w-100" v-for="(dataset, index) in datasets" :key="dataset.id">
+              <div class="fr-col">
+                <CardSm
+                  :dataset="dataset"
+                />
               </div>
-              <LinkedToAccordion
-                class="fr-fieldset__element min-width-0"
-                :accordion="addDatasetsAccordionId"
-                @blur="touch"
-              >
-                <MultiSelect
-                  :minimumCharacterBeforeSuggest="2"
-                  @change="addDataset"
-                  :placeholder="$t('Look for a dataset')"
-                  :searchPlaceholder="$t('Search a dataset...')"
-                  suggestUrl="/datasets/suggest/"
-                />
-                <p class="fr-hr-or w-100 text-transform-lowercase fr-text--regular">
-                  <span class="fr-hr-or-text">{{ $t('or') }}</span>
-                </p>
-                <InputGroup
-                  :label="$t('Link to the dataset')"
-                  :placeholder="'https://...'"
-                  v-model="linkedDataset"
-                  @change="getLinkedDataset"
-                />
-                <div v-if="datasetNotFound" class="fr-col bg-contrast-grey text-align-center fr-p-2v">
-                  <p class="fr-text--md fr-text--bold">{{ t('No dataset associated to that link has been found') }}</p>
-                </div>
-              </LinkedToAccordion>
-            </fieldset>
-            <Alert type="error" v-if="errors.length" class="fr-mt-n2w fr-mb-2w">
-              <template #title>{{ t("An error occured | Some errors occured", errors.length) }}</template>
-              <ul v-if="errors.length > 1">
-                <li v-for="error in errors">{{ error }}</li>
-              </ul>
-              <p v-else> {{ errors[0] }}</p>
-            </Alert>
-            <div class="fr-grid-row fr-grid-row--right">
-              <button class="fr-btn" @click="submit">
-                {{ $t("Next") }}
-              </button>
+              <div class="fr-col-1 fr-my-auto fr-ml-auto justify-center flex">
+                <button
+                  type="button"
+                  class="fr-btn fr-btn--sm fr-btn--tertiary fr-icon-delete-line"
+                  @click="removeDataset(index)"
+                ></button>
+              </div>
             </div>
-          </Container>
-        </div>
+            <LinkedToAccordion
+              class="fr-fieldset__element min-width-0"
+              :accordion="addDatasetsAccordionId"
+              @blur="touch"
+            >
+              <MultiSelect
+                :minimumCharacterBeforeSuggest="2"
+                @change="addDataset"
+                :placeholder="$t('Look for a dataset')"
+                :searchPlaceholder="$t('Search a dataset...')"
+                suggestUrl="/datasets/suggest/"
+              />
+              <p class="fr-hr-or w-100 text-transform-lowercase fr-text--regular">
+                <span class="fr-hr-or-text">{{ $t('or') }}</span>
+              </p>
+              <InputGroup
+                :label="$t('Link to the dataset')"
+                :placeholder="'https://...'"
+                v-model="linkedDataset"
+                @change="getLinkedDataset"
+              />
+              <div v-if="datasetNotFound" class="fr-col bg-contrast-grey text-align-center fr-p-2v">
+                <p class="fr-text--md fr-text--bold">{{ t('No dataset associated to that link has been found') }}</p>
+              </div>
+            </LinkedToAccordion>
+          </fieldset>
+          <Alert type="error" v-if="errors.length" class="fr-mt-n2w fr-mb-2w">
+            <template #title>{{ t("An error occured | Some errors occured", errors.length) }}</template>
+            <ul v-if="errors.length > 1">
+              <li v-for="error in errors">{{ error }}</li>
+            </ul>
+            <p v-else> {{ errors[0] }}</p>
+          </Alert>
+          <div class="fr-grid-row fr-grid-row--right">
+            <button class="fr-btn" @click="submit">
+              {{ $t("Next") }}
+            </button>
+          </div>
+        </Container>
       </div>
     </div>
-  </template>
+  </Container>
+</template>
 <script setup lang="ts">
-import { computed, reactive, ref, toValue } from 'vue';
+import { computed, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import Container from '../../components/Ui/Container/Container.vue';
@@ -106,19 +105,17 @@ import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
 import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
-import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import useUid from "../../composables/useUid";
 import useFunctionalState from '../../composables/form/useFunctionalState';
-import { requiredWithCustomMessage, withMessage } from '../../i18n';
+import { requiredWithCustomMessage } from '../../i18n';
 import { api } from '../../plugins/api';
-import CardSm from '../../components/dataset/CardSm.vue';
+import CardSm from '../../components/dataset/CardSM.vue';
 import { type Dataset, Well } from '@etalab/data.gouv.fr-components';
 import { Reuse } from '../../types';
   
 const props = defineProps<{
   errors: Array<string>,
   loading?: Boolean,
-  steps: Array<string>,
   reuse: Reuse,
   originalDatasets?: Array<Dataset>
 }>();

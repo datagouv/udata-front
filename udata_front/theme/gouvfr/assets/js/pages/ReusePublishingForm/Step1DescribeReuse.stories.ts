@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { rest } from 'msw';
 import Step1DescribeReuse from './Step1DescribeReuse.vue';
-import * as Stepper from '../../components/Form/Stepper/StepperReuse.stories';
 
 const meta = {
   title: 'Pages/ReusePublishingForm/Step1',
@@ -11,7 +10,6 @@ const meta = {
 export default meta;
 
 const args = {
-  steps: Stepper.StepperOnFirstStep.args.steps,
   errors: [],
 };
 

@@ -1,5 +1,6 @@
 <template>
-  <div ref="containerRef">
+  <div class="fr-container" ref="containerRef">
+    <Stepper :steps="steps" :currentStep="currentStep"/>
     <Step1DescribeReuse
       v-if="currentStep === 0"
       :originalReuse="reuse"
@@ -28,6 +29,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import Stepper from "../../components/Form/Stepper/Stepper.vue";
 import Step1DescribeReuse from './Step1DescribeReuse.vue';
 import Step2AddDatasets from './Step2AddDatasets.vue';
 import Step3CompleteThePublication from './Step3CompleteThePublication.vue';

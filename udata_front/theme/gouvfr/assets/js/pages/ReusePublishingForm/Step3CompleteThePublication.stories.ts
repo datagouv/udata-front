@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Step3CompleteThePublication from './Step3CompleteThePublication.vue';
-import * as Stepper from '../../components/Form/Stepper/StepperReuse.stories';
 
 const meta = {
   title: 'Pages/ReusePublishingForm/Step3',
@@ -57,7 +56,6 @@ const originalReuse = {
 const args = {
   originalReuse,
   feedbackUrl: "https://demo.data.gouv.fr/fr/reuses/?q=feedback",
-  steps: Stepper.StepperOnFirstStep.args.steps,
   redirectDraftUrl: "https://demo.data.gouv.fr/fr/reuses/?q=draft",
 };
 
