@@ -68,7 +68,9 @@ export const Step3: StoryObj<typeof meta> = {
       return { args };
     },
     template: ` <div class="bg-grey-50 fr-p-4w">
-                  <Step3CompleteThePublication v-bind="args" />
+                  <div class="fr-container">
+                    <Step3CompleteThePublication v-bind="args" />
+                  </div>
                 </div>`,
   }),
   args,
