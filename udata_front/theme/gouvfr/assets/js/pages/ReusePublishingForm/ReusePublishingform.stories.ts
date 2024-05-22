@@ -30,8 +30,8 @@ const args = {
 export const FormWithNoOrganizations: StoryObj<typeof meta> = {
   parameters: {
     msw: [
-      rest.get('*/api/1/me', async (req, res, ctx) => {
-        return res(ctx.delay(), ctx.json({organizations: []}));
+      rest.get('*/api/1/me', async (_req, res, ctx) => {
+        return res(ctx.delay(), ctx.json({first_name: "John", last_name: "Doe", avatar: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png", organizations: [],}));
       }),
       rest.post('*/api/1/reuses/', async (req, res, ctx) => {
         const body = await req.json();
