@@ -129,10 +129,15 @@
                   :initialOptions="organizations"
                   :values="userOrganization"
                   @change="(value: Organization) => userOrganization = value"
-                  :addNewOption="true"
                 />
               </div>
-              <div v-else>
+              <div v-else> 
+                <!-- TODO: Handle fake Input when no organization
+                <InputGroup
+                  :label="$t('Link url')"
+                  :v-model="test"
+                  type="text"
+                />-->
                 <div class="fr-col bg-contrast-grey text-align-center fr-p-2v">
                   <p class="fr-text--md fr-text--bold fr-mb-n3v">You belong to no organization</p>
                   <p class="fr-text--sm fr-text--bold fr-mb-n4v">You publish in your own name</p>
@@ -292,8 +297,8 @@
 </template>
   
 <script setup lang="ts">
-import { computed, reactive, ref, toValue } from 'vue';
-import { minLengthWarning, not, required, requiredWithCustomMessage } from '../../i18n';
+import { computed, onMounted, reactive, ref, toValue } from 'vue';
+import { minLengthWarning, required } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
 import Container from '../../components/Ui/Container/Container.vue';
@@ -308,7 +313,7 @@ import editIcon from "../../../../templates/svg/illustrations/edit.svg";
 import { quality_description_length } from "../../config";
 import { getReuseTypesUrl, getReuseTopicsUrl } from '../../api/reuses';
 import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
-import { PublishingFormAccordionState, Reuse } from '../../types';
+import { Me, PublishingFormAccordionState, Reuse } from '../../types';
 import { useI18n } from 'vue-i18n';
 import { getUser } from '../../api/user';
 import Alert from '../../components/Alert/Alert.vue';
@@ -341,19 +346,12 @@ const topicsUrl = getReuseTopicsUrl();
 const typesUrl = getReuseTypesUrl();
 
 const organizations = ref<Array<Organization>>([]);
-const hasOrganizations = computed<Boolean>(() => organizations.value.length > 0);
+const hasOrganizations = computed<Boolean>(() => organizations.value.length > 1);
 const hasImage = () => {
   return image.value !== null;
 };
 
-(async () => {
-  try {
-    const me = await getUser();
-    organizations.value = me.organizations;
-  } catch (error) {
-    console.error('Error:', error);
-  }
-})();
+const me = ref(null);
 
 const requiredRules = {
   title: { required },
@@ -388,6 +386,10 @@ const state = computed<Record<string, PublishingFormAccordionState>>(() => {
   };
 });
 
+function capitalizeFirstLetter(string: string) {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+};
+
 const fieldHasError = (field: string) => hasError(state, field);
 
 const fieldHasWarning = (field: string) => hasWarning(state, field);
@@ -396,10 +398,40 @@ const addImage = (newImage: File) => {
   image.value = newImage;
 };
 
+async function fetchUser() {
+  try {
+    me.value = await getUser();
+    updateOrganizations();
+  } catch (error) {
+    console.error('Error fetching user:', error);
+  }
+}
+
+function updateOrganizations() {
+  if (me.value) {
+    organizations.value = me.value.organizations;
+    organizations.value.push({
+      name: `${capitalizeFirstLetter(me.value.first_name)} ${capitalizeFirstLetter(me.value.last_name)}`,
+      logo: me.value.avatar || "https://picsum.photos/200",
+      id: "user",
+      acronym: null,
+      badges: [],
+      page: "",
+      slug: "",
+      uri: "",
+      logo_thumbnail: me.value.avatar_thumbnail || "https://picsum.photos/200"
+    });
+  }
+}
+
+onMounted(async () => {
+  await fetchUser()
+});
+
 const submit = () => {
   validateRequiredRules().then(valid => {
     if(valid) {
-      if (userOrganization) {
+      if (toValue(userOrganization) !== "user") {
         reuse.organization = toValue(userOrganization);
         reuse.owner = null;
       }
