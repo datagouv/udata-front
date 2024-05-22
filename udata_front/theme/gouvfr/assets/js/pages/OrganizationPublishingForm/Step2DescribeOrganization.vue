@@ -1,7 +1,5 @@
 <template>
-  <div class="fr-container">
-    <Stepper :steps="steps" :currentStep="1"/>
-    <div class="fr-grid-row">
+  <div class="fr-grid-row">
       <Sidemenu
         class="fr-col-12 fr-col-md-5"
         :buttonText="t('Help')"
@@ -85,6 +83,7 @@
             color="blue-cumulus"
             weight="regular"
             class="fr-mb-2w"
+            v-if="showWell"
           >
             <div class="fr-grid-row">
               <div class="fr-col-auto fr-mr-3v">
@@ -96,8 +95,8 @@
               </div>
             </div>
           </Well>
-          <fieldset class="fr-fieldset" aria-labelledby="description-legend">
-            <legend class="fr-fieldset__legend" id="description-legend">
+          <fieldset class="fr-fieldset" :aria-labelledby="legend">
+            <legend v-if="showLegend" class="fr-fieldset__legend" :id="legend">
               <h2 class="subtitle subtitle--uppercase fr-mb-3v">
                 {{ t("Description") }}
               </h2>
@@ -203,7 +202,7 @@
                 :validText="t('Your file is valid')"
                 @change="addFiles"
               />
-              <div class="text-align-center">
+              <div class="text-align-center" v-show="imagePreview?.src">
                 <img class="fr-col fr-mx-2v fr-mb-2v" ref="imagePreview" width="300px" />
               </div>
             </LinkedToAccordion>
@@ -216,18 +215,34 @@
             <p v-else> {{ errors[0] }}</p>
           </Alert>
           <div class="fr-grid-row fr-grid-row--right">
-            <button class="fr-btn" data-testid="submitButton" @click="submit">
-              {{ t("Next") }}
-            </button>
+            <slot name="submitButton" :submit="submit">
+              <button class="fr-btn" data-testid="submitButton" @click="submit">
+                {{ t("Next") }}
+              </button>
+          </slot>
           </div>
+          <slot></slot>
         </Container>
       </div>
-    </div>
   </div>
 </template>
-  
+<script lang="ts">
+  import type { NewOrganization } from '@etalab/data.gouv.fr-components';
+  import type { OrganizationV1 } from '../../types';
+
+  export type DescribeOrganizationProps = {
+    organization: NewOrganization | OrganizationV1;
+    errors: Array<string>;
+    showLegend?: boolean;
+    showWell?: boolean;
+  };
+</script>
 <script setup lang="ts">
-  import { computed, reactive, ref, watch } from 'vue';
+  import { Well } from '@etalab/data.gouv.fr-components';
+  import { url } from '@vuelidate/validators';
+  import axios from 'axios';
+  import { computed, reactive, ref, watchEffect } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import { minLengthWarning, required } from '../../i18n';
   import Accordion from '../../components/Accordion/Accordion.vue';
   import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -236,28 +251,25 @@
   import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
   import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
   import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
-  import Stepper from '../../components/Form/Stepper/Stepper.vue';
   import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
   import useUid from "../../composables/useUid";
   import useFunctionalState from '../../composables/form/useFunctionalState';
   import organizationIcon from "../../../../templates/svg/illustrations/organization.svg";
-  import config, { quality_description_length } from "../../config";
+  import { quality_description_length, search_siren_url } from "../../config";
   import { PublishingFormAccordionState } from '../../types';
-  import { Well } from '@etalab/data.gouv.fr-components';
-  import type { NewOrganization } from '@etalab/data.gouv.fr-components';
-  import axios from 'axios';
-  import { url } from '@vuelidate/validators';
-  import { useI18n } from 'vue-i18n';
 
-  const props = defineProps<{
-    organization: NewOrganization,
-    steps: Array<string>
-    errors: Array<string>,
-  }>();
+  const props = withDefaults(defineProps<DescribeOrganizationProps>(), {
+    showLegend: true,
+    showWell: true,
+  });
 
   const emit = defineEmits<{
-    (event: 'next', organization: NewOrganization, file: File): void,
+    (event: 'submit', submittedOrganization: typeof organization, file: File | null): void,
   }>();
+
+  const legend = "description-legend";
+
+  defineExpose({ legend });
 
   const { id: nameOrganizationAccordionId } = useUid("accordion");
   const { id: addAcronymAccordionId } = useUid("accordion");
@@ -275,14 +287,14 @@
   const checkOrga = ref({
     name: '',
     siren: '',
-    isPublicService: '',
+    isPublicService: false,
     exists: null as boolean | null
   });
 
   const checkBusinessId = () => {
-    if (organization.business_number_id.length == 0) {
+    if (!organization.business_number_id || organization.business_number_id?.length == 0) {
       return true;
-    } else if (organization.business_number_id.length == 14 && checkOrga.value.exists) {
+    } else if (organization.business_number_id?.length == 14 && checkOrga.value.exists) {
       return true;
     } else {
       return false;
@@ -299,7 +311,7 @@
   const warningRules = {
     acronym: {},
     business_number_id: { custom: checkBusinessId },
-    description: {required, minLengthValue: minLengthWarning(quality_description_length) },
+    description: {required, minLengthValue: minLengthWarning(parseInt(quality_description_length ?? "0")) },
     logo: {},
     name: { required },
     url: { url },
@@ -320,7 +332,7 @@
 
   function fieldHasError(field: string) {
     return hasError(state, field);
-  };
+  }
 
   function fieldHasWarning(field: string) {
     return hasWarning(state, field);
@@ -329,22 +341,32 @@
   function submit() {
     validateRequiredRules().then(valid => {
       if(valid) {
-        emit("next", organization, file);
+        emit("submit", organization, file.value);
       }
     });
-  };
+  }
 
-  function addFiles(newFile: File) {
-    file.value = newFile;
+  function addFiles(newFile: Array<File>) {
+    file.value = newFile[0];
     if (imagePreview.value) {
-      imagePreview.value.src = URL.createObjectURL(file.value[0]);
+      imagePreview.value.src = URL.createObjectURL(file.value);
     }
-  };
+  }
 
-  watch(() => organization.business_number_id, (newValue) => {
-    let siret = newValue.replace(/\s/g,'')
-    if (siret.length === 14) {
-      axios.get(config.search_siren_url, {
+  watchEffect(() => {
+    let siret = organization.business_number_id?.replace(/\s/g,'')
+    if (search_siren_url && siret?.length === 14) {
+      type SearchSirenResponse = {
+        total_results: number;
+        results: Array<{
+          nom_complet: string;
+          siren: string;
+          complements: {
+            est_service_public: boolean;
+          };
+        }>;
+      };
+      axios.get<SearchSirenResponse>(search_siren_url, {
         params: {
           q: siret,
           mtm_campaign: "udata-front"
@@ -360,10 +382,9 @@
           checkOrga.value.isPublicService = result.results[0].complements.est_service_public;
           checkOrga.value.exists = true;
         }
-      })
+      });
     } else {
       checkOrga.value.exists = null;
     }
   });
 </script>
-  

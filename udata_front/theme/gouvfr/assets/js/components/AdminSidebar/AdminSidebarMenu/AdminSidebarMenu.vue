@@ -59,6 +59,11 @@
             :label="t('Members')"
             :to="{name: 'organization-members', params: {oid: organization.id}}"
           />
+          <AdminSidebarLink
+            icon="fr-icon-user-line"
+            :label="t('Profile')"
+            :to="{name: 'organization-profile', params: {oid: organization.id}}"
+          />
         </template>
       </ul>
     </div>

@@ -6,6 +6,7 @@
 - Fix an error that blocks datasets search filters reset [#402](https://github.com/datagouv/udata-front/pull/402)
 - Componentize dataset card [#397](https://github.com/datagouv/udata-front/pull/397)
 - Add beta admin "add member" modale [#398](https://github.com/etalab/udata-front/pull/398)
+- Add organization edit to new admin [#412](https://github.com/datagouv/udata-front/pull/412)
 
 ## 4.0.2 (2024-04-26)
 
