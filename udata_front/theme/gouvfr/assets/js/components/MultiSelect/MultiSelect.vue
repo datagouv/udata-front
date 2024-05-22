@@ -48,7 +48,7 @@
             </template>
         </template>
         <template v-else>
-          <option 
+          <option
             v-for="option in displayedOptions"
             :key="option.value"
             :value="option.value"
@@ -73,8 +73,8 @@
 </template>
 
 <script>
-import {defineComponent, ref, computed, onMounted, onUpdated, reactive, unref, watch, toValue} from "vue";
-import Select from "@conciergerie.dev/select-a11y";
+import {defineComponent, ref, computed, onMounted, onUpdated, reactive, watch, toValue} from "vue";
+import Select from "@datagouv/select-a11y";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
 import {api, generateCancelToken} from "../../plugins/api";
@@ -263,7 +263,7 @@ export default defineComponent({
 
     /**
      * SelectA11y instance
-     * @type {import("vue").Ref<import("@conciergerie.dev/select-a11y").Select | null>}
+     * @type {import("vue").Ref<import("@datagouv/select-a11y").Select | null>}
      */
     const selectA11y = ref(null);
 
@@ -406,7 +406,7 @@ export default defineComponent({
         return option;
       });
       if(props.allOption) {
-        const existingAllOption = options.value.find(option => !option.value);
+        const existingAllOption = newOptions.find(option => !option.value);
         if(!existingAllOption) {
           newOptions.unshift({
             label: props.allOption,
@@ -520,7 +520,7 @@ export default defineComponent({
       let selectedPromise = null;
       if (value && props.entityUrl) {
         selectedPromise = api
-          .get(props.entityUrl + value)
+          .get(`${props.entityUrl}${value}/`)
           .then((resp) => resp.data)
           .then((data) => mapToOption([data]))
           .then((entities) => entities[0]?.label ?? value)
@@ -561,6 +561,19 @@ export default defineComponent({
         } else {
           selected.value = selectRef.value.value;
           emit("change", selectRef.value.value);
+        }
+      }
+    };
+
+     /**
+     * Register event listener to trigger on reset event
+     */
+     const registerTriggerOnReset = () => {
+      if(selectRef.value) {
+        if(props.multiple) {
+          selected.value = [];
+        } else {
+          selected.value = null;
         }
       }
     };
@@ -616,6 +629,8 @@ export default defineComponent({
       if(selectRef.value) {
         selectRef.value.removeEventListener('change', registerTriggerOnChange);
         selectRef.value.addEventListener('change', registerTriggerOnChange);
+        selectRef.value.removeEventListener('reset', registerTriggerOnReset);
+        selectRef.value.addEventListener('reset', registerTriggerOnReset);
       }
     };
 
@@ -635,9 +650,15 @@ export default defineComponent({
       }
     };
 
-    watch(() => props.values, () => {
-      let value = unref(normalizeValues(props.values));
-      selectA11y.value?.selectOptionSilently(value);
+    watch(() => props.values, async () => {
+      await fillSelectedFromValues();
+      if(Array.isArray(selected.value)) {
+        for(const value of selected.value) {
+          selectA11y.value?.selectOptionSilently(value);
+        }
+      } else {
+        selectA11y.value?.selectOptionSilently(selected.value ?? "");
+      }
     });
 
     const fillOptionsAndValues = suggestAndMapToOption()

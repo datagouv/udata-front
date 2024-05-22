@@ -132,18 +132,3 @@ a {
 .fr-link.rounded-0 {
     .rounded-0;
 }
-
-.not-enlarged {
-    .relative;
-    z-index: 2;
-}
-
-.fr-enlarge-link .not-enlarged a {
-    background-image: var(--underline-img),var(--underline-img);
-    &:hover {
-        &:extend([href]);
-    }
-    &::before {
-        background: none;
-    }
-}

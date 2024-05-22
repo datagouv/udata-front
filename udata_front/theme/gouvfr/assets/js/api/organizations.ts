@@ -1,6 +1,24 @@
-import { getLocalizedUrl } from "../i18n";
+import { type MaybeRefOrGetter, toValue } from "vue";
 import { api } from "../plugins/api";
+import { getLocalizedUrl } from "../i18n";
 import type { Member, MemberRole, OrganizationV1, PendingMembershipRequest } from "../types";
+
+type UploadLogoResponse = {
+  image: string;
+  success: boolean;
+};
+
+export function createOrganization(organization: MaybeRefOrGetter<OrganizationV1>) {
+  return api.post<OrganizationV1>("organizations/", {
+    ...toValue(organization),
+  }).then(resp => resp.data);
+}
+
+export function uploadLogo(organizationId: string, file: File) {
+  return api.postForm<UploadLogoResponse>(`organizations/${organizationId}/logo`, {
+    file: file
+  }).then(resp => resp.data);
+}
 
 
 export function getOrganization(oid: string) {

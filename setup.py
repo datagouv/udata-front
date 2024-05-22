@@ -31,12 +31,12 @@ setup(
     description=__import__('udata_front').__description__,
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/etalab/udata-front',
+    url='https://github.com/datagouv/udata-front',
     author='Etalab',
     author_email='pypi@data.gouv.fr',
     packages=find_packages(),
     include_package_data=True,
-    python_requires='>=3.7',
+    python_requires='>=3.8',
     install_requires=get_requirements(),
     entry_points={
         'udata.themes': [
