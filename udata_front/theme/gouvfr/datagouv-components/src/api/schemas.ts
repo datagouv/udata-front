@@ -1,7 +1,5 @@
-import axios from "axios";
 import type { AxiosResponse } from "axios";
-import { config } from "../config";
-
+import { api } from "./api";
 /**
  * A schema version.
  */
@@ -40,7 +38,7 @@ export interface ValidataError {
   rowNumber: number;
   rowPosition: number;
 }
-export type SchemaResponseData = { schemas: Array<RegisteredSchema>; }
+export type SchemaResponseData = Array<RegisteredSchema>;
 export type SchemaResponse = AxiosResponse<SchemaResponseData>;
 
 let catalogRequest: Promise<Array<RegisteredSchema>> | null = null;
@@ -49,14 +47,10 @@ let catalogRequest: Promise<Array<RegisteredSchema>> | null = null;
  * Get Schema Catalog
  */
 export function getCatalog() {
-  if(!config.schema_catalog_url) {
-    catalogRequest = Promise.resolve([]);
-  }
   if (catalogRequest) {
     return catalogRequest;
   }
-  catalogRequest = axios.get<SchemaResponseData>(config.schema_catalog_url)
+  catalogRequest = api.get<SchemaResponseData>("datasets/schemas/")
   .then((resp) => resp.data)
-  .then((data) => data.schemas);
   return catalogRequest;
 }
