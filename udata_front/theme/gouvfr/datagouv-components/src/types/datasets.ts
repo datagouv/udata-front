@@ -14,7 +14,7 @@ export type Quality = {
   temporal_coverage: boolean;
   update_frequency: boolean;
   update_fulfilled_in_time: boolean;
-}
+};
 
 export type NewDataset = Owned & {
   title: string;
@@ -58,7 +58,6 @@ export type Dataset = NewDataset & {
   harvest: Record<string, any>
   extras: Record<string, any>
 };
-
 
 export type DatasetV2 = NewDataset & Omit<Dataset, 'resources' | 'community_resources'> & {
   resources: Rel;
