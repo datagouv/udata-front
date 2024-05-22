@@ -266,10 +266,15 @@
               :accordion="addImageAccordionId"
               @blur="vWarning$.image.$touch"
             >
-              <p>{{ $t('Cover picture') }}</p>
+              <label class="fr-label fr-mb-1w" :class="{ 'text-default-error' : fieldHasError('image') }" for="logoUpload">
+                {{$t('Cover picture')}}
+                <span class="required-field-star">*</span>
+              </label>
               <UploadGroup
                 hintText="Max size: 4Mo. Accepted formats: JPG, JPEG, PNG"
                 accept=".jpeg, .jpg, .png"
+                label="Test"
+                id="logoUpload"
                 :isValid="image"
                 :validText="$t('Your file is valid')"
                 :hasError="fieldHasError('image')"
