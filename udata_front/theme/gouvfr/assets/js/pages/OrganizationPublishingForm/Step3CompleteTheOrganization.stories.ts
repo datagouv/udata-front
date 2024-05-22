@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Step3CompleteTheOrganization from './Step3CompleteTheOrganization.vue';
-import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
 import * as Step2 from './Step2DescribeOrganization.stories';
 
 
@@ -18,7 +17,8 @@ organization.description = 'This is the provided description'
 
 const args = {
   organization,
-  steps: Stepper.StepperOrgaOnSecondStep.args.steps,
+  datasetLink: "",
+  reuseLink: "",
 };
 
 export const Step3: StoryObj<typeof meta> = {
@@ -28,7 +28,9 @@ export const Step3: StoryObj<typeof meta> = {
       return { args };
     },
     template: ` <div class="bg-grey-50 fr-p-4w">
-                  <Step3CompleteTheOrganization v-bind="args" />
+                  <div class="fr-container">
+                    <Step3CompleteTheOrganization v-bind="args" />
+                  </div>
                 </div>`,
   }),
   args,

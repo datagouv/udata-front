@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
-import AdminSidebarOrganizationMenu from "./AdminSidebarOrganizationMenu.vue";
+import AdminSidebarMenu from "./AdminSidebarMenu.vue";
 import type { Organization } from "@etalab/data.gouv.fr-components";
 
 const meta = {
-  title: "Admin/AdminSidebarOrganizationMenu",
-  component: AdminSidebarOrganizationMenu,
-} satisfies Meta<typeof AdminSidebarOrganizationMenu>;
+  title: "Admin/AdminSidebarMenu",
+  component: AdminSidebarMenu,
+} satisfies Meta<typeof AdminSidebarMenu>;
 
 export default meta;
 
@@ -23,11 +23,11 @@ const organization : Organization = {
 
 export const Opened: StoryObj<typeof meta> = {
   render: (args) => ({
-    components: { AdminSidebarOrganizationMenu },
+    components: { AdminSidebarMenu },
     setup() {
       return { args };
     },
-    template: `<ul class="fr-sidemenu"><AdminSidebarOrganizationMenu v-bind="args"/></ul>`,
+    template: `<ul class="fr-sidemenu"><AdminSidebarMenu v-bind="args"/></ul>`,
   }),
   args: {
     organization,
@@ -37,11 +37,11 @@ export const Opened: StoryObj<typeof meta> = {
 
 export const Closed: StoryObj<typeof meta> = {
   render: (args) => ({
-    components: { AdminSidebarOrganizationMenu },
+    components: { AdminSidebarMenu },
     setup() {
       return { args };
     },
-    template: `<ul class="fr-sidemenu"><AdminSidebarOrganizationMenu v-bind="args"/></ul>`,
+    template: `<ul class="fr-sidemenu"><AdminSidebarMenu v-bind="args"/></ul>`,
   }),
   args: {
     organization,

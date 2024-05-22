@@ -20,7 +20,7 @@ export const Form: StoryObj<typeof meta> = {
         const organization: Organization = {...body, id: "someId", last_update: new Date()};
         return res(ctx.delay(), ctx.json(organization));
       }),
-      rest.post('*/api/1/organizations/:organizationId/logo', async (req, res, ctx) => {
+      rest.post('*/api/1/organizations/:organizationId/logo', async (_req, res, ctx) => {
         return res(ctx.delay(), ctx.status(200), ctx.json({"image": "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png", "success": true}));
       }),
     ],
@@ -45,7 +45,7 @@ export const FormWithFailedRequests: StoryObj<typeof meta> = {
         const organization: Dataset = {...body, id: "someId", last_update: new Date()};
         return res(ctx.delay(), ctx.json(organization));
       }),
-      rest.post('*/api/1/organizations/:organizationId/upload', async (req, res, ctx) => {
+      rest.post('*/api/1/organizations/:organizationId/upload', async (_req, res, ctx) => {
         return res(ctx.delay(), ctx.status(400), ctx.json({error: "Chunk size mismatch"}));
       }),
     ],

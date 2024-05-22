@@ -4,7 +4,6 @@ import { within, waitFor, userEvent } from '@storybook/testing-library';
 import { expect } from '@storybook/test';
 import type { NewOrganization } from "@etalab/data.gouv.fr-components";
 import Step2DescribeOrganization from './Step2DescribeOrganization.vue';
-import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
 
 
 const meta = {
@@ -12,7 +11,7 @@ const meta = {
   component: Step2DescribeOrganization,
   decorators: [withActions],
   argTypes: {
-    onNext: { action: true }
+    onSubmit: { action: true }
   }
 } satisfies Meta<typeof Step2DescribeOrganization>;
 
@@ -31,7 +30,6 @@ const organization: NewOrganization = {
 
 const args = {
   organization,
-  steps: Stepper.StepperOrgaOnSecondStep.args.steps,
   errors: []
 };
 
@@ -61,7 +59,7 @@ export const Step2WithInteraction: StoryObj<typeof meta> = {
     });
 
     await userEvent.click(canvas.getByTestId('submitButton'));
-    await waitFor(() => expect(args.onNext).toHaveBeenCalled());
+    await waitFor(() => expect(args.onSubmit).toHaveBeenCalled());
   },
   render: (args) => ({
     components: { Step2DescribeOrganization },
@@ -69,7 +67,9 @@ export const Step2WithInteraction: StoryObj<typeof meta> = {
       return { args };
     },
     template: ` <div class="bg-grey-50 fr-p-4w">
-                  <Step2DescribeOrganization v-bind="args" />
+                  <div class="fr-container">
+                    <Step2DescribeOrganization v-bind="args" />
+                  </div>
                 </div>`,
   }),
   args,

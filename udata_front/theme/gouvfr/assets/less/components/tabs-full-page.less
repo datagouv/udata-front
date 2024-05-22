@@ -1,5 +1,8 @@
 .fr-tabs--full-page {
     overflow: visible;
+    &[data-fr-js-tabs-group] {
+        overflow: hidden;
+    }
     & > .fr-tabs__panel {
         padding: 0;
         padding-top: 2.5rem;

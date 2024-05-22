@@ -32,7 +32,7 @@ const owner: User = {
 
 const args: CardLGProps = {
   dataset: {
-    id: "someId",
+    id: "5de8f397634f4164071119c5",
     acronym: "",
     archived: false,
     description: "Some description",
@@ -45,7 +45,7 @@ const args: CardLGProps = {
       dataset_description_quality: true,
       has_open_format: true,
       has_resources: true,
-      license: true,
+      license: false,
       resources_documentation: true,
       score: 1,
       spatial: true,
@@ -56,7 +56,7 @@ const args: CardLGProps = {
     title: "My new dataset",
     resources: [],
     community_resources: [],
-    created_at: "2014-12-12T12:01:06.889000+00:0",
+    created_at: "2014-12-12T12:01:06.889000+00:00",
     last_modified: "2020-11-03T09:16:55.837000+00:00",
     uri: "https://www.data.gouv.fr",
     slug: "data-gouv-fr",
