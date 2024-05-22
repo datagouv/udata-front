@@ -113,11 +113,6 @@ export const admin_root = _meta("admin-root");
 export const auth_url = _meta("auth-url");
 
 /**
- * The schema catalog URL
- */
-export const schema_catalog_url = _meta("schema-catalog-url");
-
-/**
  * The schema documentation URL
  */
 export const schema_documentation_url = _meta("schema-documentation-url");
@@ -314,7 +309,6 @@ export default {
   admin_root,
   auth_url,
   publishing_form_feedback_url,
-  schema_catalog_url,
   schema_documentation_url,
   schema_publishing_url,
   schema_validata_url,

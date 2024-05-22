@@ -5,7 +5,6 @@ Default settings for udata-front
 # TODO: move this back to an extension
 RESOURCES_SCHEMAGOUVFR_ENABLED = True
 SCHEMA_GOUVFR_VALIDATA_URL = 'https://validata.etalab.studio'
-SCHEMA_CATALOG_URL = 'https://schema.data.gouv.fr/schemas/schemas.json'
 SCHEMA_DOCUMENTATION_URL = 'https://schema.data.gouv.fr/'
 SCHEMA_PUBLISHING_URL = 'https://publier.etalab.studio/fr'
 
