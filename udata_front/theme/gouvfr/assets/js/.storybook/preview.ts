@@ -18,7 +18,7 @@ setup((app) => {
 
 
   const routes: Array<RouteRecordRaw> = [
-    { path: '/', component: Container },
+    { path: '/', component: Me },
     { path: '/me', component: Me },
     {
       path: '/organizations/:oid',

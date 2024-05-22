@@ -1,14 +1,14 @@
 <template>
-  <div class="fr-container--fluid">
+  <div>
     <Breadcrumb>
       <li>
         <router-link class="fr-breadcrumb__link" to="/">
           {{ t('Administration') }}
         </router-link>
       </li>
-      <li v-if="organization">
+      <li v-if="currentOrganization">
         <router-link class="fr-breadcrumb__link" to="/">
-          {{ organization.name }}
+          {{ currentOrganization.name }}
         </router-link>
       </li>
       <li>
@@ -17,31 +17,45 @@
         </a>
       </li>
     </Breadcrumb>
-    <div class="fr-alert fr-alert--info">
-      <h3 class="fr-alert__title">{{ t('This is a WIP page') }}</h3>
-      <p><a :href="url">{{ t('You can manage your datasets on the current admin.') }}</a></p>
-    </div>
+    <DatasetsTable
+      :datasets="datasets"
+      @sort="(newSort) => sort = newSort"
+    />
+    <Pagination
+      v-if="totalResult > pageSize"
+      :page="page"
+      :page-size="pageSize"
+      :total-results="totalResult"
+      @change="(changedPage) => page = changedPage"
+    />
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { Pagination, type Dataset } from "@etalab/data.gouv.fr-components";
+import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
-import type { Me } from "../../../types";
-import { fetchMe } from "../../../api/me";
-import { watchEffect } from 'vue';
-import type { Organization } from '@etalab/data.gouv.fr-components';
+import { useCurrentOrganization } from '../../../composables/admin/useCurrentOrganization';
+import DatasetsTable from "../../../components/AdminTable/AdminDatasetsTable/AdminDatasetsTable.vue";
+import { watchPostEffect } from "vue";
+import { getOrganizationDatasets } from "../../../api/datasets";
 
 const { t } = useI18n();
 const props = defineProps<{oid: string}>();
-const url = `/admin/organization/${props.oid}/`;
 
-const me = ref<Me | null>(null);
-const organization = ref<Organization | null>(null);
+const datasets = ref<Array<Dataset>>([]);
+const page = ref(1);
+const pageSize = ref(10);
+const totalResult = ref(0);
+const sort = ref("-created");
 
-onMounted(async () => me.value = await fetchMe());
+const { currentOrganization } = useCurrentOrganization();
 
-watchEffect(() => {
-  organization.value = me.value?.organizations.find(organization => organization.id === props.oid) ?? null;
+watchPostEffect(async () => {
+  const response = await getOrganizationDatasets(props.oid, page.value, pageSize.value, sort.value);
+  datasets.value = response.data;
+  page.value = response.page;
+  pageSize.value = response.page_size;
+  totalResult.value = response.total;
 });
 </script>
