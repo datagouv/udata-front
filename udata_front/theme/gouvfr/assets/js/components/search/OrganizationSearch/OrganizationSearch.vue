@@ -65,7 +65,6 @@ const inputId = computed(() => `${id}-input`);
 const labelId = computed(() => `${id}-label`);
 
 const options = ref<Array<Organization>>([]);
-const selectedIndex = ref(-1);
 
 async function fetchOptions() {
   try {
@@ -82,11 +81,6 @@ async function fetchOptions() {
 };
 
 const { expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, selected, searchSelectedOption, showAndSelectIfQuery, uid } = useDropdown(options, q);
-
-function openLink(link: string, event: Event) {
-  event.preventDefault();
-  window.open(link, "_self");
-};
 
 watchDebounced(q, async (newValue, oldValue) => {
   if (newValue !== oldValue) {
