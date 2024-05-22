@@ -113,7 +113,7 @@ class ReuseDetailView(ReuseView, DetailView):
 @blueprint.route('/publishing-form/', endpoint='publishing-form')
 class ReusePublishingFormView(LoginOnlyView):
     template_name = 'reuse/publishing-form.html'
-    
+
 
 @sitemap.register_generator
 def sitemap_urls():
