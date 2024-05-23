@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from "@storybook/vue3";
 import UserSearchOption from "./UserSearchOption.vue";
+import * as AvatarStories from "../../discussions/Avatar/Avatar.stories";
 
 const meta = {
   title: 'Components/UserSearch/UserSearchOption',
@@ -22,10 +23,9 @@ export const DefaultUserSearchOption: StoryObj<typeof meta> = {
     setup() {
       return { args };
     },
-    template: ` <div class="fr-grid-row relative">
-                  <UserSearchOption v-bind="args" />
-                </div>`,
+    template: `<UserSearchOption v-bind="args" />`
   }),
   args: {
+    user: AvatarStories.DefaultIdenticonAvatar.args.user
   },
 };
