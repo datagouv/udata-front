@@ -83,6 +83,7 @@ import { api } from '../../plugins/api';
 import CardSm from '../../components/dataset/CardSM.vue';
 import { type Dataset, Well } from '@etalab/data.gouv.fr-components';
 import { Reuse } from '../../types';
+import { useToast } from "../../composables/useToast";
   
 const props = defineProps<{
   errors: Array<string>,
@@ -96,6 +97,7 @@ const emit = defineEmits<{
 }>();
 
 const { t } = useI18n();
+const { toast } = useToast();
 
 const datasets = ref([...props.originalDatasets || []]);
 const reuse = ref(props.reuse);
@@ -152,9 +154,12 @@ const submit = () => {
   validateRequiredRules().then(validated => {
     if(validated) {
       toValue(datasets).forEach(dataset => {
+        console.log(reuse)
         reuse.value.datasets.push(dataset.id);
       });
       emit("next", toValue(reuse));
+    } else {
+      toast.error(t("Please provide at least one dataset."));
     }
   });
 };
