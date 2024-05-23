@@ -411,17 +411,19 @@ async function fetchUser() {
 
 function updateOrganizations() {
   if (me.value) {
+    const userValue = toValue(me)
+    console.log(userValue)
     organizations.value = me.value.organizations;
     organizations.value.push({
       name: `${capitalizeFirstLetter(me.value.first_name)} ${capitalizeFirstLetter(me.value.last_name)}`,
-      logo: me.value.avatar || "https://picsum.photos/200",
+      logo: me.value.avatar,
       id: "user",
       acronym: null,
       badges: [],
       page: "",
       slug: "",
       uri: "",
-      logo_thumbnail: me.value.avatar_thumbnail || "https://picsum.photos/200"
+      logo_thumbnail: me.value.avatar_thumbnail
     });
   }
 }

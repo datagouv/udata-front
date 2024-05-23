@@ -17,8 +17,8 @@ const originalReuse = {
   extras: {},
   featured: null,
   id: "someId",
-  image: "https://picsum.photos/200",
-  image_thumbnail: "https://picsum.photos/200",
+  image: "hhttps://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+  image_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
   last_modified: "2024-03-04T08:07:50.215000+00:00",
   metrics: {
     datasets: 1,

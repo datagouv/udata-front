@@ -1,38 +1,22 @@
 <template>
   <Container class="fr-container">
     <div class="fr-grid-row">
-      <Sidemenu
-        class="fr-col-12 fr-col-md-5"
-        :buttonText="$t('Help')"
-        :onRight="true"
-        :fixed="true"
-        :showBorder="false"
-      >
-        <template #title>
-          <span class="fr-icon--sm fr-icon-question-line" aria-hidden="true"></span>
-          {{ $t('Help') }}
-        </template>
-        <Accordion
-          :title= "$t('Associate datasets to your reuse')"
-          :id="addDatasetsAccordionId"
-          :state="state.datasets"
-          :opened="true"
-        >
-          <div class="markdown fr-m-0">
-            <p class="fr-m-0 fr-mb-1w">
-              {{ $t("By default, your reuse will be linked to the dataset that served as your starting point. But if your reuse has involved other datasets, you can associate them with your reuse at this stage.") }}
-            </p>
-            <p class="fr-m-0 fr-mb-1w">
-              {{ $t("It is important to associate all the datasets used, as this allows for understanding the intersections that were necessary and improving the visibility of your reuse.") }}
-            </p>
-          </div>
-          <Well class="fr-mt-1w" v-if="fieldHasWarning('datasets')" color="orange-terre-battue">
-            {{ getWarningText("files") }}
-          </Well>
-        </Accordion>
-      </Sidemenu>
-      <div class="fr-col-12 fr-col-md-7">
         <Container>
+          <Well
+            color="blue-cumulus"
+            weight="regular"
+            class="fr-mb-2w"
+          >
+            <div class="fr-grid-row">
+              <div class="fr-col-auto fr-mr-3v">
+                <!--<img :src="reuseIcon" alt="" />-->
+              </div>
+              <div class="fr-col">
+                <p class="fr-m-0 fr-text--bold">{{ $t('What is a reuse?') }}</p>
+                <p class="fr-m-0 fr-text--xs">{{ $t('A reuse is an exemple of public data\'s usage.') }} {{ $t('Publishing a reuse can allow you to gain visibility and start start a dialogue with the dataset producer.') }}</p>
+              </div>
+            </div>
+          </Well>
           <fieldset class="fr-fieldset min-width-0" aria-labelledby="description-legend">
             <legend class="fr-fieldset__legend" id="description-legend">
               <h2 class="subtitle subtitle--uppercase fr-mb-3v">
@@ -53,31 +37,26 @@
                 ></button>
               </div>
             </div>
-            <LinkedToAccordion
-              class="fr-fieldset__element min-width-0"
-              :accordion="addDatasetsAccordionId"
-              @blur="touch"
-            >
-              <MultiSelect
-                :minimumCharacterBeforeSuggest="2"
-                @change="addDataset"
-                :placeholder="$t('Look for a dataset')"
-                :searchPlaceholder="$t('Search a dataset...')"
-                suggestUrl="/datasets/suggest/"
-              />
-              <p class="fr-hr-or w-100 text-transform-lowercase fr-text--regular">
-                <span class="fr-hr-or-text">{{ $t('or') }}</span>
-              </p>
-              <InputGroup
-                :label="$t('Link to the dataset')"
-                :placeholder="'https://...'"
-                v-model="linkedDataset"
-                @change="getLinkedDataset"
-              />
-              <div v-if="datasetNotFound" class="fr-col bg-contrast-grey text-align-center fr-p-2v">
-                <p class="fr-text--md fr-text--bold">{{ t('No dataset associated to that link has been found') }}</p>
-              </div>
-            </LinkedToAccordion>
+            <MultiSelect
+              :minimumCharacterBeforeSuggest="2"
+              @change="addDataset"
+              :placeholder="$t('Look for a dataset')"
+              :searchPlaceholder="$t('Search a dataset...')"
+              suggestUrl="/datasets/suggest/"
+            />
+            <p class="fr-hr-or w-100 text-transform-lowercase fr-text--regular">
+              <span class="fr-hr-or-text">{{ $t('or') }}</span>
+            </p>
+            <InputGroup
+              :label="$t('Link to the dataset')"
+              :placeholder="'https://...'"
+              class="w-100"
+              v-model="linkedDataset"
+              @change="getLinkedDataset"
+            />
+            <div v-if="datasetNotFound" class="fr-col bg-contrast-grey text-align-center fr-p-2v">
+              <p class="fr-text--md fr-text--bold">{{ t('No dataset associated to that link has been found') }}</p>
+            </div>
           </fieldset>
           <Alert type="error" v-if="errors.length" class="fr-mt-n2w fr-mb-2w">
             <template #title>{{ t("An error occured | Some errors occured", errors.length) }}</template>
@@ -93,19 +72,14 @@
           </div>
         </Container>
       </div>
-    </div>
   </Container>
 </template>
 <script setup lang="ts">
-import { computed, ref, toValue } from 'vue';
+import { ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
-import Accordion from '../../components/Accordion/Accordion.vue';
 import Container from '../../components/Ui/Container/Container.vue';
 import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
-import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
-import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
-import useUid from "../../composables/useUid";
 import useFunctionalState from '../../composables/form/useFunctionalState';
 import { requiredWithCustomMessage } from '../../i18n';
 import { api } from '../../plugins/api';
@@ -117,7 +91,7 @@ const props = defineProps<{
   errors: Array<string>,
   loading?: Boolean,
   reuse: Reuse,
-  originalDatasets?: Array<Dataset>
+  originalDatasets?: Dataset[]
 }>();
 
 const emit = defineEmits<{
@@ -125,9 +99,8 @@ const emit = defineEmits<{
 }>();
 
 const { t } = useI18n();
-const { id: addDatasetsAccordionId } = useUid("accordion");
 
-const datasets = ref([...props.originalDatasets]);
+const datasets = ref([...props.originalDatasets || []]);
 const reuse = ref(props.reuse)
 const linkedDataset = ref<String>("")
 const datasetNotFound = ref<Boolean>(false)
@@ -142,7 +115,7 @@ const warningRules = {
   datasets: { datasetRequired },
 };
 
-const { getFunctionalState, getWarningText, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState({ datasets }, requiredRules, warningRules);
+const { validateRequiredRules } = useFunctionalState({ datasets }, requiredRules, warningRules);
 
 const addDataset = async (datasetId: string) => {
   const existingDataset = datasets.value.find(dataset => dataset.id === datasetId);
@@ -153,15 +126,6 @@ const addDataset = async (datasetId: string) => {
 };
 
 const removeDataset = (index: number) => datasets.value.splice(index, 1);
-
-/**
- * @type {import("vue").ComputedRef<Record<string, import("../../types").AccordionFunctionalState>>}
- */
-const state = computed(() => {
-  return {
-    datasets: getFunctionalState(vWarning$.value.datasets.$dirty, v$.value.datasets.$invalid, vWarning$.value.datasets.$error),
-  };
-});
 
 const getLinkedDataset = async () => {
   datasetNotFound.value = false;
@@ -186,11 +150,6 @@ const getLinkedDataset = async () => {
     datasetNotFound.value = true;
   }
 }
-  
-const touch = () => {
-  v$.value.datasets.$touch();
-  vWarning$.value.datasets.$touch();
-};
 
 const submit = () => {
   validateRequiredRules().then(validated => {
@@ -202,6 +161,4 @@ const submit = () => {
     }
   });
 };
-
-const fieldHasWarning = (field: string) => hasWarning(state, field);
 </script>
