@@ -650,10 +650,23 @@ export default defineComponent({
       }
     };
 
+    function diff(value1, value2) {
+      if (typeof value1 === 'string' && typeof value2 === 'string') {
+        return value1 === value2 ? "" : value1;
+      } else if (typeof value1 === 'object' && typeof value2 === 'object') {
+        return [
+          ...value1.filter(item => !value2.includes(item)),
+          ...value2.filter(item => !value1.includes(item))
+        ]
+      }
+    };
+
     watch(() => props.values, async () => {
+      const selectedValues = selected.value;
       await fillSelectedFromValues();
-      if(Array.isArray(selected.value)) {
-        for(const value of selected.value) {
+      const toSelect = diff(selected.value, selectedValues)
+      if(Array.isArray(toSelect)) {
+        for(const value of toSelect) {
           selectA11y.value?.selectOptionSilently(value);
         }
       } else {
