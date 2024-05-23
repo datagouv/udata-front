@@ -80,6 +80,7 @@ import { useI18n } from 'vue-i18n';
 import Container from '../../components/Ui/Container/Container.vue';
 import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
+import Alert from '../../components/Alert/Alert.vue';
 import useFunctionalState from '../../composables/form/useFunctionalState';
 import { requiredWithCustomMessage } from '../../i18n';
 import { api } from '../../plugins/api';
@@ -101,9 +102,9 @@ const emit = defineEmits<{
 const { t } = useI18n();
 
 const datasets = ref([...props.originalDatasets || []]);
-const reuse = ref(props.reuse)
-const linkedDataset = ref<String>("")
-const datasetNotFound = ref<Boolean>(false)
+const reuse = ref(props.reuse);
+const linkedDataset = ref<String>("");
+const datasetNotFound = ref<Boolean>(false);
 
 const datasetRequired = requiredWithCustomMessage(t("At least one dataset is required."));
 
@@ -157,7 +158,7 @@ const submit = () => {
       toValue(datasets).forEach(dataset => {
         reuse.value.datasets.push(dataset.id);
       });
-      emit("next", reuse);
+      emit("next", toValue(reuse));
     }
   });
 };

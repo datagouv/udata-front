@@ -321,7 +321,7 @@ import { useI18n } from 'vue-i18n';
 import { getUser } from '../../api/user';
 import Alert from '../../components/Alert/Alert.vue';
 import { url } from '@vuelidate/validators';
-import { type Organization, Well } from '@etalab/data.gouv.fr-components';
+import { type Organization, Well, type User } from '@etalab/data.gouv.fr-components';
 
 const props = defineProps<{
   originalReuse: Reuse,
@@ -353,7 +353,7 @@ const hasImage = () => {
   return image.value !== null;
 };
 
-const me = ref(null);
+const me = ref<User | null>(null);
 
 const requiredRules = {
   title: { required },
@@ -410,20 +410,19 @@ async function fetchUser() {
 }
 
 function updateOrganizations() {
-  if (me.value) {
-    const userValue = toValue(me)
-    console.log(userValue)
-    organizations.value = me.value.organizations;
+  const userValue = toValue(me)
+  if (userValue) {
+    organizations.value = userValue.organizations;
     organizations.value.push({
-      name: `${capitalizeFirstLetter(me.value.first_name)} ${capitalizeFirstLetter(me.value.last_name)}`,
-      logo: me.value.avatar,
+      name: `${userValue.first_name} ${userValue.last_name}`,
+      logo: userValue.avatar || "",
       id: "user",
       acronym: null,
       badges: [],
       page: "",
       slug: "",
       uri: "",
-      logo_thumbnail: me.value.avatar_thumbnail
+      logo_thumbnail: userValue.avatar_thumbnail || ""
     });
   }
 }

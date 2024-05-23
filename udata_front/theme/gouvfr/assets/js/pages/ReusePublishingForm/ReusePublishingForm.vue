@@ -118,14 +118,15 @@ async function createReuseAndMoveToNextStep(newReuse: Reuse, newFile: File) {
   if (moveToNextStep) {
     moveToStep(1);
   }
-
 }
 
 async function updateReuseAndMoveToNextStep(newReuse: Reuse) {
   errors.value = [];
   let moveToNextStep = false;
+  const datasets = newReuse.datasets;
   try {
     reuse.value = await updateReuse(newReuse);
+    reuse.value.datasets = datasets;
     moveToNextStep = true;
   } catch (e) {
     errors.value.push(e.message);
@@ -135,9 +136,9 @@ async function updateReuseAndMoveToNextStep(newReuse: Reuse) {
   }
 };
 
-async function updateReuseDatas(reuse: Reuse) {
+async function updateReuseDatas(newReuse: Reuse) {
   try {
-    reuse.value = await updateReuse(reuse);
+    reuse.value = await updateReuse(newReuse);
   } catch (e) {
     errors.value.push(e.message);
   }
