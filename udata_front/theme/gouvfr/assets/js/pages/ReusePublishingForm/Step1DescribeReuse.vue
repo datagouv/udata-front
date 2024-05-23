@@ -103,12 +103,11 @@
           >
             <div class="fr-grid-row">
               <div class="fr-col-auto fr-mr-3v">
-                <img :src="editIcon" alt="" />
+                <img :src="reuseIcon" alt="" />
               </div>
               <div class="fr-col">
                 <p class="fr-m-0 fr-text--bold">{{ $t('What is a reuse?') }}</p>
-                <p class="fr-m-0 fr-text--xs">{{ $t('A reuse is an exemple of public data\'s usage.') }}</p>
-                <p class="fr-m-0 fr-text--xs">{{ $t('Publishing a reuse can allow you to gain visibility and start start a dialogue with the dataset producer.') }}</p>
+                <p class="fr-m-0 fr-text--xs">{{ $t('A reuse is an exemple of public data\'s usage.') }} {{ $t('Publishing a reuse can allow you to gain visibility and start start a dialogue with the dataset producer.') }}</p>
               </div>
             </div>
           </Well>
@@ -313,7 +312,7 @@ import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
 import useUid from "../../composables/useUid";
 import useFunctionalState from '../../composables/form/useFunctionalState';
-import editIcon from "../../../../templates/svg/illustrations/edit.svg";
+import reuseIcon from "../../../../templates/svg/illustrations/reuse.svg";
 import { quality_description_length } from "../../config";
 import { getReuseTypesUrl, getReuseTopicsUrl } from '../../api/reuses';
 import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
