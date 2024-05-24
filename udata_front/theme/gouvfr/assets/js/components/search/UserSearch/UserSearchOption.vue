@@ -1,10 +1,13 @@
 <template>
-  <div class="fr-grid-row fr-grid-row--middle border-default-grey border-bottom">
+  <button
+    class="w-100 fr-grid-row fr-grid-row--middle border-default-grey border-bottom"
+    @click="$emit('click', user)"
+  >
     <Avatar :user class="fr-col-auto fr-m-1w" :size="32" :rounded="true" />
-    <div class="fr-col ">
+    <div class="fr-col text-align-left">
       {{ user.first_name + " " + user.last_name }}
     </div>
-  </div>
+  </button>
 </template>
 
 <script setup lang="ts">
@@ -13,5 +16,9 @@ import Avatar from '../../discussions/Avatar/Avatar.vue';
 
 defineProps<{
   user: User;
+}>();
+
+defineEmits<{
+  click: [user: User]
 }>();
 </script>

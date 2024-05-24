@@ -19,7 +19,6 @@
       v-model="q"
       @click.stop.capture="() => showAndSelectIfQuery(q)"
       @keydown="handleKeyDown"
-      @keypress.enter.prevent="searchSelectedOption"
       @blur="handleFocusOut"
     />
     <div
@@ -37,13 +36,12 @@
           role="option"
           :aria-selected="isSelected(option.id)"
         >
-          <UserSearchOption :user="option.user"/>
+          <UserSearchOption :user="option.user" @click="select(option.id)"/>
         </li>
       </ul>
     </div>
   </div>
 </template>
-
 
 <script setup lang="ts">
 import { ref, computed } from "vue";
@@ -80,7 +78,7 @@ async function fetchOptions() {
   }
 };
 
-const { expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, selected, searchSelectedOption, showAndSelectIfQuery, uid} = useDropdown(options, q);
+const { expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, selected, select, showAndSelectIfQuery, uid} = useDropdown(options, q);
 
 watchDebounced(q, async (newValue, oldValue) => {
   if (newValue !== oldValue) {
