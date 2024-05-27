@@ -52,7 +52,7 @@ For our releases, a manual update of the version number is necessary. To do so, 
 npm run update-version -- NEW_VERSION
 ```
 
-You should use `major`, `minor`, `patch` to let NPM compute the next version number.
+`NEW_VERSION` should be either `major`, `minor` or `patch` to let NPM compute the next version number.
 
 The update triggers a project build and its tests.
 
