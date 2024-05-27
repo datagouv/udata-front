@@ -143,16 +143,26 @@
     </div>
   </div>
 </template>
-<script>
+
+<script lang="ts">
+import type { Step } from '../../components/Form/Stepper/Stepper.vue';
+import type { NewDatasetFile } from '../../types';
+
+export type Step3AddFilesProps = {
+  errors: Array<string>;
+  loading?: boolean;
+  steps: Array<Step>;
+  originalFiles: Array<NewDatasetFile>;
+};
+</script>
+<script setup lang="ts">
 import { Well } from "@etalab/data.gouv.fr-components";
-import { computed, defineComponent, ref } from 'vue';
+import { type Ref, computed, ref, watchEffect, MaybeRefOrGetter } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
-import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
 import Alert from '../../components/Alert/Alert.vue';
 import ButtonLoader from '../../components/Form/ButtonLoader.vue';
 import Container from '../../components/Ui/Container/Container.vue';
-import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
 import FileCard from '../../components/Form/FileCard/FileCard.vue';
 import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
@@ -163,136 +173,81 @@ import useFunctionalState from '../../composables/form/useFunctionalState';
 import { requiredWithCustomMessage, withMessage } from '../../i18n';
 import editIcon from "../../../../templates/svg/illustrations/edit.svg";
 import { isClosedFormat } from '../../helpers';
-import { isLoading, isLoaded } from "../../api/resources";
+import type { DatasetFile } from "../../types";
 
-export default defineComponent({
-  components: { Accordion, AccordionGroup, Alert, ButtonLoader, Container, FileCard, InputGroup, LinkedToAccordion, Sidemenu, Stepper, UploadModalButton, Well, },
-  emits: ["editFile", "next"],
-  props: {
-    errors: {
-      type: Array,
-      required: true,
-    },
-    loading: {
-      type: Boolean,
-      default: false,
-    },
-    steps: {
-      type: Array,
-      required: true,
-    },
-    originalFiles: {
-      /** @type {import("vue").PropType<Readonly<Array<import("../../types").NewDatasetFile>>>} */
-      type: Array,
-      required: true,
-    }
-  },
-  setup(props, { emit }) {
-    const { t } = useI18n();
-    const { id: publishFileAccordionId } = useUid("accordion");
-    const { id: addDescriptionAccordionId } = useUid("accordion");
-
-    const files = ref([...props.originalFiles]);
-
-    const fileRequired = requiredWithCustomMessage(t("At least one file is required."));
-
-    /**
-     * Validates that the dataset contains an open format file.
-     * @param {Array<import("../../types").DatasetFile>} value
-     */
-    const onefileHasOpenFormats = (value) => value.reduce((previous, current) => previous || !isClosedFormat(current.format), false);
-
-    /**
-     * Validates that the dataset contains a documentation file.
-     * @param {undefined} value
-     * * @param {{files: Array<import("../../types").DatasetFile>}} siblings
-     */
-     const hasDocumentation = (value, siblings) => siblings.files.reduce((previous, current) => previous || current.type === "documentation" || !!current.description?.trim(), false);
-
-    const requiredRules = {
-      files: { fileRequired },
-    };
-
-    const warningRules = {
-      files: { fileRequired, openFormat: withMessage(t("You did not add a file with an open format."), onefileHasOpenFormats) },
-      hasDocumentation: { hasDocumentation: withMessage(t("You have not added a documentation file or described your files."), hasDocumentation) }
-    };
-
-    const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState({ files }, requiredRules, warningRules);
-
-    /**
-     *
-     * @param {Array<import("../../types").NewDatasetFile>} newFiles
-     */
-    const addFiles = (newFiles) => {
-      files.value.push(...newFiles);
-      if(newFiles.length === 1 && newFiles[0].filetype === "remote") {
-        emit('editFile', files, files.value.length - 1);
-      }
-    };
-
-    /**
-     *
-     * @param {number} position
-     */
-    const removeFile = (position) => files.value.splice(position, 1);
-
-    /**
-     * @type {import("vue").ComputedRef<Record<string, import("../../types").AccordionFunctionalState>>}
-     */
-    const state = computed(() => {
-      return {
-        files: getFunctionalState(vWarning$.value.files.$dirty, v$.value.files.$invalid, vWarning$.value.files.$error),
-        hasDocumentation: getFunctionalState(vWarning$.value.hasDocumentation.$dirty, false, vWarning$.value.hasDocumentation.$error),
-      };
-    });
-
-    const touch = () => {
-      v$.value.files.$touch();
-      vWarning$.value.files.$touch();
-      vWarning$.value.hasDocumentation.$touch();
-    };
-
-    const submit = () => {
-      validateRequiredRules().then(validated => {
-        if(validated) {
-          emit("next", files);
-        }
-      });
-    };
-
-    /**
-     *
-     * @param {string} field
-     */
-    const fieldHasError = (field) => hasError(state, field);
-
-    /**
-     *
-     * @param {string} field
-     */
-    const fieldHasWarning = (field) => hasWarning(state, field);
-
-    return {
-      addDescriptionAccordionId,
-      addFiles,
-      files,
-      editIcon,
-      getErrorText,
-      getFunctionalState,
-      getWarningText,
-      isLoaded,
-      isLoading,
-      publishFileAccordionId,
-      removeFile,
-      state,
-      fieldHasError,
-      fieldHasWarning,
-      submit,
-      touch,
-      v$,
-      vWarning$,
-    };
-  },
+const props = withDefaults(defineProps<Step3AddFilesProps>(), {
+  loading: false,
 });
+
+const emit = defineEmits<{
+  editFile: [files: MaybeRefOrGetter<Array<NewDatasetFile>>, index: number],
+  next: [files: Ref<Array<NewDatasetFile>>]
+}>();
+
+const { t } = useI18n();
+const { id: publishFileAccordionId } = useUid("accordion");
+const { id: addDescriptionAccordionId } = useUid("accordion");
+
+const files = ref<Array<NewDatasetFile>>([]);
+
+watchEffect(() => {
+  files.value = [...props.originalFiles];
+});
+
+const fileRequired = requiredWithCustomMessage(t("At least one file is required."));
+
+/**
+ * Validates that the dataset contains an open format file.
+ */
+const onefileHasOpenFormats = (value: Array<DatasetFile>) => value.reduce((previous, current) => previous || !isClosedFormat(current.format), false);
+
+/**
+ * Validates that the dataset contains a documentation file.
+ */
+  const hasDocumentation = (_value: undefined, siblings: { files: Array<DatasetFile> }) => siblings.files.reduce((previous, current) => previous || current.type === "documentation" || !!current.description?.trim(), false);
+
+const requiredRules = {
+  files: { fileRequired },
+};
+
+const warningRules = {
+  files: { fileRequired, openFormat: withMessage(t("You did not add a file with an open format."), onefileHasOpenFormats) },
+  hasDocumentation: { hasDocumentation: withMessage(t("You have not added a documentation file or described your files."), hasDocumentation) },
+};
+
+const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState({ files }, requiredRules, warningRules);
+
+const addFiles = (newFiles: Array<NewDatasetFile>) => {
+  files.value.push(...newFiles);
+  if(newFiles.length === 1 && newFiles[0].filetype === "remote") {
+    emit('editFile', files, files.value.length - 1);
+  }
+};
+
+const removeFile = (position: number) => files.value.splice(position, 1);
+
+const state = computed(() => {
+  return {
+    files: getFunctionalState(vWarning$.value.files.$dirty, v$.value.files.$invalid, vWarning$.value.files.$error),
+    hasDocumentation: getFunctionalState(vWarning$.value.hasDocumentation.$dirty, false, vWarning$.value.hasDocumentation.$error),
+  };
+});
+
+const touch = () => {
+  v$.value.files.$touch();
+  vWarning$.value.files.$touch();
+  vWarning$.value.hasDocumentation.$touch();
+};
+
+const submit = () => {
+  validateRequiredRules().then(validated => {
+    if(validated) {
+      emit("next", files);
+    }
+  });
+};
+
+const fieldHasError = (field: string) => hasError(state, field);
+
+const fieldHasWarning = (field: string) => hasWarning(state, field);
 </script>
