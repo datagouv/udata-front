@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import {defineComponent, ref, computed, onMounted, onUpdated, reactive, unref, watch, toValue} from "vue";
+import {defineComponent, ref, computed, onMounted, onUpdated, reactive, watch, toValue} from "vue";
 import Select from "@datagouv/select-a11y";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
