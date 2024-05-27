@@ -3,7 +3,7 @@
     <label class="fr-label" :for="inputId" :id="labelId">
       {{ t('Search for data') }}
     </label>
-    <span class="fr-icon-search-line" aria-hidden="true"></span>
+    <span class="fr-icon-search-line absolute fr-m-1v" aria-hidden="true"></span>
     <input
       class="fr-input fr-col-12 fr-pl-10v"
       :placeholder="t('Search an organization on data.gouv.fr')"
@@ -91,14 +91,7 @@ watchDebounced(q, async (newValue, oldValue) => {
 
 <style scoped>
   .shadow {
-    box-shadow: 0px 4px 2px var(--border-default-grey);
-  }
-
-  .fr-icon-search-line {
-    position: absolute;
-    left: 0.5rem;
-    top: 0.5rem;
-    pointer-events: none;
+    box-shadow: 0px 4px 4px var(--border-default-grey);
   }
 
   .fr-icon-search-line::before {
