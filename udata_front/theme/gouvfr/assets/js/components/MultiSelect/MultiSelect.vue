@@ -650,14 +650,13 @@ export default defineComponent({
       }
     };
 
-    function diff(value1, value2) {
-      if (Array.isArray(value1) && Array.isArray(value2)) {
+    function diff(newValue, oldValue) {
+      if (Array.isArray(newValue) && Array.isArray(oldValue)) {
         return [
-          ...value1.filter(item => !value2.includes(item)),
-          ...value2.filter(item => !value1.includes(item)),
+          ...newValue.filter(item => !oldValue.includes(item)),
         ];
       } else {
-        return value1 === value2 ? [] : [value1];
+        return newValue === oldValue ? [] : [newValue];
       }
     };
 
