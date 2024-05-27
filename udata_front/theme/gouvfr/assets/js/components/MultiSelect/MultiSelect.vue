@@ -651,11 +651,11 @@ export default defineComponent({
     };
 
     function diff(value1, value2) {
-      if (value1.isArray && value2.isArray) {
+      if (Array.isArray(value1) && Array.isArray(value2)) {
         return [
           ...value1.filter(item => !value2.includes(item)),
-          ...value2.filter(item => !value1.includes(item))
-        ]
+          ...value2.filter(item => !value1.includes(item)),
+        ];
       } else {
         return value1 === value2 ? [] : [value1];
       }
@@ -664,7 +664,7 @@ export default defineComponent({
     watch(() => props.values, async () => {
       const selectedValues = selected.value;
       await fillSelectedFromValues();
-      const toSelect = diff(selected.value, selectedValues)
+      const toSelect = diff(selected.value, selectedValues);
       for(const value of toSelect) {
         selectA11y.value?.selectOptionSilently(value);
       }
