@@ -24,7 +24,7 @@
       @blur="handleFocusOut"
     />
     <div
-      class="fr-collapse autocomplete w-100 fr-mt-1w shadow"
+      class="fr-collapse autocomplete w-100 fr-mt-1w shadow border-bottom-rounded"
       :id="uid"
       ref="listRef"
       role="listbox"
