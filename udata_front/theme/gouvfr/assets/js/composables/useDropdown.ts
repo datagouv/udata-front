@@ -11,7 +11,7 @@ export function useDropdown<T extends OptionWithId>(options: MaybeRefOrGetter<Ar
   const { expanded, handleKeyPressForCollapse, hide, registerBackgroundEvent, removeBackgroundEvent, show, uid } = useCollapse();
   const { focusOut, handleKeyPressForActiveDescendant, isSelected, select, selected, selectedOption, NOT_MOVED_YET, ALREADY_MOVED_DOWN } = useActiveDescendant(options);
 
-  function showAndSelectIfQuery(q: MaybeRefOrGetter<string>) {
+  function showAndSelectIfQuery() {
     if(toValue(q)) {
       show();
       select(selected.value);
