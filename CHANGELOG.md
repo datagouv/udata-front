@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add beta admin "add member" modale [#398](https://github.com/etalab/udata-front/pull/398)
 
 ## 4.0.3 (2024-05-28)
 
@@ -10,7 +10,6 @@
 - Fix an error that blocks datasets search filters reset [#402](https://github.com/datagouv/udata-front/pull/402)
 - Componentize dataset card [#397](https://github.com/datagouv/udata-front/pull/397)
 - Use udata schema endpoint [#336](https://github.com/etalab/udata-front/pull/336)
-- Add beta admin "add member" modale [#398](https://github.com/etalab/udata-front/pull/398)
 
 ## 4.0.2 (2024-04-26)
 
