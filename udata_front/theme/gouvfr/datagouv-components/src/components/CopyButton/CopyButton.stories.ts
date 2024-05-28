@@ -1,6 +1,6 @@
 import { withActions } from '@storybook/addon-actions/decorator';
-import { expect } from '@storybook/jest';
-import { userEvent, waitFor, within } from '@storybook/testing-library';
+import { expect } from '@storybook/test';
+import { userEvent, within } from '@storybook/testing-library';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { CopyButton } from '.';
 

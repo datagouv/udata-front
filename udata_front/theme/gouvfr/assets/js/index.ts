@@ -20,6 +20,7 @@ import Captcha from "./components/utils/captcha.vue";
 import UserDatasetList from "./components/UserDatasetList/UserDatasetList.vue";
 import UserReuseList from "./components/UserReuseList/UserReuseList.vue";
 import PublishingForm from "./pages/PublishingForm/PublishingForm.vue";
+import OrganizationPublishingForm from "./pages/OrganizationPublishingForm/OrganizationPublishingForm.vue";
 import { ReadMore, Toggletip } from "@etalab/data.gouv.fr-components";
 
 import "./components/vanilla/tabs.js";
@@ -29,7 +30,7 @@ import "./components/vanilla/dialog.js";
 import "./components/vanilla/sort-search.js";
 import handleUpdateUrlButtons from "./components/vanilla/update-url.js";
 import i18n from "./i18n.ts";
-import { admin_root, api_root, api_2_root, explorable_resources, schema_catalog_url, schema_documentation_url, schema_validata_url, title, } from "./config.ts";
+import { admin_root, api_root, api_2_root, explorable_resources, schema_documentation_url, schema_validata_url, title, } from "./config.ts";
 import Api from "./plugins/api.ts";
 import EventBus from "./plugins/eventbus.ts";
 import Auth from "./plugins/auth.ts";
@@ -42,7 +43,6 @@ setupComponents({
   default_lang: i18n.global.locale.value,
   explorable_resources,
   only_locales: i18n.global.locale.value,
-  schema_catalog_url,
   schema_documentation_url,
   schema_validata_url,
   show_copy_resource_permalink: true,
@@ -75,6 +75,7 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("chart", Chart);
   app.component("toggletip", Toggletip);
   app.component("publishing-form", PublishingForm);
+  app.component("organization-publishing-form", OrganizationPublishingForm);
   app.component("user-dataset-list", UserDatasetList);
   app.component("user-reuse-list", UserReuseList);
 
