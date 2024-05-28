@@ -90,10 +90,6 @@ watchDebounced(q, async (newValue, oldValue) => {
 </script>
 
 <style scoped>
-  .shadow {
-    box-shadow: 0px 4px 4px var(--border-default-grey);
-  }
-
   .fr-icon-search-line::before {
     height: 1.25rem;
   }
