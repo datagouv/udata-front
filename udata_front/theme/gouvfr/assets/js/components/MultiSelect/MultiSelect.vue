@@ -181,6 +181,10 @@ export default defineComponent({
     showDescription: {
       type: Boolean,
       default: false
+    },
+    roundedImages: {
+      type: Boolean,
+      default: false,
     }
   },
   setup(props, { emit }) {
@@ -194,7 +198,9 @@ export default defineComponent({
       return {
         'fr-select-group--error': props.hasError,
         'fr-select-group--warning': !props.hasError && props.hasWarning,
-        'fr-select-group--valid': props.isValid
+        'fr-select-group--valid': props.isValid,
+        'multiselect--rounded-images': props.roundedImages,
+        'multiselect--align-center': !props.showDescription,
       };
     });
 
@@ -277,6 +283,9 @@ export default defineComponent({
       deleteItem: t('Delete {t}'),
       delete: t('Delete'),
     });
+
+    /** CSS property to round suggestion image */
+    const roundedImages = props.roundedImages ? "50%" : "inherit";
 
     /**
      * Get initial set of options from API or an empty array

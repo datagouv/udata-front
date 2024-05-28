@@ -107,48 +107,6 @@ const members = ref<Array<EditingMember>>([]);
 
 const loading = ref(false);
 
-function getModalId(id: string) {
-  return "fr-modal-user-" + id;
-}
-
-function getModalTitleId(id: string) {
-  return "fr-modal-title-user-" + id;
-}
-
-function closeModal(memberId: string) {
-  const modal = document.getElementById(getModalId(memberId));
-  globalThis.dsfr(modal).modal.conceal();
-}
-
-async function updateRole(member: EditingMember) {
-  if(!member.newRole) {
-    closeModal(member.user.id);
-    return;
-  }
-  try {
-    loading.value = true;
-    await updateMemberRole(props.oid, member.user.id, member.newRole);
-    updateMembers();
-    closeModal(member.user.id);
-  } catch (e) {
-    toast.error(t("An error occurred while updating the member role."));
-  } finally {
-    loading.value = false;
-  }
-}
-
-async function removeMemberFromOrganization(member: Member) {
-  try {
-    loading.value = true;
-    await removeMember(props.oid, member.user.id);
-    updateMembers();
-  } catch (e) {
-    toast.error(t("An error occurred while removing this member."));
-  } finally {
-    loading.value = false;
-  }
-}
-
 function getRoleLabel(role: MemberRole) {
   return roles.value.find(memberRole => memberRole.value === role)?.label ?? role;
 }

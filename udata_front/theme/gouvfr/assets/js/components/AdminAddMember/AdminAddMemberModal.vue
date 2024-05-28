@@ -29,10 +29,16 @@
                   >
                     {{ t("Add member to the organization") }}
                   </h1>
-                  <InputGroup
-                    :label="t('Search a user')"
-                    :model-value="userId"
-                    @update:model-value="(user) => userId = user"
+                  <MultiSelect
+                    :placeholder="$t('Search a user')"
+                    :searchPlaceholder="$t('Search a user...')"
+                    suggestUrl="/users/suggest/"
+                    :values="userId"
+                    @change="(value: string) => userId = value"
+                    :allOption="$t('Select a user')"
+                    :addAllOption="false"
+                    :onSuggest="formatUsers"
+                    :roundedImages="true"
                   />
                   <SelectGroup
                     :label="t('Role of the member')"
@@ -79,13 +85,15 @@ export type AdminAddMemberModalProps = {
 </script>
 
 <script setup lang="ts">
+import type { User } from '@etalab/data.gouv.fr-components';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { addMember } from "../../api/organizations";
-import InputGroup, { InputValue } from "../Form/InputGroup/InputGroup.vue";
+import MultiSelect from "../MultiSelect/MultiSelect.vue";
 import SelectGroup, { type Option } from "../Form/SelectGroup/SelectGroup.vue";
-import type { MemberRole } from '../../types';
+import type { MemberRole, MultiSelectOption } from '../../types';
 import { useToast } from '../../composables/useToast';
+import useUserAvatar from '../../composables/useUserAvatar';
 
 const props = defineProps<AdminAddMemberModalProps>();
 
@@ -96,7 +104,7 @@ const emits = defineEmits<{
 const { t } = useI18n();
 const { toast } = useToast();
 const loading = ref(false);
-const userId = ref<InputValue>();
+const userId = ref<string>();
 const role = ref<MemberRole>("editor");
 const modalTitleId = computed(() => "fr-modal-title-user-" + props.id);
 
@@ -113,6 +121,19 @@ async function submit() {
   } finally {
     loading.value = false;
   }
+}
+
+type UserSuggest = Omit<User, "avatar" | "avatar_thumbnail" | "roles" | "pages"> & { avatar_url: string | null };
+
+function formatUsers(users: Array<UserSuggest>): Array<MultiSelectOption> {
+  return users.map(userSuggested => {
+    const user = { ...userSuggested, avatar_thumbnail: userSuggested.avatar_url ?? undefined };
+    return  {
+      value: user.id,
+      label: user.first_name + " " + user.last_name,
+      image: useUserAvatar(user, 32),
+    };
+  });
 }
 
 function closeModal() {
