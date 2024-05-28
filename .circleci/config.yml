@@ -249,7 +249,7 @@ jobs:
               npm run publish-dev
             else
               # This is a simple development build
-              # `npm view @datagouv/components@dev version` allows us to get the current `dev` version
+              # `npm view @datagouv/components@dev version` allows us to get the current `dev` version on the npm registry
               # We set it as the current version
               npm run update-version -- --allow-same-version $(npm view @datagouv/components@dev version)
               # Then, we increment the preprelease version number
