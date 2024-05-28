@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 4.0.3 (2024-05-28)
 
 - Add Organization publishing form [#358](https://github.com/datagouv/udata-front/pull/358)
