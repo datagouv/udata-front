@@ -5,6 +5,7 @@
 - Add Organization publishing form [#358](https://github.com/datagouv/udata-front/pull/358)
 - Fix an error that blocks datasets search filters reset [#402](https://github.com/datagouv/udata-front/pull/402)
 - Componentize dataset card [#397](https://github.com/datagouv/udata-front/pull/397)
+- Use udata schema endpoint [#336](https://github.com/etalab/udata-front/pull/336)
 - Fix display not showing in Multiselect for multi options [#416](https://github.com/datagouv/udata-front/pull/416)
 
 ## 4.0.2 (2024-04-26)
@@ -48,7 +49,6 @@
 - Fix structure tab not shown [#369](https://github.com/etalab/udata-front/pull/369)
 - Update sentry configuration to ignore aborted requests [#368](https://github.com/etalab/udata-front/pull/368)
 - Fix CI not using udata release when needed [#363](https://github.com/etalab/udata-front/pull/363)
-- Use udata schema endpoint [#336](https://github.com/etalab/udata-front/pull/336)
 
 ## 3.5.3 (2024-02-22)
 
