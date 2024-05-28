@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 4.0.3 (2024-05-28)
 
 - Add Organization publishing form [#358](https://github.com/datagouv/udata-front/pull/358)
 - Fix an error that blocks datasets search filters reset [#402](https://github.com/datagouv/udata-front/pull/402)
