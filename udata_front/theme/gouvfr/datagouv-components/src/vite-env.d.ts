@@ -4,7 +4,6 @@ interface ImportMetaEnv {
   readonly VITE_ADMIN_ROOT: string;
   readonly VITE_SHOW_COPY_RESOURCE_PERMALINK: string;
   readonly VITE_SCHEMA_DOCUMENTATION_URL: string;
-  readonly VITE_SCHEMA_CATALOG_URL: string;
   readonly VITE_SCHEMA_VALIDATA_URL: string;
   readonly VITE_TITLE: string;
   readonly VITE_ONLY_LOCALES: string;
