@@ -284,9 +284,6 @@ export default defineComponent({
       delete: t('Delete'),
     });
 
-    /** CSS property to round suggestion image */
-    const roundedImages = props.roundedImages ? "50%" : "inherit";
-
     /**
      * Get initial set of options from API or an empty array
      * @returns {Promise<Array<import("../../types").MultiSelectOption>>}
