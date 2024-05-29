@@ -28,6 +28,8 @@ export const DefaultDeleteUserButton: StoryObj<typeof meta> = {
     template: '<DeleteUserButton v-bind="args"/>',
   }),
   args: {
-    url: "http://someUrl"
+    id: "someId",
+    full_name: "John Doe",
+    avatar_thumbnail: "https://static.data.gouv.fr/avatars/ad/95e60b115a4582b2dcb1eb0ad7e9d3-original.png"
   },
 };
