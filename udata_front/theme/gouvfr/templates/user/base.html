@@ -39,8 +39,8 @@
     <div class="fr-col-auto vuejs">
         <delete-user-button
             id="{{ user.id }}"
-            name="{{ user.fullname }}"
-            picture="{{ user|avatar_url(40) }}"
+            full_name="{{ user.fullname }}"
+            avatar_thumbnail="{{ user|avatar_url(40) }}"
         >
         </delete-user-button>
     </div>

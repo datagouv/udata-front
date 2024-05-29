@@ -26,14 +26,14 @@
                             <div class="avatar fr-mr-1w">
                               <img
                                 class="rounded-circle border border-default-grey"
-                                :src="props.picture"
+                                :src="props.avatar_thumbnail"
                                 width="40"
                                 height="40"
                                 loading="lazy"
                                 alt=""
                               />
                             </div>
-                            {{ props.name }} {{ t('will be permanently deleted.') }} 
+                            {{ props.full_name }} {{ t('will be permanently deleted.') }} 
                           </p>
                       </div>
                       <div class="fr-modal__footer">
@@ -73,8 +73,8 @@ import { type User } from "@etalab/data.gouv.fr-components";
 
 const props = defineProps<{
   id: string,
-  name: string,
-  picture: string,
+  full_name: string,
+  avatar_thumbnail: string,
 }>();
 
 const { t } = useI18n();
