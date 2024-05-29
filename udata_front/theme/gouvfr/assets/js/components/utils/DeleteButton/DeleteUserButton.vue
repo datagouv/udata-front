@@ -22,8 +22,19 @@
                               <span class="fr-icon-delete-line fr-icon--lg"></span>
                               {{ t('Are you sure ?') }}
                           </h1>
-                          <p>{{ t('This user will be permanently deleted.') }}</p>
-                          <p>{{ props.name }}</p>
+                          <p class="fr-grid-row fr-grid-row--middle fr-mb-2w">
+                            <div class="avatar fr-mr-1w">
+                              <img
+                                class="rounded-circle border border-default-grey"
+                                :src="props.picture"
+                                width="40"
+                                height="40"
+                                loading="lazy"
+                                alt=""
+                              />
+                            </div>
+                            {{ props.name }} {{ t('will be permanently deleted.') }} 
+                          </p>
                       </div>
                       <div class="fr-modal__footer">
                           <div class="fr-btns-group fr-btns-group--right fr-btns-group--inline-reverse fr-btns-group--inline-lg fr-btns-group--icon-left">
@@ -56,10 +67,14 @@ import { read_only_enabled } from "../../../config";
 import { useI18n } from "vue-i18n";
 import { getRandomId } from "@etalab/data.gouv.fr-components";
 import { useToast } from "../../../composables/useToast";
+import Avatar from "../../../components/discussions/Avatar/Avatar.vue";
 import { deleteUser, deleteUserWithoutSendingMail } from "../../../api/users"
+import { type User } from "@etalab/data.gouv.fr-components";
 
 const props = defineProps<{
-  user: string
+  id: string,
+  name: string,
+  picture: string,
 }>();
 
 const { t } = useI18n();
@@ -71,15 +86,14 @@ const modalId = getRandomId("delete-modal");
 const modalTitleId = modalId + "-title";
 
 async function deleteObject() {
-  return deleteUser(props.user)
+  return deleteUser(props.id)
   .then(() => window.location.reload())
   .catch(() => toast.error(t("An error occured during the deletion.")));
 };
 
 function deleteObjectWithoutMail() {
-  console.log(props)
-  /*return deleteUserWithoutSendingMail(props.user.id)
+  return deleteUserWithoutSendingMail(props.id)
   .then(() => window.location.reload())
-  .catch(() => toast.error(t("An error occured during the deletion.")));*/
+  .catch(() => toast.error(t("An error occured during the deletion.")));
 };
 </script>
