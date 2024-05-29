@@ -57,6 +57,7 @@ import { auth } from "../../../plugins/auth";
 import { useI18n } from "vue-i18n";
 import { getRandomId } from "@etalab/data.gouv.fr-components";
 import { useToast } from "../../../composables/useToast";
+import { deleteUser, deleteUserWithoutSendingMail } from "../../../api/users"
 
 const props = defineProps<{
   url: string,
@@ -71,14 +72,15 @@ const modalId = getRandomId("delete-modal");
 const modalTitleId = modalId + "-title";
 console.log(props.url)
 
-function deleteObject() {
-  auth();
-  return api.delete(props.url)
+async function deleteObject() {
+  return deleteUser("id")
   .then(() => window.location.reload())
   .catch(() => toast.error(t("An error occured during the deletion.")));
 };
 
 function deleteObjectWithoutMail() {
-  console.log('Hey')
+  return deleteUserWithoutSendingMail("id")
+  .then(() => window.location.reload())
+  .catch(() => toast.error(t("An error occured during the deletion.")));
 };
 </script>
