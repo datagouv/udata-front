@@ -23,6 +23,7 @@
                               {{ t('Are you sure ?') }}
                           </h1>
                           <p>{{ t('This user will be permanently deleted.') }}</p>
+                          <p>{{ props.name }}</p>
                       </div>
                       <div class="fr-modal__footer">
                           <div class="fr-btns-group fr-btns-group--right fr-btns-group--inline-reverse fr-btns-group--inline-lg fr-btns-group--icon-left">
@@ -52,15 +53,13 @@
 
 <script setup lang="ts">
 import { read_only_enabled } from "../../../config";
-import { api } from "../../../plugins/api";
-import { auth } from "../../../plugins/auth";
 import { useI18n } from "vue-i18n";
 import { getRandomId } from "@etalab/data.gouv.fr-components";
 import { useToast } from "../../../composables/useToast";
 import { deleteUser, deleteUserWithoutSendingMail } from "../../../api/users"
 
 const props = defineProps<{
-  url: string,
+  user: string
 }>();
 
 const { t } = useI18n();
@@ -70,17 +69,17 @@ const readOnlyEnabled = read_only_enabled;
 
 const modalId = getRandomId("delete-modal");
 const modalTitleId = modalId + "-title";
-console.log(props.url)
 
 async function deleteObject() {
-  return deleteUser("id")
+  return deleteUser(props.user)
   .then(() => window.location.reload())
   .catch(() => toast.error(t("An error occured during the deletion.")));
 };
 
 function deleteObjectWithoutMail() {
-  return deleteUserWithoutSendingMail("id")
+  console.log(props)
+  /*return deleteUserWithoutSendingMail(props.user.id)
   .then(() => window.location.reload())
-  .catch(() => toast.error(t("An error occured during the deletion.")));
+  .catch(() => toast.error(t("An error occured during the deletion.")));*/
 };
 </script>

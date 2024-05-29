@@ -1,0 +1,9 @@
+{% macro delete_btn(user) %}
+{% set basename = obj.__class__.__name__|lower %}
+<div class="fr-col-auto vuejs">
+    <delete-user-button
+        user="{{ user }}"
+    >
+    </delete-user-button>
+</div>
+{% endmacro %}
