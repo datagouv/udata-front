@@ -67,9 +67,7 @@ import { read_only_enabled } from "../../../config";
 import { useI18n } from "vue-i18n";
 import { getRandomId } from "@etalab/data.gouv.fr-components";
 import { useToast } from "../../../composables/useToast";
-import Avatar from "../../../components/discussions/Avatar/Avatar.vue";
 import { deleteUser, deleteUserWithoutSendingMail } from "../../../api/users"
-import { type User } from "@etalab/data.gouv.fr-components";
 
 const props = defineProps<{
   id: string,
