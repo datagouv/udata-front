@@ -40,12 +40,12 @@
           </a>
         </h4>
         <p class="fr-my-0 fr-text--xs " v-if="dataset.organization || dataset.owner">
-          <span class="not-enlarged fr-mr-1v" v-if="dataset.organization">
+          <span class="not-enlarged dash-after fr-mr-1v" v-if="dataset.organization">
             <a class="fr-link fr-text--xs" :href="dataset.organization.page">
               <OrganizationNameWithCertificate :organization="dataset.organization" />
             </a>
           </span>
-          <span class="not-enlarged fr-mr-1v" v-else-if="dataset.owner">
+          <span class="not-enlarged dash-after fr-mr-1v" v-else-if="dataset.owner">
             <a class="fr-link fr-text--xs" :href="dataset.owner.page">
               {{ ownerName }}
             </a>
@@ -104,7 +104,7 @@ const ownerName = useOwnerName(props.dataset);
 
 <style>
 .icon {
-  &::before{
+  &::before {
     --icon-size: 1rem;
   }
 };
