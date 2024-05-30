@@ -79,7 +79,6 @@ const dataset: DatasetV2 = {
 
 const args = {
   dataset: dataset,
-  datasetUrl: "/datasets/6571faa17f46a65ee05c4d17",
 };
 
 export const SimpleDatasetCardSM: StoryObj<typeof meta> = {
@@ -91,4 +90,18 @@ export const SimpleDatasetCardSM: StoryObj<typeof meta> = {
     template: `<DatasetCardSM v-bind="args"/>`,
   }),
   args,
+};
+
+export const SimpleDatasetCardSMWithoutDescription: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCardSM },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCardSM v-bind="args"/>`,
+  }),
+  args: {
+    ...args,
+    showDescription: false,
+  },
 };
