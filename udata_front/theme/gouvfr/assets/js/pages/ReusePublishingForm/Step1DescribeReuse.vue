@@ -118,7 +118,18 @@
               </h2>
             </legend>
             <div class="fr-fieldset__element">
-              <div v-if="hasOrganizations">
+              <div v-if="isAdmin()">
+                <MultiSelect
+                  :required="true"
+                  :minimumCharacterBeforeSuggest="2"
+                  :placeholder="$t('Check the identity with which you want to publish')"
+                  :searchPlaceholder="$t('Select an organization')"
+                  suggestUrl="/organizations/suggest/"
+                  :values="userOrganization"
+                  @change="(value: Organization) => userOrganization = value"
+                />
+              </div>
+              <div v-else-if="hasOrganizations">
                 <MultiSelect
                   :required="true"
                   :minimumCharacterBeforeSuggest="2"
@@ -129,13 +140,7 @@
                   @change="(value: Organization) => userOrganization = value"
                 />
               </div>
-              <div v-else> 
-                <!-- TODO: Handle fake Input when no organization
-                <InputGroup
-                  :label="$t('Link url')"
-                  :v-model="test"
-                  type="text"
-                />-->
+              <div v-else>
                 <div class="fr-col bg-contrast-grey text-align-center fr-p-2v">
                   <p class="fr-text--md fr-text--bold fr-mb-n3v">You belong to no organization</p>
                   <p class="fr-text--sm fr-text--bold fr-mb-n4v">You publish in your own name</p>
@@ -352,8 +357,11 @@ const hasOrganizations = computed<Boolean>(() => organizations.value.length > 1)
 const hasImage = () => {
   return image.value !== null;
 };
+const isAdmin= () => {
+  return me.value?.roles?.includes('admin') ?? false;
+}
 
-const me = ref<User | null>(null);
+const me = ref<User | null>(null);
 
 const requiredRules = {
   title: { required },
@@ -388,10 +396,6 @@ const state = computed<Record<string, PublishingFormAccordionState>>(() => {
   };
 });
 
-function capitalizeFirstLetter(string: string) {
-  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-};
-
 const fieldHasError = (field: string) => hasError(state, field);
 
 const fieldHasWarning = (field: string) => hasWarning(state, field);
@@ -403,6 +407,7 @@ const addImage = (newImage: File) => {
 async function fetchUser() {
   try {
     me.value = await getUser();
+    console.log(me.value)
     updateOrganizations();
   } catch (error) {
     console.error('Error fetching user:', error);
