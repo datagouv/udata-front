@@ -66,14 +66,29 @@ const dataset: DatasetV2 = {
   owner: null,
   organization: {
     id: "some_id",
+    created_at: "",
+    last_modified: "",
+    last_update: "",
+    deleted: null,
+    members: [],
+    metrics: {
+      datasets: 0,
+      followers: 0,
+      members: 0,
+      reuses: 0,
+      views: 0
+    },
     acronym: null,
     logo: "https://demo-static.data.gouv.fr/avatars/92/6284d057ca4279af35e9b62bc62639-100.png",
     logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/92/6284d057ca4279af35e9b62bc62639-100.png",
     page: "https://demo.data.gouv.fr/fr/organizations/test-meteo-france/",
+    business_number_id: "",
+    description: "",
     badges: [],
     name: "[TEST] Météo France",
     slug: "test-meteo-france",
-    uri: "https://demo.data.gouv.fr/api/1/organizations/test-meteo-france/"
+    uri: "https://demo.data.gouv.fr/api/1/organizations/test-meteo-france/",
+    url: ""
   }
 };
 
@@ -81,7 +96,15 @@ const args = {
   dataset: dataset,
 };
 
-export const SimpleDatasetCardSM: StoryObj<typeof meta> = {
+const argsPrivate = {
+  dataset: {...dataset, private: true},
+};
+
+const argsArchived = {
+  dataset: {...dataset, archived: true},
+};
+
+export const DatasetCardSMSimple: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { DatasetCardSM },
     setup() {
@@ -92,7 +115,7 @@ export const SimpleDatasetCardSM: StoryObj<typeof meta> = {
   args,
 };
 
-export const SimpleDatasetCardSMWithoutDescription: StoryObj<typeof meta> = {
+export const DatasetCardSMWithoutDescription: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { DatasetCardSM },
     setup() {
@@ -103,5 +126,31 @@ export const SimpleDatasetCardSMWithoutDescription: StoryObj<typeof meta> = {
   args: {
     ...args,
     showDescription: false,
+  },
+};
+
+export const PrivateDatasetCardSM: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCardSM },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCardSM v-bind="args"/>`,
+  }),
+  args: {
+    ...argsPrivate,
+  },
+};
+
+export const ArchivedDatasetCardSM: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCardSM },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCardSM v-bind="args"/>`,
+  }),
+  args: {
+    ...argsArchived,
   },
 };

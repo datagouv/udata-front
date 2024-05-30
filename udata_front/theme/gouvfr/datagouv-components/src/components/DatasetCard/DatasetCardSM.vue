@@ -1,16 +1,16 @@
 <template>
   <article class="fr-my-2w fr-p-2w border border-default-grey fr-enlarge-link" :style="props.style">
-    <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v" v-if="dataset.private || dataset.archived">
-      <p class="fr-badge fr-badge--mention-grey fr-mr-1w" v-if="dataset.private">
-        <span class="fr-icon-lock-line" aria-hidden="true"></span>
+    <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v fr-ml-n2v" v-if="dataset.private || dataset.archived">
+      <p class="fr-badge fr-badge--mention-grey fr-mr-1w fr-text--xs" v-if="dataset.private">
+        <span class="fr-icon-lock-line icon" aria-hidden="true"></span>
         {{ t('Private') }}
       </p>
-      <p class="fr-badge fr-badge--mention-grey" v-if="dataset.archived">
-        <span class="fr-icon-archive-line" aria-hidden="true"></span>
+      <p class="fr-badge fr-badge--mention-grey fr-mr-1w fr-text--xs" v-if="dataset.archived">
+        <span class="fr-icon-archive-line icon" aria-hidden="true"></span>
         {{ t('Archived') }}
       </p>
     </div>
-    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
+    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top fr-mt-1v">
       <div class="fr-col-auto">
         <div class="logo">
           <Placeholder
@@ -107,5 +107,5 @@ const ownerName = useOwnerName(props.dataset);
   &::before{
     --icon-size: 1rem;
   }
-}
+};
 </style>
