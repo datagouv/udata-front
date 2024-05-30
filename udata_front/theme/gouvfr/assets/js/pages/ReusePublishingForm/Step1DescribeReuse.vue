@@ -407,7 +407,6 @@ const addImage = (newImage: File) => {
 async function fetchUser() {
   try {
     me.value = await getUser();
-    console.log(me.value)
     updateOrganizations();
   } catch (error) {
     console.error('Error fetching user:', error);
