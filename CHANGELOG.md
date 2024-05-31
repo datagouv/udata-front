@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add dataservice show page [#420](https://github.com/datagouv/udata-front/pull/420)
 
 ## 4.0.3 (2024-05-28)
 
