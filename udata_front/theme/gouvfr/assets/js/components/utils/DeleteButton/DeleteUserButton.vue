@@ -41,14 +41,14 @@
                             <button
                                 class="fr-btn fr-btn--secondary fr-btn--secondary-warning-425 fr-btn--icon-left fr-icon-delete-line"
                                 role="button"
-                                @click="deleteObjectWithoutMail"
+                                @click="removeUserWithoutMail"
                               >
                                   {{ t("Delete without sending mail") }}
                               </button>
                               <button
                                 class="fr-btn fr-btn--primary fr-btn--primary-warning-425 fr-btn--icon-left fr-icon-delete-line"
                                 role="button"
-                                @click="deleteObject"
+                                @click="removeUser"
                               >
                                   {{ t("Delete") }}
                               </button>
@@ -83,13 +83,13 @@ const readOnlyEnabled = read_only_enabled;
 const modalId = getRandomId("delete-modal");
 const modalTitleId = modalId + "-title";
 
-async function deleteObject() {
+function removeUser() {
   return deleteUser(props.id)
   .then(() => window.location.reload())
   .catch(() => toast.error(t("An error occured during the deletion.")));
 };
 
-function deleteObjectWithoutMail() {
+function removeUserWithoutMail() {
   return deleteUserWithoutSendingMail(props.id)
   .then(() => window.location.reload())
   .catch(() => toast.error(t("An error occured during the deletion.")));
