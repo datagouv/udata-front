@@ -6,6 +6,14 @@ import { rest } from 'msw';
 const meta = {
   title: 'Components/ProducerSelector',
   component: ProducerSelector,
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: "The Producer Selector Item allows the user to select one of its organizations or himself in order to publish datasets or reuses. If the user has admin rights, he cas access all organizations."
+      }
+    }
+  },
 } satisfies Meta<typeof ProducerSelector>;
 
 export default meta;
