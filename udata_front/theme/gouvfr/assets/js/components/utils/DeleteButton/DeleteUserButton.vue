@@ -46,7 +46,7 @@
                                   {{ t("Delete without sending mail") }}
                               </button>
                               <button
-                                class="fr-btn fr-btn--primary fr-btn--primary-warning-425 fr-btn--icon-left fr-icon-delete-line"
+                                class="fr-btn bg-warning-425 fr-btn--icon-left fr-icon-delete-line"
                                 role="button"
                                 @click="removeUser"
                               >

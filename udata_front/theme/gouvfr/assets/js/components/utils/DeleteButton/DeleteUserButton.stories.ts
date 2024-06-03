@@ -3,7 +3,7 @@ import { withActions } from '@storybook/addon-actions/decorator';
 import type { Meta, StoryObj } from "@storybook/vue3";
 
 const meta = {
-  title: 'Buttons/Delete Button',
+  title: 'Components/Buttons/Delete User Button',
   component: DeleteUserButton,
   parameters: {
     actions: {
