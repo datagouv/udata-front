@@ -400,8 +400,6 @@ const formatSpatialZones = (data) => {
 return suggestions;
 };
 
-const me = ref<User | null>(null);
-
 const notUnknown = not(t("The value must be different than unknown."), sameAs("unknown"));
 const tagsRequired = requiredWithCustomMessage(t("Adding tags helps improve the SEO of your data."));
 const temporalCoverageRequired = requiredWithCustomMessage(t("You did not provide the temporal coverage."));

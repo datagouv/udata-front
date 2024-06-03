@@ -6,6 +6,7 @@
       :placeholder="$t('Check the identity with which you want to publish')"
       :searchPlaceholder="$t('Select an organization')"
       suggestUrl="/organizations/suggest/"
+      :initialOptions="organizations"
       :values="userOrganization"
       @change="updateOrganization"
     />
