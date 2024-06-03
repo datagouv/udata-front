@@ -510,9 +510,9 @@ async function fetchUser() {
 
 function updateOrganizations() {
   const userValue = toValue(me);
-  console.log(userValue)
   if (userValue) {
     organizations.value = userValue.organizations;
+    console.log(organizations.value)
     organizations.value.push({
       name: `${userValue.first_name} ${userValue.last_name}`,
       logo: userValue.avatar || "",
@@ -533,7 +533,6 @@ onMounted(async () => {
 
 function submit() {
   validateRequiredRules().then(valid => {
-    console.log(dataset)
     if(valid) {
       if (toValue(userOrganization) !== "user") {
         dataset.organization = toValue(userOrganization);
