@@ -2,6 +2,7 @@
 
 ## Current (in progress)
 
+- Switch MAAF backend to new sync harvest system [#409](https://github.com/datagouv/udata-front/pull/409)
 - Add dataservice show page [#420](https://github.com/datagouv/udata-front/pull/420)
 
 ## 4.0.3 (2024-05-28)
