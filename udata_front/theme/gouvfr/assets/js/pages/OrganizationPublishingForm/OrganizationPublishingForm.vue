@@ -3,19 +3,16 @@
     <Stepper :steps="steps" :currentStep="currentStep"/>
     <Step1CreateOrJoinOrganization
       v-if="currentStep === 0"
-      :steps="steps"
       @start="moveToStep(1)"
     />
     <Step2DescribeOrganization
       v-else-if="currentStep === 1"
       :organization="organization"
-      :steps="steps"
       :errors="errors"
       @submit="createOrganizationAndMoveToNextStep"
     />
     <Step3CompleteTheOrganization
       v-else-if="currentStep === 2"
-      :steps="steps"
       :organization="organization"
       :errors="errors"
       :datasetLink="datasetAdminUrl"
