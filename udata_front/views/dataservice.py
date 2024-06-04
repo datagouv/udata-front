@@ -12,12 +12,13 @@ from udata_front.views.base import DetailView
 
 blueprint = I18nBlueprint('dataservices', __name__, url_prefix='/dataservices')
 
+
 @blueprint.route('/recent.atom')
 def recent_feed():
     feed = Atom1Feed(_('Last datasets'), description=None,
                      feed_url=request.url, link=request.url_root)
     dataservices = (Dataservice.objects.visible().order_by('-created_at_internal')
-                .limit(current_site.feed_size))
+                    .limit(current_site.feed_size))
     for dataservice in dataservices:
         author_name = None
         author_uri = None
@@ -31,7 +32,8 @@ def recent_feed():
                                  user=dataservice.owner.id, _external=True)
         feed.add_item(dataservice.title,
                       description=dataservice.description,
-                      content=render_template('dataservice/feed_item.html', dataservice=dataservice),
+                      content=render_template('dataservice/feed_item.html',
+                                              dataservice=dataservice),
                       author_name=author_name,
                       author_link=author_uri,
                       link=url_for('dataservices.show', dataservice=dataservice.id, _external=True),
@@ -71,6 +73,7 @@ class DataserviceDetailView(DataserviceView, DetailView):
                 abort(410)
         context['can_edit'] = DataserviceEditPermission(self.dataservice)
         return context
+
 
 @sitemap.register_generator
 def sitemap_urls():

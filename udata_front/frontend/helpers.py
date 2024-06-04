@@ -406,6 +406,7 @@ def format_number(number):
     '''A locale aware formatter.'''
     return format_decimal(number, locale=g.lang_code) if number else number
 
+
 @front.app_template_filter()
 def format_percentage(number):
     '''A locale aware formatter.'''
