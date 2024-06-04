@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Switch MAAF backend to new sync harvest system [#409](https://github.com/datagouv/udata-front/pull/409)
 
 ## 4.0.3 (2024-05-28)
 
