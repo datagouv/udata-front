@@ -13,7 +13,7 @@ markdown.linkify.add('mailto:', null)
 markdown.use(function(md) {
   md.renderer.rules.link_open = function(tokens, idx, options, _env, self) {
     const link_open = tokens[idx];
-    link_open.attrs?.push(['rel','ugc nofollow']);
+    link_open.attrs?.push(['rel','ugc nofollow noopener']);
     return self.renderToken(tokens, idx, options);
   };
   // Render ~~<text>~~ as del tag
