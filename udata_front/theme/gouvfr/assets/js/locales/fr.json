@@ -427,5 +427,19 @@
   "An error occurred while removing this member.": "Une erreur est survenue lors de la suppression de ce membre.",
   "An error occurred while accepting this membership.": "Une erreur est survenue lors de l'acceptation de cette demande.",
   "An error occurred while refusing this membership.": "Une erreur est survenue lors de la suppression de cette demande.",
-  "An error occurred while updating the member role.": "Une erreur s'est produite lors de la mise à jour du rôle du membre."
+  "An error occurred while updating the member role.": "Une erreur s'est produite lors de la mise à jour du rôle du membre.",
+  "An error occurred while fetching the options.": "Une erreur s'est produite lors de la mise à jour des options.",
+  "An organization is an entity in which many users can collaborate. The published datasets on the organization\\'s name can be edited by its members.": "Une organisation est une entité dans laquelle les utilisateurs peuvent collaborer. Les jeux de données publiés dans une organisation peuvent être édités par ses membres.",
+  "Informations": "Informations",
+  "Temporality": "Temporalité",
+  "Creation": "Création",
+  "Frequency": "Fréquence",
+  "Last update": "Dernière mise à jour",
+  "Territorial coverage": "Couverture territoriale",
+  "Granularity of territorial coverage": "Granularité de la couverture territoriale",
+  "Integrate on your website": "Intégrer sur votre site web",
+  "Extras": "Extras",
+  "See extras": "Voir les extras",
+  "Harvest": "Moissonage",
+  "See harvest": "Voir le moissonage"
 }
