@@ -5,6 +5,7 @@
 - Add Organization publishing form [#358](https://github.com/datagouv/udata-front/pull/358)
 - Fix an error that blocks datasets search filters reset [#402](https://github.com/datagouv/udata-front/pull/402)
 - Componentize dataset card [#397](https://github.com/datagouv/udata-front/pull/397)
+- Improve design of the OrganizationSearch component [#410](https://github.com/datagouv/udata-front/pull/410)
 
 ## 4.0.2 (2024-04-26)
 
