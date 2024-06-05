@@ -69,7 +69,7 @@
             <a
               :href="resource.latest"
               :title="$t('File link - opens a new window')"
-              rel="nofollow noopener"
+              rel="ugc nofollow noopener"
               target="_blank"
               class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-external-link-line fr-icon--sm"
             >
@@ -78,6 +78,7 @@
           <p class="fr-col-auto fr-ml-3v fr-m-0" v-else>
             <a
               :href="resource.latest"
+              rel="ugc nofollow noopener"
               :title="$t('Download file')"
               download
               class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-download-line fr-icon--sm matomo_download"
