@@ -69,7 +69,7 @@ class DataserviceDetailView(DataserviceView, DetailView):
         if not DataserviceEditPermission(self.dataservice).can():
             if self.dataservice.private:
                 abort(404)
-            elif self.dataservice.deleted:
+            elif self.dataservice.deleted_at:
                 abort(410)
         context['can_edit'] = DataserviceEditPermission(self.dataservice)
         return context
