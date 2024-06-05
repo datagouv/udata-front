@@ -70,7 +70,10 @@
         }
         .select-a11y-suggestion__image {
             .logo;
-            .fr-p-1v;
+            .fr-p-0;
+            background: none;
+            width: 2rem;
+            height: 2rem;
         }
         .select-a11y-suggestion__label {
             font-size: 0.875rem;
@@ -114,5 +117,17 @@
             font-weight: bold;
             padding: 0.5rem;
         }
+    }
+}
+
+.multiselect--rounded-images {
+    .select-a11y-suggestion__image {
+        .rounded-circle;
+    }
+}
+
+.multiselect.multiselect--align-center {
+    .select-a11y-suggestion {
+        .fr-grid-row--middle;
     }
 }

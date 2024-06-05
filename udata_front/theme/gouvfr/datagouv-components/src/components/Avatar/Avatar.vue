@@ -12,9 +12,10 @@
 
 <script setup lang="ts">
 import useUserAvatar from "../../composables/useUserAvatar";
+import type { User } from "@etalab/data.gouv.fr-components";
 type Props = {
-    user: Object,
-    size?: number
+    user: User;
+    size?: number;
 }
 const props = withDefaults(defineProps<Props>(), {
   size: 40,
