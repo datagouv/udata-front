@@ -9,7 +9,7 @@ import "@gouvfr/dsfr/dist/dsfr/dsfr.module";
 import Admin from "./pages/Admin/Admin.vue";
 
 import i18n from "./i18n.ts";
-import { admin_root, explorable_resources, schema_catalog_url, schema_documentation_url, schema_validata_url, title } from "./config.ts";
+import { admin_root, explorable_resources, schema_documentation_url, schema_validata_url, title } from "./config.ts";
 import Api from "./plugins/api.ts";
 import Auth from "./plugins/auth.ts";
 import InitSentry from "./sentry.ts";
@@ -23,7 +23,6 @@ setupComponents({
   default_lang: i18n.global.locale.value,
   explorable_resources,
   only_locales: i18n.global.locale.value,
-  schema_catalog_url,
   schema_documentation_url,
   schema_validata_url,
   show_copy_resource_permalink: true,

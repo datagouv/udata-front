@@ -34,7 +34,7 @@ def _load_views(app, module):
         app.register_blueprint(blueprint)
 
 
-VIEWS = ['gouvfr', 'dataset', 'organization', 'follower', 'post',
+VIEWS = ['gouvfr', 'dataset', 'dataservice', 'organization', 'follower', 'post',
          'reuse', 'site', 'territories', 'topic', 'user', 'mcp', 'beta']
 
 

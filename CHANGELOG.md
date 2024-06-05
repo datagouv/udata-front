@@ -2,10 +2,16 @@
 
 ## Current (in progress)
 
+- Switch MAAF backend to new sync harvest system [#409](https://github.com/datagouv/udata-front/pull/409)
+- Add dataservice show page [#420](https://github.com/datagouv/udata-front/pull/420)
+- Use udata schema endpoint [#336](https://github.com/etalab/udata-front/pull/336)
+
+## 4.0.3 (2024-05-28)
+
 - Add Organization publishing form [#358](https://github.com/datagouv/udata-front/pull/358)
 - Fix an error that blocks datasets search filters reset [#402](https://github.com/datagouv/udata-front/pull/402)
 - Componentize dataset card [#397](https://github.com/datagouv/udata-front/pull/397)
-- use vue-toaster from `@datagouv` scope on NPM [#403](https://github.com/datagouv/udata-front/pull/403)
+- Use udata schema endpoint [#336](https://github.com/etalab/udata-front/pull/336)
 
 ## 4.0.2 (2024-04-26)
 
