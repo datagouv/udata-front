@@ -30,7 +30,7 @@
     "vue": "^3.3.8"
   },
   "peerDependencies": {
-    "@gouvfr/dsfr": "~1.9.2",
+    "@gouvfr/dsfr": "~1.11.2",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
