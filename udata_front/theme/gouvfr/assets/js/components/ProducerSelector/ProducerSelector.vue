@@ -46,16 +46,16 @@
 <script setup lang="ts">
 import { ref, computed, toValue, onMounted } from 'vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
-import { fetchMe } from '../../api/me';
 import type { User, Organization } from '@etalab/data.gouv.fr-components';
+
+const props = defineProps<{user: User}>();
 
 const userOrganization = ref<Organization>();
 const organizations = ref<Array<Organization>>([]);
-const me = ref<User | null>(null);
 const emit = defineEmits(['update:organization']);
 
 const isAdmin = () => {
-  return me.value?.roles?.includes('admin') ?? false;
+  return props.user.roles?.includes('admin') ?? false;
 };
 
 const hasOrganizations = computed<Boolean>(() => organizations.value.length > 1);
@@ -65,17 +65,8 @@ const updateOrganization = (value: Organization) => {
   emit('update:organization', value);
 };
 
-async function fetchUser() {
-  try {
-    me.value = await fetchMe();
-    updateOrganizations();
-  } catch (error) {
-    console.error('Error fetching user:', error);
-  }
-};
-
-function updateOrganizations() {
-  const userValue = toValue(me);
+function listOrganizations() {
+  const userValue = toValue(props.user);
   if (userValue) {
     organizations.value = userValue.organizations;
     organizations.value.push({
@@ -90,9 +81,11 @@ function updateOrganizations() {
       logo_thumbnail: userValue.avatar_thumbnail || ""
     });
   }
+  console.log(organizations.value)
 };
 
-onMounted(async () => {
-  await fetchUser();
+onMounted(() => {
+  organizations.value = [];
+  listOrganizations()
 });
 </script>

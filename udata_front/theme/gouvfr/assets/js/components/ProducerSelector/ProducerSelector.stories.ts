@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import ProducerSelector from './ProducerSelector.vue';
-import { rest } from 'msw';
-
 
 const meta = {
   title: 'Components/ProducerSelector',
@@ -18,16 +16,42 @@ const meta = {
 
 export default meta;
 
-const args = {};
+const user = {
+  id: "someId",
+  first_name: "John",
+  last_name: "Doe",
+  avatar: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+  organizations: [
+    {
+      acronym: null,
+      badges: [],
+      class: "Organization",
+      id: "65e9b7cf830c3b5a515ee4ed",
+      logo: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+      logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+      name: "My Organization",
+      page: "",
+      slug: "my-organization",
+      uri: "/"
+    },
+    {
+      acronym: null,
+      badges: [],
+      class: "Organization",
+      id: "65e9b7cf830c3b5a515ee4ed",
+      logo: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+      logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+      name: "My Second Organization",
+      page: "",
+      slug: "my-second-organization",
+      uri: "/"
+    }
+  ],
+  roles: [],
+  page: ""
+};
 
 export const ProducerSelectorWithNoOrganization: StoryObj<typeof meta> = {
-  parameters: {
-    msw: [
-      rest.get('*/api/1/me', async (_req, res, ctx) => {
-        return res(ctx.delay(), ctx.json({first_name: "John", last_name: "Doe", avatar: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png", organizations: [], roles: []}));
-      }),
-    ],
-  },
   render: (args) => ({
     components: { ProducerSelector },
     setup() {
@@ -37,44 +61,15 @@ export const ProducerSelectorWithNoOrganization: StoryObj<typeof meta> = {
                   <ProducerSelector v-bind="args" />
                 </div>`,
   }),
-  args,
+  args: {
+    user: {
+      ...user,
+      organizations: []
+    },
+  },
 };
 
 export const ProducerSelectorWithOrganizations: StoryObj<typeof meta> = {
-  parameters: {
-    msw: [
-      rest.get('*/api/1/me', async (_req, res, ctx) => {
-        return res(ctx.delay(), ctx.json({first_name: "John", last_name: "Doe", roles: [], avatar: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-          organizations: [
-            {
-              acronym: null,
-              badges: [],
-              class: "Organization",
-              id: "65e9b7cf830c3b5a515ee4ed",
-              logo: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-              logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-              name: "My Organization",
-              page: "",
-              slug: "my-organization",
-              uri: "/"
-            },
-            {
-              acronym: null,
-              badges: [],
-              class: "Organization",
-              id: "65e9b7cf830c3b5a515ee4ed",
-              logo: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-              logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-              name: "My Second Organization",
-              page: "",
-              slug: "my-second-organization",
-              uri: "/"
-            }
-          ]})
-        );
-      }),
-    ],
-  },
   render: (args) => ({
     components: { ProducerSelector },
     setup() {
@@ -84,44 +79,12 @@ export const ProducerSelectorWithOrganizations: StoryObj<typeof meta> = {
                   <ProducerSelector v-bind="args" />
                 </div>`,
   }),
-  args,
+  args: {
+    user: user
+  },
 };
 
 export const ProducerSelectorWithAdmin: StoryObj<typeof meta> = {
-  parameters: {
-    msw: [
-      rest.get('*/api/1/me', async (_req, res, ctx) => {
-        return res(ctx.delay(), ctx.json({first_name: "John", last_name: "Doe", roles: ['admin'], avatar: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-          organizations: [
-            {
-              acronym: null,
-              badges: [],
-              class: "Organization",
-              id: "65e9b7cf830c3b5a515ee4ed",
-              logo: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-              logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-              name: "My Organization",
-              page: "",
-              slug: "my-organization",
-              uri: "/"
-            },
-            {
-              acronym: null,
-              badges: [],
-              class: "Organization",
-              id: "65e9b7cf830c3b5a515ee4ed",
-              logo: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-              logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-              name: "My Second Organization",
-              page: "",
-              slug: "my-second-organization",
-              uri: "/"
-            }
-          ]})
-        );
-      }),
-    ],
-  },
   render: (args) => ({
     components: { ProducerSelector },
     setup() {
@@ -131,5 +94,10 @@ export const ProducerSelectorWithAdmin: StoryObj<typeof meta> = {
                   <ProducerSelector v-bind="args" />
                 </div>`,
   }),
-  args,
+  args: {
+    user: {
+      ...user,
+      roles: [...user.roles, 'admin']
+    },
+  },
 };

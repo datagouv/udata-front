@@ -149,7 +149,7 @@
               </h2>
             </legend>
             <div class="fr-fieldset__element">
-              <ProducerSelector @update:organization="(value) => userOrganization = value" />
+              <ProducerSelector v-if="me" :user="me" @update:organization="(value) => userOrganization = value" />
             </div>
           </fieldset>
           <fieldset class="fr-fieldset min-width-0" aria-labelledby="description-legend">
@@ -333,8 +333,8 @@ export type Step2DescribeDatasetProps = {
 };
 </script>
 <script setup lang="ts">
-import { type User, type Organization, Well } from "@etalab/data.gouv.fr-components";
-import { computed, reactive, ref, toValue } from 'vue';
+import { type Organization, Well, type User } from "@etalab/data.gouv.fr-components";
+import { computed, onMounted, reactive, ref, toValue } from 'vue';
 import { minLengthWarning, not, required, requiredWithCustomMessage, sameAs } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -353,6 +353,7 @@ import { useI18n } from 'vue-i18n';
 import { getLicensesUrl } from '../../api/licenses';
 import { getFrequenciesUrl } from '../../api/datasets';
 import type { NewDataset, PublishingFormAccordionState, SpatialGranularity } from '../../types';
+import { fetchMe } from "../../api/me";
 
 const emit = defineEmits(["next"]);
 const props = defineProps<Step2DescribeDatasetProps>();
@@ -376,6 +377,7 @@ if(!dataset.spatial) {
 };
 
 const userOrganization = ref<Organization>();
+const me = ref<User | null>(null);
 
 const frequenciesUrl = getFrequenciesUrl();
 const licensesUrl = getLicensesUrl();
@@ -462,4 +464,8 @@ function submit() {
     }
   });
 };
+
+onMounted(async() => {
+  me.value = await fetchMe();
+});
 </script>
