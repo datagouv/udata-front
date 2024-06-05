@@ -2,7 +2,7 @@ import { useI18n } from 'vue-i18n';
 import { ref, computed } from "vue";
 import { getCatalog } from "../../api/schemas";
 import { config } from "../../config";
-import { useToast } from "../useToast";
+import useToast from "../useToast";
 import type { Resource } from "../../types/resources";
 
 type ReportMap = Map<string, { name: string; count: number; }>;

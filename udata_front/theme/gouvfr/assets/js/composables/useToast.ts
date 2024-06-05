@@ -1,4 +1,4 @@
-import { createToaster } from "@conciergerie.dev/vue-toaster";
+import { createToaster } from "@datagouv/vue-toaster";
 
 const toast = createToaster({
   duration: false,

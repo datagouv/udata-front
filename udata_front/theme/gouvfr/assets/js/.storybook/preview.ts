@@ -1,7 +1,7 @@
 import "../../less/style.less";
 import "../dsfr";
 import "@gouvfr/dsfr/dist/dsfr/dsfr.module";
-import Toaster from "@conciergerie.dev/vue-toaster";
+import Toaster from "@datagouv/vue-toaster";
 import { setup } from '@storybook/vue3';
 import i18n from "../i18n";
 import Api from "../plugins/api";

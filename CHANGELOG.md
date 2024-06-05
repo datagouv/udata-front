@@ -4,6 +4,7 @@
 
 - Switch MAAF backend to new sync harvest system [#409](https://github.com/datagouv/udata-front/pull/409)
 - Add dataservice show page [#420](https://github.com/datagouv/udata-front/pull/420)
+- Use udata schema endpoint [#336](https://github.com/etalab/udata-front/pull/336)
 
 ## 4.0.3 (2024-05-28)
 

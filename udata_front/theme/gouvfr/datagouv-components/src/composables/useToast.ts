@@ -1,10 +1,10 @@
-import { createToaster } from "@conciergerie.dev/vue-toaster";
+import { createToaster } from "@datagouv/vue-toaster";
 
 const toast = createToaster({
   duration: false,
   dismissible: true,
 });
 
-export function useToast() {
+export default function useToast() {
   return { toast };
 }
