@@ -37,7 +37,7 @@ def recent_feed():
                       author_name=author_name,
                       author_link=author_uri,
                       link=url_for('dataservices.show', dataservice=dataservice.id, _external=True),
-                      updateddate=dataservice.last_modified,
+                      updateddate=dataservice.metadata_modified_at,
                       pubdate=dataservice.created_at)
     response = make_response(feed.writeString('utf-8'))
     response.headers['Content-Type'] = 'application/atom+xml'
