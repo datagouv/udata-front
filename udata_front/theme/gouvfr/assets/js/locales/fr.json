@@ -440,5 +440,7 @@
   "Extras": "Extras",
   "See extras": "Voir les extras",
   "Harvest": "Moissonage",
-  "See harvest": "Voir le moissonage"
+  "See harvest": "Voir le moissonage",
+  "will be permanently deleted.": "sera supprimé de façon permanente.",
+  "Delete without sending mail": "Supprimer sans envoi de mail"
 }
