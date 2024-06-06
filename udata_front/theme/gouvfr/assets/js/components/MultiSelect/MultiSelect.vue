@@ -650,14 +650,22 @@ export default defineComponent({
       }
     };
 
-    watch(() => props.values, async () => {
-      await fillSelectedFromValues();
-      if(Array.isArray(selected.value)) {
-        for(const value of selected.value) {
-          selectA11y.value?.selectOptionSilently(value);
-        }
+    function diff(newValue, oldValue) {
+      if (Array.isArray(newValue) && Array.isArray(oldValue)) {
+        return [
+          ...newValue.filter(item => !oldValue.includes(item)),
+        ];
       } else {
-        selectA11y.value?.selectOptionSilently(selected.value ?? "");
+        return newValue === oldValue ? [] : [newValue];
+      }
+    };
+
+    watch(() => props.values, async () => {
+      const selectedValues = selected.value;
+      await fillSelectedFromValues();
+      const toSelect = diff(selected.value, selectedValues);
+      for(const value of toSelect) {
+        selectA11y.value?.selectOptionSilently(value);
       }
     });
 

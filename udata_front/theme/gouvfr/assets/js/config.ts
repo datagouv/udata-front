@@ -263,7 +263,7 @@ export const markdown = _jsonMeta("markdown-config");
 /**
  * License groups options configuration.
  */
-export const license_groups_options = _jsonMeta("license-groups-options");
+export const license_groups_options: Array<[string, Array<Record<string, string>>]> = _jsonMeta("license-groups-options");
 
 
 /**
