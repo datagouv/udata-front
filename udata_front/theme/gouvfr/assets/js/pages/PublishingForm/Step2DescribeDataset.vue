@@ -355,8 +355,11 @@ import { getLicensesUrl } from '../../api/licenses';
 import { getFrequenciesUrl } from '../../api/datasets';
 import type { NewDataset, PublishingFormAccordionState, SpatialGranularity } from '../../types';
 
-const emit = defineEmits(["next"]);
 const props = defineProps<Step2DescribeDatasetProps>();
+
+const emit = defineEmits<{
+  (event: 'next', dataset: NewDataset): void,
+}>();
 
 const { t } = useI18n();
 const { id: nameDatasetAccordionId } = useUid("accordion");
