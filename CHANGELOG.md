@@ -5,6 +5,7 @@
 - Switch MAAF backend to new sync harvest system [#409](https://github.com/datagouv/udata-front/pull/409)
 - Add dataservice show page [#420](https://github.com/datagouv/udata-front/pull/420)
 - Improve design of the OrganizationSearch component [#410](https://github.com/datagouv/udata-front/pull/410)
+- Add button to remove user without sending email [#418](https://github.com/datagouv/udata-front/pull/418)
 
 ## 4.0.3 (2024-05-28)
 
