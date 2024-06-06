@@ -11,6 +11,7 @@ import ThreadCreate from "./components/discussions/ThreadCreate/ThreadCreate.vue
 import MenuSearch from "./components/search/MenuSearch/MenuSearch.vue";
 import Search from "./components/search/Search/Search.vue";
 import DeleteButton from "./components/utils/DeleteButton/DeleteButton.vue";
+import DeleteUserButton from "./components/utils/DeleteButton/DeleteUserButton.vue";
 import FeaturedButton from './components/utils/featured.vue';
 import FollowButton from "./components/utils/follow-button.vue";
 import RequestMembership from "./components/organization/request-membership.vue";
@@ -30,7 +31,7 @@ import "./components/vanilla/dialog.js";
 import "./components/vanilla/sort-search.js";
 import handleUpdateUrlButtons from "./components/vanilla/update-url.js";
 import i18n from "./i18n.ts";
-import { admin_root, api_root, api_2_root, explorable_resources, schema_catalog_url, schema_documentation_url, schema_validata_url, title, } from "./config.ts";
+import { admin_root, api_root, api_2_root, explorable_resources, schema_documentation_url, schema_validata_url, title, } from "./config.ts";
 import Api from "./plugins/api.ts";
 import EventBus from "./plugins/eventbus.ts";
 import Auth from "./plugins/auth.ts";
@@ -43,7 +44,6 @@ setupComponents({
   default_lang: i18n.global.locale.value,
   explorable_resources,
   only_locales: i18n.global.locale.value,
-  schema_catalog_url,
   schema_documentation_url,
   schema_validata_url,
   show_copy_resource_permalink: true,
@@ -66,6 +66,7 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("menu-search", MenuSearch);
   app.component("search", Search);
   app.component("delete-button", DeleteButton);
+  app.component("delete-user-button", DeleteUserButton);
   app.component("featured-button", FeaturedButton);
   app.component("follow-button", FollowButton);
   app.component("read-more", ReadMore);

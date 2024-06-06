@@ -48,7 +48,7 @@ export type FileLoadingState = "none" | "loading" | "failed" | "loaded";
 
 export type NewDatasetFile = (DatasetLocalFile | DatasetRemoteFile) & { state: FileLoadingState; };
 
-export type DatasetFile = (DatasetLocalFile | DatasetRemoteFile) & { rid: string; };
+export type DatasetFile = (DatasetLocalFile | DatasetRemoteFile) & { id: string; };
 
 export type DatasetFullFileUpload = { file: Blob; uuid: string; filename: string; };
 

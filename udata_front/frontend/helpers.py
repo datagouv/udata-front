@@ -407,6 +407,12 @@ def format_number(number):
     return format_decimal(number, locale=g.lang_code) if number else number
 
 
+@front.app_template_filter()
+def format_percentage(number):
+    '''A locale aware formatter.'''
+    return format_decimal(number, locale=g.lang_code, format='0.########') if number else number
+
+
 def json_ld_script_preprocessor(o):
     if isinstance(o, dict):
         return {k: json_ld_script_preprocessor(v) for k, v in o.items()}
