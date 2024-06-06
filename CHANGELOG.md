@@ -3,7 +3,7 @@
 ## Current (in progress)
 
 - Switch MAAF backend to new sync harvest system [#409](https://github.com/datagouv/udata-front/pull/409)
-- Add dataservice show page [#420](https://github.com/datagouv/udata-front/pull/420)
+- Add dataservice show page [#420](https://github.com/datagouv/udata-front/pull/420) [#424](https://github.com/datagouv/udata-front/pull/424)
 - Improve design of the OrganizationSearch component [#410](https://github.com/datagouv/udata-front/pull/410)
 - Add button to remove user without sending email [#418](https://github.com/datagouv/udata-front/pull/418)
 - Fix display not showing in Multiselect for multi options [#416](https://github.com/datagouv/udata-front/pull/416)
