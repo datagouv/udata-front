@@ -57,6 +57,7 @@
     "@storybook/testing-library": "^0.2.2",
     "@storybook/vue3": "^7.5.2",
     "@storybook/vue3-vite": "^7.5.2",
+    "@types/uuid": "^9.0.8",
     "@vitejs/plugin-legacy": "^4.1.1",
     "@vitejs/plugin-vue": "^4.4.0",
     "@vuelidate/core": "^2.0.3",

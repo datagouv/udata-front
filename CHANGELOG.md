@@ -12,6 +12,7 @@
 - Fix an error that blocks datasets search filters reset [#402](https://github.com/datagouv/udata-front/pull/402)
 - Componentize dataset card [#397](https://github.com/datagouv/udata-front/pull/397)
 - Use udata schema endpoint [#336](https://github.com/etalab/udata-front/pull/336)
+- Fix dataset publishing form [#417](https://github.com/datagouv/udata-front/pull/417)
 - Fix display not showing in Multiselect for multi options [#416](https://github.com/datagouv/udata-front/pull/416)
 
 ## 4.0.2 (2024-04-26)
