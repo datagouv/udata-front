@@ -11,7 +11,7 @@ export function useDropdown<T extends OptionWithId>(options: MaybeRefOrGetter<Ar
   const { expanded, handleKeyPressForCollapse, hide, registerBackgroundEvent, removeBackgroundEvent, show, uid } = useCollapse();
   const { focusOut, handleKeyPressForActiveDescendant, isSelected, select, selected, selectedOption, NOT_MOVED_YET, ALREADY_MOVED_DOWN } = useActiveDescendant(options);
 
-  function showAndSelectIfQuery(q: MaybeRefOrGetter<string>) {
+  function showAndSelectIfQuery() {
     if(toValue(q)) {
       show();
       select(selected.value);
@@ -23,7 +23,7 @@ export function useDropdown<T extends OptionWithId>(options: MaybeRefOrGetter<Ar
       searchSelectedOption();
     } else {
       inputRef.value?.focus();
-      showAndSelectIfQuery(q);
+      showAndSelectIfQuery();
     }
   };
 
@@ -34,7 +34,7 @@ export function useDropdown<T extends OptionWithId>(options: MaybeRefOrGetter<Ar
   };
 
   function handleKeyDown(e: KeyboardEvent) {
-    showAndSelectIfQuery(q);
+    showAndSelectIfQuery();
     let moved = NOT_MOVED_YET;
     if (!expanded.value) {
       moved = ALREADY_MOVED_DOWN;

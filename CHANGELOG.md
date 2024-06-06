@@ -2,7 +2,9 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Switch MAAF backend to new sync harvest system [#409](https://github.com/datagouv/udata-front/pull/409)
+- Add dataservice show page [#420](https://github.com/datagouv/udata-front/pull/420)
+- Improve design of the OrganizationSearch component [#410](https://github.com/datagouv/udata-front/pull/410)
 
 ## 4.0.3 (2024-05-28)
 
@@ -11,6 +13,7 @@
 - Componentize dataset card [#397](https://github.com/datagouv/udata-front/pull/397)
 - Use udata schema endpoint [#336](https://github.com/etalab/udata-front/pull/336)
 - Fix dataset publishing form [#417](https://github.com/datagouv/udata-front/pull/417)
+- Fix display not showing in Multiselect for multi options [#416](https://github.com/datagouv/udata-front/pull/416)
 
 ## 4.0.2 (2024-04-26)
 
