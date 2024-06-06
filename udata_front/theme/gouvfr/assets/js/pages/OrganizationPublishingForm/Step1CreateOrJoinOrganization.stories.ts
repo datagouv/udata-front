@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from '@storybook/vue3';
 import { within, waitFor, userEvent } from '@storybook/testing-library';
 import { expect } from '@storybook/test';
 import Step1CreateOrJoinOrganization from './Step1CreateOrJoinOrganization.vue';
-import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
 
 const meta = {
   title: 'Pages/OrganizationPublishingForm/Step1',
@@ -14,10 +13,11 @@ const meta = {
   }
 } satisfies Meta<typeof Step1CreateOrJoinOrganization>;
 
-export default meta
+export default meta;
 
 const args = {
-  steps: Stepper.StepperOrgaOnFirstStep.argsOrga.steps,
+  steps: ["Create or join an organization on data.gouv.fr", "Describe your organization", "Finalize your organization"],
+  currentStep: 0,
 };
 
 export const Step1: StoryObj<typeof meta> = {

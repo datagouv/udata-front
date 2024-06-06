@@ -6,6 +6,7 @@ import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
 import { user } from '../../config';
 import { NewDataset } from '../../types';
 import { userEvent, waitFor, within } from '@storybook/testing-library';
+import { User } from '@etalab/data.gouv.fr-components';
 
 
 const meta = {
@@ -35,7 +36,7 @@ const originalDataset: NewDataset = {
     zones: [],
     granularity: "",
   },
-  owner: user,
+  owner: user as User,
   organization: null,
   quality: {
     all_resources_available: true,

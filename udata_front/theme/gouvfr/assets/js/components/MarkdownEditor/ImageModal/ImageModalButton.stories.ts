@@ -3,15 +3,14 @@ import { expect } from '@storybook/test';
 import { screen, userEvent, waitFor } from '@storybook/testing-library';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import ImageModalButton from './ImageModalButton.vue';
-import type { ImageModalForm } from './ImageModal.vue';
 
 const meta = {
   title: 'Components/MarkdownEditor/Internals/ImageModalButton',
   component: ImageModalButton,
+  decorators: [withActions],
   argTypes: {
     onSend: {action: true}
   },
-  decorators: [withActions],
 } satisfies Meta<typeof ImageModalButton>;
 
 export default meta;
@@ -34,7 +33,7 @@ export const Image: StoryObj<typeof meta> = {
       await userEvent.click(screen.getByTestId("add-image-button"));
     });
 
-    await waitFor(() => expect(args.onSend).toHaveBeenCalledWith<[ImageModalForm]>({
+    await waitFor(() => expect(args.onSend).toHaveBeenCalledWith({
       src: link,
       title: "",
       alt: "",
