@@ -441,5 +441,7 @@
   "Extras": "Extras",
   "See extras": "See extras",
   "Harvest": "Harvest",
-  "See harvest": "See harvest"
+  "See harvest": "See harvest",
+  "will be permanently deleted.": "will be permanently deleted.",
+  "Delete without sending mail": "Delete without sending mail"
 }
