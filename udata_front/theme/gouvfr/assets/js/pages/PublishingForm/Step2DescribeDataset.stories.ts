@@ -6,7 +6,6 @@ import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
 import { user } from '../../config';
 import { NewDataset } from '../../types';
 import { userEvent, waitFor, within } from '@storybook/testing-library';
-import { rest } from 'msw';
 
 
 const meta = {
@@ -53,9 +52,45 @@ const originalDataset: NewDataset = {
   },
 };
 
+const myUser = {
+  id: "someId",
+  first_name: "John",
+  last_name: "Doe",
+  avatar: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+  organizations: [
+    {
+      acronym: null,
+      badges: [],
+      class: "Organization",
+      id: "65e9b7cf830c3b5a515ee4ed",
+      logo: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+      logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+      name: "My Organization",
+      page: "",
+      slug: "my-organization",
+      uri: "/"
+    },
+    {
+      acronym: null,
+      badges: [],
+      class: "Organization",
+      id: "65e9b7cf830c3b5a515ee4ed",
+      logo: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+      logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+      name: "My Second Organization",
+      page: "",
+      slug: "my-second-organization",
+      uri: "/"
+    }
+  ],
+  roles: [],
+  page: ""
+};
+
 const args: Step2DescribeDatasetProps = {
   originalDataset,
   steps: Stepper.StepperOnSecondStep.args.steps,
+  me: myUser,
   granularities: [
     {
       'id': 'country-group',
@@ -113,13 +148,6 @@ const args: Step2DescribeDatasetProps = {
 };
 
 export const Step2WithNoOrganization: StoryObj<typeof meta> = {
-  parameters: {
-    msw: [
-      rest.get('*/api/1/me', async (_req, res, ctx) => {
-        return res(ctx.delay(), ctx.json({first_name: "John", last_name: "Doe", avatar: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png", organizations: [], roles: []}));
-      }),
-    ],
-  },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     await waitFor(() => expect(canvas.getByTestId("markdown-editor")).toBeDefined());
@@ -139,44 +167,16 @@ export const Step2WithNoOrganization: StoryObj<typeof meta> = {
                   <Step2DescribeDataset v-bind="args" />
                 </div>`,
   }),
-  args,
+  args: {
+    ...args,
+    me: {
+      ...myUser,
+      organizations: []
+    }
+  },
 };
 
 export const Step2WithOrganizations: StoryObj<typeof meta> = {
-  parameters: {
-    msw: [
-      rest.get('*/api/1/me', async (_req, res, ctx) => {
-        return res(ctx.delay(), ctx.json({first_name: "John", last_name: "Doe", roles: [], avatar: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-          organizations: [
-            {
-              acronym: null,
-              badges: [],
-              class: "Organization",
-              id: "65e9b7cf830c3b5a515ee4ed",
-              logo: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-              logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-              name: "My Organization",
-              page: "",
-              slug: "my-organization",
-              uri: "/"
-            },
-            {
-              acronym: null,
-              badges: [],
-              class: "Organization",
-              id: "65e9b7cf830c3b5a515ee4ed",
-              logo: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-              logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-              name: "My Second Organization",
-              page: "",
-              slug: "my-second-organization",
-              uri: "/"
-            }
-          ]})
-        );
-      }),
-    ],
-  },
   render: (args) => ({
     components: { Step2DescribeDataset },
     setup() {
@@ -190,40 +190,6 @@ export const Step2WithOrganizations: StoryObj<typeof meta> = {
 };
 
 export const Step2WithAdmin: StoryObj<typeof meta> = {
-  parameters: {
-    msw: [
-      rest.get('*/api/1/me', async (_req, res, ctx) => {
-        return res(ctx.delay(), ctx.json({first_name: "John", last_name: "Doe", roles: ['admin'], avatar: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-          organizations: [
-            {
-              acronym: null,
-              badges: [],
-              class: "Organization",
-              id: "65e9b7cf830c3b5a515ee4ed",
-              logo: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-              logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-              name: "My Organization",
-              page: "",
-              slug: "my-organization",
-              uri: "/"
-            },
-            {
-              acronym: null,
-              badges: [],
-              class: "Organization",
-              id: "65e9b7cf830c3b5a515ee4ed",
-              logo: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-              logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-              name: "My Second Organization",
-              page: "",
-              slug: "my-second-organization",
-              uri: "/"
-            }
-          ]})
-        );
-      }),
-    ],
-  },
   render: (args) => ({
     components: { Step2DescribeDataset },
     setup() {
@@ -233,5 +199,11 @@ export const Step2WithAdmin: StoryObj<typeof meta> = {
                   <Step2DescribeDataset v-bind="args" />
                 </div>`,
   }),
-  args,
+  args: {
+    ...args,
+    me: {
+      ...myUser,
+      roles: [...myUser?.roles, 'admin']
+    }
+  },
 };

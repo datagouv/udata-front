@@ -10,6 +10,7 @@
       :originalDataset="dataset"
       :steps="steps"
       :granularities="granularities"
+      :user="me"
       @next="updateDatasetAndMoveToNextStep"
     />
     <template v-else-if="currentStep === 2">
@@ -51,6 +52,7 @@ import Step4CompleteThePublication from "./Step4CompleteThePublication.vue";
 import { publishing_form_feedback_url, title, user } from '../../config';
 import { createDataset, getSpatialGranularities, publishDataset } from '../../api/datasets';
 import { useFilesUpload } from '../../composables/form/useFilesUpload';
+import { fetchMe } from '../../api/me';
 
 export default defineComponent({
   components: { Step1PublishingType, Step2DescribeDataset, Step3AddFiles, Step3UpdateFileMetadata, Step4CompleteThePublication },
@@ -150,6 +152,9 @@ export default defineComponent({
     /** @type {import("vue").Ref<number | null>} */
     const editedIndex = ref(null);
 
+    /** @type {import("vue").Ref<import('@etalab/data.gouv.fr-components').User | null>} */
+    const me = ref(null)
+
     /**
      *
      * @param {number | null} step
@@ -172,6 +177,8 @@ export default defineComponent({
     };
 
     onMounted(async () => {
+      const meValue = await fetchMe();
+      me.value = meValue;
       try {
         const granularitiesValue = await getSpatialGranularities();
         granularities.value = granularitiesValue;
@@ -297,6 +304,7 @@ export default defineComponent({
       files,
       granularities,
       loading,
+      me,
       moveToStep,
       publishing_form_feedback_url,
       redirectToPublicUrl,

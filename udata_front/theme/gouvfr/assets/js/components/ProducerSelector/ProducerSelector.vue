@@ -68,7 +68,7 @@ const updateOrganization = (value: Organization) => {
 function listOrganizations() {
   const userValue = toValue(props.user);
   if (userValue) {
-    organizations.value = userValue.organizations;
+    organizations.value = [...userValue.organizations];
     organizations.value.push({
       name: `${userValue.first_name} ${userValue.last_name}`,
       logo: userValue.avatar || "",
@@ -80,8 +80,7 @@ function listOrganizations() {
       uri: "",
       logo_thumbnail: userValue.avatar_thumbnail || ""
     });
-  }
-  console.log(organizations.value)
+  };
 };
 
 onMounted(() => {

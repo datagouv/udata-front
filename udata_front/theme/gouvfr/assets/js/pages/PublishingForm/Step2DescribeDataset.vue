@@ -142,14 +142,14 @@
               </div>
             </div>
           </Well>
-          <fieldset class="fr-fieldset" aria-labelledby="description-legend">
+          <fieldset v-if="user" class="fr-fieldset" aria-labelledby="description-legend">
             <legend class="fr-fieldset__legend" id="description-legend">
               <h2 class="subtitle subtitle--uppercase fr-mb-3v">
                 {{ $t("Producer") }}
               </h2>
             </legend>
             <div class="fr-fieldset__element">
-              <ProducerSelector v-if="me" :user="me" @update:organization="(value) => userOrganization = value" />
+              <ProducerSelector :user="user" @update:organization="(value) => userOrganization = value" />
             </div>
           </fieldset>
           <fieldset class="fr-fieldset min-width-0" aria-labelledby="description-legend">
@@ -329,12 +329,13 @@
 export type Step2DescribeDatasetProps = {
   originalDataset: NewDataset,
   steps: Array<string>,
-  granularities: Array<SpatialGranularity>
+  granularities: Array<SpatialGranularity>,
+  user: User
 };
 </script>
 <script setup lang="ts">
 import { type Organization, Well, type User } from "@etalab/data.gouv.fr-components";
-import { computed, onMounted, reactive, ref, toValue } from 'vue';
+import { computed, reactive, ref, toValue } from 'vue';
 import { minLengthWarning, not, required, requiredWithCustomMessage, sameAs } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -353,7 +354,6 @@ import { useI18n } from 'vue-i18n';
 import { getLicensesUrl } from '../../api/licenses';
 import { getFrequenciesUrl } from '../../api/datasets';
 import type { NewDataset, PublishingFormAccordionState, SpatialGranularity } from '../../types';
-import { fetchMe } from "../../api/me";
 
 const emit = defineEmits(["next"]);
 const props = defineProps<Step2DescribeDatasetProps>();
@@ -377,7 +377,6 @@ if(!dataset.spatial) {
 };
 
 const userOrganization = ref<Organization>();
-const me = ref<User | null>(null);
 
 const frequenciesUrl = getFrequenciesUrl();
 const licensesUrl = getLicensesUrl();
@@ -464,8 +463,4 @@ function submit() {
     }
   });
 };
-
-onMounted(async() => {
-  me.value = await fetchMe();
-});
 </script>
