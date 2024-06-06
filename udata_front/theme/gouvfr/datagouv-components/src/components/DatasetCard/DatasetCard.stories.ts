@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3';
 import { vueRouter } from 'storybook-vue3-router';
 import { DatasetCard } from ".";
 import type { DatasetV2 } from '../..';
-import TestComponent from "./TestComponent.vue"
+import TestComponent from "./TestComponent.vue";
 
 const meta = {
   title: 'Components/DatasetCard',
@@ -28,7 +28,7 @@ const datasetRoutes = [
     path: '/organizations/:id',
     component: TestComponent
   }
-]
+];
 
 const dataset: DatasetV2 = {
   id: "653a6afa18f9f98d2ffdadee",

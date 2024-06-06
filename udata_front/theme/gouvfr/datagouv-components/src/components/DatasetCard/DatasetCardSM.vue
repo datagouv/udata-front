@@ -34,18 +34,23 @@
       </div>
       <div class="fr-col">
         <h4 class="fr-mb-1v fr-grid-row">
-          <a :href="dataset.page" class="text-grey-500">
-            {{ dataset.title }}
-            <small v-if="dataset.acronym">{{ dataset.acronym }}</small>
-          </a>
+          <slot name="datasetUrl" :dataset="dataset" :datasetUrl="datasetUrl">
+            <AppLink :to="datasetUrl" class="text-grey-500">
+              {{ dataset.title }}
+              <small v-if="dataset.acronym">{{ dataset.acronym }}</small>
+            </AppLink>
+          </slot>
         </h4>
-        <p class="fr-my-0 fr-text--xs " v-if="dataset.organization || dataset.owner">
-          <span class="not-enlarged dash-after fr-mr-1v" v-if="dataset.organization">
-            <a class="fr-link fr-text--xs" :href="dataset.organization.page">
-              <OrganizationNameWithCertificate :organization="dataset.organization" />
-            </a>
-          </span>
-          <span class="not-enlarged dash-after fr-mr-1v" v-else-if="dataset.owner">
+        <p class="fr-my-0 fr-text--xs" v-if="dataset.organization || dataset.owner">
+          <template v-if="dataset.organization">
+            <span class="not-enlarged dash-after fr-mr-1v" v-if="organizationUrl">
+              <AppLink class="fr-link fr-text--xs" :to="organizationUrl">
+                <OrganizationNameWithCertificate :organization="dataset.organization" />
+              </AppLink>
+            </span>
+            <OrganizationNameWithCertificate v-else :organization="dataset.organization" />
+          </template>
+          <span class="not-enlarged dash-after fr-mr-1v" v-else>
             <a class="fr-link fr-text--xs" :href="dataset.owner.page">
               {{ ownerName }}
             </a>
@@ -86,9 +91,23 @@ import { excerpt } from "../../helpers";
 import { Placeholder } from "../utils/";
 import { QualityScore } from "../QualityScore";
 import type { Dataset, DatasetV2 } from "../../types/datasets";
+import AppLink from "../AppLink/AppLink.vue";
+import { RouteLocationRaw } from "vue-router";
 
 type Props = {
   dataset: Dataset | DatasetV2,
+
+  /**
+   * The datasetUrl is a route location object to allow Vue Router to navigate to the details of a dataset.
+   * It is used as a separate prop to allow other sites using the package to define their own dataset pages.
+   */
+  datasetUrl: RouteLocationRaw,
+
+  /**
+   * The organizationUrl is an optional route location object to allow Vue Router to navigate to the details of the organization linked to tha dataset.
+   * It is used as a separate prop to allow other sites using the package to define their own organization pages.
+   */
+  organizationUrl?: RouteLocationRaw,
   showDescription?: boolean,
 };
 

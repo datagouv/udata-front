@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
+import { vueRouter } from 'storybook-vue3-router';
 import { DatasetCardSM } from '.';
 import type { DatasetV2 } from '../..';
+import TestComponent from "./TestComponent.vue";
 
 const meta = {
   title: 'Components/DatasetCardSM',
@@ -16,6 +18,17 @@ const meta = {
 } satisfies Meta<typeof DatasetCardSM>;
 
 export default meta;
+
+const datasetRoutes = [
+  {
+    path: '/datasets/:id',
+    component: TestComponent
+  },
+  {
+    path: '/organizations/:id',
+    component: TestComponent
+  }
+];
 
 const dataset: DatasetV2 = {
   id: "653a6afa18f9f98d2ffdadee",
@@ -94,14 +107,17 @@ const dataset: DatasetV2 = {
 
 const args = {
   dataset: dataset,
+  datasetUrl: "/datasets/6571faa17f46a65ee05c4d17",
 };
 
 const argsPrivate = {
   dataset: {...dataset, private: true},
+  datasetUrl: "/datasets/6571faa17f46a65ee05c4d17",
 };
 
 const argsArchived = {
   dataset: {...dataset, archived: true},
+  datasetUrl: "/datasets/6571faa17f46a65ee05c4d17",
 };
 
 export const DatasetCardSMSimple: StoryObj<typeof meta> = {
@@ -113,6 +129,20 @@ export const DatasetCardSMSimple: StoryObj<typeof meta> = {
     template: `<DatasetCardSM v-bind="args"/>`,
   }),
   args,
+};
+
+export const DatasetCardSMSimpleWithOrganizationUrl: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCardSM },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCardSM v-bind="args"/>`,
+  }),
+  args: {
+    ...args,
+    organizationUrl: "/organizations/another-url-easier-to-distinguish"
+  },
 };
 
 export const DatasetCardSMWithoutDescription: StoryObj<typeof meta> = {
@@ -150,6 +180,76 @@ export const ArchivedDatasetCardSM: StoryObj<typeof meta> = {
     },
     template: `<DatasetCardSM v-bind="args"/>`,
   }),
+  args: {
+    ...argsArchived,
+  },
+};
+
+export const RouterDatasetCardSMSimple: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCardSM },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCardSM v-bind="args"/><router-view></router-view>`,
+  }),
+  decorators: [vueRouter(datasetRoutes)],
+  args,
+};
+
+export const RouterDatasetCardSMSimpleWithOrganizationUrl: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCardSM },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCardSM v-bind="args"/><router-view></router-view>`,
+  }),
+  decorators: [vueRouter(datasetRoutes)],
+  args: {
+    ...args,
+    organizationUrl: "/organizations/another-url-easier-to-distinguish"
+  },
+};
+
+export const RouterDatasetCardSMWithoutDescription: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCardSM },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCardSM v-bind="args"/><router-view></router-view>`,
+  }),
+  decorators: [vueRouter(datasetRoutes)],
+  args: {
+    ...args,
+    showDescription: false,
+  },
+};
+
+export const RouterPrivateDatasetCardSM: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCardSM },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCardSM v-bind="args"/><router-view></router-view>`,
+  }),
+  decorators: [vueRouter(datasetRoutes)],
+  args: {
+    ...argsPrivate,
+  },
+};
+
+export const RouterArchivedDatasetCardSM: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCardSM },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCardSM v-bind="args"/><router-view></router-view>`,
+  }),
+  decorators: [vueRouter(datasetRoutes)],
   args: {
     ...argsArchived,
   },
