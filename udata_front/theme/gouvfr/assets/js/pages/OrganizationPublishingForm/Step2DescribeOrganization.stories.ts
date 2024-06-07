@@ -1,7 +1,6 @@
 import { withActions } from '@storybook/addon-actions/decorator';
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { within, waitFor, userEvent } from '@storybook/testing-library';
-import { expect } from '@storybook/test';
+import { expect, within, waitFor, userEvent } from '@storybook/test';
 import type { NewOrganization } from "@etalab/data.gouv.fr-components";
 import Step2DescribeOrganization from './Step2DescribeOrganization.vue';
 import * as Step1 from './Step1CreateOrJoinOrganization.stories';

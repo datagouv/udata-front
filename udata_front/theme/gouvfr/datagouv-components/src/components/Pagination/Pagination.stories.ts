@@ -1,6 +1,5 @@
 import { withActions } from '@storybook/addon-actions/decorator';
-import { expect } from '@storybook/test';
-import { userEvent, waitFor, within } from '@storybook/testing-library';
+import { expect, userEvent, waitFor, within } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Pagination from '.';
 import { getVisiblePages, PAGES_AROUND } from "./paginate";

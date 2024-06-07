@@ -1,11 +1,10 @@
 import { withActions } from '@storybook/addon-actions/decorator';
-import { expect } from '@storybook/test';
+import { expect, userEvent, waitFor, within  } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Step2DescribeDataset, { Step2DescribeDatasetProps } from './Step2DescribeDataset.vue';
 import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
 import { user } from '../../config';
 import { NewDataset } from '../../types';
-import { userEvent, waitFor, within } from '@storybook/testing-library';
 import { User } from '@etalab/data.gouv.fr-components';
 
 

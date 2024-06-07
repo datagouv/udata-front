@@ -1,4 +1,4 @@
-import { rest } from 'msw';
+import { delay, http, HttpResponse } from 'msw';
 import PublishingForm from './PublishingForm.vue';
 
 export default {
@@ -13,18 +13,21 @@ const args = {
 export const Form = {
   parameters: {
     msw: [
-      rest.post('*/api/1/datasets/', async (req, res, ctx) => {
+      http.post('*/api/1/datasets/', async ({ request }) => {
         /** @type {import("../../types").NewDataset} */
-        const body = await req.json();
+        const body = await request.json();
         /** @type {import("../../types").Dataset} */
         const dataset = {...body, id: "someId", last_update: new Date()};
-        return res(ctx.delay(), ctx.json(dataset));
+        await delay();
+        return HttpResponse.json(dataset);
       }),
-      rest.post('*/api/1/datasets/:datasetId/upload', async (req, res, ctx) => {
-        return res(ctx.delay(), ctx.json({success: true}));
+      http.post('*/api/1/datasets/:datasetId/upload', async () => {
+        await delay();
+        return HttpResponse.json({ success: true });
       }),
-      rest.post('*/api/1/datasets/:datasetId/resources', async (req, res, ctx) => {
-        return res(ctx.delay(), ctx.json({success: true}));
+      http.post('*/api/1/datasets/:datasetId/resources', async () => {
+        await delay();
+        return HttpResponse.json({ success: true });
       }),
     ],
   },
@@ -43,18 +46,26 @@ export const Form = {
 export const FormWithFailedRequests = {
   parameters: {
     msw: [
-      rest.post('*/api/1/datasets/', async (req, res, ctx) => {
+      http.post('*/api/1/datasets/', async ({ request }) => {
         /** @type {import("../../types").NewDataset} */
-        const body = await req.json();
+        const body = await request.json();
         /** @type {import("../../types").Dataset} */
         const dataset = {...body, id: "someId", last_update: new Date()};
-        return res(ctx.delay(), ctx.json(dataset));
+        await delay();
+        return HttpResponse.json(dataset);
       }),
-      rest.post('*/api/1/datasets/:datasetId/upload', async (req, res, ctx) => {
-        return res(ctx.delay(), ctx.status(400), ctx.json({error: "Chunk size mismatch"}));
+      http.post('*/api/1/datasets/:datasetId/upload', async () => {
+        await delay();
+        return HttpResponse.json({ error: "Chunk size mismatch" }, {
+          status: 400,
+        });
       }),
-      rest.post('*/api/1/datasets/:datasetId/resources', async (req, res, ctx) => {
-        return res(ctx.delay(), ctx.status(400, "This endpoint only supports remote resources"));
+      http.post('*/api/1/datasets/:datasetId/resources', async () => {
+        await delay();
+        return new HttpResponse.json({}, {
+          status: 400,
+          statusText: "This endpoint only supports remote resources",
+        });
       }),
     ],
   },
