@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix dataset card link opening another tab [#426](https://github.com/datagouv/udata-front/pull/426)
 
 ## 5.0.0 (2024-06-07)
 
