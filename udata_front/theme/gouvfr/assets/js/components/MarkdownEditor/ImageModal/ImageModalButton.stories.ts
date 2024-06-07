@@ -6,7 +6,15 @@ import ImageModalButton from './ImageModalButton.vue';
 const meta = {
   title: 'Components/MarkdownEditor/Internals/ImageModalButton',
   component: ImageModalButton,
-  decorators: [withActions],
+  decorators: [
+    withActions,
+    (story, ctx) => {
+      return {
+        components: { story },
+        template: `<div style="width: 1200px; height: 800px;"><story /></div>`,
+      };
+    },
+  ],
   argTypes: {
     onSend: {action: true}
   },
