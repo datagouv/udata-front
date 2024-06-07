@@ -22,7 +22,7 @@
     "local-testing": "start-server-and-test prepare-and-serve-e2e http://localhost:7000 cypress",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test-storybook": "test-storybook --no-cache",
+    "test-storybook": "test-storybook",
     "chromatic": "npx chromatic"
   },
   "overrides": {

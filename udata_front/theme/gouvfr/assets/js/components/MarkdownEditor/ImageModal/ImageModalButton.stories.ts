@@ -17,7 +17,7 @@ export default meta;
 
 const args = {};
 
-export const Image: StoryObj<typeof meta> = {
+export const DefaultImageModalButton: StoryObj<typeof meta> = {
   play: async ({ args, step }) => {
     const link = "https://static.data.gouv.fr/avatars/09/1ba932cbfa48dc8c158981de6c700a.jpeg";
 
