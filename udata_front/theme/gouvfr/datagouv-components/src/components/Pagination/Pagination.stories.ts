@@ -1,5 +1,5 @@
 import { withActions } from '@storybook/addon-actions/decorator';
-import { expect, userEvent, waitFor, within } from '@storybook/test';
+import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Pagination from '.';
 import { getVisiblePages, PAGES_AROUND } from "./paginate";
@@ -10,8 +10,8 @@ const meta = {
   component: Pagination,
   tags: ['autodocs'],
   decorators: [withActions],
-  argTypes: {
-    onChange: { action: true },
+  args: {
+    onChange: fn(),
   },
   parameters: {
     docs: {

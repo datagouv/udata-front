@@ -1,5 +1,5 @@
 import { withActions } from '@storybook/addon-actions/decorator';
-import { expect, screen, userEvent, waitFor } from '@storybook/test';
+import { expect, fn, screen, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import ImageModal, {ImageModalForm, type ImageModalProps} from './ImageModal.vue';
 
@@ -7,8 +7,8 @@ const meta = {
   title: 'Components/MarkdownEditor/Internals/ImageModal',
   component: ImageModal,
   decorators: [withActions],
-  argTypes: {
-    onSend: { action: true },
+  args: {
+    onSendModal: fn(),
   }
 } satisfies Meta<typeof ImageModal>;
 
@@ -29,7 +29,7 @@ export const SimpleImageModal = {
       await userEvent.click(screen.getByTestId("add-image-button"));
     });
 
-    await waitFor(() => expect(args.onSend).toHaveBeenCalledWith<[ImageModalForm]>({
+    await waitFor(() => expect(args.onSendModal).toHaveBeenCalledWith<[ImageModalForm]>({
       src: link,
       title: "",
       alt: "",
@@ -66,7 +66,7 @@ export const SimpleImageModalWithAllFieldsFilled = {
       await userEvent.click(screen.getByTestId("add-image-button"));
     });
 
-    await waitFor(() => expect(args.onSend).toHaveBeenCalledWith<[ImageModalForm]>({
+    await waitFor(() => expect(args.onSendModal).toHaveBeenCalledWith<[ImageModalForm]>({
       src: link,
       title,
       alt,

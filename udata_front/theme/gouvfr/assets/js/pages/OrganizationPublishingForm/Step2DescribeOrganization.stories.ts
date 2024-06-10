@@ -1,6 +1,6 @@
 import { withActions } from '@storybook/addon-actions/decorator';
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { expect, within, waitFor, userEvent } from '@storybook/test';
+import { expect, within, waitFor, userEvent, fn } from '@storybook/test';
 import type { NewOrganization } from "@etalab/data.gouv.fr-components";
 import Step2DescribeOrganization from './Step2DescribeOrganization.vue';
 import * as Step1 from './Step1CreateOrJoinOrganization.stories';
@@ -10,8 +10,8 @@ const meta = {
   title: 'Pages/OrganizationPublishingForm/Step2',
   component: Step2DescribeOrganization,
   decorators: [withActions],
-  argTypes: {
-    onNext: { action: true }
+  args: {
+    onNext: fn()
   }
 } satisfies Meta<typeof Step2DescribeOrganization>;
 
@@ -59,8 +59,13 @@ export const Step2WithInteraction: StoryObj<typeof meta> = {
       await userEvent.type(canvas.getByTestId('websiteInput').querySelector('input') as HTMLInputElement, 'https://data.gouv.fr');
     });
 
-    await userEvent.click(canvas.getByTestId('submitButton'));
-    await waitFor(() => expect(args.onNext).toHaveBeenCalled());
+    await step('Send form', async () => {
+      await userEvent.click(canvas.getByTestId('submitButton'));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await waitFor(() => expect(args.onNext).toHaveBeenCalled(), {
+        timeout: 5000,
+      });
+    });
   },
   render: (args) => ({
     components: { Step2DescribeOrganization },

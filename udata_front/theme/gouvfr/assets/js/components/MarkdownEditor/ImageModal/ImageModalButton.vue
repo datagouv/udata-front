@@ -10,7 +10,7 @@
     <ImageModal
       :id="id"
       :multiple="true"
-      @send="onChange"
+      @sendModal="onChange"
     />
 </template>
 <script setup lang="ts">

@@ -1,5 +1,5 @@
 import { withActions } from '@storybook/addon-actions/decorator';
-import { expect, userEvent, waitFor, within  } from '@storybook/test';
+import { expect, fn, userEvent, waitFor, within  } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Step2DescribeDataset, { Step2DescribeDatasetProps } from './Step2DescribeDataset.vue';
 import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
@@ -12,8 +12,8 @@ const meta = {
   title: 'Pages/PublishingForm/Step2',
   component: Step2DescribeDataset,
   decorators: [withActions],
-  argTypes: {
-    onNext: { action: true },
+  args: {
+    onNext: fn(),
   }
 } satisfies Meta<typeof Step2DescribeDataset>;
 

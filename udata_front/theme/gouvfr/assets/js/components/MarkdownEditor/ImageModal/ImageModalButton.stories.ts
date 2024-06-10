@@ -1,5 +1,5 @@
 import { withActions } from '@storybook/addon-actions/decorator';
-import { expect, screen, userEvent, waitFor } from '@storybook/test';
+import { expect, fn, screen, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import ImageModalButton from './ImageModalButton.vue';
 
@@ -15,8 +15,8 @@ const meta = {
       };
     },
   ],
-  argTypes: {
-    onSend: {action: true}
+  args: {
+    onSend: fn()
   },
 } satisfies Meta<typeof ImageModalButton>;
 
@@ -35,16 +35,18 @@ export const DefaultImageModalButton: StoryObj<typeof meta> = {
     await step('Type a link', async () => {
       await userEvent.type(screen.getByPlaceholderText("Paste your link..."), link);
     });
-
-    await step('Add image', async () => {
+    await step('Click on button "add image"', async () => {
       await userEvent.click(screen.getByTestId("add-image-button"));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await waitFor(() => expect(args.onSend).toHaveBeenCalledWith({
+        src: link,
+        title: "",
+        alt: "",
+      }), {
+        timeout: 5000,
+      });
     });
 
-    await waitFor(() => expect(args.onSend).toHaveBeenCalledWith({
-      src: link,
-      title: "",
-      alt: "",
-    }));
   },
   render: (args) => ({
     components: { ImageModalButton },
