@@ -24,9 +24,9 @@
   </div>
   <div v-else>
     <div class="fr-col bg-contrast-grey text-align-center fr-p-2v">
-      <p class="fr-text--md fr-text--bold fr-mb-n3v">You belong to no organization</p>
-      <p class="fr-text--sm fr-text--bold fr-mb-n4v">You publish in your own name</p>
-      <p class="fr-text--sm">We advise you to publish under an organization if it's a professional activity</p>
+      <p class="fr-text--md fr-text--bold fr-mb-n3v">{{ t('You belong to no organization') }}</p>
+      <p class="fr-text--sm fr-text--bold fr-mb-n4v">{{ t('You publish in your own name') }}</p>
+      <p class="fr-text--sm">{{ t('We advise you to publish under an organization if it\'s a professional activity') }}</p>
       <div class="fr-grid-row fr-grid-row--middle fr-pb-3v">
         <div class="fr-col-6">
           <button class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500" @click="">
@@ -47,6 +47,9 @@
 import { ref, computed, toValue, onMounted } from 'vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
 import type { User, Organization } from '@etalab/data.gouv.fr-components';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const props = defineProps<{user: User}>();
 
@@ -54,11 +57,9 @@ const userOrganization = ref<Organization>();
 const organizations = ref<Array<Organization>>([]);
 const emit = defineEmits(['update:organization']);
 
-const isAdmin = () => {
-  return props.user.roles?.includes('admin') ?? false;
-};
+const isAdmin = computed(() => props.user.roles?.includes('admin') ?? false);
 
-const hasOrganizations = computed<Boolean>(() => organizations.value.length > 1);
+const hasOrganizations = computed(() => organizations.value.length > 1);
 
 const updateOrganization = (value: Organization) => {
   userOrganization.value = value;
@@ -85,6 +86,6 @@ function listOrganizations() {
 
 onMounted(() => {
   organizations.value = [];
-  listOrganizations()
+  listOrganizations();
 });
 </script>
