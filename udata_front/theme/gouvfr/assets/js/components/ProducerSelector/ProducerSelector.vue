@@ -75,14 +75,14 @@ function listOrganizations() {
     organizations.value = [...userValue.organizations];
     organizations.value.push({
       name: `${userValue.first_name} ${userValue.last_name}`,
-      logo: userValue.avatar || "",
+      logo: useUserAvatar(userValue, 40),
       id: "user",
       acronym: null,
       badges: [],
       page: "",
       slug: "",
       uri: "",
-      logo_thumbnail: useUserAvatar(userValue, 40)
+      logo_thumbnail: useUserAvatar(userValue, 40),
     });
   };
 };
