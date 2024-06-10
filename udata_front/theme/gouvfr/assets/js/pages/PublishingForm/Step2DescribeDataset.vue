@@ -323,7 +323,7 @@ export type Step2DescribeDatasetProps = {
 };
 </script>
 <script setup lang="ts">
-import { Well } from "@etalab/data.gouv.fr-components";
+import { Well } from "@datagouv/components";
 import { computed, reactive } from 'vue';
 import { minLengthWarning, not, required, requiredWithCustomMessage, sameAs } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';

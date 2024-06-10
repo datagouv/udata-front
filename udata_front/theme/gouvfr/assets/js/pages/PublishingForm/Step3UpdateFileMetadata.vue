@@ -237,7 +237,7 @@
   </div>
 </template>
 <script>
-import { Well } from "@etalab/data.gouv.fr-components";
+import { Well } from "@datagouv/components";
 import { computed, defineComponent, ref } from 'vue';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';

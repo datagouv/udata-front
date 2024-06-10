@@ -1,6 +1,6 @@
 import { MaybeRefOrGetter, Ref, ref, toValue } from 'vue'
 import useKeyCodes from "./useKeyCodes";
-import { getRandomId } from '@etalab/data.gouv.fr-components';
+import { getRandomId } from '@datagouv/components';
 
 export function useCollapse() {
   const {KEYCODES} = useKeyCodes();

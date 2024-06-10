@@ -77,7 +77,7 @@ import Placeholder from "../utils/placeholder.vue";
 import { excerpt } from "../../helpers";
 import { useI18n } from "vue-i18n";
 import { type CSSProperties } from "vue";
-import { formatRelativeIfRecentDate, useOwnerName, OrganizationNameWithCertificate } from "@etalab/data.gouv.fr-components";
+import { formatRelativeIfRecentDate, useOwnerName, OrganizationNameWithCertificate } from "@datagouv/components";
 
 defineOptions({inheritAttrs: false});
 

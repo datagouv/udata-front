@@ -4,7 +4,7 @@
  * Lots of variables here are probably useless for the front-end
  */
 
-import type { User } from "@etalab/data.gouv.fr-components";
+import type { User } from "@datagouv/components";
 import type { Primitive } from "@sentry/types";
 
 /**

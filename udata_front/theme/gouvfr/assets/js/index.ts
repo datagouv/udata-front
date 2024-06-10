@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import { setupComponents } from "@etalab/data.gouv.fr-components";
+import { setupComponents } from "@datagouv/components";
 
 import "./dsfr.ts";
 // @ts-ignore
@@ -22,7 +22,7 @@ import UserDatasetList from "./components/UserDatasetList/UserDatasetList.vue";
 import UserReuseList from "./components/UserReuseList/UserReuseList.vue";
 import PublishingForm from "./pages/PublishingForm/PublishingForm.vue";
 import OrganizationPublishingForm from "./pages/OrganizationPublishingForm/OrganizationPublishingForm.vue";
-import { ReadMore, Toggletip } from "@etalab/data.gouv.fr-components";
+import { ReadMore, Toggletip } from "@datagouv/components";
 
 import "./components/vanilla/tabs.js";
 import "./components/vanilla/accordion.js";

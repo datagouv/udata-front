@@ -30,7 +30,7 @@ import Step2DescribeOrganization from './Step2DescribeOrganization.vue';
 import Step3CompleteTheOrganization from './Step3CompleteTheOrganization.vue';
 import { title, admin_root } from '../../config';
 import { createOrganization, uploadLogo } from '../../api/organizations';
-import { type NewOrganization } from '@etalab/data.gouv.fr-components';
+import { type NewOrganization } from '@datagouv/components';
 
 const { t } = useI18n();
 
@@ -86,4 +86,3 @@ async function createOrganizationAndMoveToNextStep(org: NewOrganization, file: F
   }
 };
 </script>
-  

@@ -1,4 +1,4 @@
-import { CERTIFIED, PUBLIC_SERVICE, type Organization } from '@etalab/data.gouv.fr-components';
+import { CERTIFIED, PUBLIC_SERVICE, type Organization } from '@datagouv/components';
 import Reuse, { type ReuseProps } from './Reuse.vue';
 import { withActions } from '@storybook/addon-actions/decorator';
 import type { Meta, StoryObj } from "@storybook/vue3";
