@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isAdmin()">
+  <div v-if="isAdmin">
     <MultiSelect
       :required="true"
       :minimumCharacterBeforeSuggest="2"
@@ -48,6 +48,7 @@ import { ref, computed, toValue, onMounted } from 'vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
 import type { User, Organization } from '@etalab/data.gouv.fr-components';
 import { useI18n } from 'vue-i18n';
+import useUserAvatar from "../../composables/useUserAvatar";
 
 const { t } = useI18n();
 
@@ -55,7 +56,9 @@ const props = defineProps<{user: User}>();
 
 const userOrganization = ref<Organization>();
 const organizations = ref<Array<Organization>>([]);
-const emit = defineEmits(['update:organization']);
+const emit = defineEmits<{
+  (event: 'update:organization', organization: Organization): void,
+}>();
 
 const isAdmin = computed(() => props.user.roles?.includes('admin') ?? false);
 
@@ -79,7 +82,7 @@ function listOrganizations() {
       page: "",
       slug: "",
       uri: "",
-      logo_thumbnail: userValue.avatar_thumbnail || ""
+      logo_thumbnail: useUserAvatar(userValue, 40)
     });
   };
 };
