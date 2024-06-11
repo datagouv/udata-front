@@ -29,14 +29,14 @@
       <p class="fr-text--sm">{{ t('We advise you to publish under an organization if it\'s a professional activity') }}</p>
       <div class="fr-grid-row fr-grid-row--middle fr-pb-3v">
         <div class="fr-col-6">
-          <button class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500" @click="">
+          <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500" :href="organizationsUrl">
             {{ $t("Join an organization") }}
-          </button>
+          </a>
         </div>
         <div class="fr-col-6">
-          <button class="fr-btn" @click="">
+          <a class="fr-btn" :href="createOrganizationUrl">
             {{ $t("Create an organization") }}
-          </button>
+          </a>
         </div>
       </div>
     </div>
@@ -47,12 +47,16 @@
 import { ref, computed, toValue, onMounted } from 'vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
 import type { User, Organization } from '@etalab/data.gouv.fr-components';
+import { organization_url } from '../../config';
 import { useI18n } from 'vue-i18n';
 import useUserAvatar from "../../composables/useUserAvatar";
 
 const { t } = useI18n();
 
 const props = defineProps<{user: User}>();
+
+const organizationsUrl = organization_url;
+const createOrganizationUrl = `${organization_url}publishing-form/`;
 
 const userOrganization = ref<Organization>();
 const organizations = ref<Array<Organization>>([]);
