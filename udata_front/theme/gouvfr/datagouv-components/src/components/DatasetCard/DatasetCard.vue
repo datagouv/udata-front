@@ -91,7 +91,7 @@ import { useI18n } from "vue-i18n";
 import { useOwnerName } from "../../composables"
 import { formatRelativeIfRecentDate } from "../../helpers";
 import OrganizationNameWithCertificate from "../Organization/OrganizationNameWithCertificate.vue";
-import { getRandomId } from '@etalab/data.gouv.fr-components';
+import { getRandomId } from "@gouvminint/vue-dsfr";
 import Avatar from "../Avatar/Avatar.vue";
 import { excerpt } from "../../helpers";
 import { Placeholder } from "../utils/";
