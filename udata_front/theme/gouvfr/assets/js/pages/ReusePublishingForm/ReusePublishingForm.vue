@@ -21,7 +21,7 @@
       :steps="steps"
       :feedbackUrl="publishing_form_feedback_url"
       :originalReuse="reuse"
-      @update="updateReuseDatas"
+      @update="updateReuseData"
     />
   </div>
 </template>
@@ -113,7 +113,7 @@ async function createReuseAndMoveToNextStep(newReuse: Reuse, newFile: File) {
     const resp = await uploadLogo(reuse.value.id, newFile.value[0]);
     reuse.value.image = resp.data.image
   } catch (e) {
-    errors.value.push("Failed to upload logo, you can upload it again in your management panel");
+    errors.value.push(t("Failed to upload logo, you can upload it again in your management panel"));
   }
   if (moveToNextStep) {
     moveToStep(1);
@@ -132,11 +132,11 @@ async function updateReuseAndMoveToNextStep(newReuse: Reuse) {
     errors.value.push(e.message);
   }
   if (moveToNextStep) {
-    moveToStep(2)
+    moveToStep(2);
   }
 };
 
-async function updateReuseDatas(newReuse: Reuse) {
+async function updateReuseData(newReuse: Reuse) {
   try {
     reuse.value = await updateReuse(newReuse);
   } catch (e) {

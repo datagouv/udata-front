@@ -3,41 +3,41 @@
     <div class="fr-grid-row">
       <Sidemenu
         class="fr-col-12 fr-col-md-5"
-        :buttonText="$t('Help')"
+        :buttonText="t('Help')"
         :onRight="true"
         :fixed="true"
         >
           <template #title>
             <span class="fr-icon--sm fr-icon-question-line" aria-hidden="true"></span>
-            {{ $t('Help') }}
+            {{ t('Help') }}
           </template>
           <AccordionGroup>
             <Accordion
-              :title= "$t('Naming your reuse')"
+              :title= "t('Naming your reuse')"
               :id="nameReuseAccordionId"
               :state="state.title"
             >
               <p class="fr-m-0">
-                {{ $t("Prefer a title that allows understanding of the use made of the data rather than the name of the website or application (\"Search Engine for Company Agreements\" rather than \"\" for example).") }}
+                {{ t("Prefer a title that allows understanding of the use made of the data rather than the name of the website or application (\"Search Engine for Company Agreements\" rather than \"\" for example).") }}
               </p>
             </Accordion>
             <Accordion
-              :title= "$t('What link to provide')"
+              :title= "t('What link to provide')"
               :id="addLinkAccordionId"
               :state="state.url"
             >
               <p class="fr-m-0">
-                {{ $t("Enter the link of the page on which the reuse is visible. Point directly to the reuse itself rather than a homepage. Make sure the link is stable over time.") }}
+                {{ t("Enter the link of the page on which the reuse is visible. Point directly to the reuse itself rather than a homepage. Make sure the link is stable over time.") }}
               </p>
             </Accordion>
             <Accordion
-              :title= "$t('Choose a type')"
+              :title= "('Choose a type')"
               :id="addTypeAccordionId"
               :state="state.type"
             >
               <div class="markdown fr-m-0">
                 <p class="fr-m-0">
-                  {{ $t('Please indicate the type under which to categorize the reuse (API, application, news article, visualization, etc.).') }}
+                  {{ t('Please indicate the type under which to categorize the reuse (API, application, news article, visualization, etc.).') }}
                 </p>
                 <Well class="fr-mt-1w" v-if="fieldHasWarning('type')" color="orange-terre-battue">
                   {{ getWarningText("type") }}
@@ -45,48 +45,48 @@
               </div>
             </Accordion>
             <Accordion
-              :title= "$t('Choose a theme')"
+              :title= "t('Choose a theme')"
               :id="addTopicAccordionId"
               :state="state.topic"
             >
               <p class="fr-m-0">
-                {{ $t("Choose the theme associated with your reuse.") }}
+                {{ t("Choose the theme associated with your reuse.") }}
               </p>
               <Well class="fr-mt-1w" v-if="fieldHasWarning('topic')" color="orange-terre-battue">
                 {{ getWarningText("topic") }}
               </Well>
             </Accordion>
             <Accordion
-              :title= "$t('Describe your reuse')"
+              :title= "t('Describe your reuse')"
               :id="addDescriptionAccordionId"
               :state="state.description"
             >
               <p class="fr-m-0">
-                {{ $t("You can provide information about the method of creating the reuse, what the reuse allows to do or show, or tell more about yourself and the context of this reuse. It is preferable to maintain a neutral tone: if the reuse resembles too much like a promotional message, we may delete it.") }}
+                {{ t("You can provide information about the method of creating the reuse, what the reuse allows to do or show, or tell more about yourself and the context of this reuse. It is preferable to maintain a neutral tone: if the reuse resembles too much like a promotional message, we may delete it.") }}
               </p>
               <Well class="fr-mt-1w" v-if="fieldHasWarning('description')" color="orange-terre-battue">
                 {{ getWarningText("description") }}
               </Well>
             </Accordion>
             <Accordion
-              :title= "$t('Add keywords')"
+              :title= "t('Add keywords')"
               :id="addTagsAccordionId"
               :state="state.tags"
             >
               <p class="fr-m-0">
-                {{ $t("Keywords appear on the presentation page and improve search engine optimization when a user is searching. From each keyword, you can obtain a list of reuses for which the keyword has also been assigned.") }}
+                {{ t("Keywords appear on the presentation page and improve search engine optimization when a user is searching. From each keyword, you can obtain a list of reuses for which the keyword has also been assigned.") }}
               </p>
               <Well class="fr-mt-1w" v-if="fieldHasWarning('tags')" color="orange-terre-battue">
                 {{ getWarningText("tags") }}
               </Well>
             </Accordion>
             <Accordion
-              :title= "$t('Choose an image')"
+              :title= "t('Choose an image')"
               :id="addImageAccordionId"
               :state="state.image"
             >
               <p class="fr-m-0">
-                {{ $t("If your reuse takes the form of a graphical representation, you can provide a preview to other users through an image or screenshot. This image will appear in the \"Reuses\" section of the associated dataset page. When relevant, screenshots are more effective in conveying what the reuse is about, so they are preferable to logos or illustrations, for example.") }}
+                {{ t("If your reuse takes the form of a graphical representation, you can provide a preview to other users through an image or screenshot. This image will appear in the \"Reuses\" section of the associated dataset page. When relevant, screenshots are more effective in conveying what the reuse is about, so they are preferable to logos or illustrations, for example.") }}
               </p>
               <Well class="fr-mt-1w" v-if="fieldHasWarning('image')" color="orange-terre-battue">
                 {{ getWarningText("image") }}
@@ -106,15 +106,15 @@
                 <img :src="reuseIcon" alt="" />
               </div>
               <div class="fr-col">
-                <p class="fr-m-0 fr-text--bold">{{ $t('What is a reuse?') }}</p>
-                <p class="fr-m-0 fr-text--xs">{{ $t('A reuse is an exemple of public data\'s usage.') }} {{ $t('Publishing a reuse can allow you to gain visibility and start start a dialogue with the dataset producer.') }}</p>
+                <p class="fr-m-0 fr-text--bold">{{ t('What is a reuse?') }}</p>
+                <p class="fr-m-0 fr-text--xs">{{ t('A reuse is an exemple of public data\'s usage.') }} {{ t('Publishing a reuse can allow you to gain visibility and start start a dialogue with the dataset producer.') }}</p>
               </div>
             </div>
           </Well>
           <fieldset class="fr-fieldset" aria-labelledby="description-legend">
             <legend class="fr-fieldset__legend" id="description-legend">
               <h2 class="subtitle subtitle--uppercase fr-mb-3v">
-                {{ $t("Producer") }}
+                {{ t("Producer") }}
               </h2>
             </legend>
             <div class="fr-fieldset__element">
@@ -122,8 +122,8 @@
                 <MultiSelect
                   :required="true"
                   :minimumCharacterBeforeSuggest="2"
-                  :placeholder="$t('Check the identity with which you want to publish')"
-                  :searchPlaceholder="$t('Select an organization')"
+                  :placeholder="t('Check the identity with which you want to publish')"
+                  :searchPlaceholder="t('Select an organization')"
                   suggestUrl="/organizations/suggest/"
                   :values="userOrganization"
                   @change="(value: Organization) => userOrganization = value"
@@ -133,8 +133,8 @@
                 <MultiSelect
                   :required="true"
                   :minimumCharacterBeforeSuggest="2"
-                  :placeholder="$t('Check the identity with which you want to publish')"
-                  :searchPlaceholder="$t('Select an organization')"
+                  :placeholder="t('Check the identity with which you want to publish')"
+                  :searchPlaceholder="t('Select an organization')"
                   :initialOptions="organizations"
                   :values="userOrganization"
                   @change="(value: Organization) => userOrganization = value"
@@ -148,12 +148,12 @@
                   <div class="fr-grid-row fr-grid-row--middle fr-pb-3v">
                     <div class="fr-col-6">
                       <button class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500" @click="">
-                        {{ $t("Join an organization") }}
+                        {{ t("Join an organization") }}
                       </button>
                     </div>
                     <div class="fr-col-6">
                       <button class="fr-btn" @click="">
-                        {{ $t("Create an organization") }}
+                        {{ t("Create an organization") }}
                       </button>
                     </div>
                   </div>
@@ -164,7 +164,7 @@
           <fieldset class="fr-fieldset" aria-labelledby="description-legend">
             <legend class="fr-fieldset__legend" id="description-legend">
               <h2 class="subtitle subtitle--uppercase fr-mb-3v">
-                {{ $t("Description") }}
+                {{ t("Description") }}
               </h2>
             </legend>
             <LinkedToAccordion
@@ -174,7 +174,7 @@
             >
               <InputGroup
                 :aria-describedby="nameReuseAccordionId"
-                :label="$t('Reuse name')"
+                :label="t('Reuse name')"
                 :required="true"
                 v-model="reuse.title"
                 :hasError="fieldHasError('title')"
@@ -189,9 +189,9 @@
             >
               <InputGroup
                 :aria-describedby="addLinkAccordionId"
-                :label="$t('Link')"
+                :label="t('Link')"
                 type="url"
-                :placeholder="$t('https://...')"
+                :placeholder="t('https://...')"
                 :required="true"
                 v-model="reuse.url"
                 :hasError="fieldHasError('url')"
@@ -206,8 +206,8 @@
             >
             <MultiSelect
                 :required="true"
-                :placeholder="$t('Type')"
-                :searchPlaceholder="$t('Select a type')"
+                :placeholder="t('Type')"
+                :searchPlaceholder="t('Select a type')"
                 :listUrl="typesUrl"
                 :values="reuse.type"
                 @change="(value: string) => reuse.type = value"
@@ -223,8 +223,8 @@
             >
               <MultiSelect
                 :required="true"
-                :placeholder="$t('Theme')"
-                :searchPlaceholder="$t('Select a theme...')"
+                :placeholder="t('Theme')"
+                :searchPlaceholder="t('Select a theme...')"
                 :listUrl="topicsUrl"
                 :values="reuse.topic"
                 @change="(value: string) => reuse.topic = value"
@@ -239,7 +239,7 @@
               @blur="vWarning$.description.$touch"
             >
               <InputGroup
-                :label="$t('Description')"
+                :label="t('Description')"
                 :required="true"
                 type="textarea"
                 v-model="reuse.description"
@@ -256,8 +256,8 @@
               <MultiSelect
                 :minimumCharacterBeforeSuggest="2"
                 @change="(value: Array<string>) => reuse.tags = value"
-                :placeholder="$t('Tags')"
-                :searchPlaceholder="$t('Search a tag...')"
+                :placeholder="t('Tags')"
+                :searchPlaceholder="t('Search a tag...')"
                 suggestUrl="/tags/suggest/"
                 :values="reuse.tags"
                 :hasWarning="fieldHasWarning('tags')"
@@ -271,7 +271,7 @@
               @blur="vWarning$.image.$touch"
             >
               <label class="fr-label fr-mb-1w" :class="{ 'text-default-error' : fieldHasError('image') }" for="logoUpload">
-                {{$t('Cover picture')}}
+                {{t('Cover picture')}}
                 <span class="required-field-star">*</span>
               </label>
               <UploadGroup
@@ -280,7 +280,7 @@
                 label="Test"
                 id="logoUpload"
                 :isValid="image"
-                :validText="$t('Your file is valid')"
+                :validText="t('Your file is valid')"
                 :hasError="fieldHasError('image')"
                 :errorText="getErrorText('image')"
                 @change="addImage"
@@ -296,7 +296,7 @@
           </Alert>
           <div class="fr-grid-row fr-grid-row--right">
             <button class="fr-btn" @click="submit">
-              {{ $t("Next") }}
+              {{ t("Next") }}
             </button>
           </div>
         </Container>

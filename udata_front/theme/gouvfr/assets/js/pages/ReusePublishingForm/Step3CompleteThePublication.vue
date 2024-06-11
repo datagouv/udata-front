@@ -10,8 +10,8 @@
           <img :src="successIcon" alt="" />
         </div>
         <div class="fr-col">
-          <p class="fr-m-0 fr-text--bold">{{ $t('Your reuse is created !') }}</p>
-          <p class="fr-m-0 fr-text--xs">{{ $t('You can now publish it or save it as a draft.') }}</p>
+          <p class="fr-m-0 fr-text--bold">{{ t('Your reuse is created !') }}</p>
+          <p class="fr-m-0 fr-text--xs">{{ t('You can now publish it or save it as a draft.') }}</p>
         </div>
       </div>
     </Well>
@@ -31,14 +31,14 @@
         :href="feedbackUrl"
         class="fr-btn fr-btn--tertiary-no-outline fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-lightbulb-line"
       >
-        {{ $t('Give us your feedback on the publishing form') }}
+        {{ t('Give us your feedback on the publishing form') }}
       </a>
       <div class="fr-grid-row fr-grid-row--right">
         <button @click="draft" class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v">
-          {{ $t("Save as draft") }}
+          {{ t("Save as draft") }}
         </button>
         <button @click="publish" class="fr-btn">
-          {{ $t("Publish the reuse") }}
+          {{ t("Publish the reuse") }}
         </button>
       </div>
     </div>
@@ -47,6 +47,7 @@
   
 <script setup lang="ts">
 import { reactive } from 'vue';
+import { useI18n } from 'vue-i18n';
 import Container from '../../components/Ui/Container/Container.vue';
 import successIcon from "../../../../templates/svg/illustrations/success.svg";
 import ReuseCard from '../../components/Reuse/Reuse.vue';
@@ -62,6 +63,8 @@ const props = defineProps<{
 const emit = defineEmits<{
   (event: 'update', reuse: Reuse): void,
 }>();
+
+const { t } = useI18n();
 
 const reuse = reactive({...props.originalReuse});
 const draft = () => {

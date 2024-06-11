@@ -10,15 +10,15 @@
             <!--<img :src="reuseIcon" alt="" />-->
           </div>
           <div class="fr-col">
-            <p class="fr-m-0 fr-text--bold">{{ $t('What is a reuse?') }}</p>
-            <p class="fr-m-0 fr-text--xs">{{ $t('A reuse is an exemple of public data\'s usage.') }} {{ $t('Publishing a reuse can allow you to gain visibility and start start a dialogue with the dataset producer.') }}</p>
+            <p class="fr-m-0 fr-text--bold">{{ t('What is a reuse?') }}</p>
+            <p class="fr-m-0 fr-text--xs">{{ t('A reuse is an exemple of public data\'s usage.') }} {{ t('Publishing a reuse can allow you to gain visibility and start start a dialogue with the dataset producer.') }}</p>
           </div>
         </div>
       </Well>
       <fieldset class="fr-fieldset min-width-0" aria-labelledby="description-legend">
         <legend class="fr-fieldset__legend" id="description-legend">
           <h2 class="subtitle subtitle--uppercase fr-mb-3v">
-            {{ $t("Associated datasets") }}
+            {{ t("Associated datasets") }}
           </h2>
         </legend>
         <div class="fr-grid-row fr-grid-row--center w-100" v-for="(dataset, index) in datasets" :key="dataset.id">
@@ -38,15 +38,15 @@
         <MultiSelect
           :minimumCharacterBeforeSuggest="2"
           @change="addDataset"
-          :placeholder="$t('Look for a dataset')"
-          :searchPlaceholder="$t('Search a dataset...')"
+          :placeholder="t('Look for a dataset')"
+          :searchPlaceholder="t('Search a dataset...')"
           suggestUrl="/datasets/suggest/"
         />
         <p class="fr-hr-or w-100 text-transform-lowercase fr-text--regular">
-          <span class="fr-hr-or-text">{{ $t('or') }}</span>
+          <span class="fr-hr-or-text">{{ t('or') }}</span>
         </p>
         <InputGroup
-          :label="$t('Link to the dataset')"
+          :label="t('Link to the dataset')"
           :placeholder="'https://...'"
           class="w-100"
           v-model="linkedDataset"
@@ -65,7 +65,7 @@
       </Alert>
       <div class="fr-grid-row fr-grid-row--right">
         <button class="fr-btn" @click="submit">
-          {{ $t("Next") }}
+          {{ t("Next") }}
         </button>
       </div>
     </Container>
