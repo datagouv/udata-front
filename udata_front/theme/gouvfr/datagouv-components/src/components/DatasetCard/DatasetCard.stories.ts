@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { vueRouter } from 'storybook-vue3-router';
-import { DatasetCard } from ".";
+import { DatasetCard } from '.';
 import type { DatasetV2 } from '../..';
 import TestComponent from "./TestComponent.vue";
 
@@ -11,7 +11,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: "The DatasetCard displays data about a dataset and allows you to go to its page as well as its organization."
+        component: "The DatasetCard displays data about a dataset."
       }
     }
   },
@@ -79,14 +79,29 @@ const dataset: DatasetV2 = {
   owner: null,
   organization: {
     id: "some_id",
+    created_at: "",
+    last_modified: "",
+    last_update: "",
+    deleted: null,
+    members: [],
+    metrics: {
+      datasets: 0,
+      followers: 0,
+      members: 0,
+      reuses: 0,
+      views: 0
+    },
     acronym: null,
     logo: "https://demo-static.data.gouv.fr/avatars/92/6284d057ca4279af35e9b62bc62639-100.png",
     logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/92/6284d057ca4279af35e9b62bc62639-100.png",
     page: "https://demo.data.gouv.fr/fr/organizations/test-meteo-france/",
+    business_number_id: "",
+    description: "",
     badges: [],
     name: "[TEST] Météo France",
     slug: "test-meteo-france",
-    uri: "https://demo.data.gouv.fr/api/1/organizations/test-meteo-france/"
+    uri: "https://demo.data.gouv.fr/api/1/organizations/test-meteo-france/",
+    url: ""
   }
 };
 
@@ -95,7 +110,17 @@ const args = {
   datasetUrl: "/datasets/6571faa17f46a65ee05c4d17",
 };
 
-export const DatasetCardWithDatasetUrl: StoryObj<typeof meta> = {
+const argsPrivate = {
+  dataset: {...dataset, private: true},
+  datasetUrl: "/datasets/6571faa17f46a65ee05c4d17",
+};
+
+const argsArchived = {
+  dataset: {...dataset, archived: true},
+  datasetUrl: "/datasets/6571faa17f46a65ee05c4d17",
+};
+
+export const DatasetCardSimple: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { DatasetCard },
     setup() {
@@ -106,18 +131,7 @@ export const DatasetCardWithDatasetUrl: StoryObj<typeof meta> = {
   args,
 };
 
-export const DatasetCardWithNoQualityScore: StoryObj<typeof meta> = {
-  render: (args) => ({
-    components: { DatasetCard },
-    setup() {
-      return { args };
-    },
-    template: `<DatasetCard v-bind="args" :showQualityScore="false"/>`,
-  }),
-  args,
-};
-
-export const DatasetCardWithDatasetAndOrganizationUrl: StoryObj<typeof meta> = {
+export const DatasetCardSimpleWithOrganizationUrl: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { DatasetCard },
     setup() {
@@ -131,7 +145,47 @@ export const DatasetCardWithDatasetAndOrganizationUrl: StoryObj<typeof meta> = {
   },
 };
 
-export const RouterDatasetCardWithDatasetUrl: StoryObj<typeof meta> = {
+export const DatasetCardWithoutDescription: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCard },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCard v-bind="args"/>`,
+  }),
+  args: {
+    ...args,
+    showDescription: false,
+  },
+};
+
+export const PrivateDatasetCard: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCard },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCard v-bind="args"/>`,
+  }),
+  args: {
+    ...argsPrivate,
+  },
+};
+
+export const ArchivedDatasetCard: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCard },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCard v-bind="args"/>`,
+  }),
+  args: {
+    ...argsArchived,
+  },
+};
+
+export const RouterDatasetCardSimple: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { DatasetCard },
     setup() {
@@ -143,7 +197,7 @@ export const RouterDatasetCardWithDatasetUrl: StoryObj<typeof meta> = {
   args,
 };
 
-export const RouterDatasetCardWithDatasetAndOrganizationUrl: StoryObj<typeof meta> = {
+export const RouterDatasetCardSimpleWithOrganizationUrl: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { DatasetCard },
     setup() {
@@ -155,5 +209,48 @@ export const RouterDatasetCardWithDatasetAndOrganizationUrl: StoryObj<typeof met
   args: {
     ...args,
     organizationUrl: "/organizations/another-url-easier-to-distinguish"
+  },
+};
+
+export const RouterDatasetCardWithoutDescription: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCard },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCard v-bind="args"/><router-view></router-view>`,
+  }),
+  decorators: [vueRouter(datasetRoutes)],
+  args: {
+    ...args,
+    showDescription: false,
+  },
+};
+
+export const RouterPrivateDatasetCard: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCard },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCard v-bind="args"/><router-view></router-view>`,
+  }),
+  decorators: [vueRouter(datasetRoutes)],
+  args: {
+    ...argsPrivate,
+  },
+};
+
+export const RouterArchivedDatasetCard: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCard },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCard v-bind="args"/><router-view></router-view>`,
+  }),
+  decorators: [vueRouter(datasetRoutes)],
+  args: {
+    ...argsArchived,
   },
 };
