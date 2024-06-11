@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Fix dataset card link opening another tab [#426](https://github.com/datagouv/udata-front/pull/426)
+- Use roadmap page instead of deprecated nouveautes in footer [#429](https://github.com/datagouv/udata-front/pull/429)
 
 ## 5.0.0 (2024-06-07)
 
