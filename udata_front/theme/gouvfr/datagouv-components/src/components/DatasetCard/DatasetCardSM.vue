@@ -1,12 +1,12 @@
 <template>
   <article class="fr-my-2w fr-p-2w border border-default-grey fr-enlarge-link" :style="props.style">
     <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v fr-ml-n2v" v-if="dataset.private || dataset.archived">
-      <p class="fr-badge fr-badge--mention-grey fr-mr-1w fr-text--xs" v-if="dataset.private">
-        <span class="fr-icon-lock-line icon" aria-hidden="true"></span>
+      <p class="fr-badge fr-badge--mention-grey fr-mr-1w fr-text--sm" v-if="dataset.private">
+        <span class="fr-icon-lock-line fr-icon--sm" aria-hidden="true"></span>
         {{ t('Private') }}
       </p>
-      <p class="fr-badge fr-badge--mention-grey fr-mr-1w fr-text--xs" v-if="dataset.archived">
-        <span class="fr-icon-archive-line icon" aria-hidden="true"></span>
+      <p class="fr-badge fr-badge--mention-grey fr-mr-1w fr-text--sm" v-if="dataset.archived">
+        <span class="fr-icon-archive-line fr-icon--sm" aria-hidden="true"></span>
         {{ t('Archived') }}
       </p>
     </div>
@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="fr-col">
-        <h4 class="fr-mb-1v fr-grid-row">
+        <h4 class="fr-text--md fr-mb-0 fr-grid-row">
           <slot name="datasetUrl" :dataset="dataset" :datasetUrl="datasetUrl">
             <AppLink :to="datasetUrl" class="text-grey-500">
               {{ dataset.title }}
@@ -41,17 +41,17 @@
             </AppLink>
           </slot>
         </h4>
-        <p class="fr-my-0 fr-text--xs" v-if="dataset.organization || dataset.owner">
+        <p class="fr-my-0 fr-text--sm" v-if="dataset.organization || dataset.owner">
           <template v-if="dataset.organization">
             <span class="not-enlarged dash-after fr-mr-1v" v-if="organizationUrl">
-              <AppLink class="fr-link fr-text--xs" :to="organizationUrl">
+              <AppLink class="fr-link fr-text--sm" :to="organizationUrl">
                 <OrganizationNameWithCertificate :organization="dataset.organization" />
               </AppLink>
             </span>
             <OrganizationNameWithCertificate v-else :organization="dataset.organization" />
           </template>
           <span class="not-enlarged dash-after fr-mr-1v" v-else>
-            <a class="fr-link fr-text--xs" :href="dataset.owner.page">
+            <a class="fr-link fr-text--sm" :href="dataset.owner.page">
               {{ ownerName }}
             </a>
           </span>
@@ -67,9 +67,15 @@
             </div>
           </div>
           <div class="fr-grid-row fr-grid-row--middle fr-mr-1v">
-            <p class="fr-text--xs fr-my-0"><span class="fr-icon-download-line icon fr-px-1v" aria-hidden="true"></span>{{ dataset.metrics.discussions }}</p>
-            <p class="fr-text--xs fr-my-0"><span class="fr-icon-star-line icon fr-px-1v" aria-hidden="true"></span>{{ dataset.metrics.followers }}</p>
-            <p class="fr-text--xs fr-my-0"><span class="fr-icon-line-chart-line icon fr-px-1v" aria-hidden="true"></span>{{ dataset.metrics.views }}</p>
+            <p class="fr-text--sm fr-my-0">
+              <span class="fr-icon-download-line fr-icon--sm fr-px-1v" aria-hidden="true"></span>{{ dataset.metrics.discussions }}
+            </p>
+            <p class="fr-text--sm fr-my-0">
+              <span class="fr-icon-star-line fr-icon--sm fr-px-1v" aria-hidden="true"></span>{{ dataset.metrics.followers }}
+            </p>
+            <p class="fr-text--sm fr-my-0">
+              <span class="fr-icon-line-chart-line fr-icon--sm fr-px-1v" aria-hidden="true"></span>{{ dataset.metrics.views }}
+            </p>
           </div>
         </div>
         <div v-if="props.showDescription" class="fr-pt-2v">
@@ -85,7 +91,7 @@ import { useI18n } from "vue-i18n";
 import { useOwnerName } from "../../composables"
 import { formatRelativeIfRecentDate } from "../../helpers";
 import OrganizationNameWithCertificate from "../Organization/OrganizationNameWithCertificate.vue";
-import useUid from "../../composables/useUid";
+import { getRandomId } from '@etalab/data.gouv.fr-components';
 import Avatar from "../Avatar/Avatar.vue";
 import { excerpt } from "../../helpers";
 import { Placeholder } from "../utils/";
@@ -117,14 +123,6 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const { t } = useI18n();
-const { id } = useUid("metadata-quality");
+const id = getRandomId("metadata-quality");
 const ownerName = useOwnerName(props.dataset);
 </script>
-
-<style>
-.icon {
-  &::before {
-    --icon-size: 1rem;
-  }
-};
-</style>
