@@ -90,7 +90,7 @@ const myUser = {
 const args: Step2DescribeDatasetProps = {
   originalDataset,
   steps: Stepper.StepperOnSecondStep.args.steps,
-  me: myUser,
+  user: myUser,
   granularities: [
     {
       'id': 'country-group',
@@ -169,7 +169,7 @@ export const Step2WithNoOrganization: StoryObj<typeof meta> = {
   }),
   args: {
     ...args,
-    me: {
+    user: {
       ...myUser,
       organizations: []
     }
@@ -201,7 +201,7 @@ export const Step2WithAdmin: StoryObj<typeof meta> = {
   }),
   args: {
     ...args,
-    me: {
+    user: {
       ...myUser,
       roles: [...myUser?.roles, 'admin']
     }
