@@ -353,7 +353,7 @@ import { license_groups_options, quality_description_length, title } from "../..
 import { useI18n } from 'vue-i18n';
 import { getLicensesUrl } from '../../api/licenses';
 import { getFrequenciesUrl } from '../../api/datasets';
-import type { NewDataset, PublishingFormAccordionState, SpatialGranularity } from '../../types';
+import type { NewDataset, PublishingFormAccordionState, SpatialGranularity, SpatialZone } from '../../types';
 
 const props = defineProps<Step2DescribeDatasetProps>();
 
@@ -374,8 +374,8 @@ const { id: addSpatialInformationAccordionId } = useUid("accordion");
 const dataset = reactive({...props.originalDataset});
 if(!dataset.spatial) {
   dataset.spatial = {
-    zones: null,
-    granularity: null,
+    zones: undefined,
+    granularity: undefined,
   }
 };
 
@@ -387,20 +387,20 @@ const licensesGroups = license_groups_options?.map(([name, values]) => ({
   name,
   values
 }));
-const formatSpatialZones = (data) => {
+const formatSpatialZones = (data: Array<SpatialZone>) => {
   const suggestions = data.map(item => {
-  const matchingGranularity = props.granularities.find(granularity => granularity.id === item.level);
-  if (matchingGranularity) {
-    return {
-      ...item,
-      description: matchingGranularity.name,
-    };
-  } else {
-    return {
-      ...item,
-    };
-  }
-});
+    const matchingGranularity = props.granularities.find(granularity => granularity.id === item.level);
+    if (matchingGranularity) {
+      return {
+        ...item,
+        description: matchingGranularity.name,
+      };
+    } else {
+      return {
+        ...item,
+      };
+    }
+  });
 return suggestions;
 };
 
@@ -448,10 +448,10 @@ const fieldHasError = (field: string) => hasError(state, field);
 const fieldHasWarning = (field: string) => hasWarning(state, field);
 
 function setGranularity(value: string) {
-  if (this.dataset.spatial) {
-    this.dataset.spatial.granularity = value;
+  if (dataset.spatial) {
+    dataset.spatial.granularity = value;
   } else {
-    this.dataset.spatial = { granularity: value };
+    dataset.spatial = { granularity: value };
   }
 };
 
