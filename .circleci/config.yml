@@ -295,6 +295,9 @@ jobs:
             fi
       - cypress/run-tests:
           cypress-command: npm run ci
+      - run:
+        name: publish to chromatic
+        command: npm run chromatic
 
   lighthouse:
     docker:
