@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@conciergerie.dev/vue-toaster": "^2.4.4",
-    "@etalab/data.gouv.fr-components": "^1.14.0",
+    "@etalab/data.gouv.fr-components": "^1.14.1",
     "@etalab/udata-front-plugins-helper": "1.1.0",
     "@gouvfr/dsfr": "~1.9.2",
     "@intlify/unplugin-vue-i18n": "^1.5.0",
@@ -60,6 +60,7 @@
     "@storybook/theming": "^8.1.6",
     "@storybook/vue3": "^8.1.6",
     "@storybook/vue3-vite": "^8.1.6",
+    "@types/uuid": "^9.0.8",
     "@vitejs/plugin-legacy": "^4.1.1",
     "@vitejs/plugin-vue": "^4.4.0",
     "@vuelidate/core": "^2.0.3",

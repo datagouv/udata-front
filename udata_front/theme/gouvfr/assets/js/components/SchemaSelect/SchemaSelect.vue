@@ -15,7 +15,7 @@ export type SchemaSelectProps = {
     allOption?: string,
     isBlue?: boolean,
     showExplanation?: boolean,
-    values: Array<string>,
+    values: Array<string> | string,
 };
 </script>
 <script setup lang="ts">
