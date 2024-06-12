@@ -1,8 +1,8 @@
 <template>
   <article class="fr-card fr-card--no-icon fr-enlarge-link">
     <div class="fr-card__body">
-      <div class="fr-card__content fr-p-2w">
-        <h3 class="fr-card__title fr-text--md fr-mt-1v">
+      <div class="fr-card__content fr-px-2w fr-py-1v">
+        <h3 class="fr-card__title fr-text--bold fr-mt-1v fr-mb-0">
           <a :href="reuse.page">
             {{ truncate(reuse.title, 55) }}
             <span
@@ -14,7 +14,7 @@
           </a>
         </h3>
         <div class="fr-card__desc fr-mt-1v text-mention-grey">
-          <p class="not-enlarged">
+          <p class="not-enlarged fr-mb-0">
             <span class="not-enlarged dash-after" v-if="reuse.organization">
               <a class="fr-link" :href="reuse.organization.page">
                 <OrganizationNameWithCertificate :organization="reuse.organization" />
@@ -27,7 +27,7 @@
             </span>
             {{ t('Updated {date}', {date: formatRelativeIfRecentDate(reuse.last_update)}) }}
           </p>
-          <p class="fr-m-0">
+          <p class="fr-mt-1v">
             <span class="dash-after">
               {{ reuseType }}
             </span>
@@ -38,14 +38,12 @@
       </div>
     </div>
     <div class="fr-card__header">
-      <div class="fr-card__img">
-        <Placeholder
-          class="fr-responsive-img"
-          type="reuse"
-          :src="reuse.image"
-          :size="80"
-        />
-      </div>
+      <Placeholder
+        class="fr-responsive-img ratio-sm"
+        type="reuse"
+        :src="reuse.image"
+        :size="80"
+      />
     </div>
   </article>
 </template>
@@ -74,9 +72,8 @@ const { label: reuseType } = useReuseType(() => props.reuse.type);
 </script>
 
 <style>
-.icon {
-  &::before {
-    --icon-size: 1rem;
-  }
+.ratio-sm {
+  aspect-ratio: 1.4;
+  object-fit: cover;
 };
 </style>
