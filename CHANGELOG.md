@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 5.0.1 (2024-06-12)
 
 - Fix dataset card link opening another tab [#426](https://github.com/datagouv/udata-front/pull/426)
