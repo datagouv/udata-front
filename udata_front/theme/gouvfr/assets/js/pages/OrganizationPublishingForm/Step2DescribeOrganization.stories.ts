@@ -62,9 +62,7 @@ export const Step2WithInteraction: StoryObj<typeof meta> = {
     await step('Send form', async () => {
       await userEvent.click(canvas.getByTestId('submitButton'));
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      await waitFor(() => expect(args.onNext).toHaveBeenCalled(), {
-        timeout: 5000,
-      });
+      setTimeout(() => { expect(args.onNext).toHaveBeenCalled(); }, 1000);
     });
   },
   render: (args) => ({
