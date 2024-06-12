@@ -1,5 +1,5 @@
 import { withActions } from '@storybook/addon-actions/decorator';
-import { expect, fn, screen, userEvent, waitFor } from '@storybook/test';
+import { expect, fn, screen, userEvent } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import ImageModalButton from './ImageModalButton.vue';
 
