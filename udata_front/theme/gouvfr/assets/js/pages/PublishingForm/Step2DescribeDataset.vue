@@ -458,7 +458,10 @@ function setGranularity(value: string) {
 function submit() {
   validateRequiredRules().then(valid => {
     if(valid) {
-      if (toValue(userOrganization) !== "user") {
+      if (toValue(userOrganization) === "user") {
+        dataset.organization = null;
+        dataset.owner = props.user;
+      } else {
         dataset.organization = toValue(userOrganization);
         dataset.owner = null;
       };

@@ -41,7 +41,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { Dataset, NewDataset, Organization, Owned, User } from '@etalab/data.gouv.fr-components';
+import type { Dataset, NewDataset, User } from '@etalab/data.gouv.fr-components';
 import { useEventListener } from '@vueuse/core';
 import { type MaybeRefOrGetter, computed, onMounted, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -50,15 +50,13 @@ import Step2DescribeDataset from './Step2DescribeDataset.vue';
 import Step3AddFiles from './Step3AddFiles.vue';
 import Step3UpdateFileMetadata from "./Step3UpdateFileMetadata.vue";
 import Step4CompleteThePublication from "./Step4CompleteThePublication.vue";
-import { publishing_form_feedback_url, title, user } from '../../config';
+import { publishing_form_feedback_url, title } from '../../config';
 import { createDataset, getSpatialGranularities, publishDataset } from '../../api/datasets';
 import { useFilesUpload } from '../../composables/form/useFilesUpload';
 import { fetchMe } from '../../api/me';
 import type { NewDatasetFile, SpatialGranularity } from '../../types';
 
 const props = defineProps<{
-  organization?: Organization;
-  owner?: User;
   redirectDraftUrl: string;
 }>();
 
@@ -74,19 +72,12 @@ const currentStep = ref(0);
 
 const containerRef = ref<HTMLDivElement | null>(null);
 
-let owned: Owned;
+const me = ref<User | null>(null);
 
-if(props.organization) {
-  owned = {
-    organization: props.organization as Organization,
-    owner: null,
-  };
-} else {
-  owned = {
-    organization: null,
-    owner: (props.owner ? props.owner : user) as User,
-  };
-}
+let owned = {
+  organization: null,
+  owner: me.value as User,
+};
 
 const dataset = ref<NewDataset>({
   archived: false,
@@ -134,8 +125,6 @@ const editedFile = ref<NewDatasetFile | null>(null);
 
 const editedIndex = ref<number | null>(null);
 
-const me = ref<User | null>(null);
-
 /**
  * Move form to new step. `null` step means to only scroll to top
  * @param step
@@ -158,8 +147,9 @@ const moveToStep = (step: number | null = null, saveToHistory = true) => {
 };
 
 onMounted(async () => {
-  const meValue = await fetchMe();
-  me.value = meValue;
+  fetchMe().then(result => {
+    me.value = result
+  });
   try {
     const granularitiesValue = await getSpatialGranularities();
     granularities.value = granularitiesValue;
