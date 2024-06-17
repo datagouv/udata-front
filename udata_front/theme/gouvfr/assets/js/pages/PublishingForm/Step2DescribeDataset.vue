@@ -142,7 +142,7 @@
               </div>
             </div>
           </Well>
-          <fieldset v-if="user" class="fr-fieldset" aria-labelledby="description-legend">
+          <fieldset class="fr-fieldset" aria-labelledby="description-legend">
             <legend class="fr-fieldset__legend" id="description-legend">
               <h2 class="subtitle subtitle--uppercase fr-mb-3v">
                 {{ $t("Producer") }}

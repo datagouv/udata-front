@@ -59,7 +59,7 @@ const organizationsUrl = organization_url;
 const createOrganizationUrl = `${organization_url}publishing-form/`;
 
 const userOrganization = ref<Organization>();
-const organizations = ref<Array<Organization>>([]);
+const organizations = ref<Array<Organization | User>>([]);
 const emit = defineEmits<{
   (event: 'update:organization', organization: Organization): void,
 }>();

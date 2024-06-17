@@ -74,11 +74,6 @@ const containerRef = ref<HTMLDivElement | null>(null);
 
 const me = ref<User | null>(null);
 
-let owned = {
-  organization: null,
-  owner: me.value as User,
-};
-
 const dataset = ref<NewDataset>({
   archived: false,
   page: "",
@@ -108,7 +103,8 @@ const dataset = ref<NewDataset>({
     update_frequency: false,
     update_fulfilled_in_time: false,
   },
-  ...owned,
+  owner: null,
+  organization: null,
 });
 
 const savedDataset = ref<Dataset | null>(null);
@@ -148,7 +144,7 @@ const moveToStep = (step: number | null = null, saveToHistory = true) => {
 
 onMounted(async () => {
   fetchMe().then(result => {
-    me.value = result
+    me.value = result;
   });
   try {
     const granularitiesValue = await getSpatialGranularities();
