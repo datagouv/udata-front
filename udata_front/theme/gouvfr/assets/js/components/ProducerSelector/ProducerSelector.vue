@@ -74,20 +74,14 @@ const updateOrganization = (value: Organization) => {
 };
 
 function listOrganizations() {
-  const userValue = toValue(props.user);
+  const userValue = {
+    ...toValue(props.user),
+    logo: useUserAvatar(toValue(props.user), 40),
+    logo_thumbnail: useUserAvatar(toValue(props.user), 40),
+  };
   if (userValue) {
     organizations.value = [...userValue.organizations];
-    organizations.value.push({
-      name: `${userValue.first_name} ${userValue.last_name}`,
-      logo: useUserAvatar(userValue, 40),
-      id: "user",
-      acronym: null,
-      badges: [],
-      page: "",
-      slug: "",
-      uri: "",
-      logo_thumbnail: useUserAvatar(userValue, 40),
-    });
+    organizations.value.push(userValue);
   };
 };
 
