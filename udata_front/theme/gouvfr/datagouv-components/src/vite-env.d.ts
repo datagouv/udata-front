@@ -13,6 +13,9 @@ interface ImportMetaEnv {
   readonly VITE_SITE_ROOT_URL: string;
   readonly VITE_STATIC_ROOT_URL: string;
   readonly VITE_GUIDES_QUALITY_URL: string;
+  readonly VITE_TABULAR_API_URL: string;
+  readonly VITE_TABULAR_PAGE_SIZE: number;
+  readonly VITE_TABULAR_ALLOW_REMOTE: boolean;
 }
 
 interface ImportMeta {

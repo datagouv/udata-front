@@ -61,7 +61,7 @@
                 {{ $t('Close details') }}
               </template>
               <template v-else>
-                {{hasExplore ? $t('See data') : $t('See metadata')}}
+                {{hasPreview ? $t('See data') : $t('See metadata')}}
               </template>
             </button>
           </p>
@@ -103,7 +103,7 @@
     >
       <div class="fr-tabs fr-tabs--no-border fr-mt-1v" ref="tabsRef">
         <ul class="fr-tabs__list" ref="tabListRef" role="tablist" :aria-label="$t('File menu')">
-          <template v-if="hasExplore">
+          <template v-if="hasPreview">
             <li role="presentation">
               <button
                 :id="resourcePreviewButtonId"
@@ -118,7 +118,7 @@
               </button>
             </li>
           </template>
-          <template v-if="hasExplore || hasSchema">
+          <template v-if="hasPreview || hasSchema">
             <li role="presentation">
               <button
                 :id="resourceStructureButtonId"
@@ -150,7 +150,7 @@
         <transition
           name="slide-fade"
           mode="in-out"
-          v-if="hasExplore"
+          v-if="hasPreview"
         >
           <div
             :id="resourcePreviewTabId"
@@ -161,13 +161,13 @@
             :tabindex="resourcePreviewTabIndex"
             v-show="resourcePreviewSelected"
           >
-            <component v-if="expanded" v-for="ex in explore" :is="ex.component" :resource="resource"/>
+            <Preview  v-if="expanded" :resource />
           </div>
         </transition>
         <transition
           name="slide-fade"
           mode="in-out"
-          v-if="hasExplore || hasSchema"
+          v-if="hasPreview || hasSchema"
         >
           <div
             :id="resourceStructureTabId"
@@ -178,8 +178,8 @@
             :tabindex="resourceStructureTabIndex"
             v-show="resourceStructureSelected"
           >
-            <component v-if="expanded && hasExplore" v-for="dataStructure in structure" :is="dataStructure.component" :resource="resource"/>
-            <hr class="fr-my-5v fr-p-1v" v-if="hasExplore && hasSchema"/>
+            <component v-if="expanded && hasPreview" v-for="dataStructure in structure" :is="dataStructure.component" :resource="resource"/>
+            <hr class="fr-my-5v fr-p-1v" v-if="hasPreview && hasSchema"/>
             <template v-if="hasSchema">
               <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle">
                 <div class="fr-col-12 fr-col-lg">
@@ -324,7 +324,7 @@
               <div class="fr-mt-0 markdown fr-text--sm text-mention-grey" v-html="markdown(resource.description)">
               </div>
             </template>
-            <div class="text-align-right" v-if="!hasExplore && resource.preview_url">
+            <div class="text-align-right" v-if="!hasPreview && resource.preview_url">
               <a
                 :href="resource.preview_url"
                 class="fr-btn fr-btn--icon-left fr-icon-test-tube-line"
@@ -342,6 +342,7 @@
 <script setup lang="ts">
 import Clipboard from "clipboard";
 import { ref, computed, unref, onMounted, type ComputedRef } from "vue";
+import Preview from "./Preview/Preview.vue";
 import SchemaLoader from "./SchemaLoader.vue";
 import useOwnerName from "../../composables/organizations/useOwnerName";
 import useResourceImage from "../../composables/resources/useResourceImage";
@@ -352,6 +353,7 @@ import DescriptionDetails from "../DescriptionList/DescriptionDetails.vue";
 import DescriptionList from "../DescriptionList/DescriptionList.vue";
 import DescriptionTerm from "../DescriptionList/DescriptionTerm.vue";
 import OrganizationNameWithCertificate from "../Organization/OrganizationNameWithCertificate.vue";
+import useTabularApiPreview from "../../composables/preview/useTabularApiPreview";
 import useSchema from "../../composables/resources/useSchema";
 import useComponentsForHook from "../../composables/useComponentsForHook";
 import { config } from "../../config";
@@ -381,30 +383,29 @@ const props = withDefaults(defineProps<Props>(), {
 const owner = useOwnerName(props.resource);
 const { url } = useResourceImage(props.resource);
 const { getComponentsForHook } = useComponentsForHook();
+const { hasPreview } = useTabularApiPreview(props.resource);
 
 const contentRef = templateRef<HTMLElement | null>("contentRef");
 const copyRef = templateRef<HTMLButtonElement | null>("copyRef");
 const tabsRef = templateRef<HTMLButtonElement | null>("tabsRef");
 const tabListRef = templateRef<HTMLUListElement | null>("tabListRef");
-const explore = getComponentsForHook("explore");
 const structure = getComponentsForHook("data-structure");
 
 const schemaName = computed(() => props.resource.schema ? props.resource.schema.name : "");
 const schemaUrl = computed(() => props.resource.schema ? props.resource.schema.url : "");
 
 const hasSchema = computed(() => schemaName.value || schemaUrl.value);
-const hasExplore = computed(() => explore.length > 0 && config.explorable_resources && config.explorable_resources.includes(props.resource.id));
 const resourcePreviewIndex = computed(() => {
   return 0;
 });
 const resourceStructureIndex = computed(() => {
-  if (hasExplore.value && hasSchema.value) {
+  if (hasPreview.value && hasSchema.value) {
     return 1;
   }
   return 0;
 });
 const resourceInformationIndex = computed(() => {
-  if (hasExplore.value && hasSchema.value) {
+  if (hasPreview.value && hasSchema.value) {
     return 2;
   }
   if (hasSchema.value) {
@@ -421,7 +422,7 @@ const expand = () => {
     globalThis._paq?.push(['trackEvent', 'Close resource', props.resource.id]);
   } else {
     globalThis._paq?.push(['trackEvent', 'Open resource', props.resource.id]);
-    if(hasExplore.value) {
+    if(hasPreview.value) {
       registerEvent(resourcePreviewButtonId);
     } else if (hasSchema.value) {
       registerEvent(resourceStructureButtonId);
