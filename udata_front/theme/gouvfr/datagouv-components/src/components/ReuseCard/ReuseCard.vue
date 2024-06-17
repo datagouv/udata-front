@@ -31,8 +31,8 @@
             <span class="dash-after">
               {{ reuseType }}
             </span>
-            <span class="fr-icon-star-line icon fr-px-1v" aria-hidden="true">{{ reuse.metrics.followers }}</span>
-            <span class="fr-icon-eye-line icon fr-px-1v" aria-hidden="true">{{ reuse.metrics.views }}</span>
+            <span class="fr-icon-star-line fr-icon--sm fr-px-1v" aria-hidden="true">{{ reuse.metrics.followers }}</span>
+            <span class="fr-icon-eye-line fr-icon--sm fr-px-1v" aria-hidden="true">{{ reuse.metrics.views }}</span>
           </p>
         </div>
       </div>
