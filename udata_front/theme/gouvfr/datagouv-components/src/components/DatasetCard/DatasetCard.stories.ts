@@ -45,9 +45,9 @@ const dataset: DatasetV2 = {
     total: 0,
     type: "GET"
   },
-  created_at: "2023-10-26T13:34:50.156000+00:00",
-  last_modified: "2023-12-07T16:51:02.937000+00:00",
-  last_update: "2023-11-03T08:55:42.847000+00:00",
+  created_at: (new Date()).toDateString(),
+  last_modified: (new Date()).toDateString(),
+  last_update: (new Date()).toDateString(),
   uri: "https://demo.data.gouv.fr/api/1/datasets/donnees-changement-climatique-sqr/",
   slug: "donnees-changement-climatique-sqr",
   quality: {
@@ -104,6 +104,9 @@ const dataset: DatasetV2 = {
     url: ""
   }
 };
+
+const updateLastMonth = new Date();
+updateLastMonth.setMonth(updateLastMonth.getMonth() - 1, 20);
 
 const args = {
   dataset: dataset,
@@ -252,5 +255,19 @@ export const RouterArchivedDatasetCard: StoryObj<typeof meta> = {
   decorators: [vueRouter(datasetRoutes)],
   args: {
     ...argsArchived,
+  },
+};
+
+export const DatasetCardUpdatedLastMonth: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCard },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCard v-bind="args"/>`,
+  }),
+  args: {
+    dataset: {...dataset, last_update: updateLastMonth.toDateString()},
+    datasetUrl: "/datasets/6571faa17f46a65ee05c4d17",
   },
 };
