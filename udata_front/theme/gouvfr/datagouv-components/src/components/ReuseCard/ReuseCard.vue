@@ -25,7 +25,7 @@
                 {{ ownerName }}
               </a>
             </span>
-            {{ t('Updated {date}', {date: formatRelativeIfRecentDate(reuse.last_update)}) }}
+            {{ t('Published {date}', {date: formatRelativeIfRecentDate(reuse.created_at)}) }}
           </p>
           <p class="fr-mt-1v">
             <span class="dash-after">
@@ -57,13 +57,14 @@ export type ReuseProps = {
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import Placeholder from '../utils/Placeholder.vue';
+import OrganizationNameWithCertificate from "../Organization";
 import { truncate } from "../../helpers";
-import type { Reuse } from '../../types';
-import { formatRelativeIfRecentDate, useOwnerName, OrganizationNameWithCertificate } from "@etalab/data.gouv.fr-components";
+import type { Reuse } from '../../types/reuses';
+import { formatRelativeIfRecentDate } from '../../helpers';
+import { useOwnerName } from '../../composables';
 import useReuseType from '../../composables/useReuseType';
 
 const props = defineProps<ReuseProps>();
-console.log(props)
 
 const { t } = useI18n();
 

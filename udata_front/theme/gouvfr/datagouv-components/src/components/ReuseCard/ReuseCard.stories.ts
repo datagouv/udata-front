@@ -3,8 +3,16 @@ import ReuseCard, { type ReuseProps } from './ReuseCard.vue';
 import type { Meta, StoryObj } from "@storybook/vue3";
 
 const meta = {
-  title: 'Components/Reuse Card',
+  title: 'Components/ReuseCard',
   component: ReuseCard,
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: "The ReuseCard displays data about a reuse and allows you to go to its page as well as its owner."
+      }
+    }
+  },
 } satisfies Meta<typeof ReuseCard>;
 
 export default meta;
@@ -13,6 +21,7 @@ const args: ReuseProps = {
   reuse: {
     id: "someId",
     description: "Some description",
+    created_at: (new Date()).toDateString(),
     last_update: (new Date()).toDateString(),
     page: "https://www.data.gouv.fr",
     deleted: false,
@@ -35,7 +44,7 @@ const args: ReuseProps = {
       views: 36
     },
     organization: null,
-    title: "My new dataset",
+    title: "My new reuse",
     image: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",
     image_thumbnail: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",
   }
@@ -83,10 +92,6 @@ const argsWithCertifiedOrganization: ReuseProps = {
   }
 };
 
-/**
- * #### Reuse with a owner
- * This is how a reuse owned by a owner is shown.
- */
 export const ReuseWithOwner: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { ReuseCard },
@@ -98,10 +103,6 @@ export const ReuseWithOwner: StoryObj<typeof meta> = {
   args,
 };
 
-/**
- * #### Reuse with an organization
- * This is how a reuse owned by an organization is shown.
- */
 export const ReuseWithOrganization: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { ReuseCard },
@@ -113,10 +114,6 @@ export const ReuseWithOrganization: StoryObj<typeof meta> = {
   args: argsWithOrganizationWithLogo,
 };
 
-/**
- * #### Reuse with a certified organization
- * This is how a reuse owned by a certified organization is shown.
- */
 export const ReuseWithCertifiedOrganization: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { ReuseCard },
@@ -128,11 +125,6 @@ export const ReuseWithCertifiedOrganization: StoryObj<typeof meta> = {
   args: argsWithCertifiedOrganization,
 };
 
-
-/**
- * #### Reuse updated last month
- * This is how a reuse owned by an organization is shown.
- */
 export const ReuseUpdatedLastMonth: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { ReuseCard },
@@ -144,15 +136,11 @@ export const ReuseUpdatedLastMonth: StoryObj<typeof meta> = {
   args: {
     reuse: {
       ...argsWithOrganizationWithLogo.reuse,
-      last_update: updateLastMonth.toDateString(),
+      created_at: updateLastMonth.toDateString(),
     }
   },
 };
 
-/**
- * #### Reuse updated last year
- * This is how a reuse owned by an organization is shown.
- */
 export const ReuseUpdatedLastYear: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { ReuseCard },
@@ -164,7 +152,7 @@ export const ReuseUpdatedLastYear: StoryObj<typeof meta> = {
   args: {
     reuse: {
       ...argsWithOrganizationWithLogo.reuse,
-      last_update: updateLastYear.toDateString(),
+      created_at: updateLastYear.toDateString(),
     }
   },
 };
