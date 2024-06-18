@@ -33,6 +33,7 @@
 ## 4.0.1 (2024-04-26)
 
 - Update footer
+- Fix markdown tables and use DSFR ones [#432](https://github.com/datagouv/udata-front/pull/432)
 
 ## 4.0.0 (2024-04-23)
 
