@@ -18,6 +18,8 @@ export type Reuse = Owned & {
   created_at: string,
   last_update: string;
   metrics: {
+    datasets: number,
+    discussions: number,
     followers: number,
     views: number,
   }

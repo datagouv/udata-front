@@ -3,7 +3,7 @@
     <div class="fr-card__body">
       <div class="fr-card__content fr-px-2w fr-py-1v">
         <h3 class="fr-card__title fr-text--bold fr-mt-1v fr-mb-0">
-          <a :href="reuse.page">
+          <AppLink :to="reuse.page">
             {{ truncate(reuse.title, 55) }}
             <span
               v-if="reuse.private"
@@ -11,19 +11,19 @@
             >
               {{ t('Private') }}
             </span>
-          </a>
+          </AppLink>
         </h3>
         <div class="fr-card__desc fr-mt-1v text-mention-grey">
-          <p class="not-enlarged fr-mb-0">
+          <p class="fr-mb-0">
             <span class="not-enlarged dash-after" v-if="reuse.organization">
-              <a class="fr-link" :href="reuse.organization.page">
+              <AppLink class="fr-link" :to="reuse.organization.page">
                 <OrganizationNameWithCertificate :organization="reuse.organization" />
-              </a>
+              </AppLink>
             </span>
             <span class="not-enlarged dash-after" v-else>
-              <a class="fr-link" :href="reuse.owner.page">
+              <AppLink class="fr-link" :to="reuse.owner.page">
                 {{ ownerName }}
-              </a>
+              </AppLink>
             </span>
             {{ t('Published {date}', {date: formatRelativeIfRecentDate(reuse.created_at)}) }}
           </p>
@@ -63,6 +63,7 @@ import type { Reuse } from '../../types/reuses';
 import { formatRelativeIfRecentDate } from '../../helpers';
 import { useOwnerName } from '../../composables';
 import useReuseType from '../../composables/useReuseType';
+import AppLink from "../AppLink/AppLink.vue";
 
 const props = defineProps<ReuseProps>();
 

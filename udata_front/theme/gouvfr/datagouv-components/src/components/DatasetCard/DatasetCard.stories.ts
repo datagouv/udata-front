@@ -28,7 +28,7 @@ const datasetRoutes = [
     path: '/organizations/:id',
     component: TestComponent
   }
-]
+];
 
 const dataset: DatasetV2 = {
   id: "653a6afa18f9f98d2ffdadee",

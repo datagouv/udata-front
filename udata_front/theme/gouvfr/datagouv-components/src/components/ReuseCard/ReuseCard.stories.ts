@@ -1,6 +1,8 @@
+import type { Meta, StoryObj } from "@storybook/vue3";
+import { vueRouter } from 'storybook-vue3-router';
 import { CERTIFIED, PUBLIC_SERVICE, type Organization } from '@etalab/data.gouv.fr-components';
 import ReuseCard, { type ReuseProps } from './ReuseCard.vue';
-import type { Meta, StoryObj } from "@storybook/vue3";
+import TestComponent from "../DatasetCard/TestComponent.vue"
 
 const meta = {
   title: 'Components/ReuseCard',
@@ -16,6 +18,17 @@ const meta = {
 } satisfies Meta<typeof ReuseCard>;
 
 export default meta;
+
+const datasetRoutes = [
+  {
+    path: '/reuses/:id',
+    component: TestComponent
+  },
+  {
+    path: '/organizations/:id',
+    component: TestComponent
+  }
+];
 
 const args: ReuseProps = {
   reuse: {
@@ -125,6 +138,22 @@ export const ReuseWithCertifiedOrganization: StoryObj<typeof meta> = {
   args: argsWithCertifiedOrganization,
 };
 
+export const PrivateReuse: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { ReuseCard },
+    setup() {
+      return { args };
+    },
+    template: '<ReuseCard v-bind="args"/>',
+  }),
+  args: {
+    reuse: {
+      ...argsWithOrganizationWithLogo.reuse,
+      private: true,
+    }
+  },
+};
+
 export const ReuseUpdatedLastMonth: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { ReuseCard },
@@ -155,4 +184,28 @@ export const ReuseUpdatedLastYear: StoryObj<typeof meta> = {
       created_at: updateLastYear.toDateString(),
     }
   },
+};
+
+export const RouterReuseWithOwner: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { ReuseCard },
+    setup() {
+      return { args };
+    },
+    template: '<ReuseCard v-bind="args"/><router-view></router-view>',
+  }),
+  decorators: [vueRouter(datasetRoutes)],
+  args,
+};
+
+export const RouterReuseWithOrganization: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { ReuseCard },
+    setup() {
+      return { args };
+    },
+    template: '<ReuseCard v-bind="args"/><router-view></router-view>',
+  }),
+  decorators: [vueRouter(datasetRoutes)],
+  args,
 };
