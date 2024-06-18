@@ -14,27 +14,27 @@
             class="fr-mb-1v"
             :id="resourceTitleId"
           >
-            {{ resource.title || $t('Nameless file') }}
+            {{ resource.title || t('Nameless file') }}
           </h4>
           <div class="fr-my-0 text-grey-380 fr-grid-row fr-grid-row--middle">
             <p v-if="hasSchema" class="fr-tag fr-tag--sm z-2">
-              <strong class="fr-mr-1v">{{ $t("schema:") }}</strong>{{schemaName ? schemaName : schemaUrl}}
+              <strong class="fr-mr-1v">{{ t("schema:") }}</strong>{{schemaName ? schemaName : schemaUrl}}
             </p>
             <p
               v-if="hasSchema && hasSchemaErrors"
               class="fr-tag fr-tag--error fr-tag--on-right fr-tag--sm fr-ml-n3v fr-pl-2w fr-icon-error-line fr-tag--icon-left"
             >
-              {{ $t("Invalid") }}
+              {{ t("Invalid") }}
             </p>
-            <p :class="{'dash-before': hasSchema}" class="fr-text--xs fr-m-0 dash-after">{{ $t('Updated {date}', {date: formatRelativeIfRecentDate(lastUpdate)}) }}</p>
+            <p :class="{'dash-before': hasSchema}" class="fr-text--xs fr-m-0 dash-after">{{ t('Updated {date}', {date: formatRelativeIfRecentDate(lastUpdate)}) }}</p>
             <p v-if="resource.format" class="fr-text--xs fr-m-0 dash-after">
               {{ resource.format?.trim()?.toLowerCase() }}
               <template v-if="resource.filesize">({{ filesize(resource.filesize) }})</template>
             </p>
-            <p class="fr-text--xs fr-m-0">{{ $t('{n} downloads', resource.metrics.views || 0) }}</p>
+            <p class="fr-text--xs fr-m-0">{{ t('{n} downloads', resource.metrics.views || 0) }}</p>
           </div>
           <p class="fr-mb-0 fr-mt-1v fr-text--xs text-grey-380" v-if="isCommunityResource && (resource.organization || resource.owner)">
-            {{ $t('From') }}
+            {{ t('From') }}
             <a class="fr-link" :href="resource.organization.page" v-if="resource.organization">
               <OrganizationNameWithCertificate :organization="resource.organization" />
             </a>
@@ -45,7 +45,7 @@
       <div class="fr-col-auto fr-ml-auto">
         <div class="fr-grid-row fr-grid-row--middle no-wrap wrap-md">
           <p class="text-default-warning fr-m-0" v-if="unavailable">
-            {{$t('Unavailable')}}
+            {{t('Unavailable')}}
           </p>
           <p class="fr-col-auto fr-ml-3v fr-m-0">
             <button
@@ -58,17 +58,17 @@
               data-testid="expand-button"
             >
               <template v-if="expanded">
-                {{ $t('Close details') }}
+                {{ t('Close details') }}
               </template>
               <template v-else>
-                {{hasPreview ? $t('See data') : $t('See metadata')}}
+                {{hasPreview ? t('See data') : t('See metadata')}}
               </template>
             </button>
           </p>
           <p class="fr-col-auto fr-ml-3v fr-m-0" v-if="resource.format === 'url'">
             <a
               :href="resource.latest"
-              :title="$t('File link - opens a new window')"
+              :title="t('File link - opens a new window')"
               rel="ugc nofollow noopener"
               target="_blank"
               class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-external-link-line fr-icon--sm"
@@ -79,7 +79,7 @@
             <a
               :href="resource.latest"
               rel="ugc nofollow noopener"
-              :title="$t('Download file')"
+              :title="t('Download file')"
               download
               class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-download-line fr-icon--sm matomo_download"
             >
@@ -102,7 +102,7 @@
       ref="contentRef"
     >
       <div class="fr-tabs fr-tabs--no-border fr-mt-1v" ref="tabsRef">
-        <ul class="fr-tabs__list" ref="tabListRef" role="tablist" :aria-label="$t('File menu')">
+        <ul class="fr-tabs__list" ref="tabListRef" role="tablist" :aria-label="t('File menu')">
           <template v-if="hasPreview">
             <li role="presentation">
               <button
@@ -114,7 +114,7 @@
                 :aria-controls="resourcePreviewTabId"
                 @click="selectTab(resourcePreviewIndex)"
               >
-                {{$t('Preview')}}
+                {{t('Preview')}}
               </button>
             </li>
           </template>
@@ -129,7 +129,7 @@
                 :aria-controls="resourceStructureTabId"
                 @click="selectTab(resourceStructureIndex)"
               >
-                {{$t('Data structure')}}
+                {{t('Data structure')}}
               </button>
             </li>
           </template>
@@ -143,7 +143,7 @@
               :aria-controls="resourceInformationTabId"
               @click="selectTab(resourceInformationIndex)"
             >
-              {{$t('Metadata')}}
+              {{t('Metadata')}}
             </button>
           </li>
         </ul>
@@ -161,7 +161,7 @@
             :tabindex="resourcePreviewTabIndex"
             v-show="resourcePreviewSelected"
           >
-            <Preview  v-if="expanded" :resource />
+            <Preview  v-if="expanded" :resource="resource" />
           </div>
         </transition>
         <transition
@@ -183,7 +183,7 @@
             <template v-if="hasSchema">
               <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle">
                 <div class="fr-col-12 fr-col-lg">
-                  <h5 class="fr-h6 fr-mb-5v">{{$t('Data schema')}}</h5>
+                  <h5 class="fr-h6 fr-mb-5v">{{t('Data schema')}}</h5>
                   <ul class="fr-tags-group" v-if="hasSchemaErrors">
                     <li v-for="[_key, schemaError] in schemaReport">
                       <p class="fr-tag fr-tag--sm">{{schemaError.name}}</p>
@@ -191,7 +191,7 @@
                   </ul>
                   <template v-else>
                     <div class="fr-grid-row fr-grid-row--middle fr-mb-1w">
-                      <p class="fr-text--xs fr-m-0">{{$t('This file is following a schema: ')}}</p>
+                      <p class="fr-text--xs fr-m-0">{{t('This file is following a schema: ')}}</p>
                       <p class="fr-tag fr-tag--sm fr-icon-checkbox-circle-line fr-tag--icon-left">
                         {{schemaName ? schemaName : schemaUrl}}
                       </p>
@@ -213,14 +213,14 @@
                       class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v fr-btn--icon-left fr-icon-checkbox-line"
                       :href="validationUrl"
                     >
-                      {{ $t('See validation report') }}
+                      {{ t('See validation report') }}
                     </a>
                     <a
                       v-if="schemaName"
                       class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-book-2-line"
                       :href="documentationUrl"
                     >
-                      {{ $t('See schema documentation') }}
+                      {{ t('See schema documentation') }}
                     </a>
                   </div>
                 </div>
@@ -243,7 +243,7 @@
           >
             <div class="fr-grid-row fr-grid-row--gutters">
               <DescriptionList>
-                <DescriptionTerm>{{ $t('URL') }}</DescriptionTerm>
+                <DescriptionTerm>{{ t('URL') }}</DescriptionTerm>
                 <DescriptionDetails :withEllipsis="false">
                   <div class="fr-col text-overflow-ellipsis">
                     <a :href="resource.url">{{resource.url}}</a>
@@ -252,7 +252,7 @@
                     <CopyButton :text="resource.url"/>
                   </div>
                 </DescriptionDetails>
-                <DescriptionTerm>{{ $t('Permalink') }}</DescriptionTerm>
+                <DescriptionTerm>{{ t('Permalink') }}</DescriptionTerm>
                 <DescriptionDetails :withEllipsis="false">
                   <div class="fr-col text-overflow-ellipsis">
                     <a :href="resource.latest">{{resource.latest}}</a>
@@ -261,7 +261,7 @@
                     <CopyButton :text="resource.latest"/>
                   </div>
                 </DescriptionDetails>
-                <DescriptionTerm>{{ $t('ID') }}</DescriptionTerm>
+                <DescriptionTerm>{{ t('ID') }}</DescriptionTerm>
                 <DescriptionDetails :withEllipsis="false">
                   <div class="fr-col text-overflow-ellipsis">
                     {{ resource.id }}
@@ -271,18 +271,18 @@
                   </div>
                 </DescriptionDetails>
                 <template v-if="resource.mime">
-                  <DescriptionTerm>{{ $t('MIME Type') }}</DescriptionTerm>
+                  <DescriptionTerm>{{ t('MIME Type') }}</DescriptionTerm>
                   <DescriptionDetails>
                     {{resource.mime}}
                   </DescriptionDetails>
                 </template>
               </DescriptionList>
               <DescriptionList>
-                <DescriptionTerm>{{ $t('Created on') }}</DescriptionTerm>
+                <DescriptionTerm>{{ t('Created on') }}</DescriptionTerm>
                 <DescriptionDetails>
                   {{formatDate(resource.created_at)}}
                 </DescriptionDetails>
-                <DescriptionTerm>{{ $t('Modified on') }}</DescriptionTerm>
+                <DescriptionTerm>{{ t('Modified on') }}</DescriptionTerm>
                 <DescriptionDetails>
                   {{formatDate(resource.last_modified)}}
                 </DescriptionDetails>
@@ -300,7 +300,7 @@
               </DescriptionList>
               <DescriptionList>
                 <template v-if="resource.filesize">
-                  <DescriptionTerm>{{ $t('Size') }}</DescriptionTerm>
+                  <DescriptionTerm>{{ t('Size') }}</DescriptionTerm>
                   <DescriptionDetails>
                     {{ filesize(resource.filesize) }}
                   </DescriptionDetails>
@@ -313,13 +313,13 @@
                   :data-clipboard-text="resourceExternalUrl"
                   class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-right fr-icon-links-fill"
                 >
-                  {{$t('Copy resource permalink')}}
+                  {{t('Copy resource permalink')}}
                 </button>
               </div>
             </div>
             <template v-if="resource.description">
               <h5 class="fr-text--sm fr-my-0 fr-text--bold">
-                {{ $t("File description") }}
+                {{ t("File description") }}
               </h5>
               <div class="fr-mt-0 markdown fr-text--sm text-mention-grey" v-html="markdown(resource.description)">
               </div>
@@ -329,9 +329,15 @@
                 :href="resource.preview_url"
                 class="fr-btn fr-btn--icon-left fr-icon-test-tube-line"
               >
-                {{ $t("Explore data") }}
+                {{ t("Explore data") }}
               </a>
             </div>
+            <ExtraAccordion
+              :button-text="t('See extras')"
+              :title-text="t('Resource Extras')"
+              title-level="h5"
+              :extra="resource.extras"
+            />
           </div>
         </transition>
       </div>
@@ -361,6 +367,8 @@ import { filesize, formatRelativeIfRecentDate, formatDate, markdown } from "../.
 import type { Resource } from "../../types/resources";
 import { templateRef, unrefElement } from "@vueuse/core";
 import useTabs from "../../composables/useTabs";
+import ExtraAccordion from "../ExtraAccordion/ExtraAccordion.vue";
+import { useI18n } from "vue-i18n";
 
 type Props = {
   datasetId: string,
@@ -379,6 +387,8 @@ const props = withDefaults(defineProps<Props>(), {
   isCommunityResource: false,
   canEdit: false,
 })
+
+const { t } = useI18n();
 
 const owner = useOwnerName(props.resource);
 const { url } = useResourceImage(props.resource);

@@ -8,19 +8,18 @@
     </div>
     <Loader v-else-if="loading" />
     <template v-else>
-      <div class="banner-explore">
+      <div class="bg-blue-100 text-blue-400 fr-hidden flex-md fr-p-2w fr-grid-row--middle">
         <div class="france-explore" v-html="franceSvg">
         </div>
-        <div class="text-explore">
-          <div class="title-text-explore">{{ t("Explore data in detail") }}</div>
-          <div class="subtitle-text-explore">{{ t("Use our tool") }}</div>
-          <div class="subsubtitle-text-explore">{{ t("Preview updated: {date}", {date: lastUpdate}) }}</div>
+        <div class="fr-mx-2w">
+          <p class="fr-text--bold fr-m-0">{{ t("Explore data in detail") }}</p>
+          <p class="fr-text--sm fr-m-0 f-italic">{{ t("Use our tool to get an overview of data, learn about different columns or perform filters and sorts.") }}</p>
         </div>
-        <div class="button-explore">
+        <p class="fr-ml-auto fr-my-0">
           <a :href="resource.preview_url" class="fr-btn fr-btn--icon-right fr-icon-external-link-fill">
             {{ t("Explore data") }}
           </a>
-        </div>
+        </p>
       </div>
       <div class="fr-table fr-table--no-background fr-p-0 fr-pt-0-5v fr-m-0">
         <table class="fr-mb-3w">
@@ -60,8 +59,10 @@
         :totalResults="rowCount"
         @change="changePage"
       />
-      <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-px-5v">
-        <div class="fr-col">{{ t('{count} columns', columns.length) }} — {{ t('{count} rows', rowCount) }}</div>
+      <div class="fr-px-5v">
+          {{ t('{count} columns', columns.length) }} —
+          {{ t('{count} rows', rowCount) }} —
+          {{ t("Preview updated: {date}", {date: lastUpdate}) }}
       </div>
     </template>
   </div>
@@ -105,7 +106,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.style-cell{
+.style-cell {
   height: 3rem;
   overflow-y: auto;
   display: block;
@@ -116,29 +117,29 @@ onMounted(() => {
   align-items: center;
 }
 
-.content-cell{
+.content-cell {
   margin-top: auto;
   margin-bottom: auto;
 }
 
-.col-width{
+.col-width {
   width: 20rem;
 }
 
-.cell-padding{
+.cell-padding {
   padding: 0.5rem 0rem 0.5rem 1.2rem!important
 }
 
-td{
+td {
   border-right: 1px solid #CECECE;
   border-bottom: 1px solid #CECECE;
 }
 
-th{
+th {
   border-right: 1px solid #CECECE;
 }
 
-@media (min-width: 48rem){
+@media (min-width: 48rem) {
   .banner-explore{
     min-height: 7rem;
     background-color: #E6EEFE;
@@ -149,43 +150,22 @@ th{
     border-bottom: 1px solid #CDDDFD;
   }
 
-  .france-explore{
+  .france-explore {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     margin-right: 1rem;
   }
 
-  .text-explore{
+  .text-explore {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     margin-right: 1rem;
   }
-  .title-text-explore{
+  .title-text-explore {
     font-weight: bold;
     font-size: 1rem;
     line-height: 1.5rem;
     color: #3558A2;
-  }
-  .subtitle-text-explore{
-    font-size: 0.875rem;
-    line-height: 1.125rem;
-    font-style: italic;
-    color: #3558A2;
-  }
-  .subsubtitle-text-explore{
-    font-size: 14px;
-    line-height: 1.75rem;
-    color: #3558A2;
-  }
-
-  .button-explore{
-    margin-left: auto;
-  }
-}
-
-@media (max-width: 48rem){
-  .banner-explore{
-    display: none;
   }
 }
 </style>

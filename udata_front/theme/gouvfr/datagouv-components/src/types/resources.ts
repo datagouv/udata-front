@@ -1,6 +1,5 @@
 import type { Schema } from "../api/schemas";
 import { RESOURCE_TYPE } from "../helpers";
-import type { Owned } from "./owned";
 
 export type ResourceType = typeof RESOURCE_TYPE[number];
 
@@ -11,10 +10,10 @@ export type FileResourceFileType = "file";
 export type ResourceFileType = RemoteResourceFileType | FileResourceFileType;
 
 export type Harvest = Record<string, any> & {
-  backend: string;
+  backend?: string;
 }
 
-export type Resource = Owned & {
+export type Resource = {
   id: string;
   title: string;
   type: ResourceType;
@@ -24,7 +23,7 @@ export type Resource = Owned & {
   extras: Record<string, any>;
   metrics: { views: number; };
   harvest: Harvest | null;
-  filesize: number;
+  filesize: number | null;
   filetype: ResourceFileType;
   format: string;
   mime: string;

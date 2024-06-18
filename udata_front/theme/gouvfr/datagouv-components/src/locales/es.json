@@ -82,5 +82,17 @@
   "Private": "Private",
   "Archived": "Archived",
   "{n} reuses": "{n} reuses",
-  "{n} favorites": "{n} favorites"
+  "{n} favorites": "{n} favorites",
+  "The data structure of this file failed to load.": "",
+  "No data structure found for this file.": "",
+  "The preview of this file failed to load.": "",
+  "Explore data in detail": "",
+  "Use our tool to get an overview of data, learn about different columns or perform filters and sorts.": "",
+  "Preview updated: {date}": "",
+  "Preview of {name}": "",
+  "Sort ascending": "",
+  "Sort descending": "",
+  "{count} columns": "",
+  "{count} rows": "",
+  "Resource Extras": ""
 }
