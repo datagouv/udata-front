@@ -60,7 +60,8 @@ const args: ReuseProps = {
     title: "My new reuse",
     image: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",
     image_thumbnail: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",
-  }
+  },
+  reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
 };
 
 const updateLastMonth = new Date();
@@ -91,7 +92,9 @@ const argsWithOrganizationWithLogo: ReuseProps = {
     ...args.reuse,
     organization: organizationWithLogo,
     owner: null,
-  }
+  },
+  reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
+  organizationUrl: "/organizations/another-url-easier-to-distinguish",
 };
 
 const argsWithCertifiedOrganization: ReuseProps = {
@@ -102,7 +105,9 @@ const argsWithCertifiedOrganization: ReuseProps = {
       badges: [{kind: PUBLIC_SERVICE}, {kind: CERTIFIED}]
     },
     owner: null
-  }
+  },
+  reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
+  organizationUrl: "/organizations/another-url-easier-to-distinguish",
 };
 
 export const ReuseWithOwner: StoryObj<typeof meta> = {

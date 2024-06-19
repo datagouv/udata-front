@@ -3,7 +3,7 @@
     <div class="fr-card__body">
       <div class="fr-card__content fr-px-2w fr-py-1v">
         <h3 class="fr-card__title fr-text--bold fr-mt-1v fr-mb-0">
-          <AppLink :to="reuse.page">
+          <AppLink :to="reuseUrl">
             {{ truncate(reuse.title, 55) }}
             <span
               v-if="reuse.private"
@@ -15,15 +15,18 @@
         </h3>
         <div class="fr-card__desc fr-mt-1v text-mention-grey">
           <p class="fr-mb-0">
-            <span class="not-enlarged dash-after" v-if="reuse.organization">
-              <AppLink class="fr-link" :to="reuse.organization.page">
-                <OrganizationNameWithCertificate :organization="reuse.organization" />
-              </AppLink>
-            </span>
+            <template v-if="reuse.organization">
+              <span class="not-enlarged dash-after" v-if="organizationUrl">
+                <AppLink class="fr-link" :to="organizationUrl">
+                  <OrganizationNameWithCertificate :organization="reuse.organization" />
+                </AppLink>
+              </span>
+              <OrganizationNameWithCertificate v-else :organization="reuse.organization" />
+            </template>
             <span class="not-enlarged dash-after" v-else>
-              <AppLink class="fr-link" :to="reuse.owner.page">
+              <a class="fr-link" :to="reuse.owner.page">
                 {{ ownerName }}
-              </AppLink>
+              </a>
             </span>
             {{ t('Published {date}', {date: formatRelativeIfRecentDate(reuse.created_at)}) }}
           </p>
@@ -51,6 +54,18 @@
 <script lang="ts">
 export type ReuseProps = {
   reuse: Reuse,
+
+  /**
+   * The reuseUrl is a route location object to allow Vue Router to navigate to the details of a reuse.
+   * It is used as a separate prop to allow other sites using the package to define their own reuse pages.
+   */
+  reuseUrl: RouteLocationRaw,
+
+  /**
+   * The organizationUrl is an optional route location object to allow Vue Router to navigate to the details of the organization linked to tha reuse.
+   * It is used as a separate prop to allow other sites using the package to define their own organization pages.
+   */
+  organizationUrl?: RouteLocationRaw
 };
 </script>
 
@@ -64,6 +79,7 @@ import { formatRelativeIfRecentDate } from '../../helpers';
 import { useOwnerName } from '../../composables';
 import useReuseType from '../../composables/useReuseType';
 import AppLink from "../AppLink/AppLink.vue";
+import { RouteLocationRaw } from 'vue-router';
 
 const props = defineProps<ReuseProps>();
 
