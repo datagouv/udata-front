@@ -50,7 +50,7 @@ import Step2DescribeDataset from './Step2DescribeDataset.vue';
 import Step3AddFiles from './Step3AddFiles.vue';
 import Step3UpdateFileMetadata from "./Step3UpdateFileMetadata.vue";
 import Step4CompleteThePublication from "./Step4CompleteThePublication.vue";
-import { publishing_form_feedback_url, title } from '../../config';
+import { publishing_form_feedback_url, title, user } from '../../config';
 import { createDataset, getSpatialGranularities, publishDataset } from '../../api/datasets';
 import { useFilesUpload } from '../../composables/form/useFilesUpload';
 import { fetchMe } from '../../api/me';
@@ -103,9 +103,11 @@ const dataset = ref<NewDataset>({
     update_frequency: false,
     update_fulfilled_in_time: false,
   },
-  owner: null,
+  owner: user as User,
   organization: null,
 });
+
+console.log(dataset)
 
 const savedDataset = ref<Dataset | null>(null);
 

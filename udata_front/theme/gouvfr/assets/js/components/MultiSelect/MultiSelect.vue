@@ -338,7 +338,7 @@ export default defineComponent({
      **/
      const mapToOption = (data) => data.map((obj) => {
       return {
-        label: obj.name ?? obj.title ?? obj.text ?? obj?.properties?.name ?? obj.label ?? `${obj.first_name} ${obj.last_name}` ?? obj,
+        label: obj.name ?? obj.title ?? obj.text ?? obj?.properties?.name ?? obj.label ?? obj,
         value: obj.id ?? obj.text ?? obj.value ?? obj,
         image: obj.logo_thumbnail ?? obj.logo ?? obj.image_url ?? obj.image ?? obj.avatar_thumbnail ?? obj.avatar,
         hidden: obj.hidden,
