@@ -1,6 +1,6 @@
 import { createApp } from "vue";
 import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router';
-import { setupComponents } from "@etalab/data.gouv.fr-components";
+import { setupComponents } from "@datagouv/components";
 
 import "./dsfr.ts";
 // @ts-ignore

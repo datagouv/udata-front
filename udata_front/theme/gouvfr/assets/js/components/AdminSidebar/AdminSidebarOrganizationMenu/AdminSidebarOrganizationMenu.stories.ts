@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import AdminSidebarOrganizationMenu from "./AdminSidebarOrganizationMenu.vue";
-import type { Organization } from "@etalab/data.gouv.fr-components";
+import type { Organization } from "@datagouv/components";
 
 const meta = {
   title: "Admin/AdminSidebarOrganizationMenu",

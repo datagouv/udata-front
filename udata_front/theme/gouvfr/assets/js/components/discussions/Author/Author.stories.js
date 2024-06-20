@@ -6,7 +6,7 @@ export default {
 };
 
 const args = {
-  /** @type {import("@etalab/data.gouv.fr-components").User} */
+  /** @type {import("@datagouv/components").User} */
   author: {
     id: "someUserId",
     first_name: "John",

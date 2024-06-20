@@ -30,7 +30,7 @@ import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
 import type { Me } from "../../../types";
 import { fetchMe } from "../../../api/me";
 import { watchEffect } from 'vue';
-import type { Organization } from '@etalab/data.gouv.fr-components';
+import type { Organization } from '@datagouv/components';
 
 const { t } = useI18n();
 const props = defineProps<{oid: string}>();

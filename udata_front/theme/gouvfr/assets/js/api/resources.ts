@@ -4,7 +4,7 @@ import { getLocalizedUrl } from '../i18n';
 import type { DatasetChunkUpload, DatasetFile, DatasetFileUpload, DatasetLocalFile, DatasetRemoteFile, NewDatasetFile } from '../types';
 
 export type ResourceApiWrapper = {
-  data: Array<import("@etalab/data.gouv.fr-components").Resource>;
+  data: Array<import("@datagouv/components").Resource>;
   next_page: string | null;
   page: number;
   page_size: number;

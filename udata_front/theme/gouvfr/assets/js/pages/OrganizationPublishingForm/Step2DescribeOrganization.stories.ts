@@ -2,7 +2,7 @@ import { withActions } from '@storybook/addon-actions/decorator';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { within, waitFor, userEvent } from '@storybook/testing-library';
 import { expect } from '@storybook/test';
-import type { NewOrganization } from "@etalab/data.gouv.fr-components";
+import type { NewOrganization } from "@datagouv/components";
 import Step2DescribeOrganization from './Step2DescribeOrganization.vue';
 import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
 

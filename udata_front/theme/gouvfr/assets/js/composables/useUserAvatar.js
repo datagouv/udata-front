@@ -2,7 +2,7 @@ import config from "../config";
 
 /**
  *
- * @param {import("@etalab/data.gouv.fr-components").User} user
+ * @param {import("@datagouv/components").User} user
  * @param {number} size
  */
 export default function useUserAvatar(user, size) {

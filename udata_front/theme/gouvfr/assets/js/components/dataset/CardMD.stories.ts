@@ -1,4 +1,4 @@
-import { CERTIFIED, PUBLIC_SERVICE, type Organization, type User } from '@etalab/data.gouv.fr-components';
+import { CERTIFIED, PUBLIC_SERVICE, type Organization, type User } from '@datagouv/components';
 import CardMD, { type CardMDProps } from './CardMD.vue';
 import { withActions } from '@storybook/addon-actions/decorator';
 import type { Meta, StoryObj } from "@storybook/vue3";

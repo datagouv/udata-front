@@ -4,7 +4,7 @@
 import { lang } from "./config";
 import { createI18n } from "vue-i18n";
 import messages from '@intlify/unplugin-vue-i18n/messages';
-import { setupI18nWithExistingInstance } from "@etalab/data.gouv.fr-components";
+import { setupI18nWithExistingInstance } from "@datagouv/components";
 import { enGB as en, es, fr } from 'date-fns/esm/locale';
 import { createI18nMessage, minLength as vMinLength, not as vNot, required as vRequired, requiredIf as vRequiredIf, sameAs as vSameAs, helpers, type ValidatorWrapper } from '@vuelidate/validators';
 import { api_root_absolute } from "./plugins/api";

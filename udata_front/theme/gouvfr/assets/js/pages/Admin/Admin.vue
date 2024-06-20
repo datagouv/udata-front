@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { getRandomId } from "@etalab/data.gouv.fr-components";
+import { getRandomId } from "@datagouv/components";
 import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import Avatar from "../../components/discussions/Avatar/Avatar.vue";

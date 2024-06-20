@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import OrganizationPublishingForm from './OrganizationPublishingForm.vue';
 import type { Meta, StoryObj } from "@storybook/vue3";
-import { Dataset, NewDataset, Organization } from '@etalab/data.gouv.fr-components';
+import { Dataset, NewDataset, Organization } from '@datagouv/components';
 
 const meta = {
   title: 'Pages/OrganizationPublishingForm/Form',

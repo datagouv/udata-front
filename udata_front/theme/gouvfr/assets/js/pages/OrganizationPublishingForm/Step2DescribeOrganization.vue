@@ -225,7 +225,7 @@
     </div>
   </div>
 </template>
-  
+
 <script setup lang="ts">
   import { computed, reactive, ref, watch } from 'vue';
   import { minLengthWarning, required } from '../../i18n';
@@ -243,8 +243,8 @@
   import organizationIcon from "../../../../templates/svg/illustrations/organization.svg";
   import config, { quality_description_length } from "../../config";
   import { PublishingFormAccordionState } from '../../types';
-  import { Well } from '@etalab/data.gouv.fr-components';
-  import type { NewOrganization } from '@etalab/data.gouv.fr-components';
+  import { Well } from '@datagouv/components';
+  import type { NewOrganization } from '@datagouv/components';
   import axios from 'axios';
   import { url } from '@vuelidate/validators';
   import { useI18n } from 'vue-i18n';
@@ -366,4 +366,3 @@
     }
   });
 </script>
-  

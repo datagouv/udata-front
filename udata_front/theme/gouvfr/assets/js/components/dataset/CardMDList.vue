@@ -34,7 +34,7 @@ const defaultPageSize = 20;
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Pagination } from '@etalab/data.gouv.fr-components';
+import { Pagination } from '@datagouv/components';
 import Loader from "./loader.vue";
 import CardMD from './CardMD.vue';
 

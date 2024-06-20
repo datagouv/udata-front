@@ -1,4 +1,4 @@
-import type { License } from "@etalab/data.gouv.fr-components";
+import type { License } from "@datagouv/components";
 import { MaybeRefOrGetter, ref, toValue, watchEffect } from "vue";
 import fetchLicenses from "../api/licenses";
 

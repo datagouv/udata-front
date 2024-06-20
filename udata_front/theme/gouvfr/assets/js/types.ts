@@ -1,4 +1,4 @@
-import { type Organization, type Owned, type Resource, type User } from "@etalab/data.gouv.fr-components";
+import { type Organization, type Owned, type Resource, type User } from "@datagouv/components";
 
 export type MultiSelectOption = {
   label: string;
