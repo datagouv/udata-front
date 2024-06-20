@@ -155,7 +155,8 @@ export const PrivateReuse: StoryObj<typeof meta> = {
     reuse: {
       ...argsWithOrganizationWithLogo.reuse,
       private: true,
-    }
+    },
+    reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
   },
 };
 
@@ -171,7 +172,8 @@ export const ReuseUpdatedLastMonth: StoryObj<typeof meta> = {
     reuse: {
       ...argsWithOrganizationWithLogo.reuse,
       created_at: updateLastMonth.toDateString(),
-    }
+    },
+    reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
   },
 };
 
@@ -187,7 +189,8 @@ export const ReuseUpdatedLastYear: StoryObj<typeof meta> = {
     reuse: {
       ...argsWithOrganizationWithLogo.reuse,
       created_at: updateLastYear.toDateString(),
-    }
+    },
+    reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
   },
 };
 

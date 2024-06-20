@@ -13,7 +13,7 @@
             </span>
           </AppLink>
         </h3>
-        <div class="fr-card__desc fr-mt-1v text-mention-grey">
+        <div class="fr-card__desc fr-mt-1v text-mention-grey not-enlarged">
           <p class="fr-mb-0">
             <template v-if="reuse.organization">
               <span class="not-enlarged dash-after" v-if="organizationUrl">
