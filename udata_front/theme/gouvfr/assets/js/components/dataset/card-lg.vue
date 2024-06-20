@@ -2,7 +2,7 @@
   <DatasetCard
     :dataset
     :style
-    :show-metrics
+    :show-metrics="showMetrics"
     :dataset-url="dataset.page"
     :organization-url="dataset.organization?.page"
   />
