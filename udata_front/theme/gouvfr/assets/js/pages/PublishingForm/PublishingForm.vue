@@ -55,6 +55,7 @@ import { createDataset, getSpatialGranularities, publishDataset } from '../../ap
 import { useFilesUpload } from '../../composables/form/useFilesUpload';
 import { fetchMe } from '../../api/me';
 import type { NewDatasetFile, SpatialGranularity } from '../../types';
+import { auth } from '../../plugins/auth';
 
 const props = defineProps<{
   redirectDraftUrl: string;
@@ -73,6 +74,8 @@ const currentStep = ref(0);
 const containerRef = ref<HTMLDivElement | null>(null);
 
 const me = ref<User | null>(null);
+
+const user = auth();
 
 const dataset = ref<NewDataset>({
   archived: false,
@@ -103,11 +106,9 @@ const dataset = ref<NewDataset>({
     update_frequency: false,
     update_fulfilled_in_time: false,
   },
-  owner: user as User,
+  owner: user,
   organization: null,
 });
-
-console.log(dataset)
 
 const savedDataset = ref<Dataset | null>(null);
 
