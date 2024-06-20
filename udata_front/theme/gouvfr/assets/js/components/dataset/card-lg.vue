@@ -1,5 +1,11 @@
 <template>
-  <DatasetCard :dataset :style :show-metrics :dataset-url="dataset.page" />
+  <DatasetCard
+    :dataset
+    :style
+    :show-metrics
+    :dataset-url="dataset.page"
+    :organization-url="dataset.organization?.page"
+  />
 </template>
 
 <script setup lang="ts">
