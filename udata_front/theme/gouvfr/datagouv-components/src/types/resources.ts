@@ -1,5 +1,6 @@
 import type { Schema } from "../api/schemas";
 import { RESOURCE_TYPE } from "../helpers";
+import { Owned } from "./owned";
 
 export type ResourceType = typeof RESOURCE_TYPE[number];
 
@@ -34,3 +35,5 @@ export type Resource = {
   schema: Schema;
   url: string;
 };
+
+export type CommunityResource = Owned & Resource;

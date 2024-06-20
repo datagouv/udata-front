@@ -33,9 +33,9 @@
             </p>
             <p class="fr-text--xs fr-m-0">{{ t('{n} downloads', resource.metrics.views || 0) }}</p>
           </div>
-          <p class="fr-mb-0 fr-mt-1v fr-text--xs text-grey-380" v-if="isCommunityResource && (resource.organization || resource.owner)">
+          <p class="fr-mb-0 fr-mt-1v fr-text--xs text-grey-380" v-if="isCommunityResource && ('organization' in resource || 'owner' in resource)">
             {{ t('From') }}
-            <a class="fr-link" :href="resource.organization.page" v-if="resource.organization">
+            <a class="fr-link" :href="resource.organization.page" v-if="'organization' in resource">
               <OrganizationNameWithCertificate :organization="resource.organization" />
             </a>
             <template v-else-if="owner">{{owner}}</template>
@@ -178,7 +178,7 @@
             :tabindex="resourceStructureTabIndex"
             v-show="resourceStructureSelected"
           >
-            <component v-if="expanded && hasPreview" v-for="dataStructure in structure" :is="dataStructure.component" :resource="resource"/>
+            <DataStructure :resource="resource" />
             <hr class="fr-my-5v fr-p-1v" v-if="hasPreview && hasSchema"/>
             <template v-if="hasSchema">
               <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle">
@@ -306,7 +306,7 @@
                   </DescriptionDetails>
                 </template>
               </DescriptionList>
-              <div class="fr-col-auto fr-ml-auto" v-if="config.show_copy_resource_permalink">
+              <div class="fr-col-auto fr-ml-auto" v-if="config.show_copy_resource_permalink && !isCommunityResource">
                 <button
                   :id="resourceCopyId"
                   ref="copyRef"
@@ -346,35 +346,34 @@
 </template>
 
 <script setup lang="ts">
+import { templateRef, unrefElement } from "@vueuse/core";
 import Clipboard from "clipboard";
 import { ref, computed, unref, onMounted, type ComputedRef } from "vue";
+import { useI18n } from "vue-i18n";
+import DataStructure from "./DataStructure/DataStructure.vue";
 import Preview from "./Preview/Preview.vue";
 import SchemaLoader from "./SchemaLoader.vue";
-import useOwnerName from "../../composables/organizations/useOwnerName";
-import useResourceImage from "../../composables/resources/useResourceImage";
+import ExtraAccordion from "../ExtraAccordion/ExtraAccordion.vue";
 import CopyButton from "../CopyButton/CopyButton.vue";
 import EditButton from "./EditButton.vue";
-import { toggleAccordion } from "../../helpers/toggleAccordion";
 import DescriptionDetails from "../DescriptionList/DescriptionDetails.vue";
 import DescriptionList from "../DescriptionList/DescriptionList.vue";
 import DescriptionTerm from "../DescriptionList/DescriptionTerm.vue";
 import OrganizationNameWithCertificate from "../Organization/OrganizationNameWithCertificate.vue";
+import useOwnerName from "../../composables/organizations/useOwnerName";
 import useTabularApiPreview from "../../composables/preview/useTabularApiPreview";
+import useResourceImage from "../../composables/resources/useResourceImage";
 import useSchema from "../../composables/resources/useSchema";
-import useComponentsForHook from "../../composables/useComponentsForHook";
-import { config } from "../../config";
-import { filesize, formatRelativeIfRecentDate, formatDate, markdown } from "../../helpers";
-import type { Resource } from "../../types/resources";
-import { templateRef, unrefElement } from "@vueuse/core";
 import useTabs from "../../composables/useTabs";
-import ExtraAccordion from "../ExtraAccordion/ExtraAccordion.vue";
-import { useI18n } from "vue-i18n";
+import { config } from "../../config";
+import { filesize, formatRelativeIfRecentDate, formatDate, markdown, toggleAccordion } from "../../helpers";
+import type { CommunityResource, Resource } from "../../types/resources";
 
 type Props = {
   datasetId: string,
   expandedOnMount?: boolean,
   isCommunityResource?: boolean,
-  resource: Resource,
+  resource: Resource | CommunityResource,
   canEdit?: boolean
 };
 
@@ -386,20 +385,21 @@ const props = withDefaults(defineProps<Props>(), {
   expandedOnMount: false,
   isCommunityResource: false,
   canEdit: false,
-})
+});
 
 const { t } = useI18n();
 
-const owner = useOwnerName(props.resource);
+let owner: string | null = null;
+if('organization' in props.resource || 'owner' in props.resource) {
+  owner = useOwnerName(props.resource);
+}
 const { url } = useResourceImage(props.resource);
-const { getComponentsForHook } = useComponentsForHook();
 const { hasPreview } = useTabularApiPreview(props.resource);
 
 const contentRef = templateRef<HTMLElement | null>("contentRef");
 const copyRef = templateRef<HTMLButtonElement | null>("copyRef");
 const tabsRef = templateRef<HTMLButtonElement | null>("tabsRef");
 const tabListRef = templateRef<HTMLUListElement | null>("tabListRef");
-const structure = getComponentsForHook("data-structure");
 
 const schemaName = computed(() => props.resource.schema ? props.resource.schema.name : "");
 const schemaUrl = computed(() => props.resource.schema ? props.resource.schema.url : "");

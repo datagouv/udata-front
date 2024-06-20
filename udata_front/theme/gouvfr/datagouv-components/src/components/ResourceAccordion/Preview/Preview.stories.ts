@@ -154,6 +154,9 @@ export const UnavailablePreview: StoryObj<typeof meta> = {
     template: '<Preview v-bind="args" />',
   }),
   args: {
-    resource,
+    resource: {
+      ...resource,
+      id: "someId",
+    },
   }
 };

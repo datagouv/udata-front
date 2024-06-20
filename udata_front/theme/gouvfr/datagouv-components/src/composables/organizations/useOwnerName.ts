@@ -1,16 +1,17 @@
-import { type MaybeRefOrGetter, ref, toValue } from 'vue';
+import { type MaybeRefOrGetter, ref, toValue, watchEffect } from 'vue';
 import type { Owned } from "../../types/owned";
 
-export default function useOwnerName(owned: MaybeRefOrGetter<Owned>) {
-  owned = toValue(owned);
+export default function useOwnerName(owned: MaybeRefOrGetter<Owned | null>) {
   const owner = ref('');
-  if(!owned) {
-    return owner;
-  }
-  if(owned.organization) {
-    owner.value = owned.organization.name;
-  } else if(owned.owner) {
-    owner.value = owned.owner.first_name + " " + owned.owner.last_name;
-  }
+  watchEffect(() => {
+    const ownedValue = toValue(owned);
+    if(ownedValue) {
+      if(ownedValue.organization) {
+        owner.value = ownedValue.organization.name;
+      } else if(ownedValue.owner) {
+        owner.value = ownedValue.owner.first_name + " " + ownedValue.owner.last_name;
+      }
+    }
+  });
   return owner;
 }
