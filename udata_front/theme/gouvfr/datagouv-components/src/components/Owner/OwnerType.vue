@@ -9,6 +9,7 @@ import { useI18n } from "vue-i18n";
 import OwnerTypeIcon from "./OwnerTypeIcon.vue";
 import { ASSOCIATION, COMPANY, LOCAL_AUTHORITY, PUBLIC_SERVICE, type OrganizationTypes } from "../../composables/organizations/useOrganizationType";
 import type { UserType } from "../../types/users";
+import { throwOnNever } from "../../helpers/throwOnNever";
 
 const props = defineProps<{
   type: OrganizationTypes | UserType;
@@ -26,8 +27,10 @@ const { t } = useI18n();
       return t("Association");
     case COMPANY:
       return t('Company');
-    default:
+    case 'user':
       return t("User");
-  }
+    default:
+      return throwOnNever(props.type, `Unknown type ${props.type}`);
+  };
 });
 </script>
