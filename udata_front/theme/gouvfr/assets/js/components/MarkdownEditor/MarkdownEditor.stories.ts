@@ -1,6 +1,5 @@
 import { withActions } from '@storybook/addon-actions/decorator';
-import { expect } from '@storybook/test';
-import { userEvent, waitFor, within } from '@storybook/testing-library';
+import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import MarkdownEditor from './MarkdownEditor.vue';
 import { MarkdownEditorProps } from './types';
@@ -9,9 +8,9 @@ const meta = {
   title: 'Components/MarkdownEditor',
   component: MarkdownEditor,
   decorators: [withActions],
-  argTypes: {
-    onChange: { action: true },
-    onEditorMounted: { action: true },
+  args: {
+    onChange: fn(),
+    onEditorMounted: fn(),
   }
 } satisfies Meta<typeof MarkdownEditor>;
 

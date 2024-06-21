@@ -1,15 +1,14 @@
 import { withActions } from '@storybook/addon-actions/decorator';
-import { expect } from '@storybook/test';
+import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import InputGroup, { InputGroupProps } from './InputGroup.vue';
-import { userEvent, waitFor, within } from '@storybook/testing-library';
 
 const meta = {
   title: 'Components/InputGroup',
   component: InputGroup,
   decorators: [withActions],
-  argTypes: {
-    onChange: { action: true }
+  args: {
+    onChange: fn(),
   }
 } satisfies Meta<typeof InputGroup>;
 

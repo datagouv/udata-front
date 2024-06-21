@@ -3,7 +3,7 @@
     <label class="fr-label" :for="inputId" :id="labelId">
       {{ t('Search for data') }}
     </label>
-    <span class="fr-icon-search-line absolute fr-m-1v" aria-hidden="true"></span>
+    <span class="fr-icon-search-line absolute fr-m-1w" aria-hidden="true"></span>
     <input
       class="fr-input fr-col-12 fr-pl-10v"
       :placeholder="t('Search an organization on data.gouv.fr')"

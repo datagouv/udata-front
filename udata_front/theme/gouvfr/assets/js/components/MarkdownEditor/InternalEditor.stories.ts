@@ -5,14 +5,15 @@ import { MarkdownEditorProps } from './types';
 import { ProsemirrorAdapterProvider } from '@prosemirror-adapter/vue';
 import { MilkdownProvider } from '@milkdown/vue';
 import { useLinkPreviewProvider } from './Milkdown/LinkPreview/useLinkPreview';
+import { fn } from '@storybook/test';
 
 const meta = {
   title: 'Components/MarkdownEditor/Internals/InternalEditor',
   component: InternalEditor,
   decorators: [withActions],
-  argTypes: {
-    onChange: { action: true },
-    onEditorMounted: { action: true },
+  args: {
+    onChange: fn(),
+    onEditorMounted: fn(),
   }
 } satisfies Meta<typeof InternalEditor>;
 

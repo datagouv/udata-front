@@ -86,7 +86,7 @@ defineOptions({
 const props = defineProps<ImageModalProps>();
 
 const emit = defineEmits<{
-  (event: 'send', form: ImageModalForm): void,
+  (event: 'sendModal', form: ImageModalForm): void,
 }>();
 
 const { t } = useI18n();
@@ -128,7 +128,7 @@ function close() {
 function send() {
   validateRequiredRules().then(valid => {
     if(valid) {
-      emit('send', {...form});
+      emit('sendModal', {...form});
       close();
     }
   });
