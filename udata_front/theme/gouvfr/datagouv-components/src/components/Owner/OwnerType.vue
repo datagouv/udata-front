@@ -4,7 +4,7 @@
   </p>
 </template>
 <script setup lang="ts">
-import { ref, watchEffect } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import OwnerTypeIcon from "./OwnerTypeIcon.vue";
 import { ASSOCIATION, COMPANY, LOCAL_AUTHORITY, PUBLIC_SERVICE, type OrganizationTypes } from "../../composables/organizations/useOrganizationType";
@@ -16,25 +16,18 @@ const props = defineProps<{
 
 const { t } = useI18n();
 
-const name = ref("");
-
-watchEffect(() => {
+ const name = computed(() => {
   switch (props.type) {
     case PUBLIC_SERVICE:
-      name.value = t("Service public");
-      break;
+      return t("Service public");
     case LOCAL_AUTHORITY:
-      name.value = t("Local authority");
-      break;
+      return t("Local authority");
     case ASSOCIATION:
-      name.value = t("Association");
-      break;
+      return t("Association");
     case COMPANY:
-      name.value = t('Company');
-      break;
+      return t('Company');
     default:
-      name.value = t("User");
-      break;
+      return t("User");
   }
 });
 </script>

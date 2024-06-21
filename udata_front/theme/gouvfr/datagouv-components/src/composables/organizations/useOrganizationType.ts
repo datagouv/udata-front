@@ -1,4 +1,4 @@
-import { computed, readonly, ref, toValue, watchEffect, type MaybeRefOrGetter } from "vue";
+import { computed, toValue, type MaybeRefOrGetter } from "vue";
 import type { Organization } from "../../types/organizations";
 
 export const PUBLIC_SERVICE = "public-service";
@@ -27,22 +27,21 @@ export function hasBadge(organizationRef: MaybeRefOrGetter<Organization>, kind: 
 }
 
 export default function useOrganizationType(organizationRef: MaybeRefOrGetter<Organization>) {
-  const type = ref<OrganizationTypes>(COMPANY);
   const isPublicService = computed(() => isType(organizationRef, PUBLIC_SERVICE));
   const isAssociation = computed(() => isType(organizationRef, ASSOCIATION));
   const isLocalAuthority = computed(() => isType(organizationRef, LOCAL_AUTHORITY));
-  watchEffect(() => {
+  const type = computed(() => {
     if(isPublicService.value) {
-      type.value = PUBLIC_SERVICE;
+      return PUBLIC_SERVICE;
     } else if(isAssociation.value) {
-      type.value = ASSOCIATION;
+      return ASSOCIATION;
     } else if (isLocalAuthority.value) {
-      type.value = LOCAL_AUTHORITY;
+      return LOCAL_AUTHORITY;
     } else {
-      type.value = COMPANY;
+      return COMPANY;
     }
   });
   return {
-    type: readonly(type),
+    type,
   };
 }
