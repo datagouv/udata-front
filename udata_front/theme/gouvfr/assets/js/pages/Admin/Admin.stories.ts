@@ -9,6 +9,16 @@ const meta = {
   parameters: {
     flex: true,
     flexDirection: 'column',
+  },
+} satisfies Meta<typeof Admin>;
+
+export default meta;
+
+const args = {
+};
+
+export const HomeAdmin: StoryObj<typeof meta> = {
+  parameters: {
     msw: [
       http.get("*/api/1/me", async () => {
         const me: Me = {
@@ -85,16 +95,8 @@ const meta = {
         await delay();
         return HttpResponse.json(requests);
       }),
-    ]
+    ],
   },
-} satisfies Meta<typeof Admin>;
-
-export default meta;
-
-const args = {
-};
-
-export const HomeAdmin: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Admin },
     setup() {
