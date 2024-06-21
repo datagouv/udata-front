@@ -5,8 +5,11 @@ export const PUBLIC_SERVICE = "public-service";
 export const ASSOCIATION = "Association";
 export const COMPANY = "Company";
 export const LOCAL_AUTHORITY = "Local authority";
+export const USER = "user";
 
 export type OrganizationTypes = typeof PUBLIC_SERVICE | typeof ASSOCIATION | typeof COMPANY | typeof LOCAL_AUTHORITY;
+
+export type UserType = typeof USER;
 
 /**
  * Checks if the organization has the provided type
