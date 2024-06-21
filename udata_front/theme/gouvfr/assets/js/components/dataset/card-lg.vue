@@ -12,9 +12,13 @@
 import { DatasetCard, type Dataset, type DatasetV2 } from '@etalab/data.gouv.fr-components';
 import type { StyleValue } from "vue";
 
-defineProps<{
+withDefaults(defineProps<{
   dataset: Dataset | DatasetV2,
   style?: StyleValue,
   showMetrics?: boolean,
-}>();
+}>(), {
+  showMetrics: true,
+});
+
+
 </script>
