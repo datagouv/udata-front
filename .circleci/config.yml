@@ -297,7 +297,7 @@ jobs:
           cypress-command: npm run ci
       - run:
           name: publish to chromatic
-          command: npm run chromatic -- --exit-zero-on-changes
+          command: npm run chromatic -- --exit-once-uploaded
 
   lighthouse:
     docker:
