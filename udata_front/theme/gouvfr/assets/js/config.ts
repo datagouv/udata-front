@@ -168,7 +168,7 @@ export const catalog_url = _meta("catalog-url");
 /**
  * The description length required to pass the quality score check
  */
-export const quality_description_length = _meta("quality-description-length");
+export const quality_description_length = parseInt(_meta("quality-description-length") ??);
 
 /**
  * The data search form URL

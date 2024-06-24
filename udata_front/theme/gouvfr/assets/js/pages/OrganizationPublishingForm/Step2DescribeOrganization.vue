@@ -311,7 +311,7 @@
   const warningRules = {
     acronym: {},
     business_number_id: { custom: checkBusinessId },
-    description: {required, minLengthValue: minLengthWarning(parseInt(quality_description_length ?? "0")) },
+    description: {required, minLengthValue: minLengthWarning(quality_description_length) },
     logo: {},
     name: { required },
     url: { url },
