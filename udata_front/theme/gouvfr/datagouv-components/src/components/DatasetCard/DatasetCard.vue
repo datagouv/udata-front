@@ -43,17 +43,17 @@
         </h4>
         <p class="fr-my-0 fr-text--sm" v-if="dataset.organization || dataset.owner">
           <template v-if="dataset.organization">
-            <span class="not-enlarged dash-after fr-mr-1v" v-if="organizationUrl">
-              <AppLink class="fr-link fr-text--sm" :to="organizationUrl">
+            <span class="not-enlarged dash-after fr-mr-1v">
+              <AppLink class="fr-link fr-text--sm" v-if="organizationUrl" :to="organizationUrl">
                 <OrganizationNameWithCertificate :organization="dataset.organization" />
               </AppLink>
+              <OrganizationNameWithCertificate v-else :organization="dataset.organization" />
             </span>
-            <OrganizationNameWithCertificate v-else :organization="dataset.organization" />
           </template>
           <span class="not-enlarged dash-after fr-mr-1v" v-else>
-            <a class="fr-link fr-text--sm" :href="dataset.owner.page">
+            <AppLink class="fr-link fr-text--sm" :to="dataset.owner.page">
               {{ ownerName }}
-            </a>
+            </AppLink>
           </span>
           <span class="text-mention-grey">{{ $t('Updated {date}', {date: formatRelativeIfRecentDate(dataset.last_update)}) }}</span>
         </p>
