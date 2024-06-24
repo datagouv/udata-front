@@ -82,7 +82,6 @@
 </template>
 
 <script setup lang="ts">
-import { getRandomId } from "@gouvminint/vue-dsfr";
 import type { RouteLocationRaw } from "vue-router";
 import { useI18n } from "vue-i18n";
 import AppLink from "../AppLink/AppLink.vue";
@@ -118,6 +117,5 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const { t } = useI18n();
-const id = getRandomId("metadata-quality");
 const ownerName = useOwnerName(props.dataset);
 </script>
