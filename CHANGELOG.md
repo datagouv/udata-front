@@ -23,6 +23,7 @@
 
 - Add Organization publishing form [#358](https://github.com/datagouv/udata-front/pull/358)
 - Fix an error that blocks datasets search filters reset [#402](https://github.com/datagouv/udata-front/pull/402)
+- Add organization edit to new admin [#412](https://github.com/datagouv/udata-front/pull/412)
 - Componentize dataset card [#397](https://github.com/datagouv/udata-front/pull/397)
 - Use udata schema endpoint [#336](https://github.com/etalab/udata-front/pull/336)
 
