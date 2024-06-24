@@ -43,7 +43,7 @@
             </div>
           </Accordion>
           <Accordion
-            :title= "t('Write a Good Description')"
+            :title= "t('Write a good description')"
             :id="addDescriptionAccordionId"
             :state="state.description"
           >

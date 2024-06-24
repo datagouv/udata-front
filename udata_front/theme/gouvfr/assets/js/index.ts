@@ -11,6 +11,7 @@ import ThreadCreate from "./components/discussions/ThreadCreate/ThreadCreate.vue
 import MenuSearch from "./components/search/MenuSearch/MenuSearch.vue";
 import Search from "./components/search/Search/Search.vue";
 import DeleteButton from "./components/utils/DeleteButton/DeleteButton.vue";
+import DeleteUserButton from "./components/utils/DeleteButton/DeleteUserButton.vue";
 import FeaturedButton from './components/utils/featured.vue';
 import FollowButton from "./components/utils/follow-button.vue";
 import RequestMembership from "./components/organization/request-membership.vue";
@@ -65,6 +66,7 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("menu-search", MenuSearch);
   app.component("search", Search);
   app.component("delete-button", DeleteButton);
+  app.component("delete-user-button", DeleteUserButton);
   app.component("featured-button", FeaturedButton);
   app.component("follow-button", FollowButton);
   app.component("read-more", ReadMore);
