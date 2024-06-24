@@ -5,12 +5,6 @@
         <h3 class="fr-card__title fr-text--bold fr-mt-1v fr-mb-0">
           <AppLink :to="reuseUrl">
             {{ truncate(reuse.title, 55) }}
-            <span
-              v-if="reuse.private"
-              class="fr-badge fr-ml-1w"
-            >
-              {{ t('Private') }}
-            </span>
           </AppLink>
         </h3>
         <div class="fr-card__desc fr-mt-1v text-mention-grey not-enlarged">
@@ -41,6 +35,12 @@
       </div>
     </div>
     <div class="fr-card__header">
+      <span
+        v-if="reuse.private"
+        class="absolute top-0 fr-badge fr-mt-2w fr-ml-2w"
+      >
+        {{ t('Private') }}
+      </span>
       <Placeholder
         class="fr-responsive-img ratio-sm"
         type="reuse"
