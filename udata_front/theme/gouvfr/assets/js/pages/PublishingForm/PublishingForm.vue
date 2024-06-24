@@ -50,7 +50,7 @@ import Step2DescribeDataset from './Step2DescribeDataset.vue';
 import Step3AddFiles from './Step3AddFiles.vue';
 import Step3UpdateFileMetadata from "./Step3UpdateFileMetadata.vue";
 import Step4CompleteThePublication from "./Step4CompleteThePublication.vue";
-import { publishing_form_feedback_url, title, user } from '../../config';
+import { publishing_form_feedback_url, title } from '../../config';
 import { createDataset, getSpatialGranularities, publishDataset } from '../../api/datasets';
 import { useFilesUpload } from '../../composables/form/useFilesUpload';
 import { fetchMe } from '../../api/me';

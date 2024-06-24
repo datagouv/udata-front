@@ -76,6 +76,7 @@ const updateOrganization = (value: Organization) => {
 function listOrganizations() {
   const userValue = {
     ...toValue(props.user),
+    id: "user",
     name: `${props.user.first_name} ${props.user.last_name}`,
     logo: useUserAvatar(toValue(props.user), 40),
     logo_thumbnail: useUserAvatar(toValue(props.user), 40),
