@@ -2,11 +2,11 @@
   <article class="fr-my-2w fr-p-2w border border-default-grey fr-enlarge-link" :style="props.style">
     <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v fr-ml-n2v" v-if="dataset.private || dataset.archived">
       <p class="fr-badge fr-badge--mention-grey fr-mr-1w fr-text--sm" v-if="dataset.private">
-        <span class="fr-icon-lock-line fr-icon--sm" aria-hidden="true"></span>
+        <span class="fr-icon-lock-line fr-icon--sm fr-pr-1v" aria-hidden="true"></span>
         {{ t('Private') }}
       </p>
       <p class="fr-badge fr-badge--mention-grey fr-mr-1w fr-text--sm" v-if="dataset.archived">
-        <span class="fr-icon-archive-line fr-icon--sm" aria-hidden="true"></span>
+        <span class="fr-icon-archive-line fr-icon--sm fr-pr-1v" aria-hidden="true"></span>
         {{ t('Archived') }}
       </p>
     </div>
