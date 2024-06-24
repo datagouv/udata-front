@@ -59,12 +59,7 @@
         </p>
         <div class="fr-mx-0 fr-mt-1v fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
           <div class="fr-grid-row fr-grid-row--middle fr-hidden flex-sm dash-after text-grey-500 not-enlarged">
-            <p class="fr-m-0 fr-mr-1v text-mention-grey fr-text--sm" :id="id">
-              {{$t('Metadata quality:')}}
-            </p>
-            <div class="fr-grid-row fr-grid-row--middle fr-mr-1v">
-              <QualityScore :score="dataset.quality.score"/>
-            </div>
+            <QualityComponentInline :quality="dataset.quality"/>
           </div>
           <div class="fr-grid-row fr-grid-row--middle fr-mr-1v">
             <p class="fr-text--sm fr-my-0">
@@ -97,7 +92,7 @@ import { excerpt } from "../../helpers";
 import { formatRelativeIfRecentDate } from "../../helpers";
 import OrganizationNameWithCertificate from "../Organization/OrganizationNameWithCertificate.vue";
 import { Placeholder } from "../utils/";
-import { QualityScore } from "../QualityScore";
+import { QualityComponentInline } from "../QualityComponentInline";
 import { useOwnerName } from "../../composables"
 
 type Props = {
