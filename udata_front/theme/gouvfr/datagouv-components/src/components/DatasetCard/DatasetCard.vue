@@ -87,18 +87,18 @@
 </template>
 
 <script setup lang="ts">
+import { getRandomId } from "@gouvminint/vue-dsfr";
+import type { RouteLocationRaw } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { useOwnerName } from "../../composables"
+import AppLink from "../AppLink/AppLink.vue";
+import Avatar from "../Avatar/Avatar.vue";
+import type { Dataset, DatasetV2 } from "../../types/datasets";
+import { excerpt } from "../../helpers";
 import { formatRelativeIfRecentDate } from "../../helpers";
 import OrganizationNameWithCertificate from "../Organization/OrganizationNameWithCertificate.vue";
-import { getRandomId } from "@gouvminint/vue-dsfr";
-import Avatar from "../Avatar/Avatar.vue";
-import { excerpt } from "../../helpers";
 import { Placeholder } from "../utils/";
 import { QualityScore } from "../QualityScore";
-import type { Dataset, DatasetV2 } from "../../types/datasets";
-import AppLink from "../AppLink/AppLink.vue";
-import { RouteLocationRaw } from "vue-router";
+import { useOwnerName } from "../../composables"
 
 type Props = {
   dataset: Dataset | DatasetV2,
