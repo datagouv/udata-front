@@ -292,9 +292,9 @@
   });
 
   const checkBusinessId = () => {
-    if (!organization.business_number_id || organization.business_number_id?.length == 0) {
+    if (!organization.business_number_id || organization.business_number_id.length == 0) {
       return true;
-    } else if (organization.business_number_id?.length == 14 && checkOrga.value.exists) {
+    } else if (organization.business_number_id.length == 14 && checkOrga.value.exists) {
       return true;
     } else {
       return false;
