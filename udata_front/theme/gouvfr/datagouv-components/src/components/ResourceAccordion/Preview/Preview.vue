@@ -60,9 +60,9 @@
         @change="changePage"
       />
       <div class="fr-px-5v">
-          {{ t('{count} columns', columns.length) }} —
-          {{ t('{count} rows', rowCount) }} —
-          {{ t("Preview updated: {date}", {date: lastUpdate}) }}
+        {{ t("Preview updated on {date}", {date: lastUpdate}) }} —
+        {{ t('{count} columns', columns.length) }} —
+        {{ t('{count} rows', rowCount) }}
       </div>
     </template>
   </div>
@@ -95,7 +95,7 @@ const {
     sortByField,
     changePage,
     getTableInfos,
-  } = useTabularApiData(props.resource)
+  } = useTabularApiData(props.resource);
 
 const lastUpdate = formatDate(props.resource.extras['analysis:parsing:finished_at']);
 

@@ -33,9 +33,9 @@
             </p>
             <p class="fr-text--xs fr-m-0">{{ t('{n} downloads', resource.metrics.views || 0) }}</p>
           </div>
-          <p class="fr-mb-0 fr-mt-1v fr-text--xs text-grey-380" v-if="isCommunityResource && ('organization' in resource || 'owner' in resource)">
+          <p class="fr-mb-0 fr-mt-1v fr-text--xs text-grey-380" v-if="checkIsCommunityResource(resource)">
             {{ t('From') }}
-            <a class="fr-link" :href="resource.organization.page" v-if="'organization' in resource">
+            <a class="fr-link" v-if="resource.organization" :href="resource.organization.page" >
               <OrganizationNameWithCertificate :organization="resource.organization" />
             </a>
             <template v-else-if="owner">{{owner}}</template>
@@ -61,7 +61,7 @@
                 {{ t('Close details') }}
               </template>
               <template v-else>
-                {{hasPreview ? t('See data') : t('See metadata')}}
+                {{ hasPreview ? t('See data') : t('See metadata') }}
               </template>
             </button>
           </p>
@@ -324,7 +324,10 @@
               <div class="fr-mt-0 markdown fr-text--sm text-mention-grey" v-html="markdown(resource.description)">
               </div>
             </template>
-            <div class="text-align-right" v-if="!hasPreview && resource.preview_url">
+            <div
+              class="text-align-right"
+              v-if="!hasPreview && resource.preview_url"
+            >
               <a
                 :href="resource.preview_url"
                 class="fr-btn fr-btn--icon-left fr-icon-test-tube-line"
@@ -333,10 +336,12 @@
               </a>
             </div>
             <ExtraAccordion
+              class="fr-pt-3w fr-mt-3w border-top border-default-grey"
               :button-text="t('See extras')"
               :title-text="t('Resource Extras')"
               title-level="h5"
               :extra="resource.extras"
+              v-if="resource.extras"
             />
           </div>
         </transition>
@@ -389,8 +394,12 @@ const props = withDefaults(defineProps<Props>(), {
 
 const { t } = useI18n();
 
-let owner: string | null = null;
-if('organization' in props.resource || 'owner' in props.resource) {
+function checkIsCommunityResource(_resource: Resource | CommunityResource): _resource is CommunityResource {
+  return props.isCommunityResource;
+}
+
+let owner: ReturnType<typeof useOwnerName>;
+if(checkIsCommunityResource(props.resource)) {
   owner = useOwnerName(props.resource);
 }
 const { url } = useResourceImage(props.resource);
@@ -405,9 +414,7 @@ const schemaName = computed(() => props.resource.schema ? props.resource.schema.
 const schemaUrl = computed(() => props.resource.schema ? props.resource.schema.url : "");
 
 const hasSchema = computed(() => schemaName.value || schemaUrl.value);
-const resourcePreviewIndex = computed(() => {
-  return 0;
-});
+const resourcePreviewIndex = computed(() => 0);
 const resourceStructureIndex = computed(() => {
   if (hasPreview.value && hasSchema.value) {
     return 1;

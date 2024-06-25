@@ -7,10 +7,10 @@
           <h3 class="subtitle fr-mb-1v">{{ $t('License') }}</h3>
           <p class="fr-text--sm fr-m-0 text-mention-grey ">
             <code class="bg-alt-grey fr-px-1v text-grey-380">
-                            <a :href="props.license.url">
-                            {{ props.license.title }}
-                            </a>
-                        </code>
+                <a :href="props.license.url">
+                {{ props.license.title }}
+                </a>
+            </code>
           </p>
         </div>
         <div class="fr-col-12 fr-col-sm-6 fr-col-md-4">
@@ -67,68 +67,25 @@
     </div>
   </div>
   <div v-if="hasExtras">
-    <header class="fr-grid-row fr-grid-row--middle fr-pb-3w fr-mb-3w border-bottom border-default-grey"
-      :class="{ 'border-bottom': !extrasExpanded }">
-      <div class="fr-col">
-        <h2 class="subtitle subtitle--uppercase fr-m-0">{{ $t('Extras') }}</h2>
-      </div>
-      <div class="fr-col-auto">
-        <button @click="extrasExpand" role="button" :aria-expanded="extrasExpanded"
-          class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-btn--secondary-grey-500"
-          :class="{ 'fr-icon-arrow-up-s-line': extrasExpanded, 'fr-icon-arrow-down-s-line': !extrasExpanded }">
-          <template v-if="extrasExpanded">
-            {{ $t('Close details') }}
-          </template>
-          <template v-else>
-            {{ $t('See extras') }}
-          </template>
-        </button>
-      </div>
-    </header>
-    <div class="accordion-content" ref="extrasRef">
-      <div class="fr-pb-3w fr-mb-3w border-bottom border-default-grey">
-        <div class="fr-grid-row fr-grid-row--gutters fr-text--sm fr-m-0">
-          <div v-for="(value, key) in props.dataset?.extras" :key="key" class="fr-col-12 fr-col-sm-6 fr-col-md-4">
-            <h3 class="subtitle fr-mb-1v">{{ key }}</h3>
-            <p class="fr-text--sm fr-m-0 text-mention-grey ">{{ value }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <ExtraAccordion
+      :button-text="t('See extras')"
+      :title-text="t('Extras')"
+      :extra="props.dataset.extras"
+      title-level="h2"
+    />
   </div>
   <div v-if="props.dataset?.harvest">
-    <header class="fr-grid-row fr-grid-row--middle fr-pb-3w fr-mb-3w border-bottom border-default-grey"
-      :class="{ 'border-bottom': !harvestExpanded }">
-      <div class="fr-col">
-        <h2 class="subtitle subtitle--uppercase fr-m-0">{{ $t('Harvest') }}</h2>
-      </div>
-      <div class="fr-col-auto">
-        <button @click="expand" role="button" :aria-expanded="harvestExpanded"
-          class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-btn--secondary-grey-500"
-          :class="{ 'fr-icon-arrow-up-s-line': harvestExpanded, 'fr-icon-arrow-down-s-line': !harvestExpanded }">
-          <template v-if="harvestExpanded">
-            {{ $t('Close details') }}
-          </template>
-          <template v-else>
-            {{ $t('See harvest') }}
-          </template>
-        </button>
-      </div>
-    </header>
-    <div class="accordion-content" ref="harvestRef">
-      <div class="fr-pb-3w fr-mb-3w border-bottom border-default-grey">
-        <div class="fr-grid-row fr-grid-row--gutters fr-text--sm fr-m-0">
-          <div v-for="(value, key) in props.dataset?.harvest" :key="key" class="fr-col-12 fr-col-sm-6 fr-col-md-4">
-            <h3 class="subtitle fr-mb-1v">{{ key }}</h3>
-            <p class="fr-text--sm fr-m-0 text-mention-grey ">{{ value }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <ExtraAccordion
+      :button-text="t('See harvest')"
+      :title-text="t('Harvest')"
+      :extra="props.dataset.harvest"
+      title-level="h2"
+    />
   </div>
 </template>
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import type { Dataset, DatasetV2 } from "../../types/datasets";
 import CopyButton from "../CopyButton/CopyButton.vue";
 import { toggleAccordion } from "../../helpers/toggleAccordion";
@@ -140,10 +97,12 @@ import useOEmbed from '../../composables/useOEmbed';
 import type { Frequencies } from '../../types/frequency';
 import type { Granularities } from '../../types/granularity';
 import type { License } from '../../types/licenses';
+import ExtraAccordion from '../ExtraAccordion/ExtraAccordion.vue';
 const props = defineProps<{
   dataset: DatasetV2 | Dataset,
   license: License
 }>();
+const { t } = useI18n();
 const embedText = useOEmbed('dataset', props.dataset.id);
 const extrasExpanded = ref(false);
 const extrasRef = ref<HTMLDivElement | null>(null);

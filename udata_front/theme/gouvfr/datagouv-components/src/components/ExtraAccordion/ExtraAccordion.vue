@@ -4,7 +4,7 @@
       class="fr-grid-row fr-grid-row--middle fr-pb-3w fr-mb-3w border-bottom border-default-grey"
     >
       <div class="fr-col">
-        <component :as="titleLevel" class="subtitle subtitle--uppercase fr-m-0">
+        <component :is="titleLevel" class="subtitle subtitle--uppercase fr-m-0">
           {{ titleText }}
         </component>
       </div>
@@ -34,7 +34,7 @@
         <div class="fr-grid-row fr-grid-row--gutters fr-text--sm fr-m-0" data-testid="extra-list">
           <div v-for="(value, key) in extra" :key="key" class="fr-col-12 fr-col-sm-6 fr-col-md-4">
             <h3 class="subtitle fr-mb-1v">{{ key }}</h3>
-            <p class="fr-text--sm fr-m-0 text-mention-grey">{{ value }}</p>
+            <p class="fr-text--sm fr-m-0 text-mention-grey overflow-wrap-anywhere">{{ value }}</p>
           </div>
         </div>
       </div>

@@ -26,7 +26,7 @@ const guides_quality_url = ref<string>(import.meta.env.VITE_GUIDES_QUALITY_URL);
 
 const tabular_api_url = ref<string>(import.meta.env.VITE_TABULAR_API_URL);
 
-const tabular_page_size = ref<number>(import.meta.env.VITE_TABULAR_PAGE_SIZE);
+const tabular_page_size = ref<number>(parseInt(import.meta.env.VITE_TABULAR_PAGE_SIZE));
 
 const tabular_allow_remote = ref<boolean>(import.meta.env.VITE_TABULAR_ALLOW_REMOTE);
 
