@@ -43,14 +43,14 @@
         </h4>
         <p class="fr-my-0 fr-text--sm" v-if="dataset.organization || dataset.owner">
           <template v-if="dataset.organization">
-            <span class="not-enlarged dash-after fr-mr-1v">
+            <span class="not-enlarged dash-after-sm fr-mr-1v">
               <AppLink class="fr-link fr-text--sm" v-if="organizationUrl" :to="organizationUrl">
                 <OrganizationNameWithCertificate :organization="dataset.organization" />
               </AppLink>
               <OrganizationNameWithCertificate v-else :organization="dataset.organization" />
             </span>
           </template>
-          <span class="not-enlarged dash-after fr-mr-1v" v-else>
+          <span class="not-enlarged dash-after-sm fr-mr-1v" v-else>
             <AppLink class="fr-link fr-text--sm" :to="dataset.owner.page">
               {{ ownerName }}
             </AppLink>
@@ -58,7 +58,7 @@
           <span class="text-mention-grey">{{ $t('Updated {date}', {date: formatRelativeIfRecentDate(dataset.last_update)}) }}</span>
         </p>
         <div class="fr-mx-0 fr-mt-1v fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
-          <div class="fr-grid-row fr-grid-row--middle fr-hidden flex-sm dash-after text-grey-500 not-enlarged">
+          <div class="fr-grid-row fr-grid-row--middle fr-hidden flex-sm dash-after-sm text-grey-500 not-enlarged">
             <QualityComponentInline :quality="dataset.quality"/>
           </div>
           <div class="fr-grid-row fr-grid-row--middle fr-mr-1v">

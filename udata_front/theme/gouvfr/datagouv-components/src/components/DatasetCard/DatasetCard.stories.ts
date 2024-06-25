@@ -98,7 +98,7 @@ const dataset: DatasetV2 = {
     business_number_id: "",
     description: "",
     badges: [],
-    name: "[TEST] Météo France",
+    name: "Météo France",
     slug: "test-meteo-france",
     uri: "https://demo.data.gouv.fr/api/1/organizations/test-meteo-france/",
     url: ""
