@@ -51,9 +51,7 @@
             </span>
           </template>
           <span class="not-enlarged dash-after-sm fr-mr-1v" v-else>
-            <AppLink class="fr-link fr-text--sm" :to="dataset.owner.page">
-              {{ ownerName }}
-            </AppLink>
+            {{ ownerName }}
           </span>
           <span class="text-mention-grey">{{ $t('Updated {date}', {date: formatRelativeIfRecentDate(dataset.last_update)}) }}</span>
         </p>
