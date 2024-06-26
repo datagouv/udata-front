@@ -151,6 +151,7 @@
             <div class="fr-fieldset__element">
               <ProducerSelector
                 :user="user"
+                :owned="owned"
                 :hasError="fieldHasError('userOrganization')"
                 :errorText="$t('You need to select a Producer')"
                 @update:organization="(value) => userOrganization = value"
@@ -339,7 +340,7 @@ export type Step2DescribeDatasetProps = {
 };
 </script>
 <script setup lang="ts">
-import { Well, type User } from "@etalab/data.gouv.fr-components";
+import { Owned, Well, type User } from "@etalab/data.gouv.fr-components";
 import { computed, reactive, ref, toValue } from 'vue';
 import { minLengthWarning, not, required, requiredWithCustomMessage, sameAs } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
@@ -385,6 +386,10 @@ if(!dataset.spatial) {
 };
 
 const userOrganization = ref<string>();
+const owned = ref<Owned>({
+  organization: null,
+  owner: props.user,
+});
 
 const frequenciesUrl = getFrequenciesUrl();
 const licensesUrl = getLicensesUrl();
@@ -474,13 +479,8 @@ function setGranularity(value: string) {
 function submit() {
   validateRequiredRules().then(valid => {
     if(valid) {
-      if (toValue(userOrganization) === "user") {
-        dataset.organization = null;
-        dataset.owner = props.user;
-      } else {
-        dataset.organization = toValue(userOrganization);
-        dataset.owner = null;
-      };
+      Object.assign(dataset, owned.value);
+      console.log(dataset)
       emit("next", dataset);
     }
   });

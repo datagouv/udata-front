@@ -50,7 +50,7 @@
 <script setup lang="ts">
 import { ref, computed, toValue, onMounted } from 'vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
-import type { User, Organization } from '@etalab/data.gouv.fr-components';
+import type { User, Organization, Owned } from '@etalab/data.gouv.fr-components';
 import { organization_url } from '../../config';
 import { useI18n } from 'vue-i18n';
 import useUserAvatar from "../../composables/useUserAvatar";
@@ -59,6 +59,7 @@ const { t } = useI18n();
 
 const props = defineProps<{
   user: User,
+  owned: Owned,
   hasError?: boolean
   errorText?: string
 }>();
@@ -67,18 +68,25 @@ const organizationsUrl = organization_url;
 const createOrganizationUrl = `${organization_url}publishing-form/`;
 
 const userOrganization = ref<string>();
+const owned = ref(props.owned);
 const organizations = ref<Array<Organization | User>>([]);
 const emit = defineEmits<{
-  (event: 'update:organization', organization: Organization): void,
+  (event: 'update:organization', organization: string, owned: Owned): void,
 }>();
 
 const isAdmin = computed(() => props.user.roles?.includes('admin') ?? false);
 
 const hasOrganizations = computed(() => organizations.value.length > 1);
 
-const updateOrganization = (value: Organization) => {
-  userOrganization.value = value.id;
-  emit('update:organization', value);
+const updateOrganization = (organization: string) => {
+  if (organization === "user") {
+    owned.value.organization = null;
+    owned.value.owner = props.user;
+  } else {
+    owned.value.organization = organization;
+    owned.value.owner = null;
+  };
+  emit('update:organization', organization, toValue(owned));
 };
 
 function listOrganizations() {
