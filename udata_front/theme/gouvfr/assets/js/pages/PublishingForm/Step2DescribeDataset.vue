@@ -149,7 +149,12 @@
               </h2>
             </legend>
             <div class="fr-fieldset__element">
-              <ProducerSelector :user="user" @update:organization="(value) => userOrganization = value" />
+              <ProducerSelector
+                :user="user"
+                :hasError="checkOrganization"
+                :errorText="$t('You need to select a Producer')"
+                @update:organization="(value) => userOrganization = value"
+              />
             </div>
           </fieldset>
           <fieldset class="fr-fieldset min-width-0" aria-labelledby="description-legend">
@@ -334,7 +339,7 @@ export type Step2DescribeDatasetProps = {
 };
 </script>
 <script setup lang="ts">
-import { type Organization, Well, type User } from "@etalab/data.gouv.fr-components";
+import { Well, type User } from "@etalab/data.gouv.fr-components";
 import { computed, reactive, ref, toValue } from 'vue';
 import { minLengthWarning, not, required, requiredWithCustomMessage, sameAs } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
@@ -379,7 +384,7 @@ if(!dataset.spatial) {
   }
 };
 
-const userOrganization = ref<Organization>();
+const userOrganization = ref<string>();
 
 const frequenciesUrl = getFrequenciesUrl();
 const licensesUrl = getLicensesUrl();
@@ -409,10 +414,13 @@ const tagsRequired = requiredWithCustomMessage(t("Adding tags helps improve the 
 const temporalCoverageRequired = requiredWithCustomMessage(t("You did not provide the temporal coverage."));
 const spatialGranularityRequired = requiredWithCustomMessage(t("You have not specified the spatial granularity."));
 
+const checkOrganization = computed(() => !toValue(userOrganization));
+
 const requiredRules = {
   description: { required },
   frequency: { required },
   title: { required },
+  userOrganization: { custom: checkOrganization }
 };
 
 const warningRules = {
@@ -426,6 +434,7 @@ const warningRules = {
   tags: { required: tagsRequired },
   temporal_coverage: { required: temporalCoverageRequired },
   title: { required },
+  userOrganization: { custom: checkOrganization },
 };
 
 const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(dataset, requiredRules, warningRules);
@@ -440,6 +449,7 @@ const state = computed<Record<string, PublishingFormAccordionState>>(() => {
     frequency: getFunctionalState(vWarning$.value.frequency.$dirty, v$.value.frequency.$invalid, vWarning$.value.frequency.$error),
     temporal_coverage: getFunctionalState(vWarning$.value.temporal_coverage.$dirty, false, vWarning$.value.temporal_coverage.$error),
     spatial_information: getFunctionalState(vWarning$.value.spatial.granularity.$dirty, false, vWarning$.value.spatial.granularity.$error),
+    userOrganization: getFunctionalState(vWarning$.value.userOrganization.$dirty, false, vWarning$.value.userOrganization.$error),
   };
 });
 
@@ -456,6 +466,7 @@ function setGranularity(value: string) {
 };
 
 function submit() {
+  console.log(checkOrganization.value)
   validateRequiredRules().then(valid => {
     if(valid) {
       if (toValue(userOrganization) === "user") {

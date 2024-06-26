@@ -9,6 +9,8 @@
       :initialOptions="organizations"
       :values="userOrganization"
       @change="updateOrganization"
+      :hasError="props.hasError"
+      :errorText="props.errorText"
     />
   </div>
   <div v-else-if="hasOrganizations">
@@ -20,6 +22,8 @@
       :initialOptions="organizations"
       :values="userOrganization"
       @change="updateOrganization"
+      :hasError="props.hasError"
+      :errorText="props.errorText"
     />
   </div>
   <div v-else>
@@ -53,12 +57,18 @@ import useUserAvatar from "../../composables/useUserAvatar";
 
 const { t } = useI18n();
 
-const props = defineProps<{user: User}>();
+const props = defineProps<{
+  user: User,
+  hasError?: boolean
+  errorText?: string
+}>();
+
+console.log(props.hasError)
 
 const organizationsUrl = organization_url;
 const createOrganizationUrl = `${organization_url}publishing-form/`;
 
-const userOrganization = ref<Organization>();
+const userOrganization = ref<string>();
 const organizations = ref<Array<Organization | User>>([]);
 const emit = defineEmits<{
   (event: 'update:organization', organization: Organization): void,
@@ -69,7 +79,7 @@ const isAdmin = computed(() => props.user.roles?.includes('admin') ?? false);
 const hasOrganizations = computed(() => organizations.value.length > 1);
 
 const updateOrganization = (value: Organization) => {
-  userOrganization.value = value;
+  userOrganization.value = value.id;
   emit('update:organization', value);
 };
 
