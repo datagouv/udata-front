@@ -416,13 +416,13 @@ const schemaUrl = computed(() => props.resource.schema ? props.resource.schema.u
 const hasSchema = computed(() => schemaName.value || schemaUrl.value);
 const resourcePreviewIndex = computed(() => 0);
 const resourceStructureIndex = computed(() => {
-  if (hasPreview.value && hasSchema.value) {
+  if (hasPreview.value) {
     return 1;
   }
   return 0;
 });
 const resourceInformationIndex = computed(() => {
-  if (hasPreview.value && hasSchema.value) {
+  if (hasPreview.value) {
     return 2;
   }
   if (hasSchema.value) {
