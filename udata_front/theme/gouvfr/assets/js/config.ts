@@ -281,9 +281,12 @@ export const search_autocomplete_enabled = _jsonMeta("search-autocomplete-enable
  */
 export const search_autocomplete_debounce = _jsonMeta("search-autocomplete-debounce");
 
-export const tabular_api_url = _meta("tabular-api-url");
+// TODO: remove when datagouv/components is used with Preview component in Resource
+export const explorable_resources: Array<string> = _jsonMeta("explorable-resources") || [];
 
-export const tabular_page_size = _meta("tabular-page-size");
+// TODO: uncomment when datagouv/components is used with Preview component in Resource
+// export const tabular_api_url = _meta("tabular-api-url");
+// export const tabular_page_size = _meta("tabular-page-size");
 
 export const search_siren_url = _meta("search-siren-url");
 
@@ -324,8 +327,6 @@ export default {
   sentry,
   static_root,
   support_url,
-  tabular_api_url,
-  tabular_page_size,
   tags,
   theme_static,
   title,
