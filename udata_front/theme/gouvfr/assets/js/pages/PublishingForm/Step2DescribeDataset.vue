@@ -151,7 +151,7 @@
             <div class="fr-fieldset__element">
               <ProducerSelector
                 :user="user"
-                :hasError="checkOrganization"
+                :hasError="fieldHasError('userOrganization')"
                 :errorText="$t('You need to select a Producer')"
                 @update:organization="(value) => userOrganization = value"
               />
@@ -414,7 +414,13 @@ const tagsRequired = requiredWithCustomMessage(t("Adding tags helps improve the 
 const temporalCoverageRequired = requiredWithCustomMessage(t("You did not provide the temporal coverage."));
 const spatialGranularityRequired = requiredWithCustomMessage(t("You have not specified the spatial granularity."));
 
-const checkOrganization = computed(() => !toValue(userOrganization));
+const checkOrganization = () => {
+  if (userOrganization.value) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
 const requiredRules = {
   description: { required },
@@ -449,7 +455,7 @@ const state = computed<Record<string, PublishingFormAccordionState>>(() => {
     frequency: getFunctionalState(vWarning$.value.frequency.$dirty, v$.value.frequency.$invalid, vWarning$.value.frequency.$error),
     temporal_coverage: getFunctionalState(vWarning$.value.temporal_coverage.$dirty, false, vWarning$.value.temporal_coverage.$error),
     spatial_information: getFunctionalState(vWarning$.value.spatial.granularity.$dirty, false, vWarning$.value.spatial.granularity.$error),
-    userOrganization: getFunctionalState(vWarning$.value.userOrganization.$dirty, false, vWarning$.value.userOrganization.$error),
+    userOrganization: getFunctionalState(vWarning$.value.userOrganization.$dirty, v$.value.userOrganization.$invalid, vWarning$.value.userOrganization.$error),
   };
 });
 
@@ -466,7 +472,6 @@ function setGranularity(value: string) {
 };
 
 function submit() {
-  console.log(checkOrganization.value)
   validateRequiredRules().then(valid => {
     if(valid) {
       if (toValue(userOrganization) === "user") {

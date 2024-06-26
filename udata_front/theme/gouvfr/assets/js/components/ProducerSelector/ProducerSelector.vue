@@ -63,8 +63,6 @@ const props = defineProps<{
   errorText?: string
 }>();
 
-console.log(props.hasError)
-
 const organizationsUrl = organization_url;
 const createOrganizationUrl = `${organization_url}publishing-form/`;
 
