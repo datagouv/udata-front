@@ -306,6 +306,7 @@ export default {
   debug,
   demo_server_url,
   demo_server_name,
+  explorable_resources,
   guides_harvesting_url,
   guides_quality_url,
   hidpi,
