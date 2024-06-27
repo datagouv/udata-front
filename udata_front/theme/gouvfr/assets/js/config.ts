@@ -281,8 +281,6 @@ export const search_autocomplete_enabled = _jsonMeta("search-autocomplete-enable
  */
 export const search_autocomplete_debounce = _jsonMeta("search-autocomplete-debounce");
 
-export const explorable_resources: Array<string> = _jsonMeta("explorable-resources") || [];
-
 export const search_siren_url = _meta("search-siren-url");
 
 export const quality_metadata_backend_ignore: Array<string> = _jsonMeta("quality-metadata-backend-ignore") || [];
