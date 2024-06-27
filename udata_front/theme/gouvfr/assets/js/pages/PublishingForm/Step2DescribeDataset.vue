@@ -413,7 +413,7 @@ const temporalCoverageRequired = requiredWithCustomMessage(t("You did not provid
 const spatialGranularityRequired = requiredWithCustomMessage(t("You have not specified the spatial granularity."));
 const isSelectedProducer = ref<boolean>(false);
 
-const checkOrganization = () => {
+function checkOrganization() {
   return isSelectedProducer.value;
 };
 
