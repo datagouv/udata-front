@@ -151,10 +151,9 @@
             <div class="fr-fieldset__element">
               <ProducerSelector
                 :user="user"
-                :owned="owned"
                 :hasError="fieldHasError('userOrganization')"
                 :errorText="$t('You need to select a Producer')"
-                @update:organization="(value) => userOrganization = value"
+                @update:owned="updateOwned"
               />
             </div>
           </fieldset>
@@ -341,7 +340,7 @@ export type Step2DescribeDatasetProps = {
 </script>
 <script setup lang="ts">
 import { Owned, Well, type User } from "@etalab/data.gouv.fr-components";
-import { computed, reactive, ref, toValue } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { minLengthWarning, not, required, requiredWithCustomMessage, sameAs } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -385,12 +384,6 @@ if(!dataset.spatial) {
   }
 };
 
-const userOrganization = ref<string>();
-const owned = ref<Owned>({
-  organization: null,
-  owner: props.user,
-});
-
 const frequenciesUrl = getFrequenciesUrl();
 const licensesUrl = getLicensesUrl();
 const licensesGroups = license_groups_options?.map(([name, values]) => ({
@@ -418,14 +411,17 @@ const notUnknown = not(t("The value must be different than unknown."), sameAs("u
 const tagsRequired = requiredWithCustomMessage(t("Adding tags helps improve the SEO of your data."));
 const temporalCoverageRequired = requiredWithCustomMessage(t("You did not provide the temporal coverage."));
 const spatialGranularityRequired = requiredWithCustomMessage(t("You have not specified the spatial granularity."));
+const isSelectedProducer = ref<boolean>(false);
 
 const checkOrganization = () => {
-  if (userOrganization.value) {
-    return true;
-  } else {
-    return false;
-  }
+  return isSelectedProducer.value;
 };
+
+function updateOwned(owned: Owned) {
+  dataset.organization = owned.organization;
+  dataset.owner = owned.owner;
+  isSelectedProducer.value = true;
+}
 
 const requiredRules = {
   description: { required },
@@ -479,8 +475,6 @@ function setGranularity(value: string) {
 function submit() {
   validateRequiredRules().then(valid => {
     if(valid) {
-      Object.assign(dataset, owned.value);
-      console.log(dataset)
       emit("next", dataset);
     }
   });

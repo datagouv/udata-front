@@ -59,7 +59,6 @@ const { t } = useI18n();
 
 const props = defineProps<{
   user: User,
-  owned: Owned,
   hasError?: boolean
   errorText?: string
 }>();
@@ -68,10 +67,13 @@ const organizationsUrl = organization_url;
 const createOrganizationUrl = `${organization_url}publishing-form/`;
 
 const userOrganization = ref<string>();
-const owned = ref(props.owned);
+const owned = ref<Owned>({
+  organization: null,
+  owner: props.user,
+});
 const organizations = ref<Array<Organization | User>>([]);
 const emit = defineEmits<{
-  (event: 'update:organization', organization: string, owned: Owned): void,
+  (event: 'update:owned', owned: Owned): void,
 }>();
 
 const isAdmin = computed(() => props.user.roles?.includes('admin') ?? false);
@@ -86,7 +88,7 @@ const updateOrganization = (organization: string) => {
     owned.value.organization = organization;
     owned.value.owner = null;
   };
-  emit('update:organization', organization, toValue(owned));
+  emit('update:owned', toValue(owned));
 };
 
 function listOrganizations() {
