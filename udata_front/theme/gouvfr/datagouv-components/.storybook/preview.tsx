@@ -28,6 +28,11 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    options: {
+      storySort: {
+        method: "alphabetical"
+      }
+    },
     docs: {
       toc: {
         title: 'Table of contents'
