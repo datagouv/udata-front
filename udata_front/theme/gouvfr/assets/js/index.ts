@@ -21,6 +21,7 @@ import Captcha from "./components/utils/captcha.vue";
 import UserDatasetList from "./components/UserDatasetList/UserDatasetList.vue";
 import UserReuseList from "./components/UserReuseList/UserReuseList.vue";
 import PublishingForm from "./pages/PublishingForm/PublishingForm.vue";
+import ReusePublishingForm from "./pages/ReusePublishingForm/ReusePublishingForm.vue";
 import OrganizationPublishingForm from "./pages/OrganizationPublishingForm/OrganizationPublishingForm.vue";
 import { ReadMore, Toggletip } from "@etalab/data.gouv.fr-components";
 
@@ -78,6 +79,7 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("toggletip", Toggletip);
   app.component("publishing-form", PublishingForm);
   app.component("organization-publishing-form", OrganizationPublishingForm);
+  app.component("reuse-publishing-form", ReusePublishingForm);
   app.component("user-dataset-list", UserDatasetList);
   app.component("user-reuse-list", UserReuseList);
 

@@ -77,7 +77,7 @@ async function createOrganizationAndMoveToNextStep(org: NewOrganization, file: F
       const resp = await uploadLogo(organization.value.id, file);
       organization.value.logo_thumbnail = resp.image
     } catch (e) {
-      errors.value.push("Failed to upload logo, you can upload it again in your management panel");
+      errors.value.push(t("Failed to upload logo, you can upload it again in your management panel"));
     }
   }
   if (moveToNextStep) {
