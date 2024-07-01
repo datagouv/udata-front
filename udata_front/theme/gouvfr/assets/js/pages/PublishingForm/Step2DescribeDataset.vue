@@ -427,7 +427,7 @@ const requiredRules = {
   description: { required },
   frequency: { required },
   title: { required },
-  owned: { custom: checkOwned }
+  owned: { custom: checkOwned },
 };
 
 const warningRules = {
