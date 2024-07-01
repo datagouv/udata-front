@@ -57,7 +57,13 @@
         </p>
         <div class="fr-mx-0 fr-mt-1v fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
           <div class="fr-grid-row fr-grid-row--middle fr-hidden flex-sm dash-after-sm text-grey-500 not-enlarged">
-            <QualityComponentInline :quality="dataset.quality"/>
+            <img :src="informationIcon" alt="" class="fr-mr-1v"/>
+            <p class="fr-m-0 fr-mr-1v text-mention-grey fr-text--sm" :id="id">
+              {{$t('Metadatas :')}}
+            </p>
+            <div class="fr-grid-row fr-grid-row--middle fr-mr-1v">
+              <QualityScore :score="dataset.quality.score"/>
+            </div>
           </div>
           <div class="fr-grid-row fr-grid-row--middle fr-mr-1v">
             <p class="fr-text--sm fr-my-0">
@@ -80,6 +86,7 @@
 </template>
 
 <script setup lang="ts">
+import { getRandomId } from "@gouvminint/vue-dsfr";
 import type { RouteLocationRaw } from "vue-router";
 import { useI18n } from "vue-i18n";
 import AppLink from "../AppLink/AppLink.vue";
@@ -89,8 +96,9 @@ import { excerpt } from "../../helpers";
 import { formatRelativeIfRecentDate } from "../../helpers";
 import OrganizationNameWithCertificate from "../Organization/OrganizationNameWithCertificate.vue";
 import { Placeholder } from "../utils/";
-import { QualityComponentInline } from "../QualityComponentInline";
-import { useOwnerName } from "../../composables"
+import { QualityScore } from "../QualityScore";
+import { useOwnerName } from "../../composables";
+import informationIcon from "../../assets/img/utils/information.svg";
 
 type Props = {
   dataset: Dataset | DatasetV2,
@@ -115,5 +123,6 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const { t } = useI18n();
+const id = getRandomId("metadata-quality");
 const ownerName = useOwnerName(props.dataset);
 </script>
