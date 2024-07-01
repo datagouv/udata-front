@@ -33,7 +33,7 @@
       <p class="fr-text--sm">{{ t('We advise you to publish under an organization if it\'s a professional activity') }}</p>
       <div class="fr-grid-row fr-grid-row--middle fr-pb-3v">
         <div class="fr-col-6">
-          <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500" :href="organizationsUrl">
+          <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500" :href="organization_url">
             {{ $t("Join an organization") }}
           </a>
         </div>
@@ -50,30 +50,30 @@
 <script setup lang="ts">
 import { ref, computed, toValue, onMounted } from 'vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
-import type { User, Organization, Owned } from '@etalab/data.gouv.fr-components';
+import type { User, Organization } from '@etalab/data.gouv.fr-components';
 import { organization_url } from '../../config';
+import type { Me, OwnedWithId } from '../../types';
 import { useI18n } from 'vue-i18n';
 import useUserAvatar from "../../composables/useUserAvatar";
 
 const { t } = useI18n();
 
 const props = defineProps<{
-  user: User,
+  user: Me,
   hasError?: boolean
   errorText?: string
 }>();
 
-const organizationsUrl = organization_url;
 const createOrganizationUrl = `${organization_url}publishing-form/`;
 
-const userOrganization = ref<string>();
-const owned = ref<Owned>({
+const userOrganization = ref<Organization>();
+const owned = ref<OwnedWithId>({
   organization: null,
-  owner: props.user,
+  owner: props.user.id,
 });
-const organizations = ref<Array<Organization | User>>([]);
+const organizations = ref<Array<Organization | User>>([]);
 const emit = defineEmits<{
-  (event: 'update:owned', owned: Owned): void,
+  (event: 'update:owned', owned: OwnedWithId): void,
 }>();
 
 const isAdmin = computed(() => props.user.roles?.includes('admin') ?? false);
@@ -83,7 +83,7 @@ const hasOrganizations = computed(() => organizations.value.length > 1);
 const updateOrganization = (organization: string) => {
   if (organization === "user") {
     owned.value.organization = null;
-    owned.value.owner = props.user;
+    owned.value.owner = props.user.id;
   } else {
     owned.value.organization = organization;
     owned.value.owner = null;

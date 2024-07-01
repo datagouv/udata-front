@@ -114,7 +114,9 @@ export type Harvest = {
   backend: string;
 }
 
-export type NewDataset = Owned & {
+export type OwnedWithId = { organization: Organization | string, owner: never | null } | { organization: never | null, owner: User | string };
+
+export type NewDataset = OwnedWithId & {
   title: string;
   acronym: string;
   archived: boolean;

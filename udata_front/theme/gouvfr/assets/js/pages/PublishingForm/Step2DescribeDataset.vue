@@ -335,11 +335,11 @@ export type Step2DescribeDatasetProps = {
   originalDataset: NewDataset,
   steps: Array<string>,
   granularities: Array<SpatialGranularity>,
-  user: User
+  user: Me,
 };
 </script>
 <script setup lang="ts">
-import { Owned, Well, type User } from "@etalab/data.gouv.fr-components";
+import { Well } from "@etalab/data.gouv.fr-components";
 import { computed, reactive, ref } from 'vue';
 import { minLengthWarning, not, required, requiredWithCustomMessage, sameAs } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
@@ -358,7 +358,7 @@ import { license_groups_options, quality_description_length, title } from "../..
 import { useI18n } from 'vue-i18n';
 import { getLicensesUrl } from '../../api/licenses';
 import { getFrequenciesUrl } from '../../api/datasets';
-import type { NewDataset, PublishingFormAccordionState, SpatialGranularity, SpatialZone } from '../../types';
+import type { Me, NewDataset, OwnedWithId, PublishingFormAccordionState, SpatialGranularity, SpatialZone } from '../../types';
 
 const props = defineProps<Step2DescribeDatasetProps>();
 
@@ -417,7 +417,7 @@ function checkOwned() {
   return isSelectedProducer.value;
 };
 
-function updateOwned(owned: Owned) {
+function updateOwned(owned: OwnedWithId) {
   dataset.organization = owned.organization;
   dataset.owner = owned.owner;
   isSelectedProducer.value = true;
