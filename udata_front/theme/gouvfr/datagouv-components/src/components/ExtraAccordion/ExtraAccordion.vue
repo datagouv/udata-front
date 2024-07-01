@@ -51,7 +51,7 @@ const accordionRef = ref<HTMLDivElement | null>(null);
 defineProps<{
   buttonText: string;
   titleText: string;
-  extra: Record<string, string>;
+  extra: Record<string, any>;
   titleLevel: 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div';
 }>();
 
