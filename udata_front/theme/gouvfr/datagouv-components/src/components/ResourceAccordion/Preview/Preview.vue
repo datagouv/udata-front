@@ -69,33 +69,92 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import useTabularApiData from "../../../composables/preview/useTabularApiData";
+import { onMounted, ref } from 'vue';
+import { useI18n } from "vue-i18n";
 import Loader from "./Loader.vue";
 import franceSvg from "./france.svg?raw";
 import Pagination from "../../Pagination";
-import type { Resource } from "../../../types/resources";
+import { getData, type SortConfig } from '../../../api/tabularApi';
+import { config } from '../../../config';
 import { formatDate } from "../../../helpers";
-import { useI18n } from "vue-i18n";
+import type { Resource } from "../../../types/resources";
 
 const props = defineProps<{ resource: Resource }>();
 
 const { t } = useI18n();
 
-const {
-    loading,
-    hasError,
-    rows,
-    columns,
-    rowCount,
-    pageSize,
-    currentPage,
-    sortConfig,
-    isSortedBy,
-    sortByField,
-    changePage,
-    getTableInfos,
-  } = useTabularApiData(props.resource);
+const rows = ref<Array<Record<string, any>>>([]);
+const columns = ref<Array<string>>([]);
+const loading = ref(true);
+const hasError = ref(false);
+const sortConfig = ref<SortConfig>(null);
+const rowCount = ref(0);
+const pageSize = config.tabular_page_size;
+const currentPage = ref(1);
+
+/**
+ * Check if the preview is sorted by the provided column
+ */
+function isSortedBy(col: string) {
+  return col === sortConfig.value?.column;
+}
+
+/**
+ * Retrieve preview necessary infos
+ */
+ async function getTableInfos (page: number, sortConfig?: SortConfig) {
+  try {
+    // Check that this function return wanted data
+    const { data } = await getData(props.resource.id, page, sortConfig);
+    if ('data' in data && data.data && data.data.length > 0) {
+      // Update existing rows
+      rows.value = data.data;
+      columns.value = Object.keys(data.data[0]).filter(item => item !== "__id");
+      rowCount.value = data.meta.total;
+      currentPage.value = page;
+      loading.value = false
+    } else {
+      hasError.value = true;
+      loading.value = false;
+    }
+  } catch (error) {
+    hasError.value = true;
+    loading.value = false;
+  }
+};
+
+/**
+ * Change page
+ */
+function changePage(page: number) {
+  getTableInfos(page, sortConfig.value);
+}
+
+
+/**
+ * Sort by a specific column
+ */
+function sortByField(col: string) {
+  if (sortConfig.value && sortConfig.value.column == col) {
+    if (sortConfig.value.type == "asc") {
+      sortConfig.value.type = "desc";
+    } else {
+      sortConfig.value.type = "asc";
+    }
+  } else {
+    if (!sortConfig.value) {
+      sortConfig.value = {
+        column: col,
+        type: "asc",
+      };
+    } else {
+      sortConfig.value.column = col;
+      sortConfig.value.type = "asc";
+    }
+  }
+  currentPage.value = 1;
+  getTableInfos(currentPage.value, sortConfig.value);
+};
 
 const lastUpdate = formatDate(props.resource.extras['analysis:parsing:finished_at']);
 

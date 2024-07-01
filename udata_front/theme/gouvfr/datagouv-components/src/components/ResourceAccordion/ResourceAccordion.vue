@@ -106,12 +106,12 @@
           <template v-if="hasPreview">
             <li role="presentation">
               <button
-                :id="resourcePreviewButtonId"
+                :id="getIdFromIndex(resourcePreviewIndex)"
                 class="fr-tabs__tab"
-                :tabindex="resourcePreviewTabIndex"
+                :tabindex="getTabPanelTabIndex(resourcePreviewIndex)"
                 role="tab"
-                :aria-selected="resourcePreviewSelected"
-                :aria-controls="resourcePreviewTabId"
+                :aria-selected="isSelected(resourcePreviewIndex)"
+                :aria-controls="getTabIdFromIndex(resourcePreviewIndex)"
                 @click="selectTab(resourcePreviewIndex)"
               >
                 {{t('Preview')}}
@@ -121,12 +121,12 @@
           <template v-if="hasPreview || hasSchema">
             <li role="presentation">
               <button
-                :id="resourceStructureButtonId"
+                :id="getIdFromIndex(resourceStructureIndex)"
                 class="fr-tabs__tab"
-                :tabindex="resourceStructureTabIndex"
+                :tabindex="getTabPanelTabIndex(resourceStructureIndex)"
                 role="tab"
-                :aria-selected="resourceStructureSelected"
-                :aria-controls="resourceStructureTabId"
+                :aria-selected="isSelected(resourceStructureIndex)"
+                :aria-controls="getTabIdFromIndex(resourceStructureIndex)"
                 @click="selectTab(resourceStructureIndex)"
               >
                 {{t('Data structure')}}
@@ -135,12 +135,12 @@
           </template>
           <li role="presentation">
             <button
-              :id="resourceInformationButtonId"
+              :id="getIdFromIndex(resourceInformationIndex)"
               class="fr-tabs__tab"
-              :tabindex="resourceInformationTabIndex"
+              :tabindex="getTabPanelTabIndex(resourceInformationIndex)"
               role="tab"
-              :aria-selected="resourceInformationSelected"
-              :aria-controls="resourceInformationTabId"
+              :aria-selected="isSelected(resourceInformationIndex)"
+              :aria-controls="getTabIdFromIndex(resourceInformationIndex)"
               @click="selectTab(resourceInformationIndex)"
             >
               {{t('Metadata')}}
@@ -153,13 +153,13 @@
           v-if="hasPreview"
         >
           <div
-            :id="resourcePreviewTabId"
+            :id="getTabIdFromIndex(resourcePreviewIndex)"
             class="fr-tabs__panel fr-tabs__panel--no-padding fr-table--dense"
-            :class="resourcePreviewClass"
+            :class="getTabPanelClass(resourcePreviewIndex)"
             role="tabpanel"
-            :aria-labelledby="resourcePreviewButtonId"
-            :tabindex="resourcePreviewTabIndex"
-            v-show="resourcePreviewSelected"
+            :aria-labelledby="getIdFromIndex(resourcePreviewIndex)"
+            :tabindex="getTabPanelTabIndex(resourcePreviewIndex)"
+            v-show="isSelected(resourcePreviewIndex)"
           >
             <Preview  v-if="expanded" :resource="resource" />
           </div>
@@ -170,13 +170,13 @@
           v-if="hasPreview || hasSchema"
         >
           <div
-            :id="resourceStructureTabId"
+            :id="getTabIdFromIndex(resourceStructureIndex)"
             class="fr-tabs__panel"
-            :class="resourceStructureClass"
+            :class="getTabPanelClass(resourceStructureIndex)"
             role="tabpanel"
-            :aria-labelledby="resourceStructureButtonId"
-            :tabindex="resourceStructureTabIndex"
-            v-show="resourceStructureSelected"
+            :aria-labelledby="getIdFromIndex(resourceStructureIndex)"
+            :tabindex="getTabPanelTabIndex(resourceStructureIndex)"
+            v-show="isSelected(resourceStructureIndex)"
           >
             <DataStructure :resource="resource" />
             <hr class="fr-my-5v fr-p-1v" v-if="hasPreview && hasSchema"/>
@@ -233,13 +233,13 @@
           mode="in-out"
         >
           <div
-            :id="resourceInformationTabId"
+            :id="getTabIdFromIndex(resourceInformationIndex)"
             class="fr-tabs__panel"
-            :class="resourceInformationClass"
+            :class="getTabPanelClass(resourceInformationIndex)"
             role="tabpanel"
-            :aria-labelledby="resourceInformationButtonId"
-            :tabindex="resourceInformationTabIndex"
-            v-show="resourceInformationSelected"
+            :aria-labelledby="getIdFromIndex(resourceInformationIndex)"
+            :tabindex="getTabPanelTabIndex(resourceInformationIndex)"
+            v-show="isSelected(resourceInformationIndex)"
           >
             <div class="fr-grid-row fr-grid-row--gutters">
               <DescriptionList>
@@ -351,7 +351,7 @@
 </template>
 
 <script setup lang="ts">
-import { templateRef, unrefElement } from "@vueuse/core";
+import { unrefElement } from "@vueuse/core";
 import Clipboard from "clipboard";
 import { ref, computed, unref, onMounted, type ComputedRef } from "vue";
 import { useI18n } from "vue-i18n";
@@ -366,7 +366,6 @@ import DescriptionList from "../DescriptionList/DescriptionList.vue";
 import DescriptionTerm from "../DescriptionList/DescriptionTerm.vue";
 import OrganizationNameWithCertificate from "../Organization/OrganizationNameWithCertificate.vue";
 import useOwnerName from "../../composables/organizations/useOwnerName";
-import useTabularApiPreview from "../../composables/preview/useTabularApiPreview";
 import useResourceImage from "../../composables/resources/useResourceImage";
 import useSchema from "../../composables/resources/useSchema";
 import useTabs from "../../composables/useTabs";
@@ -403,49 +402,34 @@ if(checkIsCommunityResource(props.resource)) {
   owner = useOwnerName(props.resource);
 }
 const { url } = useResourceImage(props.resource);
-const { hasPreview } = useTabularApiPreview(props.resource);
 
-const contentRef = templateRef<HTMLElement | null>("contentRef");
-const copyRef = templateRef<HTMLButtonElement | null>("copyRef");
-const tabsRef = templateRef<HTMLButtonElement | null>("tabsRef");
-const tabListRef = templateRef<HTMLUListElement | null>("tabListRef");
+const hasPreview: boolean = config.tabular_api_url &&
+  props.resource.extras['analysis:parsing:finished_at'] &&
+  !props.resource.extras['analysis:parsing:error'] &&
+  (config.tabular_allow_remote || props.resource.filetype === "file");
 
-const schemaName = computed(() => props.resource.schema ? props.resource.schema.name : "");
-const schemaUrl = computed(() => props.resource.schema ? props.resource.schema.url : "");
+const contentRef = ref<HTMLElement | null>(null);
+const copyRef = ref<HTMLButtonElement | null>(null);
+const tabsRef = ref<HTMLButtonElement | null>(null);
+const tabListRef = ref<HTMLUListElement | null>(null);
 
-const hasSchema = computed(() => schemaName.value || schemaUrl.value);
-const resourcePreviewIndex = computed(() => 0);
-const resourceStructureIndex = computed(() => {
-  if (hasPreview.value) {
-    return 1;
-  }
-  return 0;
-});
-const resourceInformationIndex = computed(() => {
-  if (hasPreview.value) {
-    return 2;
-  }
-  if (hasSchema.value) {
-    return 1;
-  }
-  return 0;
-});
+const schemaName = props.resource.schema ? props.resource.schema.name ?? "" : "";
+const schemaUrl = props.resource.schema ? props.resource.schema.url ?? "" : "";
 
-const { asc, getIdFromIndex, isSelected, selectIndex } = useTabs(tabsRef, tabListRef, resourceInformationIndex.value);
+const hasSchema = schemaName || schemaUrl;
+const resourcePreviewIndex = 0;
+const resourceStructureIndex = hasPreview ? 1 : 0;
+const resourceInformationIndex = hasPreview ? 2 : (hasSchema ? 1 : 0);
+
+const { asc, getIdFromIndex, isSelected, selectIndex } = useTabs(tabsRef, tabListRef, resourceInformationIndex);
 
 const expanded = ref(false);
-const expand = () => {
+function expand() {
   if(expanded.value) {
     globalThis._paq?.push(['trackEvent', 'Close resource', props.resource.id]);
   } else {
     globalThis._paq?.push(['trackEvent', 'Open resource', props.resource.id]);
-    if(hasPreview.value) {
-      registerEvent(resourcePreviewButtonId);
-    } else if (hasSchema.value) {
-      registerEvent(resourceStructureButtonId);
-    } else {
-      registerEvent(resourceInformationButtonId);
-    }
+    getIdFromIndex(0);
   }
   expanded.value = !expanded.value;
   if(contentRef.value) {
@@ -462,61 +446,44 @@ const expand = () => {
   }
 }
 
-const registerEvent = (tab: ComputedRef<string> | string) => {
+function registerEvent(tab: ComputedRef<string> | string) {
   const tabName = unref(tab);
   globalThis._paq?.push(['trackEvent', 'View resource tab', props.resource.id, tab]);
-  if(tabName === resourcePreviewButtonId.value) {
+  if(tabName === getIdFromIndex(resourcePreviewIndex)) {
     globalThis._paq?.push(['trackEvent', 'Show preview', props.resource.id]);
-  } else if (tabName === resourceStructureButtonId.value) {
+  } else if (tabName === getIdFromIndex(resourceStructureIndex)) {
     globalThis._paq?.push(['trackEvent', 'Show data structure', props.resource.id]);
   }
 }
 
-const getTabPanelClass = (selected: boolean) => {
-  return {'fr-tabs__panel--selected': selected };
+function getTabPanelClass(index: number) {
+  return {'fr-tabs__panel--selected': isSelected(index) };
 };
 
-const getTabPanelTabIndex = (selected: boolean) => {
-  return selected ? 0 : -1;
+function getTabPanelTabIndex(index: number) {
+  return isSelected(index) ? 0 : -1;
 };
 
-const selectTab = (index: number) => {
+function getTabIdFromIndex(index: number) {
+  return getIdFromIndex(index) + "-tab";
+};
+
+function selectTab(index: number) {
   selectIndex(index);
   registerEvent(getIdFromIndex(index));
 }
 
-const availabilityChecked = computed(() => props.resource.extras && props.resource.extras['check:available']);
-const lastUpdate = computed(() => props.resource.last_modified);
-const unavailable = computed(() => availabilityChecked.value === false);
+const availabilityChecked: boolean = !!props.resource.extras && !!props.resource.extras['check:available'];
+const lastUpdate = props.resource.last_modified;
+const unavailable = availabilityChecked === false;
 const { authorizeValidation, documentationUrl, loading, validationUrl, schemaReport} = useSchema(props.resource);
-const hasSchemaErrors = computed(() => !!schemaReport.value.size);
-const resourceExternalUrl = computed(() => {
-  let hash = "#/resources/" + props.resource.id;
-  return window.location.origin + window.location.pathname + hash;
-});
+const hasSchemaErrors = !!schemaReport.value.size;
+const resourceExternalUrl = window.location.origin + window.location.pathname + "#/resources/" + props.resource.id;
 
-const resourceContentId = computed(() => 'resource-' + props.resource.id);
-const resourceHeaderId = computed(() => 'resource-' + props.resource.id + '-header');
-const resourceTitleId = computed(() => 'resource-' + props.resource.id + '-title');
-const resourceCopyId = computed(() => 'resource-' + props.resource.id + '-copy');
-
-const resourcePreviewButtonId = computed(() => getIdFromIndex(resourcePreviewIndex.value));
-const resourcePreviewTabId = computed(() => 'resource-' + props.resource.id + '-preview-tab');
-const resourcePreviewSelected = computed(() => isSelected(resourcePreviewIndex.value));
-const resourcePreviewTabIndex = computed(() => getTabPanelTabIndex(resourcePreviewSelected.value));
-const resourcePreviewClass = computed(() => getTabPanelClass(resourcePreviewSelected.value));
-
-const resourceStructureButtonId = computed(() => getIdFromIndex(resourceStructureIndex.value));
-const resourceStructureTabId = computed(() => resourceStructureButtonId.value + '-structure-tab');
-const resourceStructureSelected = computed(() => isSelected(resourceStructureIndex.value));
-const resourceStructureTabIndex = computed(() => getTabPanelTabIndex(resourceStructureSelected.value));
-const resourceStructureClass = computed(() => getTabPanelClass(resourceStructureSelected.value));
-
-const resourceInformationButtonId = computed(() => getIdFromIndex(resourceInformationIndex.value));
-const resourceInformationTabId = computed(() => resourceInformationButtonId.value + '-information-tab');
-const resourceInformationSelected = computed(() => isSelected(resourceInformationIndex.value));
-const resourceInformationTabIndex = computed(() => getTabPanelTabIndex(resourceInformationSelected.value));
-const resourceInformationClass = computed(() => getTabPanelClass(resourceInformationSelected.value));
+const resourceContentId = 'resource-' + props.resource.id;
+const resourceHeaderId = 'resource-' + props.resource.id + '-header';
+const resourceTitleId = 'resource-' + props.resource.id + '-title';
+const resourceCopyId = 'resource-' + props.resource.id + '-copy';
 
 onMounted(() => {
   if(props.expandedOnMount) {

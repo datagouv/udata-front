@@ -23,17 +23,40 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, ref } from "vue";
 import type { Resource } from "../../../types/resources";
 import Loader from "../Preview/Loader.vue";
-import useTabularApiProfile from "../../../composables/preview/useTabularApiProfile";
+import { getProfile } from "../../../api/tabularApi";
 
 const props = defineProps<{ resource: Resource }>();
 
-const {
-  loading,
-  hasError,
-  hasColumnInfo,
-  columns,
-  columnsInfo,
-} = useTabularApiProfile(() => props.resource);
+type ColumnInfo = {
+  score: number;
+  format: string;
+  python_type: string;
+};
+
+const columns = ref<Array<string>>([]);
+const columnsInfo = ref<Record<string, ColumnInfo>>({})
+const loading = ref(true);
+const hasError = ref(false);
+const hasColumnInfo = ref(false);
+
+onMounted(async () => {
+  try {
+    const { data } = await getProfile(props.resource.id); // Assurez-vous que cette fonction retourne bien les données attendues
+    if ('profile' in data && data.profile) {
+      columns.value = Object.keys(data.profile.columns);
+      columnsInfo.value = data.profile.columns;
+      hasColumnInfo.value = true;
+      loading.value = false;
+    } else {
+      hasError.value = true;
+      loading.value = false;
+    }
+  } catch (error) {
+    hasError.value = true;
+    loading.value = false;
+  }
+});
 </script>
