@@ -414,7 +414,7 @@ const spatialGranularityRequired = requiredWithCustomMessage(t("You have not spe
 const isSelectedProducer = ref<boolean>(false);
 
 function checkOwned() {
-  return isSelectedProducer.value
+  return isSelectedProducer.value;
 };
 
 function updateOwned(owned: Owned) {
