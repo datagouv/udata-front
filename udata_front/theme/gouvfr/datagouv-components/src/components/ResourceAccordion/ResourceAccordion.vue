@@ -178,7 +178,7 @@
             :tabindex="getTabPanelTabIndex(resourceStructureIndex)"
             v-show="isSelected(resourceStructureIndex)"
           >
-            <DataStructure :resource="resource" />
+            <DataStructure v-if="hasPreview" :resource="resource" />
             <hr class="fr-my-5v fr-p-1v" v-if="hasPreview && hasSchema"/>
             <template v-if="hasSchema">
               <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle">
