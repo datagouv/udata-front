@@ -26,6 +26,7 @@ export function auth() {
     window.location.href = get_auth_url();
     throw new Error('Auth required'); // This avoid calling function to continue its execution
   }
+  return user;
 }
 
 export default function install(app: App) {
