@@ -21,9 +21,9 @@ export type RegisteredSchema = {
  * A schema associated with a resource.
  */
 export type Schema = {
-  name?: string
-  url ?: string
-  version ?: string
+  name?: string | null;
+  url ?: string | null;
+  version ?: string | null;
 } | null;
 
 export interface ValidataError {

@@ -1,6 +1,5 @@
-import type { Preview, StoryContext, StoryFn } from '@storybook/vue3';
+import type { Preview } from '@storybook/vue3';
 import { initialize, mswDecorator } from 'msw-storybook-addon';
-import { defineComponent } from 'vue';
 
 /*
  * Initializes MSW

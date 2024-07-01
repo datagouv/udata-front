@@ -3,6 +3,9 @@ import { dayjs } from "./i18n";
 import markdown from "./markdown";
 import { toggleAccordion } from "./toggleAccordion";
 import RemoveMarkdown from "remove-markdown";
+import { readonly } from "vue";
+
+export const RESOURCE_TYPE = readonly(["main", "documentation", "update", "api", "code", "other"] as const);
 
 export const filesize = (val: number) => {
   const { t } = useI18n();
