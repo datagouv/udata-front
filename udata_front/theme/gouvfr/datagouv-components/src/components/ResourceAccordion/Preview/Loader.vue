@@ -25,6 +25,10 @@
 import { ContentLoader } from "vue-content-loader";
 
 function getY(row: number) {
-  return 16 + 4 + row * (16 * 2 + 24);
+  const topMargin = 16;
+  const borderHeight = 4;
+  const cellHeight = 32;
+  const gapHeight = 24;
+  return topMargin + borderHeight + row * (cellHeight + gapHeight);
 }
 </script>

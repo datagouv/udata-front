@@ -1,6 +1,7 @@
 import { withActions } from '@storybook/addon-actions/decorator';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Preview from '.';
+import Loader from './Loader.vue';
 import { Resource } from '../../../types/resources';
 
 const meta = {
@@ -139,6 +140,19 @@ export const AvailablePreview: StoryObj<typeof meta> = {
       return { args };
     },
     template: '<Preview v-bind="args" />',
+  }),
+  args: {
+    resource,
+  }
+};
+
+export const LoadingPreview: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { Loader },
+    setup() {
+      return { args };
+    },
+    template: '<Loader />',
   }),
   args: {
     resource,
