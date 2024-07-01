@@ -151,7 +151,7 @@
             <div class="fr-fieldset__element">
               <ProducerSelector
                 :user="user"
-                :hasError="fieldHasError('userOrganization')"
+                :hasError="fieldHasError('owned')"
                 :errorText="$t('You need to select a Producer')"
                 @update:owned="updateOwned"
               />
@@ -413,8 +413,8 @@ const temporalCoverageRequired = requiredWithCustomMessage(t("You did not provid
 const spatialGranularityRequired = requiredWithCustomMessage(t("You have not specified the spatial granularity."));
 const isSelectedProducer = ref<boolean>(false);
 
-function checkOrganization() {
-  return isSelectedProducer.value;
+function checkOwned() {
+  return isSelectedProducer.value
 };
 
 function updateOwned(owned: Owned) {
@@ -427,7 +427,7 @@ const requiredRules = {
   description: { required },
   frequency: { required },
   title: { required },
-  userOrganization: { custom: checkOrganization }
+  owned: { custom: checkOwned }
 };
 
 const warningRules = {
@@ -441,7 +441,7 @@ const warningRules = {
   tags: { required: tagsRequired },
   temporal_coverage: { required: temporalCoverageRequired },
   title: { required },
-  userOrganization: { custom: checkOrganization },
+  owned: { custom: checkOwned },
 };
 
 const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(dataset, requiredRules, warningRules);
@@ -456,7 +456,7 @@ const state = computed<Record<string, PublishingFormAccordionState>>(() => {
     frequency: getFunctionalState(vWarning$.value.frequency.$dirty, v$.value.frequency.$invalid, vWarning$.value.frequency.$error),
     temporal_coverage: getFunctionalState(vWarning$.value.temporal_coverage.$dirty, false, vWarning$.value.temporal_coverage.$error),
     spatial_information: getFunctionalState(vWarning$.value.spatial.granularity.$dirty, false, vWarning$.value.spatial.granularity.$error),
-    userOrganization: getFunctionalState(vWarning$.value.userOrganization.$dirty, v$.value.userOrganization.$invalid, vWarning$.value.userOrganization.$error),
+    owned: getFunctionalState(vWarning$.value.owned.$dirty, v$.value.owned.$invalid, vWarning$.value.owned.$error),
   };
 });
 
