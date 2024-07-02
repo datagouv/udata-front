@@ -1,4 +1,4 @@
-import { type Organization, type Owned, type Resource, type User } from "@etalab/data.gouv.fr-components";
+import { type Organization, type Owned, type Resource, type User, type NewDataset as BaseNewDataset } from "@etalab/data.gouv.fr-components";
 
 export type MultiSelectOption = {
   label: string;
@@ -114,28 +114,11 @@ export type Harvest = {
   backend: string;
 }
 
-export type OwnedWithId = { organization: Organization | string, owner: never | null } | { organization: never | null, owner: User | string };
+export type OwnedWithId = { organization: string, owner: never | null } | { organization: never | null, owner: string };
 
-export type NewDataset = OwnedWithId & {
-  title: string;
-  acronym: string;
-  archived: boolean;
-  description: string;
-  tags: Array<string> | null;
-  license: string;
-  frequency: string;
-  temporal_coverage: string;
-  frequency_date: Date | null;
-  page: string;
-  private: boolean;
-  quality?: Quality;
-  spatial: {
-    zones?: Array<string>;
-    granularity?: string;
-  } | null;
-};
+export type NewDataset = Omit<BaseNewDataset, keyof OwnedWithId> & OwnedWithId;
 
-export type Dataset = NewDataset & {
+export type Dataset = BaseNewDataset & {
   id: string;
   page: string;
   resources: Array<Resource>;
