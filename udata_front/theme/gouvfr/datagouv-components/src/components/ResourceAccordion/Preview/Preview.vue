@@ -9,7 +9,7 @@
     <Loader v-else-if="loading" />
     <template v-else>
       <div class="bg-blue-100 text-blue-400 fr-hidden flex-md fr-p-2w fr-grid-row--middle">
-        <div class="france-explore" v-html="franceSvg">
+        <div class="fr-px-1w fr-mr-2w" v-html="franceSvg">
         </div>
         <div class="fr-mx-2w">
           <p class="fr-text--bold fr-m-0">{{ t("Explore data in detail") }}</p>
@@ -47,7 +47,14 @@
           </thead>
           <tbody>
             <tr v-for="row in rows" >
-              <td v-for="col in columns" class="cell-padding"><div class="style-cell"><div class="content-cell">{{ row[col] }}</div></div></td>
+              <td
+                v-for="col in columns"
+                class="cell-padding"
+              >
+                <div class="fr-grid-row fr-grid-row--middle fr-text--xs w-100 style-cell">
+                  <div class="fr-my-auto">{{ row[col] }}</div>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -168,17 +175,6 @@ onMounted(() => {
 .style-cell {
   height: 3rem;
   overflow-y: auto;
-  display: block;
-  width: 100%;
-  font-size: 0.75rem;
-  line-height: 1.25rem;
-  display: flex;
-  align-items: center;
-}
-
-.content-cell {
-  margin-top: auto;
-  margin-bottom: auto;
 }
 
 .col-width {
@@ -186,7 +182,7 @@ onMounted(() => {
 }
 
 .cell-padding {
-  padding: 0.5rem 0rem 0.5rem 1.2rem!important
+  padding: 0.5rem 0rem 0.5rem 1.2rem!important;
 }
 
 td {
@@ -196,35 +192,5 @@ td {
 
 th {
   border-right: 1px solid #CECECE;
-}
-
-@media (min-width: 48rem) {
-  .banner-explore{
-    min-height: 7rem;
-    background-color: #E6EEFE;
-    display: flex;
-    align-items: center;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    border-bottom: 1px solid #CDDDFD;
-  }
-
-  .france-explore {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    margin-right: 1rem;
-  }
-
-  .text-explore {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    margin-right: 1rem;
-  }
-  .title-text-explore {
-    font-weight: bold;
-    font-size: 1rem;
-    line-height: 1.5rem;
-    color: #3558A2;
-  }
 }
 </style>
