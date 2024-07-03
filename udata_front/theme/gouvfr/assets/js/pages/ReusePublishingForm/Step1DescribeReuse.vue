@@ -241,7 +241,7 @@
               <InputGroup
                 :label="t('Description')"
                 :required="true"
-                type="textarea"
+                type="markdown"
                 v-model="reuse.description"
                 :hasError="fieldHasError('description')"
                 :hasWarning="fieldHasWarning('description')"
