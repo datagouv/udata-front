@@ -60,8 +60,8 @@ const { t } = useI18n();
 
 const props = defineProps<{
   user: Me,
-  hasError?: boolean
-  errorText?: string
+  hasError?: boolean,
+  errorText?: string,
 }>();
 
 const createOrganizationUrl = `${organization_url}publishing-form/`;
