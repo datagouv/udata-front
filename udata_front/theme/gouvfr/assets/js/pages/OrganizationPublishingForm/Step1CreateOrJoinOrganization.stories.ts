@@ -14,10 +14,7 @@ const meta = {
 
 export default meta;
 
-const args = {
-  steps: ["Create or join an organization on data.gouv.fr", "Describe your organization", "Finalize your organization"],
-  currentStep: 0,
-};
+const args = {};
 
 export const Step1: StoryObj<typeof meta> = {
   render: (args) => ({
@@ -26,7 +23,9 @@ export const Step1: StoryObj<typeof meta> = {
       return { args };
     },
     template: ` <div class="bg-grey-50 fr-p-4w">
-                  <Step1CreateOrJoinOrganization v-bind="args" />
+                  <div class="fr-container">
+                    <Step1CreateOrJoinOrganization v-bind="args" />
+                  </div>
                 </div>`,
   }),
   args,
@@ -49,7 +48,9 @@ export const Step1WithInteraction: StoryObj<typeof meta> = {
       return { args };
     },
     template: ` <div class="bg-grey-50 fr-p-4w">
-                  <Step1CreateOrJoinOrganization v-bind="args" />
+                  <div class="fr-container">
+                    <Step1CreateOrJoinOrganization v-bind="args" />
+                  </div>
                 </div>`,
   }),
   args,

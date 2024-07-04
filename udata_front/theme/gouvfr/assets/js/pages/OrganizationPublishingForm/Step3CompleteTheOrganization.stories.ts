@@ -17,9 +17,8 @@ organization.description = 'This is the provided description'
 
 const args = {
   organization,
-  steps: Step2.Step2.args.steps,
   datasetLink: "",
-  reuseLink: ""
+  reuseLink: "",
 };
 
 export const Step3: StoryObj<typeof meta> = {
@@ -29,7 +28,9 @@ export const Step3: StoryObj<typeof meta> = {
       return { args };
     },
     template: ` <div class="bg-grey-50 fr-p-4w">
-                  <Step3CompleteTheOrganization v-bind="args" />
+                  <div class="fr-container">
+                    <Step3CompleteTheOrganization v-bind="args" />
+                  </div>
                 </div>`,
   }),
   args,

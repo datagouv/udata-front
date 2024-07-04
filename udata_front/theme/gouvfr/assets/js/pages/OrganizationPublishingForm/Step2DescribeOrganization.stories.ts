@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from '@storybook/vue3';
 import { expect, within, userEvent, fn } from '@storybook/test';
 import type { NewOrganization } from "@etalab/data.gouv.fr-components";
 import Step2DescribeOrganization from './Step2DescribeOrganization.vue';
-import * as Step1 from './Step1CreateOrJoinOrganization.stories';
 
 
 const meta = {
@@ -11,7 +10,7 @@ const meta = {
   component: Step2DescribeOrganization,
   decorators: [withActions],
   args: {
-    onNext: fn()
+    onSubmit: fn()
   }
 } satisfies Meta<typeof Step2DescribeOrganization>;
 
@@ -30,7 +29,6 @@ const organization: NewOrganization = {
 
 const args = {
   organization,
-  steps: Step1.Step1.args.steps,
   errors: []
 };
 
@@ -62,7 +60,7 @@ export const Step2WithInteraction: StoryObj<typeof meta> = {
     await step('Send form', async () => {
       await userEvent.click(canvas.getByTestId('submitButton'));
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      setTimeout(() => { expect(args.onNext).toHaveBeenCalled(); }, 1000);
+      setTimeout(() => { expect(args.onSubmit).toHaveBeenCalled(); }, 1000);
     });
   },
   render: (args) => ({
@@ -71,7 +69,9 @@ export const Step2WithInteraction: StoryObj<typeof meta> = {
       return { args };
     },
     template: ` <div class="bg-grey-50 fr-p-4w">
-                  <Step2DescribeOrganization v-bind="args" />
+                  <div class="fr-container">
+                    <Step2DescribeOrganization v-bind="args" />
+                  </div>
                 </div>`,
   }),
   args,
