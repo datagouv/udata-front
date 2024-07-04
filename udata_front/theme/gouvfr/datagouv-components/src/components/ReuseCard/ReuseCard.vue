@@ -7,7 +7,7 @@
             {{ truncate(reuse.title, 55) }}
           </AppLink>
         </h3>
-        <div class="fr-card__desc fr-mt-1v text-mention-grey not-enlarged">
+        <div class="fr-card__desc fr-mt-1v text-mention-grey">
           <p class="fr-mb-0">
             <template v-if="reuse.organization">
               <span class="not-enlarged dash-after" v-if="organizationUrl">
@@ -17,10 +17,8 @@
               </span>
               <OrganizationNameWithCertificate v-else :organization="reuse.organization" />
             </template>
-            <span class="not-enlarged dash-after" v-else>
-              <a class="fr-link" :to="reuse.owner.page">
-                {{ ownerName }}
-              </a>
+            <span class="dash-after" v-else>
+              {{ ownerName }}
             </span>
             {{ t('Published {date}', {date: formatRelativeIfRecentDate(reuse.created_at)}) }}
           </p>
