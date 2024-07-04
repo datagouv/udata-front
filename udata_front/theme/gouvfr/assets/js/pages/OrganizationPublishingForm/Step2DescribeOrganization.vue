@@ -227,7 +227,7 @@
   </div>
 </template>
 <script lang="ts">
-  import type { NewOrganization } from '@etalab/data.gouv.fr-components';
+  import type { NewOrganization } from '@datagouv/components';
   import type { OrganizationV1 } from '../../types';
 
   export type DescribeOrganizationProps = {
@@ -238,7 +238,7 @@
   };
 </script>
 <script setup lang="ts">
-  import { Well } from '@etalab/data.gouv.fr-components';
+  import { Well } from '@datagouv/components';
   import { url } from '@vuelidate/validators';
   import axios from 'axios';
   import { computed, reactive, ref, watchEffect } from 'vue';
