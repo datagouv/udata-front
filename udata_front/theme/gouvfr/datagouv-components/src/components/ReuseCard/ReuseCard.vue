@@ -10,12 +10,12 @@
         <div class="fr-card__desc fr-mt-1v text-mention-grey">
           <p class="fr-mb-0">
             <template v-if="reuse.organization">
-              <span class="not-enlarged dash-after" v-if="organizationUrl">
-                <AppLink class="fr-link" :to="organizationUrl">
+              <span class="not-enlarged dash-after">
+                <AppLink class="fr-link" v-if="organizationUrl" :to="organizationUrl">
                   <OrganizationNameWithCertificate :organization="reuse.organization" />
                 </AppLink>
+                <OrganizationNameWithCertificate v-else :organization="reuse.organization" />
               </span>
-              <OrganizationNameWithCertificate v-else :organization="reuse.organization" />
             </template>
             <span class="dash-after" v-else>
               {{ ownerName }}
