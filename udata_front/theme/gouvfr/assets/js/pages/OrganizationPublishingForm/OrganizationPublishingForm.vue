@@ -1,20 +1,18 @@
 <template>
-  <div ref="containerRef">
+  <div class="fr-container" ref="containerRef">
+    <Stepper :steps="steps" :currentStep="currentStep"/>
     <Step1CreateOrJoinOrganization
       v-if="currentStep === 0"
-      :steps="steps"
       @start="moveToStep(1)"
     />
     <Step2DescribeOrganization
       v-else-if="currentStep === 1"
       :organization="organization"
-      :steps="steps"
       :errors="errors"
-      @next="createOrganizationAndMoveToNextStep"
+      @submit="createOrganizationAndMoveToNextStep"
     />
     <Step3CompleteTheOrganization
       v-else-if="currentStep === 2"
-      :steps="steps"
       :organization="organization"
       :errors="errors"
       :datasetLink="datasetAdminUrl"
@@ -23,14 +21,15 @@
   </div>
 </template>
 <script setup lang="ts">
+import { type NewOrganization } from '@datagouv/components';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import Stepper from "../../components/Form/Stepper/Stepper.vue";
 import Step1CreateOrJoinOrganization from "./Step1CreateOrJoinOrganization.vue";
 import Step2DescribeOrganization from './Step2DescribeOrganization.vue';
 import Step3CompleteTheOrganization from './Step3CompleteTheOrganization.vue';
 import { title, admin_root } from '../../config';
 import { createOrganization, uploadLogo } from '../../api/organizations';
-import { type NewOrganization } from '@datagouv/components';
 
 const { t } = useI18n();
 
@@ -64,18 +63,18 @@ const moveToStep = (step: number) => {
   currentStep.value = step;
 };
 
-async function createOrganizationAndMoveToNextStep(org: NewOrganization, file: File) {
+async function createOrganizationAndMoveToNextStep(org: NewOrganization, file: File | null) {
   errors.value = [];
   let moveToNextStep = false;
   try {
     organization.value = await createOrganization(org);
     moveToNextStep = true;
-  } catch (e) {
+  } catch (e: Error) {
     errors.value.push(e.message);
   }
-  if (file.value !== null) {
+  if (file) {
     try {
-      const resp = await uploadLogo(organization.value.id, file.value[0]);
+      const resp = await uploadLogo(organization.value.id, file);
       organization.value.logo_thumbnail = resp.image
     } catch (e) {
       errors.value.push("Failed to upload logo, you can upload it again in your management panel");
