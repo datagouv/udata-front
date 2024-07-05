@@ -1,5 +1,6 @@
 import { withActions } from '@storybook/addon-actions/decorator';
 import type { Meta, StoryObj } from '@storybook/vue3';
+import { rest } from 'msw';
 import ReportModal, { type ReportModalProps } from './ReportModal.vue';
 
 const meta = {
@@ -18,6 +19,20 @@ const args: ReportModalProps = {
 };
 
 export const SimpleReportModal = {
+  parameters: {
+    msw: [
+      rest.get('*/api/1/reports/reasons/', async (_req, res, ctx) => {
+        return res(ctx.delay(), ctx.json({
+          "explicit_content": "Explicit content",
+          "illegal_content": "Illegal content",
+          "others": "Others",
+          "personal_data": "Personal data",
+          "security": "Security",
+          "spam": "Spam"
+        }));
+      }),
+    ],
+  },
   render: (args) => ({
     components: { ReportModal },
     setup() {

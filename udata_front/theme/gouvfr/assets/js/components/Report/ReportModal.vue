@@ -17,13 +17,28 @@
                 </button>
               </div>
               <div class="fr-modal__content">
-                <h2 :id="reportModalTitleId" class="fr-mb-1w">
+                <h2 :id="reportModalTitleId" class="fr-mb-2w">
                   {{ t('Report this content') }}
                 </h2>
-                <Well color="warning" weight="regular">
+                <Well class="fr-mb-2w" color="warning" weight="regular">
+                  <span class="fr-icon-warning-line fr-mr-1v" aria-hidden="true"></span>
                   {{ t("Please only report in case of serious concern.") }}
                   <a href="">{{ t("See our usage policy") }}</a>
                 </Well>
+                <SelectGroup
+                  :label="t('Report reason')"
+                  :required="true"
+                  v-model="form.reason"
+                  :hasError="fieldHasError('reason')"
+                  :errorText="getErrorText('reason')"
+                  :options="reasons"
+                />
+                <InputGroup
+                  type="textarea"
+                  :label="t('Message')"
+                  v-model="form.reason"
+                  :placeholder="t('Reason of your report.\nDon\'t include any personal data.')"
+                />
               </div>
               <div class="fr-modal__footer">
                 <div class="fr-btns-group fr-btns-group--right fr-btns-group--inline-lg fr-btns-group--icon-left">
@@ -48,6 +63,9 @@
 import type { ReportReason } from '../../api/reports';
 import { required } from '../../i18n';
 import useFunctionalState from '../../composables/form/useFunctionalState';
+import SelectGroup from '../Form/SelectGroup/SelectGroup.vue';
+import InputGroup from '../Form/InputGroup/InputGroup.vue';
+import getReportReasons from '../../api/reports';
 
 export type ReportModalProps = {
   id: string,
@@ -58,7 +76,7 @@ export type ReportModalForm = {
 };
 </script>
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { Well, getRandomId } from '@etalab/data.gouv.fr-components';
 
@@ -79,15 +97,19 @@ const initialState = {
 
 const form = reactive<ReportModalForm>({...initialState});
 
+const reasons = ref([]);
+
 const requiredRules = {
-  src: { required },
+  reason: { required },
 };
 
 const { getErrorText, getFunctionalState, hasError, reset, validateRequiredRules, v$ } = useFunctionalState(form, requiredRules, requiredRules);
 
+const fieldHasError = (field: string) => hasError(state, field);
+
 const state = computed(() => {
   return {
-    src: getFunctionalState(v$.value.src.$dirty, v$.value.src.$error, false),
+    reason: getFunctionalState(v$.value.reason.$dirty, v$.value.reason.$error, false),
   };
 });
 
@@ -106,4 +128,8 @@ function send() {
     }
   });
 };
+
+onMounted(async () => {
+  reasons.value = await getReportReasons();
+});
 </script>
