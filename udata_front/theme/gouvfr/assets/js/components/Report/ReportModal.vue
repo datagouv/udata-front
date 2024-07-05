@@ -36,7 +36,7 @@
                 <InputGroup
                   type="textarea"
                   :label="t('Message')"
-                  v-model="form.reason"
+                  v-model="form.message"
                   :placeholder="t('Reason of your report.\nDon\'t include any personal data.')"
                 />
               </div>
@@ -63,13 +63,14 @@
 import type { ReportReason } from '../../api/reports';
 import { required } from '../../i18n';
 import useFunctionalState from '../../composables/form/useFunctionalState';
-import SelectGroup from '../Form/SelectGroup/SelectGroup.vue';
+import SelectGroup, { Option } from '../Form/SelectGroup/SelectGroup.vue';
 import InputGroup from '../Form/InputGroup/InputGroup.vue';
-import getReportReasons from '../../api/reports';
+import { getReportReasons } from '../../api/reports';
 
 export type ReportModalProps = {
   id: string,
 };
+
 export type ReportModalForm = {
   reason: ReportReason,
   message: string,
@@ -97,7 +98,7 @@ const initialState = {
 
 const form = reactive<ReportModalForm>({...initialState});
 
-const reasons = ref([]);
+const reasons = ref<Array<Option>>([]);
 
 const requiredRules = {
   reason: { required },
@@ -130,6 +131,12 @@ function send() {
 };
 
 onMounted(async () => {
-  reasons.value = await getReportReasons();
+  const reportReasons = await getReportReasons();
+  reasons.value = Object.entries(reportReasons).map<Option>(([value, label]) => {
+    return {
+      value,
+      label,
+    };
+  })
 });
 </script>
