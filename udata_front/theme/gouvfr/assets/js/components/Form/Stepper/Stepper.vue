@@ -12,17 +12,15 @@
 </template>
 
 <script lang="ts">
-export type Step = String;
+export type Step = string;
 </script>
 
 <script setup lang="ts">
 import { computed } from 'vue';
-
 const props = defineProps<{
   steps: Array<Step>;
   currentStep: number;
 }>();
-
 const stepCount = computed(() => props.steps.length);
 const currentStepName = computed(() => props.steps[props.currentStep]);
 const currentStepNumber = computed(() => props.currentStep + 1);

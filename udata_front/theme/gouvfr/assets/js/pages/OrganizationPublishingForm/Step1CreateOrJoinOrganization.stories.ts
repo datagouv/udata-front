@@ -1,19 +1,18 @@
 import { withActions } from '@storybook/addon-actions/decorator';
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { within, waitFor, userEvent } from '@storybook/testing-library';
-import { expect } from '@storybook/test';
+import { expect, fn, within, waitFor, userEvent } from '@storybook/test';
 import Step1CreateOrJoinOrganization from './Step1CreateOrJoinOrganization.vue';
 
 const meta = {
   title: 'Pages/OrganizationPublishingForm/Step1',
   component: Step1CreateOrJoinOrganization,
   decorators: [withActions],
-  argTypes: {
-    onStart: { action: true }
+  args: {
+    onStart: fn()
   }
 } satisfies Meta<typeof Step1CreateOrJoinOrganization>;
 
-export default meta
+export default meta;
 
 const args = {};
 
