@@ -15,9 +15,7 @@ const config = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
-    {
-      name: '@storybook/addon-styling',
-    },
+    "@storybook/addon-themes",
     '@storybook/addon-interactions',
     path.resolve('./.storybook/load-theme-preview-preset')
   ],
@@ -35,8 +33,6 @@ const config = {
       }
     });
   },
-  docs: {
-    autodocs: "tag"
-  }
+  docs: {}
 };
 export default config;

@@ -13,6 +13,7 @@ from udata.harvest.backends import BaseBackend
 from udata.harvest.filters import (
     boolean, email, to_date, taglist, force_list, normalize_string, is_url
 )
+from udata.harvest.models import HarvestItem
 from udata.utils import get_by
 
 
@@ -122,7 +123,7 @@ class MaafBackend(BaseBackend):
     display_name = 'MAAF'
     verify_ssl = False
 
-    def initialize(self):
+    def inner_harvest(self):
         '''Parse the index pages HTML to find link to dataset descriptors'''
         directories = [self.source.url]
         while directories:
@@ -134,18 +135,22 @@ class MaafBackend(BaseBackend):
                 if href.endswith('/'):
                     directories.append(urljoin(directory, href))
                 elif href.lower().endswith('.xml'):
-                    self.add_item(urljoin(directory, href))
+                    # We use the URL as `remote_id` for now, we'll be replace at
+                    # the beginning of the process
+                    self.process_dataset(urljoin(directory, href))
+                    if self.is_done():
+                        return
                 else:
                     log.debug('Skip %s', href)
 
-    def process(self, item):
+    def inner_process_dataset(self, item: HarvestItem):
         response = self.get(item.remote_id)
         xml = self.parse_xml(response.content)
         metadata = xml['metadata']
 
-        # Resolve and remote id from metadata
+        # Replace the `remote_id` from the URL to `id`.
         item.remote_id = metadata['id']
-        dataset = self.get_dataset(metadata['id'])
+        dataset = self.get_dataset(item.remote_id)
 
         dataset.title = metadata['title']
         dataset.frequency = FREQUENCIES.get(metadata['frequency'], 'unknown')

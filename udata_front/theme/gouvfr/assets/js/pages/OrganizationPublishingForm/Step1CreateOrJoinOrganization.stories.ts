@@ -1,24 +1,20 @@
 import { withActions } from '@storybook/addon-actions/decorator';
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { within, waitFor, userEvent } from '@storybook/testing-library';
-import { expect } from '@storybook/test';
+import { expect, fn, within, waitFor, userEvent } from '@storybook/test';
 import Step1CreateOrJoinOrganization from './Step1CreateOrJoinOrganization.vue';
-import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
 
 const meta = {
   title: 'Pages/OrganizationPublishingForm/Step1',
   component: Step1CreateOrJoinOrganization,
   decorators: [withActions],
-  argTypes: {
-    onStart: { action: true }
+  args: {
+    onStart: fn()
   }
 } satisfies Meta<typeof Step1CreateOrJoinOrganization>;
 
-export default meta
+export default meta;
 
-const args = {
-  steps: Stepper.StepperOrgaOnFirstStep.argsOrga.steps,
-};
+const args = {};
 
 export const Step1: StoryObj<typeof meta> = {
   render: (args) => ({
@@ -27,7 +23,9 @@ export const Step1: StoryObj<typeof meta> = {
       return { args };
     },
     template: ` <div class="bg-grey-50 fr-p-4w">
-                  <Step1CreateOrJoinOrganization v-bind="args" />
+                  <div class="fr-container">
+                    <Step1CreateOrJoinOrganization v-bind="args" />
+                  </div>
                 </div>`,
   }),
   args,
@@ -50,7 +48,9 @@ export const Step1WithInteraction: StoryObj<typeof meta> = {
       return { args };
     },
     template: ` <div class="bg-grey-50 fr-p-4w">
-                  <Step1CreateOrJoinOrganization v-bind="args" />
+                  <div class="fr-container">
+                    <Step1CreateOrJoinOrganization v-bind="args" />
+                  </div>
                 </div>`,
   }),
   args,

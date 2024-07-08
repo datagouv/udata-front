@@ -11,43 +11,24 @@
   </div>
 </template>
 
-<script>
-import { computed, defineComponent } from 'vue';
+<script lang="ts">
+export type Step = string;
+</script>
 
-/**
- * @typedef {string} Step
- */
-
-export default defineComponent({
-  props: {
-    steps: {
-      /** @type {import("vue").PropType<Array<Step>>} */
-      type: Array,
-      required: true,
-    },
-    currentStep: {
-      type: Number,
-      required: true
-    }
-  },
-  setup(props) {
-    const stepCount = computed(() => props.steps.length);
-    const currentStepName = computed(() => props.steps[props.currentStep]);
-    const currentStepNumber = computed(() => props.currentStep + 1);
-    const hasNextStep = computed(() => props.currentStep + 1 < props.steps.length);
-    const nextStepName = computed(() => {
-      if (hasNextStep.value) {
-        return props.steps[props.currentStep + 1];
-      }
-      return "";
-    });
-    return {
-      currentStepName,
-      currentStepNumber,
-      hasNextStep,
-      nextStepName,
-      stepCount,
-    }
-  },
+<script setup lang="ts">
+import { computed } from 'vue';
+const props = defineProps<{
+  steps: Array<Step>;
+  currentStep: number;
+}>();
+const stepCount = computed(() => props.steps.length);
+const currentStepName = computed(() => props.steps[props.currentStep]);
+const currentStepNumber = computed(() => props.currentStep + 1);
+const hasNextStep = computed(() => props.currentStep + 1 < props.steps.length);
+const nextStepName = computed(() => {
+  if (hasNextStep.value) {
+    return props.steps[props.currentStep + 1];
+  }
+  return "";
 });
 </script>

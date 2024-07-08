@@ -1,6 +1,6 @@
 {
   "name": "udata-front",
-  "version": "3.5.1.dev",
+  "version": "4.0.4",
   "description": "Open Data Portal - French customization",
   "author": {
     "name": "Etalab"
@@ -22,14 +22,15 @@
     "local-testing": "start-server-and-test prepare-and-serve-e2e http://localhost:7000 cypress",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "npx chromatic"
+    "test-storybook": "test-storybook",
+    "chromatic": "npx chromatic --only-changed"
   },
   "overrides": {
     "fsevents": "^2.3.3"
   },
   "devDependencies": {
     "@conciergerie.dev/vue-toaster": "^2.4.4",
-    "@etalab/data.gouv.fr-components": "^1.14.0",
+    "@etalab/data.gouv.fr-components": "^1.14.1",
     "@etalab/udata-front-plugins-helper": "1.1.0",
     "@gouvfr/dsfr": "~1.9.2",
     "@intlify/unplugin-vue-i18n": "^1.5.0",
@@ -48,15 +49,18 @@
     "@prosemirror-adapter/vue": "^0.2.6",
     "@sentry/tracing": "^6.10.0",
     "@sentry/vue": "^6.10.0",
-    "@storybook/addon-essentials": "^7.5.2",
-    "@storybook/addon-interactions": "^7.6.14",
-    "@storybook/addon-links": "^7.5.2",
-    "@storybook/addon-styling": "^1.3.7",
-    "@storybook/blocks": "^7.5.2",
-    "@storybook/test": "^8.0.6",
-    "@storybook/testing-library": "^0.2.2",
-    "@storybook/vue3": "^7.5.2",
-    "@storybook/vue3-vite": "^7.5.2",
+    "@storybook/addon-essentials": "^8.1.6",
+    "@storybook/addon-interactions": "^8.1.6",
+    "@storybook/addon-links": "^8.1.6",
+    "@storybook/addon-themes": "^8.1.6",
+    "@storybook/blocks": "^8.1.6",
+    "@storybook/manager-api": "^8.1.6",
+    "@storybook/test": "^8.1.6",
+    "@storybook/test-runner": "^0.18.2",
+    "@storybook/theming": "^8.1.6",
+    "@storybook/vue3": "^8.1.6",
+    "@storybook/vue3-vite": "^8.1.6",
+    "@types/uuid": "^9.0.8",
     "@vitejs/plugin-legacy": "^4.1.1",
     "@vitejs/plugin-vue": "^4.4.0",
     "@vuelidate/core": "^2.0.3",
@@ -66,6 +70,7 @@
     "axios": "^1.6.1",
     "browserslist": "^4.21.5",
     "chart.js": "^4.2.1",
+    "chromatic": "^11.5.1",
     "clipboard": "^2.0.11",
     "cypress": "^13.1.0",
     "cypress-axe": "^1.5.0",
@@ -76,17 +81,15 @@
     "less": "^4.1.3",
     "markdown-it": "^12.3.2",
     "mitt": "^3.0.0",
-    "msw": "^1.3.2",
-    "msw-storybook-addon": "^1.9.0",
+    "msw": "^2.3.1",
+    "msw-storybook-addon": "^2.0.2",
     "popmotion": "^8.7",
     "postcss": "^8.4.12",
     "postcss-normalize": "^10.0.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "remove-markdown": "^0.5.0",
     "rollup-plugin-copy": "^3.5.0",
     "start-server-and-test": "^1.15.4",
-    "storybook": "^7.5.2",
+    "storybook": "^8.1.6",
     "terser": "^5.15.1",
     "typescript": "^5.2.2",
     "uuid": "^9.0.1",
@@ -102,5 +105,10 @@
   "dependencies": {
     "@datagouv/select-a11y": "^3.6.1",
     "leaflet": "^1.9.4"
+  },
+  "msw": {
+    "workerDirectory": [
+      ".storybook/msw"
+    ]
   }
 }

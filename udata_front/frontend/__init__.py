@@ -7,6 +7,7 @@ from udata import entrypoints
 # included for retro-compatibility reasons (some plugins may import from here instead of udata)
 from udata.frontend import template_hook  # noqa
 from udata.i18n import I18nBlueprint
+from .markdown import init_app as init_markdown
 
 nav = Navigation()
 oauth = OAuth()
@@ -34,7 +35,7 @@ def _load_views(app, module):
         app.register_blueprint(blueprint)
 
 
-VIEWS = ['gouvfr', 'dataset', 'organization', 'follower', 'post',
+VIEWS = ['gouvfr', 'dataset', 'dataservice', 'organization', 'follower', 'post',
          'reuse', 'site', 'territories', 'topic', 'user', 'mcp', 'beta']
 
 
@@ -43,6 +44,7 @@ def init_app(app):
 
     nav.init_app(app)
     theme.init_app(app)
+    init_markdown(app)
 
     from . import helpers, error_handlers, menu_helpers, resource_helpers  # noqa
 

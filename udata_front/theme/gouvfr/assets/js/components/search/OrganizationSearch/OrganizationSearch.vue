@@ -1,10 +1,11 @@
 <template>
-  <div :id="id" class="fr-col fr-search-bar wrap" role="search">
+  <div :id="id" class="fr-col fr-search-bar relative wrap" role="search">
     <label class="fr-label" :for="inputId" :id="labelId">
       {{ t('Search for data') }}
     </label>
+    <span class="fr-icon-search-line absolute fr-m-1w" aria-hidden="true"></span>
     <input
-      class="fr-input fr-col-12"
+      class="fr-input fr-col-12 fr-pl-10v"
       :placeholder="t('Search an organization on data.gouv.fr')"
       ref="inputRef"
       autocomplete="off"
@@ -23,11 +24,12 @@
       @blur="handleFocusOut"
     />
     <div
-      class="fr-collapse autocomplete w-100 fr-mt-1w shadow"
+      class="fr-collapse autocomplete w-100 fr-mt-1w shadow border-bottom-rounded"
       :id="uid"
       ref="listRef"
       role="listbox"
       :aria-labelledby="labelId"
+      @mousedown.prevent
     >
       <ul class="w-100" role="listbox">
         <li
@@ -37,13 +39,12 @@
           role="option"
           :aria-selected="isSelected(option.id)"
         >
-          <OrganizationSearchOption :logo="option.image_url" :name="option.name" :link="option.page"/>
+          <OrganizationSearchOption :logo="option.image_url" :name="option.name" :link="option.page" />
         </li>
       </ul>
     </div>
   </div>
 </template>
-
 
 <script setup lang="ts">
 import { ref, computed } from "vue";
@@ -54,15 +55,16 @@ import { api } from "../../../plugins/api";
 import type { Organization } from "@etalab/data.gouv.fr-components";
 import { watchDebounced } from "@vueuse/core";
 import { useDropdown } from "../../../composables/useDropdown";
+import { useToast } from "../../../composables/useToast";
 
 const { t } = useI18n();
+const { toast } = useToast();
 const q = ref('');
 const { id } = useUid("search");
 const inputId = computed(() => `${id}-input`);
 const labelId = computed(() => `${id}-label`);
 
 const options = ref<Array<Organization>>([]);
-const selectedIndex = ref(-1);
 
 async function fetchOptions() {
   try {
@@ -74,11 +76,11 @@ async function fetchOptions() {
       link: option.page
     }));
   } catch (error) {
-    console.error('Error fetching options:', error);
+    toast.error(t("An error occurred while fetching the options."));
   }
 };
 
-const { expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, selected, searchSelectedOption, showAndSelectIfQuery, uid} = useDropdown(options, q);
+const { expanded, handleFocusOut, handleKeyDown, inputRef, isSelected, listRef, selected, searchSelectedOption, showAndSelectIfQuery, uid } = useDropdown(options, q);
 
 watchDebounced(q, async (newValue, oldValue) => {
   if (newValue !== oldValue) {
@@ -88,7 +90,7 @@ watchDebounced(q, async (newValue, oldValue) => {
 </script>
 
 <style scoped>
-  .shadow {
-    box-shadow: 0px 4px 2px var(--border-default-grey);
+  .fr-icon-search-line::before {
+    height: 1.25rem;
   }
 </style>
