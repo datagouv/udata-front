@@ -13,8 +13,13 @@ const args = {
 export const Form = {
   parameters: {
     msw: [
-      rest.get('*/api/1/me', async (_req, res, ctx) => {
-        return res(ctx.delay(), ctx.json({first_name: "John", last_name: "Doe", roles: [], avatar: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+      http.get('*/api/1/me', async () => {
+        await delay();
+        return HttpResponse.json({ 
+          first_name: "John",
+          last_name: "Doe",
+          roles: [],
+          avatar: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
           organizations: [
             {
               acronym: null,
@@ -40,8 +45,8 @@ export const Form = {
               slug: "my-second-organization",
               uri: "/"
             }
-          ]})
-        );
+          ]
+        })
       }),
       http.post('*/api/1/datasets/', async ({ request }) => {
         /** @type {import("../../types").NewDataset} */
