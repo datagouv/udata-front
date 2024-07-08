@@ -196,6 +196,11 @@ export const organization_url = _meta("organization-url");
 export const reuse_url = _meta("reuse-url");
 
 /**
+ * The terms URL
+ */
+export const terms_url = _meta("terms-url");
+
+/**
  * Sentry configuration (as json) if available
  */
 const sentryEl = document.querySelector("meta[name=sentry]");
@@ -328,4 +333,5 @@ export default {
   quality_description_length,
   search_siren_url,
   quality_metadata_backend_ignore,
+  terms_url,
 };

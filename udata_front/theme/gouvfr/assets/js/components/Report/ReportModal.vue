@@ -16,42 +16,76 @@
                   {{ t('Close') }}
                 </button>
               </div>
-              <div class="fr-modal__content">
-                <h2 :id="reportModalTitleId" class="fr-mb-2w">
-                  {{ t('Report this content') }}
-                </h2>
-                <Well class="fr-mb-2w" color="warning" weight="regular">
-                  <span class="fr-icon-warning-line fr-mr-1v" aria-hidden="true"></span>
-                  {{ t("Please only report in case of serious concern.") }}
-                  <a href="">{{ t("See our usage policy") }}</a>
-                </Well>
-                <SelectGroup
-                  :label="t('Report reason')"
-                  :required="true"
-                  v-model="form.reason"
-                  :hasError="fieldHasError('reason')"
-                  :errorText="getErrorText('reason')"
-                  :options="reasons"
-                />
-                <InputGroup
-                  type="textarea"
-                  :label="t('Message')"
-                  v-model="form.message"
-                  :placeholder="t('Reason of your report.\nDon\'t include any personal data.')"
-                />
-              </div>
-              <div class="fr-modal__footer">
-                <div class="fr-btns-group fr-btns-group--right fr-btns-group--inline-lg fr-btns-group--icon-left">
-                  <button
-                    class="fr-btn"
-                    :aria-controls="id"
-                    target="_self"
-                    @click.prevent.stop.capture="send"
+              <template v-if="showConfirm">
+                <div class="fr-modal__content">
+                  <h2 :id="reportModalTitleId" class="fr-mb-2w">
+                    <span class="fr-icon-success-line fr-icon--lg"></span>{{ t('Thanks for reporting this content') }}
+                  </h2>
+                  <i18n-t
+                    keypath="{site} team will examine the content to check if it breaks our {markup}. Thanks for your help."
+                    tag="p"
+                    class="fr-mt-0 fr-mb-1w fr-text--xs"
+                    scope="global"
                   >
-                    {{ t("Send") }}
-                  </button>
+                  <template #site>
+                      {{ title }}
+                    </template>
+                    <template #markup>
+                      <a :href="terms_url">{{ t("usage policy") }}</a>
+                    </template>
+                  </i18n-t>
                 </div>
-              </div>
+                <div class="fr-modal__footer">
+                  <div class="fr-btns-group fr-btns-group--right fr-btns-group--inline-lg fr-btns-group--icon-left">
+                    <button
+                      class="fr-btn"
+                      :aria-controls="id"
+                      target="_self"
+                      @click.prevent.stop.capture="close"
+                    >
+                      {{ t("Close") }}
+                    </button>
+                  </div>
+                </div>
+              </template>
+              <template v-else>
+                <div class="fr-modal__content">
+                  <h2 :id="reportModalTitleId" class="fr-mb-2w">
+                    {{ t('Report this content') }}
+                  </h2>
+                  <Well class="fr-mb-2w" color="warning" weight="regular">
+                    <span class="fr-icon-warning-line fr-mr-1v" aria-hidden="true"></span>
+                    {{ t("Please only report in case of serious concern.") }}
+                    <a :href=terms_url>{{ t("See our usage policy") }}</a>
+                  </Well>
+                  <SelectGroup
+                    :label="t('Report reason')"
+                    :required="true"
+                    v-model="form.reason"
+                    :hasError="fieldHasError('reason')"
+                    :errorText="getErrorText('reason')"
+                    :options="reasons"
+                  />
+                  <InputGroup
+                    type="textarea"
+                    :label="t('Message')"
+                    v-model="form.message"
+                    :placeholder="t('Reason of your report.\nDon\'t include any personal data.')"
+                  />
+                </div>
+                <div class="fr-modal__footer">
+                  <div class="fr-btns-group fr-btns-group--right fr-btns-group--inline-lg fr-btns-group--icon-left">
+                    <button
+                      class="fr-btn"
+                      :aria-controls="id"
+                      target="_self"
+                      @click.prevent.stop.capture="send"
+                    >
+                      {{ t("Send") }}
+                    </button>
+                  </div>
+                </div>
+              </template>
             </div>
           </div>
         </div>
@@ -60,12 +94,12 @@
   </Teleport>
 </template>
 <script lang="ts">
-import type { ReportReason } from '../../api/reports';
+import { getReportReasons, type ReportReason } from '../../api/reports';
+import { terms_url, title } from '../../config';
 import { required } from '../../i18n';
 import useFunctionalState from '../../composables/form/useFunctionalState';
-import SelectGroup, { Option } from '../Form/SelectGroup/SelectGroup.vue';
+import SelectGroup, { type Option } from '../Form/SelectGroup/SelectGroup.vue';
 import InputGroup from '../Form/InputGroup/InputGroup.vue';
-import { getReportReasons } from '../../api/reports';
 
 export type ReportModalProps = {
   id: string,
@@ -90,6 +124,7 @@ const emit = defineEmits<{
 const { t } = useI18n();
 const reportModalTitleId = getRandomId("modal-title");
 const modalRef = ref<HTMLDialogElement | null>();
+const showConfirm = ref(false);
 
 const initialState = {
   reason: "",
@@ -125,7 +160,7 @@ function send() {
   validateRequiredRules().then(valid => {
     if(valid) {
       emit('send', {...form});
-      close();
+      showConfirm.value = true;
     }
   });
 };

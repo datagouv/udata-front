@@ -42,5 +42,5 @@ export const SimpleReportModal = {
                 </ReportModal>`,
   }),
   args,
-} satisfies  StoryObj<typeof meta>;
+} satisfies StoryObj<typeof meta>;
 

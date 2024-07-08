@@ -1,6 +1,6 @@
 <template>
   <button
-      class="fr-btn fr-btn--secondary-grey-500 fr-icon-flag-line"
+      class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-flag-line"
       data-fr-opened="false"
       :aria-controls="id"
       v-bind="$attrs"
