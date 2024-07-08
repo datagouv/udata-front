@@ -19,6 +19,7 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import ReportModal, { type ReportModalForm } from './ReportModal.vue';
 import { postReport } from '../../api/reports';
+import { useToast } from '../../composables/useToast';
 
 type ObjectData = {
   objectType: string;
@@ -33,6 +34,8 @@ const emit = defineEmits<{
 
 const { t } = useI18n();
 
+const { toast } = useToast();
+
 const loading = ref(false);
 
 const id = getRandomId();
@@ -41,5 +44,6 @@ async function send(form: ReportModalForm) {
   loading.value = true;
   await postReport(props.objectType, props.objectId, form.reason, form.message);
   loading.value = false;
+  toast.success(t('The content has been reported !'));
 }
 </script>

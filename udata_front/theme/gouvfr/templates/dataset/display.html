@@ -49,6 +49,9 @@
 
 {% block toolbar %}
 {{ follow_btn(dataset) }}
+<div class="fr-col-auto fr-ml-3v vuejs">
+    <report-button object-type="Dataset" object-id="{{ dataset.id|string }}"></report-button>
+</div>
 {{ hook('dataset.display.explore-button') }}
 {% if can_edit %}
     <div class="fr-col-auto fr-ml-3v">
