@@ -41,7 +41,7 @@
             </AppLink>
           </slot>
         </h4>
-        <p class="fr-text--sm fr-mb-n1v" v-if="dataset.organization || dataset.owner">
+        <p class="fr-text--sm fr-mb-n3v" v-if="dataset.organization || dataset.owner">
           <template v-if="dataset.organization">
             <span class="not-enlarged dash-after-sm fr-mr-1v">
               <AppLink class="fr-link fr-text--sm" v-if="organizationUrl" :to="organizationUrl">
@@ -55,7 +55,7 @@
           </span>
           <span class="text-mention-grey">{{ $t('Updated {date}', {date: formatRelativeIfRecentDate(dataset.last_update)}) }}</span>
         </p>
-        <div class="fr-mx-0 fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
+        <div class="fr-mx-0 fr-mb-n1v fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
           <div class="fr-hidden flex-sm dash-after-sm text-grey-500 not-enlarged">
             <QualityComponentInline :quality="dataset.quality"/>
           </div>
