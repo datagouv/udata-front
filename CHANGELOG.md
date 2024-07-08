@@ -2,7 +2,14 @@
 
 ## Current (in progress)
 
+- Add organization edit to new admin [#412](https://github.com/datagouv/udata-front/pull/412)
+- Fix markdown tables and use DSFR ones [#432](https://github.com/datagouv/udata-front/pull/432)
+
+## 5.0.1 (2024-06-12)
+
 - Fix dataset card link opening another tab [#426](https://github.com/datagouv/udata-front/pull/426)
+- Use roadmap page instead of deprecated nouveautes in footer [#429](https://github.com/datagouv/udata-front/pull/429)
+- Add elections as featured topic [#430](https://github.com/datagouv/udata-front/pull/430)
 
 ## 5.0.0 (2024-06-07)
 
