@@ -22,13 +22,17 @@
             </span>
             {{ t('Published {date}', {date: formatRelativeIfRecentDate(reuse.created_at)}) }}
           </p>
-          <p class="fr-mt-1v">
+          <div class="fr-grid-row fr-grid-row--middle fr-mt-1v fr-mr-1v">
             <span class="dash-after">
               {{ reuseType }}
             </span>
-            <span class="fr-icon-star-line fr-icon--sm fr-px-1v" aria-hidden="true">{{ reuse.metrics.followers }}</span>
-            <span class="fr-icon-eye-line fr-icon--sm fr-px-1v" aria-hidden="true">{{ reuse.metrics.views }}</span>
-          </p>
+            <p class="fr-text--sm fr-my-0">
+              <span class="fr-icon-star-line fr-icon--sm fr-px-1v" aria-hidden="true">{{ reuse.metrics.followers }}</span>
+            </p>
+            <p class="fr-text--sm fr-my-0">
+              <span class="fr-icon-eye-line fr-icon--sm fr-px-1v" aria-hidden="true">{{ reuse.metrics.views }}</span>
+            </p>
+          </div>
         </div>
       </div>
     </div>

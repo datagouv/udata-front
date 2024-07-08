@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DatasetCard, type DatasetV2, InformationPanel, type License, Pagination, type Quality, QualityComponent, QualityComponentInline, QualityItem, QualityScore, ReadMore, type Reuse, type Resource, ResourceAccordion, Toggletip, Well } from "../src";
+import { DatasetCard, type DatasetV2, InformationPanel, type License, Pagination, type Quality, QualityComponent, QualityComponentInline, QualityItem, QualityScore, ReadMore, type Reuse, ReuseCard, type Resource, ResourceAccordion, Toggletip, Well } from "../src";
 import { ref } from "vue";
 import editIcon from "../../templates/svg/illustrations/edit.svg";
 
@@ -303,9 +303,22 @@ const id = "12";
     organization-url=""
     style="z-index: 1;"
   />
-  <ReuseCard
-    :reuse="reuse"
-    reuse-url="/datasets/6571faa17f46a65ee05c4d17"
-  />
+  <div class="fr-grid-row fr-grid-row--gutters">
+    <ReuseCard
+      class="fr-col-4"
+      :reuse="reuse"
+      reuse-url="/datasets/6571faa17f46a65ee05c4d17"
+    />
+    <ReuseCard
+      class="fr-col-4"
+      :reuse="reuse"
+      reuse-url="/datasets/6571faa17f46a65ee05c4d17"
+    />
+    <ReuseCard
+      class="fr-col-4"
+      :reuse="reuse"
+      reuse-url="/datasets/6571faa17f46a65ee05c4d17"
+    />
+  </div>
   <Pagination class="fr-mt-3v" :total-results="52" @change="p => console.log(p)" />
 </template>
