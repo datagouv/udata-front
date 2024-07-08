@@ -27,10 +27,10 @@
               {{ reuseType }}
             </span>
             <p class="fr-text--sm fr-my-0">
-              <span class="fr-icon-star-line fr-icon--sm fr-px-1v" aria-hidden="true">{{ reuse.metrics.followers }}</span>
+              <span class="fr-icon-star-line fr-icon--sm fr-px-1v" aria-hidden="true"></span>{{ reuse.metrics.followers }}
             </p>
             <p class="fr-text--sm fr-my-0">
-              <span class="fr-icon-eye-line fr-icon--sm fr-px-1v" aria-hidden="true">{{ reuse.metrics.views }}</span>
+              <span class="fr-icon-eye-line fr-icon--sm fr-px-1v" aria-hidden="true"></span>{{ reuse.metrics.views }}
             </p>
           </div>
         </div>
