@@ -71,8 +71,8 @@
             </p>
           </div>
         </div>
-        <div v-if="props.showDescription" class="fr-pt-2v">
-          <p class="fr-text--md">{{ excerpt(dataset.description, 160) }}</p>
+        <div v-if="showDescription" class="fr-pt-2v">
+          <p class="fr-text--sm fr-m-0 overflow-wrap-anywhere">{{ excerpt(dataset.description, 160) }}</p>
         </div>
       </div>
     </div>
