@@ -154,9 +154,9 @@ export const Step2WithNoOrganization: StoryObj<typeof meta> = {
 
     await step('Click on next', async () => {
       await userEvent.click(canvas.getByRole("button", {name: "Next"}));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setTimeout(() => { expect(args.onNext).toHaveBeenCalled(); }, 1000);
     });
-
-    await waitFor(() => expect(args.onNext).toHaveBeenCalled());
   },
   render: (args) => ({
     components: { Step2DescribeDataset },

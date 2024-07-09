@@ -105,8 +105,15 @@ function listOrganizations() {
   };
 };
 
+function checkIfNoOrganizations() {
+  if (!isAdmin.value && organizations.value.length === 1) {
+    updateOrganization("user");
+  }
+}
+
 onMounted(() => {
   organizations.value = [];
   listOrganizations();
+  checkIfNoOrganizations();
 });
 </script>
