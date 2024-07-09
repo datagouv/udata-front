@@ -67,7 +67,7 @@
               </template>
           </Toggletip>
           <p class="fr-my-0 fr-mr-1v text-mention-grey fr-text--sm fr-ml-n2v">
-              {{$t('Metadatas :')}}
+              {{$t('Metadata :')}}
           </p>
           <div class="fr-grid-row fr-grid-row--middle fr-mr-1v">
               <QualityScore :score="quality.score"/>
