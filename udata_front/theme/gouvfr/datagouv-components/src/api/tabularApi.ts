@@ -1,25 +1,10 @@
+import axios from "axios";
 import { config } from "../config";
 
 export type SortConfig = {
   column: string;
   type: string;
 } | null;
-
-/**
- * Fetch url
- */
-export function fetchData(url: string) {
-  return fetch(url)
-    .then(res => {
-      if (!res.ok) {
-        throw new Error('Network error');
-      }
-      return res.json();
-    })
-    .then(data => {
-      return { data };
-    });
-}
 
 /**
  * Call Tabular-api to get table content
@@ -31,7 +16,7 @@ export function getData(id: string, page: number, sortConfig?: SortConfig) {
   if (sortConfig) {
     url = url + `&${sortConfig.column}__sort=${sortConfig.type}`;
   }
-  return fetchData(url);
+  return axios.get(url);
 }
 
 /**
@@ -40,5 +25,5 @@ export function getData(id: string, page: number, sortConfig?: SortConfig) {
 export function getProfile(id: string) {
   // Make url with id
   const url = `${config.tabular_api_url}/api/resources/${id}/profile/`;
-  return fetchData(url);
+  return axios.get(url);
 }
