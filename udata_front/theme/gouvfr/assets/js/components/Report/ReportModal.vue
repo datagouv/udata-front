@@ -166,12 +166,6 @@ function send() {
 };
 
 onMounted(async () => {
-  const reportReasons = await getReportReasons();
-  reasons.value = Object.entries(reportReasons).map<Option>(([value, label]) => {
-    return {
-      value,
-      label,
-    };
-  })
+  reasons.value = await getReportReasons();
 });
 </script>
