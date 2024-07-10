@@ -27,7 +27,6 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@datagouv/components": "^1.0.0-dev.43",
     "vue": "^3.3.8"
   },
   "peerDependencies": {
