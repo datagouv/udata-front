@@ -140,6 +140,9 @@ Content on the site can be styled with Markdown. Ready made styles are provided 
         tr:nth-child(odd) {
             background-color: @grey-125;
         }
+    }
+
+    .fr-table tbody:only-child {
         & > :first-child {
             &:extend(.fr-table thead);
         }

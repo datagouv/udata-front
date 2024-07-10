@@ -2,9 +2,24 @@
 
 ## Current (in progress)
 
-- Switch MAAF backend to new sync harvest system [#409](https://github.com/datagouv/udata-front/pull/409)
-- Add dataservice show page [#420](https://github.com/datagouv/udata-front/pull/420)
+- Add organization edit to new admin [#412](https://github.com/datagouv/udata-front/pull/412)
+- Fix markdown tables and use DSFR ones [#432](https://github.com/datagouv/udata-front/pull/432)
 - Add beta admin "add member" modale [#398](https://github.com/etalab/udata-front/pull/398)
+
+## 5.0.1 (2024-06-12)
+
+- Fix dataset card link opening another tab [#426](https://github.com/datagouv/udata-front/pull/426)
+- Use roadmap page instead of deprecated nouveautes in footer [#429](https://github.com/datagouv/udata-front/pull/429)
+- Add elections as featured topic [#430](https://github.com/datagouv/udata-front/pull/430)
+
+## 5.0.0 (2024-06-07)
+
+- Switch MAAF backend to new sync harvest system [#409](https://github.com/datagouv/udata-front/pull/409)
+- Add dataservice show page [#420](https://github.com/datagouv/udata-front/pull/420) [#424](https://github.com/datagouv/udata-front/pull/424)
+- Improve design of the OrganizationSearch component [#410](https://github.com/datagouv/udata-front/pull/410)
+- Add button to remove user without sending email [#418](https://github.com/datagouv/udata-front/pull/418)
+- Fix display not showing in Multiselect for multi options [#416](https://github.com/datagouv/udata-front/pull/416)
+- Fix dataset publishing form [#417](https://github.com/datagouv/udata-front/pull/417)
 
 ## 4.0.3 (2024-05-28)
 

@@ -42,11 +42,14 @@ const args: ReuseProps = {
   }
 };
 
+const updateLessThanAMonth = new Date();
+updateLessThanAMonth.setMonth(updateLessThanAMonth.getMonth() - 1, updateLessThanAMonth.getDate() + 2);
+
 const updateLastMonth = new Date();
-updateLastMonth.setMonth(updateLastMonth.getMonth() - 1, 20);
+updateLastMonth.setMonth(updateLastMonth.getMonth() - 1, updateLastMonth.getDate());
 
 const updateLastYear = new Date();
-updateLastYear.setFullYear(updateLastYear.getFullYear() - 1);
+updateLastYear.setFullYear(updateLastYear.getFullYear() - 1, 0, 1);
 
 const organization: Organization = {
   id: "someId",
@@ -127,6 +130,26 @@ export const ReuseWithCertifiedOrganization: StoryObj<typeof meta> = {
     template: '<Reuse v-bind="args"/>',
   }),
   args: argsWithCertifiedOrganization,
+};
+
+/**
+ * #### Reuse updated this month
+ * This is how a reuse owned by an organization is shown.
+ */
+export const ReuseUpdatedLessThanAMonth: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { Reuse },
+    setup() {
+      return { args };
+    },
+    template: '<Reuse v-bind="args"/>',
+  }),
+  args: {
+    reuse: {
+      ...argsWithOrganizationWithLogo.reuse,
+      last_update: updateLessThanAMonth.toDateString(),
+    }
+  },
 };
 
 

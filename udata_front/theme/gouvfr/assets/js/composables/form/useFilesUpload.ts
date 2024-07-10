@@ -1,49 +1,32 @@
-import { onMounted, readonly, ref, toRaw, toValue } from "vue";
+import { onMounted, readonly, ref, toValue, MaybeRefOrGetter } from "vue";
 import { useI18n } from "vue-i18n";
 import { createFile, fetchAllowedExtensions } from '../../api/resources';
+import type { DatasetFile, NewDatasetFile } from "../../types";
 
- /** @type {import("vue").Ref<Array<string>>} */
- const allowedExtensions = ref([]);
+ const allowedExtensions = ref<Array<string>>([]);
 
- /** @type {import("vue").Ref<Promise | null>} */
- const promiseAllowedExtensions = ref(null);
+ const promiseAllowedExtensions = ref<Promise<Array<string>> | null>(null);
 
 export function useFilesUpload() {
   const { t } = useI18n();
 
-  /** @type {import("vue").Ref<Array<import("../../types").NewDatasetFile>>} */
-  const files = ref([]);
+  const files = ref<Array<NewDatasetFile>>([]);
 
-  /**
-   *
-   * @param {import("vue").MaybeRefOrGetter<Array<import("../../types").NewDatasetFile>>} updatedFiles
-   */
-  const updateFiles = (updatedFiles) => {
-    files.value = [...toValue(toRaw(updatedFiles))];
+  const updateFiles = (updatedFiles: MaybeRefOrGetter<Array<NewDatasetFile>>) => {
+    const t = [...toValue(updatedFiles)];
+    files.value = t;
   };
 
-  /**
-   *
-   * @param {string} datasetId
-   * @param {import("../../types").NewDatasetFile} file
-   * @param {number} retry
-   * @returns {Promise}
-   */
-  const uploadFile = (datasetId, file, retry = 0) => {
+  const uploadFile = (datasetId: string, file: NewDatasetFile, retry = 0): Promise<NewDatasetFile | DatasetFile> => {
     if(retry > 3) {
       return Promise.reject(t("Failed to upload file " + file.title));
     }
-    return createFile(datasetId, file).catch(failed => {
+    return createFile(datasetId, file).catch(_failed => {
       return uploadFile(datasetId, file, retry + 1);
     });
   }
 
-  /**
-   *
-   * @param {string} datasetId
-   * @returns {Promise<Array<PromiseSettledResult<any>>>}
-   */
-  const uploadFiles = (datasetId) => {
+  const uploadFiles = (datasetId: string) => {
     const promises = [];
     for(const i in files.value) {
       const file = files.value[i];
@@ -72,7 +55,7 @@ export function useFilesUpload() {
 
   return {
     allowedExtensions: readonly(allowedExtensions),
-    files: readonly(files),
+    files: files,
     updateFiles,
     uploadFiles,
   }

@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/vue3";
 import OrganizationSearchOption from "./OrganizationSearchOption.vue";
 
 const meta = {
-  title: 'Components/OrganizationSearch/OrganizationSearchOption',
+  title: 'Components/OrganizationSearch/Internals/OrganizationSearchOption',
   component: OrganizationSearchOption,
   tags: ['autodocs'],
   parameters: {

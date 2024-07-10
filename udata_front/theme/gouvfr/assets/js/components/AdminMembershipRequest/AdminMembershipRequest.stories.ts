@@ -1,5 +1,5 @@
 import { withActions } from '@storybook/addon-actions/decorator';
-import { userEvent, expect, screen, within, waitFor } from '@storybook/test';
+import { userEvent, expect, screen, within, waitFor, fn } from '@storybook/test';
 import type { Meta, StoryObj } from "@storybook/vue3";
 import AdminMembershipRequest from './AdminMembershipRequest.vue';
 import { DefaultIdenticonAvatar } from "../discussions/Avatar/Avatar.stories";
@@ -9,9 +9,9 @@ const meta = {
   title: 'Admin/AdminMembershipRequest',
   component: AdminMembershipRequest,
   decorators: [withActions],
-  argTypes: {
-    onAccept: {action: true},
-    onRefuse: {action: true},
+  args: {
+    onAccept: fn(),
+    onRefuse: fn(),
   },
 } satisfies Meta<typeof AdminMembershipRequest>;
 

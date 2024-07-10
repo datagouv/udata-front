@@ -72,7 +72,7 @@
                 </div>
                 <div class="fr-col-12">
                   <SchemaSelect
-                    :values="facets.schema"
+                    :values="facets.schema || ''"
                     @change="(value: string) => handleFacetChange('schema', value)"
                     :isBlue="true"
                   />
@@ -157,7 +157,7 @@
           <div v-else-if="results.length">
             <ul class="fr-mt-1w border-default-grey border-top relative z-2">
               <li v-for="(result, key) in results" :key="result.id">
-                <DatasetCard :dataset="result" :style="zIndex(key)" />
+                <CardLg :dataset="result" :style="zIndex(key)" />
               </li>
             </ul>
             <Pagination
@@ -216,26 +216,25 @@
 </template>
 
 <script setup lang="ts">
+import { Pagination, type Dataset } from "@etalab/data.gouv.fr-components";
 import { ref, onMounted, computed } from "vue";
 import { useI18n } from 'vue-i18n';
 import axios, { type CancelTokenSource } from "axios";
-import { generateCancelToken, apiv2 } from "../../../plugins/api";
-import { useToast } from "../../../composables/useToast";
-import useSearchUrl from "../../../composables/useSearchUrl";
 import SearchInput from "../search-input.vue";
-import DatasetCard from "../../dataset/card-lg.vue";
+import CardLg from "../../dataset/card-lg.vue";
 import Loader from "../../dataset/loader.vue";
 import SchemaSelect from "../../SchemaSelect/SchemaSelect.vue";
-import { Pagination } from "@etalab/data.gouv.fr-components";
 import MultiSelect from "../../MultiSelect/MultiSelect.vue";
 import ActionCard from "../../Form/ActionCard/ActionCard.vue";
+import { getLicensesUrl } from "../../../api/licenses";
+import { getAllowedExtensionsUrl } from "../../../api/resources";
 import { data_search_feedback_form_url, search_autocomplete_debounce } from "../../../config";
 import { debounce } from "../../../composables/useDebouncedRef";
+import useSearchUrl from "../../../composables/useSearchUrl";
+import { useToast } from "../../../composables/useToast";
+import { generateCancelToken, apiv2 } from "../../../plugins/api";
 import franceWithMagnifyingGlassIcon from "../../../../../templates/svg/illustrations/france_with_magnifying_glass.svg";
 import magnifyingGlassIcon from "../../../../../templates/svg/illustrations/magnifying_glass.svg";
-import type { Dataset } from "../../../types";
-import { getAllowedExtensionsUrl } from "../../../api/resources";
-import { getLicensesUrl } from "../../../api/licenses";
 
 type Props = {
   downloadLink?: string,
