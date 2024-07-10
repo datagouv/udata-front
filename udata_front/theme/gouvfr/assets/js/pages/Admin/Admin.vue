@@ -99,30 +99,25 @@ onMounted(async () => {
 html, body {
   height: 100%;
 }
-
 #app {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
-
 .fr-sidemenu .fr-sidemenu__item:first-child:before, .fr-sidemenu .fr-sidemenu__item:last-child:before, .fr-sidemenu .fr-sidemenu__item:before {
   box-shadow: none;
 }
 </style>
 <style lang="less" scoped>
 @import "../../../less/variables.less";
-
 .fr-sidemenu {
   padding: 0;
 }
-
 .fr-sidemenu .fr-sidemenu__inner {
   padding: 0;
   box-shadow: 1px 0 0 0 @border-default-grey;
   background-color: @white;
 }
-
 @media @dsfr-query-md {
   .fr-sidemenu, .fr-sidemenu__inner {
     height: 100%;

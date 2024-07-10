@@ -1,14 +1,24 @@
 <template>
-  <DatasetCard :dataset :style :show-metrics :dataset-url="dataset.page" />
+  <DatasetCard
+    :dataset
+    :style
+    :show-metrics="showMetrics"
+    :dataset-url="dataset.page"
+    :organization-url="dataset.organization?.page"
+  />
 </template>
 
 <script setup lang="ts">
 import { DatasetCard, type Dataset, type DatasetV2 } from '@datagouv/components';
 import type { StyleValue } from "vue";
 
-defineProps<{
+withDefaults(defineProps<{
   dataset: Dataset | DatasetV2,
   style?: StyleValue,
   showMetrics?: boolean,
-}>();
+}>(), {
+  showMetrics: true,
+});
+
+
 </script>

@@ -10,6 +10,7 @@
       :originalDataset="dataset"
       :steps="steps"
       :granularities="granularities"
+      :user="me"
       @next="updateDatasetAndMoveToNextStep"
     />
     <template v-else-if="currentStep === 2">
@@ -40,7 +41,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { Dataset, NewDataset, Organization, Owned, User } from '@datagouv/components';
+import type { Dataset, NewDataset, User } from '@datagouv/components';
 import { useEventListener } from '@vueuse/core';
 import { type MaybeRefOrGetter, computed, onMounted, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -49,14 +50,14 @@ import Step2DescribeDataset from './Step2DescribeDataset.vue';
 import Step3AddFiles from './Step3AddFiles.vue';
 import Step3UpdateFileMetadata from "./Step3UpdateFileMetadata.vue";
 import Step4CompleteThePublication from "./Step4CompleteThePublication.vue";
-import { publishing_form_feedback_url, title, user } from '../../config';
+import { publishing_form_feedback_url, title } from '../../config';
 import { createDataset, getSpatialGranularities, publishDataset } from '../../api/datasets';
 import { useFilesUpload } from '../../composables/form/useFilesUpload';
+import { fetchMe } from '../../api/me';
 import type { NewDatasetFile, SpatialGranularity } from '../../types';
+import { auth } from '../../plugins/auth';
 
 const props = defineProps<{
-  organization?: Organization;
-  owner?: User;
   redirectDraftUrl: string;
 }>();
 
@@ -72,19 +73,9 @@ const currentStep = ref(0);
 
 const containerRef = ref<HTMLDivElement | null>(null);
 
-let owned: Owned;
+const me = ref<User | null>(null);
 
-if(props.organization) {
-  owned = {
-    organization: props.organization as Organization,
-    owner: null,
-  };
-} else {
-  owned = {
-    organization: null,
-    owner: (props.owner ? props.owner : user) as User,
-  };
-}
+const user = auth();
 
 const dataset = ref<NewDataset>({
   archived: false,
@@ -115,7 +106,8 @@ const dataset = ref<NewDataset>({
     update_frequency: false,
     update_fulfilled_in_time: false,
   },
-  ...owned,
+  owner: user,
+  organization: null,
 });
 
 const savedDataset = ref<Dataset | null>(null);
@@ -154,6 +146,9 @@ const moveToStep = (step: number | null = null, saveToHistory = true) => {
 };
 
 onMounted(async () => {
+  fetchMe().then(result => {
+    me.value = result;
+  });
   try {
     const granularitiesValue = await getSpatialGranularities();
     granularities.value = granularitiesValue;

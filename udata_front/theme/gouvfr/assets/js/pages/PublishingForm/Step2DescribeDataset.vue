@@ -142,6 +142,21 @@
               </div>
             </div>
           </Well>
+          <fieldset class="fr-fieldset" aria-labelledby="description-legend">
+            <legend class="fr-fieldset__legend" id="description-legend">
+              <h2 class="subtitle subtitle--uppercase fr-mb-3v">
+                {{ $t("Producer") }}
+              </h2>
+            </legend>
+            <div class="fr-fieldset__element">
+              <ProducerSelector
+                :user="user"
+                :hasError="fieldHasError('owned')"
+                :errorText="$t('You need to select a Producer')"
+                @update:owned="updateOwned"
+              />
+            </div>
+          </fieldset>
           <fieldset class="fr-fieldset min-width-0" aria-labelledby="description-legend">
             <legend class="fr-fieldset__legend" id="description-legend">
               <h2 class="subtitle subtitle--uppercase fr-mb-3v">
@@ -319,12 +334,13 @@
 export type Step2DescribeDatasetProps = {
   originalDataset: NewDataset,
   steps: Array<string>,
-  granularities: Array<SpatialGranularity>
+  granularities: Array<SpatialGranularity>,
+  user: Me,
 };
 </script>
 <script setup lang="ts">
 import { Well } from "@datagouv/components";
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { minLengthWarning, not, required, requiredWithCustomMessage, sameAs } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -332,6 +348,7 @@ import Container from '../../components/Ui/Container/Container.vue';
 import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
 import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
+import ProducerSelector from '../../components/ProducerSelector/ProducerSelector.vue'
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import useUid from "../../composables/useUid";
@@ -341,10 +358,13 @@ import { license_groups_options, quality_description_length, title } from "../..
 import { useI18n } from 'vue-i18n';
 import { getLicensesUrl } from '../../api/licenses';
 import { getFrequenciesUrl } from '../../api/datasets';
-import type { NewDataset, PublishingFormAccordionState, SpatialGranularity, SpatialZone } from '../../types';
+import type { Me, NewDataset, OwnedWithId, PublishingFormAccordionState, SpatialGranularity, SpatialZone } from '../../types';
 
-const emit = defineEmits(["next"]);
 const props = defineProps<Step2DescribeDatasetProps>();
+
+const emit = defineEmits<{
+  (event: 'next', dataset: NewDataset): void,
+}>();
 
 const { t } = useI18n();
 const { id: nameDatasetAccordionId } = useUid("accordion");
@@ -362,7 +382,7 @@ if(!dataset.spatial) {
     zones: undefined,
     granularity: undefined,
   }
-}
+};
 
 const frequenciesUrl = getFrequenciesUrl();
 const licensesUrl = getLicensesUrl();
@@ -385,17 +405,29 @@ const formatSpatialZones = (data: Array<SpatialZone>) => {
     }
   });
 return suggestions;
-}
+};
 
 const notUnknown = not(t("The value must be different than unknown."), sameAs("unknown"));
 const tagsRequired = requiredWithCustomMessage(t("Adding tags helps improve the SEO of your data."));
 const temporalCoverageRequired = requiredWithCustomMessage(t("You did not provide the temporal coverage."));
 const spatialGranularityRequired = requiredWithCustomMessage(t("You have not specified the spatial granularity."));
+const isSelectedProducer = ref<boolean>(false);
+
+function checkOwned() {
+  return isSelectedProducer.value;
+};
+
+function updateOwned(owned: OwnedWithId) {
+  dataset.organization = owned.organization;
+  dataset.owner = owned.owner;
+  isSelectedProducer.value = true;
+}
 
 const requiredRules = {
   description: { required },
   frequency: { required },
   title: { required },
+  owned: { custom: checkOwned },
 };
 
 const warningRules = {
@@ -409,6 +441,7 @@ const warningRules = {
   tags: { required: tagsRequired },
   temporal_coverage: { required: temporalCoverageRequired },
   title: { required },
+  owned: { custom: checkOwned },
 };
 
 const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(dataset, requiredRules, warningRules);
@@ -423,6 +456,7 @@ const state = computed<Record<string, PublishingFormAccordionState>>(() => {
     frequency: getFunctionalState(vWarning$.value.frequency.$dirty, v$.value.frequency.$invalid, vWarning$.value.frequency.$error),
     temporal_coverage: getFunctionalState(vWarning$.value.temporal_coverage.$dirty, false, vWarning$.value.temporal_coverage.$error),
     spatial_information: getFunctionalState(vWarning$.value.spatial.granularity.$dirty, false, vWarning$.value.spatial.granularity.$error),
+    owned: getFunctionalState(vWarning$.value.owned.$dirty, v$.value.owned.$invalid, vWarning$.value.owned.$error),
   };
 });
 

@@ -3,7 +3,7 @@ import useKeyCodes from "./useKeyCodes";
 import { getRandomId } from '@datagouv/components';
 
 export function useCollapse() {
-  const {KEYCODES} = useKeyCodes();
+  const { KEYCODES } = useKeyCodes();
   const collapseId = getRandomId("collapse");
   const expanded = ref(false);
 

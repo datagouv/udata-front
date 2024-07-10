@@ -1,4 +1,4 @@
-import { type Organization, type Owned, type Resource, type User } from "@datagouv/components";
+import { type Organization, type Owned, type Resource, type User, type NewDataset as BaseNewDataset, type Dataset } from "@datagouv/components";
 
 export type MultiSelectOption = {
   label: string;
@@ -114,43 +114,9 @@ export type Harvest = {
   backend: string;
 }
 
-export type NewDataset = Owned & {
-  title: string;
-  acronym: string;
-  archived: boolean;
-  description: string;
-  tags: Array<string> | null;
-  license: string;
-  frequency: string;
-  temporal_coverage: string;
-  frequency_date: Date | null;
-  page: string;
-  private: boolean;
-  quality?: Quality;
-  spatial: {
-    zones?: Array<string>;
-    granularity?: string;
-  } | null;
-};
+export type OwnedWithId = { organization: string, owner: never | null } | { organization: never | null, owner: string };
 
-export type Dataset = NewDataset & {
-  id: string;
-  page: string;
-  resources: Array<Resource>;
-  community_resources: Array<Resource>;
-  created_at: string;
-  last_modified: string;
-  last_update: string;
-  uri: string;
-  slug: string;
-  quality: Quality;
-  metrics: { discussions: number; followers: number; reuses: number; views: number; };
-  harvest: Harvest | null;
-};
-
-export type UiDataset = Omit<Dataset, 'last_modified'> & {
-  last_modified: Date;
-};
+export type NewDataset = Omit<BaseNewDataset, keyof OwnedWithId> & OwnedWithId;
 
 export type Reuse = Owned & {
   id: string;
