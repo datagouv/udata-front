@@ -102,7 +102,7 @@
   },
   "license": "LGPL-2.1-only",
   "dependencies": {
-    "@datagouv/components": "^1.0.0-dev.43",
+    "@datagouv/components": "^1.0.0-dev.44",
     "@datagouv/select-a11y": "^3.6.1",
     "leaflet": "^1.9.4"
   },
