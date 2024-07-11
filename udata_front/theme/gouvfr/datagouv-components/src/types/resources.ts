@@ -1,6 +1,7 @@
+import type { Schema } from "../api/schemas";
 import type { Owned } from "./owned";
 
-type ResourceRest = {
+export type Resource = Owned & {
   id: string;
   title: string;
   type: string;
@@ -18,8 +19,6 @@ type ResourceRest = {
   last_modified: string;
   latest: string;
   preview_url: string;
-  schema: import("../api/schemas").Schema;
+  schema: Schema;
   url: string;
-}
-
-export type Resource = Owned & ResourceRest;
+};

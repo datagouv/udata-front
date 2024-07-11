@@ -136,7 +136,7 @@
                 <div class="fr-my-3v fr-text--sm">
                     {{ banner_info(
                         "fr-icon-external-link-line",
-                        _("This dataset come from an external portal.&nbsp;<a href='{external_source}'>View the original source.</a>")
+                        _("This dataset come from an external portal.&nbsp;<a href='{external_source}' rel='ugc nofollow noopener'>View the original source.</a>")
                         .format(external_source=external_source(dataset))
                     )}}
                 </div>
@@ -549,7 +549,7 @@
                 {% endcall %}
                 {% if external_source(dataset) %}
                 {% call() information_col(_('Remote source'), 'text-overflow-ellipsis') %}
-                    <a rel="nofollow" href="{{ external_source(dataset) }}">{{external_source(dataset)}}</a>
+                    <a rel="ugc nofollow noopener" href="{{ external_source(dataset) }}">{{external_source(dataset)}}</a>
                 {% endcall %}
                 {% endif %}
             </div>

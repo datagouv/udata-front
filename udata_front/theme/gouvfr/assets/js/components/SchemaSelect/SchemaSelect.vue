@@ -10,45 +10,32 @@
     :isBlue="isBlue"
   />
 </template>
-
-<script>
-import { defineComponent } from "vue";
+<script lang="ts">
+export type SchemaSelectProps = {
+    allOption?: string,
+    isBlue?: boolean,
+    showExplanation?: boolean,
+    values: Array<string> | string,
+};
+</script>
+<script setup lang="ts">
 import { getCatalog } from "@etalab/data.gouv.fr-components";
 import MultiSelect from "../MultiSelect/MultiSelect.vue";
 
-export default defineComponent({
-  components: {
-    MultiSelect,
-  },
-  emits: ["change"],
-  props: {
-    allOption: {
-      type: String,
-      default: "",
-    },
-    isBlue: {
-      type: Boolean,
-      default: false,
-    },
-    showExplanation: {
-      type: Boolean,
-      default: true,
-    },
-    values: {
-      type: [String, Array],
-    },
-  },
-  setup(props, {emit}) {
-    /** @type {Promise<Array<import("../../types").MultiSelectOption>>} */
-    const initialOptions = getCatalog().then(catalog => catalog.map(schema => ({
-      label: schema.name,
-      value: schema.name,
-    })));
-    const change = (value) => emit("change", value);
-    return {
-      change,
-      initialOptions,
-    };
-  }
+withDefaults(defineProps<SchemaSelectProps>(), {
+  allOption: "",
+  isBlue: false,
+  showExplanation: true,
 });
+
+const emit = defineEmits<{
+  change: [value: string]
+}>();
+
+/** @type {Promise<Array<import("../../types").MultiSelectOption>>} */
+const initialOptions = getCatalog().then(catalog => catalog.map(schema => ({
+    label: schema.name,
+    value: schema.name,
+  })));
+const change = (value: string) => emit("change", value);
 </script>

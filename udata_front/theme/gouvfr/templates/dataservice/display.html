@@ -1,0 +1,217 @@
+{% extends theme('layouts/1-column.html') %}
+{% from theme('macros/breadcrumb.html') import breadcrumb with context %}
+{% from theme('macros/follow.html') import follow_btn with context %}
+
+{% set meta = {
+    'title': dataservice.title,
+    'description': dataservice.description|mdstrip(60)|forceescape,
+    'image': dataservice.organization and dataservice.organization.logo(external=True) or '',
+    'keywords': [_('API')] + dataservice.tags,
+    'robots': 'noindex, nofollow' if dataservice.is_hidden else '',
+} %}
+
+{% set read_only_mode = config.READ_ONLY_MODE %}
+
+{% block extra_head %}
+    {% cache cache_duration, 'dataservice-extra-head', dataservice.id|string, g.lang_code, dataservice.last_modified|string %}
+    <link rel="canonical" href="{{ url_for('dataservices.show', dataservice=dataservice) }}" />
+    {% endcache %}
+{% endblock %}
+
+{% block breadcrumb %}
+    {% cache cache_duration, 'dataservice-breadcrumb', dataservice.id|string, g.lang_code, dataservice.last_modified|string %}
+        <li>
+            <a class="fr-breadcrumb__link">
+                {{ _('APIs') }}
+            </a>
+        </li>
+        <li>
+            <a class="fr-breadcrumb__link" aria-current="page">
+                {{ dataservice.acronym or dataservice.title|truncate(128) }}
+            </a>
+        </li>
+    {% endcache %}
+{% endblock %}
+
+{% block toolbar %}
+{{ follow_btn(dataservice) }}
+{% endblock %}
+
+{% block content %}
+{% cache cache_duration, 'dataservice-content', dataservice.id|string, g.lang_code, current_user.slug or 'anonymous', dataservice.metadata_modified_at|string %}
+
+{{ breadcrumb(self) }}
+
+<div class="content fr-container fr-mb-10v">
+    {% if dataservice.private or dataservice.deleted_at or dataservice.archived_at %}
+        <div class="fr-grid-row">
+            {% if dataservice.private %}
+                <div class="fr-col-auto fr-mr-1w">
+                    <p class="fr-tag"
+                        title="{{ _('This API is private and will not be visible by other users') }}">{{ _('Private') }}
+                    </p>
+                </div>
+            {% endif %}
+            {% if dataservice.deleted_at %}
+                <div class="fr-col-auto fr-mr-1w">
+                    <p class="fr-tag"
+                        title="{{ _('This API has been deleted. This will be permanent in the next 24 hours') }}">{{ _('Deleted') }}
+                    </p>
+                </div>
+            {% endif %}
+            {% if dataservice.archived_at %}
+                <div class="fr-col-auto fr-mr-1w">
+                    <p class="fr-tag" title="_('This API has been archived.')">
+                        {{ _('Archived') }}
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+    <div class="fr-grid-row fr-grid-row--gutters vuejs">
+        <section class="fr-col-12 fr-col-md-8">
+            <h1 class="fr-mb-5v fr-h3">
+                {{ dataservice.title }}
+                {% if dataservice.acronym %}<small>{{ dataservice.acronym }}</small>{% endif %}
+            </h1>
+            <h2 id="description" class="subtitle fr-mb-1w">{{ _('Description') }}</h2>
+            {{ dataservice.description|markdown }}
+        </section>
+        <section class="fr-col-12 fr-col-md-4">
+            {% if dataservice.organization %}
+                <h2 id="producer" class="subtitle fr-mb-1v">{{ _('Producer') }}</h2>
+                {% with organization=dataservice.organization, producer_type='organization' %}
+                {% include theme('organization/producer-name-with-logo.html') %}
+                {% endwith %}
+            {% elif dataservice.owner %}
+                <h2 id="author" class="subtitle fr-mb-1w">{{ _('Author') }}</h2>
+                {% with organization=dataservice.owner, producer_type='owner' %}
+                {% include theme('organization/producer-name-with-logo.html') %}
+                {% endwith %}
+                <p class="well well-grey-100 fr-py-3v fr-my-3v">
+                    {% trans
+                            date=dataservice.created_at|dateformat(format='long'),
+                            update=dataservice.metadata_modified_at|dateformat(format='long'),
+                            author=dataservice.owner.fullname
+                        %}This API has been published on the initiative and under the responsibility of
+                    {{author}}<br />Published on {{date}}{% endtrans %}
+                </p>
+            {% endif %}
+            <h2 class="subtitle fr-mt-3v fr-mb-1v">{{ _('Latest update') }}</h2>
+            <p class="fr-text--sm fr-mt-0 fr-mb-3v">
+                {{ dataservice.metadata_modified_at|dateformat(format='long') }}
+            </p>
+            <h2 class="subtitle fr-mt-3v fr-mb-1v">{{ _('Rate limiting') }}</h2>
+            <p class="fr-text--sm fr-mt-0 fr-mb-3v">
+                {% if dataservice.rate_limiting %}
+                    {{ dataservice.rate_limiting }}
+                {% else %}
+                    {{ _('Not documented') }}
+                {% endif %}
+            </p>
+            <h2 class="subtitle fr-mt-3v fr-mb-1v">{{ _('Availability') }}</h2>
+            <p class="fr-text--sm fr-mt-0 fr-mb-3v">
+            {% if dataservice.availability %}
+                {{ _("%(availability)s last month", availability=dataservice.availability|format_percentage) }}
+            {% else %}
+                {{ _('Not documented') }}
+            {% endif %}
+            </p>
+            <h2 class="subtitle fr-mt-3v fr-mb-1v">{{ _('Access') }}</h2>
+            <div class="fr-text--sm fr-mt-0 fr-mb-3v">
+            {% if dataservice.is_restricted %}
+                <p class="fr-badge fr-badge--warning fr-badge--no-icon">
+                    {{ _('Restricted') }}
+                </p>
+                {% if dataservice.authorization_request_url %}
+                    <p class="fr-m-0">
+                        <a
+                            href="{{ dataservice.authorization_request_url }}"
+                            rel="ugc nofollow noopener"
+                            target="_blank"
+                            class="fr-text--sm fr-link"
+                        >
+                            {{ _("Make an authorization request") }}
+                        </a>
+                    </p>
+                {% endif %}
+            {% else %}
+                <p class="fr-badge fr-badge--success fr-badge--no-icon">
+                    {{ _('Opened') }}
+                </p>
+            {% endif %}
+            </div>
+            <h2 class="subtitle fr-mt-3v fr-mb-1v">{{ _('API link') }}</h2>
+            <p class="fr-text--sm fr-mt-0 fr-mb-3v text-overflow-ellipsis">
+            {% if dataservice.base_api_url %}
+                <code class="bg-alt-grey fr-px-1v text-grey-380">
+                    <a href="{{ dataservice.base_api_url }}" rel="ugc nofollow noopener">
+                        {{ dataservice.base_api_url }}
+                    </a>
+                </code>
+            {% else %}
+                {{ _('Not documented') }}
+            {% endif %}
+            <h2 class="subtitle fr-mt-3v fr-mb-1v">{{ _('Documentation link') }}</h2>
+            <p class="fr-text--sm fr-mt-0 fr-mb-3v text-overflow-ellipsis">
+            {% if dataservice.endpoint_description_url %}
+                <code class="bg-alt-grey fr-px-1v text-grey-380">
+                    <a href="{{ dataservice.endpoint_description_url }}" rel="ugc nofollow noopener">
+                        {{ dataservice.endpoint_description_url }}
+                    </a>
+                </code>
+            {% else %}
+                {{ _('Not documented') }}
+            {% endif %}
+            </p>
+        </section>
+    </div>
+</div>
+<div class="fr-mb-10v">
+    {{ hook('dataservice.display.after-description') }}
+</div>
+
+<div class="fr-container">
+    {% if dataservice.datasets|length %}
+        <section class="fr-py-5v border-top border-bottom border-default-grey">
+            <h2 class="subtitle subtitle--uppercase fr-m-0">
+                {{ ngettext('%(num)d used dataset', '%(num)d used datasets', dataservice.datasets|length) }}
+            </h2>
+            {% with datasets = dataservice.datasets %}
+            {% include theme('dataset/search-results.html') %}
+            {% endwith %}
+        </section>
+    {% else %}
+        <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-mt-5w">
+            {% include theme('svg/illustrations/dataset.svg') %}
+            <p class="fr-h6 fr-mt-2w fr-mb-5v text-center">
+                {{ _('No datasets on %(site)s are linked to this API.', site=config.SITE_TITLE) }}
+            </p>
+        </div>
+    {% endif %}
+
+    {{ hook('dataservice.display.metrics') }}
+
+    <section class="fr-py-5v vuejs">
+        {% if not dataservice.metrics.discussions %}
+            <h2 class="subtitle subtitle--uppercase fr-mb-3v">
+                {{ _('Discussions') }}
+            </h2>
+            <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-mt-5w" data-no-discussion>
+                {% include theme('svg/blank_state/discussion.svg') %}
+                <p class="fr-h6 fr-mt-2w fr-mb-5v text-center">
+                    {{ _('There are no discussions for this API yet.') }}
+                </p>
+            </div>
+        {% endif %}
+        <discussion-threads
+            ref="discussions"
+            subject-id="{{ dataservice.id }}"
+            subject-class="{{ dataservice.__class__.__name__ }}"
+        >
+        </discussion-threads>
+    </section>
+</div>
+
+{% endcache %}
+{% endblock %}

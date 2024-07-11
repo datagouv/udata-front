@@ -113,11 +113,6 @@ export const admin_root = _meta("admin-root");
 export const auth_url = _meta("auth-url");
 
 /**
- * The schema catalog URL
- */
-export const schema_catalog_url = _meta("schema-catalog-url");
-
-/**
  * The schema documentation URL
  */
 export const schema_documentation_url = _meta("schema-documentation-url");
@@ -173,7 +168,7 @@ export const catalog_url = _meta("catalog-url");
 /**
  * The description length required to pass the quality score check
  */
-export const quality_description_length = _meta("quality-description-length");
+export const quality_description_length = parseInt(_meta("quality-description-length") ?? "0");
 
 /**
  * The data search form URL
@@ -268,7 +263,7 @@ export const markdown = _jsonMeta("markdown-config");
 /**
  * License groups options configuration.
  */
-export const license_groups_options = _jsonMeta("license-groups-options");
+export const license_groups_options: Array<[string, Array<Record<string, string>>]> = _jsonMeta("license-groups-options");
 
 
 /**
@@ -314,7 +309,6 @@ export default {
   admin_root,
   auth_url,
   publishing_form_feedback_url,
-  schema_catalog_url,
   schema_documentation_url,
   schema_publishing_url,
   schema_validata_url,
