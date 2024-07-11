@@ -58,6 +58,7 @@
     "dayjs": "^1.11.10",
     "less": "^4.2.0",
     "markdown-it": "^13.0.2",
+    "oh-vue-icons": "^1.0.0-rc3",
     "popmotion": "^8.7.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -1,6 +1,5 @@
 <template>
-  <div class="fr-container">
-    <Stepper :steps="props.steps" :currentStep="0"/>
+  <div class="fr-grid-row fr-grid-row--top no-wrap wrap-md">
     <Container class="fr-mb-6v">
       <ActionCard
         :title="t('Join an Organization')"
@@ -29,19 +28,13 @@
     </Container>
   </div>
 </template>
-  
+
 <script setup lang="ts">
 import ActionCard from '../../components/Form/ActionCard/ActionCard.vue';
 import OrganizationSearch from '../../components/search/OrganizationSearch/OrganizationSearch.vue';
-import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Container from '../../components/Ui/Container/Container.vue';
 import organizationIcon from "../../../../templates/svg/illustrations/organization.svg";
 import { useI18n } from 'vue-i18n';
-
-const props = defineProps<{
-  steps: Array<string>;
-}>();
-
 const { t } = useI18n();
 
 const emits = defineEmits<{

@@ -1,7 +1,6 @@
 import { withActions } from '@storybook/addon-actions/decorator';
-import { expect } from '@storybook/test';
+import { expect, within } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { within } from '@storybook/testing-library';
 import EditButton from './EditButton.vue';
 import { config } from '../../config';
 import ".";

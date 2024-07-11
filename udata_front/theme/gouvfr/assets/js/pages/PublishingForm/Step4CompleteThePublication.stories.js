@@ -8,7 +8,7 @@ export default {
   component: Step4CompleteThePublication,
 };
 
-const originalDataset = Step2.Step2.args.originalDataset;
+const originalDataset = Step2.Step2WithAdmin.args.originalDataset;
 
 const args = {
   originalDataset,

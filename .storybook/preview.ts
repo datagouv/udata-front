@@ -8,7 +8,8 @@ import { initialize, mswDecorator } from 'msw-storybook-addon';
  */
 initialize({
   onUnhandledRequest: ({ url }, print) => {
-    if(url.pathname.startsWith("/udata_front") || url.pathname.startsWith("/@fs") || url.pathname.startsWith("/node_modules")) {
+    const pathname = new URL(url).pathname
+    if(pathname.startsWith("/udata_front") || pathname.startsWith("/@fs") || pathname.startsWith("/node_modules")) {
       return;
     }
     print.warning();
@@ -18,7 +19,6 @@ initialize({
 const preview: Preview = {
   decorators: [mswDecorator],
   parameters: {
-    actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
       matchers: {
         color: /(background|color)$/i,
