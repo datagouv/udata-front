@@ -5,9 +5,9 @@ export type ReportReason = string;
 
 export type ReportReasons = Record<string, string>;
 
-export function getReportReasons() {
-  return api.get<ReportReasons>("/reports/reasons/")
-    .then(res => res.data);
+export async function getReportReasons() {
+  const res = await api.get<ReportReasons>("/reports/reasons/");
+  return res.data;
 }
 
 export type ObjectType = 'Dataset';
@@ -25,11 +25,12 @@ export type Report = NewReport & {
   by: User | null;
 };
 
-export function postReport(type: ObjectType, id: string, reason: ReportReason, message: string) {
-  return api.post<Report, AxiosResponse<Report>, NewReport>("/reports/", {
+export async function postReport(type: ObjectType, id: string, reason: ReportReason, message: string) {
+  const res = await api.post<Report, AxiosResponse<Report>, NewReport>("/reports/", {
     object_type: type,
     object_id: id,
     reason,
     message,
-  }).then(res => res.data);
+  });
+  return res.data;
 }
