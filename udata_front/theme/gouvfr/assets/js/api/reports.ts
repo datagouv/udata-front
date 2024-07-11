@@ -10,8 +10,10 @@ export function getReportReasons() {
     .then(res => res.data);
 }
 
+export type ObjectType = 'Dataset';
+
 export type NewReport = {
-  object_type: string;
+  object_type: ObjectType;
   object_id: string;
   reason: ReportReason;
   message: string;
@@ -23,7 +25,7 @@ export type Report = NewReport & {
   by: User | null;
 };
 
-export function postReport(type: string, id: string, reason: ReportReason, message: string) {
+export function postReport(type: ObjectType, id: string, reason: ReportReason, message: string) {
   return api.post<Report, AxiosResponse<Report>, NewReport>("/reports/", {
     object_type: type,
     object_id: id,

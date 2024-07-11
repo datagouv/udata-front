@@ -18,11 +18,11 @@ import { getRandomId } from '@etalab/data.gouv.fr-components';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import ReportModal, { type ReportModalForm } from './ReportModal.vue';
-import { postReport } from '../../api/reports';
+import { type ObjectType, postReport } from '../../api/reports';
 import { useToast } from '../../composables/useToast';
 
 type ObjectData = {
-  objectType: string;
+  objectType: ObjectType;
   objectId: string;
 };
 
