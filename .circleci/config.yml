@@ -224,6 +224,9 @@ jobs:
           name: Compile and test package
           command: npm run preversion
           working_directory: ./udata_front/theme/gouvfr/datagouv-components
+      - run:
+          name: publish to chromatic
+          command: npm run chromatic -- --exit-once-uploaded
 
   publish_datagouv_components:
     docker:
