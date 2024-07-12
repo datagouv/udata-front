@@ -3,8 +3,8 @@
     <MultiSelect
       :required="true"
       :minimumCharacterBeforeSuggest="2"
-      :placeholder="$t('Check the identity with which you want to publish')"
-      :searchPlaceholder="$t('Select an organization')"
+      :placeholder="t('Check the identity with which you want to publish')"
+      :searchPlaceholder="t('Select an organization')"
       suggestUrl="/organizations/suggest/"
       :initialOptions="organizations"
       :values="userOrganization"
@@ -17,8 +17,8 @@
     <MultiSelect
       :required="true"
       :minimumCharacterBeforeSuggest="2"
-      :placeholder="$t('Check the identity with which you want to publish')"
-      :searchPlaceholder="$t('Select an organization')"
+      :placeholder="t('Check the identity with which you want to publish')"
+      :searchPlaceholder="t('Select an organization')"
       :initialOptions="organizations"
       :values="userOrganization"
       @change="updateOrganization"
@@ -34,12 +34,12 @@
       <div class="fr-grid-row fr-grid-row--middle fr-pb-3v">
         <div class="fr-col-6">
           <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500" :href="organization_url">
-            {{ $t("Join an organization") }}
+            {{ t("Join an organization") }}
           </a>
         </div>
         <div class="fr-col-6">
           <a class="fr-btn" :href="createOrganizationUrl">
-            {{ $t("Create an organization") }}
+            {{ t("Create an organization") }}
           </a>
         </div>
       </div>
@@ -67,6 +67,7 @@ const props = defineProps<{
 const createOrganizationUrl = `${organization_url}publishing-form/`;
 
 const userOrganization = ref<Organization>();
+console.log(props.user)
 const owned = ref<OwnedWithId>({
   organization: null,
   owner: props.user.id,

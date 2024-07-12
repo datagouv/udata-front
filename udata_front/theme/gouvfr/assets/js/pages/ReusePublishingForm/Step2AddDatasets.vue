@@ -101,7 +101,7 @@ const { toast } = useToast();
 
 const datasets = ref([...props.originalDatasets || []]);
 const reuse = ref(props.reuse);
-const linkedDataset = ref<String>("");
+const linkedDataset = ref<string>("");
 const datasetNotFound = ref<Boolean>(false);
 
 const datasetRequired = requiredWithCustomMessage(t("At least one dataset is required."));

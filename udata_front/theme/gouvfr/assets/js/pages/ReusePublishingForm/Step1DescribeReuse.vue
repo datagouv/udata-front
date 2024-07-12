@@ -1,5 +1,6 @@
 <template>
-  <Container class="fr-mb-6v">
+  <div class="fr-container">
+    <Stepper :steps="steps" :currentStep="0"/>
     <div class="fr-grid-row">
       <Sidemenu
         class="fr-col-12 fr-col-md-5"
@@ -114,51 +115,16 @@
           <fieldset class="fr-fieldset" aria-labelledby="description-legend">
             <legend class="fr-fieldset__legend" id="description-legend">
               <h2 class="subtitle subtitle--uppercase fr-mb-3v">
-                {{ t("Producer") }}
+                {{ $t("Producer") }}
               </h2>
             </legend>
             <div class="fr-fieldset__element">
-              <div v-if="isAdmin()">
-                <MultiSelect
-                  :required="true"
-                  :minimumCharacterBeforeSuggest="2"
-                  :placeholder="t('Check the identity with which you want to publish')"
-                  :searchPlaceholder="t('Select an organization')"
-                  suggestUrl="/organizations/suggest/"
-                  :values="userOrganization"
-                  @change="(value: Organization) => userOrganization = value"
-                />
-              </div>
-              <div v-else-if="hasOrganizations">
-                <MultiSelect
-                  :required="true"
-                  :minimumCharacterBeforeSuggest="2"
-                  :placeholder="t('Check the identity with which you want to publish')"
-                  :searchPlaceholder="t('Select an organization')"
-                  :initialOptions="organizations"
-                  :values="userOrganization"
-                  @change="(value: Organization) => userOrganization = value"
-                />
-              </div>
-              <div v-else>
-                <div class="fr-col bg-contrast-grey text-align-center fr-p-2v">
-                  <p class="fr-text--md fr-text--bold fr-mb-n3v">You belong to no organization</p>
-                  <p class="fr-text--sm fr-text--bold fr-mb-n4v">You publish in your own name</p>
-                  <p class="fr-text--sm">We advise you to publish under an organization if it's a professional activity</p>
-                  <div class="fr-grid-row fr-grid-row--middle fr-pb-3v">
-                    <div class="fr-col-6">
-                      <button class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500" @click="">
-                        {{ t("Join an organization") }}
-                      </button>
-                    </div>
-                    <div class="fr-col-6">
-                      <button class="fr-btn" @click="">
-                        {{ t("Create an organization") }}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <ProducerSelector
+                :user="user"
+                :hasError="fieldHasError('owned')"
+                :errorText="$t('You need to select a Producer')"
+                @update:owned="updateOwned"
+              />
             </div>
           </fieldset>
           <fieldset class="fr-fieldset" aria-labelledby="description-legend">
@@ -279,12 +245,15 @@
                 accept=".jpeg, .jpg, .png"
                 label="Test"
                 id="logoUpload"
-                :isValid="image"
+                :isValid="file"
                 :validText="t('Your file is valid')"
                 :hasError="fieldHasError('image')"
                 :errorText="getErrorText('image')"
-                @change="addImage"
+                @change="addFiles"
               />
+              <div class="text-align-center" v-show="imagePreview?.src">
+                <img class="fr-col fr-mx-2v fr-mb-2v" ref="imagePreview" width="300px" />
+              </div>
             </LinkedToAccordion>
           </fieldset>
           <Alert type="error" v-if="errors.length" class="fr-mt-n2w fr-mb-2w">
@@ -302,11 +271,12 @@
         </Container>
       </div>
     </div>
-  </Container>
+  </div>
 </template>
   
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref, toValue } from 'vue';
+import { computed, reactive, ref } from 'vue';
+import { Well } from '@etalab/data.gouv.fr-components';
 import { minLengthWarning, required } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -314,6 +284,7 @@ import Container from '../../components/Ui/Container/Container.vue';
 import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
 import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
+import ProducerSelector from '../../components/ProducerSelector/ProducerSelector.vue'
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
 import useUid from "../../composables/useUid";
 import useFunctionalState from '../../composables/form/useFunctionalState';
@@ -321,20 +292,20 @@ import reuseIcon from "../../../../templates/svg/illustrations/reuse.svg";
 import { quality_description_length } from "../../config";
 import { getReuseTypesUrl, getReuseTopicsUrl } from '../../api/reuses';
 import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
-import { PublishingFormAccordionState, Reuse } from '../../types';
+import type { Me, OwnedWithId, PublishingFormAccordionState, Reuse } from '../../types';
 import { useI18n } from 'vue-i18n';
-import { getUser } from '../../api/user';
 import Alert from '../../components/Alert/Alert.vue';
 import { url } from '@vuelidate/validators';
-import { type Organization, Well, type User } from '@etalab/data.gouv.fr-components';
 
 const props = defineProps<{
   originalReuse: Reuse,
+  steps: Array<string>,
   errors: Array<String>,
+  user: Me,
 }>();
 
 const emit = defineEmits<{
-  (event: 'next', reuse: Reuse, image: File): void,
+  (event: 'next', reuse: Reuse, file: File): void,
 }>();
 
 const { t } = useI18n();
@@ -348,20 +319,26 @@ const { id: addImageAccordionId } = useUid("accordion");
 
 const reuse = reactive<Reuse>({...props.originalReuse});
 const image = ref<File | null>(null);
-const userOrganization = ref<Organization>();
+const file = ref<File | null>(null);
+const imagePreview = ref<HTMLImageElement | null>(null);
 const topicsUrl = getReuseTopicsUrl();
 const typesUrl = getReuseTypesUrl();
 
-const organizations = ref<Array<Organization>>([]);
-const hasOrganizations = computed<Boolean>(() => organizations.value.length > 1);
+const isSelectedProducer = ref<boolean>(false);
+
 const hasImage = () => {
   return image.value !== null;
 };
-const isAdmin= () => {
-  return me.value?.roles?.includes('admin') ?? false;
-}
 
-const me = ref<User | null>(null);
+function checkOwned() {
+  return isSelectedProducer.value;
+};
+
+function updateOwned(owned: OwnedWithId) {
+  reuse.organization = owned.organization;
+  reuse.owner = owned.owner;
+  isSelectedProducer.value = true;
+}
 
 const requiredRules = {
   title: { required },
@@ -369,7 +346,8 @@ const requiredRules = {
   type: { required },
   topic: { required },
   description: { required },
-  image: { custom: hasImage  }
+  image: { custom: hasImage },
+  owned: { custom: checkOwned },
 };
 
 const warningRules = {
@@ -379,7 +357,8 @@ const warningRules = {
   topic: { required },
   description: {required, minLengthValue: minLengthWarning(quality_description_length), },
   tags: {},
-  image: { custom: hasImage }
+  image: { custom: hasImage },
+  owned: { custom: checkOwned },
 };
 
 const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(reuse, requiredRules, warningRules);
@@ -393,6 +372,7 @@ const state = computed<Record<string, PublishingFormAccordionState>>(() => {
     description: getFunctionalState(vWarning$.value.description.$dirty, v$.value.description.$invalid, vWarning$.value.description.$error),
     tags: getFunctionalState(vWarning$.value.tags.$dirty, false, vWarning$.value.tags.$error),
     image: getFunctionalState(vWarning$.value.image.$dirty, v$.value.image.$invalid, vWarning$.value.image.$error),
+    owned: getFunctionalState(vWarning$.value.owned.$dirty, v$.value.owned.$invalid, vWarning$.value.owned.$error),
   };
 });
 
@@ -400,49 +380,17 @@ const fieldHasError = (field: string) => hasError(state, field);
 
 const fieldHasWarning = (field: string) => hasWarning(state, field);
 
-const addImage = (newImage: File) => {
-  image.value = newImage;
+function addFiles(newFile: Array<File>) {
+  file.value = newFile[0];
+    if (imagePreview.value) {
+      imagePreview.value.src = URL.createObjectURL(file.value);
+    }
 };
-
-async function fetchUser() {
-  try {
-    me.value = await getUser();
-    updateOrganizations();
-  } catch (error) {
-    console.error('Error fetching user:', error);
-  }
-}
-
-function updateOrganizations() {
-  const userValue = toValue(me)
-  if (userValue) {
-    organizations.value = userValue.organizations;
-    organizations.value.push({
-      name: `${userValue.first_name} ${userValue.last_name}`,
-      logo: userValue.avatar || "",
-      id: "user",
-      acronym: null,
-      badges: [],
-      page: "",
-      slug: "",
-      uri: "",
-      logo_thumbnail: userValue.avatar_thumbnail || ""
-    });
-  }
-}
-
-onMounted(async () => {
-  await fetchUser()
-});
 
 const submit = () => {
   validateRequiredRules().then(valid => {
     if(valid) {
-      if (toValue(userOrganization) !== "user") {
-        reuse.organization = toValue(userOrganization);
-        reuse.owner = null;
-      }
-      emit("next", reuse, image);
+      emit("next", reuse, file.value);
     }
   });
 };

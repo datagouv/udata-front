@@ -1,11 +1,11 @@
 <template>
   <div class="fr-container" ref="containerRef">
-    <Stepper :steps="steps" :currentStep="currentStep"/>
     <Step1DescribeReuse
-      v-if="currentStep === 0"
+      v-if="currentStep === 0 && me"
       :originalReuse="reuse"
       :steps="steps"
       :errors="errors"
+      :user="me"
       @next="createReuseAndMoveToNextStep"
     />
     <Step2AddDatasets
@@ -27,16 +27,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import Stepper from "../../components/Form/Stepper/Stepper.vue";
+import type { Dataset, Organization, Owned, User } from '@etalab/data.gouv.fr-components';
 import Step1DescribeReuse from './Step1DescribeReuse.vue';
 import Step2AddDatasets from './Step2AddDatasets.vue';
 import Step3CompleteThePublication from './Step3CompleteThePublication.vue';
 import { publishing_form_feedback_url, user } from '../../config';
 import { createReuse, updateReuse, uploadLogo } from '../../api/reuses';
 import { Reuse } from '../../types';
-import { Dataset, Organization, Owned } from '@etalab/data.gouv.fr-components';
+import { fetchMe } from '../../api/me';
 
 const props = defineProps<{
   organization?: Array<Organization>,
@@ -53,6 +53,8 @@ const steps = [t("Describe your reuse"), t("Add datasets"), t("Complete your pub
 const currentStep = ref<Number>(0);
 
 const containerRef = ref<HTMLDivElement | null>(null);
+
+const me = ref<User | null>(null);
 
 let owned: Owned;
 
@@ -100,7 +102,7 @@ const moveToStep = (step: number, saveToHistory = true) => {
   }
 };
 
-async function createReuseAndMoveToNextStep(newReuse: Reuse, newFile: File) {
+async function createReuseAndMoveToNextStep(newReuse: Reuse, file: File) {
   errors.value = [];
   let moveToNextStep = false;
   try {
@@ -110,7 +112,7 @@ async function createReuseAndMoveToNextStep(newReuse: Reuse, newFile: File) {
     errors.value.push(e.message);
   }
   try {
-    const resp = await uploadLogo(reuse.value.id, newFile.value[0]);
+    const resp = await uploadLogo(reuse.value.id, file);
     reuse.value.image = resp.data.image
   } catch (e) {
     errors.value.push(t("Failed to upload logo, you can upload it again in your management panel"));
@@ -142,5 +144,12 @@ async function updateReuseData(newReuse: Reuse) {
   } catch (e) {
     errors.value.push(e.message);
   }
-}
+};
+
+onMounted(async () => {
+  fetchMe().then(result => {
+    me.value = result;
+  });
+  console.log(me.value)
+});
 </script>
