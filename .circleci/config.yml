@@ -227,6 +227,7 @@ jobs:
       - run:
           name: publish to chromatic
           command: npm run chromatic -- --exit-once-uploaded
+          working_directory: ./udata_front/theme/gouvfr/datagouv-components
 
   publish_datagouv_components:
     docker:
