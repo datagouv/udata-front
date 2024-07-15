@@ -10,6 +10,7 @@
       :originalDataset="dataset"
       :steps="steps"
       :granularities="granularities"
+      :user="me"
       @next="updateDatasetAndMoveToNextStep"
     />
     <template v-else-if="currentStep === 2">
@@ -39,273 +40,202 @@
     />
   </div>
 </template>
-<script>
-import { computed, defineComponent, onMounted, ref, toValue } from 'vue';
+<script setup lang="ts">
+import type { Dataset, NewDataset, User } from '@etalab/data.gouv.fr-components';
+import { useEventListener } from '@vueuse/core';
+import { type MaybeRefOrGetter, computed, onMounted, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { templateRef, useEventListener } from '@vueuse/core';
 import Step1PublishingType from "./Step1PublishingType.vue";
 import Step2DescribeDataset from './Step2DescribeDataset.vue';
 import Step3AddFiles from './Step3AddFiles.vue';
 import Step3UpdateFileMetadata from "./Step3UpdateFileMetadata.vue";
 import Step4CompleteThePublication from "./Step4CompleteThePublication.vue";
-import { publishing_form_feedback_url, title, user } from '../../config';
+import { publishing_form_feedback_url, title } from '../../config';
 import { createDataset, getSpatialGranularities, publishDataset } from '../../api/datasets';
 import { useFilesUpload } from '../../composables/form/useFilesUpload';
+import { fetchMe } from '../../api/me';
+import type { NewDatasetFile, SpatialGranularity } from '../../types';
+import { auth } from '../../plugins/auth';
 
-export default defineComponent({
-  components: { Step1PublishingType, Step2DescribeDataset, Step3AddFiles, Step3UpdateFileMetadata, Step4CompleteThePublication },
-  props: {
-    organization: {
-      /** @type {import("vue").PropType<import("../../types").Organization>} */
-      type: Object,
-    },
-    owner: {
-      /** @type {import("vue").PropType<import("../../types").User>} */
-      type: Object,
-    },
-    redirectDraftUrl: {
-      type: String,
-      required: true,
-    },
+const props = defineProps<{
+  redirectDraftUrl: string;
+}>();
+
+const { t } = useI18n();
+
+const { files, updateFiles, uploadFiles } = useFilesUpload();
+
+const granularities = ref<Array<SpatialGranularity>>([]);
+
+const steps = [t("Publish data on {site}", {site: title}), t("Describe your dataset"), t("Add files"), t("Complete your publishing")];
+
+const currentStep = ref(0);
+
+const containerRef = ref<HTMLDivElement | null>(null);
+
+const me = ref<User | null>(null);
+
+const user = auth();
+
+const dataset = ref<NewDataset>({
+  archived: false,
+  page: "",
+  title: "",
+  acronym: "",
+  description: "",
+  tags: null,
+  license: "",
+  frequency: "",
+  temporal_coverage: "",
+  frequency_date: null,
+  private: true,
+  spatial: {
+    zones: [],
+    granularity: "",
   },
-  setup(props) {
-    const { t } = useI18n();
+  quality: {
+    all_resources_available: false,
+    dataset_description_quality: false,
+    has_open_format: false,
+    has_resources: false,
+    license: false,
+    resources_documentation: false,
+    score: 0,
+    spatial: false,
+    temporal_coverage: false,
+    update_frequency: false,
+    update_fulfilled_in_time: false,
+  },
+  owner: user,
+  organization: null,
+});
 
-    const { files, updateFiles, uploadFiles } = useFilesUpload();
+const savedDataset = ref<Dataset | null>(null);
 
-    /** @type {import("vue").Ref<Array<import("../../types").SpatialGranularity>>} */
-    const granularities = ref([]);
+const draftUrl = ref<string | null>(null);
 
-    const steps = [t("Publish data on {site}", {site: title}), t("Describe your dataset"), t("Add files"), t("Complete your publishing")];
+const datasetLoading = ref(false);
 
-    const currentStep = ref(0);
+const loading = computed(() => files.value.reduce((loading, file) => loading || file.state === "loading", datasetLoading.value));
 
-    /** @type {import("vue").Ref<HTMLDivElement | null>} */
-    const containerRef = templateRef('containerRef');
+const errors = ref<Array<string>>([]);
 
-    /** @type {import("../../types").Owned} */
-    let owned;
+const editedFile = ref<NewDatasetFile | null>(null);
 
-    if(props.organization) {
-      owned = /** @type {import("../../types").OwnedByOrganization} */( {
-      organization: props.organization,
-      owner: undefined,
+const editedIndex = ref<number | null>(null);
+
+/**
+ * Move form to new step. `null` step means to only scroll to top
+ * @param step
+ */
+const moveToStep = (step: number | null = null, saveToHistory = true) => {
+  if(containerRef.value) {
+    containerRef.value.scrollIntoView({
+      behavior: "smooth"
     });
-    } else {
-      owned = {
-        organization: undefined,
-        owner: /** @type {import("../../types").User} */(props.owner ? props.owner : user),
-      };
+  }
+  if(step !== null) {
+    currentStep.value = step;
+    if(saveToHistory) {
+      let url = new URL(window.location.href);
+      const targetHash = `#/step-${step + 1}`;
+      url.hash = targetHash;
+      window.history.pushState(null, "", url);
     }
+  }
+};
 
-    /** @type {import("vue").Ref<import("../../types").NewDataset>} */
-    const dataset = ref({
-      archived: false,
-      page: "",
-      title: "",
-      acronym: "",
-      description: "",
-      tags: null,
-      license: "",
-      frequency: "",
-      temporal_coverage: "",
-      frequency_date: null,
-      private: true,
-      spatial: {
-        zones: [],
-        granularity: "",
-      },
-      quality: {
-        all_resources_available: false,
-        dataset_description_quality: false,
-        has_open_format: false,
-        has_resources: false,
-        license: false,
-        resources_documentation: false,
-        score: 0,
-        spatial: false,
-        temporal_coverage: false,
-        update_frequency: false,
-        update_fulfilled_in_time: false,
-      },
-      ...owned,
-    });
+onMounted(async () => {
+  fetchMe().then(result => {
+    me.value = result;
+  });
+  try {
+    const granularitiesValue = await getSpatialGranularities();
+    granularities.value = granularitiesValue;
+  } catch(error) {
+    console.error("Error fetching granularities:", error);
+  }
+});
 
-    /** @type {import("vue").Ref<import("../../types").Dataset | null>} */
-    const savedDataset = ref(null);
+const updateDataset = (updatedDataset: MaybeRefOrGetter<NewDataset>) => dataset.value = toValue(updatedDataset);
 
-    /** @type {import("vue").Ref<string | null>} */
-    const draftUrl = ref(null);
+const updateDatasetAndMoveToNextStep = (updatedDataset: MaybeRefOrGetter<NewDataset>) => {
+  updateDataset(updatedDataset);
+  moveToStep(2);
+};
 
-    const datasetLoading = ref(false);
+const createOrReturnDataset = (dataset: MaybeRefOrGetter<NewDataset>) => {
+  if(savedDataset.value) {
+    return Promise.resolve<Dataset>(savedDataset.value);
+  }
+  return createDataset(dataset);
+}
 
-    const loading = computed(() => files.value.reduce((loading, file) => loading || file.state === "loading", datasetLoading.value));
-
-    /** @type {import("vue").Ref<Array<string>>} */
-    const errors = ref([]);
-
-    /** @type {import("vue").Ref<import("../../types").NewDatasetFile | null>} */
-    const editedFile = ref(null);
-
-    /** @type {import("vue").Ref<number | null>} */
-    const editedIndex = ref(null);
-
-    /**
-     *
-     * @param {number | null} step
-     */
-    const moveToStep = (step = null, saveToHistory = true) => {
-      if(containerRef.value) {
-        containerRef.value.scrollIntoView({
-          behavior: "smooth"
-        });
-      }
-      if(step !== null) {
-        currentStep.value = step;
-        if(saveToHistory) {
-          let url = new URL(window.location.href);
-          const targetHash = `#/step-${step + 1}`;
-          url.hash = targetHash;
-          window.history.pushState(null, "", url);
+const updateFilesAndMoveToNextStep = (files: MaybeRefOrGetter<Array<NewDatasetFile>>) => {
+  updateFiles(files);
+  errors.value = [];
+  datasetLoading.value = true;
+  createOrReturnDataset(dataset).then(datasetFromApi => {
+    savedDataset.value = datasetFromApi;
+    draftUrl.value = props.redirectDraftUrl + savedDataset.value.id;
+    uploadFiles(savedDataset.value.id)
+    .then(results => {
+      let allPromisesSucceded = true;
+      for (let result of results) {
+        if(result.status === "rejected") {
+          allPromisesSucceded = false;
+          errors.value.push(result.reason);
         }
       }
-    };
-
-    onMounted(async () => {
-      try {
-        const granularitiesValue = await getSpatialGranularities();
-        granularities.value = granularitiesValue;
-      } catch(error) {
-        console.error("Error fetching granularities:", error);
+      if(allPromisesSucceded) {
+        moveToStep(3);
       }
     });
+  }).catch(e => console.log(e))
+  .finally(() => datasetLoading.value = false);
+}
 
-    /**
-     *
-     * @param {import("vue").MaybeRefOrGetter<import("../../types").NewDataset>} updatedDataset
-     */
-    const updateDataset = (updatedDataset) => dataset.value = toValue(updatedDataset);
+const redirectToPublicUrl = () => {
+  if(savedDataset.value) {
+    publishDataset(savedDataset.value).then((dataset) => window.open(dataset.page, "_self"));
+  }
+};
 
-    /**
-     *
-     * @param {import("vue").MaybeRefOrGetter<import("../../types").NewDataset>} updatedDataset
-     */
-    const updateDatasetAndMoveToNextStep = (updatedDataset) => {
-      updateDataset(updatedDataset);
-      moveToStep(2);
-    };
+const editFile = (resources: MaybeRefOrGetter<Array<NewDatasetFile>>, index: number) => {
+  updateFiles(resources);
+  editedFile.value = toValue(files)[index];
+  editedIndex.value = index;
+  moveToStep();
+};
 
-    /**
-     *
-     * @param {import("vue").MaybeRefOrGetter<import("../../types").NewDataset>} dataset
-     */
-    const createOrReturnDataset = (dataset) => {
-      if(savedDataset.value) {
-        return Promise.resolve(savedDataset.value);
-      }
-      return createDataset(dataset);
+const updateEditedFile = (file: NewDatasetFile) => {
+  editedFile.value = toValue(file);
+  if(editedFile.value) {
+    const filesToUpdate = [...toValue(files)];
+    filesToUpdate[editedIndex.value || 0] = editedFile.value;
+    updateFiles(filesToUpdate);
+  }
+  editedFile.value = null;
+  editedIndex.value = null;
+  moveToStep();
+}
+
+useEventListener(window, 'hashchange', (_evt) => {
+  const hash = window.location.hash;
+  const step = hash.substring(7);
+  const parsedStep = parseInt(step, 10) - 1|| 0;
+  const dontSave = false;
+  if(editedFile.value && typeof editedIndex.value === "number") {
+    if(!editedFile.value.title || !editedFile.value.format) {
+      const filesToUpdate = [...toValue(files)];
+      filesToUpdate.splice(editedIndex.value, 1);
+      updateFiles(filesToUpdate);
     }
-
-    /**
-     *
-     * @param {import("vue").MaybeRefOrGetter<Array<import("../../types").NewDatasetFile>>} files
-     */
-    const updateFilesAndMoveToNextStep = (files) => {
-      updateFiles(files);
-      errors.value = [];
-      datasetLoading.value = true;
-      createOrReturnDataset(dataset).then(datasetFromApi => {
-        savedDataset.value = datasetFromApi;
-        draftUrl.value = props.redirectDraftUrl + savedDataset.value.id;
-        uploadFiles(savedDataset.value.id)
-        .then(results => {
-          let allPromisesSucceded = true;
-          for (let result of results) {
-            if(result.status === "rejected") {
-              allPromisesSucceded = false;
-              errors.value.push(result.reason);
-            }
-          }
-          if(allPromisesSucceded) {
-            moveToStep(3);
-          }
-        });
-      }).catch(e => console.log(e))
-      .finally(() => datasetLoading.value = false);
-    }
-
-    const redirectToPublicUrl = () => {
-      if(savedDataset.value) {
-        publishDataset(savedDataset.value).then((dataset) => window.open(dataset.page, "_self"));
-      }
-    };
-
-    /**
-     *
-     * @param {Array<import("../../types").NewDatasetFile>} resources
-     * @param {number} index
-     */
-    const editFile = (resources, index) => {
-      updateFiles(resources);
-      editedFile.value = files.value[index];
-      editedIndex.value = index;
-      moveToStep();
-    };
-
-    /**
-     *
-     * @param {import("../../types").NewDatasetFile} file
-     */
-    const updateEditedFile = (file) => {
-      editedFile.value = toValue(file);
-      if(editedFile.value) {
-        const filesToUpdate = [...toValue(files)];
-        filesToUpdate[editedIndex.value || 0] = editedFile.value;
-        updateFiles(filesToUpdate);
-      }
-      editedFile.value = null;
-      editedIndex.value = null;
-      moveToStep();
-    }
-
-    useEventListener(window, 'hashchange', (evt) => {
-      const hash = window.location.hash;
-      const step = hash.substring(7);
-      const parsedStep = parseInt(step, 10) - 1|| 0;
-      const dontSave = false;
-      if(editedFile.value && typeof editedIndex.value === "number") {
-        if(!editedFile.value.title || !editedFile.value.format) {
-          const filesToUpdate = [...toValue(files)];
-          filesToUpdate.splice(editedIndex.value, 1);
-          updateFiles(filesToUpdate);
-        }
-        editedFile.value = null;
-        editedIndex.value = null;
-        moveToStep();
-      } else {
-        moveToStep(parsedStep, dontSave);
-      }
-    });
-
-    return {
-      currentStep,
-      dataset,
-      draftUrl,
-      editFile,
-      editedFile,
-      errors,
-      files,
-      granularities,
-      loading,
-      moveToStep,
-      publishing_form_feedback_url,
-      redirectToPublicUrl,
-      savedDataset,
-      steps,
-      updateDatasetAndMoveToNextStep,
-      updateEditedFile,
-      updateFilesAndMoveToNextStep,
-    };
+    editedFile.value = null;
+    editedIndex.value = null;
+    moveToStep();
+  } else {
+    moveToStep(parsedStep, dontSave);
   }
 });
 </script>
