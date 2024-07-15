@@ -1,7 +1,8 @@
 {% extends theme('layouts/1-column.html') %}
+{% from theme('macros/breadcrumb.html') import breadcrumb with context %}
 {% from theme('macros/follow.html') import follow_btn with context %}
 {% from theme('macros/integrate.html') import integrate_btn with context %}
-{% from theme('macros/breadcrumb.html') import breadcrumb with context %}
+{% from theme('macros/report.html') import report_btn with context %}
 
 {% set meta = {
     'title': reuse.title,
@@ -46,6 +47,7 @@
 
 {% block toolbar %}
 {{ follow_btn(reuse) }}
+{{ report_btn(reuse) }}
 <a
     href="{{ reuse.url }}"
     rel="ugc nofollow noopener"

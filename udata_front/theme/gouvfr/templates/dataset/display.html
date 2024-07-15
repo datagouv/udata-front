@@ -1,13 +1,14 @@
 {% extends theme('layouts/1-column.html') %}
+{% from theme('macros/banner_info.html') import banner_info %}
+{% from theme('macros/banner_warning.html') import banner_warning %}
+{% from theme('macros/breadcrumb.html') import breadcrumb with context %}
 {% from theme('macros/dataset_information.html') import information_col, information_section, information_accordion %}
 {% from theme('macros/follow.html') import follow_btn with context %}
 {% from theme('macros/integrate.html') import integrate_btn with context %}
-{% from theme('macros/paginator.html') import paginator with context %}
-{% from theme('macros/breadcrumb.html') import breadcrumb with context %}
-{% from theme('macros/banner_info.html') import banner_info %}
 {% from theme('macros/leaflet.html') import leaflet_map %}
-{% from theme('macros/banner_warning.html') import banner_warning %}
+{% from theme('macros/paginator.html') import paginator with context %}
 {% from theme('macros/quality_score_with_warning_below.html') import quality_score_with_warning_below %}
+{% from theme('macros/report.html') import report_btn with context %}
 
 ## FIXME: remove inspire:indentifier robots condition when geo.data.gouv.fr is shutdown
 {% set meta = {
@@ -49,9 +50,7 @@
 
 {% block toolbar %}
 {{ follow_btn(dataset) }}
-<div class="fr-col-auto fr-ml-3v vuejs">
-    <report-button object-type="Dataset" object-id="{{ dataset.id|string }}"></report-button>
-</div>
+{{ report_btn(dataset) }}
 {{ hook('dataset.display.explore-button') }}
 {% if can_edit %}
     <div class="fr-col-auto fr-ml-3v">
