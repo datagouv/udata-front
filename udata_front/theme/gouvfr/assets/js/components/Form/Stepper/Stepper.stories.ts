@@ -13,11 +13,6 @@ const args = {
   currentStep: 0,
 };
 
-const argsOrga = {
-  steps: ["Create or join an organization on data.gouv.fr", "Describe your organization", "Finalize your organization"],
-  currentStep: 0,
-}
-
 export const StepperOnFirstStep: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Stepper },
@@ -39,31 +34,6 @@ export const StepperOnSecondStep: StoryObj<typeof meta> = {
   }),
   args: {
     ...args,
-    currentStep: 1,
-  },
-};
-
-export const StepperOrgaOnFirstStep: StoryObj<typeof meta> = {
-  render: (args) => ({
-    components: { Stepper },
-    setup() {
-      return { args };
-    },
-    template: '<Stepper v-bind="args" />',
-  }),
-  args: argsOrga,
-};
-
-export const StepperOrgaOnSecondStep: StoryObj<typeof meta> = {
-  render: (args) => ({
-    components: { Stepper },
-    setup() {
-      return { args };
-    },
-    template: '<Stepper v-bind="args" />',
-  }),
-  args: {
-    ...argsOrga,
     currentStep: 1,
   },
 };
