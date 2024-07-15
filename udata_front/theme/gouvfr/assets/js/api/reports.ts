@@ -4,7 +4,7 @@ import { getLocalizedUrl } from "../i18n";
 
 export type ReportReason = string;
 
-export type ReportReasons = Record<string, string>;
+export type ReportReasons = Array<{label: string, value: string}>;
 
 export async function getReportReasons() {
   const res = await api.get<ReportReasons>(getLocalizedUrl("reports/reasons/"));

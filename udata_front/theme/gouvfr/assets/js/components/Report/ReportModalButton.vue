@@ -11,6 +11,8 @@
     </button>
     <ReportModal
       :id="id"
+      :loading="loading"
+      :succeeded="succeeded"
       @send="send"
     />
 </template>
@@ -20,6 +22,7 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import ReportModal, { type ReportModalForm } from './ReportModal.vue';
 import { type ObjectType, postReport } from '../../api/reports';
+import { useToast } from '../../composables/useToast';
 
 type ObjectData = {
   objectType: ObjectType;
@@ -28,19 +31,25 @@ type ObjectData = {
 
 const props = defineProps<ObjectData>();
 
-const emit = defineEmits<{
-  (event: 'send', form: ReportModalForm & ObjectData): void,
-}>();
-
 const { t } = useI18n();
 
+const { toast } = useToast();
+
 const loading = ref(false);
+
+const succeeded = ref(false);
 
 const id = getRandomId();
 
 async function send(form: ReportModalForm) {
-  loading.value = true;
-  await postReport(props.objectType, props.objectId, form.reason, form.message);
-  loading.value = false;
+  try {
+    loading.value = true;
+    await postReport(props.objectType, props.objectId, form.reason, form.message);
+    succeeded.value = true;
+  } catch (e) {
+    toast.error(t('An unexpected error occured while reporting this content.'))
+  } finally {
+    loading.value = false;
+  }
 }
 </script>

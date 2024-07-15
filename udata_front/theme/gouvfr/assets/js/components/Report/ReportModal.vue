@@ -11,12 +11,13 @@
                   :title="t('Close the modal dialog')"
                   :aria-controls="id"
                   target="_self"
+                  :disabled="loading"
                   @click="close"
                 >
                   {{ t('Close') }}
                 </button>
               </div>
-              <template v-if="showConfirm">
+              <template v-if="succeeded">
                 <div class="fr-modal__content">
                   <h2 :id="reportModalTitleId" class="fr-mb-2w">
                     <span class="fr-icon-success-line fr-icon--lg"></span>{{ t('Thanks for reporting this content') }}
@@ -79,6 +80,7 @@
                       class="fr-btn"
                       :aria-controls="id"
                       target="_self"
+                      :disabled="loading"
                       @click.prevent.stop.capture="send"
                     >
                       {{ t("Send") }}
@@ -103,6 +105,8 @@ import InputGroup from '../Form/InputGroup/InputGroup.vue';
 
 export type ReportModalProps = {
   id: string,
+  loading: boolean,
+  succeeded: boolean,
 };
 
 export type ReportModalForm = {
@@ -124,7 +128,6 @@ const emit = defineEmits<{
 const { t } = useI18n();
 const reportModalTitleId = getRandomId("modal-title");
 const modalRef = ref<HTMLDialogElement | null>();
-const showConfirm = ref(false);
 
 const initialState = {
   reason: "",
@@ -160,7 +163,6 @@ function send() {
   validateRequiredRules().then(valid => {
     if(valid) {
       emit('send', {...form});
-      showConfirm.value = true;
     }
   });
 };
