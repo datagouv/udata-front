@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { delay, http, HttpResponse } from 'msw';
-import { user } from '../../config';
+import { user } from '../../config';
 import ReusePublishingForm from './ReusePublishingForm.vue';
 
 const meta = {
@@ -34,9 +34,8 @@ export const FormWithNoOrganizations: StoryObj<typeof meta> = {
         return HttpResponse.json(reuse);
       }),
       http.post('*/api/1/reuses/:reuseId/image', async () => {
-        return HttpResponse.json({"image": "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png", "success": true}), {
-          status: 200,
-        };
+        await delay();
+        return HttpResponse.json({image: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png", success: true});
       }),
       http.put('*/api/1/reuses/:reuseId', async ({ request }) => {
         const body = await request.json();
@@ -103,9 +102,8 @@ export const FormWithOrganizations: StoryObj<typeof meta> = {
         return HttpResponse.json(reuse);
       }),
       http.post('*/api/1/reuses/:reuseId/image', async () => {
-        return HttpResponse.json({"image": "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png", "success": true}), {
-          status: 200,
-        };
+        await delay();
+        return HttpResponse.json({"image": "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png", "success": true});
       }),
       http.put('*/api/1/reuses/:reuseId', async ({ request }) => {
         const body = await request.json();

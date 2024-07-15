@@ -1,5 +1,6 @@
 <template>
     <Container>
+      <Stepper :steps="steps" :currentStep="1"/>
       <Well
         color="blue-cumulus"
         weight="regular"
@@ -76,6 +77,7 @@ import { useI18n } from 'vue-i18n';
 import Container from '../../components/Ui/Container/Container.vue';
 import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
+import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Alert from '../../components/Alert/Alert.vue';
 import useFunctionalState from '../../composables/form/useFunctionalState';
 import { requiredWithCustomMessage } from '../../i18n';
@@ -87,19 +89,19 @@ import { useToast } from "../../composables/useToast";
   
 const props = defineProps<{
   errors: Array<string>,
+  steps: Array<string>,
   loading?: Boolean,
   reuse: Reuse,
-  originalDatasets?: Dataset[]
 }>();
 
 const emit = defineEmits<{
-  (event: 'next', datasets: Array<Dataset>): void,
+  (event: 'next', reuse: Reuse): void,
 }>();
 
 const { t } = useI18n();
 const { toast } = useToast();
 
-const datasets = ref([...props.originalDatasets || []]);
+const datasets = ref<Dataset[]>([]);
 const reuse = ref(props.reuse);
 const linkedDataset = ref<string>("");
 const datasetNotFound = ref<Boolean>(false);
@@ -154,7 +156,6 @@ const submit = () => {
   validateRequiredRules().then(validated => {
     if(validated) {
       toValue(datasets).forEach(dataset => {
-        console.log(reuse)
         reuse.value.datasets.push(dataset.id);
       });
       emit("next", toValue(reuse));

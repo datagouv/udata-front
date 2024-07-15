@@ -284,7 +284,8 @@ import Container from '../../components/Ui/Container/Container.vue';
 import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
 import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
-import ProducerSelector from '../../components/ProducerSelector/ProducerSelector.vue'
+import ProducerSelector from '../../components/ProducerSelector/ProducerSelector.vue';
+import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
 import useUid from "../../composables/useUid";
 import useFunctionalState from '../../composables/form/useFunctionalState';
@@ -318,7 +319,6 @@ const { id: addTagsAccordionId } = useUid("accordion");
 const { id: addImageAccordionId } = useUid("accordion");
 
 const reuse = reactive<Reuse>({...props.originalReuse});
-const image = ref<File | null>(null);
 const file = ref<File | null>(null);
 const imagePreview = ref<HTMLImageElement | null>(null);
 const topicsUrl = getReuseTopicsUrl();
@@ -327,7 +327,7 @@ const typesUrl = getReuseTypesUrl();
 const isSelectedProducer = ref<boolean>(false);
 
 const hasImage = () => {
-  return image.value !== null;
+  return file.value !== null;
 };
 
 function checkOwned() {

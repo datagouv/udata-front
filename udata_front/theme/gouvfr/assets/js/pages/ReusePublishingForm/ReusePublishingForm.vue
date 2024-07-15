@@ -13,7 +13,6 @@
       :steps="steps"
       :reuse="reuse"
       :errors="errors"
-      :originalDatasets="[]"
       @next="updateReuseAndMoveToNextStep"
     />
     <Step3CompleteThePublication
@@ -29,22 +28,15 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { Dataset, Organization, Owned, User } from '@etalab/data.gouv.fr-components';
+import type { Dataset, User } from '@etalab/data.gouv.fr-components';
 import Step1DescribeReuse from './Step1DescribeReuse.vue';
 import Step2AddDatasets from './Step2AddDatasets.vue';
 import Step3CompleteThePublication from './Step3CompleteThePublication.vue';
-import { publishing_form_feedback_url, user } from '../../config';
+import { publishing_form_feedback_url } from '../../config';
 import { createReuse, updateReuse, uploadLogo } from '../../api/reuses';
-import { Reuse } from '../../types';
+import type { Reuse } from '../../types';
 import { fetchMe } from '../../api/me';
-
-const props = defineProps<{
-  organization?: Array<Organization>,
-  reuse?: Reuse,
-  owner?: Owned,
-  redirectDraftUrl: string
-  originalDatasets?: Array<Dataset>
-}>();
+import { auth } from '../../plugins/auth';
   
 const { t } = useI18n();
 
@@ -56,19 +48,7 @@ const containerRef = ref<HTMLDivElement | null>(null);
 
 const me = ref<User | null>(null);
 
-let owned: Owned;
-
-if(props.organization) {
-  owned = ( {
-    organization: props.organization,
-    owner: null,
-  });
-} else {
-  owned = {
-    organization: null,
-    owner: (props.owner ? props.owner : user),
-  };
-}
+const user = auth();
 
 const reuse = ref<Reuse>({
   title: "",
@@ -80,7 +60,8 @@ const reuse = ref<Reuse>({
   image_thumbnail: "",
   topic: "",
   type: "",
-  ...owned
+  organization: null,
+  owner: user,
 });
 
 const errors = ref<Array<String>>([]);
