@@ -10,9 +10,7 @@ const meta = {
 
 export default meta;
 
-const args = {
-  redirectDraftUrl: "https://demo.data.gouv.fr/fr/reuses/?q=draft",
-};
+const args = {};
 
 export const FormWithNoOrganizations: StoryObj<typeof meta> = {
   parameters: {

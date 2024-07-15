@@ -94,6 +94,7 @@ const args = {
       }
     }
   ],
+  steps: ["Describe your reuse", "Add datasets", "Complete your publishing"],
   errors: [],
 };
 

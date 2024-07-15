@@ -17,8 +17,8 @@ const originalReuse = {
   extras: {},
   featured: null,
   id: "someId",
-  image: "hhttps://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-  image_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+  image: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",
+  image_thumbnail: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",
   last_modified: "2024-03-04T08:07:50.215000+00:00",
   metrics: {
     datasets: 1,
@@ -56,7 +56,7 @@ const originalReuse = {
 const args = {
   originalReuse,
   feedbackUrl: "https://demo.data.gouv.fr/fr/reuses/?q=feedback",
-  redirectDraftUrl: "https://demo.data.gouv.fr/fr/reuses/?q=draft",
+  steps: ["Describe your reuse", "Add datasets", "Complete your publishing"],
 };
 
 export const Step3: StoryObj<typeof meta> = {

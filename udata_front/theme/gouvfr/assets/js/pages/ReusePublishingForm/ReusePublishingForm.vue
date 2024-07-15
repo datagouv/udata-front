@@ -28,13 +28,13 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { Dataset, User } from '@etalab/data.gouv.fr-components';
+import type { User } from '@etalab/data.gouv.fr-components';
 import Step1DescribeReuse from './Step1DescribeReuse.vue';
 import Step2AddDatasets from './Step2AddDatasets.vue';
 import Step3CompleteThePublication from './Step3CompleteThePublication.vue';
 import { publishing_form_feedback_url } from '../../config';
 import { createReuse, updateReuse, uploadLogo } from '../../api/reuses';
-import type { Reuse } from '../../types';
+import type { NewReuse } from '../../types';
 import { fetchMe } from '../../api/me';
 import { auth } from '../../plugins/auth';
   
@@ -50,18 +50,16 @@ const me = ref<User | null>(null);
 
 const user = auth();
 
-const reuse = ref<Reuse>({
+const reuse = ref<NewReuse>({
   title: "",
   description: "",
   tags: null,
-  private: false,
+  url: "",
   datasets: [],
-  image: "",
-  image_thumbnail: "",
   topic: "",
   type: "",
   organization: null,
-  owner: user,
+  owner: user.id,
 });
 
 const errors = ref<Array<String>>([]);
@@ -131,6 +129,5 @@ onMounted(async () => {
   fetchMe().then(result => {
     me.value = result;
   });
-  console.log(me.value)
 });
 </script>

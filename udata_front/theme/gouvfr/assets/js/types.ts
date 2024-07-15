@@ -1,4 +1,4 @@
-import { type Organization, type Owned, type Resource, type User, type NewDataset as BaseNewDataset, type Dataset } from "@etalab/data.gouv.fr-components";
+import { type Organization, type Owned, type Resource, type User, type NewDataset as BaseNewDataset, type Dataset, type NewReuse } from "@etalab/data.gouv.fr-components";
 export type MultiSelectOption = {
   label: string;
   value: string;
@@ -117,7 +117,7 @@ export type OwnedWithId = { organization: string, owner: never | null } | { orga
 
 export type NewDataset = Omit<BaseNewDataset, keyof OwnedWithId> & OwnedWithId;
 
-export type NewReuse = Owned & {
+export type BaseNewReuse = Owned & {
   title: string;
   description: string;
   tags: Array<string> | null;
@@ -127,7 +127,9 @@ export type NewReuse = Owned & {
   url: string;
 };
 
-export type Reuse = NewReuse & {
+export type NewReuse = Omit<NewReuse, keyof OwnedWithId> & OwnedWithId;
+
+export type Reuse = BaseNewReuse & {
   id: string;
   page: string;
   private: boolean;

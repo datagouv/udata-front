@@ -57,7 +57,7 @@
           <p class="fr-text--md fr-text--bold">{{ t('No dataset associated to that link has been found') }}</p>
         </div>
       </fieldset>
-      <Alert type="error" v-if="errors.length" class="fr-mt-n2w fr-mb-2w">
+      <Alert type="error" v-if="errors.length" class="fr-mb-2w">
         <template #title>{{ t("An error occured | Some errors occured", errors.length) }}</template>
         <ul v-if="errors.length > 1">
           <li v-for="error in errors">{{ error }}</li>

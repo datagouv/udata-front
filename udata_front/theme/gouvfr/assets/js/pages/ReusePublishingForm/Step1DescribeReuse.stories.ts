@@ -65,6 +65,7 @@ const originalReuse = {
 
 const args = {
   originalReuse,
+  steps: ["Describe your reuse", "Add datasets", "Complete your publishing"],
   errors: [],
   user: myUser
 };
