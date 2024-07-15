@@ -1,8 +1,8 @@
 <template>
     <div class="fr-m-0 fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
-        <div class="fr-grid-row fr-grid-row--middle fr-ml-n3v">
+        <div class="fr-grid-row fr-grid-row--middle">
           <Toggletip
-              class="fr-btn fr-btn--tertiary-no-outline fr-btn--xs fr-btn--secondary-grey-380 fr-icon-information-line fr-icon--sm"
+              class="fr-btn fr-btn--tertiary-no-outline fr-btn--xs fr-icon-information-line fr-icon--sm fr-mt-1v"
           >
               <template #toggletip>
                   <h5 class="fr-text--sm fr-my-0">{{$t("Metadata quality:")}}</h5>
@@ -66,7 +66,7 @@
                   </div>
               </template>
           </Toggletip>
-          <p class="fr-my-0 fr-mr-1v text-mention-grey fr-text--sm fr-ml-n2v">
+          <p class="fr-my-0 fr-mr-1v text-mention-grey fr-text--sm">
               {{$t('Metadata :')}}
           </p>
           <div class="fr-grid-row fr-grid-row--middle fr-mr-1v">

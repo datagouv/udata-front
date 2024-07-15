@@ -92,8 +92,8 @@ const dataset: DatasetV2 = {
       views: 0
     },
     acronym: null,
-    logo: "https://demo-static.data.gouv.fr/avatars/92/6284d057ca4279af35e9b62bc62639-100.png",
-    logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/92/6284d057ca4279af35e9b62bc62639-100.png",
+    logo: "https://static.data.gouv.fr/avatars/09/1ba932cbfa48dc8c158981de6c700a-100.jpeg",
+    logo_thumbnail: "https://static.data.gouv.fr/avatars/09/1ba932cbfa48dc8c158981de6c700a-100.jpeg",
     page: "https://demo.data.gouv.fr/fr/organizations/test-meteo-france/",
     business_number_id: "",
     description: "",

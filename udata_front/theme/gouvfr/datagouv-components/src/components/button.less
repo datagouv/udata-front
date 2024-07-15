@@ -3,8 +3,16 @@
 .datagouv-components {
     @import "../../../assets/less/components/buttons.less";
 
-    .fr-btn--xs {
-        padding: 0.25rem !important;
-        border-radius: 4rem;
+    .fr-btn.fr-btn--xs[class*=" fr-icon-"]:not([class*=fr-btn--icon-]) {
+        max-height: 1.5rem;
+        min-height: 1.5rem;
+        max-width: 1.5rem;
+        padding: 0.25rem;
+        line-height: 0.75rem;
+        color: @grey-380;
+
+        &:hover {
+            background-color: @grey-300;
+        }
     }
 }
