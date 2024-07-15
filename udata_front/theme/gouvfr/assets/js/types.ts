@@ -121,7 +121,7 @@ export type BaseNewReuse = Owned & {
   title: string;
   description: string;
   tags: Array<string> | null;
-  datasets: Array<Dataset>;
+  datasets: Array<Dataset | string>;
   topic: string;
   type: string;
   url: string;
