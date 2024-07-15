@@ -1,6 +1,6 @@
 import { withActions } from '@storybook/addon-actions/decorator';
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { rest } from 'msw';
+import { delay, http, HttpResponse } from 'msw';
 import ReportModal, { type ReportModalProps } from './ReportModal.vue';
 
 const meta = {
@@ -9,20 +9,12 @@ const meta = {
   decorators: [withActions],
   argTypes: {
     onSend: { action: true },
-  }
-} satisfies Meta<typeof ReportModal>;
-
-export default meta;
-
-const args: ReportModalProps = {
-  id: "someId",
-};
-
-export const SimpleReportModal = {
+  },
   parameters: {
     msw: [
-      rest.get('*/api/1/reports/reasons/', async (_req, res, ctx) => {
-        return res(ctx.delay(), ctx.json([
+      http.get('*/api/1/reports/reasons/', async () => {
+        await delay();
+        return HttpResponse.json([
           {
             "label": "Explicit content",
             "value": "explicit_content"
@@ -47,10 +39,21 @@ export const SimpleReportModal = {
             "label": "Spam",
             "value": "spam"
           }
-        ]));
+        ]);
       }),
     ],
   },
+} satisfies Meta<typeof ReportModal>;
+
+export default meta;
+
+const args: ReportModalProps = {
+  id: "someId",
+  loading: false,
+  succeeded: false,
+};
+
+export const SimpleReportModal = {
   render: (args) => ({
     components: { ReportModal },
     setup() {
@@ -60,5 +63,35 @@ export const SimpleReportModal = {
                 </ReportModal>`,
   }),
   args,
+} satisfies StoryObj<typeof meta>;
+
+export const LoadingReportModal = {
+  render: (args) => ({
+    components: { ReportModal },
+    setup() {
+      return { args };
+    },
+    template: ` <ReportModal class="fr-modal--opened" v-bind="args">
+                </ReportModal>`,
+  }),
+  args: {
+    ...args,
+    loading: true,
+  },
+} satisfies StoryObj<typeof meta>;
+
+export const SuceeddeedReportModal = {
+  render: (args) => ({
+    components: { ReportModal },
+    setup() {
+      return { args };
+    },
+    template: ` <ReportModal class="fr-modal--opened" v-bind="args">
+                </ReportModal>`,
+  }),
+  args: {
+    ...args,
+    succeeded: true,
+  },
 } satisfies StoryObj<typeof meta>;
 

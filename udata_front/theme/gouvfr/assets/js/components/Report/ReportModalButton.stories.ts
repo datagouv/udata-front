@@ -1,6 +1,6 @@
 import { withActions } from '@storybook/addon-actions/decorator';
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { rest } from 'msw';
+import { delay, http, HttpResponse } from 'msw';
 import ReportModalButton from './ReportModalButton.vue';
 import type { NewReport, Report } from '../../api/reports';
 
@@ -18,24 +18,26 @@ export default meta;
 export const SimpleReportModalButton = {
   parameters: {
     msw: [
-      rest.get('*/api/1/reports/reasons/', async (_req, res, ctx) => {
-        return res(ctx.delay(), ctx.json({
+      http.get('*/api/1/reports/reasons/', async () => {
+        await delay();
+        return HttpResponse.json({
           "explicit_content": "Explicit content",
           "illegal_content": "Illegal content",
           "others": "Others",
           "personal_data": "Personal data",
           "security": "Security",
           "spam": "Spam"
-        }));
+        });
       }),
-      rest.post('*/api/1/reports/', async (req, res, ctx) => {
-        const reportSent = await req.json<NewReport>();
-        return res(ctx.delay(), ctx.json<Report>({
+      http.post('*/api/1/reports/', async ({ request }) => {
+        await delay();
+        const reportSent = await request.json() as NewReport;
+        return HttpResponse.json<Report>({
           ...reportSent,
           id: "someId",
           by: null,
           reported_at: (new Date()).toUTCString()
-        }));
+        });
       }),
     ],
   },
