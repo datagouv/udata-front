@@ -20,6 +20,14 @@
     font-size: @font-size-xs;
 }
 
+.fr-btn.fr-btn--xs[class*=" fr-icon-"]:not([class*=fr-btn--icon-]) {
+    max-height: 1.5rem;
+    min-height: 1.5rem;
+    max-width: 1.5rem;
+    padding: 0.25rem;
+    line-height: 0.75rem;
+}
+
 .fr-header__menu-links .fr-btn {
     border-radius: 0;
     --text-action-high-blue-france: @blue-400;
@@ -72,4 +80,10 @@ each(@colors, {
     --background-action-high-blue-france-active: @background-contrast-blue-cumulus-active;
     --text-inverted-blue-france: @text-label-blue-cumulus;
     border-radius: 4px;
+}
+
+.fr-btn--darker-hover {
+    &:hover {
+        background-color: @grey-300;
+    }
 }
