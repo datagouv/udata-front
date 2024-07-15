@@ -293,20 +293,20 @@ import reuseIcon from "../../../../templates/svg/illustrations/reuse.svg";
 import { quality_description_length } from "../../config";
 import { getReuseTypesUrl, getReuseTopicsUrl } from '../../api/reuses';
 import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
-import type { Me, OwnedWithId, PublishingFormAccordionState, Reuse } from '../../types';
+import type { Me, OwnedWithId, PublishingFormAccordionState, NewReuse } from '../../types';
 import { useI18n } from 'vue-i18n';
 import Alert from '../../components/Alert/Alert.vue';
 import { url } from '@vuelidate/validators';
 
 const props = defineProps<{
-  originalReuse: Reuse,
+  reuse: NewReuse,
   steps: Array<string>,
   errors: Array<String>,
   user: Me,
 }>();
 
 const emit = defineEmits<{
-  (event: 'next', reuse: Reuse, file: File): void,
+  (event: 'next', reuse: NewReuse, file: File): void,
 }>();
 
 const { t } = useI18n();
@@ -318,7 +318,7 @@ const { id: addDescriptionAccordionId } = useUid("accordion");
 const { id: addTagsAccordionId } = useUid("accordion");
 const { id: addImageAccordionId } = useUid("accordion");
 
-const reuse = reactive<Reuse>({...props.originalReuse});
+const reuse = reactive<NewReuse>({...props.reuse});
 const file = ref<File | null>(null);
 const imagePreview = ref<HTMLImageElement | null>(null);
 const topicsUrl = getReuseTopicsUrl();
@@ -389,7 +389,7 @@ function addFiles(newFile: Array<File>) {
 
 const submit = () => {
   validateRequiredRules().then(valid => {
-    if(valid) {
+    if(valid && file.value) {
       emit("next", reuse, file.value);
     }
   });

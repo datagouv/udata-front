@@ -70,11 +70,11 @@ const emit = defineEmits<{
 const { t } = useI18n();
 
 const reuse = reactive({...props.originalReuse});
-const draft = () => {
+function draft() {
   reuse.private = true
   emit("update", reuse);
 }
-const publish = () => {
+function publish() {
   reuse.private = false
   emit("update", reuse);
 };

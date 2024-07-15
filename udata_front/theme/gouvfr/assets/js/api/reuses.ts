@@ -1,7 +1,7 @@
 import { getLocalizedUrl } from "../i18n";
 import { toValue } from "vue";
 import { api } from "../plugins/api";
-import { Reuse } from "../types";
+import type { Reuse, NewReuse } from "../types";
 
 let reuseTypesRequest: Promise<Array<ReuseType>> | null = null;
 
@@ -36,7 +36,7 @@ export function getType(types: Array<ReuseType>, id: string): string {
   return type ? type.label : "";
 }
 
-export function createReuse(reuse: Reuse) {
+export function createReuse(reuse: NewReuse) {
   return api.post<Reuse>("reuses/", {
     ...toValue(reuse),
   }).then(resp => resp.data);

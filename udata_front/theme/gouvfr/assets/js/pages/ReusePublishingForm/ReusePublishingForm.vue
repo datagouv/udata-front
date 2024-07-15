@@ -2,7 +2,7 @@
   <div class="fr-container" ref="containerRef">
     <Step1DescribeReuse
       v-if="currentStep === 0 && me"
-      :originalReuse="reuse"
+      :reuse="reuse"
       :steps="steps"
       :errors="errors"
       :user="me"
@@ -11,7 +11,7 @@
     <Step2AddDatasets
       v-else-if="currentStep === 1"
       :steps="steps"
-      :reuse="reuse"
+      :reuse="savedReuse"
       :errors="errors"
       @next="updateReuseAndMoveToNextStep"
     />
@@ -19,7 +19,7 @@
       v-else-if="currentStep === 2"
       :steps="steps"
       :feedbackUrl="publishing_form_feedback_url"
-      :originalReuse="reuse"
+      :originalReuse="savedReuse"
       @update="updateReuseData"
     />
   </div>
@@ -34,7 +34,7 @@ import Step2AddDatasets from './Step2AddDatasets.vue';
 import Step3CompleteThePublication from './Step3CompleteThePublication.vue';
 import { publishing_form_feedback_url } from '../../config';
 import { createReuse, updateReuse, uploadLogo } from '../../api/reuses';
-import type { NewReuse } from '../../types';
+import type { NewReuse, Reuse } from '../../types';
 import { fetchMe } from '../../api/me';
 import { auth } from '../../plugins/auth';
   
@@ -62,6 +62,26 @@ const reuse = ref<NewReuse>({
   owner: user.id,
 });
 
+const savedReuse = ref<Reuse>({
+  id: "",
+  page: "",
+  private: false,
+  deleted: false,
+  image: "",
+  image_thumbnail: "",
+  slug: "",
+  last_update: "",
+  title: "",
+  description: "",
+  tags: null,
+  url: "",
+  datasets: [],
+  topic: "",
+  type: "",
+  organization: null,
+  owner: user,
+});
+
 const errors = ref<Array<String>>([]);
 
 const moveToStep = (step: number, saveToHistory = true) => {
@@ -81,11 +101,11 @@ const moveToStep = (step: number, saveToHistory = true) => {
   }
 };
 
-async function createReuseAndMoveToNextStep(newReuse: Reuse, file: File) {
+async function createReuseAndMoveToNextStep(newReuse: NewReuse, file: File) {
   errors.value = [];
   let moveToNextStep = false;
   try {
-    reuse.value = await createReuse(newReuse);
+    savedReuse.value = await createReuse(newReuse);
     moveToNextStep = true;
   } catch (e) {
     errors.value.push(e.message);
@@ -106,7 +126,7 @@ async function updateReuseAndMoveToNextStep(newReuse: Reuse) {
   let moveToNextStep = false;
   const datasets = newReuse.datasets;
   try {
-    reuse.value = await updateReuse(newReuse);
+    savedReuse.value = await updateReuse(newReuse);
     reuse.value.datasets = datasets;
     moveToNextStep = true;
   } catch (e) {
@@ -119,7 +139,7 @@ async function updateReuseAndMoveToNextStep(newReuse: Reuse) {
 
 async function updateReuseData(newReuse: Reuse) {
   try {
-    reuse.value = await updateReuse(newReuse);
+    savedReuse.value = await updateReuse(newReuse);
   } catch (e) {
     errors.value.push(e.message);
   }
