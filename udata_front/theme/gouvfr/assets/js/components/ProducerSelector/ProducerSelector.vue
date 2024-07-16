@@ -67,7 +67,6 @@ const props = defineProps<{
 const createOrganizationUrl = `${organization_url}publishing-form/`;
 
 const userOrganization = ref<Organization>();
-console.log(props.user)
 const owned = ref<OwnedWithId>({
   organization: null,
   owner: props.user.id,
