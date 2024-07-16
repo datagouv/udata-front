@@ -9,8 +9,6 @@ const meta = {
   component: DatasetCard,
   tags: ['autodocs'],
   parameters: {
-    // Sets a delay for the component's stories
-    chromatic: { delay: 600 },
     docs: {
       description: {
         component: "The DatasetCard displays data about a dataset."
@@ -126,6 +124,10 @@ const argsArchived = {
 };
 
 export const DatasetCardSimple: StoryObj<typeof meta> = {
+  parameters: {
+    // Sets a delay for the component's stories
+    chromatic: { delay: 600 },
+  },
   render: (args) => ({
     components: { DatasetCard },
     setup() {
@@ -137,6 +139,10 @@ export const DatasetCardSimple: StoryObj<typeof meta> = {
 };
 
 export const DatasetCardSimpleWithOrganizationUrl: StoryObj<typeof meta> = {
+  parameters: {
+    // Sets a delay for the component's stories
+    chromatic: { delay: 600 },
+  },
   render: (args) => ({
     components: { DatasetCard },
     setup() {
@@ -151,6 +157,10 @@ export const DatasetCardSimpleWithOrganizationUrl: StoryObj<typeof meta> = {
 };
 
 export const DatasetCardWithoutDescription: StoryObj<typeof meta> = {
+  parameters: {
+    // Sets a delay for the component's stories
+    chromatic: { delay: 600 },
+  },
   render: (args) => ({
     components: { DatasetCard },
     setup() {
@@ -165,6 +175,10 @@ export const DatasetCardWithoutDescription: StoryObj<typeof meta> = {
 };
 
 export const PrivateDatasetCard: StoryObj<typeof meta> = {
+  parameters: {
+    // Sets a delay for the component's stories
+    chromatic: { delay: 600 },
+  },
   render: (args) => ({
     components: { DatasetCard },
     setup() {
@@ -178,6 +192,10 @@ export const PrivateDatasetCard: StoryObj<typeof meta> = {
 };
 
 export const ArchivedDatasetCard: StoryObj<typeof meta> = {
+  parameters: {
+    // Sets a delay for the component's stories
+    chromatic: { delay: 600 },
+  },
   render: (args) => ({
     components: { DatasetCard },
     setup() {
@@ -191,6 +209,10 @@ export const ArchivedDatasetCard: StoryObj<typeof meta> = {
 };
 
 export const RouterDatasetCardSimple: StoryObj<typeof meta> = {
+  parameters: {
+    // Sets a delay for the component's stories
+    chromatic: { delay: 600 },
+  },
   render: (args) => ({
     components: { DatasetCard },
     setup() {
@@ -203,6 +225,10 @@ export const RouterDatasetCardSimple: StoryObj<typeof meta> = {
 };
 
 export const RouterDatasetCardSimpleWithOrganizationUrl: StoryObj<typeof meta> = {
+  parameters: {
+    // Sets a delay for the component's stories
+    chromatic: { delay: 600 },
+  },
   render: (args) => ({
     components: { DatasetCard },
     setup() {
@@ -218,6 +244,10 @@ export const RouterDatasetCardSimpleWithOrganizationUrl: StoryObj<typeof meta> =
 };
 
 export const RouterDatasetCardWithoutDescription: StoryObj<typeof meta> = {
+  parameters: {
+    // Sets a delay for the component's stories
+    chromatic: { delay: 600 },
+  },
   render: (args) => ({
     components: { DatasetCard },
     setup() {
@@ -233,6 +263,10 @@ export const RouterDatasetCardWithoutDescription: StoryObj<typeof meta> = {
 };
 
 export const RouterPrivateDatasetCard: StoryObj<typeof meta> = {
+  parameters: {
+    // Sets a delay for the component's stories
+    chromatic: { delay: 600 },
+  },
   render: (args) => ({
     components: { DatasetCard },
     setup() {
@@ -247,6 +281,10 @@ export const RouterPrivateDatasetCard: StoryObj<typeof meta> = {
 };
 
 export const RouterArchivedDatasetCard: StoryObj<typeof meta> = {
+  parameters: {
+    // Sets a delay for the component's stories
+    chromatic: { delay: 600 },
+  },
   render: (args) => ({
     components: { DatasetCard },
     setup() {
@@ -261,6 +299,10 @@ export const RouterArchivedDatasetCard: StoryObj<typeof meta> = {
 };
 
 export const DatasetCardUpdatedLastMonth: StoryObj<typeof meta> = {
+  parameters: {
+    // Sets a delay for the component's stories
+    chromatic: { delay: 600 },
+  },
   render: (args) => ({
     components: { DatasetCard },
     setup() {
