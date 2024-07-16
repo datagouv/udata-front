@@ -10,7 +10,7 @@
         {{ t('Archived') }}
       </p>
     </div>
-    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top fr-pt-1v">
+    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
       <div class="fr-col-auto">
         <div class="logo">
           <Placeholder
