@@ -229,7 +229,7 @@ export default defineComponent({
     /**
      * Maximum options count
      */
-    const maxOptionsCount = 200;
+    const maxOptionsCount = 30;
 
     /**
      * Initial options
