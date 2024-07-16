@@ -10,20 +10,20 @@
         <div class="fr-card__desc fr-mt-1v text-mention-grey">
           <p class="fr-mb-0">
             <template v-if="reuse.organization">
-              <span class="not-enlarged dash-after">
+              <span class="not-enlarged dash-after-sm">
                 <AppLink class="fr-link" v-if="organizationUrl" :to="organizationUrl">
                   <OrganizationNameWithCertificate :organization="reuse.organization" />
                 </AppLink>
                 <OrganizationNameWithCertificate v-else :organization="reuse.organization" />
               </span>
             </template>
-            <span class="dash-after" v-else>
+            <span class="dash-after-sm" v-else>
               {{ ownerName }}
             </span>
             {{ t('Published {date}', {date: formatRelativeIfRecentDate(reuse.created_at)}) }}
           </p>
           <div class="fr-grid-row fr-grid-row--middle fr-mt-1v fr-mr-1v">
-            <span class="dash-after">
+            <span class="dash-after-sm">
               {{ reuseType }}
             </span>
             <p class="fr-text--sm fr-my-0">
@@ -37,12 +37,13 @@
       </div>
     </div>
     <div class="fr-card__header">
-      <span
-        v-if="reuse.private"
-        class="absolute top-0 fr-badge fr-mt-2w fr-ml-2w"
-      >
-        {{ t('Private') }}
-      </span>
+      <div class="absolute top-0 fr-mt-3w fr-ml-3w">
+        <p class="fr-badge fr-badge--sm fr-badge--mention-grey text-grey-380" v-if="reuse.private">
+          <span class="fr-icon-lock-line fr-icon--sm">
+            {{ t('Private') }}
+          </span>
+        </p>
+      </div>
       <Placeholder
         class="fr-responsive-img ratio-sm"
         type="reuse"
