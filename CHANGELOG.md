@@ -4,7 +4,7 @@
 
 - Add organization edit to new admin [#412](https://github.com/datagouv/udata-front/pull/412)
 - Fix markdown tables and use DSFR ones [#432](https://github.com/datagouv/udata-front/pull/432)
-- Add beta admin "add member" modale [#398](https://github.com/etalab/udata-front/pull/398)
+- Add beta admin "add member" modale [#442](https://github.com/etalab/udata-front/pull/442)
 
 ## 5.0.1 (2024-06-12)
 
