@@ -25,7 +25,7 @@
     "publish-dev": "npm run publish-stable -- --tag=dev",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "npx chromatic"
+    "chromatic": "npx chromatic --only-changed"
   },
   "dependencies": {
     "vue": "^3.3.8"
