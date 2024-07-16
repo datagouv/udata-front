@@ -168,7 +168,7 @@ export const catalog_url = _meta("catalog-url");
 /**
  * The description length required to pass the quality score check
  */
-export const quality_description_length = _meta("quality-description-length");
+export const quality_description_length = parseInt(_meta("quality-description-length") ?? "0");
 
 /**
  * The data search form URL
@@ -263,7 +263,7 @@ export const markdown = _jsonMeta("markdown-config");
 /**
  * License groups options configuration.
  */
-export const license_groups_options = _jsonMeta("license-groups-options");
+export const license_groups_options: Array<[string, Array<Record<string, string>>]> = _jsonMeta("license-groups-options");
 
 
 /**

@@ -14,18 +14,28 @@ export function createOrganization(organization: MaybeRefOrGetter<OrganizationV1
   }).then(resp => resp.data);
 }
 
-export function uploadLogo(organizationId: string, file: File) {
-  return api.postForm<UploadLogoResponse>(`organizations/${organizationId}/logo`, {
+export function uploadLogo(oid: string, file: File) {
+  return api.postForm<UploadLogoResponse>(`organizations/${oid}/logo`, {
     file: file
   }).then(resp => resp.data);
 }
 
+export function updateOrganization(organization: MaybeRefOrGetter<OrganizationV1>) {
+  const organizationValue  = toValue(organization);
+  return api.put<OrganizationV1>(`organizations/${organizationValue.id}/`, {
+    ...organizationValue,
+  }).then(resp => resp.data);
+}
 
 export function getOrganization(oid: string) {
   return api.get<OrganizationV1>(getLocalizedUrl(`organizations/${oid}/`))
     .then(res => res.data);
 }
 
+export function deleteOrganization(oid: string) {
+  return api.delete<void>(getLocalizedUrl(`organizations/${oid}/`))
+    .then(res => res.data);
+}
 
 export function getPendingMemberships(oid: string) {
   return api.get<Array<PendingMembershipRequest>>(getLocalizedUrl(`organizations/${oid}/membership/`), {
