@@ -18,7 +18,7 @@
       <div class="fr-col-12 fr-col-md">
         <h1 class="fr-h1 fr-mb-2w">{{ t("Members") }}</h1>
       </div>
-      <div class="fr-col-auto">
+      <div class="fr-col-auto" v-if="isAdmin">
         <AdminAddMemberButton
           :oid="oid"
           :roles="roles"
