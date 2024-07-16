@@ -138,6 +138,8 @@ function formatUsers(users: Array<UserSuggest>): Array<MultiSelectOption> {
 
 function closeModal() {
   loading.value = false;
+  userId.value = undefined;
+  role.value = "editor";
   const modal = document.getElementById(props.id);
   globalThis.dsfr(modal).modal.conceal();
 }
