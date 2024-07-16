@@ -9,6 +9,8 @@ const meta = {
   component: DatasetCard,
   tags: ['autodocs'],
   parameters: {
+    // Sets a delay for the component's stories
+    chromatic: { delay: 300 },
     docs: {
       description: {
         component: "The DatasetCard displays data about a dataset."
