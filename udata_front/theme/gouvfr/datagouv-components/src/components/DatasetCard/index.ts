@@ -1,4 +1,5 @@
 import "../badge.less";
+import "../base.less";
 import "../button.less";
 import "../dataset.less";
 import "../logo.less";
