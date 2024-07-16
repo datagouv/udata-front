@@ -1,7 +1,7 @@
 import type { Schema } from "../api/schemas";
 import type { Owned } from "./owned";
 
-export type ResourceRest = Owned & {
+export type Resource = Owned & {
   id: string;
   title: string;
   type: string;
