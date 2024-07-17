@@ -193,7 +193,7 @@ const reuse : Reuse = {
   last_update: (new Date()).toDateString(),
   page: "https://www.data.gouv.fr",
   deleted: false,
-  private: false,
+  private: true,
   datasets: [],
   slug: "some-slug",
   topic: "housing_and_development",
@@ -303,7 +303,7 @@ const id = "12";
     organization-url=""
     style="z-index: 1;"
   />
-  <div class="fr-grid-row fr-grid-row--gutters">
+  <div class="fr-grid-row">
     <ReuseCard
       class="fr-col-4"
       :reuse="reuse"

@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="fr-card__header">
-      <div class="absolute top-0 fr-mt-3w fr-ml-3w">
+      <div class="absolute top-0 fr-mt-2w fr-ml-2w">
         <p class="fr-badge fr-badge--sm fr-badge--mention-grey text-grey-380" v-if="reuse.private">
           <span class="fr-icon-lock-line fr-icon--sm">
             {{ t('Private') }}
