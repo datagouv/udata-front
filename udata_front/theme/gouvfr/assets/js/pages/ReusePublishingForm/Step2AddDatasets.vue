@@ -1,21 +1,6 @@
 <template>
     <Container>
       <Stepper :steps="steps" :currentStep="1"/>
-      <Well
-        color="blue-cumulus"
-        weight="regular"
-        class="fr-mb-2w"
-      >
-        <div class="fr-grid-row">
-          <div class="fr-col-auto fr-mr-3v">
-            <!--<img :src="reuseIcon" alt="" />-->
-          </div>
-          <div class="fr-col">
-            <p class="fr-m-0 fr-text--bold">{{ t('What is a reuse?') }}</p>
-            <p class="fr-m-0 fr-text--xs">{{ t('A reuse is an exemple of public data\'s usage.') }} {{ t('Publishing a reuse can allow you to gain visibility and start start a dialogue with the dataset producer.') }}</p>
-          </div>
-        </div>
-      </Well>
       <fieldset class="fr-fieldset min-width-0" aria-labelledby="description-legend">
         <legend class="fr-fieldset__legend" id="description-legend">
           <h2 class="subtitle subtitle--uppercase fr-mb-3v">
@@ -83,7 +68,7 @@ import useFunctionalState from '../../composables/form/useFunctionalState';
 import { requiredWithCustomMessage } from '../../i18n';
 import { api } from '../../plugins/api';
 import CardSm from '../../components/dataset/CardSM.vue';
-import { type Dataset, Well } from '@etalab/data.gouv.fr-components';
+import type { Dataset } from '@etalab/data.gouv.fr-components';
 import { Reuse } from '../../types';
 import { useToast } from "../../composables/useToast";
   
