@@ -2,6 +2,8 @@ import type { License } from "@etalab/data.gouv.fr-components";
 import { MaybeRefOrGetter, ref, toValue, watchEffect } from "vue";
 import fetchLicenses from "../api/licenses";
 
+/** TODO : to be removed when the component moved to data.gouv.fr-components */
+
 export default function useLicense(id: MaybeRefOrGetter<string>) {
     const license = ref<License | null>(null);
     watchEffect(() => {
