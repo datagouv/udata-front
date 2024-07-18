@@ -83,5 +83,12 @@
   "Archived": "Archived",
   "{n} reuses": "{n} reuses",
   "{n} favorites": "{n} favorites",
-  "Metadata :": "Metadata :"
+  "Metadata :": "Metadata :",
+  "Availability :": "Availability :",
+  "{n}% on the last month": "{n}% on the last month",
+  "Service public": "Service public",
+  "Local authority": "Local authority",
+  "Association": "Association",
+  "Company": "Company",
+  "User": "User"
 }

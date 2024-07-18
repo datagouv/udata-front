@@ -13,11 +13,10 @@
             <span class="fr-icon-terminal-line fr-icon--sm fr-mr-1v" aria-hidden="true"></span>
             <AppLink :to="dataserviceUrl" class="text-grey-500">
               {{ dataservice.title }}
-              <small v-if="dataservice.acronym">{{ dataservice.acronym }}</small>
             </AppLink>
           </slot>
         </h4>
-        <div class="fr-text--sm fr-mb-n2v" v-if="dataservice.organization || dataservice.owner">
+        <div class="fr-text--sm fr-mb-n1v" v-if="dataservice.organization || dataservice.owner">
           <template v-if="dataservice.organization">
             <span class="not-enlarged dash-after-sm fr-mr-1v">
               <AppLink class="fr-link fr-text--sm" v-if="organizationUrl" :to="organizationUrl">
@@ -29,25 +28,14 @@
           <span class="not-enlarged dash-after-sm fr-mr-1v" v-else>
             {{ ownerName }}
           </span>
-          <span class="text-mention-grey">{{ $t('Updated {date}', {date: formatRelativeIfRecentDate(dataservice.metadata_modified_at)}) }}</span>
+          <span class="text-mention-grey">{{ t('Updated {date}', {date: formatRelativeIfRecentDate(dataservice.metadata_modified_at)}) }}</span>
         </div>
-        <div class="fr-mx-0 fr-mb-n1v fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
-          <div class="fr-hidden flex-sm dash-after-sm text-grey-500 not-enlarged">
-            <QualityComponentInline :quality="dataservice.quality"/>
-          </div>
-          <div class="fr-grid-row fr-grid-row--middle fr-mr-1v">
-            <p class="fr-text--sm fr-my-0">
-              <span class="fr-icon-download-line fr-icon--sm fr-px-1v" aria-hidden="true"></span>{{ dataservice.metrics.discussions }}
-            </p>
-            <p class="fr-text--sm fr-my-0">
-              <span class="fr-icon-star-line fr-icon--sm fr-px-1v" aria-hidden="true"></span>{{ dataservice.metrics.followers }}
-            </p>
-            <p class="fr-text--sm fr-my-0">
-              <span class="fr-icon-line-chart-line fr-icon--sm fr-px-1v" aria-hidden="true"></span>{{ dataservice.metrics.views }}
-            </p>
-          </div>
+        <div class="fr-mx-0 fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
+          <p><span class="fr-icon-information-line fr-icon--sm text-grey-380 fr-mr-1v"></span></p>
+          <p class="fr-text--sm fr-mr-1v">{{ t('Availability :') }}</p>
+          <p class="text-grey-400 fr-text--sm">{{ t('{n}% on the last month', dataservice.availability) }}</p>
         </div>
-        <div v-if="showDescription" class="fr-pt-2v">
+        <div v-if="showDescription">
           <p class="fr-text--sm fr-m-0 overflow-wrap-anywhere">{{ excerpt(dataservice.description, 160) }}</p>
         </div>
       </div>
@@ -63,7 +51,6 @@ import type { Dataservice } from "../../types/dataservices";
 import { excerpt } from "../../helpers";
 import { formatRelativeIfRecentDate } from "../../helpers";
 import OrganizationNameWithCertificate from "../Organization/OrganizationNameWithCertificate.vue";
-import { QualityComponentInline } from "../QualityComponentInline";
 import { useOwnerName } from "../../composables";
 
 type Props = {

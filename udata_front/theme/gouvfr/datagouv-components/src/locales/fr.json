@@ -83,5 +83,12 @@
   "Archived": "Archivé",
   "{n} reuses": "{n} réutilisations | {n} réutilisation | {n} réutilisations",
   "{n} favorites": "{n} favoris | {n} favori | {n} favoris",
-  "Metadata :": "Métadonnées :"
+  "Metadata :": "Métadonnées :",
+  "Availability :": "Disponibilité :",
+  "{n}% on the last month": "{n}% sur le dernier mois",
+  "Service public": "Service public",
+  "Local authority": "Autorité locale",
+  "Association": "Association",
+  "Company": "Entreprise",
+  "User": "Utilisateur"
 }

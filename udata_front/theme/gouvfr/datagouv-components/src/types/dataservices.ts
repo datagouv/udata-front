@@ -2,7 +2,7 @@ import type { Owned } from "./owned";
 
 export type Dataservice = Owned & {
   acronym: string;
-  archived_at: Date;
+  archived_at: string | null ;
   authorization_request_url: string;
   availability: number;
   base_api_url: string;
@@ -10,8 +10,8 @@ export type Dataservice = Owned & {
     email: string;
     id: string;
     name: string;
-    organization: string;
-    owner: string;
+    organization: string | null;
+    owner: string | null;
   };
   created_at: string;
   datasets: [
