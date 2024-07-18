@@ -86,7 +86,7 @@ const dataservice: Dataservice = {
     page: "https://demo.data.gouv.fr/fr/organizations/test-meteo-france/",
     business_number_id: "",
     description: "",
-    badges: [],
+    badges: [{kind: 'certified'}, {kind: 'public-service'}],
     name: "Météo France",
     slug: "test-meteo-france",
     uri: "https://demo.data.gouv.fr/api/1/organizations/test-meteo-france/",
@@ -107,7 +107,12 @@ const args = {
   dataserviceUrl: "/dataservices/6571faa17f46a65ee05c4d17",
 };
 
-export const DataserviceCardWithDataserviceUrl: StoryObj<typeof meta> = {
+const argsPrivate = {
+  dataservice: {...dataservice, private: true},
+  dataserviceUrl: "/dataservices/6571faa17f46a65ee05c4d17",
+};
+
+export const SimpleDataserviceCard: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { DataserviceCard },
     setup() {
@@ -118,7 +123,21 @@ export const DataserviceCardWithDataserviceUrl: StoryObj<typeof meta> = {
   args,
 };
 
-export const DataserviceCardWithDataserviceAndOrganizationUrl: StoryObj<typeof meta> = {
+export const DataserviceCardWithoutDescription: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DataserviceCard },
+    setup() {
+      return { args };
+    },
+    template: `<DataserviceCard v-bind="args"/>`,
+  }),
+  args: {
+    ...args,
+    showDescription: false,
+  },
+};
+
+export const DataserviceCardWithOrganizationUrl: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { DataserviceCard },
     setup() {
@@ -132,7 +151,21 @@ export const DataserviceCardWithDataserviceAndOrganizationUrl: StoryObj<typeof m
   },
 };
 
-export const RouterDataserviceCardWithDataserviceUrl: StoryObj<typeof meta> = {
+export const PrivateDataserviceCardWithOrganizationUrl: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DataserviceCard },
+    setup() {
+      return { args };
+    },
+    template: `<DataserviceCard v-bind="args"/>`,
+  }),
+  args: {
+    ...argsPrivate,
+    organizationUrl: "/organizations/another-url-easier-to-distinguish"
+  },
+};
+
+export const RouterDataserviceCard: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { DataserviceCard },
     setup() {
@@ -144,7 +177,7 @@ export const RouterDataserviceCardWithDataserviceUrl: StoryObj<typeof meta> = {
   args,
 };
 
-export const RouterDataserviceCardWithDataserviceAndOrganizationUrl: StoryObj<typeof meta> = {
+export const RouterDataserviceCardWithoutDescription: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { DataserviceCard },
     setup() {
@@ -155,6 +188,36 @@ export const RouterDataserviceCardWithDataserviceAndOrganizationUrl: StoryObj<ty
   decorators: [vueRouter(dataserviceRoutes)],
   args: {
     ...args,
+    showDescription: false,
+  },
+};
+
+export const RouterDataserviceCardWithOrganizationUrl: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DataserviceCard },
+    setup() {
+      return { args };
+    },
+    template: `<DataserviceCard v-bind="args"/><router-view></router-view>`,
+  }),
+  decorators: [vueRouter(dataserviceRoutes)],
+  args: {
+    ...args,
+    organizationUrl: "/organizations/another-url-easier-to-distinguish"
+  },
+};
+
+export const PrivateRouterDataserviceCardWithOrganizationUrl: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DataserviceCard },
+    setup() {
+      return { args };
+    },
+    template: `<DataserviceCard v-bind="args"/><router-view></router-view>`,
+  }),
+  decorators: [vueRouter(dataserviceRoutes)],
+  args: {
+    ...argsPrivate,
     organizationUrl: "/organizations/another-url-easier-to-distinguish"
   },
 };

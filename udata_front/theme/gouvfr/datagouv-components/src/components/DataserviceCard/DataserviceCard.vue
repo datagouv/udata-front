@@ -8,7 +8,7 @@
     </div>
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
       <div class="fr-col">
-        <h4 class="fr-text--md fr-mb-0 fr-grid-row">
+        <h4 class="fr-text--md fr-mb-1v fr-grid-row">
           <slot name="dataserviceUrl" :dataservice="dataservice" :dataserviceUrl="dataserviceUrl">
             <span class="fr-icon-terminal-line fr-icon--sm fr-mr-1v" aria-hidden="true"></span>
             <AppLink :to="dataserviceUrl" class="text-grey-500">
@@ -31,12 +31,12 @@
           <span class="text-mention-grey">{{ t('Updated {date}', {date: formatRelativeIfRecentDate(dataservice.metadata_modified_at)}) }}</span>
         </div>
         <div class="fr-mx-0 fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
-          <p><span class="fr-icon-information-line fr-icon--sm text-grey-380 fr-mr-1v"></span></p>
-          <p class="fr-text--sm fr-mr-1v">{{ t('Availability :') }}</p>
-          <p class="text-grey-400 fr-text--sm">{{ t('{n}% on the last month', dataservice.availability) }}</p>
+          <p class="fr-my-0"><span class="fr-icon-information-line fr-icon--sm text-grey-380 fr-mr-1v"></span></p>
+          <p class="fr-text--sm fr-mr-1v fr-my-0">{{ t('Availability :') }}</p>
+          <p class="text-grey-400 fr-text--sm fr-my-0">{{ t('{n}% on the last month', dataservice.availability) }}</p>
         </div>
         <div v-if="showDescription">
-          <p class="fr-text--sm fr-m-0 overflow-wrap-anywhere">{{ excerpt(dataservice.description, 160) }}</p>
+          <p class="fr-text--sm fr-m-0 overflow-wrap-anywhere fr-mt-2w">{{ excerpt(dataservice.description, 160) }}</p>
         </div>
       </div>
     </div>
