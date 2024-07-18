@@ -82,5 +82,10 @@
   "Private": "Private",
   "Archived": "Archived",
   "{n} reuses": "{n} reuses",
-  "{n} favorites": "{n} favorites"
+  "{n} favorites": "{n} favorites",
+  "Service public": "Service public",
+  "Local authority": "Local authority",
+  "Association": "Association",
+  "Company": "Company",
+  "User": "User"
 }
