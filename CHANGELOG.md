@@ -2,7 +2,18 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add organization edit to new admin [#412](https://github.com/datagouv/udata-front/pull/412)
+- Fix markdown tables and use DSFR ones [#432](https://github.com/datagouv/udata-front/pull/432)
+- Add organization selector to dataset publishing [#438](https://github.com/datagouv/udata-front/pull/438)
+- Add beta admin "add member" modale [#442](https://github.com/etalab/udata-front/pull/442)
+- Update dependencies from udata [#448](https://github.com/datagouv/udata-front/pull/448)
+- Add new dataset card [#445](https://github.com/datagouv/udata-front/pull/445)
+
+## 5.0.1 (2024-06-12)
+
+- Fix dataset card link opening another tab [#426](https://github.com/datagouv/udata-front/pull/426)
+- Use roadmap page instead of deprecated nouveautes in footer [#429](https://github.com/datagouv/udata-front/pull/429)
+- Add elections as featured topic [#430](https://github.com/datagouv/udata-front/pull/430)
 
 ## 5.0.0 (2024-06-07)
 
