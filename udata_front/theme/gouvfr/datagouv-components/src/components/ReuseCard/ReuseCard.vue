@@ -75,7 +75,7 @@ export type ReuseProps = {
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import Placeholder from '../utils/Placeholder.vue';
-import OrganizationNameWithCertificate from "../Organization";
+import { OrganizationNameWithCertificate } from "../Organization";
 import { truncate } from "../../helpers";
 import type { Reuse } from '../../types/reuses';
 import { formatRelativeIfRecentDate } from '../../helpers';
