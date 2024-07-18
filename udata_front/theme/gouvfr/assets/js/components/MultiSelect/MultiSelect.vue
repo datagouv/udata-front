@@ -181,6 +181,10 @@ export default defineComponent({
     showDescription: {
       type: Boolean,
       default: false
+    },
+    roundedImages: {
+      type: Boolean,
+      default: false,
     }
   },
   setup(props, { emit }) {
@@ -194,7 +198,9 @@ export default defineComponent({
       return {
         'fr-select-group--error': props.hasError,
         'fr-select-group--warning': !props.hasError && props.hasWarning,
-        'fr-select-group--valid': props.isValid
+        'fr-select-group--valid': props.isValid,
+        'multiselect--rounded-images': props.roundedImages,
+        'multiselect--align-center': !props.showDescription,
       };
     });
 
@@ -223,7 +229,7 @@ export default defineComponent({
     /**
      * Maximum options count
      */
-    const maxOptionsCount = 200;
+    const maxOptionsCount = 20;
 
     /**
      * Initial options
@@ -340,7 +346,7 @@ export default defineComponent({
       return {
         label: obj.name ?? obj.title ?? obj.text ?? obj?.properties?.name ?? obj.label ?? obj,
         value: obj.id ?? obj.text ?? obj.value ?? obj,
-        image: obj.logo_thumbnail ?? obj.logo ?? obj.image_url ?? obj.image,
+        image: obj.logo_thumbnail ?? obj.logo ?? obj.image_url ?? obj.image ?? obj.avatar_thumbnail ?? obj.avatar,
         hidden: obj.hidden,
         selected: !!obj.selected,
         helper: obj?.code ? props.helperLabel + obj.code : obj?.helper,

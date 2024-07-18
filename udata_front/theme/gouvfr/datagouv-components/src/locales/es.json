@@ -83,5 +83,6 @@
   "Archived": "Archived",
   "{n} reuses": "{n} reuses",
   "{n} favorites": "{n} favorites",
-  "Published {date}": "Published {date}"
+  "Published {date}": "Published {date}",
+  "Metadata :": "Metadata :"
 }

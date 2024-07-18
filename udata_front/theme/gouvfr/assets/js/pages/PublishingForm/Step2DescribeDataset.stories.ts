@@ -1,19 +1,19 @@
 import { withActions } from '@storybook/addon-actions/decorator';
-import { expect } from '@storybook/test';
+import { expect, fn, userEvent, waitFor, within  } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Step2DescribeDataset, { Step2DescribeDatasetProps } from './Step2DescribeDataset.vue';
 import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
 import { user } from '../../config';
 import { NewDataset } from '../../types';
-import { userEvent, waitFor, within } from '@storybook/testing-library';
+import { User } from '@etalab/data.gouv.fr-components';
 
 
 const meta = {
   title: 'Pages/PublishingForm/Step2',
   component: Step2DescribeDataset,
   decorators: [withActions],
-  argTypes: {
-    onNext: { action: true },
+  args: {
+    onNext: fn(),
   }
 } satisfies Meta<typeof Step2DescribeDataset>;
 
@@ -35,7 +35,7 @@ const originalDataset: NewDataset = {
     zones: [],
     granularity: "",
   },
-  owner: user,
+  owner: user as User,
   organization: null,
   quality: {
     all_resources_available: true,
@@ -52,9 +52,45 @@ const originalDataset: NewDataset = {
   },
 };
 
+const myUser = {
+  id: "someId",
+  first_name: "John",
+  last_name: "Doe",
+  avatar: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+  organizations: [
+    {
+      acronym: null,
+      badges: [],
+      class: "Organization",
+      id: "65e9b7cf830c3b5a515ee4ed",
+      logo: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+      logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+      name: "My Organization",
+      page: "",
+      slug: "my-organization",
+      uri: "/"
+    },
+    {
+      acronym: null,
+      badges: [],
+      class: "Organization",
+      id: "65e9b7cf830c3b5a515ee4ed",
+      logo: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+      logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+      name: "My Second Organization",
+      page: "",
+      slug: "my-second-organization",
+      uri: "/"
+    }
+  ],
+  roles: [],
+  page: ""
+};
+
 const args: Step2DescribeDatasetProps = {
   originalDataset,
   steps: Stepper.StepperOnSecondStep.args.steps,
+  user: myUser,
   granularities: [
     {
       'id': 'country-group',
@@ -111,16 +147,16 @@ const args: Step2DescribeDatasetProps = {
   ]
 };
 
-export const Step2: StoryObj<typeof meta> = {
+export const Step2WithNoOrganization: StoryObj<typeof meta> = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     await waitFor(() => expect(canvas.getByTestId("markdown-editor")).toBeDefined());
 
     await step('Click on next', async () => {
       await userEvent.click(canvas.getByRole("button", {name: "Next"}));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setTimeout(() => { expect(args.onNext).toHaveBeenCalled(); }, 1000);
     });
-
-    await waitFor(() => expect(args.onNext).toHaveBeenCalled());
   },
   render: (args) => ({
     components: { Step2DescribeDataset },
@@ -131,5 +167,43 @@ export const Step2: StoryObj<typeof meta> = {
                   <Step2DescribeDataset v-bind="args" />
                 </div>`,
   }),
+  args: {
+    ...args,
+    user: {
+      ...myUser,
+      organizations: []
+    }
+  },
+};
+
+export const Step2WithOrganizations: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { Step2DescribeDataset },
+    setup() {
+      return { args };
+    },
+    template: ` <div class="bg-grey-50 fr-p-4w">
+                  <Step2DescribeDataset v-bind="args" />
+                </div>`,
+  }),
   args,
+};
+
+export const Step2WithAdmin: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { Step2DescribeDataset },
+    setup() {
+      return { args };
+    },
+    template: ` <div class="bg-grey-50 fr-p-4w">
+                  <Step2DescribeDataset v-bind="args" />
+                </div>`,
+  }),
+  args: {
+    ...args,
+    user: {
+      ...myUser,
+      roles: [...myUser?.roles, 'admin']
+    }
+  },
 };

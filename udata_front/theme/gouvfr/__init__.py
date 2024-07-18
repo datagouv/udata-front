@@ -99,7 +99,7 @@ nav.Bar('gouvfr_opendata', opendata_links)
 
 platform_links = [
     nav.Item(_('Guides'), None, url=current_app.config.get('GUIDES_URL', '#')),
-    nav.Item(_('Roadmap and news'), 'gouvfr.show_page', args={'slug': 'nouveautes'}),
+    nav.Item(_('Roadmap and news'), 'gouvfr.show_page', args={'slug': 'roadmap'}),
     nav.Item(_('Contact us'), None, url='https://support.data.gouv.fr'),
     nav.Item(_('Give us your feedback'), None,
              url=current_app.config.get('FEEDBACK_FORM_URL', '#')),

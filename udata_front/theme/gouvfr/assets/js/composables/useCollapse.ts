@@ -3,7 +3,7 @@ import useKeyCodes from "./useKeyCodes";
 import { getRandomId } from '@etalab/data.gouv.fr-components';
 
 export function useCollapse() {
-  const {KEYCODES} = useKeyCodes();
+  const { KEYCODES } = useKeyCodes();
   const collapseId = getRandomId("collapse");
   const expanded = ref(false);
 
