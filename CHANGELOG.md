@@ -7,6 +7,7 @@
 - Add organization selector to dataset publishing [#438](https://github.com/datagouv/udata-front/pull/438)
 - Add beta admin "add member" modale [#442](https://github.com/etalab/udata-front/pull/442)
 - Update dependencies from udata [#448](https://github.com/datagouv/udata-front/pull/448)
+- Add new dataset card [#445](https://github.com/datagouv/udata-front/pull/445)
 
 ## 5.0.1 (2024-06-12)
 
