@@ -1,19 +1,19 @@
-import MembershipRequest from './MembershipRequest.vue';
 import { withActions } from '@storybook/addon-actions/decorator';
 import { userEvent, expect, screen, within, waitFor, fn } from '@storybook/test';
 import type { Meta, StoryObj } from "@storybook/vue3";
+import AdminMembershipRequest from './AdminMembershipRequest.vue';
 import { DefaultIdenticonAvatar } from "../discussions/Avatar/Avatar.stories";
 import { MembershipStatus } from '../../types';
 
 const meta = {
-  title: 'Admin/MembershipRequest',
-  component: MembershipRequest,
+  title: 'Admin/AdminMembershipRequest',
+  component: AdminMembershipRequest,
   decorators: [withActions],
   args: {
     onAccept: fn(),
     onRefuse: fn(),
   },
-} satisfies Meta<typeof MembershipRequest>;
+} satisfies Meta<typeof AdminMembershipRequest>;
 
 export default meta;
 
@@ -36,11 +36,11 @@ const args = {
  */
 export const DefaultMembershipRequest: StoryObj<typeof meta> = {
   render: (args) => ({
-    components: { MembershipRequest },
+    components: { AdminMembershipRequest },
     setup() {
       return { args };
     },
-    template: '<MembershipRequest v-bind="args"/>',
+    template: '<AdminMembershipRequest v-bind="args"/>',
   }),
   args,
 };
@@ -51,11 +51,11 @@ export const DefaultMembershipRequest: StoryObj<typeof meta> = {
  */
 export const LoadingMembershipRequest: StoryObj<typeof meta> = {
   render: (args) => ({
-    components: { MembershipRequest },
+    components: { AdminMembershipRequest },
     setup() {
       return { args };
     },
-    template: '<MembershipRequest v-bind="args"/>',
+    template: '<AdminMembershipRequest v-bind="args"/>',
   }),
   args: {
     ...args,
@@ -69,11 +69,11 @@ export const LoadingMembershipRequest: StoryObj<typeof meta> = {
  */
 export const MembershipRequestWithoutActions: StoryObj<typeof meta> = {
   render: (args) => ({
-    components: { MembershipRequest },
+    components: { AdminMembershipRequest },
     setup() {
       return { args };
     },
-    template: '<MembershipRequest v-bind="args"/>',
+    template: '<AdminMembershipRequest v-bind="args"/>',
   }),
   args: {
     ...args,
@@ -97,11 +97,11 @@ export const AcceptedMembershipRequest: StoryObj<typeof meta> = {
     });
   },
   render: (args) => ({
-    components: { MembershipRequest },
+    components: { AdminMembershipRequest },
     setup() {
       return { args };
     },
-    template: '<MembershipRequest v-bind="args"/>',
+    template: '<AdminMembershipRequest v-bind="args"/>',
   }),
   args,
 };
@@ -135,11 +135,11 @@ export const RefusedMembershipRequest: StoryObj<typeof meta> = {
     });
   },
   render: (args) => ({
-    components: { MembershipRequest },
+    components: { AdminMembershipRequest },
     setup() {
       return { args };
     },
-    template: '<MembershipRequest v-bind="args"/>',
+    template: '<AdminMembershipRequest v-bind="args"/>',
   }),
   args,
 };
@@ -172,11 +172,11 @@ export const RefuseMembershipRequestCancelled: StoryObj<typeof meta> = {
     });
   },
   render: (args) => ({
-    components: { MembershipRequest },
+    components: { AdminMembershipRequest },
     setup() {
       return { args };
     },
-    template: '<MembershipRequest v-bind="args"/>',
+    template: '<AdminMembershipRequest v-bind="args"/>',
   }),
   args,
 };
