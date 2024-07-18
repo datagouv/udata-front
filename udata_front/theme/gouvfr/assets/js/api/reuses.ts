@@ -1,6 +1,6 @@
 import { getLocalizedUrl } from "../i18n";
 import { api } from "../plugins/api";
-import { Reuse } from "../types";
+import type { GetPaginatedData, Reuse } from "../types";
 
 let reuseTypesRequest: Promise<Array<ReuseType>> | null = null;
 
@@ -24,4 +24,11 @@ export function fetchReuseTypes() {
 export function getType(types: Array<ReuseType>, id: string): string {
   const type = types.find(t => t.id === id);
   return type ? type.label : "";
+}
+
+export async function getOrganizationReuses(oid: string, page: number, pageSize: number, sort: string) {
+  const resp = await api.get<GetPaginatedData<Reuse>>(getLocalizedUrl(`organizations/${oid}/reuses/`), {
+    params: { sort, page_size: pageSize, page }
+  });
+  return resp.data;
 }

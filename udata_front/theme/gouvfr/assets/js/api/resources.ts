@@ -1,40 +1,33 @@
 import { v4 as uuidv4 } from 'uuid';
 import { api, apiv2 } from "../plugins/api";
 import { getLocalizedUrl } from '../i18n';
-import type { DatasetChunkUpload, DatasetFile, DatasetFileUpload, DatasetLocalFile, DatasetRemoteFile, NewDatasetFile } from '../types';
+import type { DatasetChunkUpload, DatasetFile, DatasetFileUpload, DatasetLocalFile, DatasetRemoteFile, GetPaginatedData, NewDatasetFile } from '../types';
+import type { Resource } from '@etalab/data.gouv.fr-components';
 
-export type ResourceApiWrapper = {
-  data: Array<import("@etalab/data.gouv.fr-components").Resource>;
-  next_page: string | null;
-  page: number;
-  page_size: number;
-  previous_page: string | null;
-  total: number;
-};
-
-export function fetchDatasetResources(datasetId: string, type: string, page: number, pageSize: number, search: string) {
-  return apiv2
-    .get<ResourceApiWrapper>("/datasets/" + datasetId + "/resources/", {
+export async function fetchDatasetResources(datasetId: string, type: string, page: number, pageSize: number, search: string) {
+  const resp = await apiv2
+    .get<GetPaginatedData<Resource>>("/datasets/" + datasetId + "/resources/", {
       params: {
         page,
         type: type,
         page_size: pageSize,
         q: search,
       },
-    })
-    .then((resp) => resp.data);
+    });
+  return resp.data;
 }
 
-export function fetchDatasetCommunityResources (datasetId: string, page: number, pageSize: number) {
-  return api
-    .get<ResourceApiWrapper>("datasets/community_resources/", {
+// TODO: use CommunityResource from datagouv/components when merged
+export async function fetchDatasetCommunityResources (datasetId: string, page: number, pageSize: number) {
+  const resp = await api
+    .get<GetPaginatedData<Resource>>("datasets/community_resources/", {
       params: {
         page,
         dataset: datasetId,
         page_size: pageSize,
       },
-    })
-    .then((resp) => resp.data)
+    });
+  return resp.data;
 }
 
 export function getAllowedExtensionsUrl () {

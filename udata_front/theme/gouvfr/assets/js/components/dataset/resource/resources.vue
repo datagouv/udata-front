@@ -67,6 +67,7 @@ import {
 } from "../../../plugins/eventbus";
 import useIdFromHash from '../../../composables/useIdFromHash';
 import { previousResourceUrlRegExp, resourceUrlRegExp } from '../../../helpers';
+import type { GetPaginatedData } from '../../../types';
 
 type Props = {
   canEdit?: boolean,
@@ -115,7 +116,8 @@ const loadPage = (page = 1, scroll = false) => {
   if (scroll && top.value) {
     top.value.scrollIntoView({ behavior: "smooth" });
   }
-  let fetchData: Promise<import("../../../api/resources").ResourceApiWrapper>;
+  // use CommunityResource from datagouv/components when merged
+  let fetchData: Promise<GetPaginatedData<Resource>>;
   if(isCommunityResources.value) {
     fetchData = fetchDatasetCommunityResources(props.datasetId, page, pageSize);
   } else {

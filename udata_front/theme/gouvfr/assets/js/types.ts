@@ -1,4 +1,5 @@
-import { type Organization, type Owned, type Resource, type User, type NewDataset as BaseNewDataset, type Dataset } from "@etalab/data.gouv.fr-components";
+import { type Organization, type Owned, type User, type NewDataset as BaseNewDataset, type Dataset, Badges } from "@etalab/data.gouv.fr-components";
+
 export type MultiSelectOption = {
   label: string;
   value: string;
@@ -118,20 +119,32 @@ export type OwnedWithId = { organization: string, owner: never | null } | { orga
 export type NewDataset = Omit<BaseNewDataset, keyof OwnedWithId> & OwnedWithId;
 
 export type Reuse = Owned & {
-  id: string;
-  title: string;
+  badges: Badges;
+  created_at: string;
+  datasets: Array<Dataset>;
+  deleted: boolean;
   description: string;
+  extras: Record<string, any>;
+  featured: boolean | null;
+  id: string;
+  image: string | null;
+  image_thumbnail: string | null;
+  last_modified: string;
+  metrics: {
+    datasets: number;
+    discussions: number;
+    followers: number;
+    view: number;
+  };
+  title: string;
+  private: boolean;
+  slug: string;
   tags: Array<string> | null;
   page: string;
-  private: boolean;
-  deleted: boolean;
-  datasets: Array<Dataset>;
-  image: string;
-  image_thumbnail: string;
-  slug: string;
   topic: string;
   type: string;
-  last_update: string;
+  uri: string;
+  url: string;
 };
 
 export type Me = User & {
@@ -210,5 +223,14 @@ export type OrganizationV1 = Organization & {
   };
   url: string | null;
 }
+
+export type GetPaginatedData<T> = {
+  data: Array<T>;
+  next_page: string | null;
+  page: number;
+  page_size: number;
+  previous_page: string | null;
+  total: number;
+};
 
 export default {};
