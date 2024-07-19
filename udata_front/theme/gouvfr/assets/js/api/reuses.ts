@@ -25,3 +25,8 @@ export function getType(types: Array<ReuseType>, id: string): string {
   const type = types.find(t => t.id === id);
   return type ? type.label : "";
 }
+
+export async function getReuse(id: string) {
+  const resp = await api.get<Reuse>(`/reuses/${id}/`);
+  return resp.data;
+}

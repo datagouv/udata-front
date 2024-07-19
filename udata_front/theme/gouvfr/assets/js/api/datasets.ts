@@ -39,6 +39,12 @@ export function getFrequenciesUrl () {
   return getLocalizedUrl("datasets/frequencies/");
 }
 
-export function getSpatialGranularities () {
-  return api.get<Array<SpatialGranularity>>(getLocalizedUrl("spatial/granularities/")).then(resp => resp.data);
+export async function getSpatialGranularities () {
+  const resp = await api.get<Array<SpatialGranularity>>(getLocalizedUrl("spatial/granularities/"));
+  return resp.data;
+}
+
+export async function getDataset(id: string) {
+  const resp = await api.get<Dataset>(`/datasets/${id}/`);
+  return resp.data;
 }

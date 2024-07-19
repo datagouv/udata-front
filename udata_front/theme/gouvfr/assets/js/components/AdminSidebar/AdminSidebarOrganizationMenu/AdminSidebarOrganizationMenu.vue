@@ -33,6 +33,11 @@
           :to="{name: 'organization-reuses', params: {oid: organization.id}}"
         />
         <AdminSidebarLink
+          icon="fr-icon-chat-3-line"
+          :label="t('Discussions')"
+          :to="{name: 'organization-discussions', params: {oid: organization.id}}"
+        />
+        <AdminSidebarLink
           icon="fr-icon-parent-line"
           :label="t('Members')"
           :to="{name: 'organization-members', params: {oid: organization.id}}"

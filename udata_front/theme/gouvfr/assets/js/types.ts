@@ -1,4 +1,6 @@
 import { type Organization, type Owned, type Resource, type User, type NewDataset as BaseNewDataset, type Dataset } from "@etalab/data.gouv.fr-components";
+import { StringLiteral } from "typescript";
+
 export type MultiSelectOption = {
   label: string;
   value: string;
@@ -80,14 +82,23 @@ export type Spam = {
 
 export type Discussion = Array<{content: string, posted_by: User, posted_on: string, spam?: Spam}>;
 
+export type DiscussionSubjectTypes = Dataset | Reuse | Post;
+
+export type DiscussionSubject = {
+  class: 'Dataset' | 'Reuse' | 'Dataservice' | 'Post';
+  id: string;
+};
+
 export type Thread = {
   id: string;
   discussion: Discussion;
   title: string;
   url: string;
+  created: string;
   closed: string;
   closed_by: User;
   spam?: Spam;
+  subject: DiscussionSubject;
 };
 
 export type Sort = {
@@ -132,6 +143,7 @@ export type Reuse = Owned & {
   topic: string;
   type: string;
   last_update: string;
+  uri: string;
 };
 
 export type Me = User & {
@@ -210,5 +222,26 @@ export type OrganizationV1 = Organization & {
   };
   url: string | null;
 }
+
+export type Post = {
+  body_type: 'markdown' | 'html';
+  content: string;
+  created_at: string;
+  credit_to: string;
+  credit_url: string;
+  datasets: Array<Pick<Dataset, "acronym" | "id" | "page" | "title" | "uri">>;
+  headline: string;
+  id: string;
+  image: string | null;
+  last_modified: string;
+  name: string;
+  owner: User;
+  page: string;
+  published: string;
+  reuses: Array<Pick<Reuse, "id" | "image" | "image_thumbnail" | "page" | "title" | "uri">>;
+  slug: string;
+  tags: Array<string>;
+  url: string;
+};
 
 export default {};
