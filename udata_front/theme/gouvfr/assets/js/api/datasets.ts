@@ -48,8 +48,8 @@ export type GetOrganizationDatasetsData = {
   next_page: string | null;
   page: number;
   page_size: number;
-};
   total: number;
+};
 
 export function getOrganizationDatasets(oid: string, page: number, pageSize: number, sort: string) {
   return api.get<GetOrganizationDatasetsData>(getLocalizedUrl(`organizations/${oid}/datasets/`), {

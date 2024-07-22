@@ -8,8 +8,7 @@
 </template>
 <script setup lang="ts">
 import type { Dataset, DatasetV2 } from '@etalab/data.gouv.fr-components';
-import { getRandomId } from '@etalab/data.gouv.fr-components';
-import QualityScore from "../../quality-score.vue";
+import { getRandomId, QualityScore } from '@etalab/data.gouv.fr-components';
 import QualityScoreTooltipContent from '../QualityScoreTooltipContent/QualityScoreTooltipContent.vue';
 
 defineProps<{
