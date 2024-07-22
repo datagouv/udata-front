@@ -84,12 +84,13 @@ import { useI18n } from "vue-i18n";
 import { acceptRequest, formatRolesAsOptions, getOrganization, getPendingMemberships, getRoles, refuseRequest } from "../../../api/organizations";
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
 import { type Option } from "../../../components/Form/SelectGroup/SelectGroup.vue";
+import AdminAddMemberButton from "../../../components/AdminAddMember/AdminAddMemberButton.vue";
 import AdminEditMemberButton from "../../../components/AdminEditMember/AdminEditMemberButton.vue";
 import AdminMembershipRequest from "../../../components/AdminMembershipRequest/AdminMembershipRequest.vue";
-import type { EditingMember, MemberRole, PendingMembershipRequest } from "../../../types";
+import { useCurrentOrganization } from "../../../composables/admin/useCurrentOrganization";
 import { useToast } from "../../../composables/useToast";
 import { user, userIsAdmin } from "../../../config";
-import AdminAddMemberButton from "../../../components/AdminAddMember/AdminAddMemberButton.vue";
+import type { EditingMember, MemberRole, PendingMembershipRequest } from "../../../types";
 
 const props = defineProps<{oid: string}>();
 
