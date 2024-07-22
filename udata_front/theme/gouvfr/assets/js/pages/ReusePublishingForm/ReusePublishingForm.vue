@@ -11,9 +11,8 @@
     <Step2AddDatasets
       v-else-if="currentStep === 1"
       :steps="steps"
-      :reuse="savedReuse"
       :errors="errors"
-      @next="updateReuseAndMoveToNextStep"
+      @next="updateDatasetsAndMoveToNextStep"
     />
     <Step3CompleteThePublication
       v-else-if="currentStep === 2"
@@ -26,9 +25,9 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { User } from '@etalab/data.gouv.fr-components';
+import type { Dataset, User } from '@etalab/data.gouv.fr-components';
 import Step1DescribeReuse from './Step1DescribeReuse.vue';
 import Step2AddDatasets from './Step2AddDatasets.vue';
 import Step3CompleteThePublication from './Step3CompleteThePublication.vue';
@@ -121,13 +120,14 @@ async function createReuseAndMoveToNextStep(newReuse: NewReuse, file: File) {
   }
 }
 
-async function updateReuseAndMoveToNextStep(newReuse: Reuse) {
+async function updateDatasetsAndMoveToNextStep(datasets: Array<Dataset>) {
   errors.value = [];
   let moveToNextStep = false;
-  const datasets = newReuse.datasets;
+  datasets.forEach(dataset => {
+    savedReuse.value.datasets.push(dataset.id);
+  });
   try {
-    savedReuse.value = await updateReuse(newReuse);
-    reuse.value.datasets = datasets;
+    savedReuse.value = await updateReuse(toValue(savedReuse));
     moveToNextStep = true;
   } catch (e) {
     errors.value.push(e.message);

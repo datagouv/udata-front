@@ -69,25 +69,22 @@ import useFunctionalState from '../../composables/form/useFunctionalState';
 import { requiredWithCustomMessage } from '../../i18n';
 import { api } from '../../plugins/api';
 import { type Dataset, DatasetCard } from '@etalab/data.gouv.fr-components';
-import { Reuse } from '../../types';
 import { useToast } from "../../composables/useToast";
   
 const props = defineProps<{
   errors: Array<string>,
   steps: Array<string>,
   loading?: Boolean,
-  reuse: Reuse,
 }>();
 
 const emit = defineEmits<{
-  (event: 'next', reuse: Reuse): void,
+  (event: 'next', datasets: Array<Dataset>): void,
 }>();
 
 const { t } = useI18n();
 const { toast } = useToast();
 
 const datasets = ref<Dataset[]>([]);
-const reuse = ref(props.reuse);
 const linkedDataset = ref<string>("");
 const datasetNotFound = ref<Boolean>(false);
 
@@ -140,10 +137,7 @@ const getLinkedDataset = async () => {
 const submit = () => {
   validateRequiredRules().then(validated => {
     if(validated) {
-      toValue(datasets).forEach(dataset => {
-        reuse.value.datasets.push(dataset.id);
-      });
-      emit("next", toValue(reuse));
+      emit("next", toValue(datasets));
     } else {
       toast.error(t("Please provide at least one dataset."));
     }
