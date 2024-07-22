@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3';
 import { OrganizationNameWithCertificate } from '.';
 import { CERTIFIED } from '../../composables/organizations/useOrganizationCertified';
 import { ASSOCIATION, LOCAL_AUTHORITY, PUBLIC_SERVICE } from '../../composables/organizations/useOrganizationType';
+import type { Organization } from '../../types/organizations';
 
 const meta = {
   title: "Components/Organizations/Organization Name With Certificate",
@@ -18,7 +19,7 @@ const meta = {
 
 export default meta;
 
-const organization = {
+const organization: Organization = {
   id: "someId",
   acronym: null,
   name: 'My Organization',
@@ -27,10 +28,25 @@ const organization = {
   page: '',
   logo: '',
   logo_thumbnail: '',
-  badges: [{kind: CERTIFIED}, {kind: PUBLIC_SERVICE}]
+  badges: [{kind: CERTIFIED}, {kind: PUBLIC_SERVICE}],
+  business_number_id: "",
+  description: "",
+  url: "",
+  created_at: (new Date()).toUTCString(),
+  last_modified: (new Date()).toUTCString(),
+  last_update: (new Date()).toUTCString(),
+  deleted: (new Date()).toUTCString(),
+  members: [],
+  metrics: {
+    datasets: 0,
+    followers: 0,
+    members: 0,
+    reuses: 0,
+    views: 0,
+  },
 }
 
-export const CertifiedPlublicServiceName: StoryObj<typeof meta> = {
+export const CertifiedPublicServiceName: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { OrganizationNameWithCertificate },
     setup() {

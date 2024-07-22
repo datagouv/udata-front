@@ -68,7 +68,7 @@
                       >
                         {{ t("Refuse membership request") }}
                       </h1>
-                      <MembershipRequest
+                      <AdminMembershipRequest
                         class="fr-mt-4w fr-mb-2w"
                         :loading="false"
                         :oid="oid"
