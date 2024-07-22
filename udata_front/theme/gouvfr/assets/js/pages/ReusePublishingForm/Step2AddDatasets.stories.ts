@@ -10,50 +10,6 @@ const meta = {
 export default meta;
 
 const args = {
-  reuse: {
-    badges: [],
-    created_at: "2024-03-03T19:04:43.599000+00:00",
-    datasets: [],
-    deleted: null,
-    description: "This is a random description",
-    extras: {},
-    featured: null,
-    id: "someId",
-    image: "hhttps://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-    image_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-    last_modified: "2024-03-04T08:07:50.215000+00:00",
-    metrics: {
-      datasets: 1,
-      discussions: 0,
-      followers: 0,
-      views: 0
-    },
-    organization: null,
-    owner: {
-      avatar: "https://static.data.gouv.fr/avatars/27/62003f06b04fa996d1e3ae84adbaf9-original.png",
-      avatar_thumbnail: "https://static.data.gouv.fr/avatars/27/62003f06b04fa996d1e3ae84adbaf9-500.png",
-      class: "User",
-      first_name: "Benoit",
-      id: "5bdb10308b4c4108ae679f01",
-      last_name: "Demaegdt",
-      page: "https://www.data.gouv.fr/fr/users/benoit-demaegdt/",
-      slug: "benoit-demaegdt",
-      uri: "https://www.data.gouv.fr/api/1/users/benoit-demaegdt/"
-    },
-    page: "",
-    private: false,
-    slug: "testReuse",
-    tags: [
-      "mobilite",
-      "mobilite-douce",
-      "velo"
-    ],
-    title: "Test Reuse",
-    topic: "transport_and_mobility",
-    type: "vizualization",
-    uri: "",
-    url: "data.gouv.fr"
-  },
   originalDatasets: [
     {
       id: "someId",
