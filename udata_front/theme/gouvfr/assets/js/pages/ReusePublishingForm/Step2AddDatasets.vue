@@ -9,8 +9,9 @@
         </legend>
         <div class="fr-grid-row fr-grid-row--center w-100" v-for="(dataset, index) in datasets" :key="dataset.id">
           <div class="fr-col">
-            <CardSm
+            <DatasetCard
               :dataset="dataset"
+              :dataset-url="dataset.slug"
             />
           </div>
           <div class="fr-col-1 fr-my-auto fr-ml-auto justify-center flex">
@@ -67,8 +68,7 @@ import Alert from '../../components/Alert/Alert.vue';
 import useFunctionalState from '../../composables/form/useFunctionalState';
 import { requiredWithCustomMessage } from '../../i18n';
 import { api } from '../../plugins/api';
-import CardSm from '../../components/dataset/CardSM.vue';
-import type { Dataset } from '@etalab/data.gouv.fr-components';
+import { type Dataset, DatasetCard } from '@etalab/data.gouv.fr-components';
 import { Reuse } from '../../types';
 import { useToast } from "../../composables/useToast";
   
