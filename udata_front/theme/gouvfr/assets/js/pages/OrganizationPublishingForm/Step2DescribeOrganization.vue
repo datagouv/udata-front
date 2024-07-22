@@ -131,11 +131,11 @@
                 :errorText="t('This SIRET is not valid')"
               />
             </LinkedToAccordion>
-            <div v-if="checkOrga.exists !== null" class="fr-col fr-mx-2v fr-mb-2v bg-contrast-grey text-align-center">
+            <div v-if="checkOrga.exists !== null" class="fr-col fr-mx-2v fr-mb-2v bg-contrast-grey text-align-center fr-p-2w">
               <div v-if="checkOrga.exists">
-                <p>{{ t('The SIRET n° {number} is matching', { number: organization.business_number_id }) }}</p>
-                <p>{{ checkOrga.name }}</p>
-                <p v-if="checkOrga.isPublicService">
+                <p class="fr-m-0 fr-text--sm fr-text--bold">{{ t('The SIRET n° {number} is matching', { number: organization.business_number_id }) }}</p>
+                <p class="fr-m-0 fr-text--xs">{{ checkOrga.name }}</p>
+                <p class="fr-m-0 fr-text--xs" v-if="checkOrga.isPublicService">
                   <span class="fr-icon-bank-line" aria-hidden="true"></span>
                   {{ t('Public Service') }}
                 </p>
