@@ -112,18 +112,11 @@ const removeDataset = (index: number) => datasets.value.splice(index, 1);
 
 const getLinkedDataset = async () => {
   datasetNotFound.value = false;
-  
   if (linkedDataset.value.includes('/datasets/')) {
-    const datasetsIndex = linkedDataset.value.indexOf("/datasets/") + "/datasets/".length;
-    let modifiedSubstring = linkedDataset.value.substring(datasetsIndex).replace(/-/g, " ");
-    
-    if (modifiedSubstring.endsWith("/")) {
-      modifiedSubstring = modifiedSubstring.slice(0, -1);
-    }
-    
     try {
-      const resp = await api.get('datasets/?q=' + modifiedSubstring);
-      const newDatasetId = resp.data.data[0].id;
+      const slug = getSlug(linkedDataset.value);
+      const resp = await api.get('datasets/' + slug);
+      const newDatasetId = resp.data.id;
       addDataset(newDatasetId);
     } catch {
       datasetNotFound.value = true;
@@ -131,7 +124,12 @@ const getLinkedDataset = async () => {
   } else {
     datasetNotFound.value = true;
   }
-}
+};
+
+function getSlug(url: string) {
+  const parts = url.split('/').filter(part => part !== "");
+  return parts.pop();
+};
 
 const submit = () => {
   validateRequiredRules().then(validated => {
