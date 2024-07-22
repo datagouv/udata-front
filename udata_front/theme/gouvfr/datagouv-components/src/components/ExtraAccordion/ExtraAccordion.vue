@@ -13,6 +13,7 @@
           @click="expand"
           role="button"
           :aria-expanded="expanded"
+          :aria-controls="accordionId"
           class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-btn--secondary-grey-500"
           :class="{ 'fr-icon-arrow-up-s-line': expanded, 'fr-icon-arrow-down-s-line': !expanded }"
           data-testid="button"
@@ -28,7 +29,7 @@
     </header>
     <div
       class="accordion-content"
-      ref="accordionRef"
+      :id="accordionId"
     >
       <div class="fr-pb-3w fr-mb-3w border-bottom border-default-grey">
         <div class="fr-grid-row fr-grid-row--gutters fr-text--sm fr-m-0" data-testid="extra-list">
@@ -43,10 +44,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { toggleAccordion } from "../../helpers/toggleAccordion";
-const expanded = ref(false);
-const accordionRef = ref<HTMLDivElement | null>(null);
+import useAccordion from '../../composables/useAccordion';
+import { getRandomId } from '@etalab/data.gouv.fr-components';
+const accordionId = getRandomId("accordion");
+
+const { expanded, expand } = useAccordion(accordionId);
 
 defineProps<{
   buttonText: string;
@@ -54,11 +56,4 @@ defineProps<{
   extra: Record<string, any>;
   titleLevel: 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div';
 }>();
-
-function expand() {
-  expanded.value = !expanded.value;
-  if(accordionRef.value) {
-    toggleAccordion(accordionRef.value, expanded.value);
-  }
-};
 </script>
