@@ -64,7 +64,7 @@
 </template>
 
 <script lang="ts">
-import type { Dataset } from '@etalab/data.gouv.fr-components';
+import type { Dataset } from '@datagouv/components';
 export type CardMDProps = {
   dataset: Dataset,
   style?: CSSProperties,

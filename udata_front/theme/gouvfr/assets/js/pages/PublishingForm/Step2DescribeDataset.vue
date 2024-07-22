@@ -432,7 +432,7 @@ const requiredRules = {
 
 const warningRules = {
   acronym: {},
-  description: {required, minLengthValue: minLengthWarning(parseInt(quality_description_length ?? "0"))},
+  description: {required, minLengthValue: minLengthWarning(quality_description_length)},
   frequency: { required, notUnknown },
   license: { required },
   spatial: {

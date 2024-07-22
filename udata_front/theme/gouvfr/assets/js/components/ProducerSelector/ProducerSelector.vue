@@ -50,7 +50,7 @@
 <script setup lang="ts">
 import { ref, computed, toValue, onMounted } from 'vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
-import type { User, Organization } from '@etalab/data.gouv.fr-components';
+import type { User, Organization } from '@datagouv/components';
 import { organization_url } from '../../config';
 import type { Me, OwnedWithId } from '../../types';
 import { useI18n } from 'vue-i18n';

@@ -1,4 +1,4 @@
-import { type Organization, type Owned, type Resource, type User, type NewDataset as BaseNewDataset, type Dataset } from "@etalab/data.gouv.fr-components";
+import { type Organization, type Owned, type Resource, type User, type NewDataset as BaseNewDataset, type Dataset } from "@datagouv/components";
 
 import { CLOSED_FORMATS, RESOURCE_TYPE } from "./helpers";
 
