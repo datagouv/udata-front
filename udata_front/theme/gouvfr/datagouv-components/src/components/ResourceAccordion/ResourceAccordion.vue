@@ -341,7 +341,7 @@
               :title-text="t('Resource Extras')"
               title-level="h5"
               :extra="resource.extras"
-              v-if="resource.extras"
+              v-if="hasExtras"
             />
           </div>
         </transition>
@@ -415,6 +415,8 @@ const tabListRef = ref<HTMLUListElement | null>(null);
 
 const schemaName = props.resource.schema ? props.resource.schema.name ?? "" : "";
 const schemaUrl = props.resource.schema ? props.resource.schema.url ?? "" : "";
+
+const hasExtras = Object.keys(props.resource.extras).length > 0;
 
 const hasSchema = schemaName || schemaUrl;
 const resourcePreviewIndex = 0;
