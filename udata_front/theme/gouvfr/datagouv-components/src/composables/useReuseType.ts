@@ -1,13 +1,13 @@
-import { ref, type MaybeRefOrGetter, watchEffect, toValue } from "vue";
+import { type MaybeRefOrGetter, toValue } from "vue";
 import { fetchReuseTypes, getType } from "../api/reuses";
+import { computedAsync } from "@vueuse/core";
 
 export default function useReuseType(id: MaybeRefOrGetter<string>) {
-  const label = ref("");
-  watchEffect(async () => {
+  const label = computedAsync(async () => {
     const idValue = toValue(id);
     const types = await fetchReuseTypes();
-    label.value = getType(types, idValue);
-  });
+    return getType(types, idValue);
+  }, "");
   return {
     label,
   };
