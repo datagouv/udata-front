@@ -1,5 +1,5 @@
-import { toggleAccordion } from "@etalab/data.gouv.fr-components";
 import { ref } from "vue";
+import { toggleAccordion } from "../helpers";
 
 export default function useAccordion(id: string) {
   const expanded = ref(false);
