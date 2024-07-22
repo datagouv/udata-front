@@ -8,7 +8,7 @@ import { setupComponents } from "../src/config";
 
 setupComponents({
   default_lang: "en",
-  only_locales: "en,fr",
+  only_locales: "en",
 });
 
 const i18n = setupI18n();
