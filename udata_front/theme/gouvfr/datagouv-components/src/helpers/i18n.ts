@@ -4,6 +4,7 @@ import RelativeTime from "dayjs/esm/plugin/relativeTime";
 import { DefineLocaleMessage, I18n, Locale, createI18n } from "vue-i18n";
 import messages from '@intlify/unplugin-vue-i18n/messages';
 import { config } from "../config";
+import { api_root_absolute } from "../api/api";
 import { getRegisteredTranslations } from "@etalab/udata-front-plugins-helper";
 
 dayjs.extend(LocalizedFormat);
@@ -70,6 +71,14 @@ const setupI18nWithExistingInstance = (newI18n: I18n) => {
 }
 
 const loadedModules: Record<string, boolean> = {};
+
+export function getLocalizedUrl (path: string) {
+  const lang = i18n?.global.locale.value ?? config.default_lang;
+  const url = new URL(api_root_absolute + path);
+  const params = new URLSearchParams({ lang });
+  url.search = params.toString();
+  return url.toString();
+}
 
 /**
  * Reload translations from plugins if they aren't already loaded

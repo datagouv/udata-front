@@ -1,0 +1,16 @@
+@import "../variables.less";
+
+.not-enlarged {
+    position: relative;
+    z-index: 2;
+}
+
+.fr-enlarge-link .not-enlarged a {
+    background-image: var(--underline-img), var(--underline-img);
+    &:hover {
+        @dsfr-hover();
+    }
+    &::before {
+        background: none;
+    }
+}

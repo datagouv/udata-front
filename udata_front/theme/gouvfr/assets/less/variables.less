@@ -25,6 +25,7 @@
 @grey-500: var(--grey-50-1000);
 @green-400: var(--green-emeraude-sun-425-moon-753);
 
+@background-contrast-grey-hover: var(--background-contrast-grey-hover);
 @background-elevated-grey: var(--background-elevated-grey);
 @background-elevated-grey-hover: var(--background-elevated-grey-hover);
 @background-elevated-grey-active: var(--background-elevated-grey-active);
@@ -129,4 +130,12 @@
         height: 0;
         display: none;
     }
-}
+};
+
+@dsfr-hover: {
+    background-image: var(--underline-img),var(--underline-img);
+    background-position: var(--underline-x) 100%, var(--underline-x) calc(100% - var(--underline-thickness));
+    background-repeat: no-repeat, no-repeat;
+    transition: background-size 0s;
+    background-size: var(--underline-hover-width) calc(var(--underline-thickness) * 2), var(--underline-idle-width) var(--underline-thickness);
+};

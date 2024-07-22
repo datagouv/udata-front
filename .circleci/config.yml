@@ -9,7 +9,7 @@ jobs:
 
   deps:
     docker:
-      - image: udata/circleci:2-alpine
+      - image: udata/circleci:py3.11-bookworm
     steps:
       - checkout
       # needed to commit changed *.pip files if needed
@@ -21,11 +21,9 @@ jobs:
           - py-cache-v16-{{ arch }}-{{ .Branch }}{{ .Environment.CIRCLE_TAG }}
       - run:
           name: Create venv and install pip-tools
-          # FIXME: For now, we fix setuptools due to https://github.com/etalab/data.gouv.fr/issues/1041
           command: |
-            virtualenv venv
+            python -m venv venv
             source venv/bin/activate
-            pip install --force-reinstall setuptools==66.1.1
             pip install --upgrade pip-tools
       - run:
           name: Upgrade udata to latest pypi release if tagged release
@@ -69,7 +67,7 @@ jobs:
 
   python:
     docker:
-      - image: udata/circleci:2-alpine
+      - image: udata/circleci:py3.11-bookworm
       - image: mongo:6.0.4
       - image: redis:alpine
     environment:
@@ -136,7 +134,8 @@ jobs:
 
   assets:
     docker:
-      - image: cimg/python:3.9.18-node
+      # TODO make an image based on 2-alpine w/ nvm and phantom deps
+      - image: cimg/python:3.11-node
     steps:
       - checkout
       - attach_workspace:
@@ -197,9 +196,74 @@ jobs:
           working_directory: ./udata-front-plugins-helper
           command: npm run preversion
 
+  datagouv_components:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - checkout
+      - run:
+          name: Compute JS dependencies key
+          command: cat ./udata_front/theme/gouvfr/datagouv-components/package.json > datagouv-components-js.deps
+      - restore_cache:
+          keys:
+            - js-cache-{{ arch }}-{{ checksum "datagouv-components-js.deps" }}
+            - js-cache-{{ arch }}-{{ .Branch }}{{ .Environment.CIRCLE_TAG }}
+      - run:
+          name: Install NodeJS and dependencies
+          command: npm ci
+          working_directory: ./udata_front/theme/gouvfr/datagouv-components
+      - save_cache:
+          key: js-cache-{{ arch }}-{{ checksum "datagouv-components-js.deps" }}
+          paths:
+          - ./udata_front/theme/gouvfr/datagouv-components/node_modules
+      - save_cache:
+          key: js-cache-{{ arch }}-{{ .Branch }}{{ .Environment.CIRCLE_TAG }}
+          paths:
+          - ./udata_front/theme/gouvfr/datagouv-components/node_modules
+      - run:
+          name: Compile and test package
+          command: npm run preversion
+          working_directory: ./udata_front/theme/gouvfr/datagouv-components
+      - run:
+          name: publish to chromatic
+          command: CHROMATIC_PROJECT_TOKEN=$CHROMATIC_COMPONENTS_TOKEN npm run chromatic -- --exit-once-uploaded
+          working_directory: ./udata_front/theme/gouvfr/datagouv-components
+
+  publish_datagouv_components:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - checkout
+      - run:
+          name: Install NodeJS and dependencies
+          command: npm ci
+          working_directory: ./udata_front/theme/gouvfr/datagouv-components
+      - run:
+          name: Config npm registry
+          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
+          working_directory: ./udata_front/theme/gouvfr/datagouv-components
+      - run:
+          name: Publish on NPM
+          working_directory: ./udata_front/theme/gouvfr/datagouv-components
+          command: |
+            if [[ $CIRCLE_TAG ]]; then
+              # This is a tagged release
+              npm run publish-stable
+              npm run update-version -- prerelease --preid=dev
+              npm run publish-dev
+            else
+              # This is a simple development build
+              # `npm view @datagouv/components@dev version` allows us to get the current `dev` version on the npm registry
+              # We set it as the current version
+              npm run update-version -- --allow-same-version $(npm view @datagouv/components@dev version)
+              # Then, we increment the preprelease version number
+              npm run update-version -- prerelease --preid=dev
+              npm run publish-dev
+            fi
+
   cypress:
     docker:
-      - image: cimg/python:3.7.13-browsers
+      - image: cimg/python:3.11-browsers
       - image: mongo:6.0.4
       - image: redis:alpine
     steps:
@@ -235,10 +299,13 @@ jobs:
             fi
       - cypress/run-tests:
           cypress-command: npm run ci
+      - run:
+          name: publish to chromatic
+          command: CHROMATIC_PROJECT_TOKEN=$CHROMATIC_UDATA_FRONT_TOKEN npm run chromatic -- --exit-once-uploaded
 
   lighthouse:
     docker:
-      - image: cimg/python:3.7.13-browsers
+      - image: cimg/python:3.11-browsers
       - image: mongo:6.0.4
       - image: redis:alpine
     steps:
@@ -277,7 +344,7 @@ jobs:
 
   dist:
     docker:
-      - image: udata/circleci:2-alpine
+      - image: udata/circleci:py3.11-bookworm
     environment:
        BASH_ENV: /root/.bashrc
     steps:
@@ -308,11 +375,11 @@ jobs:
 
   publish:
     docker:
-      - image: udata/circleci:2-alpine
+      - image: udata/circleci:py3.11-bookworm
     steps:
       - attach_workspace:
           at: .
-      - deploy:
+      - run:
           name: Publish on PyPI
           command: |
             source venv/bin/activate
@@ -343,6 +410,20 @@ workflows:
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
+      - datagouv_components:
+          filters:
+            tags:
+              only: /@datagouv\/components@([0-9]+(?:\.[0-9]+)*(?:-(?:a|b|dev|rc)\.[0-9]+)?)/
+      - publish_datagouv_components:
+          requires:
+            - datagouv_components
+          filters:
+            branches:
+              only:
+                - master
+            tags:
+              only: /@datagouv\/components@([0-9]+(?:\.[0-9]+)*(?:-(?:a|b|dev|rc)\.[0-9]+)?)/
+          context: org-global
       - cypress:
           requires:
             - deps

@@ -23,8 +23,7 @@
 <meta name="admin-root" content="{{ url_for('admin.index') }}" />
 <meta name="api-specs" content="{{ url_for('api.specs', _external=True) }}"/>
 <meta name="auth-url" content="{{ url_for('security.login') }}" />
-{% if config.SCHEMA_CATALOG_URL %}
-<meta name="schema-catalog-url" content="{{ config.SCHEMA_CATALOG_URL }}" />
+{% if config.SCHEMA_DOCUMENTATION_URL %}
 <meta name="schema-documentation-url" content="{{ config.SCHEMA_DOCUMENTATION_URL }}" />
 <meta name="schema-validata-url" content="{{ config.SCHEMA_GOUVFR_VALIDATA_URL }}" />
 <meta name="schema-publishing-url" content="{{ config.SCHEMA_PUBLISHING_URL }}" />
@@ -109,4 +108,7 @@
 <script id="json_ld" type="application/ld+json">{{ json_ld|embedded_json_ld }}</script>
 {% endif %}
 
+{% if config.SEARCH_SIREN_URL %}
+<meta name="search-siren-url" content="{{ config.SEARCH_SIREN_URL }}" />
+{% endif %}
 {% endmacro %}

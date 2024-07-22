@@ -1,8 +1,7 @@
-import { CERTIFIED, PUBLIC_SERVICE, type Organization, type User } from '@etalab/data.gouv.fr-components';
+import { CERTIFIED, PUBLIC_SERVICE, type Dataset, type Organization, type User } from '@etalab/data.gouv.fr-components';
 import CardLG from './card-lg.vue';
 import { withActions } from '@storybook/addon-actions/decorator';
 import { Meta, StoryObj } from '@storybook/vue3';
-import { Dataset } from '../../types';
 
 const meta = {
   title: 'Components/Dataset Card/Card Large',
@@ -73,15 +72,18 @@ const args: CardLGProps = {
       followers: 500,
       views: 50000
     },
+    extras: {},
+    harvest: {},
+    badges: [],
   },
   showMetrics: true,
 };
 
 const updateLastMonth = new Date();
-updateLastMonth.setMonth(updateLastMonth.getMonth() - 1, 20);
+updateLastMonth.setMonth(updateLastMonth.getMonth() - 1, updateLastMonth.getDate());
 
 const updateLastYear = new Date();
-updateLastYear.setFullYear(updateLastYear.getFullYear() - 1);
+updateLastYear.setFullYear(updateLastYear.getFullYear() - 1, 0, 1);
 
 const ownerWithAvatar: User = {
   ...owner,

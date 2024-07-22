@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import type { Dataset } from '../../types';
+import type { Dataset } from '@etalab/data.gouv.fr-components';
 
 export type UserDatasetListProps = {
   owner: string,

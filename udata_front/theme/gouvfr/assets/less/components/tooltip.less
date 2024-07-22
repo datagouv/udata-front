@@ -1,5 +1,6 @@
 .toggletip__wrapper, .tooltip__wrapper {
     position: relative;
+    display: flex;
     z-index: 3;
 }
 
@@ -12,9 +13,10 @@
 }
 
 .toggletip, .tooltip {
-    .fr-text--sm;
-    .fr-my-0;
-    .fr-p-3v;
+    font-size: @font-size-sm;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0.75rem;
     background: white;
     color: @grey-500;
     border-radius: 4px;

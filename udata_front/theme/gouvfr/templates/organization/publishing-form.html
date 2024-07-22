@@ -1,0 +1,31 @@
+{% extends theme('layouts/1-column.html') %}
+{% from theme('macros/breadcrumb.html') import breadcrumb with context %}
+
+{% set meta = {
+    'title': _("Publishing Form"),
+    'description': _("%(site)s organization publishing form", site=config['SITE_TITLE']),
+} %}
+
+{% set section_class = 'bg-grey-50' %}
+{% set container_class = 'vuejs' %}
+
+{% block breadcrumb %}
+{% cache cache_duration, 'organization-breadcrumb', g.lang_code %}
+        <li>
+            <a class="fr-breadcrumb__link" href="{{ url_for('organizations.list') }}">
+                {{ _('Organizations') }}
+            </a>
+        </li>
+        <li>
+            <a class="fr-breadcrumb__link" aria-current="page">
+                {{ _('Publishing Form') }}
+            </a>
+        </li>
+    {% endcache %}
+{% endblock %}
+
+{% block main_content %}
+    <organization-publishing-form
+        class="fr-pb-10w"
+    ></organization-publishing-form>
+{% endblock %}

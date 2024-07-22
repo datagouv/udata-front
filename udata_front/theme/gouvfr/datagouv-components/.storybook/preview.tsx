@@ -4,6 +4,12 @@ import * as React from 'react';
 import { Title, Subtitle, Description, Primary, Controls, Stories } from '@storybook/blocks';
 import { setup, type Preview } from '@storybook/vue3';
 import { setupI18n } from '../src/helpers/i18n';
+import { setupComponents } from "../src/config";
+
+setupComponents({
+  default_lang: "en",
+  only_locales: "en",
+});
 
 const i18n = setupI18n();
 
@@ -21,12 +27,16 @@ const preview: Preview = {
     },
   ],
   parameters: {
-    actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/i,
       },
+    },
+    options: {
+      storySort: {
+        method: "alphabetical"
+      }
     },
     docs: {
       toc: {

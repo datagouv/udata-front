@@ -1,13 +1,41 @@
-import { getLocalizedUrl } from "../i18n";
+import { type MaybeRefOrGetter, toValue } from "vue";
 import { api } from "../plugins/api";
+import { getLocalizedUrl } from "../i18n";
 import type { Member, MemberRole, OrganizationV1, PendingMembershipRequest } from "../types";
 
+type UploadLogoResponse = {
+  image: string;
+  success: boolean;
+};
+
+export function createOrganization(organization: MaybeRefOrGetter<OrganizationV1>) {
+  return api.post<OrganizationV1>("organizations/", {
+    ...toValue(organization),
+  }).then(resp => resp.data);
+}
+
+export function uploadLogo(oid: string, file: File) {
+  return api.postForm<UploadLogoResponse>(`organizations/${oid}/logo`, {
+    file: file
+  }).then(resp => resp.data);
+}
+
+export function updateOrganization(organization: MaybeRefOrGetter<OrganizationV1>) {
+  const organizationValue  = toValue(organization);
+  return api.put<OrganizationV1>(`organizations/${organizationValue.id}/`, {
+    ...organizationValue,
+  }).then(resp => resp.data);
+}
 
 export function getOrganization(oid: string) {
   return api.get<OrganizationV1>(getLocalizedUrl(`organizations/${oid}/`))
     .then(res => res.data);
 }
 
+export function deleteOrganization(oid: string) {
+  return api.delete<void>(getLocalizedUrl(`organizations/${oid}/`))
+    .then(res => res.data);
+}
 
 export function getPendingMemberships(oid: string) {
   return api.get<Array<PendingMembershipRequest>>(getLocalizedUrl(`organizations/${oid}/membership/`), {
@@ -54,6 +82,13 @@ export function acceptRequest(oid: string, requestId: string) {
 export function refuseRequest(oid: string, requestId: string, comment: string) {
   return api.post<void>(`organizations/${oid}/membership/${requestId}/refuse`, {
     comment,
+  })
+    .then(resp => resp.data);
+}
+
+export function addMember(oid: string, userId: string, role: MemberRole) {
+  return api.post<Member>(`organizations/${oid}/member/${userId}`, {
+    role,
   })
     .then(resp => resp.data);
 }

@@ -1,8 +1,10 @@
 import { withActions } from '@storybook/addon-actions/decorator';
-import { expect } from '@storybook/jest';
-import { userEvent, within } from '@storybook/testing-library';
+import { expect, userEvent, within } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { ResourceAccordion } from '.';
+import { AvailablePreview } from './Preview/Preview.stories';
+import * as OrganizationStories from "../Organization/OrganizationNameWithCertificate.stories";
+import type { CommunityResource, Resource } from '../../types/resources';
 
 const meta = {
   title: "Components/Resource/Resource",
@@ -26,18 +28,6 @@ export default meta;
 const args = {
   datasetId: "someId",
   resource: {
-    organization: {
-      id: "someId",
-      acronym: null,
-      name: 'My Organization',
-      uri: '',
-      slug: '',
-      page: '',
-      logo: '',
-      logo_thumbnail: '',
-      badges: []
-    },
-    owner: null,
     checksum: {type: "sha1", value: "54d0f3a4847c546c1cc4865f5ca54a1f8fc3f9af"},
     created_at: "2023-11-15T10:40:22.288000+00:00",
     description: `# h1 Heading 8-)
@@ -84,24 +74,12 @@ test.. test... test..... test?..... test!....
     title: "tondeuse_batterie_fr.csv",
     type: "main",
     url: "https://static.data.gouv.fr/resources/indice-de-reparabilite-organisation-ribimex/20231115-104022/data.csv"
-  }
+  } satisfies Resource
 };
 
 const argsWithSchema = {
   datasetId: "someId",
   resource: {
-    organization: {
-      id: "someId",
-      acronym: null,
-      name: 'My Organization',
-      uri: '',
-      slug: '',
-      page: '',
-      logo: '',
-      logo_thumbnail: '',
-      badges: []
-    },
-    owner: null,
     checksum: {type: "sha1", value: "54d0f3a4847c546c1cc4865f5ca54a1f8fc3f9af"},
     created_at: "2023-11-15T10:40:22.288000+00:00",
     description: ``,
@@ -121,7 +99,7 @@ const argsWithSchema = {
     title: "tondeuse_batterie_fr.csv",
     type: "main",
     url: "https://static.data.gouv.fr/resources/indice-de-reparabilite-organisation-ribimex/20231115-104022/data.csv"
-  }
+  } satisfies Resource
 };
 
 export const SimpleResource: StoryObj<typeof meta> = {
@@ -134,7 +112,6 @@ export const SimpleResource: StoryObj<typeof meta> = {
   }),
   args,
 };
-
 
 export const ResourceWithSchema: StoryObj<typeof meta> = {
   render: (args) => ({
@@ -178,7 +155,7 @@ export const EditableResource: StoryObj<typeof meta> = {
 
 
 export const ResourceWithInteractions: StoryObj<typeof meta> = {
-  play: async ({ args, canvasElement, step }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
     await step('Expand Resource', async () => {
@@ -204,7 +181,7 @@ export const ResourceWithInteractions: StoryObj<typeof meta> = {
   },
 };
 
-export const CommunityResource: StoryObj<typeof meta> = {
+export const ResourceWithPreview: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { ResourceAccordion },
     setup() {
@@ -214,6 +191,63 @@ export const CommunityResource: StoryObj<typeof meta> = {
   }),
   args: {
     ...args,
+    resource: AvailablePreview.args.resource,
+  },
+};
+
+export const AvailableResource: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { ResourceAccordion },
+    setup() {
+      return { args };
+    },
+    template: '<ResourceAccordion v-bind="args" />',
+  }),
+  args: {
+    ...args,
+    resource: {
+      ...args.resource,
+      extras: {
+        'check:available': true,
+      }
+    },
+  },
+};
+
+export const UnavailableResource: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { ResourceAccordion },
+    setup() {
+      return { args };
+    },
+    template: '<ResourceAccordion v-bind="args" />',
+  }),
+  args: {
+    ...args,
+    resource: {
+      ...args.resource,
+      extras: {
+        'check:available': false,
+      }
+    },
+  },
+};
+
+export const SimpleCommunityResource: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { ResourceAccordion },
+    setup() {
+      return { args };
+    },
+    template: '<ResourceAccordion v-bind="args" />',
+  }),
+  args: {
+    ...args,
+    resource: {
+      ...args.resource,
+      owner: null,
+      organization: OrganizationStories.CertifiedPublicServiceName.args.organization,
+    } as CommunityResource,
     isCommunityResource: true,
   },
 };
@@ -229,6 +263,11 @@ export const EditableCommunityResource: StoryObj<typeof meta> = {
   }),
   args: {
     ...args,
+    resource: {
+      ...args.resource,
+      owner: null,
+      organization: OrganizationStories.CertifiedPublicServiceName.args.organization,
+    } as CommunityResource,
     isCommunityResource: true,
     canEdit: true,
   },

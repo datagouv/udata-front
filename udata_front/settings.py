@@ -5,7 +5,6 @@ Default settings for udata-front
 # TODO: move this back to an extension
 RESOURCES_SCHEMAGOUVFR_ENABLED = True
 SCHEMA_GOUVFR_VALIDATA_URL = 'https://validata.etalab.studio'
-SCHEMA_CATALOG_URL = 'https://schema.data.gouv.fr/schemas/schemas.json'
 SCHEMA_DOCUMENTATION_URL = 'https://schema.data.gouv.fr/'
 SCHEMA_PUBLISHING_URL = 'https://publier.etalab.studio/fr'
 
@@ -77,6 +76,9 @@ NEWSLETTER_SUBSCRIPTION_URL = 'https://f.info.data.gouv.fr/f/lp/infolettre-data-
 
 # Metrics API
 METRICS_API = None
+
+# recherche-entreprises.api.gouv.fr
+SEARCH_SIREN_URL = None
 
 # Metadata quality is hidden for datasets harvested from these backends
 QUALITY_METADATA_BACKEND_IGNORE = []

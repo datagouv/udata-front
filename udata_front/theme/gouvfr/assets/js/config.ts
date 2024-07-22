@@ -113,11 +113,6 @@ export const admin_root = _meta("admin-root");
 export const auth_url = _meta("auth-url");
 
 /**
- * The schema catalog URL
- */
-export const schema_catalog_url = _meta("schema-catalog-url");
-
-/**
  * The schema documentation URL
  */
 export const schema_documentation_url = _meta("schema-documentation-url");
@@ -173,7 +168,7 @@ export const catalog_url = _meta("catalog-url");
 /**
  * The description length required to pass the quality score check
  */
-export const quality_description_length = _meta("quality-description-length");
+export const quality_description_length = parseInt(_meta("quality-description-length") ?? "0");
 
 /**
  * The data search form URL
@@ -268,7 +263,7 @@ export const markdown = _jsonMeta("markdown-config");
 /**
  * License groups options configuration.
  */
-export const license_groups_options = _jsonMeta("license-groups-options");
+export const license_groups_options: Array<[string, Array<Record<string, string>>]> = _jsonMeta("license-groups-options");
 
 
 /**
@@ -286,49 +281,57 @@ export const search_autocomplete_enabled = _jsonMeta("search-autocomplete-enable
  */
 export const search_autocomplete_debounce = _jsonMeta("search-autocomplete-debounce");
 
+// TODO: remove when datagouv/components is used with Preview component in Resource
 export const explorable_resources: Array<string> = _jsonMeta("explorable-resources") || [];
+
+// TODO: uncomment when datagouv/components is used with Preview component in Resource
+// export const tabular_api_url = _meta("tabular-api-url");
+// export const tabular_page_size = _meta("tabular-page-size");
+
+export const search_siren_url = _meta("search-siren-url");
 
 export const quality_metadata_backend_ignore: Array<string> = _jsonMeta("quality-metadata-backend-ignore") || [];
 
 export default {
-  user,
-  userIsAdmin,
-  debug,
-  lang,
-  title,
-  catalog_url,
-  csrf_token,
-  demo_server_url,
-  demo_server_name,
+  admin_root,
   api_doc_external_link,
-  guides_harvesting_url,
-  support_url,
-  data_search_feedback_form_url,
   api_root,
   api_2_root,
   api_specs,
-  theme_static,
-  static_root,
-  admin_root,
   auth_url,
+  catalog_url,
+  check_urls,
+  csrf_token,
+  data_search_feedback_form_url,
+  debug,
+  demo_server_url,
+  demo_server_name,
+  explorable_resources,
+  guides_harvesting_url,
+  guides_quality_url,
+  hidpi,
+  is_delete_me_enabled,
+  is_territory_enabled,
+  lang,
+  license_groups_options,
+  markdown,
   publishing_form_feedback_url,
-  schema_catalog_url,
+  quality_description_length,
+  quality_metadata_backend_ignore,
+  read_only_enabled,
+  resources_default_page_size,
+  resources_min_count_to_show_search,
   schema_documentation_url,
   schema_publishing_url,
   schema_validata_url,
-  guides_quality_url,
+  search_siren_url,
   sentry,
-  check_urls,
-  unchecked_types,
-  is_territory_enabled,
-  is_delete_me_enabled,
-  hidpi,
+  static_root,
+  support_url,
   tags,
-  resources_default_page_size,
-  resources_min_count_to_show_search,
-  markdown,
-  license_groups_options,
-  read_only_enabled,
-  quality_description_length,
-  quality_metadata_backend_ignore,
+  theme_static,
+  title,
+  unchecked_types,
+  user,
+  userIsAdmin,
 };

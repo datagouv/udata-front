@@ -1,56 +1,46 @@
-import { type MaybeRefOrGetter, toValue } from "vue";
+import type { Dataset, NewDataset } from "@etalab/data.gouv.fr-components";
+import { toValue, type MaybeRefOrGetter } from "vue";
 import { api } from "../plugins/api";
 import { getLocalizedUrl } from "../i18n";
-import type { Dataset, NewDataset, Owned } from "@etalab/data.gouv.fr-components";
 import type { SpatialGranularity } from "../types";
 
-export type DatasetToUpload = Owned & {
-  title: string;
-  acronym: string;
-  archived?: string;
-  description: string;
-  tags: Array<string> | null;
-  license: string;
-  frequency: string;
-  temporal_coverage: string;
-  frequency_date: Date | null;
-  private: boolean;
-  spatial?: {
-  zones?: Array<string>;
-  granularity?: string;
-  };
-};
-
-function formatDatasetForUpload(datasetRef: MaybeRefOrGetter<NewDataset>): DatasetToUpload {
-  const dataset = { ...toValue(datasetRef) };
+function formatDatasetForUpload(datasetRef: MaybeRefOrGetter<NewDataset>) {
+  type DatasetToUpload = Omit<NewDataset, "archived">;
+  const dataset: DatasetToUpload = { ...toValue(datasetRef) };
+  if("archived" in dataset) {
+    delete dataset.archived;
+  }
   return {
     ...dataset,
     private: true,
-    archived: undefined,
     spatial: dataset.spatial ? {
       zones: dataset.spatial.zones?.length ? dataset.spatial.zones : undefined,
       granularity: dataset.spatial.granularity ? dataset.spatial.granularity : undefined,
     } : undefined,
-  };
+  } as DatasetToUpload;
 }
 
-export function createDataset(dataset: MaybeRefOrGetter<NewDataset>): Promise<Dataset> {
-  const datasetToUpload: DatasetToUpload = formatDatasetForUpload(dataset);
-  return api.post("datasets/", {
+export function createDataset(dataset: MaybeRefOrGetter<NewDataset>) {
+  const datasetToUpload = formatDatasetForUpload(dataset);
+  return api.post<Dataset>("datasets/", {
     ...datasetToUpload,
   }).then(resp => resp.data);
 }
 
-export function publishDataset(dataset: MaybeRefOrGetter<Dataset>): Promise<Dataset> {
+export function publishDataset(dataset: Dataset) {
   const datasetToUpload = toValue(dataset);
   datasetToUpload.private = false;
-  return api.put("datasets/" + datasetToUpload.id, {
+  return api.put<Dataset>("datasets/" + datasetToUpload.id, {
     ...datasetToUpload,
   }).then(resp => resp.data);
 }
 
-export function getFrequenciesUrl(): string {
+export function getFrequenciesUrl () {
   return getLocalizedUrl("datasets/frequencies/");
+}
+
+export function getSpatialGranularities () {
+  return api.get<Array<SpatialGranularity>>(getLocalizedUrl("spatial/granularities/")).then(resp => resp.data);
 }
 
 export type GetOrganizationDatasetsData = {
@@ -58,15 +48,11 @@ export type GetOrganizationDatasetsData = {
   next_page: string | null;
   page: number;
   page_size: number;
-  total: number;
 };
+  total: number;
 
 export function getOrganizationDatasets(oid: string, page: number, pageSize: number, sort: string) {
   return api.get<GetOrganizationDatasetsData>(getLocalizedUrl(`organizations/${oid}/datasets/`), {
     params: { sort, page_size: pageSize, page }
   }).then(resp => resp.data);
-}
-
-export function getSpatialGranularities () {
-  return api.get<Array<SpatialGranularity>>(getLocalizedUrl("spatial/granularities/")).then(resp => resp.data);
 }

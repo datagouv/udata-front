@@ -1,0 +1,15 @@
+{{dataservice.description|markdown}}
+
+{% if dataservice.organization %}
+<a href="{{ url_for('dataservices.show', dataservice=dataservice.id, _external=True) }}"
+    title="{{ dataservice.title }}">
+    <img alt="{{ dataservice.organization.title }}"
+        src="{{ dataservice.organization.logo|placeholder('organization') }}">
+</a>
+{% elif dataservice.owner %}
+<a href="{{ url_for('dataservices.show', dataservice=dataservice.id, _external=True) }}"
+    title="{{ dataservice.title }}">
+    <img alt="{{ dataservice.owner.fullname }}"
+        src="{{ dataservice.owner|avatar_url(150) }}">
+</a>
+{% endif %}

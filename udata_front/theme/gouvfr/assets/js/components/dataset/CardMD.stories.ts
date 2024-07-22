@@ -65,10 +65,10 @@ const args: CardMDProps = {
 };
 
 const updateLastMonth = new Date();
-updateLastMonth.setMonth(updateLastMonth.getMonth() - 1, 20);
+updateLastMonth.setMonth(updateLastMonth.getMonth() - 1, updateLastMonth.getDate());
 
 const updateLastYear = new Date();
-updateLastYear.setFullYear(updateLastYear.getFullYear() - 1);
+updateLastYear.setFullYear(updateLastYear.getFullYear() - 1, 0, 1);
 
 const ownerWithAvatar: User = {
   ...owner,

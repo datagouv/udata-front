@@ -1,4 +1,4 @@
-import { rest } from 'msw';
+import { delay, http, HttpResponse } from 'msw';
 import Admin from './Admin.vue';
 import type { Meta, StoryObj } from "@storybook/vue3";
 import type { Me, PendingMembershipRequest } from '../../types';
@@ -9,8 +9,18 @@ const meta = {
   parameters: {
     flex: true,
     flexDirection: 'column',
+  },
+} satisfies Meta<typeof Admin>;
+
+export default meta;
+
+const args = {
+};
+
+export const HomeAdmin: StoryObj<typeof meta> = {
+  parameters: {
     msw: [
-      rest.get("*/api/1/me", async (_req, res, ctx) => {
+      http.get("*/api/1/me", async () => {
         const me: Me = {
           "about": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
           "active": true,
@@ -53,9 +63,10 @@ const meta = {
           "uri": "http://dev.local:7000/api/1/users/nicolas-kempf-1/",
           "website": "https://www.data.gouv.fr"
         };
-        return res(ctx.delay(), ctx.json(me));
+        await delay();
+        return HttpResponse.json(me);
       }),
-      rest.get("*/api/1/organizations/*/membership", async (_req, res, ctx) => {
+      http.get("*/api/1/organizations/*/membership", async () => {
         const requests: Array<PendingMembershipRequest> = [
           {
               "comment": "justice et patriotisme information et suivie des affaires class\u00e9s r\u00e9ouverture ",
@@ -91,19 +102,12 @@ const meta = {
                   "uri": "http://dev.local:7000/api/1/users/some-user/"
               }
           }
-      ];
-        return res(ctx.delay(), ctx.json(requests));
+        ];
+        await delay();
+        return HttpResponse.json(requests);
       }),
-    ]
+    ],
   },
-} satisfies Meta<typeof Admin>;
-
-export default meta;
-
-const args = {
-};
-
-export const HomeAdmin: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Admin },
     setup() {

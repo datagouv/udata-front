@@ -48,7 +48,7 @@
             </template>
         </template>
         <template v-else>
-          <option 
+          <option
             v-for="option in displayedOptions"
             :key="option.value"
             :value="option.value"
@@ -73,8 +73,8 @@
 </template>
 
 <script>
-import {defineComponent, ref, computed, onMounted, onUpdated, reactive, unref, watch, toValue} from "vue";
-import Select from "@conciergerie.dev/select-a11y";
+import {defineComponent, ref, computed, onMounted, onUpdated, reactive, watch, toValue} from "vue";
+import Select from "@datagouv/select-a11y";
 import {useI18n} from 'vue-i18n';
 import axios from "axios";
 import {api, generateCancelToken} from "../../plugins/api";
@@ -181,6 +181,10 @@ export default defineComponent({
     showDescription: {
       type: Boolean,
       default: false
+    },
+    roundedImages: {
+      type: Boolean,
+      default: false,
     }
   },
   setup(props, { emit }) {
@@ -194,7 +198,9 @@ export default defineComponent({
       return {
         'fr-select-group--error': props.hasError,
         'fr-select-group--warning': !props.hasError && props.hasWarning,
-        'fr-select-group--valid': props.isValid
+        'fr-select-group--valid': props.isValid,
+        'multiselect--rounded-images': props.roundedImages,
+        'multiselect--align-center': !props.showDescription,
       };
     });
 
@@ -223,7 +229,7 @@ export default defineComponent({
     /**
      * Maximum options count
      */
-    const maxOptionsCount = 200;
+    const maxOptionsCount = 20;
 
     /**
      * Initial options
@@ -263,7 +269,7 @@ export default defineComponent({
 
     /**
      * SelectA11y instance
-     * @type {import("vue").Ref<import("@conciergerie.dev/select-a11y").Select | null>}
+     * @type {import("vue").Ref<import("@datagouv/select-a11y").Select | null>}
      */
     const selectA11y = ref(null);
 
@@ -340,7 +346,7 @@ export default defineComponent({
       return {
         label: obj.name ?? obj.title ?? obj.text ?? obj?.properties?.name ?? obj.label ?? obj,
         value: obj.id ?? obj.text ?? obj.value ?? obj,
-        image: obj.logo_thumbnail ?? obj.logo ?? obj.image_url ?? obj.image,
+        image: obj.logo_thumbnail ?? obj.logo ?? obj.image_url ?? obj.image ?? obj.avatar_thumbnail ?? obj.avatar,
         hidden: obj.hidden,
         selected: !!obj.selected,
         helper: obj?.code ? props.helperLabel + obj.code : obj?.helper,
@@ -406,7 +412,7 @@ export default defineComponent({
         return option;
       });
       if(props.allOption) {
-        const existingAllOption = options.value.find(option => !option.value);
+        const existingAllOption = newOptions.find(option => !option.value);
         if(!existingAllOption) {
           newOptions.unshift({
             label: props.allOption,
@@ -520,7 +526,7 @@ export default defineComponent({
       let selectedPromise = null;
       if (value && props.entityUrl) {
         selectedPromise = api
-          .get(props.entityUrl + value)
+          .get(`${props.entityUrl}${value}/`)
           .then((resp) => resp.data)
           .then((data) => mapToOption([data]))
           .then((entities) => entities[0]?.label ?? value)
@@ -561,6 +567,19 @@ export default defineComponent({
         } else {
           selected.value = selectRef.value.value;
           emit("change", selectRef.value.value);
+        }
+      }
+    };
+
+     /**
+     * Register event listener to trigger on reset event
+     */
+     const registerTriggerOnReset = () => {
+      if(selectRef.value) {
+        if(props.multiple) {
+          selected.value = [];
+        } else {
+          selected.value = null;
         }
       }
     };
@@ -616,6 +635,8 @@ export default defineComponent({
       if(selectRef.value) {
         selectRef.value.removeEventListener('change', registerTriggerOnChange);
         selectRef.value.addEventListener('change', registerTriggerOnChange);
+        selectRef.value.removeEventListener('reset', registerTriggerOnReset);
+        selectRef.value.addEventListener('reset', registerTriggerOnReset);
       }
     };
 
@@ -635,9 +656,23 @@ export default defineComponent({
       }
     };
 
-    watch(() => props.values, () => {
-      let value = unref(normalizeValues(props.values));
-      selectA11y.value?.selectOptionSilently(value);
+    function diff(newValue, oldValue) {
+      if (Array.isArray(newValue) && Array.isArray(oldValue)) {
+        return [
+          ...newValue.filter(item => !oldValue.includes(item)),
+        ];
+      } else {
+        return newValue === oldValue ? [] : [newValue];
+      }
+    };
+
+    watch(() => props.values, async () => {
+      const selectedValues = selected.value;
+      await fillSelectedFromValues();
+      const toSelect = diff(selected.value, selectedValues);
+      for(const value of toSelect) {
+        selectA11y.value?.selectOptionSilently(value);
+      }
     });
 
     const fillOptionsAndValues = suggestAndMapToOption()
