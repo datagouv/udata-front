@@ -475,9 +475,9 @@ function selectTab(index: number) {
   registerEvent(getIdFromIndex(index));
 }
 
-const availabilityChecked: boolean = !!props.resource.extras && !!props.resource.extras['check:available'];
+const availabilityChecked: boolean = hasExtras && 'check:available' in props.resource.extras;
 const lastUpdate = props.resource.last_modified;
-const unavailable = availabilityChecked === false;
+const unavailable = availabilityChecked && props.resource.extras['check:available'] === false;
 const { authorizeValidation, documentationUrl, loading, validationUrl, schemaReport} = useSchema(props.resource);
 const hasSchemaErrors = !!schemaReport.value.size;
 const resourceExternalUrl = window.location.origin + window.location.pathname + "#/resources/" + props.resource.id;

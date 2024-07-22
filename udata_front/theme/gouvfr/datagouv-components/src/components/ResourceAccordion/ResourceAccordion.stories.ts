@@ -113,7 +113,6 @@ export const SimpleResource: StoryObj<typeof meta> = {
   args,
 };
 
-
 export const ResourceWithSchema: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { ResourceAccordion },
@@ -193,6 +192,44 @@ export const ResourceWithPreview: StoryObj<typeof meta> = {
   args: {
     ...args,
     resource: AvailablePreview.args.resource,
+  },
+};
+
+export const AvailableResource: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { ResourceAccordion },
+    setup() {
+      return { args };
+    },
+    template: '<ResourceAccordion v-bind="args" />',
+  }),
+  args: {
+    ...args,
+    resource: {
+      ...args.resource,
+      extras: {
+        'check:available': true,
+      }
+    },
+  },
+};
+
+export const UnavailableResource: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { ResourceAccordion },
+    setup() {
+      return { args };
+    },
+    template: '<ResourceAccordion v-bind="args" />',
+  }),
+  args: {
+    ...args,
+    resource: {
+      ...args.resource,
+      extras: {
+        'check:available': false,
+      }
+    },
   },
 };
 
