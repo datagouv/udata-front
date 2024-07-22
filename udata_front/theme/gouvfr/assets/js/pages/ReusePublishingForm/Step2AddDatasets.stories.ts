@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Step2AddDatasets from './Step2AddDatasets.vue';
-import { user } from '../../config';
+import { user } from '../../config';
 
 const meta = {
   title: 'Pages/ReusePublishingForm/Step2',
