@@ -2,7 +2,7 @@
   <DatasetCard
     :dataset
     :style
-    :show-metrics="showMetrics"
+    :showDescription
     :dataset-url="dataset.page"
     :organization-url="dataset.organization?.page"
   />
@@ -15,10 +15,8 @@ import type { StyleValue } from "vue";
 withDefaults(defineProps<{
   dataset: Dataset | DatasetV2,
   style?: StyleValue,
-  showMetrics?: boolean,
+  showDescription?: boolean,
 }>(), {
-  showMetrics: true,
+  showDescription: true,
 });
-
-
 </script>

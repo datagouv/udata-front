@@ -28,7 +28,7 @@ import { apiv2, generateCancelToken } from '../../plugins/api';
 import ReuseList from '../Reuse/ReuseList.vue';
 
 const { t } = useI18n();
-const toast = useToast();
+const { toast } = useToast();
 
 const props = defineProps<UserReuseListProps>();
 

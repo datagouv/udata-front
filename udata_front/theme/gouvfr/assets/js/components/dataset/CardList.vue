@@ -4,8 +4,8 @@
   </div>
   <template v-else-if="totalResults">
     <ul ref="listRef">
-      <li v-for="dataset in datasets" :key="dataset.id">
-        <CardMD :dataset="dataset" />
+      <li v-for="(dataset, key) in datasets" :key="dataset.id">
+        <CardLG :dataset="dataset" :style="zIndex(key)" />
       </li>
     </ul>
     <Pagination
@@ -20,9 +20,9 @@
 </template>
 
 <script lang="ts">
-import type { Dataset } from '@datagouv/components';
-export type CardMDListProps = {
-  datasets: Array<Dataset>,
+import type { Dataset, DatasetV2 } from '@datagouv/components';
+export type CardListProps = {
+  datasets: Array<Dataset | DatasetV2>,
   loading?: boolean,
   totalResults: number,
   pageSize?: number,
@@ -36,9 +36,9 @@ const defaultPageSize = 20;
 import { ref } from 'vue';
 import { Pagination } from '@datagouv/components';
 import Loader from "./loader.vue";
-import CardMD from './CardMD.vue';
+import CardLG from './card-lg.vue';
 
-withDefaults(defineProps<CardMDListProps>(), {
+const props = withDefaults(defineProps<CardListProps>(), {
   loading: false,
   pageSize: defaultPageSize,
 });
@@ -55,6 +55,10 @@ function scrollToTop () {
   if (listRef.value) {
     listRef.value.scrollIntoView({ behavior: "smooth" });
   }
+};
+
+const zIndex = (key: number) => {
+  return {zIndex: props.datasets.length - key}
 };
 
 function changePage (page: number) {
