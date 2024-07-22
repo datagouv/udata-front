@@ -1,7 +1,7 @@
 import { getLocalizedUrl } from "../helpers/i18n";
 import { api } from "../api";
 
-let reuseTypesRequest: Promise<Array<ReuseType>> | null = null;
+let reuseTypesRequest: Array<ReuseType> | null = null;
 
 export type ReuseType = {
   id: string,
@@ -12,12 +12,14 @@ export function getReuseTypesUrl() {
   return getLocalizedUrl("/reuses/types/");
 }
 
-export function fetchReuseTypes() {
+export async function fetchReuseTypes() {
   if (reuseTypesRequest) {
     return reuseTypesRequest;
   }
-  return reuseTypesRequest = api.get<Promise<Array<ReuseType>>>(getReuseTypesUrl())
-  .then((resp) => resp.data);
+  const request = api.get<Array<ReuseType>>(getReuseTypesUrl())
+  const resp = await request;
+  reuseTypesRequest = resp.data;
+  return reuseTypesRequest;
 }
 
 export function getType(types: Array<ReuseType>, id: string): string {
