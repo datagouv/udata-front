@@ -17,6 +17,32 @@
         </a>
       </li>
     </Breadcrumb>
+    <h1 class="fr-h3">{{ t("Datasets") }}</h1>
+    <Container>
+      <div class="fr-grid-row fr-grid-row--middle fr-grid-row--gutters">
+        <div class="fr-col">
+          <h2 class="fr-text--md fr-m-0">{{ t("Statistics of your datasets") }}</h2>
+        </div>
+        <p class="fr-col-auto fr-m-0">
+          <button class="fr-btn fr-btn--sm fr-icon-download-line fr-btn--icon-left">
+            {{ t("Download") }}
+          </button>
+        </p>
+        <p class="fr-col-auto fr-ml-3v fr-m-0">
+            <button
+              @click="expand"
+              role="button"
+              :aria-expanded="expanded"
+              :aria-controls="resourceContentId"
+              class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-btn--secondary-grey-500"
+              :class="{'fr-icon-arrow-up-s-line': expanded, 'fr-icon-arrow-down-s-line': !expanded}"
+              data-testid="expand-button"
+            >
+            {{ t('See statistics') }}
+            </button>
+          </p>
+      </div>
+    </Container>
     <DatasetsTable
       :datasets="datasets"
       @sort="(newSort) => sort = newSort"
@@ -39,6 +65,7 @@ import { useCurrentOrganization } from '../../../composables/admin/useCurrentOrg
 import DatasetsTable from "../../../components/AdminTable/AdminDatasetsTable/AdminDatasetsTable.vue";
 import { watchPostEffect } from "vue";
 import { getOrganizationDatasets } from "../../../api/datasets";
+import Container from "../../../components/Ui/Container/Container.vue";
 
 const { t } = useI18n();
 const props = defineProps<{oid: string}>();
