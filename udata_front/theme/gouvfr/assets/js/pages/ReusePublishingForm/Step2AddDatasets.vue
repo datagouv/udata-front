@@ -112,9 +112,8 @@ const removeDataset = (index: number) => datasets.value.splice(index, 1);
 
 const getLinkedDataset = async () => {
   datasetNotFound.value = false;
-  const regex = /\/datasets\//;
   
-  if (regex.test(linkedDataset.value)) {
+  if (linkedDataset.value.includes('/datasets/')) {
     const datasetsIndex = linkedDataset.value.indexOf("/datasets/") + "/datasets/".length;
     let modifiedSubstring = linkedDataset.value.substring(datasetsIndex).replace(/-/g, " ");
     
