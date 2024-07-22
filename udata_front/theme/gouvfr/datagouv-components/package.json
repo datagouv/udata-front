@@ -49,6 +49,7 @@
     "@storybook/vue3": "^8.1.6",
     "@storybook/vue3-vite": "^8.1.6",
     "@types/markdown-it": "^13.0.7",
+    "@types/remove-markdown": "^0.3.4",
     "@vitejs/plugin-vue": "^4.4.1",
     "@vueuse/core": "^10.6.1",
     "axios": "^1.6.8",
