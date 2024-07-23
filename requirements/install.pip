@@ -39,6 +39,7 @@ markupsafe==2.1.2
     # via
     #   -c requirements/udata.pip
     #   jinja2
+    #   sentry-sdk
     #   werkzeug
 python-frontmatter==1.0.0
     # via -r requirements/install.in
@@ -48,11 +49,11 @@ pytz==2024.1
     #   feedgenerator
 pyyaml==6.0.1
     # via python-frontmatter
-sentry-sdk[flask]==1.9.0
+sentry-sdk[flask]==2.9.0
     # via -r requirements/install.in
 sgmllib3k==1.0.0
     # via feedparser
-urllib3==1.25.11
+urllib3==1.26.19
     # via
     #   -c requirements/udata.pip
     #   sentry-sdk

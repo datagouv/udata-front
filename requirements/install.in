@@ -2,6 +2,6 @@
 
 feedparser==6.0.8
 python-frontmatter==1.0.0
-sentry-sdk[flask] >= 1.1.0
+sentry-sdk[flask]>=2.9.0
 Flask-Themes2==1.0.0
 feedgenerator==2.1.0
