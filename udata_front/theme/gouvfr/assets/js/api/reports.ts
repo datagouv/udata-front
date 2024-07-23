@@ -14,8 +14,10 @@ export async function getReportReasons() {
 export type ObjectType = 'Dataset' | 'Reuse' | 'Organization';
 
 export type NewReport = {
-  object_type: ObjectType;
-  object_id: string;
+  subject: {
+    class: ObjectType;
+    id: string;
+  },
   reason: ReportReason;
   message: string;
 };
@@ -28,8 +30,10 @@ export type Report = NewReport & {
 
 export async function postReport(type: ObjectType, id: string, reason: ReportReason, message: string) {
   const res = await api.post<Report, AxiosResponse<Report>, NewReport>("/reports/", {
-    object_type: type,
-    object_id: id,
+    subject: {
+      id,
+      class: type,
+    },
     reason,
     message,
   });
