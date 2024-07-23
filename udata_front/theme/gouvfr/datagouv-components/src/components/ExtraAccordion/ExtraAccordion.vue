@@ -44,8 +44,9 @@
 </template>
 
 <script setup lang="ts">
+import { getRandomId } from '@gouvminint/vue-dsfr';
 import useAccordion from '../../composables/useAccordion';
-import { getRandomId } from '@etalab/data.gouv.fr-components';
+
 const accordionId = getRandomId("accordion");
 
 const { expanded, expand } = useAccordion(accordionId);
