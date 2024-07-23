@@ -72,13 +72,13 @@ import { type Dataset, DatasetCard } from '@etalab/data.gouv.fr-components';
 import { useToast } from "../../composables/useToast";
 
 const props = defineProps<{
-errors: Array<string>,
-steps: Array<string>,
-loading?: Boolean,
+  errors: Array<string>,
+  steps: Array<string>,
+  loading?: Boolean,
 }>();
 
 const emit = defineEmits<{
-(event: 'next', datasets: Array<Dataset>): void,
+  (event: 'next', datasets: Array<Dataset>): void,
 }>();
 
 const { t } = useI18n();
@@ -91,53 +91,53 @@ const datasetNotFound = ref<Boolean>(false);
 const datasetRequired = requiredWithCustomMessage(t("At least one dataset is required."));
 
 const requiredRules = {
-datasets: { datasetRequired },
+  datasets: { datasetRequired },
 };
 
 const warningRules = {
-datasets: { datasetRequired },
+  datasets: { datasetRequired },
 };
 
 const { validateRequiredRules } = useFunctionalState({ datasets }, requiredRules, warningRules);
 
 const addDataset = async (datasetId: string) => {
-const existingDataset = datasets.value.find(dataset => dataset.id === datasetId);
-if (!existingDataset) {
-  let newDataset = await api.get('datasets/' + datasetId);
-  datasets.value.push(newDataset.data);
-}
+  const existingDataset = datasets.value.find(dataset => dataset.id === datasetId);
+  if (!existingDataset) {
+    let newDataset = await api.get('datasets/' + datasetId);
+    datasets.value.push(newDataset.data);
+  }
 };
 
 const removeDataset = (index: number) => datasets.value.splice(index, 1);
 
 const getLinkedDataset = async () => {
-datasetNotFound.value = false;
-if (linkedDataset.value.includes('/datasets/')) {
-  try {
-    const slug = getSlug(linkedDataset.value);
-    const resp = await api.get('datasets/' + slug);
-    const newDatasetId = resp.data.id;
-    addDataset(newDatasetId);
-  } catch {
+  datasetNotFound.value = false;
+  if (linkedDataset.value.includes('/datasets/')) {
+    try {
+      const slug = getSlug(linkedDataset.value);
+      const resp = await api.get('datasets/' + slug);
+      const newDatasetId = resp.data.id;
+      addDataset(newDatasetId);
+    } catch {
+      datasetNotFound.value = true;
+    }
+  } else {
     datasetNotFound.value = true;
   }
-} else {
-  datasetNotFound.value = true;
-}
 };
 
 function getSlug(url: string) {
-const parts = url.split('/').filter(part => part !== "");
-return parts.pop();
+  const parts = url.split('/').filter(part => part !== "");
+  return parts.pop();
 };
 
 const submit = () => {
-validateRequiredRules().then(validated => {
-  if(validated) {
-    emit("next", toValue(datasets));
-  } else {
-    toast.error(t("Please provide at least one dataset."));
-  }
-});
+  validateRequiredRules().then(validated => {
+    if(validated) {
+      emit("next", toValue(datasets));
+    } else {
+      toast.error(t("Please provide at least one dataset."));
+    }
+  });
 };
 </script>
