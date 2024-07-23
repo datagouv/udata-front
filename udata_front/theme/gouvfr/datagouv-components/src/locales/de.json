@@ -84,5 +84,10 @@
   "{n} reuses": "{n} reuses",
   "{n} favorites": "{n} favorites",
   "Published {date}": "Published {date}",
-  "Metadata :": "Metadata :"
+  "Metadata :": "Metadata :",
+  "Service public": "",
+  "Local authority": "",
+  "Association": "",
+  "Company": "",
+  "User": ""
 }

@@ -84,5 +84,10 @@
   "{n} reuses": "{n} réutilisations | {n} réutilisation | {n} réutilisations",
   "{n} favorites": "{n} favoris | {n} favori | {n} favoris",
   "Published {date}": "Publié {date}",
-  "Metadata :": "Métadonnées :"
+  "Metadata :": "Métadonnées :",
+  "Service public": "",
+  "Local authority": "",
+  "Association": "",
+  "Company": "",
+  "User": ""
 }
