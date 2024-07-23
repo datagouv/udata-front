@@ -88,7 +88,6 @@ import { ref, onMounted, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import type { Dataset, DatasetV2 } from "../../types/datasets";
 import CopyButton from "../CopyButton/CopyButton.vue";
-import { toggleAccordion } from "../../helpers/toggleAccordion";
 import { formatDate } from '../../helpers/index';
 import { getGranularity, fetchGranularities } from '../../api/granularity';
 import { getFrequencies, fetchFrequencies } from '../../api/frequency';
@@ -104,13 +103,9 @@ const props = defineProps<{
 }>();
 const { t } = useI18n();
 const embedText = useOEmbed('dataset', props.dataset.id);
-const extrasExpanded = ref(false);
-const extrasRef = ref<HTMLDivElement | null>(null);
 const granularity = ref<string | null>(null);
 const frequency = ref<string | null>(null);
 const zone = ref<string | null>(null);
-const harvestExpanded = ref(false);
-const harvestRef = ref<HTMLDivElement | null>(null);
 const textAreaRef = ref<HTMLTextAreaElement | null>(null);
 
 const hasExtras = computed(() => Object.keys(props.dataset.extras).length > 0);
@@ -118,20 +113,6 @@ const hasExtras = computed(() => Object.keys(props.dataset.extras).length > 0);
 function selectContent() {
   if (textAreaRef.value) {
     textAreaRef.value.select();
-  }
-};
-
-function expand() {
-  harvestExpanded.value = !harvestExpanded.value;
-  if (harvestRef.value) {
-    toggleAccordion(harvestRef.value, harvestExpanded.value);
-  }
-};
-
-function extrasExpand() {
-  extrasExpanded.value = !extrasExpanded.value;
-  if (extrasRef.value) {
-    toggleAccordion(extrasRef.value, extrasExpanded.value);
   }
 };
 
