@@ -2,7 +2,7 @@ import type { Owned } from "./owned";
 
 export type Dataservice = Owned & {
   acronym: string;
-  archived_at: string | null ;
+  archived_at: string;
   authorization_request_url: string;
   availability: number;
   base_api_url: string;
@@ -12,7 +12,7 @@ export type Dataservice = Owned & {
     name: string;
     organization: string | null;
     owner: string | null;
-  };
+  } | null;
   created_at: string;
   datasets: [
     {
@@ -33,7 +33,7 @@ export type Dataservice = Owned & {
   has_token: boolean;
   id: string;
   is_restricted: boolean;
-  license: string;
+  license: string | null;
   metadata_modified_at: string;
   metrics: { discussions: number; followers: number; reuses: number; views: number; };
   private: boolean;
@@ -41,6 +41,6 @@ export type Dataservice = Owned & {
   self_api_url: string;
   self_web_url: string;
   slug: string;
-  tags: Array<string> | null;
+  tags: Array<string>;
   title: string;
 }
