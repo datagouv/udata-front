@@ -70,6 +70,7 @@
                   <InputGroup
                     type="textarea"
                     :label="t('Message')"
+                    :required="true"
                     v-model="form.message"
                     :placeholder="t('Reason of your report.\nDon\'t include any personal data.')"
                   />
@@ -140,6 +141,7 @@ const reasons = ref<Array<Option>>([]);
 
 const requiredRules = {
   reason: { required },
+  message: { required },
 };
 
 const { getErrorText, getFunctionalState, hasError, reset, validateRequiredRules, v$ } = useFunctionalState(form, requiredRules, requiredRules);
