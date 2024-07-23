@@ -22,25 +22,37 @@
           ></button>
         </div>
       </div>
-      <MultiSelect
-        :minimumCharacterBeforeSuggest="2"
-        @change="addDataset"
-        :placeholder="t('Look for a dataset')"
-        :searchPlaceholder="t('Search a dataset...')"
-        suggestUrl="/datasets/suggest/"
-      />
+      <div
+        class="fr-col"
+        @blur="vWarning$.datasets.$touch"
+      >
+        <MultiSelect
+          :minimumCharacterBeforeSuggest="2"
+          :placeholder="t('Look for a dataset')"
+          :searchPlaceholder="t('Search a dataset...')"
+          suggestUrl="/datasets/suggest/"
+          @change="addDataset"
+          :hasError="fieldHasError('datasets')"
+          :errorText="getErrorText('datasets')"
+        />
+      </div>
       <p class="fr-hr-or w-100 text-transform-lowercase fr-text--regular">
         <span class="fr-hr-or-text">{{ t('or') }}</span>
       </p>
-      <InputGroup
-        :label="t('Link to the dataset')"
-        :placeholder="'https://...'"
-        class="w-100"
-        v-model="linkedDataset"
-        @change="getLinkedDataset"
-      />
-      <div v-if="datasetNotFound" class="fr-col bg-contrast-grey text-align-center fr-p-2v">
-        <p class="fr-text--md fr-text--bold">{{ t('No dataset associated to that link has been found') }}</p>
+      <div
+        class="fr-col"
+        @blur="vWarning$.linkedDataset.$touch"
+      >
+        <InputGroup
+          :label="t('Link to the dataset')"
+          :placeholder="'https://...'"
+          class="w-100"
+          v-model="linkedDataset"
+          @change="getLinkedDataset"
+          :hasError="fieldHasError('linkedDataset')"
+          :hasWarning="fieldHasWarning('linkedDataset')"
+          :errorText="t('No dataset has been found on the provided url')"
+        />
       </div>
     </fieldset>
     <Alert type="error" v-if="errors.length" class="fr-mb-2w">
@@ -58,7 +70,7 @@
   </Container>
 </template>
 <script setup lang="ts">
-import { ref, toValue } from 'vue';
+import { computed, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Container from '../../components/Ui/Container/Container.vue';
 import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
@@ -69,7 +81,6 @@ import useFunctionalState from '../../composables/form/useFunctionalState';
 import { requiredWithCustomMessage } from '../../i18n';
 import { api } from '../../plugins/api';
 import { type Dataset, DatasetCard } from '@etalab/data.gouv.fr-components';
-import { useToast } from "../../composables/useToast";
 
 const props = defineProps<{
   errors: Array<string>,
@@ -82,23 +93,47 @@ const emit = defineEmits<{
 }>();
 
 const { t } = useI18n();
-const { toast } = useToast();
 
 const datasets = ref<Dataset[]>([]);
 const linkedDataset = ref<string>("");
-const datasetNotFound = ref<Boolean>(false);
+const datasetFound = ref<Boolean>(false);
 
 const datasetRequired = requiredWithCustomMessage(t("At least one dataset is required."));
 
+const checkLinkedDataset = () => {
+  if (linkedDataset.value.length == 0) {
+    return true;
+  } else {
+    return datasetFound.value
+  }
+};
+
 const requiredRules = {
   datasets: { datasetRequired },
+  linkedDataset: { custom: checkLinkedDataset },
 };
 
 const warningRules = {
   datasets: { datasetRequired },
+  linkedDataset: { custom: checkLinkedDataset },
+}; 
+
+const { getErrorText, getFunctionalState, getWarningText, validateRequiredRules, v$, hasWarning, hasError, vWarning$ } = useFunctionalState({datasets}, requiredRules, warningRules);
+console.log(vWarning$.value)
+const state = computed(() => {
+  return {
+    datasets: getFunctionalState(vWarning$.value.datasets.$dirty, v$.value.datasets.$invalid, vWarning$.value.datasets.$error),
+    linkedDataset: getFunctionalState(vWarning$.value.linkedDataset.$dirty, v$.value.linkedDataset.$invalid, vWarning$.value.linkedDataset.$error)
+  }
+});
+
+function fieldHasError(field: string) {
+  return hasError(state, field);
 };
 
-const { validateRequiredRules } = useFunctionalState({ datasets }, requiredRules, warningRules);
+function fieldHasWarning(field: string) {
+  return hasWarning(state, field);
+};
 
 const addDataset = async (datasetId: string) => {
   const existingDataset = datasets.value.find(dataset => dataset.id === datasetId);
@@ -111,18 +146,18 @@ const addDataset = async (datasetId: string) => {
 const removeDataset = (index: number) => datasets.value.splice(index, 1);
 
 const getLinkedDataset = async () => {
-  datasetNotFound.value = false;
   if (linkedDataset.value.includes('/datasets/')) {
     try {
       const slug = getSlug(linkedDataset.value);
       const resp = await api.get('datasets/' + slug);
       const newDatasetId = resp.data.id;
       addDataset(newDatasetId);
+      linkedDataset.value = "";
     } catch {
-      datasetNotFound.value = true;
+      datasetFound.value = false;
     }
   } else {
-    datasetNotFound.value = true;
+    datasetFound.value = false;
   }
 };
 
@@ -135,8 +170,6 @@ const submit = () => {
   validateRequiredRules().then(validated => {
     if(validated) {
       emit("next", toValue(datasets));
-    } else {
-      toast.error(t("Please provide at least one dataset."));
     }
   });
 };
