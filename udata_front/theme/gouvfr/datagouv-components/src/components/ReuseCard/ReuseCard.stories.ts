@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import { vueRouter } from 'storybook-vue3-router';
-import { CERTIFIED, PUBLIC_SERVICE, type Organization } from '@etalab/data.gouv.fr-components';
+import { CERTIFIED, PUBLIC_SERVICE } from "../../composables";
+import type { Organization } from "../../types/organizations";
 import ReuseCard, { type ReuseProps } from './ReuseCard.vue';
 import TestComponent from "../DatasetCard/TestComponent.vue"
 
