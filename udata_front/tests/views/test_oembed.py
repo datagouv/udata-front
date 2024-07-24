@@ -31,7 +31,7 @@ class OEmbedAPITest:
 
         url = url_for('api.oembed', url=dataset.external_url)
 
-        response = api.get(url)
+        response = api.get(url, headers={'Origin': 'http://localhost'})
         assert200(response)
         assert_cors(response)
         assert 'html' in response.json
@@ -51,7 +51,7 @@ class OEmbedAPITest:
 
         url = url_for('api.oembed', url=dataset.external_url)
 
-        response = api.get(url)
+        response = api.get(url, headers={'Origin': 'http://localhost'})
         assert200(response)
         assert_cors(response)
 
@@ -65,7 +65,7 @@ class OEmbedAPITest:
                                dataset=dataset, _external=True)
 
         url = url_for('api.oembed', url=redirect_url)
-        response = api.get(url)
+        response = api.get(url, headers={'Origin': 'http://localhost'})
         assert200(response)
         assert_cors(response)
         assert 'html' in response.json
@@ -83,7 +83,7 @@ class OEmbedAPITest:
         dataset_url = url_for('datasets.show', dataset='unknown',
                               _external=True)
         url = url_for('api.oembed', url=dataset_url)
-        response = api.get(url)
+        response = api.get(url, headers={'Origin': 'http://localhost'})
         assert404(response)
         assert_cors(response)
 
@@ -92,7 +92,7 @@ class OEmbedAPITest:
         reuse = ReuseFactory()
 
         url = url_for('api.oembed', url=reuse.external_url)
-        response = api.get(url)
+        response = api.get(url, headers={'Origin': 'http://localhost'})
         assert200(response)
         assert_cors(response)
         assert 'html' in response.json
@@ -110,7 +110,7 @@ class OEmbedAPITest:
         org = OrganizationFactory()
 
         url = url_for('api.oembed', url=org.external_url)
-        response = api.get(url)
+        response = api.get(url, headers={'Origin': 'http://localhost'})
         assert200(response)
         assert_cors(response)
         assert 'html' in response.json
@@ -138,7 +138,7 @@ class OEmbedAPITest:
     def test_oembed_with_an_unknown_url(self, api):
         '''It should fail at fetching an oembed with an invalid URL.'''
         url = url_for('api.oembed', url='http://local.test/somewhere')
-        response = api.get(url)
+        response = api.get(url, headers={'Origin': 'http://localhost'})
         assert404(response)
         assert_cors(response)
 
@@ -155,7 +155,7 @@ class OEmbedAPITest:
         '''It does not support xml format.'''
         dataset = DatasetFactory()
         url = url_for('api.oembed', url=dataset.external_url, format='xml')
-        response = api.get(url)
+        response = api.get(url, headers={'Origin': 'http://localhost'})
         assert_status(response, 501)
         assert_cors(response)
         assert response.json['message'] == 'Only JSON format is supported'
@@ -202,7 +202,7 @@ class OEmbedsDatasetAPITest:
 
         url = url_for('api.oembeds',
                       references='dataset-{id}'.format(id=dataset.id))
-        response = api.get(url)
+        response = api.get(url, headers={'Origin': 'http://localhost'})
         assert200(response)
         data = response.json[0]
         assert 'html' in data
@@ -224,7 +224,7 @@ class OEmbedsDatasetAPITest:
 
         url = url_for('api.oembeds',
                       references='dataset-{id}'.format(id=dataset.id))
-        response = api.get(url)
+        response = api.get(url, headers={'Origin': 'http://localhost'})
         assert200(response)
         data = response.json[0]
         assert organization.name in data['html']
@@ -247,14 +247,14 @@ class OEmbedsDatasetAPITest:
         user = UserFactory()
 
         url = url_for('api.oembeds', references='user-{id}'.format(id=user.id))
-        response = api.get(url)
+        response = api.get(url, headers={'Origin': 'http://localhost'})
         assert400(response)
         assert response.json['message'] == 'Invalid object type.'
 
     def test_oembeds_dataset_api_get_without_valid_id(self, api):
         '''It should fail at fetching an oembed without a valid id.'''
         url = url_for('api.oembeds', references='dataset-123456789')
-        response = api.get(url)
+        response = api.get(url, headers={'Origin': 'http://localhost'})
         assert400(response)
         assert response.json['message'] == 'Unknown dataset ID.'
 
@@ -267,7 +267,7 @@ class OEmbedsDatasetAPITest:
         TERRITORY_DATASETS[level][TestDataset.id] = TestDataset
         reference = 'territory-{0}:{1}'.format(zone.id, TestDataset.id)
         url = url_for('api.oembeds', references=reference)
-        response = api.get(url)
+        response = api.get(url, headers={'Origin': 'http://localhost'})
         assert200(response)
         data = response.json[0]
         assert 'html' in data
@@ -291,7 +291,7 @@ class OEmbedsDatasetAPITest:
         reference = 'territory-{0}:{1}'.format(geoid, TestDataset.id)
 
         url = url_for('api.oembeds', references=reference)
-        response = api.get(url)
+        response = api.get(url, headers={'Origin': 'http://localhost'})
         assert200(response)
         data = response.json[0]
         assert 'html' in data
@@ -307,7 +307,7 @@ class OEmbedsDatasetAPITest:
     def test_oembeds_api_for_territory_bad_id(self, api):
         '''Should raise 400 on bad territory ID'''
         url = url_for('api.oembeds', references='territory-xyz')
-        response = api.get(url)
+        response = api.get(url, headers={'Origin': 'http://localhost'})
         assert400(response)
         assert response.json['message'] == 'Invalid territory ID.'
 
@@ -315,7 +315,7 @@ class OEmbedsDatasetAPITest:
         '''Should raise 400 on unknown zone ID'''
         url = url_for('api.oembeds',
                       references='territory-fr:commune:13004@1970-01-01:xyz')
-        response = api.get(url)
+        response = api.get(url, headers={'Origin': 'http://localhost'})
         assert400(response)
         assert response.json['message'] == 'Unknown territory identifier.'
 
@@ -328,7 +328,7 @@ class OEmbedsDatasetAPITest:
         del TERRITORY_DATASETS[level]
         reference = 'territory-{0}:{1}'.format(zone.id, TestDataset.id)
         url = url_for('api.oembeds', references=reference)
-        response = api.get(url)
+        response = api.get(url, headers={'Origin': 'http://localhost'})
         assert400(response)
         assert response.json['message'] == 'Unknown kind of territory.'
 
@@ -341,6 +341,6 @@ class OEmbedsDatasetAPITest:
         TERRITORY_DATASETS[level] = {}
         reference = 'territory-{0}:{1}'.format(zone.id, TestDataset.id)
         url = url_for('api.oembeds', references=reference)
-        response = api.get(url)
+        response = api.get(url, headers={'Origin': 'http://localhost'})
         assert400(response)
         assert response.json['message'] == 'Unknown territory dataset id.'
