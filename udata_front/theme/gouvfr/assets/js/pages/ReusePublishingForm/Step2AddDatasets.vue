@@ -1,9 +1,23 @@
 <template>
   <Container>
     <Stepper :steps="steps" :currentStep="1"/>
+    <Well
+      color="blue-cumulus"
+      weight="regular"
+      class="fr-mb-2w"
+    >
+      <div class="fr-grid-row">
+        <div class="fr-col-auto fr-mr-3v">
+          <span class="fr-icon-info-line" aria-hidden="true"></span>
+        </div>
+        <div class="fr-col">
+          <p class="fr-m-0 fr-text--xs">{{ t('It is important to associate all the datasets used, as this allows to understand the cross-references and improve the visibility of your reuse.') }}</p>
+        </div>
+      </div>
+    </Well>
     <fieldset class="fr-fieldset min-width-0" aria-labelledby="description-legend">
-      <legend class="fr-fieldset__legend" id="description-legend">
-        <h2 class="subtitle subtitle--uppercase fr-mb-3v">
+      <legend class="fr-fieldset__legend" id="description-legend" v-if="datasets.length > 0">
+        <h2 class="subtitle subtitle--uppercase fr-mb-0">
           {{ t("Associated datasets") }}
         </h2>
       </legend>
@@ -64,6 +78,8 @@
 <script setup lang="ts">
 import { computed, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { type Dataset, DatasetCard, Well } from '@etalab/data.gouv.fr-components';
+import { useSortable } from '@vueuse/integrations/useSortable';
 import Container from '../../components/Ui/Container/Container.vue';
 import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
@@ -72,8 +88,6 @@ import Alert from '../../components/Alert/Alert.vue';
 import useFunctionalState from '../../composables/form/useFunctionalState';
 import { requiredWithCustomMessage } from '../../i18n';
 import { api } from '../../plugins/api';
-import { type Dataset, DatasetCard } from '@etalab/data.gouv.fr-components';
-import { useSortable } from '@vueuse/integrations/useSortable'
 
 const props = defineProps<{
   errors: Array<string>,
@@ -162,22 +176,6 @@ const addDataset = async (datasetId: string) => {
 };
 
 const removeDataset = (index: number) => datasets.value.splice(index, 1);
-
-const getLinkedDataset = async () => {
-  if (linkedDataset.value.includes('/datasets/')) {
-    try {
-      const slug = getSlug(linkedDataset.value);
-      const resp = await api.get('datasets/' + slug);
-      const newDatasetId = resp.data.id;
-      addDataset(newDatasetId);
-      linkedDataset.value = "";
-    } catch {
-      datasetFound.value = false;
-    }
-  } else {
-    datasetFound.value = false;
-  }
-};
 
 function getSlug(url: string) {
   const parts = url.split('/').filter(part => part !== "");
