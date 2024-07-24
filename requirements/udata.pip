@@ -19,6 +19,7 @@ appdirs==1.4.4
 attrs==23.2.0
     # via
     #   jsonschema
+    #   referencing
     #   udata
 authlib==0.14.3
     # via udata
@@ -39,7 +40,7 @@ bleach==3.3.1
 blinker==1.4
     # via
     #   flask-mail
-    #   flask-navigation
+    #   flask-navigation-temp-python-311
     #   flask-principal
     #   flask-security-too
     #   flask-sitemap
@@ -63,7 +64,7 @@ celery==5.3.1
     #   udata
 celerybeat-mongo==0.2.0
     # via udata
-certifi==2024.2.2
+certifi==2024.7.4
     # via
     #   requests
     #   udata
@@ -85,7 +86,7 @@ click==8.1.2
     #   flask
     #   geomet
     #   udata
-click-didyoumean==0.3.0
+click-didyoumean==0.3.1
     # via
     #   celery
     #   udata
@@ -106,7 +107,7 @@ dnspython==2.6.1
     #   email-validator
     #   pymongo
     #   udata
-email-validator==2.1.1
+email-validator==2.2.0
     # via
     #   flask-security-too
     #   udata
@@ -122,12 +123,11 @@ flask==2.1.2
     #   flask-babel
     #   flask-caching
     #   flask-cdn
-    #   flask-cors
     #   flask-gravatar
     #   flask-login
     #   flask-mail
     #   flask-mongoengine
-    #   flask-navigation
+    #   flask-navigation-temp-python-311
     #   flask-principal
     #   flask-restx
     #   flask-security-too
@@ -141,8 +141,6 @@ flask-caching==2.0.2
     # via udata
 flask-cdn==1.5.3
     # via udata
-flask-cors==3.0.8
-    # via udata
 flask-gravatar==0.5.0
     # via udata
 flask-login==0.6.2
@@ -155,7 +153,7 @@ flask-mongoengine==1.0.0
     # via
     #   flask-storage
     #   udata
-flask-navigation @ git+https://github.com/krs-novice/flask-navigation-ks.git@develop
+flask-navigation-temp-python-311==0.2.1
     # via udata
 flask-principal==0.4.0
     # via
@@ -206,9 +204,13 @@ jmespath==1.0.1
     #   boto3
     #   botocore
     #   udata
-jsonschema==3.2.0
+jsonschema==4.23.0
     # via
     #   flask-restx
+    #   udata
+jsonschema-specifications==2023.12.1
+    # via
+    #   jsonschema
     #   udata
 kombu[redis]==5.3.1
     # via
@@ -234,7 +236,7 @@ mongoengine==0.27.0
     #   udata
 netaddr==0.7.19
     # via udata
-packaging==24.0
+packaging==24.1
     # via
     #   bleach
     #   udata
@@ -247,11 +249,15 @@ pillow==9.2.0
     #   flask-storage
     #   pydenticon
     #   udata
-prompt-toolkit==3.0.43
+ply==3.11
+    # via
+    #   pycparser
+    #   udata
+prompt-toolkit==3.0.47
     # via
     #   click-repl
     #   udata
-pycparser==2.21
+pycparser==2.2
     # via
     #   cffi
     #   udata
@@ -265,10 +271,6 @@ pymongo==4.3.3
 pyparsing==3.1.2
     # via
     #   rdflib
-    #   udata
-pyrsistent==0.20.0
-    # via
-    #   jsonschema
     #   udata
 python-dateutil==2.8.2
     # via
@@ -287,12 +289,22 @@ redis==4.5.2
     # via
     #   kombu
     #   udata
-regex==2023.12.25
+referencing==0.35.1
+    # via
+    #   jsonschema
+    #   jsonschema-specifications
+    #   udata
+regex==2024.5.15
     # via
     #   awesome-slugify
     #   udata
 requests==2.24.0
     # via udata
+rpds-py==0.19.0
+    # via
+    #   jsonschema
+    #   referencing
+    #   udata
 s3transfer==0.6.2
     # via
     #   boto3
@@ -303,9 +315,7 @@ six==1.16.0
     #   bleach
     #   cryptography
     #   faker
-    #   flask-cors
     #   isodate
-    #   jsonschema
     #   langdetect
     #   python-dateutil
     #   udata
@@ -318,7 +328,7 @@ text-unidecode==1.3
     # via
     #   faker
     #   udata
-tlds==2024030600
+tlds==2024071000
     # via udata
 tzdata==2024.1
     # via
@@ -330,7 +340,7 @@ unidecode==0.4.21
     # via
     #   awesome-slugify
     #   udata
-uritools==4.0.2
+uritools==4.0.3
     # via
     #   udata
     #   urlextract

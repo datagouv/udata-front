@@ -286,52 +286,58 @@ export const search_autocomplete_enabled = _jsonMeta("search-autocomplete-enable
  */
 export const search_autocomplete_debounce = _jsonMeta("search-autocomplete-debounce");
 
+// TODO: remove when datagouv/components is used with Preview component in Resource
 export const explorable_resources: Array<string> = _jsonMeta("explorable-resources") || [];
+
+// TODO: uncomment when datagouv/components is used with Preview component in Resource
+// export const tabular_api_url = _meta("tabular-api-url");
+// export const tabular_page_size = _meta("tabular-page-size");
 
 export const search_siren_url = _meta("search-siren-url");
 
 export const quality_metadata_backend_ignore: Array<string> = _jsonMeta("quality-metadata-backend-ignore") || [];
 
 export default {
-  user,
-  userIsAdmin,
-  debug,
-  lang,
-  title,
-  catalog_url,
-  csrf_token,
-  demo_server_url,
-  demo_server_name,
+  admin_root,
   api_doc_external_link,
-  guides_harvesting_url,
-  support_url,
-  data_search_feedback_form_url,
   api_root,
   api_2_root,
   api_specs,
-  theme_static,
-  static_root,
-  admin_root,
   auth_url,
+  catalog_url,
+  check_urls,
+  csrf_token,
+  data_search_feedback_form_url,
+  debug,
+  demo_server_url,
+  demo_server_name,
+  explorable_resources,
+  guides_harvesting_url,
+  guides_quality_url,
+  hidpi,
+  is_delete_me_enabled,
+  is_territory_enabled,
+  lang,
+  license_groups_options,
+  markdown,
   publishing_form_feedback_url,
+  quality_description_length,
+  quality_metadata_backend_ignore,
+  read_only_enabled,
+  resources_default_page_size,
+  resources_min_count_to_show_search,
   schema_documentation_url,
   schema_publishing_url,
   schema_validata_url,
-  guides_quality_url,
-  sentry,
-  check_urls,
-  unchecked_types,
-  is_territory_enabled,
-  is_delete_me_enabled,
-  hidpi,
-  tags,
-  resources_default_page_size,
-  resources_min_count_to_show_search,
-  markdown,
-  license_groups_options,
-  read_only_enabled,
-  quality_description_length,
   search_siren_url,
-  quality_metadata_backend_ignore,
+  sentry,
+  static_root,
+  support_url,
+  tags,
+  theme_static,
   terms_url,
+  title,
+  unchecked_types,
+  user,
+  userIsAdmin,
 };
