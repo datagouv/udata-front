@@ -23,13 +23,16 @@
       </legend>
       <div ref="el">
         <div class="fr-col fr-grid-row fr-grid-row--center w-100" v-for="(dataset, index) in datasets" :key="dataset.id">
+          <div class="fr-col-auto fr-my-auto fr-ml-auto justify-center flex fr-mr-3v">
+            <img :src="draggableIcon" />
+          </div>
           <div class="fr-col">
             <DatasetCard
               :dataset="dataset"
               :dataset-url="dataset.slug"
             />
           </div>
-          <div class="fr-col-1 fr-my-auto fr-ml-auto justify-center flex">
+          <div class="fr-col-auto fr-ml-3v fr-my-auto fr-ml-auto justify-center flex">
             <button
               type="button"
               class="fr-btn fr-btn--sm fr-btn--tertiary fr-icon-delete-line"
@@ -88,6 +91,7 @@ import Alert from '../../components/Alert/Alert.vue';
 import useFunctionalState from '../../composables/form/useFunctionalState';
 import { requiredWithCustomMessage } from '../../i18n';
 import { api } from '../../plugins/api';
+import draggableIcon from "../../../../templates/svg/illustrations/draggable.svg";
 
 const props = defineProps<{
   errors: Array<string>,
