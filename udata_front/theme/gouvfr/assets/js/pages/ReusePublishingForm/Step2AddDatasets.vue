@@ -94,7 +94,7 @@ import draggableIcon from "../../../../templates/svg/illustrations/draggable.svg
 const props = defineProps<{
   errors: Array<string>,
   steps: Array<string>,
-  loading?: Boolean,
+  loading?: boolean,
 }>();
 
 const emit = defineEmits<{
@@ -177,14 +177,16 @@ async function addDataset(datasetId: string) {
   }
 };
 
-const removeDataset = (index: number) => datasets.value.splice(index, 1);
+function removeDataset(index: number) {
+  datasets.value.splice(index, 1);
+};
 
 function getSlug(url: string) {
   const parts = url.split('/').filter(part => part !== "");
   return parts.pop();
 };
 
-const submit = () => {
+function submit() {
   validateRequiredRules().then(validated => {
     if(validated) {
       emit("next", toValue(datasets));

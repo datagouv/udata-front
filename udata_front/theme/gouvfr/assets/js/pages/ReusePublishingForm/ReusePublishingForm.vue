@@ -81,7 +81,7 @@ const savedReuse = ref<Reuse>({
   owner: user,
 });
 
-const errors = ref<Array<String>>([]);
+const errors = ref<Array<string>>([]);
 
 const moveToStep = (step: number, saveToHistory = true) => {
   if(containerRef.value) {
@@ -146,8 +146,6 @@ async function updateReuseData(newReuse: Reuse) {
 };
 
 onMounted(async () => {
-  fetchMe().then(result => {
-    me.value = result;
-  });
+  me.value = await(fetchMe());
 });
 </script>

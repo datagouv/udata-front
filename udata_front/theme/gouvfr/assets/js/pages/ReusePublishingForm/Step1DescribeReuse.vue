@@ -301,7 +301,7 @@ import { url } from '@vuelidate/validators';
 const props = defineProps<{
   reuse: NewReuse,
   steps: Array<string>,
-  errors: Array<String>,
+  errors: Array<string>,
   user: Me,
 }>();
 
@@ -387,7 +387,7 @@ function addFiles(newFile: Array<File>) {
     }
 };
 
-const submit = () => {
+function submit() {
   validateRequiredRules().then(valid => {
     if(valid && file.value) {
       emit("next", reuse, file.value);
