@@ -71,6 +71,8 @@
                     type="textarea"
                     :label="t('Message')"
                     :required="true"
+                    :hasError="fieldHasError('message')"
+                    :errorText="getErrorText('message')"
                     v-model="form.message"
                     :placeholder="t('Reason of your report.\nDon\'t include any personal data.')"
                   />
@@ -151,6 +153,7 @@ const fieldHasError = (field: string) => hasError(state, field);
 const state = computed(() => {
   return {
     reason: getFunctionalState(v$.value.reason.$dirty, v$.value.reason.$error, false),
+    message: getFunctionalState(v$.value.message.$dirty, v$.value.message.$error, false),
   };
 });
 
