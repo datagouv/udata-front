@@ -104,7 +104,9 @@
   "license": "LGPL-2.1-only",
   "dependencies": {
     "@datagouv/select-a11y": "^3.6.1",
-    "leaflet": "^1.9.4"
+    "@vueuse/integrations": "^10.11.0",
+    "leaflet": "^1.9.4",
+    "sortablejs": "^1.15.2"
   },
   "msw": {
     "workerDirectory": [

@@ -7,19 +7,21 @@
           {{ t("Associated datasets") }}
         </h2>
       </legend>
-      <div class="fr-grid-row fr-grid-row--center w-100" v-for="(dataset, index) in datasets" :key="dataset.id">
-        <div class="fr-col">
-          <DatasetCard
-            :dataset="dataset"
-            :dataset-url="dataset.slug"
-          />
-        </div>
-        <div class="fr-col-1 fr-my-auto fr-ml-auto justify-center flex">
-          <button
-            type="button"
-            class="fr-btn fr-btn--sm fr-btn--tertiary fr-icon-delete-line"
-            @click="removeDataset(index)"
-          ></button>
+      <div ref="el">
+        <div class="fr-col fr-grid-row fr-grid-row--center w-100" v-for="(dataset, index) in datasets" :key="dataset.id">
+          <div class="fr-col">
+            <DatasetCard
+              :dataset="dataset"
+              :dataset-url="dataset.slug"
+            />
+          </div>
+          <div class="fr-col-1 fr-my-auto fr-ml-auto justify-center flex">
+            <button
+              type="button"
+              class="fr-btn fr-btn--sm fr-btn--tertiary fr-icon-delete-line"
+              @click="removeDataset(index)"
+            ></button>
+          </div>
         </div>
       </div>
       <MultiSelect
@@ -71,6 +73,7 @@ import useFunctionalState from '../../composables/form/useFunctionalState';
 import { requiredWithCustomMessage } from '../../i18n';
 import { api } from '../../plugins/api';
 import { type Dataset, DatasetCard } from '@etalab/data.gouv.fr-components';
+import { useSortable } from '@vueuse/integrations/useSortable'
 
 const props = defineProps<{
   errors: Array<string>,
@@ -87,6 +90,9 @@ const { t } = useI18n();
 const datasets = ref<Dataset[]>([]);
 const linkedDataset = ref<string>("");
 const datasetFound = ref<Boolean>(false);
+
+const el = ref<HTMLElement | null>(null);
+useSortable(el, datasets);
 
 const datasetRequired = requiredWithCustomMessage(t("At least one dataset is required."));
 
