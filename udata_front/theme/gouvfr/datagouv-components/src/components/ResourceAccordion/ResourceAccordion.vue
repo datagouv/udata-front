@@ -351,7 +351,6 @@
 </template>
 
 <script setup lang="ts">
-import { unrefElement } from "@vueuse/core";
 import Clipboard from "clipboard";
 import { ref, computed, unref, onMounted, type ComputedRef } from "vue";
 import { useI18n } from "vue-i18n";
@@ -370,8 +369,9 @@ import useResourceImage from "../../composables/resources/useResourceImage";
 import useSchema from "../../composables/resources/useSchema";
 import useTabs from "../../composables/useTabs";
 import { config } from "../../config";
-import { filesize, formatRelativeIfRecentDate, formatDate, markdown, toggleAccordion } from "../../helpers";
+import { filesize, formatRelativeIfRecentDate, formatDate, markdown } from "../../helpers";
 import type { CommunityResource, Resource } from "../../types/resources";
+import useAccordion from "../../composables/useAccordion";
 
 type Props = {
   datasetId: string,
@@ -425,27 +425,13 @@ const resourceInformationIndex = hasPreview ? 2 : (hasSchema ? 1 : 0);
 
 const { asc, getIdFromIndex, isSelected, selectIndex } = useTabs(tabsRef, tabListRef, resourceInformationIndex);
 
-const expanded = ref(false);
 function expand() {
   if(expanded.value) {
     globalThis._paq?.push(['trackEvent', 'Close resource', props.resource.id]);
   } else {
     globalThis._paq?.push(['trackEvent', 'Open resource', props.resource.id]);
-    getIdFromIndex(0);
   }
-  expanded.value = !expanded.value;
-  if(contentRef.value) {
-    toggleAccordion(contentRef.value, expanded.value);
-    const $elem = unrefElement(tabsRef);
-    if ($elem) {
-      if(expanded.value) {
-        //const { height } = window.getComputedStyle($elem);
-        //tabsHeight.value = height;
-      } else {
-        //tabsHeight.value = "auto";
-      }
-    }
-  }
+  expandAccordion();
 }
 
 function registerEvent(tab: ComputedRef<string> | string) {
@@ -486,6 +472,8 @@ const resourceContentId = 'resource-' + props.resource.id;
 const resourceHeaderId = 'resource-' + props.resource.id + '-header';
 const resourceTitleId = 'resource-' + props.resource.id + '-title';
 const resourceCopyId = 'resource-' + props.resource.id + '-copy';
+
+const { expanded, expand: expandAccordion } = useAccordion(resourceContentId);
 
 onMounted(() => {
   if(props.expandedOnMount) {
