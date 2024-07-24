@@ -130,8 +130,8 @@ const warningRules = {
   linkedDataset: { custom: checkLinkedDataset },
 }; 
 
-const { getErrorText, getFunctionalState, getWarningText, validateRequiredRules, v$, hasWarning, hasError, vWarning$ } = useFunctionalState({datasets}, requiredRules, warningRules);
-console.log(vWarning$.value)
+const { getErrorText, getFunctionalState, validateRequiredRules, v$, hasWarning, hasError, vWarning$ } = useFunctionalState({datasets}, requiredRules, warningRules);
+
 const state = computed(() => {
   return {
     datasets: getFunctionalState(vWarning$.value.datasets.$dirty, v$.value.datasets.$invalid, vWarning$.value.datasets.$error),
@@ -147,12 +147,12 @@ function fieldHasWarning(field: string) {
   return hasWarning(state, field);
 };
 
-const handleDatasetChange = async (datasetId: string) => {
+async function handleDatasetChange(datasetId: string) {
   vWarning$.value.datasets.$touch();
   addDataset(datasetId);
 };
 
-const handleLinkedDatasetChange = async () => {
+async function handleLinkedDatasetChange() {
   vWarning$.value.linkedDataset.$touch();
   if (linkedDataset.value.includes('/datasets/')) {
     try {
@@ -169,7 +169,7 @@ const handleLinkedDatasetChange = async () => {
   }
 };
 
-const addDataset = async (datasetId: string) => {
+async function addDataset(datasetId: string) {
   const existingDataset = datasets.value.find(dataset => dataset.id === datasetId);
   if (!existingDataset) {
     let newDataset = await api.get('datasets/' + datasetId);
