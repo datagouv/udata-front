@@ -26,19 +26,17 @@
           <div class="fr-col-auto fr-my-auto fr-ml-auto justify-center flex fr-mr-3v">
             <img :src="draggableIcon" />
           </div>
-          <div class="fr-col">
+          <div class="fr-col relative">
             <DatasetCard
               :dataset="dataset"
               :dataset-url="dataset.slug"
             />
           </div>
-          <div class="fr-col-auto fr-ml-3v fr-my-auto fr-ml-auto justify-center flex">
-            <button
-              type="button"
-              class="fr-btn fr-btn--sm fr-btn--tertiary fr-icon-delete-line"
-              @click="removeDataset(index)"
-            ></button>
-          </div>
+          <button
+            type="button"
+            class="fr-btn fr-btn--tertiary-no-outline fr-btn--secondary--error fr-icon-close-line border-0 absolute right-1px fr-mr-3w fr-mt-5w"
+            @click="removeDataset(index)"
+          ></button>
         </div>
       </div>
       <MultiSelect
