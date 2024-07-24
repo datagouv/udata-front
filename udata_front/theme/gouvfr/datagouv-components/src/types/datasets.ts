@@ -1,4 +1,5 @@
 import type { Badges } from "./badges";
+import { Harvest } from "./harvest";
 import type { Owned } from "./owned";
 import type { Resource } from "./resources";
 
@@ -55,8 +56,8 @@ export type Dataset = NewDataset & {
   slug: string;
   quality: Quality;
   metrics: { discussions: number; followers: number; reuses: number; views: number; };
-  harvest: Record<string, any>
-  extras: Record<string, any>
+  harvest: Harvest;
+  extras: Record<string, any>;
 };
 
 export type DatasetV2 = NewDataset & Omit<Dataset, 'resources' | 'community_resources'> & {
