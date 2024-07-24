@@ -22,38 +22,28 @@
           ></button>
         </div>
       </div>
-      <div
-        class="fr-col"
-        @blur="vWarning$.datasets.$touch"
-      >
-        <MultiSelect
-          :minimumCharacterBeforeSuggest="2"
-          :placeholder="t('Look for a dataset')"
-          :searchPlaceholder="t('Search a dataset...')"
-          suggestUrl="/datasets/suggest/"
-          @change="addDataset"
-          :hasError="fieldHasError('datasets')"
-          :errorText="getErrorText('datasets')"
-        />
-      </div>
+      <MultiSelect
+        :minimumCharacterBeforeSuggest="2"
+        :placeholder="t('Look for a dataset')"
+        :searchPlaceholder="t('Search a dataset...')"
+        suggestUrl="/datasets/suggest/"
+        @change="handleDatasetChange"
+        :hasError="fieldHasError('datasets')"
+        :errorText="getErrorText('datasets')"
+      />
       <p class="fr-hr-or w-100 text-transform-lowercase fr-text--regular">
         <span class="fr-hr-or-text">{{ t('or') }}</span>
       </p>
-      <div
-        class="fr-col"
-        @blur="vWarning$.linkedDataset.$touch"
-      >
-        <InputGroup
-          :label="t('Link to the dataset')"
-          :placeholder="'https://...'"
-          class="w-100"
-          v-model="linkedDataset"
-          @change="getLinkedDataset"
-          :hasError="fieldHasError('linkedDataset')"
-          :hasWarning="fieldHasWarning('linkedDataset')"
-          :errorText="t('No dataset has been found on the provided url')"
-        />
-      </div>
+      <InputGroup
+        :label="t('Link to the dataset')"
+        :placeholder="'https://...'"
+        class="w-100"
+        v-model="linkedDataset"
+        @change="handleLinkedDatasetChange"
+        :hasError="fieldHasError('linkedDataset')"
+        :hasWarning="fieldHasWarning('linkedDataset')"
+        :errorText="t('No dataset has been found on the provided url')"
+      />
     </fieldset>
     <Alert type="error" v-if="errors.length" class="fr-mb-2w">
       <template #title>{{ t("An error occured | Some errors occured", errors.length) }}</template>
@@ -133,6 +123,28 @@ function fieldHasError(field: string) {
 
 function fieldHasWarning(field: string) {
   return hasWarning(state, field);
+};
+
+const handleDatasetChange = async (datasetId: string) => {
+  vWarning$.value.datasets.$touch();
+  addDataset(datasetId);
+};
+
+const handleLinkedDatasetChange = async () => {
+  vWarning$.value.linkedDataset.$touch();
+  if (linkedDataset.value.includes('/datasets/')) {
+    try {
+      const slug = getSlug(linkedDataset.value);
+      const resp = await api.get('datasets/' + slug);
+      const newDatasetId = resp.data.id;
+      addDataset(newDatasetId);
+      linkedDataset.value = "";
+    } catch {
+      datasetFound.value = false;
+    }
+  } else {
+    datasetFound.value = false;
+  }
 };
 
 const addDataset = async (datasetId: string) => {
