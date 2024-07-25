@@ -16,13 +16,13 @@
       </div>
     </Well>
     <fieldset class="fr-fieldset min-width-0" aria-labelledby="description-legend">
-      <legend class="fr-fieldset__legend" id="description-legend" v-if="datasets.length > 0">
+      <legend class="fr-fieldset__legend" id="description-legend" v-if="form.datasets.length > 0">
         <h2 class="subtitle subtitle--uppercase fr-mb-0">
           {{ t("Associated datasets") }}
         </h2>
       </legend>
       <div ref="el">
-        <div class="fr-col fr-grid-row fr-grid-row--center w-100" v-for="(dataset, index) in datasets" :key="dataset.id">
+        <div class="fr-col fr-grid-row fr-grid-row--center w-100" v-for="(dataset, index) in form.datasets" :key="dataset.id">
           <div class="fr-col-auto fr-my-auto fr-ml-auto justify-center flex fr-mr-3v">
             <img :src="draggableIcon" />
           </div>
@@ -55,8 +55,8 @@
         :label="t('Link to the dataset')"
         :placeholder="'https://...'"
         class="w-100"
-        v-model="linkedDataset"
-        @change="handleLinkedDatasetChange"
+        v-model="form.linkedDataset"
+        @change="vWarning$.linkedDataset.$touch"
         :hasError="fieldHasError('linkedDataset')"
         :hasWarning="fieldHasWarning('linkedDataset')"
         :errorText="t('No dataset has been found on the provided url')"
@@ -77,21 +77,21 @@
   </Container>
 </template>
 <script setup lang="ts">
-import { computed, ref, toValue } from 'vue';
+import { computed, reactive, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { type Dataset, DatasetCard, Well } from '@etalab/data.gouv.fr-components';
 import { useSortable } from '@vueuse/integrations/useSortable';
+import { helpers } from '@vuelidate/validators'
 import Container from '../../components/Ui/Container/Container.vue';
 import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Alert from '../../components/Alert/Alert.vue';
 import useFunctionalState from '../../composables/form/useFunctionalState';
-import { requiredWithCustomMessage } from '../../i18n';
 import { api } from '../../plugins/api';
 import draggableIcon from "../../../../templates/svg/illustrations/draggable.svg";
 
-const props = defineProps<{
+defineProps<{
   errors: Array<string>,
   steps: Array<string>,
   loading?: boolean,
@@ -103,34 +103,34 @@ const emit = defineEmits<{
 
 const { t } = useI18n();
 
-const datasets = ref<Dataset[]>([]);
-const linkedDataset = ref<string>("");
-const datasetFound = ref<Boolean>(false);
+const form = reactive<{
+  datasets: Array<Dataset>;
+  linkedDataset: string;
+}>({
+  datasets: [],
+  linkedDataset: "",
+});
 
 const el = ref<HTMLElement | null>(null);
-useSortable(el, datasets);
+useSortable(el, form.datasets);
 
-const datasetRequired = requiredWithCustomMessage(t("At least one dataset is required."));
-
-const checkLinkedDataset = () => {
-  if (linkedDataset.value.length == 0) {
-    return true;
-  } else {
-    return datasetFound.value
-  }
+function checkDatasets() {
+  return form.datasets.length > 0;
 };
 
+const { withAsync } = helpers;
+
 const requiredRules = {
-  datasets: { datasetRequired },
-  linkedDataset: { custom: checkLinkedDataset },
+  datasets: { custom: checkDatasets },
+  linkedDataset: { linked: withAsync(handleLinkedDatasetChange) },
 };
 
 const warningRules = {
-  datasets: { datasetRequired },
-  linkedDataset: { custom: checkLinkedDataset },
-}; 
+  datasets: {},
+  linkedDataset: {},
+};
 
-const { getErrorText, getFunctionalState, validateRequiredRules, v$, hasWarning, hasError, vWarning$ } = useFunctionalState({datasets}, requiredRules, warningRules);
+const { getErrorText, getFunctionalState, validateRequiredRules, v$, hasWarning, hasError, vWarning$ } = useFunctionalState(form, requiredRules, warningRules);
 
 const state = computed(() => {
   return {
@@ -152,33 +152,36 @@ async function handleDatasetChange(datasetId: string) {
   addDataset(datasetId);
 };
 
-async function handleLinkedDatasetChange() {
-  vWarning$.value.linkedDataset.$touch();
-  if (linkedDataset.value.includes('/datasets/')) {
+async function handleLinkedDatasetChange(value: string) {
+  if (value == "") {
+    return true;
+  } else if (value.includes('/datasets/')) {
     try {
-      const slug = getSlug(linkedDataset.value);
+      const url = new URL(value);
+      const slug = getSlug(url.pathname);
       const resp = await api.get('datasets/' + slug);
       const newDatasetId = resp.data.id;
       addDataset(newDatasetId);
-      linkedDataset.value = "";
+      form.linkedDataset = "";
+      return true;
     } catch {
-      datasetFound.value = false;
+      return false;
     }
   } else {
-    datasetFound.value = false;
+    return false;
   }
 };
 
 async function addDataset(datasetId: string) {
-  const existingDataset = datasets.value.find(dataset => dataset.id === datasetId);
+  const existingDataset = form.datasets.find(dataset => dataset.id === datasetId);
   if (!existingDataset) {
     let newDataset = await api.get('datasets/' + datasetId);
-    datasets.value.push(newDataset.data);
+    form.datasets.push(newDataset.data);
   }
 };
 
 function removeDataset(index: number) {
-  datasets.value.splice(index, 1);
+  form.datasets.splice(index, 1);
 };
 
 function getSlug(url: string) {
@@ -189,7 +192,7 @@ function getSlug(url: string) {
 function submit() {
   validateRequiredRules().then(validated => {
     if(validated) {
-      emit("next", toValue(datasets));
+      emit("next", toValue(form.datasets));
     }
   });
 };
