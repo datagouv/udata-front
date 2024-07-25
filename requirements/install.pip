@@ -8,7 +8,7 @@ blinker==1.4
     # via
     #   -c requirements/udata.pip
     #   sentry-sdk
-certifi==2024.2.2
+certifi==2024.7.4
     # via
     #   -c requirements/udata.pip
     #   sentry-sdk
