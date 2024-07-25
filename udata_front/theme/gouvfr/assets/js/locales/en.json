@@ -450,6 +450,13 @@
   "You publish in your own name": "You publish in your own name",
   "We advise you to publish under an organization if it\\'s a professional activity": "We advise you to publish under an organization if it\\'s a professional activity",
   "Join an organization": "Join an organization",
+  "usage policy": "usage policy",
+  "Report this content": "Report this content",
+  "Please only report in case of serious concern.": "Please only report in case of serious concern.",
+  "See our usage policy": "See our usage policy",
+  "Report reason": "Report reason",
+  "Reason of your report.\\nDon\\'t include any personal data.": "Reason of your report.\\nDon\\'t include any personal data.",
+  "{site} team will examine the content to check if it breaks our {markup}. Thanks for your help.": "{site} team will examine the content to check if it breaks our {markup}. Thanks for your help.",
   "Edit profile": "Edit profile",
   "Save": "Save",
   "Delete the organization": "Delete the organization",
@@ -521,5 +528,6 @@
   "Preview updated on {date}": "Preview updated on {date}",
   "{count} columns": "{count} columns",
   "{count} rows": "{count} rows",
-  "Resource Extras": "Resource Extras"
+  "Resource Extras": "Resource Extras",
+  "Thanks for reporting this content": "Thanks for reporting this content"
 }
