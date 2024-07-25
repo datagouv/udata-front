@@ -16,7 +16,7 @@
             </AppLink>
           </slot>
         </h4>
-        <div class="fr-text--sm fr-mb-n1v" v-if="dataservice.organization || dataservice.owner">
+        <div class="fr-text--sm fr-mb-0" v-if="dataservice.organization || dataservice.owner">
           <template v-if="dataservice.organization">
             <span class="not-enlarged dash-after-sm fr-mr-1v">
               <AppLink class="fr-link fr-text--sm" v-if="organizationUrl" :to="organizationUrl">
@@ -30,7 +30,7 @@
           </span>
           <span class="text-mention-grey">{{ t('Updated {date}', {date: formatRelativeIfRecentDate(dataservice.metadata_modified_at)}) }}</span>
         </div>
-        <div class="fr-mx-0 fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
+        <div class="fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
           <p class="fr-my-0"><span class="fr-icon-information-line fr-icon--sm text-grey-380 fr-mr-1v"></span></p>
           <p class="fr-text--sm fr-mr-1v fr-my-0">{{ t('Availability :') }}</p>
           <p class="text-grey-400 fr-text--sm fr-my-0">{{ t('{n}% on the last month', dataservice.availability) }}</p>
