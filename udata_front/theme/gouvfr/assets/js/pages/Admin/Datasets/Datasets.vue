@@ -46,10 +46,17 @@
     </Container>
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle">
       <h2 class="fr-col-12 fr-col-sm subtitle subtitle--uppercase fr-m-0">{{ t('{n} datasets', totalResult) }}</h2>
-      <div class="fr-col-auto">
-        <a :href="getOrganizationDatasetsCatalogUrl(oid)" class="fr-btn fr-btn--sm fr-icon-download-line fr-btn--icon-left">
-          {{ t('Download catalog') }}
-        </a>
+      <div class="fr-col-auto fr-grid-row fr-grid-row--middle">
+        <InputGroup
+          class="fr-m-0 fr-mr-1w"
+          :label="t('Search')"
+          v-model.trim="q"
+        />
+        <div>
+          <a :href="getOrganizationDatasetsCatalogUrl(oid)" class="fr-btn fr-btn--sm fr-icon-download-line fr-btn--icon-left">
+            {{ t('Download catalog') }}
+          </a>
+        </div>
       </div>
     </div>
     <DatasetsTable
@@ -68,14 +75,16 @@
 </template>
 <script setup lang="ts">
 import { Pagination, type Dataset } from "@etalab/data.gouv.fr-components";
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
-import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
-import { useCurrentOrganization } from '../../../composables/admin/useCurrentOrganization';
-import DatasetsTable from "../../../components/AdminTable/AdminDatasetsTable/AdminDatasetsTable.vue";
-import { watchPostEffect } from "vue";
 import { getOrganizationDatasets, getOrganizationDatasetsCatalogUrl } from "../../../api/datasets";
+import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
+import DatasetsTable from "../../../components/AdminTable/AdminDatasetsTable/AdminDatasetsTable.vue";
 import Container from "../../../components/Ui/Container/Container.vue";
+import InputGroup from "../../../components/Form/InputGroup/InputGroup.vue";
+import { useCurrentOrganization } from '../../../composables/admin/useCurrentOrganization';
+import { refDebounced } from "@vueuse/core";
+import { search_autocomplete_debounce } from "../../../config";
 
 const { t } = useI18n();
 const props = defineProps<{oid: string}>();
@@ -85,11 +94,13 @@ const page = ref(1);
 const pageSize = ref(10);
 const totalResult = ref(0);
 const sort = ref("-created");
+const q = ref("");
+const qDebounced = refDebounced(q, search_autocomplete_debounce);
 
 const { currentOrganization } = useCurrentOrganization();
 
-watchPostEffect(async () => {
-  const response = await getOrganizationDatasets(props.oid, page.value, pageSize.value, sort.value);
+watchEffect(async () => {
+  const response = await getOrganizationDatasets(props.oid, qDebounced.value, page.value, pageSize.value, sort.value);
   datasets.value = response.data;
   page.value = response.page;
   pageSize.value = response.page_size;
