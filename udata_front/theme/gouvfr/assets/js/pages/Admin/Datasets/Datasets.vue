@@ -47,11 +47,11 @@
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle">
       <h2 class="fr-col-12 fr-col-sm subtitle subtitle--uppercase fr-m-0">{{ t('{n} datasets', totalResult) }}</h2>
       <div class="fr-col-auto fr-grid-row fr-grid-row--middle">
-        <InputGroup
+        <!-- Add search component when org API allow search <InputGroup
           class="fr-m-0 fr-mr-1w"
           :label="t('Search')"
           v-model.trim="q"
-        />
+        /> -->
         <div>
           <a :href="getOrganizationDatasetsCatalogUrl(oid)" class="fr-btn fr-btn--sm fr-icon-download-line fr-btn--icon-left">
             {{ t('Download catalog') }}
