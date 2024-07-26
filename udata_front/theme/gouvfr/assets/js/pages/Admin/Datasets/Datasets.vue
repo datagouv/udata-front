@@ -17,8 +17,8 @@
         </a>
       </li>
     </Breadcrumb>
-    <h1 class="fr-h3">{{ t("Datasets") }}</h1>
-    <Container>
+    <h1 class="fr-h3 fr-mb-5v">{{ t("Datasets") }}</h1>
+    <Container class="fr-mb-5v border">
       <div class="fr-grid-row fr-grid-row--middle fr-grid-row--gutters">
         <div class="fr-col">
           <h2 class="fr-text--md fr-m-0">{{ t("Statistics of your datasets") }}</h2>
@@ -28,7 +28,8 @@
             {{ t("Download") }}
           </button>
         </p>
-        <p class="fr-col-auto fr-ml-3v fr-m-0">
+        <!-- TODO: require useAccordion from @datagouv/components
+          <p class="fr-col-auto fr-ml-3v fr-m-0">
             <button
               @click="expand"
               role="button"
@@ -40,10 +41,19 @@
             >
             {{ t('See statistics') }}
             </button>
-          </p>
+          </p>-->
       </div>
     </Container>
+    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle">
+      <h2 class="fr-col-12 fr-col-sm subtitle subtitle--uppercase fr-m-0">{{ t('{n} datasets', totalResult) }}</h2>
+      <div class="fr-col-auto">
+        <a :href="getOrganizationDatasetsCatalogUrl(oid)" class="fr-btn fr-btn--sm fr-icon-download-line fr-btn--icon-left">
+          {{ t('Download catalog') }}
+        </a>
+      </div>
+    </div>
     <DatasetsTable
+      class="fr-mt-1v"
       :datasets="datasets"
       @sort="(newSort) => sort = newSort"
     />
@@ -64,7 +74,7 @@ import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
 import { useCurrentOrganization } from '../../../composables/admin/useCurrentOrganization';
 import DatasetsTable from "../../../components/AdminTable/AdminDatasetsTable/AdminDatasetsTable.vue";
 import { watchPostEffect } from "vue";
-import { getOrganizationDatasets } from "../../../api/datasets";
+import { getOrganizationDatasets, getOrganizationDatasetsCatalogUrl } from "../../../api/datasets";
 import Container from "../../../components/Ui/Container/Container.vue";
 
 const { t } = useI18n();

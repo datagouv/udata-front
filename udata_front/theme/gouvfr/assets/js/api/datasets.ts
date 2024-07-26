@@ -56,3 +56,7 @@ export function getOrganizationDatasets(oid: string, page: number, pageSize: num
     params: { sort, page_size: pageSize, page }
   }).then(resp => resp.data);
 }
+
+export function getOrganizationDatasetsCatalogUrl(oid: string) {
+  return `/organizations/${oid}/datasets.csv`;
+}
