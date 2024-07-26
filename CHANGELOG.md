@@ -9,6 +9,7 @@
 - Update dependencies from udata [#448](https://github.com/datagouv/udata-front/pull/448) [#454](https://github.com/datagouv/udata-front/pull/454)
 - Add new dataset card [#445](https://github.com/datagouv/udata-front/pull/445)
 - Fix tests for oembed CORS [#453](https://github.com/datagouv/udata-front/pull/453)
+- Add reports [#436](https://github.com/datagouv/udata-front/pull/436)
 
 ## 5.0.1 (2024-06-12)
 

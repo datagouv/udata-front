@@ -1,0 +1,8 @@
+{% macro report_btn(obj) %}
+{% set object_type = obj.__class__.__name__ %}
+{% if not((obj.organization and obj.organization.certified) or obj.certified) %}
+  <div class="fr-col-auto fr-ml-3v vuejs">
+    <report-button object-type="{{ object_type }}" object-id="{{ obj.id|string }}"></report-button>
+  </div>
+{% endif %}
+{% endmacro %}
