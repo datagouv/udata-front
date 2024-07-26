@@ -1,11 +1,12 @@
 {% extends theme('layouts/1-column.html') %}
+{% from theme('macros/breadcrumb.html') import breadcrumb with context %}
+{% from theme('macros/certified.html') import badge_if_certified with context %}
 {% from theme('macros/dataset_information.html') import information_col, information_section, information_title_with_button %}
 {% from theme('macros/follow.html') import follow_btn with context %}
-{% from theme('macros/breadcrumb.html') import breadcrumb with context %}
 {% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate %}
 {% from theme('macros/paginator.html') import paginator with context %}
+{% from theme('macros/report.html') import report_btn with context %}
 {% from theme('macros/sort_search.html') import sort_search %}
-{% from theme('macros/certified.html') import badge_if_certified with context %}
 
 {% set is_hidden = (reuses.total or 0) + (datasets.total or 0) <= 0 %}
 {% set meta = {
@@ -45,6 +46,7 @@
 
 {% block toolbar %}
 {{ follow_btn(org) }}
+{{ report_btn(org) }}
 {% if can_edit %}
     <a
         class="fr-ml-2w fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-pencil-line fr-btn--icon-left"

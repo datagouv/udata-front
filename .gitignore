@@ -61,14 +61,23 @@ nosetests.xml
 .pydevproject
 .noseids
 
-udata.cfg
-cypress/udata-front-e2e.cfg
+# Storybook
+storybook-static/
 
-cypress/videos
-cypress/screenshots
-
+# Lighthouse CI
 .lighthouseci/*.json
 .lighthouseci/*.html
 
-storybook-static/
-venv/pyvenv.cfg
+# VSCode
+.vscode/
+
+# Python
+venv/
+.venv/
+.python-version
+
+# Project-specific
+udata.cfg
+cypress/udata-front-e2e.cfg
+cypress/videos
+cypress/screenshots
