@@ -120,7 +120,7 @@ export type ReportModalForm = {
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { Well, getRandomId } from '@etalab/data.gouv.fr-components';
+import { Well, getRandomId } from '@datagouv/components';
 
 defineProps<ReportModalProps>();
 
