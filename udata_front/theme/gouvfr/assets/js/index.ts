@@ -36,6 +36,7 @@ import Api from "./plugins/api.ts";
 import EventBus from "./plugins/eventbus.ts";
 import Auth from "./plugins/auth.ts";
 import InitSentry from "./sentry.ts";
+import ReportModalButton from "./components/Report/ReportModalButton.vue";
 
 setupComponents({
   admin_root,
@@ -61,23 +62,24 @@ const configAndMountApp = (el: HTMLElement) => {
   app.use(Auth);
   app.use(i18n);
 
-  app.component("discussion-threads", Threads);
-  app.component("discussion-create", ThreadCreate);
-  app.component("menu-search", MenuSearch);
-  app.component("search", Search);
-  app.component("delete-button", DeleteButton);
-  app.component("delete-user-button", DeleteUserButton);
-  app.component("featured-button", FeaturedButton);
-  app.component("follow-button", FollowButton);
-  app.component("read-more", ReadMore);
-  app.component("request-membership", RequestMembership);
-  app.component("dataset-resources", Resources);
-  app.component("dataset-resource-from-hash", ResourceFromHash);
   app.component("captcha", Captcha);
   app.component("chart", Chart);
-  app.component("toggletip", Toggletip);
-  app.component("publishing-form", PublishingForm);
+  app.component("dataset-resources", Resources);
+  app.component("dataset-resource-from-hash", ResourceFromHash);
+  app.component("delete-button", DeleteButton);
+  app.component("delete-user-button", DeleteUserButton);
+  app.component("discussion-threads", Threads);
+  app.component("discussion-create", ThreadCreate);
+  app.component("featured-button", FeaturedButton);
+  app.component("follow-button", FollowButton);
+  app.component("menu-search", MenuSearch);
+  app.component("read-more", ReadMore);
+  app.component("report-button", ReportModalButton);
+  app.component("request-membership", RequestMembership);
   app.component("organization-publishing-form", OrganizationPublishingForm);
+  app.component("publishing-form", PublishingForm);
+  app.component("search", Search);
+  app.component("toggletip", Toggletip);
   app.component("user-dataset-list", UserDatasetList);
   app.component("user-reuse-list", UserReuseList);
 
