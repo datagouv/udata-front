@@ -39,9 +39,9 @@ import { auth } from '../../plugins/auth';
   
 const { t } = useI18n();
 
-const steps = [t("Describe your reuse"), t("Add datasets"), t("Complete your publishing")];
+const steps = [t("Describe your reuse"), t("Link datasets"), t("Complete your publishing")];
 
-const currentStep = ref<Number>(0);
+const currentStep = ref<number>(0);
 
 const containerRef = ref<HTMLDivElement | null>(null);
 

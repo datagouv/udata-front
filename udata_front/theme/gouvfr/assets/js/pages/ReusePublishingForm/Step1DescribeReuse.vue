@@ -19,7 +19,7 @@
               :state="state.title"
             >
               <p class="fr-m-0">
-                {{ t("Prefer a title that allows understanding of the use made of the data rather than the name of the website or application (\"Search Engine for Company Agreements\" rather than \"\" for example).") }}
+                {{ t('Prefer a title that allows understanding of the use made of the data rather than the name of the website or application ("Search Engine for Company Agreements" rather than "Accords-entreprise.fr" for example).') }}
               </p>
             </Accordion>
             <Accordion
@@ -252,7 +252,7 @@
                 @change="addFiles"
               />
               <div class="text-align-center" v-show="imagePreview?.src">
-                <img class="fr-col fr-mx-2v fr-mb-2v" ref="imagePreview" width="300px" />
+                <img class="fr-col fr-mx-2v fr-mb-2v" alt="" ref="imagePreview" width="300px" />
               </div>
             </LinkedToAccordion>
           </fieldset>

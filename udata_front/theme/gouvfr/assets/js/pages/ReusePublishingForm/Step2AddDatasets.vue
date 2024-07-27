@@ -21,10 +21,10 @@
           {{ t("Associated datasets") }}
         </h2>
       </legend>
-      <div ref="el">
+      <div class="w-100" ref="el">
         <div class="fr-col fr-grid-row fr-grid-row--center w-100" v-for="(dataset, index) in form.datasets" :key="dataset.id">
           <div class="fr-col-auto fr-my-auto fr-ml-auto justify-center flex fr-mr-3v">
-            <img :src="draggableIcon" />
+            <img :src="draggableIcon" alt="" />
           </div>
           <div class="fr-col relative">
             <DatasetCard
