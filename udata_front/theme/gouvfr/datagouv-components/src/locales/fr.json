@@ -95,5 +95,10 @@
   "Sort descending": "Trier par ordre décroissant",
   "{count} columns": "{count} colonnes",
   "{count} rows": "Lignes {count}",
-  "Resource Extras": "Extras de la ressource"
+  "Resource Extras": "Extras de la ressource",
+  "Public service": "",
+  "Local authority": "",
+  "Association": "",
+  "Company": "",
+  "User": ""
 }
