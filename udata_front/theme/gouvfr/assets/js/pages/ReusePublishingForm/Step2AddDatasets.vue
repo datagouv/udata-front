@@ -23,10 +23,14 @@
       </legend>
       <div class="w-100" ref="el">
         <div class="fr-col fr-grid-row fr-grid-row--center w-100" v-for="(dataset, index) in form.datasets" :key="dataset.id">
-          <div class="fr-col-auto fr-my-auto fr-ml-auto justify-center flex fr-mr-3v">
+          <button
+            type="button"
+            class="fr-col-auto fr-my-auto fr-ml-auto justify-center flex fr-mr-3v"
+            :title="t('Move this content')"
+          >
             <img :src="draggableIcon" alt="" />
-          </div>
-          <div class="fr-col relative">
+          </button>
+          <div class="fr-col relative" :style="zIndex(index)">
             <DatasetCard
               :dataset="dataset"
               :dataset-url="dataset.slug"
@@ -35,8 +39,11 @@
           <button
             type="button"
             class="fr-btn fr-btn--tertiary-no-outline fr-btn--secondary--error fr-icon-close-line border-0 absolute right-1px fr-mr-3w fr-mt-5w"
+            :title="t('Remove the dataset')"
             @click="removeDataset(index)"
-          ></button>
+          >
+            {{ t('Remove the dataset') }}
+          </button>
         </div>
       </div>
       <MultiSelect
@@ -104,6 +111,10 @@ const emit = defineEmits<{
 }>();
 
 const { t } = useI18n();
+
+const zIndex = (key: number) => {
+  return {zIndex: form.datasets.length - key}
+};
 
 const form = reactive<{
   datasets: Array<Dataset>;
