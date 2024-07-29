@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Prevent publishing NPM version without dist [#463](https://github.com/datagouv/udata-front/pull/463)
 
 ## 1.1.0 (2024-07-29)
 
