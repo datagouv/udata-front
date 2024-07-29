@@ -461,5 +461,22 @@
   "An error occured when deleting the organization.": "An error occured when deleting the organization.",
   "Organization updated !": "Organization updated !",
   "An error occured when updating the organization.": "An error occured when updating the organization.",
-  "Thanks for reporting this content": "Thanks for reporting this content"
+  "Thanks for reporting this content": "Thanks for reporting this content",
+  "Add member": "",
+  "Add member to the organization": "",
+  "Search a user": "",
+  "Search a user...": "",
+  "Select a user": "",
+  "Add to the organization": "",
+  "An error occurred while update member role.": "",
+  "Check the identity with which you want to publish": "",
+  "Select an organization": "",
+  "You belong to no organization": "",
+  "You publish in your own name": "",
+  "We advise you to publish under an organization if it\\'s a professional activity": "",
+  "Join an organization": "",
+  "Make a report": "",
+  "An unexpected error occured while reporting this content.": "",
+  "Producer": "",
+  "You need to select a Producer": ""
 }
