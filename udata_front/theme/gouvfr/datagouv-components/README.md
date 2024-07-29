@@ -56,7 +56,7 @@ npm run update-version -- NEW_VERSION
 
 The update triggers a project build and its tests.
 
-Then, you can run :
+Then, you should update the CHANGELOG with the new version and run :
 
 ```
 npm run commit-tag-and-push
