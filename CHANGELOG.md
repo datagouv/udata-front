@@ -12,7 +12,7 @@
 - Add reports [#436](https://github.com/datagouv/udata-front/pull/436)
 - Switch to @datagouv/components [#439](https://github.com/datagouv/udata-front/pull/439)
 - Update translations [#458](https://github.com/datagouv/udata-front/pull/458)
-- use @datagouv/components v1.1.0 [#462](https://github.com/datagouv/udata-front/pull/462)
+- use @datagouv/components v1.1.1 [#462](https://github.com/datagouv/udata-front/pull/462)
 
 ## 5.0.1 (2024-06-12)
 
