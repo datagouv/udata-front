@@ -1,6 +1,6 @@
 {
   "name": "@datagouv/components",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "reusable components to show content from data.gouv.fr",
   "type": "module",
   "files": [
@@ -19,7 +19,7 @@
     "preversion": "npm run build && npm run i18n:report && npm run build-storybook",
     "update-version": "npm version --no-git-tag-version",
     "commit-version": "git add --all && git commit -m \"Bump version @datagouv/components@$npm_package_version\"",
-    "tag-version": "git tag @datagouv/components@$npm_package_version",
+    "tag-version": "git tag -a @datagouv/components@$npm_package_version -m \"Package @datagouv/components version v$npm_package_version\"",
     "push-version": "git push --follow-tags",
     "commit-tag-and-push": "npm run commit-version && npm run tag-version && npm run push-version",
     "publish-stable": "npm publish --access public",
