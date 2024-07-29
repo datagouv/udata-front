@@ -1,5 +1,6 @@
 import type { Badge, Badges } from "./types/badges";
 import type { Dataset, DatasetV2, NewDataset, Quality, Rel } from "./types/datasets";
+import type { Dataservice } from "./types/dataservices";
 import type { Frequency, Frequencies } from "./types/frequency";
 import type { Granularity, Granularities } from "./types/granularity";
 import type { Harvest } from "./types/harvest";
@@ -18,6 +19,7 @@ export type {
   CommunityResource,
   Dataset,
   DatasetV2,
+  Dataservice,
   FileResourceFileType,
   Frequency,
   Frequencies,
