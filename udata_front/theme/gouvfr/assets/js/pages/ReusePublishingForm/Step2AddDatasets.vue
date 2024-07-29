@@ -25,10 +25,11 @@
         <div class="fr-col fr-grid-row fr-grid-row--center w-100" v-for="(dataset, index) in form.datasets" :key="dataset.id">
           <button
             type="button"
-            class="fr-col-auto fr-my-auto fr-ml-auto justify-center flex fr-mr-3v"
-            :title="t('Move this content')"
+            class="fr-col-auto fr-btn fr-btn--tertiary-no-outline fr-icon-svg fr-my-auto fr-ml-auto"
+            :title="t('Drag to move this content')"
           >
-            <img :src="draggableIcon" alt="" />
+            <img class="fr-mr-2w" :src="draggableIcon" alt="" />
+            {{ t('Drag to move this content') }}
           </button>
           <div class="fr-col relative" :style="zIndex(index)">
             <DatasetCard
