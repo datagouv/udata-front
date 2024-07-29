@@ -44,9 +44,10 @@
         :placeholder="t('Look for a dataset')"
         :searchPlaceholder="t('Search a dataset...')"
         suggestUrl="/datasets/suggest/"
+        :required="true"
         @change="handleDatasetChange"
         :hasError="fieldHasError('datasets')"
-        :errorText="getErrorText('datasets')"
+        :errorText="t('You need to provide at least one dataset')"
       />
       <p class="fr-hr-or w-100 text-transform-lowercase fr-text--regular">
         <span class="fr-hr-or-text">{{ t('or') }}</span>
@@ -55,6 +56,7 @@
         :label="t('Link to the dataset')"
         :placeholder="'https://...'"
         class="w-100"
+        :required="true"
         v-model="form.linkedDataset"
         @change="vWarning$.linkedDataset.$touch"
         :hasError="fieldHasError('linkedDataset')"

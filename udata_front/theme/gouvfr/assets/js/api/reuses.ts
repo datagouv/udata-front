@@ -43,13 +43,13 @@ export function createReuse(reuse: NewReuse) {
 }
 
 export function updateReuse(reuse: Reuse) {
-  return api.put<Reuse>(`reuses/${reuse.id}`, {
+  return api.put<Reuse>(`reuses/${reuse.id}/`, {
     ...toValue(reuse),
   }).then(resp => resp.data);
 }
 
 export function uploadLogo(reuseId: string, file: File) {
-  return api.postForm<UploadLogoResponse>(`reuses/${reuseId}/image`, {
+  return api.postForm<UploadLogoResponse>(`reuses/${reuseId}/image/`, {
     file: file
   });
 }
