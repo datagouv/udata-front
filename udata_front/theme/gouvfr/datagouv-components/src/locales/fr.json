@@ -96,9 +96,9 @@
   "{count} columns": "{count} colonnes",
   "{count} rows": "Lignes {count}",
   "Resource Extras": "Extras de la ressource",
-  "Public service": "Public service",
-  "Local authority": "Local authority",
+  "Public service": "Service public",
+  "Local authority": "Collectivité territoriale",
   "Association": "Association",
-  "Company": "Company",
-  "User": "User"
+  "Company": "Entreprise",
+  "User": "Utilisateur"
 }
