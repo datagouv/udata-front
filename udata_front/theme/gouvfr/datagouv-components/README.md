@@ -18,8 +18,8 @@ You should add the package styles after the DSFR ones or you may encounter unexp
 import '@gouvfr/dsfr/dist/dsfr.min.css';
 import '@gouvfr/dsfr/dist/utility/utility.min.css';
 import '@gouvfr/dsfr/dist/dsfr.module.min.js'; // or vue-dsfr
-import '@etalab/data.gouv.fr-components/dist/style.css';
-import { setupI18n } from '@etalab/data.gouv.fr-components';
+import '@datagouv/components/dist/style.css';
+import { setupI18n } from '@datagouv/components';
 
 import { createApp } from 'vue';
 import App from './App.vue';

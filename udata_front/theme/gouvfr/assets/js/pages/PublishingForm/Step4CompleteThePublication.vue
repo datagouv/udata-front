@@ -38,47 +38,28 @@
   </div>
 </template>
 
-<script>
-import { Well } from "@etalab/data.gouv.fr-components";
-import { defineComponent, reactive } from 'vue';
+<script setup lang="ts">
+import { Dataset, Well } from "@datagouv/components";
+import { reactive } from 'vue';
 import Container from '../../components/Ui/Container/Container.vue';
-import Stepper from '../../components/Form/Stepper/Stepper.vue';
+import Stepper, { Step } from '../../components/Form/Stepper/Stepper.vue';
 import CardLg from '../../components/dataset/card-lg.vue';
 import successIcon from "../../../../templates/svg/illustrations/success.svg";
 
-export default defineComponent({
-  components: { Container, Stepper, Well, CardLg },
-  emits: ["redirectToPublicUrl"],
-  props: {
-    feedbackUrl: {
-      type: String,
-      required: true,
-    },
-    originalDataset: {
-      /** @type {import("vue").PropType<import("@etalab/data.gouv.fr-components").Dataset>} */
-      type: Object,
-      required: true
-    },
-    redirectDraftUrl: {
-      type: String,
-      required: true,
-    },
-    steps: {
-      type: Array,
-      required: true,
-    },
-  },
-  setup(props, { emit }) {
-    const dataset = reactive({...props.originalDataset, private: false});
-    const submit = () => {
-      emit("redirectToPublicUrl");
-    };
+const emit = defineEmits<{
+  redirectToPublicUrl: [],
+}>();
 
-    return {
-      dataset,
-      submit,
-      successIcon,
-    };
-  },
-});
+const props = defineProps<{
+  feedbackUrl: string;
+  originalDataset: Dataset;
+  redirectDraftUrl: string;
+  steps: Array<Step>;
+}>();
+
+const dataset = reactive({...props.originalDataset, private: false});
+
+function submit() {
+  emit("redirectToPublicUrl");
+};
 </script>

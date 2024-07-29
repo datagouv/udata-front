@@ -1,4 +1,4 @@
-import { api, type User } from "@etalab/data.gouv.fr-components";
+import { api, type User } from "@datagouv/components";
 import { AxiosResponse } from "axios";
 import { getLocalizedUrl } from "../i18n";
 

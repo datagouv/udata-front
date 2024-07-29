@@ -47,7 +47,7 @@
   </li>
 </template>
 <script lang="ts">
-import type { Organization } from '@etalab/data.gouv.fr-components';
+import type { Organization } from '@datagouv/components';
 export type AdminSidebarOrganizationMenuProps = {
   organization: Organization,
   isOpened: boolean,
@@ -58,7 +58,7 @@ import DatabaseIcon from 'iconoir/icons/regular/database.svg?raw';
 import { useI18n } from "vue-i18n";
 import Placeholder from "../../../components/utils/placeholder.vue";
 import AdminSidebarLink from "../AdminSidebarLink/AdminSidebarLink.vue";
-import { getRandomId } from '@etalab/data.gouv.fr-components';
+import { getRandomId } from '@datagouv/components';
 
 const props = defineProps<AdminSidebarOrganizationMenuProps>();
 const { t } = useI18n();

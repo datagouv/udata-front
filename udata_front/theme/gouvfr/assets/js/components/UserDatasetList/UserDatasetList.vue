@@ -2,7 +2,7 @@
   <h2 class="subtitle subtitle--uppercase fr-mb-5v" v-if="totalResults">
     {{ t('{n} datasets', totalResults) }}
   </h2>
-  <CardMDList
+  <CardList
     :page-size="pageSize"
     :datasets="datasets"
     :loading="loading"
@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import type { Dataset } from '@etalab/data.gouv.fr-components';
+import type { Dataset } from '@datagouv/components';
 
 export type UserDatasetListProps = {
   owner: string,
@@ -25,10 +25,10 @@ import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useToast } from '../../composables/useToast';
 import { apiv2, generateCancelToken } from '../../plugins/api';
-import CardMDList from '../dataset/CardMDList.vue';
+import CardList from '../dataset/CardList.vue';
 
 const { t } = useI18n();
-const toast = useToast();
+const { toast } = useToast();
 
 const props = defineProps<UserDatasetListProps>();
 
