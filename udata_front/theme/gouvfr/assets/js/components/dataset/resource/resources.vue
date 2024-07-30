@@ -56,7 +56,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { onMounted, ref, computed } from 'vue';
-import { ResourceAccordion, ResourceAccordionLoader, type Resource, Pagination } from "@etalab/data.gouv.fr-components";
+import { ResourceAccordion, ResourceAccordionLoader, type Resource, Pagination } from "@datagouv/components";
 import SearchBar from "../../utils/search-bar.vue";
 import config from "../../../config";
 import { useToast } from "../../../composables/useToast";

@@ -1,14 +1,19 @@
 import Step4CompleteThePublication from './Step4CompleteThePublication.vue';
 import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
 import * as Step2 from './Step2DescribeDataset.stories';
+import * as CardLG from '../../components/dataset/CardLG.stories';
+import { Meta, StoryObj } from '@storybook/vue3';
+import { Dataset } from '@datagouv/components';
 
 
-export default {
+const meta =  {
   title: 'Pages/PublishingForm/Step4',
   component: Step4CompleteThePublication,
-};
+} satisfies Meta<typeof Step4CompleteThePublication>;
 
-const originalDataset = Step2.Step2WithAdmin.args.originalDataset;
+export default meta;
+
+const originalDataset = CardLG.CardLGWithOrganizationLogo.args.dataset as Dataset;
 
 const args = {
   originalDataset,
@@ -17,7 +22,7 @@ const args = {
   redirectDraftUrl: "https://demo.data.gouv.fr/fr/datasets/?q=draft",
 };
 
-export const Step4 = {
+export const Step4 : StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Step4CompleteThePublication },
     setup() {
