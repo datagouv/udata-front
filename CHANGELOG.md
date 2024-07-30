@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 5.1.0 (2024-07-30)
 
 - Add organization edit to new admin [#412](https://github.com/datagouv/udata-front/pull/412)
