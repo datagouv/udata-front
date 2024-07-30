@@ -339,7 +339,7 @@ export type Step2DescribeDatasetProps = {
 };
 </script>
 <script setup lang="ts">
-import { Well } from "@etalab/data.gouv.fr-components";
+import { Well } from "@datagouv/components";
 import { computed, reactive, ref } from 'vue';
 import { minLengthWarning, not, required, requiredWithCustomMessage, sameAs } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
@@ -432,7 +432,7 @@ const requiredRules = {
 
 const warningRules = {
   acronym: {},
-  description: {required, minLengthValue: minLengthWarning(parseInt(quality_description_length ?? "0"))},
+  description: {required, minLengthValue: minLengthWarning(quality_description_length)},
   frequency: { required, notUnknown },
   license: { required },
   spatial: {

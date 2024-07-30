@@ -68,7 +68,7 @@
                       >
                         {{ t("Refuse membership request") }}
                       </h1>
-                      <MembershipRequest
+                      <AdminMembershipRequest
                         class="fr-mt-4w fr-mb-2w"
                         :loading="false"
                         :oid="oid"
@@ -125,7 +125,7 @@ import Avatar from '../discussions/Avatar/Avatar.vue';
 import Container from '../Ui/Container/Container.vue';
 import type { PendingMembershipRequest } from '../../types';
 import InputGroup from '../Form/InputGroup/InputGroup.vue';
-import { getRandomId } from '@etalab/data.gouv.fr-components';
+import { getRandomId } from '@datagouv/components';
 
 const props = defineProps<{
   loading: boolean,

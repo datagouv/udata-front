@@ -11,10 +11,11 @@
 </template>
 
 <script setup lang="ts">
+import type { User } from "@datagouv/components";
 import useUserAvatar from "../../composables/useUserAvatar";
 type Props = {
-    user: Object,
-    size?: number
+    user: User;
+    size?: number;
 }
 const props = withDefaults(defineProps<Props>(), {
   size: 40,

@@ -1,83 +1,83 @@
-import CardMDList, { type CardMDListProps } from './CardMDList.vue';
+import CardList, { type CardListProps } from './CardList.vue';
 import { withActions } from '@storybook/addon-actions/decorator';
 import type { Meta, StoryObj } from "@storybook/vue3";
-import { CardMDWithCertifiedOrganization } from './CardMD.stories';
+import { CardLGWithCertifiedOrganization } from './CardLG.stories';
 
 const meta = {
   title: 'Lists/Dataset Card List',
-  component: CardMDList,
+  component: CardList,
   parameters: {
     actions: {
       handles: ['click a'],
     },
   },
   decorators: [withActions],
-} satisfies Meta<typeof CardMDList>;
+} satisfies Meta<typeof CardList>;
 
 export default meta;
 
 const dataset = {
-  ...CardMDWithCertifiedOrganization.args.dataset,
+  ...CardLGWithCertifiedOrganization.args.dataset,
 };
 
-const args: CardMDListProps = {
+const args: CardListProps = {
   datasets: [dataset, dataset, dataset],
   totalResults: 3,
 };
 
-const paginatedArgs: CardMDListProps = {
+const paginatedArgs: CardListProps = {
   datasets: [dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset,
     dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset, dataset],
   totalResults: 25,
 };
 
-const customPaginationArgs: CardMDListProps = {
+const customPaginationArgs: CardListProps = {
   datasets: [dataset, dataset],
   pageSize: 2,
   totalResults: 3,
 };
 
 /**
- * #### Card Medium List
+ * #### Card List
  * A list of dataset cards.
  */
-export const DefaultCardMDList: StoryObj<typeof meta> = {
+export const DefaultCardList: StoryObj<typeof meta> = {
   render: (args) => ({
-    components: { CardMDList },
+    components: { CardList },
     setup() {
       return { args };
     },
-    template: '<CardMDList v-bind="args"/>',
+    template: '<CardList v-bind="args"/>',
   }),
   args,
 };
 
 /**
- * #### Card Medium List With Pagination
+ * #### Card List With Pagination
  * A list of dataset cards.
  */
-export const PaginatedCardMDList: StoryObj<typeof meta> = {
+export const PaginatedCardList: StoryObj<typeof meta> = {
   render: (args) => ({
-    components: { CardMDList },
+    components: { CardList },
     setup() {
       return { args };
     },
-    template: '<CardMDList v-bind="args"/>',
+    template: '<CardList v-bind="args"/>',
   }),
   args: paginatedArgs,
 };
 
 /**
- * #### Card Medium List With Custom Page Size
+ * #### Card List With Custom Page Size
  * A list of dataset cards with custom page size.
  */
-export const CustomPageSizeCardMDList: StoryObj<typeof meta> = {
+export const CustomPageSizeCardList: StoryObj<typeof meta> = {
   render: (args) => ({
-    components: { CardMDList },
+    components: { CardList },
     setup() {
       return { args };
     },
-    template: '<CardMDList v-bind="args"/>',
+    template: '<CardList v-bind="args"/>',
   }),
   args: customPaginationArgs,
 };

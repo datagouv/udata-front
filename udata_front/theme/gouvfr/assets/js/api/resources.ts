@@ -1,10 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
+import type { Resource } from '@datagouv/components';
 import { api, apiv2 } from "../plugins/api";
 import { getLocalizedUrl } from '../i18n';
 import type { DatasetChunkUpload, DatasetFile, DatasetFileUpload, DatasetLocalFile, DatasetRemoteFile, NewDatasetFile } from '../types';
 
 export type ResourceApiWrapper = {
-  data: Array<import("@etalab/data.gouv.fr-components").Resource>;
+  data: Array<Resource>;
   next_page: string | null;
   page: number;
   page_size: number;
