@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 5.1.0 (2024-07-30)
 
 - Add organization edit to new admin [#412](https://github.com/datagouv/udata-front/pull/412)
 - Fix markdown tables and use DSFR ones [#432](https://github.com/datagouv/udata-front/pull/432)
