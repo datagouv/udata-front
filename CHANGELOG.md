@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- update dependencies following updated dependencies on udata [#470](https://github.com/datagouv/udata-front/pull/470)
 
 ## 5.1.0 (2024-07-30)
 
