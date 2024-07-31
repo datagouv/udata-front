@@ -41,7 +41,7 @@
             </AppLink>
           </slot>
         </h4>
-        <div class="fr-text--sm fr-mb-n2v" v-if="dataset.organization || dataset.owner">
+        <div class="fr-text--sm fr-m-0" v-if="dataset.organization || dataset.owner">
           <template v-if="dataset.organization">
             <span class="not-enlarged dash-after-sm fr-mr-1v">
               <AppLink class="fr-link fr-text--sm" v-if="organizationUrl" :to="organizationUrl">
@@ -67,7 +67,7 @@
               <span class="fr-icon-star-line fr-icon--sm fr-px-1v" aria-hidden="true"></span>{{ dataset.metrics.followers }}
             </p>
             <p class="fr-text--sm fr-my-0">
-              <span class="fr-icon-line-chart-line fr-icon--sm fr-px-1v" aria-hidden="true"></span>{{ dataset.metrics.views }}
+              <span class="fr-icon-line-chart-line fr-icon--sm fr-px-1v" aria-hidden="true"></span>{{ dataset.metrics.reuses }}
             </p>
           </div>
         </div>
