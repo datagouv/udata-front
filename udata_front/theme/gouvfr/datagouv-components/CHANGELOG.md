@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix resource translation [#468](https://github.com/datagouv/udata-front/pull/468)
 
 ## 1.1.1 (2024-07-29)
 
