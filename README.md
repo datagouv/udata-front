@@ -112,7 +112,7 @@ pip install -e . -r requirements/test.pip -r requirements/develop.pip
 
 > NB: the `udata.(in|pip)` files are used by the CI to stay in sync with `udata` requirements. You shouldn't need to tinker with them on your local environment, but they might be updated by the CI when you make a Pull Request.
 
-> WARNING: whenever the dependencies change on [udata](https://github.com/opendatateam/udata), the `udata.pip` needs to be manually recompiled locally:
+> WARNING: if you experience requirements conflicts, and some dependencies were changed on [udata](https://github.com/opendatateam/udata), the `udata.pip` might need to be manually recompiled locally:
 
   ```shell
   pip-compile requirements/udata.in --output-file=requirements/udata.pip
