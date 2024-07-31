@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Update paddings and display on DatasetCard [#467](https://github.com/datagouv/udata-front/pull/467)
 
 ## 1.1.1 (2024-07-29)
 
