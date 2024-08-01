@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - update dependencies following updated dependencies on udata [#470](https://github.com/datagouv/udata-front/pull/470)
+- update `@datagouv/components` and `vue-i18n` and fix report translation [#471](https://github.com/datagouv/udata-front/pull/471)
 
 ## 5.1.0 (2024-07-30)
 
