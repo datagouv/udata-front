@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import { onMounted, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { Dataset, User } from '@etalab/data.gouv.fr-components';
+import type { Dataset, User } from '@datagouv/components';
 import Step1DescribeReuse from './Step1DescribeReuse.vue';
 import Step2AddDatasets from './Step2AddDatasets.vue';
 import Step3CompleteThePublication from './Step3CompleteThePublication.vue';

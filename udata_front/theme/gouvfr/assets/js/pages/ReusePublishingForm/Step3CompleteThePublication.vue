@@ -54,7 +54,7 @@ import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import successIcon from "../../../../templates/svg/illustrations/success.svg";
 import ReuseCard from '../../components/Reuse/Reuse.vue';
 import Loader from '../../components/Reuse/ReuseLoader.vue';
-import { Well } from '@etalab/data.gouv.fr-components';
+import { Well } from '@datagouv/components';
 import { type Reuse } from '../../types';
   
 const props = defineProps<{

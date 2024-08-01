@@ -25,7 +25,7 @@
         <div class="fr-col fr-grid-row fr-grid-row--center w-100" v-for="(dataset, index) in form.datasets" :key="dataset.id">
           <button
             type="button"
-            class="fr-col-auto fr-btn fr-btn--tertiary-no-outline fr-icon-svg fr-my-auto fr-ml-auto"
+            class="fr-col-auto fr-btn fr-btn--sm fr-btn--tertiary-no-outline fr-icon-svg fr-my-auto"
             :title="t('Drag to move this content')"
           >
             <img class="fr-mr-2w" :src="draggableIcon" alt="" />
@@ -35,11 +35,12 @@
             <DatasetCard
               :dataset="dataset"
               :dataset-url="dataset.slug"
+              :show-description="false"
             />
           </div>
           <button
             type="button"
-            class="fr-btn fr-btn--tertiary-no-outline fr-btn--secondary--error fr-icon-close-line border-0 absolute top-2 right-05"
+            class="fr-btn fr-btn--tertiary-no-outline fr-btn--secondary--error fr-icon-close-line border-0 absolute top-3w right-2v"
             :title="t('Remove the dataset')"
             @click="removeDataset(index)"
           >
@@ -89,7 +90,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { type Dataset, DatasetCard, Well } from '@etalab/data.gouv.fr-components';
+import { type Dataset, DatasetCard, Well } from '@datagouv/components';
 import { useSortable } from '@vueuse/integrations/useSortable';
 import { helpers } from '@vuelidate/validators'
 import Container from '../../components/Ui/Container/Container.vue';

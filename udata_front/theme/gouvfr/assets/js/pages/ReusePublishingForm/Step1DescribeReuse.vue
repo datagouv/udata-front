@@ -276,7 +276,7 @@
   
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue';
-import { Well } from '@etalab/data.gouv.fr-components';
+import { Well } from '@datagouv/components';
 import { minLengthWarning, required } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
