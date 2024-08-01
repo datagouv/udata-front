@@ -95,14 +95,14 @@
     "vite": "^4.5.2",
     "vue": "^3.4.21",
     "vue-content-loader": "^2.0.1",
-    "vue-i18n": "^9.8.0",
+    "vue-i18n": "^9.13.1",
     "vue-i18n-extract": "^2.0.7",
     "vue-router": "^4.2.5",
     "vue3-datepicker": "^0.4.0"
   },
   "license": "LGPL-2.1-only",
   "dependencies": {
-    "@datagouv/components": "^1.1.1",
+    "@datagouv/components": "^1.1.2",
     "@datagouv/select-a11y": "^3.6.1",
     "leaflet": "^1.9.4"
   },
