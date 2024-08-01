@@ -1,4 +1,4 @@
-import type { Dataset, FileResourceFileType, NewDataset as BaseNewDataset, Organization, Owned, RemoteResourceFileType, ResourceType, User } from "@datagouv/components";
+import type { Dataset, FileResourceFileType, NewDataset as BaseNewDataset, NewReuse, Organization, Owned, RemoteResourceFileType, ResourceType, User } from "@datagouv/components";
 
 import { CLOSED_FORMATS } from "./helpers";
 
@@ -113,20 +113,26 @@ export type OwnedWithId = { organization: string, owner: never | null } | { orga
 
 export type NewDataset = Omit<BaseNewDataset, keyof OwnedWithId> & OwnedWithId;
 
-export type Reuse = Owned & {
-  id: string;
+export type BaseNewReuse = Owned & {
   title: string;
   description: string;
   tags: Array<string> | null;
+  datasets: Array<Dataset | string>;
+  topic: string;
+  type: string;
+  url: string;
+};
+
+export type NewReuse = Omit<NewReuse, keyof OwnedWithId> & OwnedWithId;
+
+export type Reuse = BaseNewReuse & {
+  id: string;
   page: string;
   private: boolean;
   deleted: boolean;
-  datasets: Array<Dataset>;
   image: string;
   image_thumbnail: string;
   slug: string;
-  topic: string;
-  type: string;
   last_update: string;
 };
 

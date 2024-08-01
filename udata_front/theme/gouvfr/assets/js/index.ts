@@ -21,6 +21,7 @@ import Captcha from "./components/utils/captcha.vue";
 import UserDatasetList from "./components/UserDatasetList/UserDatasetList.vue";
 import UserReuseList from "./components/UserReuseList/UserReuseList.vue";
 import PublishingForm from "./pages/PublishingForm/PublishingForm.vue";
+import ReusePublishingForm from "./pages/ReusePublishingForm/ReusePublishingForm.vue";
 import OrganizationPublishingForm from "./pages/OrganizationPublishingForm/OrganizationPublishingForm.vue";
 
 import "./components/vanilla/tabs.js";
@@ -77,6 +78,7 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("report-button", ReportModalButton);
   app.component("request-membership", RequestMembership);
   app.component("organization-publishing-form", OrganizationPublishingForm);
+  app.component("reuse-publishing-form", ReusePublishingForm);
   app.component("publishing-form", PublishingForm);
   app.component("search", Search);
   app.component("toggletip", Toggletip);
