@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 5.1.2 (2024-08-01)
 
 - update dependencies following updated dependencies on udata [#470](https://github.com/datagouv/udata-front/pull/470)
 - update `@datagouv/components` and `vue-i18n` and fix report translation [#471](https://github.com/datagouv/udata-front/pull/471)
