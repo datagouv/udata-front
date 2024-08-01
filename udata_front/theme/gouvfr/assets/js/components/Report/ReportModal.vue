@@ -74,7 +74,7 @@
                     :hasError="fieldHasError('message')"
                     :errorText="getErrorText('message')"
                     v-model="form.message"
-                    :placeholder="t('Reason of your report.\nDon\'t include any personal data.')"
+                    :placeholder="t(`Reason of your report.{newline}Don't include any personal data.`)"
                   />
                 </div>
                 <div class="fr-modal__footer">

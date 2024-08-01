@@ -15,7 +15,7 @@
     "i18n:report": "vue-i18n-extract report",
     "i18n:extract": "npm run i18n:report -- --add",
     "serve": "udata serve",
-    "prepare-e2e": "UDATA_SETTINGS=${INIT_CWD}/cypress/udata-front-e2e.cfg udata generate-fixtures",
+    "prepare-e2e": "UDATA_SETTINGS=${INIT_CWD}/cypress/udata-front-e2e.cfg udata import-fixtures",
     "serve-e2e": "UDATA_SETTINGS=${INIT_CWD}/cypress/udata-front-e2e.cfg udata serve",
     "prepare-and-serve-e2e": "npm run prepare-e2e && npm run serve-e2e",
     "ci": "start-server-and-test prepare-and-serve-e2e http://localhost:7000 test",
@@ -95,14 +95,14 @@
     "vite": "^4.5.2",
     "vue": "^3.4.21",
     "vue-content-loader": "^2.0.1",
-    "vue-i18n": "^9.8.0",
+    "vue-i18n": "^9.13.1",
     "vue-i18n-extract": "^2.0.7",
     "vue-router": "^4.2.5",
     "vue3-datepicker": "^0.4.0"
   },
   "license": "LGPL-2.1-only",
   "dependencies": {
-    "@datagouv/components": "^1.0.0-dev.54",
+    "@datagouv/components": "^1.1.2",
     "@datagouv/select-a11y": "^3.6.1",
     "leaflet": "^1.9.4"
   },
