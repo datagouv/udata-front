@@ -41,7 +41,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { Dataset, NewDataset, User } from '@etalab/data.gouv.fr-components';
+import type { Dataset, NewDataset, User } from '@datagouv/components';
 import { useEventListener } from '@vueuse/core';
 import { type MaybeRefOrGetter, computed, onMounted, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';

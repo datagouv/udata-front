@@ -4,7 +4,7 @@
  * Lots of variables here are probably useless for the front-end
  */
 
-import type { User } from "@etalab/data.gouv.fr-components";
+import type { User } from "@datagouv/components";
 import type { Primitive } from "@sentry/types";
 
 /**
@@ -286,12 +286,9 @@ export const search_autocomplete_enabled = _jsonMeta("search-autocomplete-enable
  */
 export const search_autocomplete_debounce = _jsonMeta("search-autocomplete-debounce");
 
-// TODO: remove when datagouv/components is used with Preview component in Resource
-export const explorable_resources: Array<string> = _jsonMeta("explorable-resources") || [];
+export const tabular_api_url = _meta("tabular-api-url");
 
-// TODO: uncomment when datagouv/components is used with Preview component in Resource
-// export const tabular_api_url = _meta("tabular-api-url");
-// export const tabular_page_size = _meta("tabular-page-size");
+export const tabular_page_size = _meta("tabular-page-size");
 
 export const search_siren_url = _meta("search-siren-url");
 
@@ -311,7 +308,6 @@ export default {
   debug,
   demo_server_url,
   demo_server_name,
-  explorable_resources,
   guides_harvesting_url,
   guides_quality_url,
   hidpi,
@@ -333,6 +329,8 @@ export default {
   sentry,
   static_root,
   support_url,
+  tabular_api_url,
+  tabular_page_size,
   tags,
   theme_static,
   terms_url,

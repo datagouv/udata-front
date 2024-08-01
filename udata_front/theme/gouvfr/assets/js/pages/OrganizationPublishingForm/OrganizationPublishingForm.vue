@@ -21,7 +21,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { type NewOrganization } from '@etalab/data.gouv.fr-components';
+import { type NewOrganization } from '@datagouv/components';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Stepper from "../../components/Form/Stepper/Stepper.vue";

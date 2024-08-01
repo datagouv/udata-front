@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import { setupComponents } from "@etalab/data.gouv.fr-components";
+import { setupComponents, ReadMore, Toggletip } from "@datagouv/components";
 
 import "./dsfr.ts";
 // @ts-ignore
@@ -23,7 +23,6 @@ import UserReuseList from "./components/UserReuseList/UserReuseList.vue";
 import PublishingForm from "./pages/PublishingForm/PublishingForm.vue";
 import ReusePublishingForm from "./pages/ReusePublishingForm/ReusePublishingForm.vue";
 import OrganizationPublishingForm from "./pages/OrganizationPublishingForm/OrganizationPublishingForm.vue";
-import { ReadMore, Toggletip } from "@etalab/data.gouv.fr-components";
 
 import "./components/vanilla/tabs.js";
 import "./components/vanilla/accordion.js";
@@ -32,7 +31,7 @@ import "./components/vanilla/dialog.js";
 import "./components/vanilla/sort-search.js";
 import handleUpdateUrlButtons from "./components/vanilla/update-url.js";
 import i18n from "./i18n.ts";
-import { admin_root, api_root, api_2_root, explorable_resources, schema_documentation_url, schema_validata_url, title, } from "./config.ts";
+import { admin_root, api_root, api_2_root, schema_documentation_url, schema_validata_url, tabular_api_url, tabular_page_size, title } from "./config.ts";
 import Api from "./plugins/api.ts";
 import EventBus from "./plugins/eventbus.ts";
 import Auth from "./plugins/auth.ts";
@@ -44,11 +43,12 @@ setupComponents({
   api_root,
   api_2_root,
   default_lang: i18n.global.locale.value,
-  explorable_resources,
   only_locales: i18n.global.locale.value,
   schema_documentation_url,
   schema_validata_url,
   show_copy_resource_permalink: true,
+  tabular_api_url,
+  tabular_page_size,
   title,
 });
 

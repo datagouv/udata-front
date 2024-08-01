@@ -6,13 +6,10 @@
 #
 certifi==2024.7.4
     # via
-    #   -c requirements/install.pip
     #   -c requirements/udata.pip
     #   requests
-chardet==3.0.4
-    # via
-    #   -c requirements/udata.pip
-    #   requests
+charset-normalizer==3.3.2
+    # via requests
 click==8.1.2
     # via
     #   -c requirements/install.pip
@@ -72,7 +69,7 @@ python-dateutil==2.8.2
     # via
     #   -c requirements/udata.pip
     #   feedgen
-requests==2.24.0
+requests==2.32.3
     # via
     #   -c requirements/udata.pip
     #   requests-mock
@@ -83,9 +80,8 @@ six==1.16.0
     #   -c requirements/udata.pip
     #   python-dateutil
     #   requests-mock
-urllib3==1.25.11
+urllib3==1.26.19
     # via
-    #   -c requirements/install.pip
     #   -c requirements/udata.pip
     #   requests
 werkzeug==2.2.2

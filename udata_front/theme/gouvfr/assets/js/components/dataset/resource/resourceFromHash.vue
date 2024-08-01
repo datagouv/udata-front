@@ -26,7 +26,7 @@
 </section>
 </template>
 <script lang="ts">
-import { ResourceAccordion, ResourceAccordionLoader, type Resource, Well } from "@etalab/data.gouv.fr-components";
+import { ResourceAccordion, ResourceAccordionLoader, type Resource, Well } from "@datagouv/components";
 import { defineComponent, ref, watchEffect } from 'vue';
 import { useI18n } from "vue-i18n";
 import { useToast } from "../../../composables/useToast";

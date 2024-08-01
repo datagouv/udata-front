@@ -8,18 +8,20 @@
     </div>
     <Loader v-else-if="loading" />
     <template v-else>
-      <div class="bg-blue-100 text-blue-400 fr-hidden flex-md fr-p-2w fr-grid-row--middle">
-        <div class="fr-px-1w fr-mr-2w" v-html="franceSvg">
+      <div class="bg-blue-100 text-blue-400 fr-hidden fr-unhidden-md fr-p-2w">
+        <div class="fr-grid-row fr-grid-row--middle fr-grid-row--gutters">
+          <div class="fr-col-auto" v-html="franceSvg">
+          </div>
+          <div class="fr-col">
+            <p class="fr-text--bold fr-m-0">{{ t("Explore data in detail") }}</p>
+            <p class="fr-text--sm fr-m-0 f-italic">{{ t("Use our tool to get an overview of data, learn about different columns or perform filters and sorts.") }}</p>
+          </div>
+          <p class="fr-col-auto fr-my-0">
+            <a :href="resource.preview_url" class="fr-btn fr-btn--icon-right fr-icon-external-link-fill">
+              {{ t("Explore data") }}
+            </a>
+          </p>
         </div>
-        <div class="fr-mx-2w">
-          <p class="fr-text--bold fr-m-0">{{ t("Explore data in detail") }}</p>
-          <p class="fr-text--sm fr-m-0 f-italic">{{ t("Use our tool to get an overview of data, learn about different columns or perform filters and sorts.") }}</p>
-        </div>
-        <p class="fr-ml-auto fr-my-0">
-          <a :href="resource.preview_url" class="fr-btn fr-btn--icon-right fr-icon-external-link-fill">
-            {{ t("Explore data") }}
-          </a>
-        </p>
       </div>
       <div class="fr-table fr-table--no-background fr-p-0 fr-pt-0-5v fr-m-0">
         <table class="fr-mb-3w">
