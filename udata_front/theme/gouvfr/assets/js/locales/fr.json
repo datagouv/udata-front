@@ -449,7 +449,7 @@
   "Please only report in case of serious concern.": "Merci de ne signaler qu'en cas d'inquiétude sérieuse.",
   "See our usage policy": "Voir nos modalités d'utilisation",
   "Report reason": "Raison du signalement",
-  "Reason of your report.\\nDon\\'t include any personal data.": "Raison de votre signalement.\\nN\\'indiquez pas de données personnelles.",
+  "Reason of your report.{newline}Don't include any personal data.": "Raison de votre signalement.\nN'indiquez pas de données personnelles.",
   "{site} team will examine the content to check if it breaks our {markup}. Thanks for your help.": "L'équipe de {site} examinera le contenu pour déterminer si celui-ci enfreint nos {markup}. Merci pour votre aide.",
   "Edit profile": "Editer le profil",
   "Save": "Sauvegarder",

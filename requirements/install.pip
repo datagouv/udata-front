@@ -4,14 +4,6 @@
 #
 #    pip-compile --output-file=requirements/install.pip requirements/install.in
 #
-blinker==1.4
-    # via
-    #   -c requirements/udata.pip
-    #   sentry-sdk
-certifi==2024.7.4
-    # via
-    #   -c requirements/udata.pip
-    #   sentry-sdk
 click==8.1.2
     # via
     #   -c requirements/udata.pip
@@ -24,7 +16,6 @@ flask==2.1.2
     # via
     #   -c requirements/udata.pip
     #   flask-themes2
-    #   sentry-sdk
 flask-themes2==1.0.0
     # via -r requirements/install.in
 itsdangerous==2.1.2
@@ -48,14 +39,8 @@ pytz==2024.1
     #   feedgenerator
 pyyaml==6.0.1
     # via python-frontmatter
-sentry-sdk[flask]==1.9.0
-    # via -r requirements/install.in
 sgmllib3k==1.0.0
     # via feedparser
-urllib3==1.25.11
-    # via
-    #   -c requirements/udata.pip
-    #   sentry-sdk
 werkzeug==2.2.2
     # via
     #   -c requirements/udata.pip
