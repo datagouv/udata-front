@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import { setupComponents, ReadMore, Toggletip } from "@datagouv/components";
+import { setupComponents, ReadMore, Toggletip, OwnerType } from "@datagouv/components";
 
 import "./dsfr.ts";
 // @ts-ignore
@@ -77,6 +77,7 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("report-button", ReportModalButton);
   app.component("request-membership", RequestMembership);
   app.component("organization-publishing-form", OrganizationPublishingForm);
+  app.component("owner-type", OwnerType);
   app.component("publishing-form", PublishingForm);
   app.component("search", Search);
   app.component("toggletip", Toggletip);

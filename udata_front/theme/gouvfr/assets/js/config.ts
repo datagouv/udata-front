@@ -288,7 +288,7 @@ export const search_autocomplete_debounce = _jsonMeta("search-autocomplete-debou
 
 export const tabular_api_url = _meta("tabular-api-url");
 
-export const tabular_page_size = _meta("tabular-page-size");
+export const tabular_page_size = parseInt(_meta("tabular-page-size") ?? "10");
 
 export const search_siren_url = _meta("search-siren-url");
 
