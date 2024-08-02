@@ -2,6 +2,15 @@
 
 ## Current (in progress)
 
+- Add beta admin datasets page [#371](https://github.com/etalab/udata-front/pull/371)
+
+## 5.1.2 (2024-08-01)
+
+- update dependencies following updated dependencies on udata [#470](https://github.com/datagouv/udata-front/pull/470)
+- update `@datagouv/components` and `vue-i18n` and fix report translation [#471](https://github.com/datagouv/udata-front/pull/471)
+
+## 5.1.0 (2024-07-30)
+
 - Add organization edit to new admin [#412](https://github.com/datagouv/udata-front/pull/412)
 - Fix markdown tables and use DSFR ones [#432](https://github.com/datagouv/udata-front/pull/432)
 - Add organization selector to dataset publishing [#438](https://github.com/datagouv/udata-front/pull/438)
@@ -10,7 +19,10 @@
 - Add new dataset card [#445](https://github.com/datagouv/udata-front/pull/445)
 - Fix tests for oembed CORS [#453](https://github.com/datagouv/udata-front/pull/453)
 - Add reports [#436](https://github.com/datagouv/udata-front/pull/436)
-- Add beta admin datasets page [#371](https://github.com/etalab/udata-front/pull/371)
+- Switch to @datagouv/components [#439](https://github.com/datagouv/udata-front/pull/439)
+- Update translations [#458](https://github.com/datagouv/udata-front/pull/458)
+- use @datagouv/components v1.1.1 [#462](https://github.com/datagouv/udata-front/pull/462)
+
 
 ## 5.0.1 (2024-06-12)
 

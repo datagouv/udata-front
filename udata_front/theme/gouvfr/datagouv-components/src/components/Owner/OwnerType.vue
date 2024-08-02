@@ -19,7 +19,7 @@ const { t } = useI18n();
  const name = computed(() => {
   switch (props.type) {
     case PUBLIC_SERVICE:
-      return t("Service public");
+      return t("Public service");
     case LOCAL_AUTHORITY:
       return t("Local authority");
     case ASSOCIATION:

@@ -10,5 +10,5 @@
   </Well>
 </template>
 <script setup lang="ts">
-import { Well } from '@etalab/data.gouv.fr-components';
+import { Well } from '@datagouv/components';
 </script>

@@ -1,4 +1,5 @@
 // @ts-ignore
+import type { ResourceType } from "@datagouv/components";
 import RemoveMarkdown from "remove-markdown";
 import { readonly } from "vue";
 import { useI18n } from "vue-i18n";
@@ -27,8 +28,6 @@ export const summarize = (value: number) => {
 };
 
 export const CLOSED_FORMATS = readonly(['pdf', 'doc', 'docx', 'word', 'xls', 'excel', 'xlsx'] as const);
-
-export const RESOURCE_TYPE = readonly(["main", "documentation", "update", "api", "code", "other"] as const);
 
 export const getResourceLabel = (type: ResourceType) => {
   const { t } = useI18n();

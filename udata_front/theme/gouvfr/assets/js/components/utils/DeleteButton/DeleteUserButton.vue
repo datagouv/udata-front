@@ -33,7 +33,7 @@
                                 alt=""
                               />
                             </div>
-                            {{ props.full_name }} {{ t('will be permanently deleted.') }} 
+                            {{ props.full_name }} {{ t('will be permanently deleted.') }}
                           </p>
                       </div>
                       <div class="fr-modal__footer">
@@ -65,7 +65,7 @@
 <script setup lang="ts">
 import { read_only_enabled } from "../../../config";
 import { useI18n } from "vue-i18n";
-import { getRandomId } from "@etalab/data.gouv.fr-components";
+import { getRandomId } from "@datagouv/components";
 import { useToast } from "../../../composables/useToast";
 import { deleteUser, deleteUserWithoutSendingMail } from "../../../api/users"
 

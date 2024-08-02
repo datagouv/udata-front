@@ -11,7 +11,7 @@
   </div>
 </template>
 <script lang="ts">
-import type { User } from "@etalab/data.gouv.fr-components";
+import type { User } from "@datagouv/components";
 export type AvatarProps = {
   user: User,
   rounded?: boolean,

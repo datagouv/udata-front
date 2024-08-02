@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Organization, getRandomId, User } from "@etalab/data.gouv.fr-components";
+import { type Organization, getRandomId, User } from "@datagouv/components";
 import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import AdminSidebarMenu from "../../components/AdminSidebar/AdminSidebarMenu/AdminSidebarMenu.vue";

@@ -74,7 +74,7 @@
                     :hasError="fieldHasError('message')"
                     :errorText="getErrorText('message')"
                     v-model="form.message"
-                    :placeholder="t('Reason of your report.\nDon\'t include any personal data.')"
+                    :placeholder="t(`Reason of your report.{newline}Don't include any personal data.`)"
                   />
                 </div>
                 <div class="fr-modal__footer">
@@ -120,7 +120,7 @@ export type ReportModalForm = {
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { Well, getRandomId } from '@etalab/data.gouv.fr-components';
+import { Well, getRandomId } from '@datagouv/components';
 
 defineProps<ReportModalProps>();
 

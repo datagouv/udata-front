@@ -2,7 +2,7 @@
 udata customizations for data.gouv.fr
 '''
 
-__version__ = '5.0.2.dev'
+__version__ = '5.1.3.dev'
 __description__ = 'udata customizations for data.gouv.fr'
 
 APIGOUVFR_EXTRAS_KEY = 'apigouvfr:apis'

@@ -55,7 +55,7 @@ import { useI18n } from 'vue-i18n';
 import Placeholder from '../utils/placeholder.vue';
 import { truncate } from "../../helpers";
 import type { Reuse } from '../../types';
-import { formatRelativeIfRecentDate, useOwnerName, OrganizationNameWithCertificate } from "@etalab/data.gouv.fr-components";
+import { formatRelativeIfRecentDate, useOwnerName, OrganizationNameWithCertificate } from "@datagouv/components";
 import useReuseType from '../../composables/useReuseType';
 
 const props = defineProps<ReuseProps>();

@@ -74,7 +74,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Pagination, type Dataset } from "@etalab/data.gouv.fr-components";
+import { Pagination, type Dataset } from "@datagouv/components";
 import { ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { getOrganizationDatasets, getOrganizationDatasetsCatalogUrl } from "../../../api/datasets";

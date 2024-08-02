@@ -44,6 +44,7 @@ blinker==1.4
     #   flask-principal
     #   flask-security-too
     #   flask-sitemap
+    #   sentry-sdk
     #   udata
 boto3==1.26.102
     # via
@@ -67,13 +68,14 @@ celerybeat-mongo==0.2.0
 certifi==2024.7.4
     # via
     #   requests
+    #   sentry-sdk
     #   udata
 cffi==1.16.0
     # via
     #   bcrypt
     #   cryptography
     #   udata
-chardet==3.0.4
+charset-normalizer==3.3.2
     # via
     #   requests
     #   udata
@@ -134,6 +136,7 @@ flask==2.1.2
     #   flask-sitemap
     #   flask-storage
     #   flask-wtf
+    #   sentry-sdk
     #   udata
 flask-babel==4.0.0
     # via udata
@@ -224,6 +227,7 @@ markupsafe==2.1.2
     # via
     #   flask-storage
     #   jinja2
+    #   sentry-sdk
     #   udata
     #   werkzeug
     #   wtforms
@@ -298,7 +302,7 @@ regex==2024.5.15
     # via
     #   awesome-slugify
     #   udata
-requests==2.24.0
+requests==2.32.3
     # via udata
 rpds-py==0.19.0
     # via
@@ -309,6 +313,8 @@ s3transfer==0.6.2
     # via
     #   boto3
     #   udata
+sentry-sdk[flask]==2.9.0
+    # via udata
 six==1.16.0
     # via
     #   bcrypt
@@ -346,10 +352,11 @@ uritools==4.0.3
     #   urlextract
 urlextract==0.14.0
     # via udata
-urllib3==1.25.11
+urllib3==1.26.19
     # via
     #   botocore
     #   requests
+    #   sentry-sdk
     #   udata
 vine==5.1.0
     # via
