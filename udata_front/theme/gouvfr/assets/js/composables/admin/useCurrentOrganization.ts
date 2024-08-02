@@ -1,4 +1,4 @@
-import type { Organization } from "@etalab/data.gouv.fr-components";
+import type { Organization } from "@datagouv/component";
 import { readonly, ref } from "vue";
 
 const currentOrganization = ref<Organization | null>(null);

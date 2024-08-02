@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { getRandomId } from '@etalab/data.gouv.fr-components';
+import { getRandomId } from '@datagouv/component';
 
 const id = getRandomId("tooltip");
 </script>

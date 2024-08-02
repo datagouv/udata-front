@@ -60,8 +60,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { Dataset, DatasetV2 } from '@etalab/data.gouv.fr-components';
-import { QualityItem } from '@etalab/data.gouv.fr-components';
+import type { Dataset, DatasetV2 } from '@datagouv/component';
+import { QualityItem } from '@datagouv/component';
 import { useI18n } from 'vue-i18n';
 import { guides_quality_url } from "../../../../config";
 
