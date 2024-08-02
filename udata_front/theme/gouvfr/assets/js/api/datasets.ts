@@ -42,3 +42,21 @@ export function getFrequenciesUrl () {
 export function getSpatialGranularities () {
   return api.get<Array<SpatialGranularity>>(getLocalizedUrl("spatial/granularities/")).then(resp => resp.data);
 }
+
+export type GetOrganizationDatasetsData = {
+  data: Array<Dataset>;
+  next_page: string | null;
+  page: number;
+  page_size: number;
+  total: number;
+};
+
+export function getOrganizationDatasets(oid: string, q: string, page: number, pageSize: number, sort: string) {
+  return api.get<GetOrganizationDatasetsData>(getLocalizedUrl(`organizations/${oid}/datasets/`), {
+    params: { q, sort, page_size: pageSize, page }
+  }).then(resp => resp.data);
+}
+
+export function getOrganizationDatasetsCatalogUrl(oid: string) {
+  return `/organizations/${oid}/datasets.csv`;
+}

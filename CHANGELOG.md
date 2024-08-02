@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add beta admin datasets page [#371](https://github.com/etalab/udata-front/pull/371)
 
 ## 5.1.2 (2024-08-01)
 
@@ -22,6 +22,7 @@
 - Switch to @datagouv/components [#439](https://github.com/datagouv/udata-front/pull/439)
 - Update translations [#458](https://github.com/datagouv/udata-front/pull/458)
 - use @datagouv/components v1.1.1 [#462](https://github.com/datagouv/udata-front/pull/462)
+
 
 ## 5.0.1 (2024-06-12)
 

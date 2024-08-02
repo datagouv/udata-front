@@ -1,6 +1,5 @@
 import { getLocalizedUrl } from "../i18n";
 import { api } from "../plugins/api";
-import { Reuse } from "../types";
 
 let reuseTypesRequest: Promise<Array<ReuseType>> | null = null;
 
