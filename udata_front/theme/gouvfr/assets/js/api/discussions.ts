@@ -11,8 +11,12 @@ import { getDataservice } from "./dataservices";
 
 addIcons(RiArticleLine, RiDatabase2Line, RiLineChartLine);
 
-export async function getOrganizationDiscussions(oid: string) {
-  const resp = await api.get<Array<Thread>>(getLocalizedUrl(`organizations/${oid}/discussions/`));
+export async function getOrganizationDiscussions(oid: string, pageSize = 10) {
+  const resp = await api.get<Array<Thread>>(getLocalizedUrl(`organizations/${oid}/discussions/`), {
+    params: {
+      page_size: pageSize,
+    }
+  });
   return resp.data;
 }
 
