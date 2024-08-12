@@ -117,7 +117,14 @@ export const ReuseWithOwner: StoryObj<typeof meta> = {
     setup() {
       return { args };
     },
-    template: '<ReuseCard v-bind="args"/>',
+    template: `<div class="fr-grid-row fr-grid-row--middle">
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+              </div>`,
   }),
   args,
 };
@@ -128,7 +135,14 @@ export const ReuseWithOrganization: StoryObj<typeof meta> = {
     setup() {
       return { args };
     },
-    template: '<ReuseCard v-bind="args"/>',
+    template: `<div class="fr-grid-row fr-grid-row--middle">
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+              </div>`,
   }),
   args: argsWithOrganizationWithLogo,
 };
@@ -139,7 +153,14 @@ export const ReuseWithCertifiedOrganization: StoryObj<typeof meta> = {
     setup() {
       return { args };
     },
-    template: '<ReuseCard v-bind="args"/>',
+    template: `<div class="fr-grid-row fr-grid-row--middle">
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+              </div>`,
   }),
   args: argsWithCertifiedOrganization,
 };
@@ -150,7 +171,14 @@ export const PrivateReuse: StoryObj<typeof meta> = {
     setup() {
       return { args };
     },
-    template: '<ReuseCard v-bind="args"/>',
+    template: `<div class="fr-grid-row fr-grid-row--middle">
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+              </div>`,
   }),
   args: {
     reuse: {
@@ -167,7 +195,14 @@ export const ReuseUpdatedLastMonth: StoryObj<typeof meta> = {
     setup() {
       return { args };
     },
-    template: '<ReuseCard v-bind="args"/>',
+    template: `<div class="fr-grid-row fr-grid-row--middle">
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+              </div>`,
   }),
   args: {
     reuse: {
@@ -184,7 +219,14 @@ export const ReuseUpdatedLastYear: StoryObj<typeof meta> = {
     setup() {
       return { args };
     },
-    template: '<ReuseCard v-bind="args"/>',
+    template: `<div class="fr-grid-row fr-grid-row--middle">
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+              </div>`,
   }),
   args: {
     reuse: {
@@ -201,7 +243,14 @@ export const RouterReuseWithOwner: StoryObj<typeof meta> = {
     setup() {
       return { args };
     },
-    template: '<ReuseCard v-bind="args"/><router-view></router-view>',
+    template: `<div class="fr-grid-row fr-grid-row--middle">
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+              </div>`,
   }),
   decorators: [vueRouter(datasetRoutes)],
   args,
@@ -213,7 +262,14 @@ export const RouterReuseWithOrganization: StoryObj<typeof meta> = {
     setup() {
       return { args };
     },
-    template: '<ReuseCard v-bind="args"/><router-view></router-view>',
+    template: `<div class="fr-grid-row fr-grid-row--middle">
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+              </div>`,
   }),
   decorators: [vueRouter(datasetRoutes)],
   args,

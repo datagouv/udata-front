@@ -46,6 +46,7 @@
       </div>
       <Placeholder
         class="fr-responsive-img ratio-sm"
+        alt=""
         type="reuse"
         :src="reuse.image"
         :size="80"
