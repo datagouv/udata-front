@@ -1,6 +1,6 @@
 {
   "name": "@datagouv/components",
-  "version": "1.0.0-dev.19",
+  "version": "1.1.2",
   "description": "reusable components to show content from data.gouv.fr",
   "type": "module",
   "files": [
@@ -15,17 +15,18 @@
     "preview": "vite preview",
     "i18n:report": "vue-i18n-extract report --vueFiles './src/**/*.?(ts|js|vue)' --languageFiles './src/locales/*.json' --separator '^'",
     "i18n:extract": "npm run i18n:report -- --add",
+    "prepublishOnly": "npm run build",
     "preversion": "npm run build && npm run i18n:report && npm run build-storybook",
     "update-version": "npm version --no-git-tag-version",
     "commit-version": "git add --all && git commit -m \"Bump version @datagouv/components@$npm_package_version\"",
-    "tag-version": "git tag @datagouv/components@$npm_package_version",
+    "tag-version": "git tag -a @datagouv/components@$npm_package_version -m \"Package @datagouv/components version v$npm_package_version\"",
     "push-version": "git push --follow-tags",
     "commit-tag-and-push": "npm run commit-version && npm run tag-version && npm run push-version",
     "publish-stable": "npm publish --access public",
     "publish-dev": "npm run publish-stable -- --tag=dev",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "npx chromatic --only-changed"
+    "chromatic": "npx chromatic --only-changed --externals './src/locales/**/*.json'"
   },
   "dependencies": {
     "vue": "^3.3.8"
@@ -68,7 +69,7 @@
     "vite": "^4.5.2",
     "vite-plugin-dts": "^3.6.3",
     "vue-content-loader": "^2.0.1",
-    "vue-i18n": "^9.8.0",
+    "vue-i18n": "^9.13.1",
     "vue-i18n-extract": "^2.0.7",
     "vue-router": "^4.2.5"
   },

@@ -321,7 +321,7 @@ jobs:
           command: |
             pip install --force-reinstall --no-deps -r requirements/udata.in
             pip install -e .
-            udata generate-fixtures
+            udata import-fixtures
       - when:
           condition:
             not: << pipeline.git.tag >>

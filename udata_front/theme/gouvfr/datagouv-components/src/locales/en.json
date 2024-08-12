@@ -101,5 +101,10 @@
   "Sort descending": "Sort descending",
   "{count} columns": "{count} columns",
   "{count} rows": "{count} rows",
-  "Resource Extras": "Resource Extras"
+  "Resource Extras": "Resource Extras",
+  "Public service": "Public service",
+  "Local authority": "Local authority",
+  "Association": "Association",
+  "Company": "Company",
+  "User": "User"
 }

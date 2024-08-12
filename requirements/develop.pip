@@ -30,7 +30,7 @@ invoke==2.2.0
     # via -r requirements/develop.in
 mccabe==0.6.1
     # via flake8
-packaging==24.0
+packaging==24.1
     # via
     #   -c requirements/test.pip
     #   -c requirements/udata.pip
@@ -40,9 +40,13 @@ pluggy==1.3.0
     # via
     #   -c requirements/test.pip
     #   pytest
+ply==3.11
+    # via
+    #   -c requirements/udata.pip
+    #   pycparser
 pycodestyle==2.5.0
     # via flake8
-pycparser==2.21
+pycparser==2.2
     # via
     #   -c requirements/udata.pip
     #   cffi
