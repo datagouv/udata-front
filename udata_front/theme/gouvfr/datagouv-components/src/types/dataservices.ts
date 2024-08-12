@@ -1,4 +1,13 @@
+import type { Harvest } from "./harvest";
 import type { Owned } from "./owned";
+
+export type ContactPoint = {
+  email: string;
+  id: string;
+  name: string;
+  organization: string | null;
+  owner: string | null;
+} | null;
 
 export type Dataservice = Owned & {
   acronym: string;
@@ -6,30 +15,22 @@ export type Dataservice = Owned & {
   authorization_request_url: string;
   availability: number;
   base_api_url: string;
-  contact_point: {
-    email: string;
-    id: string;
-    name: string;
-    organization: string | null;
-    owner: string | null;
-  } | null;
+  contact_point: ContactPoint;
   created_at: string;
-  datasets: [
-    {
+  datasets: Array<{
       class: string;
       id: string;
       acronym: string;
       page: string;
       title: string;
       uri: string;
-    }
-  ];
+    }>;
   deleted_at: string | null;
   description: string;
   endpoint_description_url: string;
   extras: Record<string, any>;
   format: string;
-  harvest: Record<string, any>;
+  harvest: Harvest;
   has_token: boolean;
   id: string;
   is_restricted: boolean;
