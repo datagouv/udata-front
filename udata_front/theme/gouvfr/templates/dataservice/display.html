@@ -1,6 +1,7 @@
 {% extends theme('layouts/1-column.html') %}
 {% from theme('macros/breadcrumb.html') import breadcrumb with context %}
 {% from theme('macros/follow.html') import follow_btn with context %}
+{% from theme('macros/report.html') import report_btn with context %}
 
 {% set meta = {
     'title': dataservice.title,
@@ -35,6 +36,7 @@
 
 {% block toolbar %}
 {{ follow_btn(dataservice) }}
+{{ report_btn(dataservice) }}
 {% endblock %}
 
 {% block content %}

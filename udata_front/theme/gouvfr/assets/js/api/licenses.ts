@@ -1,4 +1,4 @@
-import type { License } from "@etalab/data.gouv.fr-components";
+import type { License } from "@datagouv/components";
 import { getLocalizedUrl } from "../i18n";
 import { api } from "../plugins/api";
 

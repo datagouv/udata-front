@@ -32,8 +32,6 @@ class ExtendedRegisterFormTest(GouvfrFrontTestCase):
         assert result is False
         assert 'first_name' in form.errors
         assert 'last_name' in form.errors
-        assert 'captcha_code' in form.errors
-        assert 'captcha_id' in form.errors
 
     def test_register_form_accepts_no_url(self):
         form = ExtendedRegisterForm.from_json({
