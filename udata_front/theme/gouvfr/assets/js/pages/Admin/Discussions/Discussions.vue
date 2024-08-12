@@ -66,7 +66,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { formatDate, type Organization } from '@etalab/data.gouv.fr-components';
+import { formatDate, type Organization } from '@datagouv/components';
 import { OhVueIcon as Vicon } from "oh-vue-icons";
 import { onMounted, ref, watchEffect, watchPostEffect } from 'vue';
 import { useI18n } from "vue-i18n";

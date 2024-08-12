@@ -1,4 +1,4 @@
-import { api } from "@etalab/data.gouv.fr-components";
+import { api } from "@datagouv/components";
 import type { Post } from "../types";
 
 export async function getPost(id: string) {

@@ -1,6 +1,6 @@
 import { addIcons } from "oh-vue-icons";
 import { RiArticleLine, RiDatabase2Line, RiLineChartLine } from "oh-vue-icons/icons";
-import { api } from "@etalab/data.gouv.fr-components";
+import { api } from "@datagouv/components";
 import type { DiscussionSubject, DiscussionSubjectTypes, Thread } from "../types";
 import { getLocalizedUrl } from "../i18n";
 import { throwOnNever } from "../helpers";

@@ -1,4 +1,4 @@
-import { api, type Dataservice } from "@etalab/data.gouv.fr-components";
+import { api, type Dataservice } from "@datagouv/components";
 
 export async function getDataservice(id: string) {
   const res = await api.get<Dataservice>(`dataservices/${id}/`);
