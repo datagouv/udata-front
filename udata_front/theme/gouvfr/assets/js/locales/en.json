@@ -455,7 +455,7 @@
   "Please only report in case of serious concern.": "Please only report in case of serious concern.",
   "See our usage policy": "See our usage policy",
   "Report reason": "Report reason",
-  "Reason of your report.\\nDon\\'t include any personal data.": "Reason of your report.\\nDon\\'t include any personal data.",
+  "Reason of your report.{newline}Don't include any personal data.": "Reason of your report.\nDon't include any personal data.",
   "{site} team will examine the content to check if it breaks our {markup}. Thanks for your help.": "{site} team will examine the content to check if it breaks our {markup}. Thanks for your help.",
   "Edit profile": "Edit profile",
   "Save": "Save",
