@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import { setupComponents } from "@etalab/data.gouv.fr-components";
+import { setupComponents, ReadMore, Toggletip } from "@datagouv/components";
 
 import "./dsfr.ts";
 // @ts-ignore
@@ -22,7 +22,6 @@ import UserDatasetList from "./components/UserDatasetList/UserDatasetList.vue";
 import UserReuseList from "./components/UserReuseList/UserReuseList.vue";
 import PublishingForm from "./pages/PublishingForm/PublishingForm.vue";
 import OrganizationPublishingForm from "./pages/OrganizationPublishingForm/OrganizationPublishingForm.vue";
-import { ReadMore, Toggletip } from "@etalab/data.gouv.fr-components";
 
 import "./components/vanilla/tabs.js";
 import "./components/vanilla/accordion.js";
@@ -31,22 +30,24 @@ import "./components/vanilla/dialog.js";
 import "./components/vanilla/sort-search.js";
 import handleUpdateUrlButtons from "./components/vanilla/update-url.js";
 import i18n from "./i18n.ts";
-import { admin_root, api_root, api_2_root, explorable_resources, schema_documentation_url, schema_validata_url, title, } from "./config.ts";
+import { admin_root, api_root, api_2_root, schema_documentation_url, schema_validata_url, tabular_api_url, tabular_page_size, title } from "./config.ts";
 import Api from "./plugins/api.ts";
 import EventBus from "./plugins/eventbus.ts";
 import Auth from "./plugins/auth.ts";
 import InitSentry from "./sentry.ts";
+import ReportModalButton from "./components/Report/ReportModalButton.vue";
 
 setupComponents({
   admin_root,
   api_root,
   api_2_root,
   default_lang: i18n.global.locale.value,
-  explorable_resources,
   only_locales: i18n.global.locale.value,
   schema_documentation_url,
   schema_validata_url,
   show_copy_resource_permalink: true,
+  tabular_api_url,
+  tabular_page_size,
   title,
 });
 
@@ -61,23 +62,24 @@ const configAndMountApp = (el: HTMLElement) => {
   app.use(Auth);
   app.use(i18n);
 
-  app.component("discussion-threads", Threads);
-  app.component("discussion-create", ThreadCreate);
-  app.component("menu-search", MenuSearch);
-  app.component("search", Search);
-  app.component("delete-button", DeleteButton);
-  app.component("delete-user-button", DeleteUserButton);
-  app.component("featured-button", FeaturedButton);
-  app.component("follow-button", FollowButton);
-  app.component("read-more", ReadMore);
-  app.component("request-membership", RequestMembership);
-  app.component("dataset-resources", Resources);
-  app.component("dataset-resource-from-hash", ResourceFromHash);
   app.component("captcha", Captcha);
   app.component("chart", Chart);
-  app.component("toggletip", Toggletip);
-  app.component("publishing-form", PublishingForm);
+  app.component("dataset-resources", Resources);
+  app.component("dataset-resource-from-hash", ResourceFromHash);
+  app.component("delete-button", DeleteButton);
+  app.component("delete-user-button", DeleteUserButton);
+  app.component("discussion-threads", Threads);
+  app.component("discussion-create", ThreadCreate);
+  app.component("featured-button", FeaturedButton);
+  app.component("follow-button", FollowButton);
+  app.component("menu-search", MenuSearch);
+  app.component("read-more", ReadMore);
+  app.component("report-button", ReportModalButton);
+  app.component("request-membership", RequestMembership);
   app.component("organization-publishing-form", OrganizationPublishingForm);
+  app.component("publishing-form", PublishingForm);
+  app.component("search", Search);
+  app.component("toggletip", Toggletip);
   app.component("user-dataset-list", UserDatasetList);
   app.component("user-reuse-list", UserReuseList);
 

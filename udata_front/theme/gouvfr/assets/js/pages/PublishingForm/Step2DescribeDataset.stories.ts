@@ -3,9 +3,7 @@ import { expect, fn, userEvent, waitFor, within  } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Step2DescribeDataset, { Step2DescribeDatasetProps } from './Step2DescribeDataset.vue';
 import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
-import { user } from '../../config';
 import { NewDataset } from '../../types';
-import { User } from '@etalab/data.gouv.fr-components';
 
 
 const meta = {
@@ -19,6 +17,82 @@ const meta = {
 
 export default meta;
 
+const myUser = {
+  id: "someId",
+  first_name: "John",
+  last_name: "Doe",
+  avatar: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+  about: "something about me",
+  active: true,
+  apikey: null,
+  metrics: {
+    datasets: 12,
+    followers: 2,
+    following: 3,
+    reuses: 4,
+  },
+  since: (new Date()).toUTCString(),
+  website: "",
+  organizations: [
+    {
+      acronym: null,
+      badges: [],
+      class: "Organization",
+      id: "65e9b7cf830c3b5a515ee4ed",
+      logo: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+      logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+      name: "My Organization",
+      page: "",
+      slug: "my-organization",
+      uri: "/",
+      business_number_id: "some business number",
+      description: "",
+      url: "someUrl",
+      created_at: "",
+      last_modified: "",
+      last_update: "",
+      deleted: "",
+      members: [],
+      metrics: {
+        datasets: 12,
+        followers: 0,
+        members: 2,
+        reuses: 0,
+        views: 5,
+      }
+    },
+    {
+      acronym: null,
+      badges: [],
+      class: "Organization",
+      id: "65e9b7cf830c3b5a515ee4ed",
+      logo: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+      logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
+      name: "My Second Organization",
+      page: "",
+      slug: "my-second-organization",
+      uri: "/",
+      business_number_id: "some business number",
+      description: "",
+      url: "someUrl",
+      created_at: "",
+      last_modified: "",
+      last_update: "",
+      deleted: "",
+      members: [],
+      metrics: {
+        datasets: 12,
+        followers: 0,
+        members: 2,
+        reuses: 0,
+        views: 5,
+      }
+    }
+  ],
+  roles: [],
+  page: ""
+};
+
 const originalDataset: NewDataset = {
   title: "My new dataset",
   archived: false,
@@ -26,7 +100,7 @@ const originalDataset: NewDataset = {
   page: "",
   acronym: "",
   description: "Its has a required description",
-  tags: [],
+  tags: [] as Array<string>,
   license: "",
   frequency: "punctual",
   temporal_coverage: "",
@@ -35,7 +109,7 @@ const originalDataset: NewDataset = {
     zones: [],
     granularity: "",
   },
-  owner: user as User,
+  owner: myUser.id,
   organization: null,
   quality: {
     all_resources_available: true,
@@ -52,40 +126,6 @@ const originalDataset: NewDataset = {
   },
 };
 
-const myUser = {
-  id: "someId",
-  first_name: "John",
-  last_name: "Doe",
-  avatar: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-  organizations: [
-    {
-      acronym: null,
-      badges: [],
-      class: "Organization",
-      id: "65e9b7cf830c3b5a515ee4ed",
-      logo: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-      logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-      name: "My Organization",
-      page: "",
-      slug: "my-organization",
-      uri: "/"
-    },
-    {
-      acronym: null,
-      badges: [],
-      class: "Organization",
-      id: "65e9b7cf830c3b5a515ee4ed",
-      logo: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-      logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
-      name: "My Second Organization",
-      page: "",
-      slug: "my-second-organization",
-      uri: "/"
-    }
-  ],
-  roles: [],
-  page: ""
-};
 
 const args: Step2DescribeDatasetProps = {
   originalDataset,

@@ -1,7 +1,7 @@
 import requests
 
 from flask import current_app
-from flask_security.forms import RegisterForm
+from flask_security.forms import RegisterForm, ForgotPasswordForm
 from udata.forms import fields
 from udata.forms import validators
 from udata.i18n import lazy_gettext as _
@@ -16,27 +16,49 @@ class ExtendedRegisterForm(RegisterForm):
         _('Last name'), [validators.DataRequired(_('Last name is required')),
                          validators.NoURLs(_('URLs not allowed in this field'))])
 
-    captcha_code = fields.StringField(
-        _('captcha_input'), [validators.DataRequired()])
+    captcha_code = fields.StringField(_('captcha_input'), [])
 
-    captcha_id = fields.StringField(
-        _('captcha_id'), [validators.DataRequired()])
+    captcha_id = fields.StringField(_('captcha_id'), [])
 
     def validate(self):
-        # no register allowed when read only mode is on
-        if not super().validate() or current_app.config.get('READ_ONLY_MODE'):
+        if current_app.config.get('READ_ONLY_MODE'):
             return False
 
-        headers = {'Authorization': 'Bearer ' + bearer_token()}
-        captchetat_url = current_app.config.get('CAPTCHETAT_BASE_URL')
-        try:
-            resp = requests.post(f'{captchetat_url}/valider-captcha', headers=headers, json={
-                'id': self.captcha_id.data,
-                'code': self.captcha_code.data
-            })
-            if resp.text == 'true':
-                return True
-            self.captcha_code.errors.append(_('Invalid Captcha'))
+        if not check_captchetat(self.captcha_id.data, self.captcha_code.data):
+            self.captcha_code.errors = [_('Invalid Captcha')]
             return False
-        except requests.exceptions.RequestException:
+
+        return super().validate()
+
+
+class ExtendedForgotPasswordForm(ForgotPasswordForm):
+    captcha_code = fields.StringField(_('captcha_input'), [])
+
+    captcha_id = fields.StringField(_('captcha_id'), [])
+
+    def validate(self):
+        if not check_captchetat(self.captcha_id.data, self.captcha_code.data):
+            self.captcha_code.errors = [_('Invalid Captcha')]
             return False
+
+        return super().validate()
+
+
+def check_captchetat(id: str, code: str) -> bool:
+    captchetat_url = current_app.config.get('CAPTCHETAT_BASE_URL')
+    if not captchetat_url:
+        return True
+
+    if not id or not code:
+        return False
+
+    headers = {'Authorization': 'Bearer ' + bearer_token()}
+    try:
+        resp = requests.post(f'{captchetat_url}/valider-captcha', headers=headers, json={
+            'id': id,
+            'code': code,
+        })
+        return resp.text == 'true'
+    except requests.exceptions.RequestException:
+        # Should not happen, log?
+        return False

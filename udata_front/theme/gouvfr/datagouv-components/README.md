@@ -18,8 +18,8 @@ You should add the package styles after the DSFR ones or you may encounter unexp
 import '@gouvfr/dsfr/dist/dsfr.min.css';
 import '@gouvfr/dsfr/dist/utility/utility.min.css';
 import '@gouvfr/dsfr/dist/dsfr.module.min.js'; // or vue-dsfr
-import '@etalab/data.gouv.fr-components/dist/style.css';
-import { setupI18n } from '@etalab/data.gouv.fr-components';
+import '@datagouv/components/dist/style.css';
+import { setupI18n } from '@datagouv/components';
 
 import { createApp } from 'vue';
 import App from './App.vue';
@@ -56,7 +56,7 @@ npm run update-version -- NEW_VERSION
 
 The update triggers a project build and its tests.
 
-Then, you can run :
+Then, you should update the CHANGELOG with the new version and run :
 
 ```
 npm run commit-tag-and-push
@@ -75,4 +75,19 @@ If you want to do the same, you should do :
 
 ```
 npm run update-version -- prerelease --preid=dev
+```
+
+## Testing a local version in udata-front
+
+You can use the local version of the package thanks to `npm link`.
+Make sure to build the package first.
+
+```
+# build package
+cd udata_front/theme/gouvfr/datagouv-components
+npm run build
+cd ../../../../ # return to udata-front
+
+# link package
+npm link ./udata_front/theme/gouvfr/datagouv-components
 ```

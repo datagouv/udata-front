@@ -1,4 +1,6 @@
-import { type Organization, type Owned, type User, type NewDataset as BaseNewDataset, type Dataset, Badges } from "@etalab/data.gouv.fr-components";
+import type { Dataset, FileResourceFileType, NewDataset as BaseNewDataset, Organization, Owned, RemoteResourceFileType, ResourceType, User } from "@datagouv/components";
+
+import { CLOSED_FORMATS } from "./helpers";
 
 export type MultiSelectOption = {
   label: string;
@@ -30,15 +32,7 @@ export type PublishingFormAccordionState = AccordionFunctionalState | DSFRInfoSt
 
 export type AccordionState = DSFRFormDefaultState | AccordionFunctionalState | DSFRInfoState;
 
-export type ResourceType = typeof import("./helpers").RESOURCE_TYPE[number];
-
-export type RemoteResourceFileType = "remote";
-
-export type FileResourceFileType = "file";
-
-export type ResourceFileType = RemoteResourceFileType | FileResourceFileType;
-
-export type ClosedFormats = typeof import("./helpers").CLOSED_FORMATS[number];
+export type ClosedFormats = typeof CLOSED_FORMATS[number];
 
 export type DatasetRemoteFile = { description?: string; filetype: RemoteResourceFileType; format: string; mime: string; schema?: string; title: string; type: ResourceType; url: string; };
 
@@ -110,6 +104,7 @@ export type Quality = {
   update_fulfilled_in_time: boolean;
 }
 
+// TODO : import from datagouv/components when available
 export type Harvest = {
   backend: string;
 }
