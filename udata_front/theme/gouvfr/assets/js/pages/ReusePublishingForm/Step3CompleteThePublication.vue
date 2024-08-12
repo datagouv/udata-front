@@ -49,12 +49,12 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { Well } from '@datagouv/components';
 import Container from '../../components/Ui/Container/Container.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import successIcon from "../../../../templates/svg/illustrations/success.svg";
 import ReuseCard from '../../components/Reuse/Reuse.vue';
 import Loader from '../../components/Reuse/ReuseLoader.vue';
-import { Well } from '@datagouv/components';
 import { type Reuse } from '../../types';
   
 const props = defineProps<{

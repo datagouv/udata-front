@@ -49,7 +49,7 @@ export function updateReuse(reuse: Reuse) {
 }
 
 export function uploadLogo(reuseId: string, file: File) {
-  return api.postForm<UploadLogoResponse>(`reuses/${reuseId}/image/`, {
+  return api.postForm<UploadLogoResponse>(`reuses/${reuseId}/image`, {
     file: file
   });
 }

@@ -277,6 +277,8 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue';
 import { Well } from '@datagouv/components';
+import { useI18n } from 'vue-i18n';
+import { url } from '@vuelidate/validators';
 import { minLengthWarning, required } from '../../i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -294,9 +296,7 @@ import { quality_description_length } from "../../config";
 import { getReuseTypesUrl, getReuseTopicsUrl } from '../../api/reuses';
 import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
 import type { Me, OwnedWithId, PublishingFormAccordionState, NewReuse } from '../../types';
-import { useI18n } from 'vue-i18n';
 import Alert from '../../components/Alert/Alert.vue';
-import { url } from '@vuelidate/validators';
 
 const props = defineProps<{
   reuse: NewReuse,
@@ -326,7 +326,7 @@ const typesUrl = getReuseTypesUrl();
 
 const isSelectedProducer = ref<boolean>(false);
 
-const hasImage = () => {
+function hasImage () {
   return file.value !== null;
 };
 

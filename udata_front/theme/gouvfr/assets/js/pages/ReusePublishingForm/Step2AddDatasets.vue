@@ -40,7 +40,7 @@
           </div>
           <button
             type="button"
-            class="fr-btn fr-btn--tertiary-no-outline fr-btn--secondary--error fr-icon-close-line border-0 absolute top-3w right-2v"
+            class="fr-btn fr-btn--tertiary-no-outline fr-btn--secondary--error fr-icon-close-line border-0 absolute top-3w right-1w"
             :title="t('Remove the dataset')"
             @click="removeDataset(index)"
           >
