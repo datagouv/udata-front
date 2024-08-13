@@ -241,9 +241,8 @@
                 <span class="required-field-star">*</span>
               </label>
               <UploadGroup
-                hintText="Max size: 4Mo. Accepted formats: JPG, JPEG, PNG"
+                :hintText="t('Max size: 4Mo. Accepted formats: JPG, JPEG, PNG')"
                 accept=".jpeg, .jpg, .png"
-                label="Test"
                 id="logoUpload"
                 :isValid="file"
                 :validText="t('Your file is valid')"
