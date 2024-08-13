@@ -1,6 +1,5 @@
 import { withActions } from '@storybook/addon-actions/decorator';
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { delay, http, HttpResponse } from 'msw';
 import ReportModal, { type ReportModalProps } from './ReportModal.vue';
 
 const meta = {
@@ -9,39 +8,6 @@ const meta = {
   decorators: [withActions],
   argTypes: {
     onSend: { action: true },
-  },
-  parameters: {
-    msw: [
-      http.get('*/api/1/reports/reasons/', async () => {
-        await delay();
-        return HttpResponse.json([
-          {
-            "label": "Explicit content",
-            "value": "explicit_content"
-          },
-          {
-            "label": "Illegal content",
-            "value": "illegal_content"
-          },
-          {
-            "label": "Others",
-            "value": "others"
-          },
-          {
-            "label": "Personal data",
-            "value": "personal_data"
-          },
-          {
-            "label": "Security",
-            "value": "security"
-          },
-          {
-            "label": "Spam",
-            "value": "spam"
-          }
-        ]);
-      }),
-    ],
   },
 } satisfies Meta<typeof ReportModal>;
 
