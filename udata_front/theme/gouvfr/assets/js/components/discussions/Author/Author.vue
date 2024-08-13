@@ -15,7 +15,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   props: {
     author: {
-      /** @type {import("vue").PropType<import("@etalab/data.gouv.fr-components").User>} */
+      /** @type {import("vue").PropType<import("@datagouv/components").User>} */
       type: Object,
       required: true,
     },

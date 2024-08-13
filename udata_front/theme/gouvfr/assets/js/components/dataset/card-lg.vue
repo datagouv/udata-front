@@ -2,23 +2,21 @@
   <DatasetCard
     :dataset
     :style
-    :show-metrics="showMetrics"
+    :showDescription
     :dataset-url="dataset.page"
     :organization-url="dataset.organization?.page"
   />
 </template>
 
 <script setup lang="ts">
-import { DatasetCard, type Dataset, type DatasetV2 } from '@etalab/data.gouv.fr-components';
+import { DatasetCard, type Dataset, type DatasetV2 } from '@datagouv/components';
 import type { StyleValue } from "vue";
 
 withDefaults(defineProps<{
   dataset: Dataset | DatasetV2,
   style?: StyleValue,
-  showMetrics?: boolean,
+  showDescription?: boolean,
 }>(), {
-  showMetrics: true,
+  showDescription: true,
 });
-
-
 </script>

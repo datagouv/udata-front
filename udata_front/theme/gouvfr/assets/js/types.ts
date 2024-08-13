@@ -1,6 +1,6 @@
-import { type Organization, type Owned, type Resource, type User, type NewDataset as BaseNewDataset, type Dataset } from "@etalab/data.gouv.fr-components";
+import type { Dataset, FileResourceFileType, NewDataset as BaseNewDataset, Organization, Owned, RemoteResourceFileType, ResourceType, User } from "@datagouv/components";
 
-import { CLOSED_FORMATS, RESOURCE_TYPE } from "./helpers";
+import { CLOSED_FORMATS } from "./helpers";
 
 export type MultiSelectOption = {
   label: string;
@@ -31,15 +31,6 @@ export type DSFRInfoState = "info";
 export type PublishingFormAccordionState = AccordionFunctionalState | DSFRInfoState;
 
 export type AccordionState = DSFRFormDefaultState | AccordionFunctionalState | DSFRInfoState;
-
-export type ResourceType = typeof RESOURCE_TYPE[number];
-
-export type RemoteResourceFileType = "remote";
-
-export type FileResourceFileType = "file";
-
-// TODO: use ResourceFileType from datagouv/components when available
-export type ResourceFileType = RemoteResourceFileType | FileResourceFileType;
 
 export type ClosedFormats = typeof CLOSED_FORMATS[number];
 

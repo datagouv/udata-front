@@ -112,18 +112,17 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watchEffect } from 'vue';
+import { useRouter } from 'vue-router';
 import { useI18n } from "vue-i18n";
+import { getRandomId } from '@datagouv/components';
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
 import AdminDangerZone from "../../../components/AdminDangerZone/AdminDangerZone.vue";
 import DescribeOrganizationFrom from "../../OrganizationPublishingForm/Step2DescribeOrganization.vue";
 import type { Me, OrganizationV1 } from "../../../types";
 import { fetchMe } from "../../../api/me";
-import { watchEffect } from 'vue';
 import { deleteOrganization, getOrganization, updateOrganization } from '../../../api/organizations';
 import { useToast } from '../../../composables/useToast';
-import { getRandomId } from '@etalab/data.gouv.fr-components';
-import { useRouter } from 'vue-router';
 
 const { t } = useI18n();
 const { toast } = useToast();

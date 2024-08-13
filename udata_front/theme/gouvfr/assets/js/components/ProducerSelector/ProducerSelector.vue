@@ -28,9 +28,9 @@
   </div>
   <div v-else>
     <div class="fr-col bg-contrast-grey text-align-center fr-p-2v">
-      <p class="fr-text--md fr-text--bold fr-mb-n3v">{{ t('You belong to no organization') }}</p>
-      <p class="fr-text--sm fr-text--bold fr-mb-n4v">{{ t('You publish in your own name') }}</p>
-      <p class="fr-text--sm">{{ t('We advise you to publish under an organization if it\'s a professional activity') }}</p>
+      <p class="fr-text--md fr-text--bold fr-my-1w">{{ t('You belong to no organization') }}</p>
+      <p class="fr-text--sm fr-text--bold fr-m-0">{{ t('You publish in your own name') }}</p>
+      <p class="fr-text--sm fr-mb-1w">{{ t('We advise you to publish under an organization if it\'s a professional activity') }}</p>
       <div class="fr-grid-row fr-grid-row--middle fr-pb-3v">
         <div class="fr-col-6">
           <a class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500" :href="organization_url">
@@ -50,7 +50,7 @@
 <script setup lang="ts">
 import { ref, computed, toValue, onMounted } from 'vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
-import type { User, Organization } from '@etalab/data.gouv.fr-components';
+import type { User, Organization } from '@datagouv/components';
 import { organization_url } from '../../config';
 import type { Me, OwnedWithId } from '../../types';
 import { useI18n } from 'vue-i18n';

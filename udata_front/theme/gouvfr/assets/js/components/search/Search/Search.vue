@@ -216,7 +216,7 @@
 </template>
 
 <script setup lang="ts">
-import { Pagination, type Dataset } from "@etalab/data.gouv.fr-components";
+import { Pagination, type Dataset } from "@datagouv/components";
 import { ref, onMounted, computed } from "vue";
 import { useI18n } from 'vue-i18n';
 import axios, { type CancelTokenSource } from "axios";
