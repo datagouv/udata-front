@@ -5,6 +5,7 @@ export type Reuse = Owned & {
   id: string;
   title: string;
   description: string;
+  archived: boolean | null;
   tags: Array<string> | null;
   page: string;
   private: boolean;

@@ -8,8 +8,6 @@ export type ReuseType = {
   label: string,
 };
 
-/** TODO : those should be romoved and the types from datagouv/components should be used instead when the package will be updated */
-
 export function getReuseTypesUrl() {
   return getLocalizedUrl("/reuses/types/");
 }

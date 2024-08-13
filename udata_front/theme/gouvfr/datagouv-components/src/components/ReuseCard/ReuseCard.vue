@@ -43,6 +43,11 @@
             {{ t('Private') }}
           </span>
         </p>
+        <p class="fr-badge fr-badge--sm fr-badge--mention-grey text-grey-380" v-else-if="reuse.archived">
+          <span class="fr-icon-lock-line fr-icon--sm">
+            {{ t('Archived') }}
+          </span>
+        </p>
       </div>
       <Placeholder
         class="fr-responsive-img ratio-sm"
