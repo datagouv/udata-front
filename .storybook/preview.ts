@@ -1,4 +1,5 @@
 import type { Preview } from '@storybook/vue3';
+import { delay, http, HttpResponse } from 'msw';
 import { initialize, mswDecorator } from 'msw-storybook-addon';
 
 /*
@@ -25,7 +26,49 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    msw: [
+      http.get('*/api/1/reuses/types/', async () => {
+        await delay();
+        return HttpResponse.json(
+          [
+            {
+              "id": "api",
+              "label": "API"
+            },
+            {
+              "id": "application",
+              "label": "Application"
+            },
+            {
+              "id": "idea",
+              "label": "Idée"
+            },
+            {
+              "id": "news_article",
+              "label": "Article de presse"
+            },
+            {
+              "id": "paper",
+              "label": "Papier"
+            },
+            {
+              "id": "post",
+              "label": "Article de blog"
+            },
+            {
+              "id": "visualization",
+              "label": "Visualisation"
+            },
+            {
+              "id": "hardware",
+              "label": "Objet connecté"
+            }
+          ]
+        )
+      }),
+    ],
   },
 };
 
 export default preview;
+
