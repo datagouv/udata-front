@@ -125,13 +125,11 @@
                 {% with organization=dataset.owner, producer_type='owner' %}
                 {% include theme('organization/producer-name-with-logo.html') %}
                 {% endwith %}
-                <p class="well well-grey-100 fr-py-3v fr-my-3v">
-                    {% trans
-                            date=dataset.created_at|dateformat(format='long'),
-                            update=dataset.last_modified|dateformat(format='long'),
-                            author=dataset.owner.fullname
-                        %}This dataset has been published on the initiative and under the responsibility of
-                    {{author}}<br />Published on {{date}} and updated on {{update}}{% endtrans %}
+                <p class="well well-grey-100 fr-text--regular fr-py-3v fr-my-3v">
+                    {{
+                        _("This dataset has been published on the initiative and under the responsibility of {author}.")
+                        .format(author=dataset.owner.fullname)
+                    }}
                 </p>
             {% endif %}
             {% if external_source(dataset) %}

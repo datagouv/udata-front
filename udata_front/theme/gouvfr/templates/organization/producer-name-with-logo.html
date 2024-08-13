@@ -2,7 +2,7 @@
 {% set image_src = organization.logo(32)|placeholder('organization') if producer_type == 'organization' else organization|avatar_url(32)%}
 <div class="fr-grid-row fr-grid-row--middle">
     <div class="fr-col-auto">
-        <div class="border border-default-grey fr-p-1-5v fr-mr-1-5v">
+        <div class="border border-default-grey rounded-2 fr-p-1-5v fr-mr-1-5v">
             <img
                 src="{{ image_src }}"
                 alt=""
@@ -11,15 +11,25 @@
             />
         </div>
     </div>
-    <p class="fr-col fr-m-0">
+    <div class="fr-col fr-m-0">
         {% if producer_type == 'organization' %}
-            <a class="fr-link" href="{{ url_for('organizations.show', org=organization) }}">
-                {{organization_name_with_certificate(organization)}}
-            </a>
+            <p class="fr-mb-1v">
+                <a class="fr-link fr-text--sm" href="{{ url_for('organizations.show', org=organization) }}">
+                    {{organization_name_with_certificate(organization)}}
+                </a>
+            </p>
+            <p class="vuejs fr-m-0">
+                <owner-type type="{{ organization_type(organization) }}"></owner-type>
+            </p>
         {% else %}
-        <a class="fr-link" href="{{ url_for('users.show', user=organization) }}">
-            {{ organization.fullname }}
-        </a>
+            <p class="fr-mb-1v">
+                <a class="fr-link" href="{{ url_for('users.show', user=organization) }}">
+                    {{ organization.fullname }}
+                </a>
+            </p>
+            <p class="vuejs fr-m-0">
+                <owner-type type="user"></owner-type>
+            </p>
         {% endif %}
-        </p>
+    </div>
 </div>
