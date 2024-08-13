@@ -100,5 +100,7 @@
   "Local authority": "Local authority",
   "Association": "Association",
   "Company": "Company",
-  "User": "User"
+  "User": "User",
+  "Availability :": "",
+  "{n}%": ""
 }

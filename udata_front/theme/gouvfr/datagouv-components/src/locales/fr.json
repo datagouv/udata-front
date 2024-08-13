@@ -100,5 +100,7 @@
   "Local authority": "Collectivité territoriale",
   "Association": "Association",
   "Company": "Entreprise",
-  "User": "Utilisateur"
+  "User": "Utilisateur",
+  "Availability :": "Disponibilité :",
+  "{n}%": "{n}%"
 }
