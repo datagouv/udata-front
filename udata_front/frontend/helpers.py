@@ -220,14 +220,14 @@ def owner_name_acronym(obj):
 
 @front.app_template_global()
 def organization_type(org: Organization):
-  if org.public_service:
-      return PUBLIC_SERVICE
-  elif org.local_authority:
-      return LOCAL_AUTHORITY
-  elif org.association:
-      return ASSOCIATION
-  else:
-    return COMPANY
+    if org.public_service:
+        return PUBLIC_SERVICE
+    elif org.local_authority:
+        return LOCAL_AUTHORITY
+    elif org.association:
+        return ASSOCIATION
+    else:
+        return COMPANY
 
 
 @front.app_template_global()
