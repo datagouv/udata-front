@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Show organization type [#472](https://github.com/datagouv/udata-front/pull/472)
 
 ## 5.1.2 (2024-08-01)
 
