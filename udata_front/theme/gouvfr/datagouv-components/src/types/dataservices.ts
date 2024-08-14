@@ -11,7 +11,7 @@ export type ContactPoint = {
 
 export type Dataservice = Owned & {
   acronym: string;
-  archived_at: string;
+  archived_at: string | null;
   authorization_request_url: string;
   availability: number;
   base_api_url: string;
