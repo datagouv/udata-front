@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="fr-card__header">
-      <div class="absolute top-0 fr-mt-2w fr-ml-2w">
+      <div class="absolute top-0 fr-mt-2w fr-ml-2w" v-if="reuse.private || reuse.archived">
         <p class="fr-badge fr-badge--sm fr-badge--mention-grey text-grey-380" v-if="reuse.private">
           <span class="fr-icon-lock-line fr-icon--sm">
             {{ t('Private') }}
@@ -50,7 +50,7 @@
         </p>
       </div>
       <Placeholder
-        class="fr-responsive-img ratio-sm"
+        class="fr-responsive-img reuse-ratio"
         alt=""
         type="reuse"
         :src="reuse.image"
@@ -99,7 +99,7 @@ const { label: reuseType } = useReuseType(() => props.reuse.type);
 </script>
 
 <style>
-.ratio-sm {
+.reuse-ratio {
   aspect-ratio: 1.4;
   object-fit: cover;
 };

@@ -66,7 +66,7 @@ const args: ReuseProps = {
 };
 
 const updateLastMonth = new Date();
-updateLastMonth.setMonth(updateLastMonth.getMonth() - 1, 20);
+updateLastMonth.setMonth(updateLastMonth.getMonth() - 1);
 
 const updateLastYear = new Date();
 updateLastYear.setFullYear(updateLastYear.getFullYear() - 1);
