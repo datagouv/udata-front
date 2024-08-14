@@ -2,7 +2,8 @@
 {% set image_src = organization.logo(32)|placeholder('organization') if producer_type == 'organization' else organization|avatar_url(32)%}
 <div class="fr-grid-row fr-grid-row--middle">
     <div class="fr-col-auto">
-        <div class="border border-default-grey {% if producer_type == 'organization' %}rounded-2{% else %}rounded-circle{% endif %} fr-p-1-5v fr-mr-1-5v">
+    {% if producer_type == 'organization' %}
+        <div class="border border-default-grey rounded-2 fr-p-1-5v fr-mr-1-5v">
             <img
                 src="{{ image_src }}"
                 alt=""
@@ -10,6 +11,15 @@
                 height="32"
             />
         </div>
+    {% else %}
+        <img
+            class="border border-default-grey rounded-circle fr-mr-1-5v"
+            src="{{ image_src }}"
+            alt=""
+            width="32"
+            height="32"
+        />
+    {% endif %}
     </div>
     <div class="fr-col fr-m-0">
         {% if producer_type == 'organization' %}
