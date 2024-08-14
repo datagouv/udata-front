@@ -35,7 +35,7 @@
           <span class="fr-text--sm fr-mr-1v">{{ t('Availability :') }}</span>
           <span class="text-grey-400 fr-text--sm">{{ t('{n}%', dataservice.availability) }}</span>
         </p>
-        <p class="fr-text--sm fr-m-0 overflow-wrap-anywhere fr-mt-2w" v-if="showDescription">{{ excerpt(dataservice.description, 160) }}</p>
+        <p class="fr-text--sm fr-m-0 overflow-wrap-anywhere fr-mt-1w" v-if="showDescription">{{ excerpt(dataservice.description, 160) }}</p>
       </div>
     </div>
   </article>
