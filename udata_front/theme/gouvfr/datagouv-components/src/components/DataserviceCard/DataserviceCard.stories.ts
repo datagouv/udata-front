@@ -112,6 +112,11 @@ const argsPrivate = {
   dataserviceUrl: "/dataservices/6571faa17f46a65ee05c4d17",
 };
 
+const argsArchived = {
+  dataservice: {...dataservice, archived_at: new Date().toDateString()},
+  dataserviceUrl: "/dataservices/6571faa17f46a65ee05c4d17",
+};
+
 export const SimpleDataserviceCard: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { DataserviceCard },
@@ -161,6 +166,20 @@ export const PrivateDataserviceCardWithOrganizationUrl: StoryObj<typeof meta> = 
   }),
   args: {
     ...argsPrivate,
+    organizationUrl: "/organizations/another-url-easier-to-distinguish"
+  },
+};
+
+export const ArchivedDataserviceCardWithOrganizationUrl: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DataserviceCard },
+    setup() {
+      return { args };
+    },
+    template: `<DataserviceCard v-bind="args"/>`,
+  }),
+  args: {
+    ...argsArchived,
     organizationUrl: "/organizations/another-url-easier-to-distinguish"
   },
 };
@@ -218,6 +237,21 @@ export const PrivateRouterDataserviceCardWithOrganizationUrl: StoryObj<typeof me
   decorators: [vueRouter(dataserviceRoutes)],
   args: {
     ...argsPrivate,
+    organizationUrl: "/organizations/another-url-easier-to-distinguish"
+  },
+};
+
+export const ArchivedRouterDataserviceCardWithOrganizationUrl: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DataserviceCard },
+    setup() {
+      return { args };
+    },
+    template: `<DataserviceCard v-bind="args"/><router-view></router-view>`,
+  }),
+  decorators: [vueRouter(dataserviceRoutes)],
+  args: {
+    ...argsArchived,
     organizationUrl: "/organizations/another-url-easier-to-distinguish"
   },
 };
