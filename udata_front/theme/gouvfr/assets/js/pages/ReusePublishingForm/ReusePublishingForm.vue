@@ -5,6 +5,7 @@
       :reuse="reuse"
       :steps="steps"
       :errors="errors"
+      :loading="loading"
       :user="me"
       @next="createReuseAndMoveToNextStep"
     />
@@ -42,6 +43,8 @@ const { t } = useI18n();
 const steps = [t("Describe your reuse"), t("Link datasets"), t("Complete your publishing")];
 
 const currentStep = ref<number>(0);
+
+const loading = ref<boolean>(false);
 
 const containerRef = ref<HTMLDivElement | null>(null);
 
@@ -101,23 +104,26 @@ const moveToStep = (step: number, saveToHistory = true) => {
 };
 
 async function createReuseAndMoveToNextStep(newReuse: NewReuse, file: File) {
+  loading.value = true;
   errors.value = [];
   let moveToNextStep = false;
   try {
     savedReuse.value = await createReuse(newReuse);
     moveToNextStep = true;
+    try {
+      const resp = await uploadLogo(savedReuse.value.id, file);
+      reuse.value.image = resp.data.image
+    } catch (e) {
+      errors.value.push(t("Failed to upload logo, you can upload it again in your management panel"));
+    }
   } catch (e) {
-    errors.value.push(e.message);
-  }
-  try {
-    const resp = await uploadLogo(savedReuse.value.id, file);
-    reuse.value.image = resp.data.image
-  } catch (e) {
-    errors.value.push(t("Failed to upload logo, you can upload it again in your management panel"));
+    errors.value.push(t("An error occured when creating the reuse"));
+    console.log(errors.value)
   }
   if (moveToNextStep) {
     moveToStep(1);
   }
+  loading.value = false;
 }
 
 async function updateDatasetsAndMoveToNextStep(datasets: Array<Dataset>) {

@@ -37,15 +37,15 @@
               :dataset-url="dataset.slug"
               :show-description="false"
             />
+            <button
+              type="button"
+              class="fr-btn fr-btn--tertiary-no-outline fr-btn--secondary--error fr-icon-close-line border-0 absolute top-3w right-1w"
+              :title="t('Remove the dataset')"
+              @click="removeDataset(index)"
+            >
+              {{ t('Remove the dataset') }}
+            </button>
           </div>
-          <button
-            type="button"
-            class="fr-btn fr-btn--tertiary-no-outline fr-btn--secondary--error fr-icon-close-line border-0 absolute top-3w right-1w"
-            :title="t('Remove the dataset')"
-            @click="removeDataset(index)"
-          >
-            {{ t('Remove the dataset') }}
-          </button>
         </div>
       </div>
       <MultiSelect
@@ -53,6 +53,7 @@
         :placeholder="t('Look for a dataset')"
         :searchPlaceholder="t('Search a dataset...')"
         suggestUrl="/datasets/suggest/"
+        :values="multiselectDataset"
         :required="true"
         @change="handleDatasetChange"
         :hasError="fieldHasError('datasets')"
@@ -118,6 +119,8 @@ const zIndex = (key: number) => {
   return {zIndex: form.datasets.length - key}
 };
 
+const multiselectDataset = ref<Dataset | null>(null);
+
 const form = reactive<{
   datasets: Array<Dataset>;
   linkedDataset: string;
@@ -145,7 +148,7 @@ const warningRules = {
   linkedDataset: {},
 };
 
-const { getErrorText, getFunctionalState, validateRequiredRules, v$, hasWarning, hasError, vWarning$ } = useFunctionalState(form, requiredRules, warningRules);
+const { getFunctionalState, validateRequiredRules, v$, hasWarning, hasError, vWarning$ } = useFunctionalState(form, requiredRules, warningRules);
 
 const state = computed(() => {
   return {
@@ -164,6 +167,8 @@ function fieldHasWarning(field: string) {
 
 async function handleDatasetChange(datasetId: string) {
   vWarning$.value.datasets.$touch();
+  console.log(multiselectDataset.value)
+  multiselectDataset.value = null;
   addDataset(datasetId);
 };
 
