@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { getRandomId } from '@datagouv/component';
+import { getRandomId } from '@datagouv/components';
 import { onMounted } from 'vue';
 import { ref } from 'vue';
 

@@ -103,7 +103,7 @@
   "dependencies": {
     "@datagouv/components": "^1.1.2",
     "@datagouv/select-a11y": "^3.6.1",
-    "@gouvfr/dsfr": "^1.11.1",
+    "@gouvfr/dsfr": "~1.11.2",
     "leaflet": "^1.9.4"
   },
   "msw": {

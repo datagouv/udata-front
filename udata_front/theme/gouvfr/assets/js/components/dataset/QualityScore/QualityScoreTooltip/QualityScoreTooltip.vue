@@ -7,8 +7,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { Dataset, DatasetV2 } from '@datagouv/component';
-import { getRandomId, QualityScore } from '@datagouv/component';
+import type { Dataset, DatasetV2 } from '@datagouv/components';
+import { getRandomId, QualityScore } from '@datagouv/components';
 import QualityScoreTooltipContent from '../QualityScoreTooltipContent/QualityScoreTooltipContent.vue';
 
 defineProps<{

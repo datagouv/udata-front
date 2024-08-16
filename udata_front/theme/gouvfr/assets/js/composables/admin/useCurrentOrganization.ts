@@ -1,4 +1,4 @@
-import type { Organization } from "@datagouv/component";
+import type { Organization } from "@datagouv/components";
 import { readonly, ref } from "vue";
 
 const currentOrganization = ref<Organization | null>(null);

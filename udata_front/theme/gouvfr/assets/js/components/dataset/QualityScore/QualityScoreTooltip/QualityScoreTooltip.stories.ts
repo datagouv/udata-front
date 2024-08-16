@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import QualityScoreTooltip from "./QualityScoreTooltip.vue";
 import { CardLGWithOrganizationLogo } from "../../CardLG.stories";
-import type { Dataset } from "@datagouv/component";
+import type { Dataset } from "@datagouv/components";
 
 const meta = {
   title: "Components/QualityScore/QualityScoreTooltip",

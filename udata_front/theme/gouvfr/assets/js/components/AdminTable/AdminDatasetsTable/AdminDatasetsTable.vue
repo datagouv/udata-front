@@ -120,8 +120,8 @@
   </AdminTable>
 </template>
 <script setup lang="ts">
-import { formatDate } from "@datagouv/component";
-import type { Dataset, DatasetV2 } from '@datagouv/component';
+import { formatDate } from "@datagouv/components";
+import type { Dataset, DatasetV2 } from '@datagouv/components';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AdminBadge from "../../AdminBadge/AdminBadge.vue";

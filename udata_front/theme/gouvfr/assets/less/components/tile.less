@@ -23,10 +23,14 @@ You can use tiles from DSFR. You can find documented usage on [DSFR documentatio
 
 // Data.gouv customization
 .fr-tile {
-    --border-plain-blue-france: @blue-400;
+    --border-active-blue-france: @blue-400;
 }
 
-.fr-tile__link {
+.fr-tile__title a::after {
+    display: none;
+}
+
+.fr-tile__title a.fr-tile__link {
     color: inherit;
 }
 
