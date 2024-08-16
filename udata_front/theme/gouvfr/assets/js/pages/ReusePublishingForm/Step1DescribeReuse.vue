@@ -263,7 +263,7 @@
             <p v-else> {{ errors[0] }}</p>
           </Alert>
           <div class="fr-grid-row fr-grid-row--right">
-            <button class="fr-btn" @click="submit" :disabled="isLoading">
+            <button class="fr-btn" @click="submit" :disabled="loading">
               {{ t("Next") }}
             </button>
           </div>
@@ -301,7 +301,7 @@ const props = defineProps<{
   reuse: NewReuse,
   steps: Array<string>,
   errors: Array<string>,
-  isLoading: boolean
+  loading?: boolean
   user: Me,
 }>();
 
