@@ -107,7 +107,7 @@
           {{ summarize(dataset.metrics.views) }}
         </AdminTableTd>
         <AdminTableTd class="monospace">
-          {{ summarize(dataset.metrics.downloads ?? 0) }}
+          {{ summarize(dataset.metrics.resources_downloads ?? 0) }}
         </AdminTableTd>
         <AdminTableTd class="monospace">
           {{ summarize(dataset.metrics.reuses) }}
