@@ -49,15 +49,16 @@
         </div>
       </div>
       <MultiSelect
-        :minimumCharacterBeforeSuggest="2"
-        :placeholder="t('Look for a dataset')"
+      :placeholder="t('Look for a dataset')"
         :searchPlaceholder="t('Search a dataset...')"
+        :minimumCharacterBeforeSuggest="2"
         suggestUrl="/datasets/suggest/"
-        :values="multiselectDataset"
         :required="true"
         @change="handleDatasetChange"
         :hasError="fieldHasError('datasets')"
         :errorText="t('You need to provide at least one dataset')"
+        :allOption="$t('Select a dataset')"
+        :addAllOption="false"
       />
       <p class="fr-hr-or w-100 text-transform-lowercase fr-text--regular">
         <span class="fr-hr-or-text">{{ t('or') }}</span>
@@ -119,8 +120,6 @@ const zIndex = (key: number) => {
   return {zIndex: form.datasets.length - key}
 };
 
-const multiselectDataset = ref<Dataset | null>(null);
-
 const form = reactive<{
   datasets: Array<Dataset>;
   linkedDataset: string;
@@ -167,9 +166,9 @@ function fieldHasWarning(field: string) {
 
 async function handleDatasetChange(datasetId: string) {
   vWarning$.value.datasets.$touch();
-  console.log(multiselectDataset.value)
-  multiselectDataset.value = null;
-  addDataset(datasetId);
+  if (datasetId) {
+    addDataset(datasetId);
+  }
 };
 
 async function handleLinkedDatasetChange(value: string) {
