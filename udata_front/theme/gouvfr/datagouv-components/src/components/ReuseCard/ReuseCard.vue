@@ -25,11 +25,11 @@
             <p class="fr-text--sm fr-my-0 dash-after-sm">
               {{ reuseType }}
             </p>
-            <p class="fr-text--sm fr-my-0" :aria-label="t('{n} followers', reuse.metrics.followers)">
-              <span class="fr-icon-star-line fr-icon--xs fr-px-1v" aria-hidden="true"></span>{{ reuse.metrics.followers }}
-            </p>
             <p class="fr-text--sm fr-my-0" :aria-label="t('{n} views', reuse.metrics.views)">
               <span class="fr-icon-eye-line fr-icon--xs fr-px-1v" aria-hidden="true"></span>{{ reuse.metrics.views }}
+            </p>
+            <p class="fr-text--sm fr-my-0" :aria-label="t('{n} followers', reuse.metrics.followers)">
+              <span class="fr-icon-star-line fr-icon--xs fr-px-1v" aria-hidden="true"></span>{{ reuse.metrics.followers }}
             </p>
           </div>
         </div>
