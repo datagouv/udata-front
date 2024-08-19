@@ -103,5 +103,7 @@
   "{count} rows": "{count} rows",
   "Resource Extras": "Resource Extras",
   "Public service": "Public service",
-  "{n}%": "{n}%"
+  "{n}%": "{n}%",
+  "Restricted access": "Restricted access",
+  "Other": "Other"
 }

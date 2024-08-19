@@ -102,5 +102,7 @@
   "Company": "Company",
   "User": "User",
   "Availability :": "",
-  "{n}%": ""
+  "{n}%": "",
+  "Restricted access": "",
+  "Other": ""
 }

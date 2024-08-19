@@ -1,11 +1,15 @@
 <template>
   <article class="fr-my-2w fr-p-2w border border-default-grey fr-enlarge-link" :style="props.style">
-    <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v fr-ml-n1v" v-if="dataservice.private || dataservice.archived_at">
+    <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v fr-ml-n1v" v-if="dataservice.is_restricted || dataservice.private || dataservice.archived_at">
+      <p class="fr-badge fr-badge--sm fr-badge--mention-grey text-grey-380 fr-mr-1w" v-if="dataservice.is_restricted">
+        <span class="fr-icon-lock-line fr-icon--sm" aria-hidden="true"></span>
+        {{ t('Restricted access') }}
+      </p>
       <p class="fr-badge fr-badge--sm fr-badge--mention-grey text-grey-380 fr-mr-1w" v-if="dataservice.private">
         <span class="fr-icon-lock-line fr-icon--sm" aria-hidden="true"></span>
         {{ t('Private') }}
       </p>
-      <p class="fr-badge fr-badge--sm fr-badge--mention-grey text-grey-380 fr-mr-1w" v-else-if="dataservice.archived_at">
+      <p class="fr-badge fr-badge--sm fr-badge--mention-grey text-grey-380 fr-mr-1w" v-if="dataservice.archived_at">
         <span class="fr-icon-lock-line fr-icon--sm" aria-hidden="true"></span>
         {{ t('Archived') }}
       </p>

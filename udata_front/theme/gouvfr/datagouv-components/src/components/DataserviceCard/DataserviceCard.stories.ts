@@ -156,6 +156,24 @@ export const DataserviceCardWithOrganizationUrl: StoryObj<typeof meta> = {
   },
 };
 
+export const RestrictedDataserviceCardWithOrganizationUrl: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DataserviceCard },
+    setup() {
+      return { args };
+    },
+    template: `<DataserviceCard v-bind="args"/>`,
+  }),
+  args: {
+    ...args,
+    dataservice: {
+      ...args.dataservice,
+      is_restricted: true,
+    },
+    organizationUrl: "/organizations/another-url-easier-to-distinguish"
+  },
+};
+
 export const PrivateDataserviceCardWithOrganizationUrl: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { DataserviceCard },
@@ -180,6 +198,25 @@ export const ArchivedDataserviceCardWithOrganizationUrl: StoryObj<typeof meta> =
   }),
   args: {
     ...argsArchived,
+    organizationUrl: "/organizations/another-url-easier-to-distinguish"
+  },
+};
+
+export const PrivateArchivedRestrictedDataserviceCardWithOrganizationUrl: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DataserviceCard },
+    setup() {
+      return { args };
+    },
+    template: `<DataserviceCard v-bind="args"/>`,
+  }),
+  args: {
+    ...argsArchived,
+    dataservice: {
+      ...argsArchived.dataservice,
+      private: true,
+      is_restricted: true,
+    },
     organizationUrl: "/organizations/another-url-easier-to-distinguish"
   },
 };
