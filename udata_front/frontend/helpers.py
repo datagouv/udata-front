@@ -226,8 +226,10 @@ def organization_type(org: Organization):
         return LOCAL_AUTHORITY
     elif org.association:
         return ASSOCIATION
-    else:
+    elif org.company:
         return COMPANY
+    else:
+        return ""
 
 
 @front.app_template_global()
