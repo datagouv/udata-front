@@ -213,6 +213,31 @@ export const ArchivedReuse: StoryObj<typeof meta> = {
   },
 };
 
+export const PrivateArchivedReuse: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { ReuseCard },
+    setup() {
+      return { args };
+    },
+    template: `<div class="fr-grid-row fr-grid-row--middle">
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+              </div>`,
+  }),
+  args: {
+    reuse: {
+      ...argsWithOrganizationWithLogo.reuse,
+      archived: true,
+      private: true,
+    },
+    reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
+  },
+};
+
 export const ReuseUpdatedLastMonth: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { ReuseCard },

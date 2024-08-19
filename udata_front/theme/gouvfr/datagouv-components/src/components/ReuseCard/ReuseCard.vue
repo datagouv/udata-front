@@ -53,7 +53,7 @@
             {{ t('Private') }}
           </p>
         </li>
-        <li v-else-if="reuse.archived">
+        <li v-if="reuse.archived">
           <p class="fr-badge fr-badge--sm fr-badge--mention-grey text-grey-380">
             <span class="fr-icon-lock-line fr-icon--xs">
             </span>
