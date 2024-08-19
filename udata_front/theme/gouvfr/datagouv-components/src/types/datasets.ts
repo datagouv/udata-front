@@ -55,7 +55,13 @@ export type Dataset = NewDataset & {
   uri: string;
   slug: string;
   quality: Quality;
-  metrics: { discussions: number; followers: number; reuses: number; views: number; };
+  metrics: {
+    discussions: number;
+    followers: number;
+    resources_downloads: number;
+    reuses: number;
+    views: number;
+  };
   harvest: Harvest;
   extras: Record<string, any>;
 };

@@ -97,7 +97,14 @@ const dataset: DatasetV2 = {
     page: "https://demo.data.gouv.fr/fr/organizations/test-meteo-france/",
     business_number_id: "",
     description: "",
-    badges: [],
+    badges: [
+      {
+        "kind": "public-service"
+      },
+      {
+        "kind": "certified"
+      }
+    ],
     name: "Météo France",
     slug: "test-meteo-france",
     uri: "https://demo.data.gouv.fr/api/1/organizations/test-meteo-france/",
