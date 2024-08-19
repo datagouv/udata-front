@@ -81,8 +81,6 @@
   "Read more": "Lire plus",
   "Private": "Privé",
   "Archived": "Archivé",
-  "{n} reuses": "{n} réutilisations | {n} réutilisation | {n} réutilisations",
-  "{n} favorites": "{n} favoris | {n} favori | {n} favoris",
   "Metadata :": "Métadonnées :",
   "The data structure of this file failed to load.": "La structure de données de ce fichier n'a pas pu être chargée.",
   "No data structure found for this file.": "Aucune structure de données détectée pour ce fichier.",
@@ -100,6 +98,6 @@
   "Local authority": "Collectivité territoriale",
   "Association": "Association",
   "Company": "Entreprise",
-  "User": "Utilisateur"
+  "User": "Utilisateur",
+  "published {date}": ""
 }
-
