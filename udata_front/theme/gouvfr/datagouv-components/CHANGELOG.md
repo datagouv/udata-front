@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Update reuse card [#449](https://github.com/datagouv/udata-front/pull/449)
 
 ## 1.1.2 (2024-08-01)
 
