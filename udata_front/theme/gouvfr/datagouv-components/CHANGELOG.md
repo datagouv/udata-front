@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add dataservice card [#450](https://github.com/datagouv/udata-front/pull/450)
 
 ## 1.1.2 (2024-08-01)
 
