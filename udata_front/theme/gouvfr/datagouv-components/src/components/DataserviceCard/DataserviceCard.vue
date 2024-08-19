@@ -10,38 +10,36 @@
         {{ t('Archived') }}
       </p>
     </div>
-    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
-      <div class="fr-col">
-        <h4 class="fr-text--md fr-mb-1v fr-grid-row">
-          <slot name="dataserviceUrl" :dataservice="dataservice" :dataserviceUrl="dataserviceUrl">
-            <span class="fr-icon-terminal-line fr-icon--sm fr-mr-1v" aria-hidden="true"></span>
-            <AppLink :to="dataserviceUrl" class="text-grey-500">
-              {{ dataservice.title }}
-            </AppLink>
-          </slot>
-        </h4>
-        <div class="fr-text--sm fr-mb-0" v-if="dataservice.organization || dataservice.owner">
-          <template v-if="dataservice.organization">
-            <span class="not-enlarged dash-after-sm fr-mr-1v">
-              <AppLink class="fr-link fr-text--sm" v-if="organizationUrl" :to="organizationUrl">
-                <OrganizationNameWithCertificate :organization="dataservice.organization" />
-              </AppLink>
-              <OrganizationNameWithCertificate v-else :organization="dataservice.organization" />
-            </span>
-          </template>
-          <span class="not-enlarged dash-after-sm fr-mr-1v" v-else>
-            {{ ownerName }}
-          </span>
-          <span class="text-mention-grey">{{ t('Updated {date}', {date: formatRelativeIfRecentDate(dataservice.metadata_modified_at)}) }}</span>
-        </div>
-        <p class="fr-text--sm text-mention-grey fr-my-0 fr-mt-1v">
-          <span class="fr-icon-information-line fr-icon--sm text-grey-380 fr-mr-1v"></span>
-          <span class="fr-text--sm fr-mr-1v">{{ t('Availability :') }}</span>
-          <span class="text-grey-400 fr-text--sm">{{ t('{n}%', dataservice.availability) }}</span>
-        </p>
-        <p class="fr-text--sm fr-m-0 overflow-wrap-anywhere fr-mt-1w" v-if="showDescription">{{ excerpt(dataservice.description, 160) }}</p>
-      </div>
-    </div>
+    <h4 class="fr-text--md fr-mb-0 fr-grid-row">
+      <slot name="dataserviceUrl" :dataservice="dataservice" :dataserviceUrl="dataserviceUrl">
+        <span class="fr-icon-terminal-line fr-icon--sm fr-mr-1v" aria-hidden="true"></span>
+        <AppLink :to="dataserviceUrl">
+          {{ dataservice.title }}
+        </AppLink>
+      </slot>
+    </h4>
+    <p class="fr-text--sm text-mention-grey fr-mt-1v fr-mb-0" v-if="dataservice.organization || dataservice.owner">
+      <template v-if="dataservice.organization">
+        <span class="not-enlarged">
+          <AppLink class="fr-link fr-text--sm" v-if="organizationUrl" :to="organizationUrl">
+            <OrganizationNameWithCertificate :organization="dataservice.organization" />
+          </AppLink>
+          <OrganizationNameWithCertificate v-else :organization="dataservice.organization" />
+          &mdash;
+        </span>
+      </template>
+      <span class="not-enlarged" v-else>
+        {{ ownerName }}
+        &mdash;
+      </span>
+      <span>{{ t('Updated {date}', {date: formatRelativeIfRecentDate(dataservice.metadata_modified_at)}) }}</span>
+    </p>
+    <p class="fr-text--sm text-mention-grey fr-my-0 fr-mt-1v">
+      <span class="fr-icon-information-line fr-icon--sm text-grey-380"></span>
+      {{ t('Availability :') }}
+      <span class="text-grey-400">{{ t('{n}%', dataservice.availability) }}</span>
+    </p>
+    <p class="fr-text--sm fr-mt-1w fr-mb-0 overflow-wrap-anywhere" v-if="showDescription">{{ excerpt(dataservice.description, 160) }}</p>
   </article>
 </template>
 
