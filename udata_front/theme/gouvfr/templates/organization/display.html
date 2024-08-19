@@ -79,7 +79,7 @@
         loading="lazy"
     />
     <h1 class="fr-h3 fr-my-1w">{{ organization_name_with_certificate(org, "lg") }}</h1>
-    {% if organization_type(organization) %}
+    {% if organization_type(org) %}
         <p class="vuejs fr-mb-6w">
             <owner-type type="{{ organization_type(org) }}"></owner-type>
         </p>
