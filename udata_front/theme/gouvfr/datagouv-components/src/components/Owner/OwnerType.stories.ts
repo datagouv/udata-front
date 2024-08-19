@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { OwnerType } from '.';
-import { ASSOCIATION, COMPANY, LOCAL_AUTHORITY, PUBLIC_SERVICE } from '../../composables/organizations/useOrganizationType';
+import { ASSOCIATION, COMPANY, LOCAL_AUTHORITY, OTHER, PUBLIC_SERVICE } from '../../composables/organizations/useOrganizationType';
 
 const meta = {
   title: "Components/Owners/Owner Type",
@@ -79,5 +79,18 @@ export const CompanyOwnerType: StoryObj<typeof meta> = {
   }),
   args: {
     type: COMPANY,
+  }
+};
+
+export const OtherOwnerType: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { OwnerType },
+    setup() {
+      return { args };
+    },
+    template: '<OwnerType v-bind="args" />',
+  }),
+  args: {
+    type: OTHER,
   }
 };
