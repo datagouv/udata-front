@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import { setupComponents, ReadMore, Toggletip } from "@datagouv/components";
+import { setupComponents, ReadMore, Toggletip, DataserviceCard } from "@datagouv/components";
 
 import "./dsfr.ts";
 // @ts-ignore
@@ -66,6 +66,7 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("chart", Chart);
   app.component("dataset-resources", Resources);
   app.component("dataset-resource-from-hash", ResourceFromHash);
+  app.component("dataservice-card", DataserviceCard);
   app.component("delete-button", DeleteButton);
   app.component("delete-user-button", DeleteUserButton);
   app.component("discussion-threads", Threads);

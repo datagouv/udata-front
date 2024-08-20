@@ -392,11 +392,9 @@
                 <div class="fr-grid-row fr-mb-3v">
                 <h2 class="subtitle subtitle--uppercase fr-col">{{ ngettext('%(num)d Dataservice', '%(num)d Dataservices', total_dataservices) }}</h2>
             </div>
-            <div class="fr-grid-row fr-grid-row--gutters">
+            <div>
                 {% for dataservice in dataservices %}
-                <div class="fr-mb-3v fr-col-lg-3 fr-col-sm-6 fr-col-12">
                     {% include theme('dataservice/card.html') %}
-                </div>
                 {% endfor %}
             </div>
             {{ paginator(dataservices, arg_name='dataservices_page', url='#community-reuses') }}
