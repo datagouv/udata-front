@@ -23,15 +23,13 @@
       </slot>
     </h4>
     <p class="fr-text--sm text-mention-grey fr-mt-1v fr-mb-0" v-if="dataservice.organization || dataservice.owner">
-      <template v-if="dataservice.organization">
-        <span class="not-enlarged">
-          <AppLink class="fr-link fr-text--sm" v-if="organizationUrl" :to="organizationUrl">
-            <OrganizationNameWithCertificate :organization="dataservice.organization" />
-          </AppLink>
-          <OrganizationNameWithCertificate v-else :organization="dataservice.organization" />
-          &mdash;
-        </span>
-      </template>
+      <span class="not-enlarged" v-if="dataservice.organization">
+        <AppLink class="fr-link fr-text--sm" v-if="organizationUrl" :to="organizationUrl">
+          <OrganizationNameWithCertificate :organization="dataservice.organization" />
+        </AppLink>
+        <OrganizationNameWithCertificate v-else :organization="dataservice.organization" />
+        &mdash;
+      </span>
       <span class="not-enlarged" v-else>
         {{ ownerName }}
         &mdash;
