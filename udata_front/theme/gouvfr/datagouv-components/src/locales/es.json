@@ -81,9 +81,12 @@
   "Read more": "Read more",
   "Private": "Private",
   "Archived": "Archived",
-  "{n} reuses": "{n} reuses",
-  "{n} favorites": "{n} favorites",
   "Metadata :": "Metadata :",
+  "Service public": "Service public",
+  "Local authority": "Local authority",
+  "Association": "Association",
+  "Company": "Company",
+  "User": "User",
   "The data structure of this file failed to load.": "The data structure of this file failed to load.",
   "No data structure found for this file.": "No data structure found for this file.",
   "The preview of this file failed to load.": "The preview of this file failed to load.",
@@ -97,8 +100,5 @@
   "{count} rows": "{count} rows",
   "Resource Extras": "Resource Extras",
   "Public service": "Public service",
-  "Local authority": "Local authority",
-  "Association": "Association",
-  "Company": "Company",
-  "User": "User"
+  "published {date}": "published {date}"
 }
