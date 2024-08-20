@@ -1,0 +1,41 @@
+{% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate %}
+{% cache cache_duration, 'dataservice-card', dataservice.id|string, g.lang_code %}
+<article class="fr-card fr-card--no-icon fr-enlarge-link">
+    <div class="fr-card__body">
+        <div class="fr-card__content fr-p-2w">
+            <h3 class="fr-card__title fr-text--md fr-mt-1w">
+                <a
+                    href="{{ url_for('dataservices.show', dataservice=dataservice, _external=True) }}"
+                >
+                {{ dataservice.title|mdstrip(55) }}
+                {% if dataservice.private %}<span class="fr-badge fr-ml-1w">{{ _('Private') }}</span>{% endif %}
+                </a>
+            </h3>
+            <p class="fr-card__detail fr-m-0">
+                {{ dataservice.type_label }}
+            </p>
+            <p class="fr-card__desc fr-mt-1w text-mention-grey not-enlarged">
+                {{ _('Published on %(date)s', date=dataservice.created_at|dateformat(format='long')) }}
+                {% if dataservice.organization or dataservice.owner %}
+                    {{ _(' by ') }}
+                    {% if dataservice.organization %}
+                    <a
+                        class="fr-link"
+                        href="{{ url_for('organizations.show', org=dataservice.organization) }}"
+                    >
+                        {{organization_name_with_certificate(dataservice.organization)}}
+                    </a>
+                    {% elif dataservice.owner %}
+                     <a
+                        class="fr-link"
+                        href="{{ url_for('users.show', user=dataservice.owner) }}"
+                    >
+                        {{owner_name(dataservice)}}
+                    </a>
+                    {% endif %}
+                {% endif %}
+            </p>
+        </div>
+    </div>
+</article>
+{% endcache %}
