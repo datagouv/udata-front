@@ -1,6 +1,7 @@
 import AppLink from "./AppLink/AppLink.vue";
 import { CopyButton } from "./CopyButton";
 import { DatasetCard } from "./DatasetCard";
+import { DataserviceCard } from "./DataserviceCard"
 import InformationPanel from "./InformationPanel";
 import { OrganizationNameWithCertificate } from "./Organization";
 import { OwnerType, OwnerTypeIcon } from "./Owner";
@@ -16,4 +17,4 @@ import { QualityComponentInline } from "./QualityComponentInline"
 import { ReadMore } from "./ReadMore"
 import Well from "./Well";
 
-export { AppLink, CopyButton, DatasetCard, InformationPanel, OrganizationNameWithCertificate, OwnerType, OwnerTypeIcon, Pagination, QualityComponent, QualityComponentInline, QualityItem, QualityItemWarning, QualityScore, ReadMore, ResourceAccordion, ResourceAccordionLoader, ReuseCard,  Toggletip, Well };
+export { AppLink, CopyButton, DataserviceCard, DatasetCard, InformationPanel, OrganizationNameWithCertificate, OwnerType, OwnerTypeIcon, Pagination, QualityComponent, QualityComponentInline, QualityItem, QualityItemWarning, QualityScore, ReadMore, ResourceAccordion, ResourceAccordionLoader, ReuseCard,  Toggletip, Well };

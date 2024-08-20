@@ -99,5 +99,9 @@
   "Association": "Association",
   "Company": "Company",
   "User": "User",
-  "published {date}": ""
+  "published {date}": "",
+  "Availability :": "",
+  "{n}%": "",
+  "Restricted access": "",
+  "Other": ""
 }
