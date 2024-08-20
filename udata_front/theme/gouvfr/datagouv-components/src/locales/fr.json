@@ -82,6 +82,7 @@
   "Private": "Privé",
   "Archived": "Archivé",
   "Metadata :": "Métadonnées :",
+  "Availability :": "Disponibilité :",
   "Service public": "Service public",
   "Local authority": "Collectivité territoriale",
   "Association": "Association",
@@ -100,5 +101,8 @@
   "{count} rows": "Lignes {count}",
   "Resource Extras": "Extras de la ressource",
   "Public service": "Service public",
-  "published {date}": "published {date}"
+  "published {date}": "published {date}",
+  "{n}%": "{n}%",
+  "Restricted access": "Restricted access",
+  "Other": "Other"
 }
