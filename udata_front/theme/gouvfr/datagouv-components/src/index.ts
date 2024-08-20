@@ -6,6 +6,7 @@ import type { Harvest } from "./types/harvest";
 import type { License } from "./types/licenses";
 import type { Member, MemberRole, NewOrganization, Organization } from "./types/organizations";
 import type { Owned } from "./types/owned";
+import type { Reuse } from "./types/reuses";
 import type { CommunityResource, FileResourceFileType, RemoteResourceFileType, ResourceFileType, ResourceType, Resource } from "./types/resources";
 import type { Weight, WellType } from "./types/ui";
 import type { User } from "./types/users";
@@ -37,10 +38,12 @@ export type {
   Resource,
   ResourceFileType,
   ResourceType,
+  Reuse,
   User,
   Weight,
   WellType,
 };
+
 export * from "./api";
 export * from "./components";
 export * from "./composables";

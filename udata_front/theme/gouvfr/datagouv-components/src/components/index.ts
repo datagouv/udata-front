@@ -9,10 +9,11 @@ import { ResourceAccordion, Loader as ResourceAccordionLoader } from "./Resource
 import { QualityItem } from "./QualityItem";
 import { QualityItemWarning } from "./QualityItemWarning";
 import { QualityScore } from "./QualityScore";
+import { ReuseCard } from "./ReuseCard";
 import { Toggletip } from "./Toggletip";
 import { QualityComponent } from "./QualityComponent"
 import { QualityComponentInline } from "./QualityComponentInline"
 import { ReadMore } from "./ReadMore"
 import Well from "./Well";
 
-export { AppLink, CopyButton, DatasetCard, InformationPanel, OrganizationNameWithCertificate, OwnerType, OwnerTypeIcon, Pagination, QualityComponent, QualityComponentInline, QualityItem, QualityItemWarning, QualityScore, ReadMore, ResourceAccordion, ResourceAccordionLoader, Toggletip, Well };
+export { AppLink, CopyButton, DatasetCard, InformationPanel, OrganizationNameWithCertificate, OwnerType, OwnerTypeIcon, Pagination, QualityComponent, QualityComponentInline, QualityItem, QualityItemWarning, QualityScore, ReadMore, ResourceAccordion, ResourceAccordionLoader, ReuseCard,  Toggletip, Well };
