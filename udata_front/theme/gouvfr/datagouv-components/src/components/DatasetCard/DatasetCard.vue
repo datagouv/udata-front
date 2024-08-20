@@ -71,7 +71,7 @@
             </p>
           </div>
         </div>
-        <div v-if="showDescription" class="fr-pt-2v">
+        <div v-if="showDescription" class="fr-pt-1w">
           <p class="fr-text--sm fr-m-0 overflow-wrap-anywhere">{{ excerpt(dataset.description, 160) }}</p>
         </div>
       </div>

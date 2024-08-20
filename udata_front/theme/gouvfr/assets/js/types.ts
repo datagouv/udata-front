@@ -123,7 +123,7 @@ export type BaseNewReuse = Owned & {
   url: string;
 };
 
-export type NewReuse = Omit<NewReuse, keyof OwnedWithId> & OwnedWithId;
+export type NewReuse = Omit<BaseNewReuse, keyof OwnedWithId> & OwnedWithId;
 
 export type Reuse = BaseNewReuse & {
   id: string;

@@ -49,7 +49,7 @@
         </div>
       </div>
       <MultiSelect
-      :placeholder="t('Look for a dataset')"
+        :placeholder="t('Look for a dataset')"
         :searchPlaceholder="t('Search a dataset...')"
         :minimumCharacterBeforeSuggest="2"
         suggestUrl="/datasets/suggest/"
@@ -59,6 +59,7 @@
         :errorText="t('You need to provide at least one dataset')"
         :allOption="$t('Select a dataset')"
         :addAllOption="false"
+        :values="selectedDataset"
       />
       <p class="fr-hr-or w-100 text-transform-lowercase fr-text--regular">
         <span class="fr-hr-or-text">{{ t('or') }}</span>
@@ -128,6 +129,8 @@ const form = reactive<{
   linkedDataset: "",
 });
 
+const selectedDataset = ref<string | null>(null);
+
 const el = ref<HTMLElement | null>(null);
 useSortable(el, form.datasets);
 
@@ -168,6 +171,7 @@ async function handleDatasetChange(datasetId: string) {
   vWarning$.value.datasets.$touch();
   if (datasetId) {
     addDataset(datasetId);
+    selectedDataset.value = null;
   }
 };
 

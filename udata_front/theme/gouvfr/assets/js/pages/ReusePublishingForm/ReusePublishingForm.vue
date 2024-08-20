@@ -18,7 +18,7 @@
     <Step3CompleteThePublication
       v-else-if="currentStep === 2"
       :steps="steps"
-      :feedbackUrl="publishing_form_feedback_url"
+      :feedbackUrl="publishing_form_feedback_url ?? ''"
       :originalReuse="savedReuse"
       @update="updateReuseData"
     />
@@ -26,6 +26,7 @@
 </template>
 
 <script setup lang="ts">
+import type { AxiosError } from 'axios';
 import { onMounted, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
 import type { Dataset, User } from '@datagouv/components';
@@ -37,7 +38,7 @@ import { createReuse, updateReuse, uploadLogo } from '../../api/reuses';
 import type { NewReuse, Reuse } from '../../types';
 import { fetchMe } from '../../api/me';
 import { auth } from '../../plugins/auth';
-  
+
 const { t } = useI18n();
 
 const steps = [t("Describe your reuse"), t("Link datasets"), t("Complete your publishing")];
@@ -112,18 +113,25 @@ async function createReuseAndMoveToNextStep(newReuse: NewReuse, file: File) {
     moveToNextStep = true;
     try {
       const resp = await uploadLogo(savedReuse.value.id, file);
-      reuse.value.image = resp.data.image
+      savedReuse.value.image = resp.data.image;
     } catch (e) {
       errors.value.push(t("Failed to upload logo, you can upload it again in your management panel"));
     }
   } catch (e) {
-    errors.value.push(t("An error occured when creating the reuse"));
-    console.log(errors.value)
+    errors.value.push(t("An error occured while creating your reuse."));
+    if(e instanceof Error && 'response' in e) {
+      const error = e as AxiosError<{errors: {[Property in keyof NewReuse]: Array<string>}}>;
+      if(error.response?.data.errors.url) {
+        errors.value.pop();
+        errors.value.push(t("A reuse already exists for this URL."));
+      }
+    }
+  } finally {
+    loading.value = false;
   }
   if (moveToNextStep) {
     moveToStep(1);
   }
-  loading.value = false;
 }
 
 async function updateDatasetsAndMoveToNextStep(datasets: Array<Dataset>) {
@@ -136,7 +144,9 @@ async function updateDatasetsAndMoveToNextStep(datasets: Array<Dataset>) {
     savedReuse.value = await updateReuse(toValue(savedReuse));
     moveToNextStep = true;
   } catch (e) {
-    errors.value.push(e.message);
+    if(e instanceof Error) {
+      errors.value.push(e.message);
+    }
   }
   if (moveToNextStep) {
     moveToStep(2);
@@ -147,7 +157,9 @@ async function updateReuseData(newReuse: Reuse) {
   try {
     savedReuse.value = await updateReuse(newReuse);
   } catch (e) {
-    errors.value.push(e.message);
+    if(e instanceof Error) {
+      errors.value.push(e.message);
+    }
   }
 };
 

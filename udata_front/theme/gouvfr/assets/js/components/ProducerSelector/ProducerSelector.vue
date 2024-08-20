@@ -27,7 +27,7 @@
     />
   </div>
   <div v-else>
-    <div class="fr-col bg-contrast-grey text-align-center fr-p-2v">
+    <div class="fr-col bg-contrast-grey text-align-center fr-p-1w">
       <p class="fr-text--md fr-text--bold fr-my-1w">{{ t('You belong to no organization') }}</p>
       <p class="fr-text--sm fr-text--bold fr-m-0">{{ t('You publish in your own name') }}</p>
       <p class="fr-text--sm fr-mb-1w">{{ t('We advise you to publish under an organization if it\'s a professional activity') }}</p>

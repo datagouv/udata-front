@@ -4,7 +4,7 @@
     <Well
       color="blue-cumulus"
       weight="regular"
-      class="fr-mb-2v"
+      class="fr-mb-1w"
     >
       <div class="fr-grid-row">
         <div class="fr-col-auto fr-mr-3v">
@@ -16,7 +16,7 @@
         </div>
       </div>
     </Well>
-    <ul ref="listRef" class="fr-grid-row fr-grid-row--gutters fr-mb-2v">
+    <ul ref="listRef" class="fr-grid-row fr-grid-row--gutters fr-mb-1w">
       <li class="fr-col-12 fr-col-md-4">
         <Loader style="background-color: #FAFAFA" />
       </li>
@@ -45,7 +45,7 @@
     </div>
   </Container>
 </template>
-  
+
 <script setup lang="ts">
 import { reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -56,7 +56,7 @@ import successIcon from "../../../../templates/svg/illustrations/success.svg";
 import ReuseCard from '../../components/Reuse/Reuse.vue';
 import Loader from '../../components/Reuse/ReuseLoader.vue';
 import { type Reuse } from '../../types';
-  
+
 const props = defineProps<{
   steps: Array<string>,
   feedbackUrl: string,
@@ -80,4 +80,3 @@ function publish() {
 };
 
 </script>
-  

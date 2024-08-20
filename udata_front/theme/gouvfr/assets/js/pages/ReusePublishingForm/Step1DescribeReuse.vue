@@ -236,22 +236,19 @@
               :accordion="addImageAccordionId"
               @blur="vWarning$.image.$touch"
             >
-              <label class="fr-label fr-mb-1w" :class="{ 'text-default-error' : fieldHasError('image') }" for="logoUpload">
-                {{t('Cover picture')}}
-                <span class="required-field-star">*</span>
-              </label>
               <UploadGroup
                 :hintText="t('Max size: 4Mo. Accepted formats: JPG, JPEG, PNG')"
                 accept=".jpeg, .jpg, .png"
-                id="logoUpload"
-                :isValid="file"
+                :label="t('Cover picture')"
+                :isValid="!!file"
+                :required="true"
                 :validText="t('Your file is valid')"
                 :hasError="fieldHasError('image')"
                 :errorText="getErrorText('image')"
                 @change="addFiles"
               />
               <div class="text-align-center" v-show="imagePreview?.src">
-                <img class="fr-col fr-mx-2v fr-mb-2v" alt="" ref="imagePreview" width="300px" />
+                <img class="fr-responsive-img fr-mx-1w fr-mb-1w" alt="" ref="imagePreview" width="300" height="300" />
               </div>
             </LinkedToAccordion>
           </fieldset>
@@ -272,7 +269,7 @@
     </div>
   </div>
 </template>
-  
+
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue';
 import { Well } from '@datagouv/components';
