@@ -81,8 +81,6 @@
   "Read more": "Read more",
   "Private": "Private",
   "Archived": "Archived",
-  "{n} reuses": "{n} reuses",
-  "{n} favorites": "{n} favorites",
   "Metadata :": "Metadata :",
   "Availability :": "Availability :",
   "Service public": "Service public",
@@ -103,6 +101,7 @@
   "{count} rows": "{count} rows",
   "Resource Extras": "Resource Extras",
   "Public service": "Public service",
+  "published {date}": "published {date}",
   "{n}%": "{n}%",
   "Restricted access": "Restricted access",
   "Other": "Other"

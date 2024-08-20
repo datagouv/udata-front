@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DatasetCard, type DatasetV2, DataserviceCard, type Dataservice, InformationPanel, type License, Pagination, type Quality, QualityComponent, QualityComponentInline, QualityItem, QualityScore, ReadMore, type Resource, ResourceAccordion, Toggletip, Well } from "../src";
+import { DatasetCard, type DatasetV2, DataserviceCard, type Dataservice, InformationPanel, type License, Pagination, type Quality, QualityComponent, QualityComponentInline, QualityItem, QualityScore, ReadMore, type Reuse, ReuseCard, type Resource, ResourceAccordion, Toggletip, Well } from "../src";
 import { ref } from "vue";
 import editIcon from "../../templates/svg/illustrations/edit.svg";
 
@@ -274,6 +274,37 @@ const license : License = {
   ],
   id: "cc-by",
   maintainer: null,
+};
+
+const reuse : Reuse = {
+  id: "someId",
+  description: "Some description",
+  created_at: (new Date()).toDateString(),
+  last_update: (new Date()).toDateString(),
+  page: "https://www.data.gouv.fr",
+  deleted: false,
+  private: true,
+  datasets: [],
+  slug: "some-slug",
+  topic: "housing_and_development",
+  type: "application",
+  tags: [],
+  owner: {
+    id: "someUserId",
+    first_name: "First",
+    last_name: "Last",
+    page: "https://demo.data.gouv.fr/en/users/antonin-garrone/",
+  },
+  metrics: {
+    datasets: 3,
+    discussions: 7,
+    followers: 12,
+    views: 36
+  },
+  organization: null,
+  title: "My new reuse",
+  image: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",
+  image_thumbnail: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",
 }
 
 const dataservice: Dataservice = {
@@ -434,6 +465,23 @@ const id = "12";
     organization-url=""
     style="z-index: 1;"
   />
+  <div class="fr-grid-row">
+    <ReuseCard
+      class="fr-col-4"
+      :reuse="reuse"
+      reuse-url="/datasets/6571faa17f46a65ee05c4d17"
+    />
+    <ReuseCard
+      class="fr-col-4"
+      :reuse="reuse"
+      reuse-url="/datasets/6571faa17f46a65ee05c4d17"
+    />
+    <ReuseCard
+      class="fr-col-4"
+      :reuse="reuse"
+      reuse-url="/datasets/6571faa17f46a65ee05c4d17"
+    />
+  </div>
   <DataserviceCard 
     :dataservice="dataservice"
     dataservice-url="/dataservices/6571faa17f46a65ee05c4d17"
