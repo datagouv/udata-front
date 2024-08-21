@@ -107,5 +107,5 @@ const { label: reuseType } = useReuseType(() => props.reuse.type);
 .fr-card__img img.reuse-ratio {
   aspect-ratio: 1.4;
   object-fit: cover;
-};
+}
 </style>
