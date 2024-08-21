@@ -100,10 +100,10 @@
   "{count} rows": "Lignes {count}",
   "Resource Extras": "Extras de la ressource",
   "Public service": "Service public",
-  "published {date}": "published {date}",
+  "published {date}": "publié {date}",
   "{n}%": "{n}%",
-  "Restricted access": "Restricted access",
-  "Other": "Other",
-  "{n} views": "{n} views",
-  "{n} followers": "{n} followers"
+  "Restricted access": "Accès restreint",
+  "Other": "Autre",
+  "{n} views": "{n} vues",
+  "{n} followers": "{n} abonnés"
 }
