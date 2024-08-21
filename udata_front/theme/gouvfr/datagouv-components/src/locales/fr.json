@@ -83,7 +83,6 @@
   "Archived": "Archivé",
   "Metadata :": "Métadonnées :",
   "Availability :": "Disponibilité :",
-  "Service public": "Service public",
   "Local authority": "Collectivité territoriale",
   "Association": "Association",
   "Company": "Entreprise",
@@ -104,5 +103,7 @@
   "published {date}": "published {date}",
   "{n}%": "{n}%",
   "Restricted access": "Restricted access",
-  "Other": "Other"
+  "Other": "Other",
+  "{n} views": "{n} views",
+  "{n} followers": "{n} followers"
 }
