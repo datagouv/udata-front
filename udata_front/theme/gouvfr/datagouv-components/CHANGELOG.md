@@ -2,7 +2,10 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add new resources_dowloads metric to Dataset type [#474](https://github.com/datagouv/udata-front/pull/474)
+- Improve organization type logic [#475](https://github.com/datagouv/udata-front/pull/475)
+- Update reuse card [#449](https://github.com/datagouv/udata-front/pull/449)
+- Add dataservice card [#450](https://github.com/datagouv/udata-front/pull/450)
 
 ## 1.1.2 (2024-08-01)
 
