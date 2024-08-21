@@ -400,9 +400,11 @@ def to_api_format(data):
 def to_dataset_api_format(dataset):
     return marshal(dataset, dataset_fields)
 
+
 @front.app_template_filter()
 def to_dataservice_api_format(dataservice):
     return marshal(dataservice, Dataservice.__read_fields__)
+
 
 @front.app_template_filter()
 @front.app_template_global()
