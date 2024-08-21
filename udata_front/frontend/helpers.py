@@ -32,21 +32,21 @@ def now():
     return datetime.now()
 
 
-@front.app_template_global(name="form_grid")
+@front.app_template_global(name='form_grid')
 def form_grid(specs):
     if not specs:
         return None
     label_sizes, control_sizes, offset_sizes = [], [], []
-    for spec in specs.split(","):
-        label_sizes.append("fr-col-{0}".format(spec))
-        size, col = spec.split("-")
-        offset_sizes.append("fr-col-offset-{0}-{1}".format(size, col))
+    for spec in specs.split(','):
+        label_sizes.append('fr-col-{0}'.format(spec))
+        size, col = spec.split('-')
+        offset_sizes.append('fr-col-offset-{0}-{1}'.format(size, col))
         col = 12 - int(col)
-        control_sizes.append("fr-col-{0}-{1}".format(size, col))
+        control_sizes.append('fr-col-{0}-{1}'.format(size, col))
     return {
-        "label": " ".join(label_sizes),
-        "control": " ".join(control_sizes),
-        "offset": " ".join(offset_sizes),
+        'label': ' '.join(label_sizes),
+        'control': ' '.join(control_sizes),
+        'offset': ' '.join(offset_sizes),
     }
 
 
@@ -56,8 +56,10 @@ def url_rewrite(url=None, **kwargs):
     scheme, netloc, path, query, fragments = urlsplit(url or request.url)
     params = url_decode(query)
     for key, value in kwargs.items():
-        params.setlist(key, value if isinstance(value, (list, tuple)) else [value])
-    return Markup(urlunsplit((scheme, netloc, path, url_encode(params), fragments)))
+        params.setlist(key,
+                       value if isinstance(value, (list, tuple)) else [value])
+    return Markup(urlunsplit((scheme, netloc, path, url_encode(params),
+                              fragments)))
 
 
 @front.app_template_global()
@@ -68,7 +70,8 @@ def url_add(url=None, **kwargs):
     for key, value in kwargs.items():
         if value not in params.getlist(key):
             params.add(key, value)
-    return Markup(urlunsplit((scheme, netloc, path, url_encode(params), fragments)))
+    return Markup(urlunsplit((scheme, netloc, path, url_encode(params),
+                              fragments)))
 
 
 @front.app_template_global()
@@ -83,140 +86,130 @@ def url_del(url=None, *args, **kwargs):
         if str(value) in lst:
             lst.remove(str(value))
         params.setlist(key, lst)
-    return Markup(urlunsplit((scheme, netloc, path, url_encode(params), fragments)))
+    return Markup(urlunsplit((scheme, netloc, path, url_encode(params),
+                              fragments)))
 
 
 @front.app_template_global()
 def in_url(*args, **kwargs):
     scheme, netloc, path, query, fragments = urlsplit(request.url)
     params = url_decode(query)
-    return all(arg in params for arg in args) and all(
-        key in params and params[key] == value for key, value in kwargs.items()
+    return (
+            all(arg in params for arg in args) and
+            all(key in params and params[key] == value
+                for key, value in kwargs.items())
     )
 
 
 @front.app_template_filter()
 @pass_context
-def placeholder(ctx, url, name="default", external=False):
+def placeholder(ctx, url, name='default', external=False):
     return url or theme_static_with_version(
-        ctx, filename="img/placeholders/{0}.png".format(name), external=external
-    )
+        ctx,
+        filename='img/placeholders/{0}.png'.format(name),
+        external=external)
 
 
 @front.app_template_filter()
 def placeholder_alt(alt, url):
-    return alt if url else ""
+    return alt if url else ''
 
 
 @front.app_template_filter()
 def obfuscate(email):
     """Poor-man obfuscation, don't forget the |safe filter after it."""
-    return email.replace("@", "%40").replace(".", "&#46;")
+    return email.replace('@', '%40').replace('.', '&#46;')
 
 
 @front.app_template_filter()
 @pass_context
 def avatar_url(ctx, obj, size, external=False):
-    if hasattr(obj, "avatar") and obj.avatar:
+    if hasattr(obj, 'avatar') and obj.avatar:
         return obj.avatar(size, external=external)
-    elif hasattr(obj, "logo") and obj.logo:
+    elif hasattr(obj, 'logo') and obj.logo:
         return obj.logo(size, external=external)
     else:
-        return url_for(
-            "api.avatar", identifier=str(obj.id), size=size, _external=external
-        )
+        return url_for('api.avatar', identifier=str(obj.id),
+                       size=size, _external=external)
 
 
 @front.app_template_filter()
 @pass_context
 def owner_avatar_url(ctx, obj, size=32, external=False):
-    if hasattr(obj, "organization") and obj.organization:
-        return (
-            obj.organization.logo(size, external=external)
-            if obj.organization.logo
-            else placeholder(ctx, None, name="organization", external=external)
-        )
-    elif hasattr(obj, "owner") and obj.owner:
+    if hasattr(obj, 'organization') and obj.organization:
+        return (obj.organization.logo(size, external=external)
+                if obj.organization.logo
+                else placeholder(ctx, None, name='organization', external=external))
+    elif hasattr(obj, 'owner') and obj.owner:
         return avatar_url(ctx, obj.owner, size, external=external)
-    return placeholder(ctx, None, name="user", external=external)
+    return placeholder(ctx, None, name='user', external=external)
 
 
 @front.app_template_global()
 @front.app_template_filter()
 def owner_url(obj, external=False):
-    if hasattr(obj, "organization") and obj.organization:
-        return url_for("organizations.show", org=obj.organization, _external=external)
-    elif hasattr(obj, "owner") and obj.owner:
-        return url_for("users.show", user=obj.owner, _external=external)
-    return ""
+    if hasattr(obj, 'organization') and obj.organization:
+        return url_for('organizations.show', org=obj.organization, _external=external)
+    elif hasattr(obj, 'owner') and obj.owner:
+        return url_for('users.show', user=obj.owner, _external=external)
+    return ''
 
 
 @front.app_template_filter()
 @pass_context
-def avatar(ctx, user, size, classes="", external=False):
-    markup = "".join(
-        (
-            '<a class="avatar {classes}" href="{url}" title="{title}">',
-            '<img src="{avatar_url}" class="avatar" alt="{title}" ',
-            'width="{size}" height="{size}"/>',
-            "</a>",
-        )
-    ).format(
-        title=getattr(user, "fullname", _("Anonymous user")),
-        url=(
-            url_for("users.show", user=user, _external=external)
-            if user and getattr(user, "id", None)
-            else "#"
-        ),
+def avatar(ctx, user, size, classes='', external=False):
+    markup = ''.join((
+        '<a class="avatar {classes}" href="{url}" title="{title}">',
+        '<img src="{avatar_url}" class="avatar" alt="{title}" ',
+        'width="{size}" height="{size}"/>',
+        '</a>'
+    )).format(
+        title=getattr(user, 'fullname', _('Anonymous user')),
+        url=(url_for('users.show', user=user, _external=external)
+             if user and getattr(user, 'id', None) else '#'),
         size=size,
         avatar_url=avatar_url(ctx, user, size, external=external),
-        classes=classes,
+        classes=classes
     )
     return Markup(markup)
 
 
 @front.app_template_filter()
 @pass_context
-def owner_avatar(ctx, obj, size=32, classes="", external=False):
-    markup = """
+def owner_avatar(ctx, obj, size=32, classes='', external=False):
+    markup = '''
         <a class="avatar {classes}" href="{url}" title="{title}">
             <img src="{avatar_url}" class="avatar" alt="{title}"
             width="{size}" height="{size}"/>
         </a>
-    """
-    return Markup(
-        markup.format(
-            title=owner_name(obj),
-            url=owner_url(obj, external=external),
-            size=size,
-            avatar_url=owner_avatar_url(ctx, obj, size, external=external),
-            classes=classes,
-        )
-    )
+    '''
+    return Markup(markup.format(
+        title=owner_name(obj),
+        url=owner_url(obj, external=external),
+        size=size,
+        avatar_url=owner_avatar_url(ctx, obj, size, external=external),
+        classes=classes
+    ))
 
 
 @front.app_template_global()
 @front.app_template_filter()
 def owner_name(obj):
-    if hasattr(obj, "organization") and obj.organization:
+    if hasattr(obj, 'organization') and obj.organization:
         return obj.organization.name
-    elif hasattr(obj, "owner") and obj.owner:
+    elif hasattr(obj, 'owner') and obj.owner:
         return obj.owner.fullname
-    return ""
+    return ''
 
 
 @front.app_template_global()
 @front.app_template_filter()
 def owner_name_acronym(obj):
-    if hasattr(obj, "organization") and obj.organization:
-        return (
-            obj.organization.acronym
-            if obj.organization.acronym
-            else obj.organization.name
-        )
-    elif hasattr(obj, "owner") and obj.owner:
+    if hasattr(obj, 'organization') and obj.organization:
+        return obj.organization.acronym if obj.organization.acronym else obj.organization.name
+    elif hasattr(obj, 'owner') and obj.owner:
         return obj.owner.fullname
-    return ""
+    return ''
 
 
 @front.app_template_global()
@@ -232,8 +225,8 @@ def is_current_tab(request: Request, tab_arg: str) -> bool:
 
 @front.app_template_global()
 @front.app_template_filter()
-def isodate(value, format="short"):
-    dt = date(*map(int, value.split("-")))
+def isodate(value, format='short'):
+    dt = date(*map(int, value.split('-')))
     return format_date(dt, format)
 
 
@@ -249,23 +242,22 @@ front.add_app_template_filter(camel_to_lodash)
 @front.app_template_global()
 @front.app_template_filter()
 def tooltip_ellipsis(source, length=0):
-    """return the plain text representation of markdown encoded text.  That
+    ''' return the plain text representation of markdown encoded text.  That
     is the texted without any html tags.  If ``length`` is 0 then it
-    will not be truncated."""
+    will not be truncated.'''
     try:
         length = int(length)
     except ValueError:  # invalid literal for int()
         return source  # Fail silently.
     ellipsis = '<a href v-tooltip title="{0}">...</a>'.format(source)
-    return Markup(
-        (source[:length] + ellipsis) if len(source) > length and length > 0 else source
-    )
+    return Markup((source[:length] + ellipsis)
+                  if len(source) > length and length > 0 else source)
 
 
 @front.app_template_global()
 @front.app_template_filter()
 def percent(value, max_value, over=False):
-    percent = (value or 0) * 100.0 / max_value
+    percent = (value or 0) * 100. / max_value
     return percent if over else min(percent, 100)
 
 
@@ -287,15 +279,15 @@ def is_last_year_day(date):
 
 
 def short_month(date):
-    return format_date(date, pgettext("month-format", "yyyy/MM"))
+    return format_date(date, pgettext('month-format', 'yyyy/MM'))
 
 
 def short_day(date):
-    return format_date(date, pgettext("day-format", "yyyy/MM/dd"))
+    return format_date(date, pgettext('day-format', 'yyyy/MM/dd'))
 
 
 def daterange_with_details(value):
-    """Display a date range in the shorter possible maner."""
+    '''Display a date range in the shorter possible maner.'''
     delta = value.end - value.start
     start, end = None, None
     if is_first_year_day(value.start) and is_last_year_day(value.end):
@@ -310,20 +302,20 @@ def daterange_with_details(value):
         start = short_day(value.start)
         if value.start != value.end:
             end = short_day(value.end)
-    return _("%(start)s to %(end)s", start=start, end=end) if end else start
+    return _('%(start)s to %(end)s', start=start, end=end) if end else start
 
 
 @front.app_template_global()
 @front.app_template_filter()
 def daterange(value, details=False):
-    """Display a date range in the shorter possible maner."""
+    '''Display a date range in the shorter possible maner.'''
     if not isinstance(value, db.DateRange):
-        raise ValueError("daterange only accept db.DateRange as parameter")
+        raise ValueError('daterange only accept db.DateRange as parameter')
 
     if details:
         return daterange_with_details(value)
 
-    date_format = "%Y"
+    date_format = '%Y'
 
     delta = value.end - value.start
     start, end = None, None
@@ -331,29 +323,29 @@ def daterange(value, details=False):
     if delta.days > 365:
         end = value.end.strftime(date_format)
 
-    return "{start!s}–{end!s}".format(start=start, end=end) if end else start
+    return '{start!s}–{end!s}'.format(start=start, end=end) if end else start
 
 
 def format_from_now(value):
-    """
+    '''
     Format date as relative from now.
     It displays "today" or format_timedelta content, based on date.
-    """
+    '''
     today = date.today()
     value_without_time = value.date()
-    if value_without_time == today:
+    if(value_without_time == today):
         return _("today")
     return format_timedelta(value_without_time - today, add_direction=True)
 
 
 @front.app_template_filter()
 def format_based_on_date(value):
-    """
+    '''
     Format date relative form now if date is less than a month ago.
     Otherwise, show a formatted date.
-    """
+    '''
     delta = date.today() - value.date()
-    if delta.days > 30:
+    if(delta.days > 30):
         return _("on %(date)s", date=format_date(value, "long"))
     return format_from_now(value)
 
@@ -365,37 +357,37 @@ def i18n_alternate_links():
 
     if page is in a I18nBlueprint
     """
-    if not request.endpoint or not current_app.url_map.is_endpoint_expecting(
-        request.endpoint, "lang_code"
-    ):
-        return Markup("")
+    if (not request.endpoint or
+            not current_app.url_map.is_endpoint_expecting(request.endpoint,
+                                                          'lang_code')):
+        return Markup('')
 
     try:
-        LINK_PATTERN = '<link rel="alternate" href="{url}" hreflang="{lang}" />'
+        LINK_PATTERN = (
+            '<link rel="alternate" href="{url}" hreflang="{lang}" />')
         links = []
 
-        for lang in current_app.config["LANGUAGES"]:
+        for lang in current_app.config['LANGUAGES']:
             url = language_url(lang)
             links.append(LINK_PATTERN.format(url=url, lang=lang))
-        return Markup("".join(links))
+        return Markup(''.join(links))
     except Exception:
         # Never fails
-        return Markup("")
+        return Markup('')
 
 
 @front.app_template_filter()
 @front.app_template_global()
 def to_json(data):
-    """Convert data to JSON, you may have to use |safe after it."""
+    '''Convert data to JSON, you may have to use |safe after it.'''
     if not data:
-        return Markup("")
+        return Markup('')
     return json.dumps(data)
 
 
 def is_results_of_type(search_results, result_type):
     return isinstance(search_results, SearchResult) and all(
-        isinstance(dataset, result_type) for dataset in search_results
-    )
+        isinstance(dataset, result_type) for dataset in search_results)
 
 
 @front.app_template_filter()
@@ -408,27 +400,21 @@ def to_api_format(data):
 def to_dataset_api_format(dataset):
     return marshal(dataset, dataset_fields)
 
-
 @front.app_template_filter()
 def to_dataservice_api_format(dataservice):
     return marshal(dataservice, Dataservice.__read_fields__)
 
-
 @front.app_template_filter()
 @front.app_template_global()
 def format_number(number):
-    """A locale aware formatter."""
+    '''A locale aware formatter.'''
     return format_decimal(number, locale=g.lang_code) if number else number
 
 
 @front.app_template_filter()
 def format_percentage(number):
-    """A locale aware formatter."""
-    return (
-        format_decimal(number, locale=g.lang_code, format="0.########")
-        if number
-        else number
-    )
+    '''A locale aware formatter.'''
+    return format_decimal(number, locale=g.lang_code, format='0.########') if number else number
 
 
 def json_ld_script_preprocessor(o):
@@ -437,40 +423,40 @@ def json_ld_script_preprocessor(o):
     elif isinstance(o, (list, tuple)):
         return [json_ld_script_preprocessor(v) for v in o]
     elif isinstance(o, str):
-        return html.escape(o).replace("&#x27;", "&apos;")
+        return html.escape(o).replace('&#x27;', '&apos;')
     else:
         return o
 
 
 @front.app_template_filter()
 def embedded_json_ld(jsonld):
-    """
+    '''
     Sanitize JSON-LD for <script> tag inclusion.
 
     JSON-LD accepts any string but there is a special case
     for script tag inclusion.
     See: https://w3c.github.io/json-ld-syntax/#restrictions-for-contents-of-json-ld-script-elements
-    """
+    '''
     return Markup(json.dumps(json_ld_script_preprocessor(jsonld), ensure_ascii=False))
 
 
 @front.app_template_filter()
 def visibles(value):
-    """Return visible elements"""
+    '''Return visible elements'''
     if not isinstance(value, list):
-        raise ValueError("visibles only accept list as parameter")
+        raise ValueError('visibles only accept list as parameter')
     return list(filter(lambda elt: elt.is_visible, value))
 
 
 @front.app_template_global()
 def selected(current_value, value):
-    return "selected" if current_value == value else ""
+    return 'selected' if current_value == value else ''
 
 
 @front.app_template_filter()
 def summarize(value: int):
     result = float(value) if value else 0
-    for unit in "", "k", "M", "G", "T", "P", "E", "Z":
+    for unit in '', 'k', 'M', 'G', 'T', 'P', 'E', 'Z':
         if abs(result) < 1000:
             return format_decimal(round(result, 1), locale=g.lang_code) + unit
         result /= 1000
@@ -483,25 +469,25 @@ def slug(value):
 
 @front.app_template_global()
 def current_language_name():
-    """Get the name of the current locale."""
+    '''Get the name of the current locale.'''
     locale = get_locale()
-    for code, name in current_app.config["LANGUAGES"].items():
+    for code, name in current_app.config['LANGUAGES'].items():
         if locale == code:
             return name
 
 
 @front.app_template_global()
 def language_url(lang_code):
-    """Create an URL for the current endpoint and the given language code"""
+    '''Create an URL for the current endpoint and the given language code'''
     params = {}
     endpoint = request.endpoint
     if request.args:
         params.update(request.args)
     if request.view_args:
         params.update(request.view_args)
-    if not request.endpoint or not current_app.url_map.is_endpoint_expecting(
-        request.endpoint, "lang_code"
-    ):
+    if (not request.endpoint or
+            not current_app.url_map.is_endpoint_expecting(request.endpoint,
+                                                          'lang_code')):
         endpoint = "site.home"
     try:
         return url_for(endpoint, lang_code=lang_code, **params, _external=True)
