@@ -65,7 +65,10 @@
               <p class="fr-badge">{{ getRoleLabel(member.role) }}</p>
             </td>
             <td>{{ formatDate(member.since) }}</td>
-            <td>{{ formatFromNow(member.user.last_login_at) }}</td>
+            <td>
+              <span v-if="member.user.last_login_at">{{ formatFromNow(member.user.last_login_at) }}</span>
+              <span v-else>{{ t("No connection") }}</span>
+            </td>
             <td v-if="isAdmin">
               <AdminEditMemberButton
                 :member="member"
