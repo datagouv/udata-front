@@ -134,6 +134,9 @@
                     {{author}}<br />Published on {{date}} and updated on {{update}}{% endtrans %}
                 </p>
             {% endif %}
+            {% with contact_point=dataset.contact_point %}
+                {% include theme('contact_point.html') %}
+            {% endwith %}
             {% if external_source(dataset) %}
                 <div class="fr-my-3v fr-text--sm">
                     {{ banner_info(
