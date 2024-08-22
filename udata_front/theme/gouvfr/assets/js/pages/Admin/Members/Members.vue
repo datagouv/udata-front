@@ -50,16 +50,22 @@
         <thead>
           <tr>
             <th scope="col">{{ t("Members") }}</th>
+            <th scope="col">{{ t("Email") }}</th>
             <th scope="col">{{ t("Status") }}</th>
+            <th scope="col">{{ t("Member since") }}</th>
+            <th scope="col">{{ t("Last connection") }}</th>
             <th scope="col" v-if="isAdmin">{{ t("Action") }}</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="member in members" :key="member.user.id">
             <td>{{ member.user.first_name }} {{ member.user.last_name }}</td>
+            <td>{{ member.user.email }}</td>
             <td>
               <p class="fr-badge">{{ getRoleLabel(member.role) }}</p>
             </td>
+            <td>{{ formatDate(member.since) }}</td>
+            <td>{{ formatFromNow(member.user.last_login_at) }}</td>
             <td v-if="isAdmin">
               <AdminEditMemberButton
                 :member="member"
@@ -87,6 +93,7 @@ import type { EditingMember, MemberRole, PendingMembershipRequest } from "../../
 import { useToast } from "../../../composables/useToast";
 import { user, userIsAdmin } from "../../../config";
 import AdminAddMemberButton from "../../../components/AdminAddMember/AdminAddMemberButton.vue";
+import { formatDate, formatFromNow } from '@datagouv/components';
 
 const props = defineProps<{oid: string}>();
 
