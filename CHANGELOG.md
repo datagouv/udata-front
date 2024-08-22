@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - show contact point in dataset and dataservice page [#479](https://github.com/datagouv/udata-front/pull/479)
+- add email, member since and last login at to org members table [#480](https://github.com/datagouv/udata-front/pull/480)
 
 ## 5.1.2 (2024-08-01)
 
