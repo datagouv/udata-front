@@ -183,7 +183,7 @@ export type MemberRole = "admin" | "editor";
 // In org endpoint we get these two private information if we have edit rights on the org.
 export type MemberUser = User & {
   email: string;
-  last_login_at: string;
+  last_login_at?: string;
 }
 
 export type Member = {
