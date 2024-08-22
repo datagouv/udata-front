@@ -17,6 +17,7 @@ from . import front
 
 from udata.core.dataset.apiv2 import dataset_fields
 from udata.core.dataset.models import Dataset
+from udata.core.dataservices.models import Dataservice
 from udata.models import db
 from udata.i18n import get_locale, format_date, format_timedelta, _, pgettext
 from udata.search.result import SearchResult
@@ -398,6 +399,11 @@ def to_api_format(data):
 
 def to_dataset_api_format(dataset):
     return marshal(dataset, dataset_fields)
+
+
+@front.app_template_filter()
+def to_dataservice_api_format(dataservice):
+    return marshal(dataservice, Dataservice.__read_fields__)
 
 
 @front.app_template_filter()
