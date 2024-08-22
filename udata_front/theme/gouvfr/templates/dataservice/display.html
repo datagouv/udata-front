@@ -99,6 +99,9 @@
                     {{author}}<br />Published on {{date}}{% endtrans %}
                 </p>
             {% endif %}
+            {% with contact_point=dataservice.contact_point %}
+                {% include theme('contact_point.html') %}
+            {% endwith %}
             <h2 class="subtitle fr-mt-3v fr-mb-1v">{{ _('Latest update') }}</h2>
             <p class="fr-text--sm fr-mt-0 fr-mb-3v">
                 {{ dataservice.metadata_modified_at|dateformat(format='long') }}
