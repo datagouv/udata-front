@@ -1,5 +1,5 @@
 <template>
-  <Vicon v-if="icon" :name="icon"/>
+  <Vicon :scale="1/1.2" v-if="icon" :name="icon"/>
 </template>
 <script setup lang="ts">
 import { computed } from "vue";
