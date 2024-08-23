@@ -2,7 +2,10 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- add dataservices to dataset page [#476](https://github.com/datagouv/udata-front/pull/476)
+- show contact point in dataset and dataservice page [#479](https://github.com/datagouv/udata-front/pull/479)
+- always show authorization_request_url if present (even on open API) [#481](https://github.com/datagouv/udata-front/pull/481)
+- Show organization type [#472](https://github.com/datagouv/udata-front/pull/472)
 
 ## 5.1.2 (2024-08-01)
 
