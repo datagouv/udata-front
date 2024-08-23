@@ -61,7 +61,7 @@
           </div>
           <div class="fr-grid-row fr-grid-row--middle fr-mr-1v">
             <p class="fr-text--sm fr-my-0">
-              <span class="fr-icon-download-line fr-icon--sm fr-px-1v" aria-hidden="true"></span>{{ dataset.metrics.discussions }}
+              <span class="fr-icon-download-line fr-icon--sm fr-px-1v" aria-hidden="true"></span>{{ dataset.metrics.resources_downloads }}
             </p>
             <p class="fr-text--sm fr-my-0">
               <span class="fr-icon-star-line fr-icon--sm fr-px-1v" aria-hidden="true"></span>{{ dataset.metrics.followers }}

@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Use resource downloads for download icon on dataset card [#484](https://github.com/datagouv/udata-front/pull/484)
 
 ## 1.2.0 (2024-08-21)
 
