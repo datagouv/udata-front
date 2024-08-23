@@ -18,6 +18,13 @@ from . import front
 from udata.core.dataset.apiv2 import dataset_fields
 from udata.core.dataset.models import Dataset
 from udata.core.dataservices.models import Dataservice
+from udata.core.organization.models import Organization
+from udata.core.organization.constants import (
+    ASSOCIATION,
+    COMPANY,
+    LOCAL_AUTHORITY,
+    PUBLIC_SERVICE,
+)
 from udata.models import db
 from udata.i18n import get_locale, format_date, format_timedelta, _, pgettext
 from udata.search.result import SearchResult
@@ -210,6 +217,20 @@ def owner_name_acronym(obj):
     elif hasattr(obj, 'owner') and obj.owner:
         return obj.owner.fullname
     return ''
+
+
+@front.app_template_global()
+def organization_type(org: Organization):
+    if org.local_authority:
+        return LOCAL_AUTHORITY
+    elif org.public_service:
+        return PUBLIC_SERVICE
+    elif org.association:
+        return ASSOCIATION
+    elif org.company:
+        return COMPANY
+    else:
+        return ""
 
 
 @front.app_template_global()
