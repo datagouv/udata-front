@@ -49,6 +49,7 @@
         </div>
       </div>
       <MultiSelect
+        ref="selectedDatasetRef"
         :placeholder="t('Look for a dataset')"
         :searchPlaceholder="t('Search a dataset...')"
         :minimumCharacterBeforeSuggest="2"
@@ -84,7 +85,7 @@
       <p v-else> {{ errors[0] }}</p>
     </Alert>
     <div class="fr-grid-row fr-grid-row--right">
-      <button class="fr-btn" @click="submit">
+      <button class="fr-btn" :disabled="linkedDatasetLoading || loading" @click="submit">
         {{ t("Next") }}
       </button>
     </div>
@@ -129,10 +130,14 @@ const form = reactive<{
   linkedDataset: "",
 });
 
+const linkedDatasetLoading = ref(false);
+
 const selectedDataset = ref<string | null>(null);
 
 const el = ref<HTMLElement | null>(null);
 useSortable(el, form.datasets);
+
+const selectedDatasetRef = ref<InstanceType<typeof MultiSelect> | null>(null);
 
 function checkDatasets() {
   return form.datasets.length > 0;
@@ -171,7 +176,7 @@ async function handleDatasetChange(datasetId: string) {
   vWarning$.value.datasets.$touch();
   if (datasetId) {
     addDataset(datasetId);
-    selectedDataset.value = null;
+    selectedDatasetRef.value?.selectOption("");
   }
 };
 
@@ -180,6 +185,7 @@ async function handleLinkedDatasetChange(value: string) {
     return true;
   } else if (value.includes('/datasets/')) {
     try {
+      linkedDatasetLoading.value = true;
       const url = new URL(value);
       const slug = getSlug(url.pathname);
       const resp = await api.get('datasets/' + slug);
@@ -189,6 +195,8 @@ async function handleLinkedDatasetChange(value: string) {
       return true;
     } catch {
       return false;
+    } finally {
+      linkedDatasetLoading.value = false;
     }
   } else {
     return false;

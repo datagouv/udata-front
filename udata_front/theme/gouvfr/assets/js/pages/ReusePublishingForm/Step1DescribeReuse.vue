@@ -242,6 +242,7 @@
                 :label="t('Cover picture')"
                 :isValid="!!file"
                 :required="true"
+                :showLabel="true"
                 :validText="t('Your file is valid')"
                 :hasError="fieldHasError('image')"
                 :errorText="getErrorText('image')"
