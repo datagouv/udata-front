@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Reduce organization type icon [#483](https://github.com/datagouv/udata-front/pull/483)
 
 ## 1.2.0 (2024-08-21)
 
