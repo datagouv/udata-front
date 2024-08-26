@@ -1,5 +1,5 @@
 <template>
-    <p v-bind="$attrs" :aria-describedby="id">
+  <p v-bind="$attrs" :aria-describedby="id">
     <slot></slot>
   </p>
   <span class="fr-tooltip fr-placement" :id="id" role="tooltip" aria-hidden="true">

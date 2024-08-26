@@ -51,9 +51,9 @@ export type GetOrganizationDatasetsData = {
   total: number;
 };
 
-export function getOrganizationDatasets(oid: string, q: string, page: number, pageSize: number, sort: string) {
+export function getOrganizationDatasets(oid: string, q: string, page: number, pageSize: number, sortDirection: string) {
   return api.get<GetOrganizationDatasetsData>(getLocalizedUrl(`organizations/${oid}/datasets/`), {
-    params: { q, sort, page_size: pageSize, page }
+    params: { q, sort: sortDirection, page_size: pageSize, page }
   }).then(resp => resp.data);
 }
 

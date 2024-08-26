@@ -60,7 +60,7 @@
         >
           <Tooltip>
             <span class="fr-icon--sm fr-icon-line-chart-line" aria-hidden="true"></span>
-            <template #tooltip> {{ t('Reuses') }}</template>
+            <template #tooltip>{{ t('Reuses') }}</template>
           </Tooltip>
         </AdminTableTh>
         <AdminTableTh
@@ -136,7 +136,7 @@ import { summarize } from '../../../helpers';
 import type { AdminBadgeState, DatasetSortedBy, SortDirection } from '../../../types';
 
 const emit = defineEmits<{
-  (event: 'sort', sort: string): void
+  (event: 'sort', sortDirection: string): void
 }>();
 
 defineProps<{
@@ -145,7 +145,7 @@ defineProps<{
 
 const { t } = useI18n();
 
-const sort = ref<SortDirection>('desc');
+const sortDirection = ref<SortDirection>('desc');
 const sortedBy = ref<DatasetSortedBy>('created');
 
 type DatasetStatuses = "deleted" | "archived" | "private" | "public";
@@ -170,14 +170,14 @@ const datasetStatusBadge: Record<DatasetStatuses, {label: string, type: AdminBad
 }
 
 function updateSort(column: DatasetSortedBy, direction: SortDirection) {
-  sort.value = direction;
+  sortDirection.value = direction;
   sortedBy.value = column;
-  emit('sort', `${sort.value === 'asc' ? "" : "-"}${sortedBy.value}`);
+  emit('sort', `${sortDirection.value === 'asc' ? "" : "-"}${sortedBy.value}`);
 }
 
 function sorted(column: DatasetSortedBy) {
   if(sortedBy.value === column) {
-    return sort.value;
+    return sortDirection.value;
   }
   return undefined;
 }
@@ -190,7 +190,7 @@ function getFilesCount(dataset: Dataset | DatasetV2) {
 }
 
 function getDatasetLinkToAdmin(dataset: Dataset | DatasetV2) {
-  return admin_root + `dataset/${dataset.id}/`;
+  return `${admin_root}dataset/${dataset.id}/`;
 }
 
 function getStatus(dataset: Dataset | DatasetV2) {

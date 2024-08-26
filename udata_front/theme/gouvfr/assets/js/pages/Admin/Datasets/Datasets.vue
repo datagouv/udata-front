@@ -33,7 +33,7 @@
     <DatasetsTable
       class="fr-mt-1v"
       :datasets="datasets"
-      @sort="(newSort) => sort = newSort"
+      @sort="(newSort) => sortDirection = newSort"
     />
     <Pagination
       v-if="totalResult > pageSize"
@@ -62,14 +62,14 @@ const datasets = ref<Array<Dataset>>([]);
 const page = ref(1);
 const pageSize = ref(10);
 const totalResult = ref(0);
-const sort = ref("-created");
+const sortDirection = ref("-created");
 const q = ref("");
 const qDebounced = refDebounced(q, search_autocomplete_debounce);
 
 const { currentOrganization } = useCurrentOrganization();
 
 watchEffect(async () => {
-  const response = await getOrganizationDatasets(props.oid, qDebounced.value, page.value, pageSize.value, sort.value);
+  const response = await getOrganizationDatasets(props.oid, qDebounced.value, page.value, pageSize.value, sortDirection.value);
   datasets.value = response.data;
   page.value = response.page;
   pageSize.value = response.page_size;
