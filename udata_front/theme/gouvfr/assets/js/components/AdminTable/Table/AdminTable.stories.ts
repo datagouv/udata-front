@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import AdminBadge from "../../AdminBadge/AdminBadge.vue";
 import AdminContentWithTooltip from "../../AdminContentWithTooltip/AdminContentWithTooltip.vue";
 import QualityScoreTooltipContent from "../../dataset/QualityScore/QualityScoreTooltipContent/QualityScoreTooltipContent.vue";
+import Tooltip from '../../Tooltip/Tooltip.vue';
 import AdminTable from "./AdminTable.vue";
 import AdminTableTd from "./AdminTableTd.vue";
 import AdminTableTh from "./AdminTableTh.vue";
@@ -17,7 +18,7 @@ export default meta;
 
 export const DatasetsTable: StoryObj<typeof meta> = {
   render: (args) => ({
-    components: { AdminBadge, AdminContentWithTooltip, AdminTable, AdminTableTd, AdminTableTh, QualityScore, QualityScoreTooltipContent },
+    components: { AdminBadge, AdminContentWithTooltip, AdminTable, AdminTableTd, AdminTableTh, QualityScore, QualityScoreTooltipContent, Tooltip },
     setup() {
       return { args, CardLGWithOrganizationLogo };
     },
@@ -48,7 +49,7 @@ export const DatasetsTable: StoryObj<typeof meta> = {
                     </tr>
                   </thead>
                   <tbody>
-                    <Tr>
+                    <tr>
                         <AdminTableTd>
                           <AdminContentWithTooltip>
                             <a class="fr-link" href="#">
@@ -91,8 +92,8 @@ export const DatasetsTable: StoryObj<typeof meta> = {
                         <AdminTableTd>
                           412
                         </AdminTableTd>
-                    </Tr>
-                    <Tr>
+                   </tr>
+                    <tr>
                       <AdminTableTd>
                         <AdminContentWithTooltip>
                           <a class="fr-link" href="#">
@@ -121,7 +122,12 @@ export const DatasetsTable: StoryObj<typeof meta> = {
                         </AdminContentWithTooltip>
                       </AdminTableTd>
                       <AdminTableTd>
-                        <QualityScoreTooltip :dataset="CardLGWithOrganizationLogo.args.dataset"/>
+                        <Tooltip>
+                          <QualityScore :score="CardLGWithOrganizationLogo.args.dataset.quality.score" />
+                          <template #tooltip>
+                            <QualityScoreTooltipContent :dataset="CardLGWithOrganizationLogo.args.dataset" />
+                          </template>
+                          </Tooltip>
                       </AdminTableTd>
                       <AdminTableTd>
                         412
@@ -138,8 +144,8 @@ export const DatasetsTable: StoryObj<typeof meta> = {
                       <AdminTableTd>
                         412
                       </AdminTableTd>
-                    </Tr>
-                    <Tr>
+                    </tr>
+                    <tr>
                       <AdminTableTd>
                         <AdminContentWithTooltip>
                           <a class="fr-link" href="#">
@@ -160,7 +166,12 @@ export const DatasetsTable: StoryObj<typeof meta> = {
                         1
                       </AdminTableTd>
                       <AdminTableTd>
-                        <QualityScoreTooltip :dataset="CardLGWithOrganizationLogo.args.dataset"/>
+                        <Tooltip>
+                          <QualityScore :score="CardLGWithOrganizationLogo.args.dataset.quality.score" />
+                          <template #tooltip>
+                            <QualityScoreTooltipContent :dataset="CardLGWithOrganizationLogo.args.dataset" />
+                          </template>
+                        </Tooltip>
                       </AdminTableTd>
                       <AdminTableTd>
                         412
@@ -177,8 +188,8 @@ export const DatasetsTable: StoryObj<typeof meta> = {
                       <AdminTableTd>
                         412
                       </AdminTableTd>
-                    </Tr>
-                    <Tr>
+                    </tr>
+                    <tr>
                       <AdminTableTd>
                         <AdminContentWithTooltip>
                           <a class="fr-link" href="#">
@@ -203,7 +214,12 @@ export const DatasetsTable: StoryObj<typeof meta> = {
                         </AdminContentWithTooltip>
                       </AdminTableTd>
                       <AdminTableTd>
-                        <QualityScoreTooltip :dataset="CardLGWithOrganizationLogo.args.dataset"/>
+                        <Tooltip>
+                          <QualityScore :score="CardLGWithOrganizationLogo.args.dataset.quality.score" />
+                          <template #tooltip>
+                            <QualityScoreTooltipContent :dataset="CardLGWithOrganizationLogo.args.dataset" />
+                          </template>
+                        </Tooltip>
                       </AdminTableTd>
                       <AdminTableTd>
                         412
@@ -220,7 +236,7 @@ export const DatasetsTable: StoryObj<typeof meta> = {
                       <AdminTableTd>
                         412
                       </AdminTableTd>
-                    </Tr>
+                    </tr>
                   </tbody>
                 </AdminTable>`,
   }),
