@@ -1,5 +1,5 @@
 <template>
-  <Vicon :scale="1/1.2" v-if="icon" :name="icon"/>
+  <Vicon :height="wantedSize" :width="wantedSize" v-if="icon" :name="icon"/>
 </template>
 <script setup lang="ts">
 import { computed } from "vue";
@@ -13,6 +13,8 @@ addIcons(RiBankLine, RiBuilding2Line, RiCommunityLine, RiGovernmentLine, RiUserL
 const props = defineProps<{
   type: OrganizationTypes | UserType;
 }>();
+
+const wantedSize = 15;
 
 const icon = computed(() => {
   switch(props.type) {
