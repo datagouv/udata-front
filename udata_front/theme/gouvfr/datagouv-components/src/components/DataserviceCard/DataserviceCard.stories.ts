@@ -98,7 +98,7 @@ const dataservice: Dataservice = {
   self_api_url: "",
   self_web_url: "",
   slug: "",
-  tags: null,
+  tags: [],
   title: "That Awesome API",
 };
 
@@ -126,6 +126,24 @@ export const SimpleDataserviceCard: StoryObj<typeof meta> = {
     template: `<DataserviceCard v-bind="args"/>`,
   }),
   args,
+};
+
+
+export const DataserviceWithoutAvailabilityCard: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DataserviceCard },
+    setup() {
+      return { args };
+    },
+    template: `<DataserviceCard v-bind="args"/>`,
+  }),
+  args: {
+    ...args,
+    dataservice: {
+      ...args.dataservice,
+      availability: null,
+    }
+  },
 };
 
 export const DataserviceCardWithoutDescription: StoryObj<typeof meta> = {
