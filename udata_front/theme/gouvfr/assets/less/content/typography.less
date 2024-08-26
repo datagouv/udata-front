@@ -302,13 +302,7 @@ each(@breakpoints, .(@bk, @_k, @_i) {
     }
 });
 
-.dash-before::before {
-    content: "—";
-    margin-left: 0.25rem;
-    margin-right: 0.25rem;
-}
-
-.dash-after::after {
+.dash-before::before, .dash-after::after {
     content: "—";
     margin-left: 0.25rem;
     margin-right: 0.25rem;
