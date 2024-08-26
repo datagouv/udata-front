@@ -92,7 +92,12 @@
           {{ getFilesCount(dataset) }}
         </AdminTableTd>
         <AdminTableTd>
-          <QualityScoreTooltip :dataset="dataset"/>
+          <Tooltip>
+            <QualityScore :score="dataset.quality.score" />
+            <template #tooltip>
+              <QualityScoreTooltipContent :dataset="dataset" />
+            </template>
+          </Tooltip>
         </AdminTableTd>
         <AdminTableTd class="monospace">
           {{ summarize(dataset.metrics.discussions) }}
@@ -114,17 +119,17 @@
   </AdminTable>
 </template>
 <script setup lang="ts">
-import { formatDate } from "@datagouv/components";
+import { formatDate, QualityScore } from "@datagouv/components";
 import type { Dataset, DatasetV2 } from '@datagouv/components';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import QualityScoreTooltipContent from "../../dataset/QualityScore/QualityScoreTooltipContent/QualityScoreTooltipContent.vue";
 import AdminBadge from "../../AdminBadge/AdminBadge.vue";
 import AdminContentWithTooltip from "../../AdminContentWithTooltip/AdminContentWithTooltip.vue";
 import AdminTable from "../Table/AdminTable.vue";
 import AdminTableTd from "../Table/AdminTableTd.vue";
 import AdminTableTh from "../Table/AdminTableTh.vue";
 import Tooltip from '../../Tooltip/Tooltip.vue';
-import QualityScoreTooltip from "../../dataset/QualityScore/QualityScoreTooltip/QualityScoreTooltip.vue";
 import { admin_root } from '../../../config';
 import { summarize } from '../../../helpers';
 import type { AdminBadgeState, DatasetSortedBy, SortDirection } from '../../../types';
