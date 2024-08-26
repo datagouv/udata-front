@@ -2,7 +2,7 @@ import type { Dataset, NewDataset } from "@datagouv/components";
 import { toValue, type MaybeRefOrGetter } from "vue";
 import { api } from "../plugins/api";
 import { getLocalizedUrl } from "../i18n";
-import type { SpatialGranularity } from "../types";
+import type { GetPaginatedData, SpatialGranularity } from "../types";
 
 function formatDatasetForUpload(datasetRef: MaybeRefOrGetter<NewDataset>) {
   type DatasetToUpload = Omit<NewDataset, "archived">;
@@ -43,16 +43,8 @@ export function getSpatialGranularities () {
   return api.get<Array<SpatialGranularity>>(getLocalizedUrl("spatial/granularities/")).then(resp => resp.data);
 }
 
-export type GetOrganizationDatasetsData = {
-  data: Array<Dataset>;
-  next_page: string | null;
-  page: number;
-  page_size: number;
-  total: number;
-};
-
 export function getOrganizationDatasets(oid: string, q: string, page: number, pageSize: number, sortDirection: string) {
-  return api.get<GetOrganizationDatasetsData>(getLocalizedUrl(`organizations/${oid}/datasets/`), {
+  return api.get<GetPaginatedData<Dataset>>(getLocalizedUrl(`organizations/${oid}/datasets/`), {
     params: { q, sort: sortDirection, page_size: pageSize, page }
   }).then(resp => resp.data);
 }

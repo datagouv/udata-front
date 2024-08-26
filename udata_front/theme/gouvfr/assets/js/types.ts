@@ -213,4 +213,13 @@ export type OrganizationV1 = Organization & {
   url: string | null;
 }
 
+export type GetPaginatedData<T> = {
+  data: Array<T>;
+  next_page: string | null;
+  page: number;
+  page_size: number;
+  previous_page: string | null;
+  total: number;
+};
+
 export default {};
