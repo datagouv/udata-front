@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import { setupComponents, ReadMore, Toggletip } from "@datagouv/components";
+import { setupComponents, DataserviceCard, OwnerType, ReadMore, Toggletip, OwnerTypeIcon } from "@datagouv/components";
 
 import "./dsfr.ts";
 // @ts-ignore
@@ -66,6 +66,7 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("chart", Chart);
   app.component("dataset-resources", Resources);
   app.component("dataset-resource-from-hash", ResourceFromHash);
+  app.component("dataservice-card", DataserviceCard);
   app.component("delete-button", DeleteButton);
   app.component("delete-user-button", DeleteUserButton);
   app.component("discussion-threads", Threads);
@@ -77,6 +78,8 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("report-button", ReportModalButton);
   app.component("request-membership", RequestMembership);
   app.component("organization-publishing-form", OrganizationPublishingForm);
+  app.component("owner-type", OwnerType);
+  app.component("owner-type-icon", OwnerTypeIcon);
   app.component("publishing-form", PublishingForm);
   app.component("search", Search);
   app.component("toggletip", Toggletip);

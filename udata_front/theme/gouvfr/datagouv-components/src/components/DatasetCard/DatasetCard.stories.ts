@@ -63,7 +63,7 @@ const dataset: DatasetV2 = {
     update_frequency: false,
     update_fulfilled_in_time: false,
   },
-  metrics: { discussions: 12, followers: 25, reuses: 8, views: 59 },
+  metrics: { discussions: 12, followers: 25, reuses: 8, views: 59, resources_downloads:	18705 },
   title: "Données changement climatique - SQR",
   acronym: "DCC",
   archived: false,
@@ -97,7 +97,14 @@ const dataset: DatasetV2 = {
     page: "https://demo.data.gouv.fr/fr/organizations/test-meteo-france/",
     business_number_id: "",
     description: "",
-    badges: [],
+    badges: [
+      {
+        "kind": "public-service"
+      },
+      {
+        "kind": "certified"
+      }
+    ],
     name: "Météo France",
     slug: "test-meteo-france",
     uri: "https://demo.data.gouv.fr/api/1/organizations/test-meteo-france/",

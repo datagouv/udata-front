@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DatasetCard, type DatasetV2, InformationPanel, type License, Pagination, type Quality, QualityComponent, QualityComponentInline, QualityItem, QualityScore, ReadMore, type Resource, ResourceAccordion, Toggletip, Well } from "../src";
+import { DatasetCard, type DatasetV2, DataserviceCard, type Dataservice, InformationPanel, type License, Pagination, type Quality, QualityComponent, QualityComponentInline, QualityItem, QualityScore, ReadMore, type Reuse, ReuseCard, type Resource, ResourceAccordion, Toggletip, Well } from "../src";
 import { ref } from "vue";
 import editIcon from "../../templates/svg/illustrations/edit.svg";
 
@@ -237,7 +237,7 @@ const dataset : DatasetV2 = {
   uri: "https://demo.data.gouv.fr/api/1/datasets/donnees-changement-climatique-sqr/",
   slug: "donnees-changement-climatique-sqr",
   quality: quality,
-  metrics: { discussions: 12, followers: 25, reuses: 8, views: 59 },
+  metrics: { discussions: 12, followers: 25, reuses: 8, views: 59, resources_downloads:	18705 },
   title: "Données changement climatique - SQR",
   acronym: "DCC",
   archived: false,
@@ -274,7 +274,110 @@ const license : License = {
   ],
   id: "cc-by",
   maintainer: null,
+};
+
+const reuse : Reuse = {
+  id: "someId",
+  description: "Some description",
+  created_at: (new Date()).toDateString(),
+  last_update: (new Date()).toDateString(),
+  page: "https://www.data.gouv.fr",
+  deleted: false,
+  private: true,
+  datasets: [],
+  slug: "some-slug",
+  topic: "housing_and_development",
+  type: "application",
+  tags: [],
+  owner: {
+    id: "someUserId",
+    first_name: "First",
+    last_name: "Last",
+    page: "https://demo.data.gouv.fr/en/users/antonin-garrone/",
+  },
+  metrics: {
+    datasets: 3,
+    discussions: 7,
+    followers: 12,
+    views: 36
+  },
+  organization: null,
+  title: "My new reuse",
+  image: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",
+  image_thumbnail: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",
 }
+
+const dataservice: Dataservice = {
+  acronym: "API",
+  archived_at: null,
+  authorization_request_url: "",
+  availability: 99.9,
+  base_api_url: "",
+  contact_point: {
+    email: "",
+    id: "someId",
+    name: "Contact",
+    organization: null,
+    owner: "John Doe",
+  },
+  created_at: (new Date()).toDateString(),
+  datasets: [
+    {
+      class: "",
+      id: "someId2",
+      acronym: "",
+      page: "",
+      title: "",
+      uri: "",
+    }
+  ],
+  deleted_at: null,
+  description: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+  endpoint_description_url: "",
+  extras: {},
+  format: "json",
+  harvest: {},
+  has_token: false,
+  id: "653a6afa18f9f98d2ffdadee",
+  is_restricted: false,
+  license: "lov2",
+  metadata_modified_at: (new Date()).toDateString(),
+  metrics: { discussions: 12, followers: 25, reuses: 8, views: 59 },
+  organization: {
+    id: "some_id",
+    created_at: "",
+    last_modified: "",
+    last_update: "",
+    deleted: null,
+    members: [],
+    metrics: {
+      datasets: 0,
+      followers: 0,
+      members: 0,
+      reuses: 0,
+      views: 0
+    },
+    acronym: null,
+    logo: "https://static.data.gouv.fr/avatars/09/1ba932cbfa48dc8c158981de6c700a-100.jpeg",
+    logo_thumbnail: "https://static.data.gouv.fr/avatars/09/1ba932cbfa48dc8c158981de6c700a-100.jpeg",
+    page: "https://demo.data.gouv.fr/fr/organizations/test-meteo-france/",
+    business_number_id: "",
+    description: "",
+    badges: [{kind: 'certified'}, {kind: 'public-service'}],
+    name: "Météo France",
+    slug: "test-meteo-france",
+    uri: "https://demo.data.gouv.fr/api/1/organizations/test-meteo-france/",
+    url: ""
+  },
+  owner: null,
+  private: false,
+  rate_limiting: "",
+  self_api_url: "",
+  self_web_url: "",
+  slug: "",
+  tags: null,
+  title: "That Awesome API",
+};
 
 const tabTitles = [
   {
@@ -361,6 +464,43 @@ const id = "12";
     dataset-url="/datasets/6571faa17f46a65ee05c4d17"
     organization-url=""
     style="z-index: 1;"
+  />
+  <div class="fr-grid-row">
+    <ReuseCard
+      class="fr-col-4"
+      :reuse="reuse"
+      reuse-url="/datasets/6571faa17f46a65ee05c4d17"
+    />
+    <ReuseCard
+      class="fr-col-4"
+      :reuse="reuse"
+      reuse-url="/datasets/6571faa17f46a65ee05c4d17"
+    />
+    <ReuseCard
+      class="fr-col-4"
+      :reuse="reuse"
+      reuse-url="/datasets/6571faa17f46a65ee05c4d17"
+    />
+  </div>
+  <DataserviceCard 
+    :dataservice="dataservice"
+    dataservice-url="/dataservices/6571faa17f46a65ee05c4d17"
+    :show-description="false"
+  />
+  <DataserviceCard 
+    :dataservice="dataservice"
+    dataservice-url="/dataservices/6571faa17f46a65ee05c4d17"
+    organization-url="/organizations/another-url-easier-to-distinguish"
+    :show-description="false"
+  />
+  <DataserviceCard 
+    :dataservice="dataservice"
+    dataservice-url="/dataservices/6571faa17f46a65ee05c4d17"
+  />
+  <DataserviceCard 
+    :dataservice="dataservice"
+    dataservice-url="/dataservices/6571faa17f46a65ee05c4d17"
+    organization-url="/organizations/another-url-easier-to-distinguish"
   />
   <Pagination class="fr-mt-3v" :total-results="52" @change="p => console.log(p)" />
 </template>
