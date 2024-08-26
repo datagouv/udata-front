@@ -1,10 +1,11 @@
+import { QualityScore } from "@datagouv/components";
 import type { Meta, StoryObj } from "@storybook/vue3";
 import AdminBadge from "../../AdminBadge/AdminBadge.vue";
 import AdminContentWithTooltip from "../../AdminContentWithTooltip/AdminContentWithTooltip.vue";
+import QualityScoreTooltipContent from "../../dataset/QualityScore/QualityScoreTooltipContent/QualityScoreTooltipContent.vue";
 import AdminTable from "./AdminTable.vue";
 import AdminTableTd from "./AdminTableTd.vue";
 import AdminTableTh from "./AdminTableTh.vue";
-import QualityScoreTooltip from "../../dataset/QualityScore/QualityScoreTooltip/QualityScoreTooltip.vue";
 import { CardLGWithOrganizationLogo } from "../../dataset/CardLG.stories";
 
 const meta = {
@@ -16,7 +17,7 @@ export default meta;
 
 export const DatasetsTable: StoryObj<typeof meta> = {
   render: (args) => ({
-    components: { AdminBadge, AdminContentWithTooltip, AdminTable, AdminTableTd, AdminTableTh, QualityScoreTooltip },
+    components: { AdminBadge, AdminContentWithTooltip, AdminTable, AdminTableTd, AdminTableTh, QualityScore, QualityScoreTooltipContent },
     setup() {
       return { args, CardLGWithOrganizationLogo };
     },
@@ -68,7 +69,12 @@ export const DatasetsTable: StoryObj<typeof meta> = {
                           1
                         </AdminTableTd>
                         <AdminTableTd>
-                          <QualityScoreTooltip :dataset="CardLGWithOrganizationLogo.args.dataset"/>
+                          <Tooltip>
+                            <QualityScore :score="CardLGWithOrganizationLogo.args.dataset.quality.score" />
+                            <template #tooltip>
+                              <QualityScoreTooltipContent :dataset="CardLGWithOrganizationLogo.args.dataset" />
+                            </template>
+                          </Tooltip>
                         </AdminTableTd>
                         <AdminTableTd>
                           412
