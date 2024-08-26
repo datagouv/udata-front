@@ -22,24 +22,24 @@
 
 <script lang="ts">
 import type { SortDirection } from "../../../types";
+import { computed } from "vue";
 export type AdminTableThProps = {
-  sortable?: boolean;
-  sorted?: SortDirection;
+  sorted?: SortDirection | null;
 };
 </script>
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 
-const props = withDefaults(defineProps<AdminTableThProps>(), {
-  sortable: false,
-});
+const props = defineProps<AdminTableThProps>();
 
 const emit = defineEmits<{
   (event: 'sort', direction: SortDirection): void
 }>();
 
 const { t } = useI18n();
+
+const sortable = computed(() => props.sorted !== undefined);
 
 function toggleSort() {
   if(props.sorted === "desc") {

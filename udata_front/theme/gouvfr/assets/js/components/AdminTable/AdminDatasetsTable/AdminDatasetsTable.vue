@@ -3,7 +3,6 @@
     <thead>
       <tr>
         <AdminTableTh
-          :sortable="true"
           @sort="(direction) => updateSort('title', direction)"
           :sorted="sorted('title')"
           scope="col"
@@ -12,7 +11,6 @@
         </AdminTableTh>
         <AdminTableTh scope="col">{{ t("Status") }}</AdminTableTh>
         <AdminTableTh
-          :sortable="true"
           @sort="(direction) => updateSort('created', direction)"
           :sorted="sorted('created')"
           scope="col"
@@ -20,7 +18,6 @@
           {{ t('Created at') }}
         </AdminTableTh>
         <AdminTableTh
-          :sortable="true"
           @sort="(direction) => updateSort('last_update', direction)"
           :sorted="sorted('last_update')"
           scope="col"
@@ -36,7 +33,6 @@
           </Tooltip>
         </AdminTableTh>
         <AdminTableTh
-          :sortable="true"
           @sort="(direction) => updateSort('views', direction)"
           :sorted="sorted('views')"
           scope="col"
@@ -53,7 +49,6 @@
           </Tooltip>
         </AdminTableTh>
         <AdminTableTh
-          :sortable="true"
           @sort="(direction) => updateSort('reuses', direction)"
           :sorted="sorted('reuses')"
           scope="col"
@@ -64,7 +59,6 @@
           </Tooltip>
         </AdminTableTh>
         <AdminTableTh
-          :sortable="true"
           @sort="(direction) => updateSort('followers', direction)"
           :sorted="sorted('followers')"
           scope="col"
@@ -179,7 +173,7 @@ function sorted(column: DatasetSortedBy) {
   if(sortedBy.value === column) {
     return sortDirection.value;
   }
-  return undefined;
+  return null;
 }
 
 function getFilesCount(dataset: Dataset | DatasetV2) {
