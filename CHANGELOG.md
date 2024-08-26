@@ -27,7 +27,6 @@
 - Update translations [#458](https://github.com/datagouv/udata-front/pull/458)
 - use @datagouv/components v1.1.1 [#462](https://github.com/datagouv/udata-front/pull/462)
 
-
 ## 5.0.1 (2024-06-12)
 
 - Fix dataset card link opening another tab [#426](https://github.com/datagouv/udata-front/pull/426)
