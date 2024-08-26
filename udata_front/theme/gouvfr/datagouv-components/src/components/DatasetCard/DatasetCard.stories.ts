@@ -63,7 +63,7 @@ const dataset: DatasetV2 = {
     update_frequency: false,
     update_fulfilled_in_time: false,
   },
-  metrics: { discussions: 12, followers: 25, reuses: 8, views: 59 },
+  metrics: { discussions: 12, followers: 25, reuses: 8, views: 59, resources_downloads:	18705 },
   title: "Données changement climatique - SQR",
   acronym: "DCC",
   archived: false,

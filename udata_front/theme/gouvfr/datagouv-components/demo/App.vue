@@ -237,7 +237,7 @@ const dataset : DatasetV2 = {
   uri: "https://demo.data.gouv.fr/api/1/datasets/donnees-changement-climatique-sqr/",
   slug: "donnees-changement-climatique-sqr",
   quality: quality,
-  metrics: { discussions: 12, followers: 25, reuses: 8, views: 59 },
+  metrics: { discussions: 12, followers: 25, reuses: 8, views: 59, resources_downloads:	18705 },
   title: "Données changement climatique - SQR",
   acronym: "DCC",
   archived: false,
