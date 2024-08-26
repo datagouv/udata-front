@@ -14,7 +14,7 @@ const props = defineProps<{
   type: OrganizationTypes | UserType;
 }>();
 
-const wantedSize = 15;
+const wantedSize = 14;
 
 const icon = computed(() => {
   switch(props.type) {
@@ -35,3 +35,8 @@ const icon = computed(() => {
   }
 });
 </script>
+<style scoped>
+.ov-icon {
+  vertical-align: -0.1rem;
+}
+</style>
