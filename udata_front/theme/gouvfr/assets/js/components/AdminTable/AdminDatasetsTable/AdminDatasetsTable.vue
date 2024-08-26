@@ -80,7 +80,7 @@
           </AdminContentWithTooltip>
         </AdminTableTd>
         <AdminTableTd>
-          <AdminBadge :type="getStatusType(dataset)">{{ getStatusLabel(dataset) }}</AdminBadge>
+          <AdminBadge :type="getStatus(dataset).type">{{ getStatus(dataset).label }}</AdminBadge>
         </AdminTableTd>
         <AdminTableTd>
           {{ formatDate(dataset.created_at) }}
@@ -147,27 +147,6 @@ const { t } = useI18n();
 const sortDirection = ref<SortDirection>('desc');
 const sortedBy = ref<DatasetSortedBy>('created');
 
-type DatasetStatuses = "deleted" | "archived" | "private" | "public";
-
-const datasetStatusBadge: Record<DatasetStatuses, {label: string, type: AdminBadgeState}> = {
-  deleted: {
-    label: t("Deleted"),
-    type: "error",
-  },
-  archived: {
-    label: t("Archived"),
-    type: "warning",
-  },
-  private: {
-    label: t("Private"),
-    type: "default",
-  },
-  public: {
-    label: t("Public"),
-    type: "info"
-  }
-}
-
 function updateSort(column: DatasetSortedBy, direction: SortDirection) {
   sortDirection.value = direction;
   sortedBy.value = column;
@@ -192,24 +171,28 @@ function getDatasetLinkToAdmin(dataset: Dataset | DatasetV2) {
   return `${admin_root}dataset/${dataset.id}/`;
 }
 
-function getStatus(dataset: Dataset | DatasetV2) {
+function getStatus(dataset: Dataset | DatasetV2): {label: string, type: AdminBadgeState} {
   if (dataset.deleted) {
-      return datasetStatusBadge.deleted;
+    return {
+      label: t("Deleted"),
+      type: "error",
+    };
   } else if (dataset.archived) {
-      return datasetStatusBadge.archived;
+    return {
+      label: t("Archived"),
+      type: "warning",
+    };
   } else if (dataset.private) {
-      return datasetStatusBadge.private;
+    return {
+      label: t("Private"),
+      type: "default",
+    };
   } else {
-      return datasetStatusBadge.public;
+    return {
+      label: t("Public"),
+      type: "info"
+    };
   }
-}
-
-function getStatusType(dataset: Dataset | DatasetV2): AdminBadgeState {
-  return getStatus(dataset).type;
-}
-
-function getStatusLabel(dataset: Dataset | DatasetV2) {
-  return getStatus(dataset).label;
 }
 
 </script>
