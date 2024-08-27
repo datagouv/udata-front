@@ -278,3 +278,16 @@ export const DatasetCardUpdatedLastMonth: StoryObj<typeof meta> = {
     datasetUrl: "/datasets/6571faa17f46a65ee05c4d17",
   },
 };
+
+export const DatasetCardWithLongOrganization: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCard },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCard v-bind="args"/>`,
+  }),
+  args: {
+    dataset: {...dataset, organization: { ...dataset.organization, name: "Ministère de l’Économie, des Finances et de la Souveraineté industrielle et numérique de France, et encore un peu plus long"}},
+  },
+};
