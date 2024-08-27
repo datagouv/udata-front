@@ -65,8 +65,8 @@ import {
   bus,
   RESOURCES_SEARCH,
 } from "../../../plugins/eventbus";
-import useIdFromHash from '../../../composables/useIdFromHash';
-import { previousResourceUrlRegExp, resourceUrlRegExp } from '../../../helpers';
+import { getResourceIdFromHash } from '../../../helpers';
+import { useHash } from '../../../composables/useHash';
 
 type Props = {
   canEdit?: boolean,
@@ -87,8 +87,10 @@ const props = withDefaults(defineProps<Props>(), {
 
 const { t } = useI18n();
 const { toast } = useToast();
-const { id: resourceIdFromHash } = useIdFromHash([resourceUrlRegExp, previousResourceUrlRegExp]);
 const currentPage = ref(1);
+
+const { hash } = useHash()
+const resourceIdFromHash = computed(() => getResourceIdFromHash(hash.value, props.type === "community"));
 
 const resources = ref<Array<Resource>>([]);
 const pageSize = config.resources_default_page_size;
