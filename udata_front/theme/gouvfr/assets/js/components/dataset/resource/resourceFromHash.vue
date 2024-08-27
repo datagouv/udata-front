@@ -33,7 +33,7 @@ import { useI18n } from "vue-i18n";
 import { useToast } from "../../../composables/useToast";
 import { getResourceIdFromHash } from '../../../helpers';
 import { api } from "../../../plugins/api";
-import { useHash } from "../../../composables/useHash";
+import { useHash, resetHash } from "../../../composables/useHash";
 
 const props = withDefaults(defineProps<{
   canEdit: boolean;
@@ -52,11 +52,6 @@ const loading = ref(false);
 
 const { hash } = useHash()
 const resourceId = computed(() => getResourceIdFromHash(hash.value, props.communityResource));
-
-const resetHash = () => {
-  history.pushState(null, "", " ");
-  window.dispatchEvent(new HashChangeEvent('hashchange'));
-};
 
 const apiUrl = computed(() => {
   if (props.communityResource) {

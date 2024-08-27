@@ -9,3 +9,8 @@ export function useHash() {
 
     return { hash }
 }
+
+export function resetHash() {
+    history.pushState(null, "", " ");
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+}
