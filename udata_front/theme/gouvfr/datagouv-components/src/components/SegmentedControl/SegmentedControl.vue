@@ -20,7 +20,7 @@
 </template>
   
 <script setup lang="ts" generic="T extends { label: string; icon?: string }">
-import { getRandomId } from '@datagouv/components';
+import { getRandomId } from '@gouvminint/vue-dsfr';
 import { computed } from 'vue';
 
 const props = withDefaults(defineProps<{
