@@ -8,18 +8,17 @@
           </AppLink>
         </h3>
         <div class="fr-card__desc fr-mt-0 text-mention-grey">
-          <p class="fr-text--sm fr-mb-0">
-            <span class="not-enlarged" v-if="reuse.organization">
+          <p class="fr-text--sm fr-mb-0 mw-100 inline-flex wrapper-ellipsis-flow">
+            <span class="not-enlarged text-overflow-ellipsis flex-1"" v-if="reuse.organization">
               <AppLink class="fr-link" v-if="organizationUrl" :to="organizationUrl">
                 <OrganizationNameWithCertificate :organization="reuse.organization" />
               </AppLink>
               <OrganizationNameWithCertificate v-else :organization="reuse.organization" />
-              &mdash;
             </span>
-            <span v-else>
-              {{ ownerName }} &mdash;
+            <span class="not-enlarged text-overflow-ellipsis flex-1" v-else>
+              {{ ownerName }}
             </span>
-            {{ t('published {date}', { date: formatRelativeIfRecentDate(reuse.created_at) }) }}
+            <span class="dash-before-sm whitespace-nowrap">{{ t('published {date}', { date: formatRelativeIfRecentDate(reuse.created_at) }) }}</span>
           </p>
           <div class="fr-grid-row fr-grid-row--middle">
             <p class="fr-text--sm fr-my-0 dash-after-sm">
@@ -107,5 +106,11 @@ const { label: reuseType } = useReuseType(() => props.reuse.type);
 .fr-card__img img.reuse-ratio {
   aspect-ratio: 1.4;
   object-fit: cover;
+}
+</style>
+<style scoped>
+/* From https://stackoverflow.com/a/31719534 */
+.wrapper-ellipsis-flow {
+  flex-flow: row nowrap; 
 }
 </style>
