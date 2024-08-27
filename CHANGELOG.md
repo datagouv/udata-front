@@ -8,7 +8,7 @@
 - Show organization type [#472](https://github.com/datagouv/udata-front/pull/472)
 - Replace the "MonComptePro" SSO login button with a "AgentConnect" button [#482](https://github.com/datagouv/udata-front/pull/482)
   This needs the following settings:
-
+  ```
   # During development:
   #AGENTCONNECT_REDIRECT_URL = "http://dev.local:7000/agentconnect/auth"
   AGENTCONNECT_REDIRECT_URL = "https://data.gouv.fr/agentconnect/auth"
@@ -23,6 +23,7 @@
   # Use appropriate client ID and client secret
   AGENTCONNECT_CLIENT_ID = "client id here"
   AGENTCONNECT_CLIENT_SECRET = "client secret here"
+  ```
 
 
 
