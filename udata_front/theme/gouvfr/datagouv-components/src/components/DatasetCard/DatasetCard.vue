@@ -10,7 +10,7 @@
         {{ t('Archived') }}
       </p>
     </div>
-    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top">
+    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--top no-wrap">
       <div class="fr-col-auto">
         <div class="logo">
           <Placeholder
@@ -32,7 +32,7 @@
           />
         </div>
       </div>
-      <div class="fr-col">
+      <div class="fr-col overflow-hidden">
         <h4 class="fr-text--md fr-mb-0 fr-grid-row">
           <slot name="datasetUrl" :dataset="dataset" :datasetUrl="datasetUrl">
             <AppLink :to="datasetUrl" class="text-grey-500">
@@ -41,19 +41,19 @@
             </AppLink>
           </slot>
         </h4>
-        <div class="fr-text--sm fr-m-0" v-if="dataset.organization || dataset.owner">
+        <div class="fr-text--sm fr-m-0 mw-100 inline-flex wrapper-ellipsis-flow" v-if="dataset.organization || dataset.owner">
           <template v-if="dataset.organization">
-            <span class="not-enlarged dash-after-sm fr-mr-1v">
+            <span class="not-enlarged fr-mr-1v text-overflow-ellipsis flex-1">
               <AppLink class="fr-link fr-text--sm" v-if="organizationUrl" :to="organizationUrl">
                 <OrganizationNameWithCertificate :organization="dataset.organization" />
               </AppLink>
               <OrganizationNameWithCertificate v-else :organization="dataset.organization" />
             </span>
           </template>
-          <span class="not-enlarged dash-after-sm fr-mr-1v" v-else>
+          <span class="not-enlarged fr-mr-1v text-overflow-ellipsis flex-1" v-else>
             {{ ownerName }}
           </span>
-          <span class="text-mention-grey">{{ $t('Updated {date}', {date: formatRelativeIfRecentDate(dataset.last_update)}) }}</span>
+          <span class="text-mention-grey dash-before-sm whitespace-nowrap">{{ $t('Updated {date}', {date: formatRelativeIfRecentDate(dataset.last_update)}) }}</span>
         </div>
         <div class="fr-mx-0 fr-mb-n1v fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
           <div class="fr-hidden flex-sm dash-after-sm text-grey-500 not-enlarged">
@@ -117,3 +117,9 @@ const props = withDefaults(defineProps<Props>(), {
 const { t } = useI18n();
 const ownerName = useOwnerName(props.dataset);
 </script>
+<style scoped>
+/* From https://stackoverflow.com/a/31719534 */
+.wrapper-ellipsis-flow {
+  flex-flow: row nowrap; 
+}
+</style>

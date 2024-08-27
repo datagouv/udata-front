@@ -3,7 +3,7 @@ import OwnerTypeIcon from './OwnerTypeIcon.vue';
 import { ASSOCIATION, COMPANY, LOCAL_AUTHORITY, OTHER, PUBLIC_SERVICE } from '../../composables/organizations/useOrganizationType';
 
 const meta = {
-  title: "Components/Owners/Internals/Owner Type Icon",
+  title: "Components/Owners/Owner Type Icon",
   component: OwnerTypeIcon,
   tags: ['autodocs'],
   parameters: {

@@ -13,7 +13,7 @@ export type Dataservice = Owned & {
   acronym: string;
   archived_at: string | null;
   authorization_request_url: string;
-  availability: number;
+  availability: number | null;
   base_api_url: string;
   contact_point: ContactPoint;
   created_at: string;
