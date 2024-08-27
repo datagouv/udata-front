@@ -9,7 +9,7 @@
         </h3>
         <div class="fr-card__desc fr-mt-0 text-mention-grey">
           <p class="fr-text--sm fr-mb-0 mw-100 inline-flex wrapper-ellipsis-flow">
-            <span class="not-enlarged text-overflow-ellipsis flex-1"" v-if="reuse.organization">
+            <span class="not-enlarged text-overflow-ellipsis flex-1" v-if="reuse.organization">
               <AppLink class="fr-link" v-if="organizationUrl" :to="organizationUrl">
                 <OrganizationNameWithCertificate :organization="reuse.organization" />
               </AppLink>
