@@ -123,6 +123,19 @@ export const ResourceWithSchema: StoryObj<typeof meta> = {
   args: argsWithSchema,
 };
 
+
+export const ResourceZip: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { ResourceAccordion },
+    setup() {
+      return { args };
+    },
+    template: '<ResourceAccordion v-bind="args" />',
+  }),
+  args: { ...argsWithSchema, resource: { ...argsWithSchema.resource, format: "zip", title: "tondeuse_batterie_fr.zip",
+  } },
+};
+
 export const OpenedResource: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { ResourceAccordion },
