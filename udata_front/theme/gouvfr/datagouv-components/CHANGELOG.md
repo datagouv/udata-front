@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Use resource downloads for download icon on dataset card [#484](https://github.com/datagouv/udata-front/pull/484)
+- Reduce organization type icon [#483](https://github.com/datagouv/udata-front/pull/483)
 
 ## 1.2.0 (2024-08-21)
 
