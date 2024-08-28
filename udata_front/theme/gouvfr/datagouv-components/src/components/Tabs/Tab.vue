@@ -25,6 +25,11 @@ button {
     white-space: nowrap;
 }
 
+.tabs-sm button {
+    font-size: .875rem;
+    line-height: 1.5rem;
+}
+
 button.selected {
     box-shadow: inset 0 0 0 1px var(--border-active-blue-france);
     color: var(--text-active-blue-france);
@@ -39,6 +44,11 @@ button .inner {
     width: 100%;
     padding: .25rem .75rem;
     border-radius: .25rem;
+}
+
+.tabs-sm button .inner {
+    padding: 0rem .5rem;
+
 }
 
 button:not(.selected):hover .inner {

@@ -45,3 +45,28 @@ export const DefaultTabs: StoryObj<any> = {
   args: {
   },
 };
+
+export const TabsSm: StoryObj<any> = {
+  render: (args: any) => ({
+    components: { Tab, TabGroup, TabList, TabPanel, TabPanels },
+    setup() {
+      return { args };
+    },
+    template: `
+      <TabGroup size="sm">
+        <TabList>
+          <Tab>Tab 1</Tab>
+          <Tab>Tab 2</Tab>
+          <Tab>Tab 3</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>Content 1</TabPanel>
+          <TabPanel>Content 2</TabPanel>
+          <TabPanel>Content 3</TabPanel>
+        </TabPanels>
+      </TabGroup>
+    `,
+  }),
+  args: {
+  },
+};
