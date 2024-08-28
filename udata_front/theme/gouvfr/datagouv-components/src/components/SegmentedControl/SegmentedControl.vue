@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<{
 const randomId = getRandomId("segmented");
 const model = defineModel<T>()
 
-const currentIndex = computed(() => model.value ? props.options.indexOf(model.value) : null)
+const currentIndex = computed(() => model.value ? props.options.findIndex((option) => option.label === model.value?.label) : null)
 
 const moveRight = () => {
   if (currentIndex.value === null || currentIndex.value >= (props.options.length - 1)) {
