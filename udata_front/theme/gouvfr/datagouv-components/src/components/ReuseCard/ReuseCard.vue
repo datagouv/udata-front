@@ -2,8 +2,8 @@
   <article class="fr-card fr-card--no-icon fr-enlarge-link">
     <div class="fr-card__body">
       <div class="fr-card__content fr-px-2w fr-py-1v">
-        <h3 class="fr-card__title text-grey-500 fr-text--md fr-mt-1v fr-mb-0">
-          <AppLink :to="reuseUrl">
+        <h3 class="fr-card__title fr-text--md fr-mt-1v fr-mb-0">
+          <AppLink class="text-grey-500" :to="reuseUrl">
             {{ truncate(reuse.title, 55) }}
           </AppLink>
         </h3>
