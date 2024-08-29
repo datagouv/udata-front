@@ -487,6 +487,12 @@
                     )}}
                 </div>
                 <div class="resource-list vuejs">
+                    <dataset-resource-from-hash
+                        dataset-id="{{ dataset.id }}"
+                        type-label="{{ type_label }}"
+                        :can-edit="{{ can_edit.can()|tojson|safe }}"
+                        community-resource
+                    ></dataset-resource-from-hash>
                     <dataset-resources
                         dataset-id="{{ dataset.id }}"
                         type="community"
