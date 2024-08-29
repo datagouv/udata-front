@@ -4,8 +4,10 @@
 
 - add dataservices to dataset page [#476](https://github.com/datagouv/udata-front/pull/476)
 - show contact point in dataset and dataservice page [#479](https://github.com/datagouv/udata-front/pull/479)
+- add email, member since and last login at to org members table [#480](https://github.com/datagouv/udata-front/pull/480)
 - always show authorization_request_url if present (even on open API) [#481](https://github.com/datagouv/udata-front/pull/481)
 - Show organization type [#472](https://github.com/datagouv/udata-front/pull/472)
+- show permalink for community resources [#486](https://github.com/datagouv/udata-front/pull/486)
 - Add beta admin datasets page [#371](https://github.com/etalab/udata-front/pull/371)
 
 ## 5.1.2 (2024-08-01)
