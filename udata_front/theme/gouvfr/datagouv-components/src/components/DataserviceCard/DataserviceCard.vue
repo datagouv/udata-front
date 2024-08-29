@@ -39,7 +39,14 @@
     <p class="fr-text--sm text-mention-grey fr-my-0 fr-mt-1v">
       <span class="fr-icon-information-line fr-icon--sm text-grey-380"></span>
       {{ t('Availability :') }}
-      <span class="text-grey-400">{{ t('{n}%', dataservice.availability) }}</span>
+      <span class="text-grey-400">
+        <template v-if="dataservice.availability">
+          {{ t('{n}%', dataservice.availability) }}
+        </template>
+        <template v-else>
+          {{ t('unknown') }}
+        </template>
+      </span>
     </p>
     <p class="fr-text--sm fr-mt-1w fr-mb-0 overflow-wrap-anywhere" v-if="showDescription">{{ excerpt(dataservice.description, 160) }}</p>
   </article>
