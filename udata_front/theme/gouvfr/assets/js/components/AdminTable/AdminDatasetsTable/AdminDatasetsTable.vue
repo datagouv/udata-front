@@ -74,8 +74,8 @@
       <tr v-for="dataset in datasets" :key="dataset.id">
         <td>
           <AdminContentWithTooltip>
-            <a class="fr-link" :href="getDatasetLinkToAdmin(dataset)">
-              <TextClamp :text="dataset.title" :auto-resize="true" lines="1"/>
+            <a class="fr-link fr-reset-link" :href="getDatasetLinkToAdmin(dataset)">
+              <TextClamp :text="dataset.title" :auto-resize="true" :max-lines="2"/>
             </a>
           </AdminContentWithTooltip>
         </td>
@@ -123,11 +123,11 @@ import { formatDate, QualityScore } from "@datagouv/components";
 import type { Dataset, DatasetV2 } from '@datagouv/components';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import TextClamp from "vue3-text-clamp";
 import QualityScoreTooltipContent from "../../dataset/QualityScore/QualityScoreTooltipContent/QualityScoreTooltipContent.vue";
 import AdminBadge from "../../AdminBadge/AdminBadge.vue";
 import AdminContentWithTooltip from "../../AdminContentWithTooltip/AdminContentWithTooltip.vue";
 import AdminTable from "../Table/AdminTable.vue";
-import AdminTableTd from "../Table/AdminTableTd.vue";
 import AdminTableTh from "../Table/AdminTableTh.vue";
 import Tooltip from '../../Tooltip/Tooltip.vue';
 import { admin_root } from '../../../config';
