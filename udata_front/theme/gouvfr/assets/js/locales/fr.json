@@ -478,5 +478,9 @@
   "Make a report": "Faire un signalement",
   "An unexpected error occured while reporting this content.": "Une erreur inattendue s'est produite lors du signalement de ce contenu.",
   "Producer": "Producteur",
-  "You need to select a Producer": "Vous devez sélectionner un Producteur"
+  "You need to select a Producer": "Vous devez sélectionner un Producteur",
+  "Email": "Email",
+  "Member since": "Member since",
+  "Last connection": "Last connection",
+  "No connection": "No connection"
 }
