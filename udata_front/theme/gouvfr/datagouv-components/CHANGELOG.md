@@ -6,6 +6,7 @@
 - Reduce organization type icon [#483](https://github.com/datagouv/udata-front/pull/483)
 - add Tabs component [#491](https://github.com/datagouv/udata-front/pull/491)
 - show permalink for community resources [#486](https://github.com/datagouv/udata-front/pull/486)
+- fix dataset card tooltip bug [#493](https://github.com/datagouv/udata-front/pull/493)
 
 ## 1.2.0 (2024-08-21)
 
