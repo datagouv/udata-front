@@ -7,7 +7,8 @@
     <div v-else>
       <Well type="secondary" color="success" class="fr-mb-2w">
         <div class="fr-grid-row fr-grid-row--middle justify-between">
-          {{ t("You are seeing a specific file of this dataset") }}
+          <span v-if="communityResource">{{ t("You are seeing a specific community resource of this dataset") }}</span>
+          <span v-else>{{ t("You are seeing a specific file of this dataset") }}</span>
           <button class="fr-btn--close fr-btn fr-mr-0" @click.prevent="resetHash">
             {{ t('Close') }}
           </button>
