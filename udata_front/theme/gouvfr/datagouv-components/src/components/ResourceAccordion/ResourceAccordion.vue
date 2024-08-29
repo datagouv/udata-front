@@ -78,7 +78,7 @@
       :aria-labelledby="resourceTitleId"
       :id="resourceContentId"
     >
-      <TabGroup size="sm">
+      <TabGroup size="sm" @change="switchTab">
         <div class="fr-p-5v">
           <TabList>
             <Tab v-for="tab in tabsOptions" :key="tab.key">{{ tab.label }}</Tab>
@@ -169,6 +169,7 @@ const toggle = () => {
   }
 };
 
+
 const tabsOptions = computed(() => {
   let options = [];
 
@@ -189,7 +190,18 @@ const tabsOptions = computed(() => {
 
   return options;
 });
-const currentTab = ref(tabsOptions.value[0])
+const switchTab = (index: number) => {
+  const option = tabsOptions.value[index];
+  trackEvent(['View resource tab', props.resource.id, option.label])
+  
+  if (option.key === 'data') {
+    trackEvent(['Show preview', props.resource.id])
+  }
+  if (option.key === 'data-structure') {
+    trackEvent(['Show data structure', props.resource.id])
+  }
+}
+
 
 const communityResource = computed<CommunityResource | null>(() => {
   if (! props.isCommunityResource) return null
