@@ -88,6 +88,7 @@
 </template>
 
 <script setup lang="ts">
+import { formatDate, formatFromNow } from '@datagouv/components';
 import { computed, onMounted, ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { acceptRequest, formatRolesAsOptions, getOrganization, getPendingMemberships, getRoles, refuseRequest } from "../../../api/organizations";
@@ -99,8 +100,6 @@ import AdminMembershipRequest from "../../../components/AdminMembershipRequest/A
 import { useCurrentOrganization } from "../../../composables/admin/useCurrentOrganization";
 import { useToast } from "../../../composables/useToast";
 import { user, userIsAdmin } from "../../../config";
-import AdminAddMemberButton from "../../../components/AdminAddMember/AdminAddMemberButton.vue";
-import { formatDate, formatFromNow } from '@datagouv/components';
 import type { EditingMember, MemberRole, PendingMembershipRequest } from "../../../types";
 
 const props = defineProps<{oid: string}>();
