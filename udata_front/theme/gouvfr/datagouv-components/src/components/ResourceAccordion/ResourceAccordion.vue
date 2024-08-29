@@ -7,7 +7,7 @@
     >
       <div>
         <h4 class="fr-mb-1v flex items-center" :id="resourceTitleId">
-          <button type="button" @click="open = !open" class="flex items-center">
+          <button type="button" @click="toggle" class="flex items-center">
             <ResourceIcon :resource class="fr-icon--sm fr-mr-1v" />
             <span>{{ resource.title || t('Nameless file') }}</span>
 
@@ -128,6 +128,7 @@ import TabList from "../Tabs/TabList.vue";
 import Tab from "../Tabs/Tab.vue";
 import TabPanels from "../Tabs/TabPanels.vue";
 import TabPanel from "../Tabs/TabPanel.vue";
+import { trackEvent } from "../../helpers/matomo";
 
 defineOptions({
   inheritAttrs: false,
@@ -158,6 +159,16 @@ const hasSchema = computed(() => {
 })
 
 const open = ref(false);
+const toggle = () => {
+  open.value = ! open.value;
+
+  if (open.value) {
+    trackEvent(['Open resource', props.resource.id]);
+  } else {
+    trackEvent(['Close resource', props.resource.id]);
+  }
+};
+
 const tabsOptions = computed(() => {
   let options = [];
 
