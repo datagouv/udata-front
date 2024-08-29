@@ -7,7 +7,7 @@ import TabPanels from "./TabPanels.vue";
 import { ref } from 'vue';
 
 const meta = {
-  title: 'Components/TapGroup',
+  title: 'Components/TabGroup',
   component: TabGroup,
   tags: ['autodocs'],
   parameters: {
