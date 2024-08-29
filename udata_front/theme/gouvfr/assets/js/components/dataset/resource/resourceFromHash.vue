@@ -59,7 +59,7 @@ const apiUrl = computed(() => {
   } else {
     return `/datasets/${props.datasetId}/resources/${resourceId.value}`;
   }
-})
+});
 
 watchEffect(async () => {
   if (!resourceId.value) return;
