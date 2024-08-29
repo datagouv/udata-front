@@ -1,5 +1,5 @@
 <template>
-  <span class="inline-flex fr-grid-row--middle">
+  <span class="inline-flex" :class="type !== OTHER || organizationCertified ? 'fr-grid-row--middle' : 'align-items-baseline'">
     <span>
       <OwnerTypeIcon v-if="showType" :type="type" />
     </span>
@@ -25,7 +25,7 @@ import TextClamp from 'vue3-text-clamp';
 import { config } from "../../config";
 import OwnerTypeIcon from "../Owner/OwnerTypeIcon.vue";
 import useOrganizationCertified from "../../composables/organizations/useOrganizationCertified";
-import useOrganizationType from "../../composables/organizations/useOrganizationType";
+import useOrganizationType, { OTHER } from "../../composables/organizations/useOrganizationType";
 import type { Organization } from "../../types/organizations";
 
 const { t } = useI18n();
