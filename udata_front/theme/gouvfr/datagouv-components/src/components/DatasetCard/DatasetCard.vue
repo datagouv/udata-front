@@ -50,7 +50,7 @@
                 <OrganizationNameWithCertificate v-else :organization="dataset.organization" />
               </span>
             </template>
-            <text-clamp class="not-enlarged fr-mr-1v" :auto-resize="true" :text='ownerName' :max-lines='1' v-else />
+            <TextClamp class="not-enlarged fr-mr-1v" :auto-resize="true" :text='ownerName' :max-lines='1' v-else />
             <span class="text-mention-grey dash-before-sm whitespace-nowrap">{{ $t('Updated {date}', {date: formatRelativeIfRecentDate(dataset.last_update)}) }}</span>
           </div>
         <div class="fr-mx-0 fr-mb-n1v fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">

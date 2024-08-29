@@ -29,7 +29,7 @@
         </AppLink>
         <OrganizationNameWithCertificate v-else :organization="dataservice.organization" />
       </span>
-      <text-clamp class="not-enlarged fr-mr-1v" :auto-resize="true" :text='ownerName' :max-lines='1' v-else />
+      <TextClamp class="not-enlarged fr-mr-1v" :auto-resize="true" :text='ownerName' :max-lines='1' v-else />
       <span class="dash-before whitespace-nowrap">{{ t('Updated {date}', {date: formatRelativeIfRecentDate(dataservice.metadata_modified_at)}) }}</span>
     </p>
     <p class="fr-text--sm text-mention-grey fr-my-0 fr-mt-1v">

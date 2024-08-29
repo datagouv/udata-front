@@ -15,7 +15,7 @@
               </AppLink>
               <OrganizationNameWithCertificate v-else :organization="reuse.organization" />
             </span>
-            <text-clamp class="not-enlarged fr-mr-1v" :auto-resize="true" :text='ownerName' :max-lines='1' v-else />
+            <TextClamp class="not-enlarged fr-mr-1v" :auto-resize="true" :text='ownerName' :max-lines='1' v-else />
             <span class="dash-before-sm whitespace-nowrap">{{ t('published {date}', { date: formatRelativeIfRecentDate(reuse.created_at) }) }}</span>
           </p>
           <div class="fr-grid-row fr-grid-row--middle">

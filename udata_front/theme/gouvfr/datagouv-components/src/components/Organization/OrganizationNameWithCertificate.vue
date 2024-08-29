@@ -3,7 +3,7 @@
     <span>
       <OwnerTypeIcon v-if="showType" :type="type" />
     </span>
-    <text-clamp class="fr-mx-1v" :auto-resize="true" :text='organization.name' :max-lines='1' />
+    <TextClamp class="fr-mx-1v" :auto-resize="true" :text='organization.name' :max-lines='1' />
     <span
       v-if="organizationCertified"
       class="fr-icon-success-line fr-icon--sm"
