@@ -2,7 +2,7 @@
   <article class="fr-card fr-card--no-icon fr-enlarge-link">
     <div class="fr-card__body">
       <div class="fr-card__content fr-px-2w fr-py-1v">
-        <h3 class="fr-card__title fr-text--md fr-mt-1v fr-mb-0">
+        <h3 class="fr-card__title text-grey-500 fr-text--md fr-mt-1v fr-mb-0">
           <AppLink :to="reuseUrl">
             {{ truncate(reuse.title, 55) }}
           </AppLink>
@@ -107,8 +107,5 @@ const { label: reuseType } = useReuseType(() => props.reuse.type);
 .fr-card__img img.reuse-ratio {
   aspect-ratio: 1.4;
   object-fit: cover;
-}
-.fr-card__title a[href] {
-  --text-action-high-blue-france: @blue-400;
 }
 </style>
