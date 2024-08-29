@@ -4,6 +4,7 @@
 
 - Use resource downloads for download icon on dataset card [#484](https://github.com/datagouv/udata-front/pull/484)
 - Reduce organization type icon [#483](https://github.com/datagouv/udata-front/pull/483)
+- add Tabs component [#491](https://github.com/datagouv/udata-front/pull/491)
 
 ## 1.2.0 (2024-08-21)
 
