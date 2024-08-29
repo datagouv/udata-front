@@ -141,6 +141,29 @@ export const DatasetCardSimple: StoryObj<typeof meta> = {
   args,
 };
 
+export const DatasetCardSimpleWithOwner: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCard },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCard v-bind="args"/>`,
+  }),
+  args: {
+    ...args,
+    dataset: {
+      ...args.dataset,
+      organization: null,
+      owner: {
+        id: "someUserId",
+        first_name: "John",
+        last_name: "Doedoedoedoedoedoedoedoedoedoedoedoe",
+        page: "https://demo.data.gouv.fr/en/users/antonin-garrone/",
+      },
+    }
+  },
+};
+
 export const DatasetCardSimpleWithOrganizationUrl: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { DatasetCard },
