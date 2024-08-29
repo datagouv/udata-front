@@ -89,7 +89,7 @@ const { t } = useI18n();
 const { toast } = useToast();
 const currentPage = ref(1);
 
-const { hash } = useHash()
+const { hash } = useHash();
 const resourceIdFromHash = computed(() => getResourceIdFromHash(hash.value, props.type === "community"));
 
 const resources = ref<Array<Resource>>([]);

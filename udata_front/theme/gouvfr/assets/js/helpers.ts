@@ -60,11 +60,11 @@ export const communityResourceUrlRegExp = new RegExp(
 
 export const getResourceIdFromHash = (hash: string, isCommunityResource: boolean): string | null => {
   for (const regex of isCommunityResource ? [communityResourceUrlRegExp] : [resourceUrlRegExp, previousResourceUrlRegExp]) {
-    let [a, foundId, b] = regex.exec(hash) || []
+    let [a, foundId, b] = regex.exec(hash) || [];
     if(foundId) {
-      return foundId
+      return foundId;
     }
   }
 
-  return null
+  return null;
 }

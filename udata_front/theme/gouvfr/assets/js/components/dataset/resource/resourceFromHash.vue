@@ -50,14 +50,14 @@ const top = ref<HTMLElement | null>(null);
 const resource = ref<Resource | null>(null);
 const loading = ref(false);
 
-const { hash } = useHash()
+const { hash } = useHash();
 const resourceId = computed(() => getResourceIdFromHash(hash.value, props.communityResource));
 
 const apiUrl = computed(() => {
   if (props.communityResource) {
-    return `/datasets/community_resources/${resourceId.value}`
+    return `/datasets/community_resources/${resourceId.value}`;
   } else {
-    return `/datasets/${props.datasetId}/resources/${resourceId.value}`
+    return `/datasets/${props.datasetId}/resources/${resourceId.value}`;
   }
 })
 
@@ -66,19 +66,19 @@ watchEffect(async () => {
 
   loading.value = true;
   try {
-    const response = await api.get(apiUrl.value)
-    const data = await response.data
+    const response = await api.get(apiUrl.value);
+    const data = await response.data;
     if (data) {
       resource.value = data;
       if (top.value) top.value.scrollIntoView({ behavior: "smooth" })
     }
   } catch (e) {
-    console.error(e)
+    console.error(e);
     toast.error(
       t("An error occurred while fetching the file ") + resourceId.value
     );
   } finally {
     loading.value = false;
   }
-})
+});
 </script>
