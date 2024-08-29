@@ -47,8 +47,8 @@ const args: ReuseProps = {
     tags: [],
     owner: {
       id: "someUserId",
-      first_name: "First",
-      last_name: "Last",
+      first_name: "John",
+      last_name: "Doedoedoedoedoe",
       page: "https://demo.data.gouv.fr/en/users/antonin-garrone/",
     },
     metrics: {

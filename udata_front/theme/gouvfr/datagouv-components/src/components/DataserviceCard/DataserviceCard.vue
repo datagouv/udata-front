@@ -22,19 +22,15 @@
         </AppLink>
       </slot>
     </h4>
-    <p class="fr-text--sm text-mention-grey fr-mt-1v fr-mb-0" v-if="dataservice.organization || dataservice.owner">
+    <p class="fr-text--sm text-mention-grey inline-flex fr-mt-1v fr-mb-0" v-if="dataservice.organization || dataservice.owner">
       <span class="not-enlarged" v-if="dataservice.organization">
         <AppLink class="fr-link fr-text--sm" v-if="organizationUrl" :to="organizationUrl">
           <OrganizationNameWithCertificate :organization="dataservice.organization" />
         </AppLink>
         <OrganizationNameWithCertificate v-else :organization="dataservice.organization" />
-        &mdash;
       </span>
-      <span class="not-enlarged" v-else>
-        {{ ownerName }}
-        &mdash;
-      </span>
-      <span>{{ t('Updated {date}', {date: formatRelativeIfRecentDate(dataservice.metadata_modified_at)}) }}</span>
+      <text-clamp class="not-enlarged fr-mr-1v" :auto-resize="true" :text='ownerName' :max-lines='1' v-else />
+      <span class="dash-before whitespace-nowrap">{{ t('Updated {date}', {date: formatRelativeIfRecentDate(dataservice.metadata_modified_at)}) }}</span>
     </p>
     <p class="fr-text--sm text-mention-grey fr-my-0 fr-mt-1v">
       <span class="fr-icon-information-line fr-icon--sm text-grey-380"></span>
@@ -53,8 +49,9 @@
 </template>
 
 <script setup lang="ts">
-import type { RouteLocationRaw } from "vue-router";
 import { useI18n } from "vue-i18n";
+import type { RouteLocationRaw } from "vue-router";
+import TextClamp from 'vue3-text-clamp';
 import AppLink from "../AppLink/AppLink.vue";
 import type { Dataservice } from "../../types/dataservices";
 import { excerpt } from "../../helpers";

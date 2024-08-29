@@ -1,12 +1,16 @@
 <template>
-  <OwnerTypeIcon v-if="showType" :type="type" />
-  {{ organization.name }}
-  <span
-    v-if="organizationCertified"
-    class="fr-icon-success-line fr-icon--sm"
-    :title="t('The identity of this public service is certified by {certifier}', { certifier: config.title })"
-    aria-hidden="true"
-  >
+  <span class="inline-flex fr-grid-row--middle">
+    <span>
+      <OwnerTypeIcon v-if="showType" :type="type" />
+    </span>
+    <text-clamp class="fr-mx-1v" :auto-resize="true" :text='organization.name' :max-lines='1' />
+    <span
+      v-if="organizationCertified"
+      class="fr-icon-success-line fr-icon--sm"
+      :title="t('The identity of this public service is certified by {certifier}', { certifier: config.title })"
+      aria-hidden="true"
+    >
+    </span>
   </span>
 </template>
 <script lang="ts">
@@ -17,6 +21,7 @@ export type OrganizationNameWithCertificateProps = {
 </script>
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
+import TextClamp from 'vue3-text-clamp';
 import { config } from "../../config";
 import OwnerTypeIcon from "../Owner/OwnerTypeIcon.vue";
 import useOrganizationCertified from "../../composables/organizations/useOrganizationCertified";
