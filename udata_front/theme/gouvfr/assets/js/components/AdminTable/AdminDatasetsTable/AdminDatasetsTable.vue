@@ -72,48 +72,48 @@
     </thead>
     <tbody>
       <tr v-for="dataset in datasets" :key="dataset.id">
-        <AdminTableTd>
+        <td>
           <AdminContentWithTooltip>
             <a class="fr-link" :href="getDatasetLinkToAdmin(dataset)">
-              {{ dataset.title }}
+              <TextClamp :text="dataset.title" :auto-resize="true" lines="1"/>
             </a>
           </AdminContentWithTooltip>
-        </AdminTableTd>
-        <AdminTableTd>
+        </td>
+        <td>
           <AdminBadge :type="getStatus(dataset).type">{{ getStatus(dataset).label }}</AdminBadge>
-        </AdminTableTd>
-        <AdminTableTd>
+        </td>
+        <td>
           {{ formatDate(dataset.created_at) }}
-        </AdminTableTd>
-        <AdminTableTd>
+        </td>
+        <td>
           {{ formatDate(dataset.last_modified) }}
-        </AdminTableTd>
-        <AdminTableTd>
+        </td>
+        <td>
           {{ getFilesCount(dataset) }}
-        </AdminTableTd>
-        <AdminTableTd>
+        </td>
+        <td>
           <Tooltip>
             <QualityScore :score="dataset.quality.score" />
             <template #tooltip>
               <QualityScoreTooltipContent :dataset="dataset" />
             </template>
           </Tooltip>
-        </AdminTableTd>
-        <AdminTableTd class="monospace">
+        </td>
+        <td class="monospace">
           {{ summarize(dataset.metrics.discussions) }}
-        </AdminTableTd>
-        <AdminTableTd class="monospace">
+        </td>
+        <td class="monospace">
           {{ summarize(dataset.metrics.views) }}
-        </AdminTableTd>
-        <AdminTableTd class="monospace">
+        </td>
+        <td class="monospace">
           {{ summarize(dataset.metrics.resources_downloads ?? 0) }}
-        </AdminTableTd>
-        <AdminTableTd class="monospace">
+        </td>
+        <td class="monospace">
           {{ summarize(dataset.metrics.reuses) }}
-        </AdminTableTd>
-        <AdminTableTd class="monospace">
+        </td>
+        <td class="monospace">
           {{ summarize(dataset.metrics.followers) }}
-        </AdminTableTd>
+        </td>
       </tr>
     </tbody>
   </AdminTable>

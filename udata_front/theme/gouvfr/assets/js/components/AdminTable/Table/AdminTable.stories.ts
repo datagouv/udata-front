@@ -5,7 +5,6 @@ import AdminContentWithTooltip from "../../AdminContentWithTooltip/AdminContentW
 import QualityScoreTooltipContent from "../../dataset/QualityScore/QualityScoreTooltipContent/QualityScoreTooltipContent.vue";
 import Tooltip from '../../Tooltip/Tooltip.vue';
 import AdminTable from "./AdminTable.vue";
-import AdminTableTd from "./AdminTableTd.vue";
 import AdminTableTh from "./AdminTableTh.vue";
 import { CardLGWithOrganizationLogo } from "../../dataset/CardLG.stories";
 
@@ -18,7 +17,7 @@ export default meta;
 
 export const DatasetsTable: StoryObj<typeof meta> = {
   render: (args) => ({
-    components: { AdminBadge, AdminContentWithTooltip, AdminTable, AdminTableTd, AdminTableTh, QualityScore, QualityScoreTooltipContent, Tooltip },
+    components: { AdminBadge, AdminContentWithTooltip, AdminTable, AdminTableTh, QualityScore, QualityScoreTooltipContent, Tooltip },
     setup() {
       return { args, CardLGWithOrganizationLogo };
     },
@@ -50,192 +49,192 @@ export const DatasetsTable: StoryObj<typeof meta> = {
                   </thead>
                   <tbody>
                     <tr>
-                        <AdminTableTd>
+                        <td>
                           <AdminContentWithTooltip>
                             <a class="fr-link" href="#">
                               Indices de position sociale dans les écoles de France métropolitaine et DROM (2016-2021)
                             </a>
                           </AdminContentWithTooltip>
-                        </AdminTableTd>
-                        <AdminTableTd>
+                        </td>
+                        <Td>
                         <AdminBadge type="info">Public</AdminBadge>
-                        </AdminTableTd>
-                        <AdminTableTd>
+                        </Td>
+                        <Td>
                           07/05/2016
-                        </AdminTableTd>
-                        <AdminTableTd>
+                        </Td>
+                        <Td>
                           07/05/2016
-                        </AdminTableTd>
-                        <AdminTableTd>
+                        </Td>
+                        <Td>
                           1
-                        </AdminTableTd>
-                        <AdminTableTd>
+                        </Td>
+                        <Td>
                           <Tooltip>
                             <QualityScore :score="CardLGWithOrganizationLogo.args.dataset.quality.score" />
                             <template #tooltip>
                               <QualityScoreTooltipContent :dataset="CardLGWithOrganizationLogo.args.dataset" />
                             </template>
                           </Tooltip>
-                        </AdminTableTd>
-                        <AdminTableTd>
+                        </Td>
+                        <Td>
                           412
-                        </AdminTableTd>
-                        <AdminTableTd>
+                        </Td>
+                        <Td>
                           4.5k
-                        </AdminTableTd>
-                        <AdminTableTd>
+                        </Td>
+                        <Td>
                           2.3k
-                        </AdminTableTd>
-                        <AdminTableTd>
+                        </Td>
+                        <Td>
                           412
-                        </AdminTableTd>
-                        <AdminTableTd>
+                        </Td>
+                        <Td>
                           412
-                        </AdminTableTd>
+                        </Td>
                    </tr>
                     <tr>
-                      <AdminTableTd>
+                      <Td>
                         <AdminContentWithTooltip>
                           <a class="fr-link" href="#">
                             Indices de position sociale dans les écoles de France métropolitaine et DROM (2016-2021)
                           </a>
                         </AdminContentWithTooltip>
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         <AdminBadge>Private</AdminBadge>
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         07/05/2016
-                      </AdminTableTd>
-                      <AdminTableTd class="relative">
+                      </Td>
+                      <Td class="relative">
                         07/05/2016
                         <AdminContentWithTooltip class="text-default-warning">
                           <span class="fr-icon--sm fr-icon-warning-line" aria-hidden="true"></span>
                           Update required
                         </AdminContentWithTooltip>
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         0
                         <AdminContentWithTooltip class="text-default-warning">
                           <span class="fr-icon--sm fr-icon-warning-line" aria-hidden="true"></span>
                           No files
                         </AdminContentWithTooltip>
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         <Tooltip>
                           <QualityScore :score="CardLGWithOrganizationLogo.args.dataset.quality.score" />
                           <template #tooltip>
                             <QualityScoreTooltipContent :dataset="CardLGWithOrganizationLogo.args.dataset" />
                           </template>
                           </Tooltip>
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         412
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         4.5k
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         2.3k
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         412
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         412
-                      </AdminTableTd>
+                      </Td>
                     </tr>
                     <tr>
-                      <AdminTableTd>
+                      <Td>
                         <AdminContentWithTooltip>
                           <a class="fr-link" href="#">
                             Indices de position sociale dans les écoles de France métropolitaine et DROM (2016-2021)
                           </a>
                         </AdminContentWithTooltip>
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         <AdminBadge>Private</AdminBadge>
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         07/05/2016
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         07/05/2016
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         1
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         <Tooltip>
                           <QualityScore :score="CardLGWithOrganizationLogo.args.dataset.quality.score" />
                           <template #tooltip>
                             <QualityScoreTooltipContent :dataset="CardLGWithOrganizationLogo.args.dataset" />
                           </template>
                         </Tooltip>
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         412
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         4.5k
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         2.3k
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         412
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         412
-                      </AdminTableTd>
+                      </Td>
                     </tr>
                     <tr>
-                      <AdminTableTd>
+                      <Td>
                         <AdminContentWithTooltip>
                           <a class="fr-link" href="#">
                             Indices de position sociale dans les écoles de France métropolitaine et DROM (2016-2021)
                           </a>
                         </AdminContentWithTooltip>
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         <AdminBadge type="info">Public</AdminBadge>
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         07/05/2016
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         07/05/2016
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         0
                         <AdminContentWithTooltip class="text-default-warning">
                           <span class="fr-icon--sm fr-icon-warning-line" aria-hidden="true"></span>
                           No files
                         </AdminContentWithTooltip>
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         <Tooltip>
                           <QualityScore :score="CardLGWithOrganizationLogo.args.dataset.quality.score" />
                           <template #tooltip>
                             <QualityScoreTooltipContent :dataset="CardLGWithOrganizationLogo.args.dataset" />
                           </template>
                         </Tooltip>
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         412
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         4.5k
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         2.3k
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         412
-                      </AdminTableTd>
-                      <AdminTableTd>
+                      </Td>
+                      <Td>
                         412
-                      </AdminTableTd>
+                      </Td>
                     </tr>
                   </tbody>
                 </AdminTable>`,

@@ -1,5 +1,5 @@
 <template>
-  <div class="fr-table">
+  <div class="fr-table fr-mb-2w">
     <table>
       <slot></slot>
     </table>
@@ -35,6 +35,7 @@
   padding: 0.5rem 0.34375rem !important;
   border: 1px solid var(--grey-850-200);
   border-top: 0;
+  height: calc(var(--lh) * var(--max-lines) + 1rem);
 }
 
 .fr-table table :deep(*) {
