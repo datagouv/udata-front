@@ -78,24 +78,31 @@
       :aria-labelledby="resourceTitleId"
       :id="resourceContentId"
     >
-      <div class="fr-p-5v">
-        <SegmentedControl :legend="t('Resource navigation')" :options="tabsOptions" v-model="currentTab" size="sm" legendPosition="hidden" />
-      </div>
-
-      <div v-if="hasPreview && currentTab.key === 'data'">
-        <Preview :resource="resource" />
-      </div>
-      <div v-if="resource.description && currentTab.key === 'description'"  class="fr-p-5v">
-        <div class="fr-mt-0 markdown fr-text--sm text-mention-grey" v-html="markdown(resource.description)"></div>
-      </div>
-      <div v-if="(hasPreview || hasSchema) && currentTab.key === 'data-structure'"  class="fr-p-5v">
-        <DataStructure v-if="hasPreview" :resource="resource" />
-        <hr class="fr-my-5v fr-p-1v" v-if="hasPreview && hasSchema"/>
-        <SchemaTab :resource />
-      </div>
-      <div v-if="currentTab.key === 'metadata'" class="fr-p-5v">
-        <Metadata :resource />
-      </div>
+      <TabGroup size="sm">
+        <div class="fr-p-5v">
+          <TabList>
+            <Tab v-for="tab in tabsOptions" :key="tab.key">{{ tab.label }}</Tab>
+          </TabList>
+        </div>
+        <TabPanels>
+          <TabPanel v-for="tab in tabsOptions" :key="tab.key">
+            <div v-if="tab.key === 'data'">
+              <Preview :resource="resource" />
+            </div>
+            <div v-if="tab.key === 'description'"  class="fr-p-5v">
+              <div class="fr-mt-0 markdown fr-text--sm text-mention-grey" v-html="markdown(resource.description || '')"></div>
+            </div>
+            <div v-if="tab.key === 'data-structure'" class="fr-p-5v">
+              <DataStructure v-if="hasPreview" :resource="resource" />
+              <hr class="fr-my-5v fr-p-1v" v-if="hasPreview && hasSchema"/>
+              <SchemaTab :resource />
+            </div>
+            <div v-if="tab.key === 'metadata'" class="fr-p-5v">
+              <Metadata :resource />
+            </div>
+          </TabPanel>
+        </TabPanels>
+      </TabGroup>
     </section>
   </article>
 </template>
@@ -114,9 +121,13 @@ import type { CommunityResource, Resource } from "../../types/resources";
 import ResourceIcon from "./ResourceIcon.vue";
 import SchemaBadge from "./SchemaBadge.vue";
 import CopyLink from "./CopyLink.vue";
-import SegmentedControl from "../SegmentedControl/SegmentedControl.vue";
 import SchemaTab from "./SchemaTab.vue";
 import Metadata from "./Metadata.vue";
+import TabGroup from "../Tabs/TabGroup.vue";
+import TabList from "../Tabs/TabList.vue";
+import Tab from "../Tabs/Tab.vue";
+import TabPanels from "../Tabs/TabPanels.vue";
+import TabPanel from "../Tabs/TabPanel.vue";
 
 defineOptions({
   inheritAttrs: false,
@@ -179,7 +190,7 @@ const lastUpdate = props.resource.last_modified;
 const availabilityChecked = props.resource.extras && 'check:available' in props.resource.extras;
 const unavailable = availabilityChecked && props.resource.extras['check:available'] === false;
 
-const resourceExternalUrl = window.location.origin + window.location.pathname + "#/resources/" + props.resource.id;
+const resourceExternalUrl = computed(() => `${window.location.origin}${window.location.pathname}#/${props.isCommunityResource ? 'community-resources' : 'resources'}/${props.resource.id}`);
 
 const resourceContentId = 'resource-' + props.resource.id;
 const resourceHeaderId = 'resource-' + props.resource.id + '-header';

@@ -29,7 +29,7 @@
     "chromatic": "npx chromatic --only-changed --externals './src/locales/**/*.json'"
   },
   "dependencies": {
-    "vue": "^3.3.8",
+    "vue": "^3.4.38",
     "@headlessui/vue": "^1.7.22"
   },
   "peerDependencies": {
