@@ -478,5 +478,9 @@
   "Make a report": "Make a report",
   "An unexpected error occured while reporting this content.": "An unexpected error occured while reporting this content.",
   "Producer": "Producer",
-  "You need to select a Producer": "You need to select a Producer"
+  "You need to select a Producer": "You need to select a Producer",
+  "Email": "",
+  "Member since": "",
+  "Last connection": "",
+  "No connection": ""
 }
