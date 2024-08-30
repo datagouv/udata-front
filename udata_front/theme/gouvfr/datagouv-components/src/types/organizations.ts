@@ -11,9 +11,9 @@ export type Member = {
 export type NewOrganization = {
   acronym: string | null;
   name: string;
-  business_number_id: string;
+  business_number_id: string | null;
   description: string;
-  url: string;
+  url: string | null;
 };
 
 export type Organization = NewOrganization & {
