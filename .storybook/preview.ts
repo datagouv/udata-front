@@ -1,6 +1,6 @@
 import type { Preview } from '@storybook/vue3';
 import { initialize, mswLoader } from 'msw-storybook-addon';
-import mswRequests from './msw-requests';
+import mswRequests from '../udata_front/theme/gouvfr/datagouv-components/.storybook/msw-requests';
 
 /*
  * Initializes MSW

@@ -5,7 +5,7 @@ import { Title, Subtitle, Description, Primary, Controls, Stories } from '@story
 import { setup, type Preview } from '@storybook/vue3';
 import { setupI18n } from '../src/helpers/i18n';
 import { setupComponents } from "../src/config";
-import mswRequests from "../../../../../.storybook/msw-requests";
+import mswRequests from "./msw-requests";
 import { initialize, mswLoader } from "msw-storybook-addon";
 
 setupComponents({
