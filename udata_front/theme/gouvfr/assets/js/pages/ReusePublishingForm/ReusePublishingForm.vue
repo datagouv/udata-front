@@ -65,7 +65,7 @@ const reuse = ref<NewReuse>({
   owner: user.id,
 });
 
-const savedReuse = ref<Reuse>({
+const savedReuse = ref<Reuse & {datasets: Array<string>}>({
   id: "",
   page: "",
   private: false,
