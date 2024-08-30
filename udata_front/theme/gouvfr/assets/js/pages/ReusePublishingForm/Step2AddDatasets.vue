@@ -184,7 +184,7 @@ async function handleLinkedDatasetChange(value: string) {
       linkedDatasetLoading.value = true;
       const url = new URL(value);
       const slug = getSlug(url.pathname);
-      const resp = await api.get('datasets/' + slug);
+      const resp = await api.get(`datasets/${slug}/`);
       const newDatasetId = resp.data.id;
       addDataset(newDatasetId);
       form.linkedDataset = "";
@@ -202,7 +202,7 @@ async function handleLinkedDatasetChange(value: string) {
 async function addDataset(datasetId: string) {
   const existingDataset = form.datasets.find(dataset => dataset.id === datasetId);
   if (!existingDataset) {
-    let newDataset = await api.get('datasets/' + datasetId);
+    let newDataset = await api.get(`datasets/${datasetId}/`);
     form.datasets.push(newDataset.data);
   }
 };
