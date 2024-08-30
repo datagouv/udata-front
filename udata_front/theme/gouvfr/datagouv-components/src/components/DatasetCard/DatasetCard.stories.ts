@@ -63,7 +63,7 @@ const dataset: DatasetV2 = {
     update_frequency: false,
     update_fulfilled_in_time: false,
   },
-  metrics: { discussions: 12, followers: 25, reuses: 8, views: 59 },
+  metrics: { discussions: 12, followers: 25, reuses: 8, views: 59, resources_downloads:	18705 },
   title: "Données changement climatique - SQR",
   acronym: "DCC",
   archived: false,
@@ -97,7 +97,14 @@ const dataset: DatasetV2 = {
     page: "https://demo.data.gouv.fr/fr/organizations/test-meteo-france/",
     business_number_id: "",
     description: "",
-    badges: [],
+    badges: [
+      {
+        "kind": "public-service"
+      },
+      {
+        "kind": "certified"
+      }
+    ],
     name: "Météo France",
     slug: "test-meteo-france",
     uri: "https://demo.data.gouv.fr/api/1/organizations/test-meteo-france/",
@@ -132,6 +139,29 @@ export const DatasetCardSimple: StoryObj<typeof meta> = {
     template: `<DatasetCard v-bind="args"/>`,
   }),
   args,
+};
+
+export const DatasetCardSimpleWithOwner: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCard },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCard v-bind="args"/>`,
+  }),
+  args: {
+    ...args,
+    dataset: {
+      ...args.dataset,
+      organization: null,
+      owner: {
+        id: "someUserId",
+        first_name: "John",
+        last_name: "Doedoedoedoedoedoedoedoedoedoedoedoe",
+        page: "https://demo.data.gouv.fr/en/users/antonin-garrone/",
+      },
+    }
+  },
 };
 
 export const DatasetCardSimpleWithOrganizationUrl: StoryObj<typeof meta> = {
@@ -269,5 +299,18 @@ export const DatasetCardUpdatedLastMonth: StoryObj<typeof meta> = {
   args: {
     dataset: {...dataset, last_update: updateLastMonth.toDateString()},
     datasetUrl: "/datasets/6571faa17f46a65ee05c4d17",
+  },
+};
+
+export const DatasetCardWithLongOrganization: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCard },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCard v-bind="args"/>`,
+  }),
+  args: {
+    dataset: {...dataset, organization: { ...dataset.organization, name: "Ministère de l’Économie, des Finances et de la Souveraineté industrielle et numérique de France, et encore un peu plus long"}},
   },
 };

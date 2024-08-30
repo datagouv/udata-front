@@ -7,7 +7,8 @@
     <div v-else>
       <Well type="secondary" color="success" class="fr-mb-2w">
         <div class="fr-grid-row fr-grid-row--middle justify-between">
-          {{ t("You are seeing a specific file of this dataset") }}
+          <span v-if="communityResource">{{ t("You are seeing a specific community resource of this dataset") }}</span>
+          <span v-else>{{ t("You are seeing a specific file of this dataset") }}</span>
           <button class="fr-btn--close fr-btn fr-mr-0" @click.prevent="resetHash">
             {{ t('Close') }}
           </button>
@@ -20,89 +21,65 @@
         :expandedOnMount="true"
         :resource="resource"
         :canEdit="canEdit"
+        :isCommunityResource="communityResource"
       />
     </div>
   </transition>
 </section>
 </template>
-<script lang="ts">
+<script setup lang="ts">
 import { ResourceAccordion, ResourceAccordionLoader, type Resource, Well } from "@datagouv/components";
-import { defineComponent, ref, watchEffect } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from "vue-i18n";
 import { useToast } from "../../../composables/useToast";
-import useIdFromHash from "../../../composables/useIdFromHash";
-import { previousResourceUrlRegExp, resourceUrlRegExp } from '../../../helpers';
+import { getResourceIdFromHash } from '../../../helpers';
 import { api } from "../../../plugins/api";
+import { useHash, resetHash } from "../../../composables/useHash";
 
-export default defineComponent({
-  components: { ResourceAccordion, ResourceAccordionLoader, Well },
-  props: {
-    canEdit: {
-      type: Boolean,
-      default: false
-    },
-    datasetId: {
-      type: String,
-      required: true,
-    },
-  },
-  setup(props) {
-    const { t } = useI18n();
-    const { toast } = useToast();
+const props = withDefaults(defineProps<{
+  canEdit: boolean;
+  datasetId: string;
+  communityResource?: boolean;
+}>(), {
+  communityResource: false,
+});
 
-    const resource = ref<Resource | null>(null);
-    const loading = ref(true);
+const { t } = useI18n();
+const { toast } = useToast();
 
-    const { id: resourceId, resetHash } = useIdFromHash([resourceUrlRegExp, previousResourceUrlRegExp]);
+const top = ref<HTMLElement | null>(null);
+const resource = ref<Resource | null>(null);
+const loading = ref(false);
 
-    const top = ref<HTMLElement | null>(null);
+const { hash } = useHash();
+const resourceId = computed(() => getResourceIdFromHash(hash.value, props.communityResource));
 
-    const loadFileFromHash = () => {
-      if(!resourceId.value) return;
-      loading.value = true;
+const apiUrl = computed(() => {
+  if (props.communityResource) {
+    return `/datasets/community_resources/${resourceId.value}`;
+  } else {
+    return `/datasets/${props.datasetId}/resources/${resourceId.value}`;
+  }
+});
 
-      // Scroll the resource block into view.
-      setTimeout(
-        () => {
-          if(top.value) {
-            top.value.scrollIntoView({ behavior: "smooth" })
-          }
-        },
-        500
-      );
+watchEffect(async () => {
+  if (!resourceId.value) return;
 
-      return api
-        .get(`/datasets/${props.datasetId}/resources/${resourceId.value}`)
-        .then((resp) => resp.data)
-        .then((data) => {
-          if (data) {
-            resource.value = data;
-          }
-        })
-        .catch(() => {
-          toast.error(
-            t("An error occurred while fetching the file ") + resourceId.value
-          );
-        })
-        .finally(() => {
-          loading.value = false;
-        });
-    };
-
-    watchEffect(() => {
-      if (resourceId.value) {
-        loadFileFromHash();
-      }
-    });
-
-    return {
-      loading,
-      resource,
-      resourceId,
-      top,
-      resetHash,
-      t,
+  loading.value = true;
+  try {
+    const response = await api.get(apiUrl.value);
+    const data = await response.data;
+    if (data) {
+      resource.value = data;
+      if (top.value) top.value.scrollIntoView({ behavior: "smooth" })
     }
-  },
+  } catch (e) {
+    console.error(e);
+    toast.error(
+      t("An error occurred while fetching the file ") + resourceId.value
+    );
+  } finally {
+    loading.value = false;
+  }
 });
 </script>

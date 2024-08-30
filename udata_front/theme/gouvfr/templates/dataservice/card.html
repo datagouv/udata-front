@@ -1,0 +1,9 @@
+<div class="vuejs">
+    <dataservice-card
+        :dataservice='{{ dataservice|to_dataservice_api_format|tojson }}'
+        dataservice-url="{{ dataservice.self_web_url() }}"
+        {% if dataservice.organization %}
+            organization-url="{{ dataservice.organization.url_for() }}"
+        {% endif %}
+    ></dataservice-card>
+</div>

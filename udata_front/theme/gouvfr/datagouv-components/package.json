@@ -1,6 +1,6 @@
 {
   "name": "@datagouv/components",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "reusable components to show content from data.gouv.fr",
   "type": "module",
   "files": [
@@ -29,10 +29,11 @@
     "chromatic": "npx chromatic --only-changed --externals './src/locales/**/*.json'"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.22",
     "vue": "^3.3.8"
   },
   "peerDependencies": {
-    "@gouvfr/dsfr": "~1.9.2",
+    "@gouvfr/dsfr": "~1.11.2",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
@@ -71,7 +72,8 @@
     "vue-content-loader": "^2.0.1",
     "vue-i18n": "^9.13.1",
     "vue-i18n-extract": "^2.0.7",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "vue3-text-clamp": "^0.1.2"
   },
   "author": {
     "name": "DINUM"

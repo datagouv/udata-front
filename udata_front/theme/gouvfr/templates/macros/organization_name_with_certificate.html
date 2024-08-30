@@ -1,4 +1,10 @@
 {% from theme('macros/certified.html') import badge_if_certified %}
-{% macro organization_name_with_certificate(org, size="sm") %}
+{% macro organization_name_with_certificate(org, size="sm", show_icon=true) %}
+{% set org_type = organization_type(org) %}
+{% if show_icon and org_type %}
+<span class="vuejs text-blue-400 fr-m-0">
+    <owner-type-icon type="{{  org_type }}"></owner-type-icon>
+</span>
+{% endif %}
 {{org.name}}{{badge_if_certified(org, size)}}
 {% endmacro %}

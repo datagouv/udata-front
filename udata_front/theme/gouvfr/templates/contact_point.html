@@ -1,0 +1,17 @@
+{% if contact_point and (contact_point.name or contact_point.email) %}
+<h2 class="subtitle fr-mt-3v fr-mb-1v">{{ _('Contact point') }}</h2>
+<p class="fr-text--sm fr-mt-0 fr-mb-3v">
+    {% if contact_point.email %}
+        <a
+            href="mailto:{{ contact_point.email }}"
+            rel="ugc nofollow noopener"
+            target="_blank"
+            class="fr-text--sm fr-link text-grey-500"
+        >
+            {{ contact_point.name or contact_point.email }}
+        </a>
+    {% else %}
+        {{ contact_point.name }}
+    {% endif %}
+</p>
+{% endif %}
