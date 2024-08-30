@@ -5,6 +5,8 @@ import { Title, Subtitle, Description, Primary, Controls, Stories } from '@story
 import { setup, type Preview } from '@storybook/vue3';
 import { setupI18n } from '../src/helpers/i18n';
 import { setupComponents } from "../src/config";
+import mswRequests from "../../../../../.storybook/msw-requests";
+import { initialize, mswLoader } from "msw-storybook-addon";
 
 setupComponents({
   default_lang: "en",
@@ -17,6 +19,22 @@ setup((app) => {
   app.use(i18n);
 });
 
+
+/*
+ * Initializes MSW
+ * See https://github.com/mswjs/msw-storybook-addon#configuring-msw
+ * to learn how to customize it
+ */
+initialize({
+  onUnhandledRequest: ({ url }, print) => {
+    const pathname = new URL(url).pathname
+    if (pathname.startsWith("/src") || pathname.startsWith("/@fs") || pathname.startsWith("/node_modules")) {
+      return;
+    }
+    print.warning();
+  }
+});
+
 const preview: Preview = {
   decorators: [
     (story, ctx) => {
@@ -26,6 +44,7 @@ const preview: Preview = {
       };
     },
   ],
+  loaders: [mswLoader],
   parameters: {
     controls: {
       matchers: {
@@ -33,6 +52,7 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    msw: mswRequests,
     options: {
       storySort: {
         method: "alphabetical"
