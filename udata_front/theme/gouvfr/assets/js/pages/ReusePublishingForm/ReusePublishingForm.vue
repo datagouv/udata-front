@@ -29,13 +29,13 @@
 import type { AxiosError } from 'axios';
 import { onMounted, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { Dataset, User } from '@datagouv/components';
+import type { Dataset, Reuse } from '@datagouv/components';
 import Step1DescribeReuse from './Step1DescribeReuse.vue';
 import Step2AddDatasets from './Step2AddDatasets.vue';
 import Step3CompleteThePublication from './Step3CompleteThePublication.vue';
 import { publishing_form_feedback_url } from '../../config';
 import { createReuse, updateReuse, uploadLogo } from '../../api/reuses';
-import type { NewReuse, Reuse } from '../../types';
+import type { Me, NewReuse } from '../../types';
 import { fetchMe } from '../../api/me';
 import { auth } from '../../plugins/auth';
 
@@ -49,7 +49,7 @@ const loading = ref<boolean>(false);
 
 const containerRef = ref<HTMLDivElement | null>(null);
 
-const me = ref<User | null>(null);
+const me = ref<Me | null>(null);
 
 const user = auth();
 
@@ -164,6 +164,6 @@ async function updateReuseData(newReuse: Reuse) {
 };
 
 onMounted(async () => {
-  me.value = await(fetchMe());
+  me.value = await fetchMe();
 });
 </script>

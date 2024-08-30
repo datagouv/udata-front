@@ -21,7 +21,7 @@
         <Loader style="background-color: #FAFAFA" />
       </li>
       <li class="fr-col-12 fr-col-md-4">
-        <ReuseCard :reuse="reuse" />
+        <ReuseCard :reuse="reuse" :reuseUrl="reuse.page" />
       </li>
       <li class="fr-col-12 fr-col-md-4">
         <Loader style="background-color: #FAFAFA"/>
@@ -49,13 +49,12 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { Well } from '@datagouv/components';
+import { type Reuse , Well } from '@datagouv/components';
 import Container from '../../components/Ui/Container/Container.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import successIcon from "../../../../templates/svg/illustrations/success.svg";
-import ReuseCard from '../../components/Reuse/Reuse.vue';
 import Loader from '../../components/Reuse/ReuseLoader.vue';
-import { type Reuse } from '../../types';
+import ReuseCard from '../../components/Reuse/Reuse.vue';
 
 const props = defineProps<{
   steps: Array<string>,

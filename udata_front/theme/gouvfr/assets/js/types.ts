@@ -1,4 +1,4 @@
-import type { Dataset, FileResourceFileType, NewDataset as BaseNewDataset, NewReuse, Organization, Owned, RemoteResourceFileType, ResourceType, User } from "@datagouv/components";
+import type { Dataset, FileResourceFileType, NewDataset as BaseNewDataset, Organization, Owned, RemoteResourceFileType, ResourceType, User } from "@datagouv/components";
 
 import { CLOSED_FORMATS } from "./helpers";
 
@@ -124,17 +124,6 @@ export type BaseNewReuse = Owned & {
 };
 
 export type NewReuse = Omit<BaseNewReuse, keyof OwnedWithId> & OwnedWithId;
-
-export type Reuse = BaseNewReuse & {
-  id: string;
-  page: string;
-  private: boolean;
-  deleted: boolean;
-  image: string;
-  image_thumbnail: string;
-  slug: string;
-  last_update: string;
-};
 
 export type Me = User & {
   about: string,

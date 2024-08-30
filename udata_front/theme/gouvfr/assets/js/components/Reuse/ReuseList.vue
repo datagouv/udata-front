@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import type { Reuse } from '../../types';
+import type { Reuse } from "@datagouv/components";
 export type ReuseListProps = {
   reuses: Array<Reuse>,
   loading?: boolean,
@@ -40,8 +40,8 @@ const defaultPageSize = 20;
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Pagination } from '@datagouv/components';
+import ReuseCard from "../Reuse/Reuse.vue";
 import Loader from "./loader.vue";
-import ReuseCard from './Reuse.vue';
 
 withDefaults(defineProps<ReuseListProps>(), {
   loading: false,

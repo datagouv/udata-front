@@ -344,6 +344,7 @@ const requiredRules = {
   type: { required },
   topic: { required },
   description: { required },
+  tags: {},
   image: { custom: hasImage },
   owned: { custom: checkOwned },
 };
