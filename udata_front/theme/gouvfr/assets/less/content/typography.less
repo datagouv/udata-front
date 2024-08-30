@@ -280,6 +280,10 @@ each(@font-sizes, {
     }
 }
 
+.whitespace-nowrap {
+    white-space: nowrap;
+}
+
 each(@breakpoints, .(@bk, @_k, @_i) {
     @var: 'query-@{bk}';
 
@@ -298,19 +302,13 @@ each(@breakpoints, .(@bk, @_k, @_i) {
     }
 });
 
-.dash-before::before {
+.dash-before::before, .dash-after::after {
     content: "—";
     margin-left: 0.25rem;
     margin-right: 0.25rem;
 }
 
-.dash-after::after {
-    content: "—";
-    margin-left: 0.25rem;
-    margin-right: 0.25rem;
-}
-
-.dash-after-sm::after {
+.dash-after-sm::after, .dash-before-sm::before {
     content: "—";
     margin-left: 0.25rem;
     margin-right: 0.25rem;
@@ -318,4 +316,4 @@ each(@breakpoints, .(@bk, @_k, @_i) {
     margin-bottom: auto;
     color: @grey-380;
     font-size: 0.6rem;
-  }
+}

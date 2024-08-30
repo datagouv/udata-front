@@ -3,23 +3,20 @@
     <div class="fr-card__body">
       <div class="fr-card__content fr-px-2w fr-py-1v">
         <h3 class="fr-card__title fr-text--md fr-mt-1v fr-mb-0">
-          <AppLink :to="reuseUrl">
+          <AppLink class="text-grey-500" :to="reuseUrl">
             {{ truncate(reuse.title, 55) }}
           </AppLink>
         </h3>
         <div class="fr-card__desc fr-mt-0 text-mention-grey">
-          <p class="fr-text--sm fr-mb-0">
+          <p class="fr-text--sm fr-mb-0 inline-flex">
             <span class="not-enlarged" v-if="reuse.organization">
               <AppLink class="fr-link" v-if="organizationUrl" :to="organizationUrl">
                 <OrganizationNameWithCertificate :organization="reuse.organization" />
               </AppLink>
               <OrganizationNameWithCertificate v-else :organization="reuse.organization" />
-              &mdash;
             </span>
-            <span v-else>
-              {{ ownerName }} &mdash;
-            </span>
-            {{ t('published {date}', { date: formatRelativeIfRecentDate(reuse.created_at) }) }}
+            <TextClamp class="not-enlarged fr-mr-1v" :auto-resize="true" :text='ownerName' :max-lines='1' v-else />
+            <span class="dash-before-sm whitespace-nowrap">{{ t('published {date}', { date: formatRelativeIfRecentDate(reuse.created_at) }) }}</span>
           </p>
           <div class="fr-grid-row fr-grid-row--middle">
             <p class="fr-text--sm fr-my-0 dash-after-sm">
@@ -85,6 +82,7 @@ export type ReuseProps = {
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import TextClamp from 'vue3-text-clamp';
 import Placeholder from '../utils/Placeholder.vue';
 import { OrganizationNameWithCertificate } from "../Organization";
 import { truncate } from "../../helpers";
@@ -103,7 +101,9 @@ const ownerName = useOwnerName(props.reuse);
 const { label: reuseType } = useReuseType(() => props.reuse.type);
 </script>
 
-<style>
+<style scoped lang="less">
+@import "../../../../assets/less/variables.less";
+
 .fr-card__img img.reuse-ratio {
   aspect-ratio: 1.4;
   object-fit: cover;
