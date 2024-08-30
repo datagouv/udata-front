@@ -16,6 +16,7 @@ export type Reuse = Owned & {
   slug: string;
   topic: string;
   type: string;
+  url: string;
   created_at: string,
   last_update: string;
   metrics: {
