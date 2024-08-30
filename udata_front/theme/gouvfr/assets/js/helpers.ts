@@ -43,11 +43,28 @@ export const isClosedFormat = (format: string) => includeInSubtype(CLOSED_FORMAT
 export const UUIDRegExp = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
 
 export const resourceUrlRegExp = new RegExp(
-  "resources\/(" +
+  "\/resources\/(" +
   UUIDRegExp.source +
   ")?$", UUIDRegExp.flags);
 
 export const previousResourceUrlRegExp = new RegExp(
-  "resource-(" +
+  "\/resource-(" +
   UUIDRegExp.source +
   ")?$", UUIDRegExp.flags);
+
+export const communityResourceUrlRegExp = new RegExp(
+  "\/community-resources\/(" +
+  UUIDRegExp.source +
+  ")?$", UUIDRegExp.flags);
+
+
+export const getResourceIdFromHash = (hash: string, isCommunityResource: boolean): string | null => {
+  for (const regex of isCommunityResource ? [communityResourceUrlRegExp] : [resourceUrlRegExp, previousResourceUrlRegExp]) {
+    let [a, foundId, b] = regex.exec(hash) || [];
+    if(foundId) {
+      return foundId;
+    }
+  }
+
+  return null;
+}

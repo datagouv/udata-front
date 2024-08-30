@@ -47,8 +47,8 @@ const args: ReuseProps = {
     tags: [],
     owner: {
       id: "someUserId",
-      first_name: "First",
-      last_name: "Last",
+      first_name: "John",
+      last_name: "Doedoedoedoedoe",
       page: "https://demo.data.gouv.fr/en/users/antonin-garrone/",
     },
     metrics: {
@@ -322,4 +322,26 @@ export const RouterReuseWithOrganization: StoryObj<typeof meta> = {
   }),
   decorators: [vueRouter(datasetRoutes)],
   args,
+};
+
+export const ReuseCardWithLongOrganizationName: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { ReuseCard },
+    setup() {
+      return { args };
+    },
+    template: `<div class="fr-grid-row fr-grid-row--middle">
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+              </div>`,
+  }),
+  decorators: [vueRouter(datasetRoutes)],
+  args: {
+    ...args,
+    reuse: {...args.reuse, owner: { ...args.reuse.owner, first_name: "Really really long first name", last_name: "Really really long last name" } },
+  },
 };
