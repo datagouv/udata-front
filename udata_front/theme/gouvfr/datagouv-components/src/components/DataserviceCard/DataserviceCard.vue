@@ -44,7 +44,13 @@
         </template>
       </span>
     </p>
-    <p class="fr-text--sm fr-mt-1w fr-mb-0 overflow-wrap-anywhere" v-if="showDescription">{{ excerpt(dataservice.description, 160) }}</p>
+    <TextClamp
+      v-if="showDescription"
+      class="fr-text--sm fr-mt-1w fr-mb-0 overflow-wrap-anywhere"
+      :auto-resize="true"
+      :text="dataservice.description"
+      :max-lines='2'
+    />
   </article>
 </template>
 
