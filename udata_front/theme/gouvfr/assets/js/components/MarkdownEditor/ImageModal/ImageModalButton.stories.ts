@@ -6,6 +6,9 @@ import ImageModalButton from './ImageModalButton.vue';
 const meta = {
   title: 'Components/MarkdownEditor/Internals/ImageModalButton',
   component: ImageModalButton,
+  parameters: {
+    chromatic: { delay: 500 },
+  },
   decorators: [
     withActions,
     (story, ctx) => {
