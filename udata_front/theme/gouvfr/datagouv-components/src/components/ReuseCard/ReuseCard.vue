@@ -16,7 +16,7 @@
               <OrganizationNameWithCertificate v-else :organization="reuse.organization" />
             </span>
             <TextClamp class="not-enlarged fr-mr-1v" :auto-resize="true" :text='ownerName' :max-lines='1' v-else />
-            <span class="dash-before-sm whitespace-nowrap">{{ t('published {date}', { date: formatRelativeIfRecentDate(reuse.created_at) }) }}</span>
+            <span class="dash-before-sm whitespace-nowrap">{{ t('published {date}', { date: formatRelativeIfRecentDate(reuse.last_update) }) }}</span>
           </p>
           <div class="fr-grid-row fr-grid-row--middle">
             <p class="fr-text--sm fr-my-0 dash-after-sm">

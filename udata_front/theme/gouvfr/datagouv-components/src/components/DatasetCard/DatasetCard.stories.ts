@@ -112,6 +112,10 @@ const dataset: DatasetV2 = {
   }
 };
 
+const updateLessThanAMonth = new Date();
+const twoDayAgoInMs = 2 * 24 * 60  * 60 * 1000;
+updateLessThanAMonth.setTime(updateLessThanAMonth.getTime() - twoDayAgoInMs);
+
 const updateLastMonth = new Date();
 updateLastMonth.setMonth(updateLastMonth.getMonth() - 1);
 
@@ -285,6 +289,20 @@ export const RouterArchivedDatasetCard: StoryObj<typeof meta> = {
   decorators: [vueRouter(datasetRoutes)],
   args: {
     ...argsArchived,
+  },
+};
+
+export const DatasetCardUpdatedLessThanAMonth: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCard },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCard v-bind="args"/>`,
+  }),
+  args: {
+    dataset: {...dataset, last_update: updateLessThanAMonth.toDateString()},
+    datasetUrl: "/datasets/6571faa17f46a65ee05c4d17",
   },
 };
 

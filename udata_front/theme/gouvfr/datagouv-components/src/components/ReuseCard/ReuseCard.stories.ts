@@ -65,6 +65,10 @@ const args: ReuseProps = {
   reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
 };
 
+const updateLessThanAMonth = new Date();
+const twoDayAgoInMs = 2 * 24 * 60  * 60 * 1000;
+updateLessThanAMonth.setTime(updateLessThanAMonth.getTime() - twoDayAgoInMs);
+
 const updateLastMonth = new Date();
 updateLastMonth.setMonth(updateLastMonth.getMonth() - 1);
 
@@ -233,6 +237,30 @@ export const PrivateArchivedReuse: StoryObj<typeof meta> = {
       ...argsWithOrganizationWithLogo.reuse,
       archived: true,
       private: true,
+    },
+    reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
+  },
+};
+
+export const ReuseUpdatedLessThanAMonth: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { ReuseCard },
+    setup() {
+      return { args };
+    },
+    template: `<div class="fr-grid-row fr-grid-row--middle">
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+              </div>`,
+  }),
+  args: {
+    reuse: {
+      ...argsWithOrganizationWithLogo.reuse,
+      created_at: updateLessThanAMonth.toDateString(),
     },
     reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
   },
