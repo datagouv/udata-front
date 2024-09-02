@@ -65,6 +65,10 @@ const args: ReuseProps = {
   reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
 };
 
+const updateLessThanAMonth = new Date();
+const twoDayAgoInMs = 2 * 24 * 60  * 60 * 1000;
+updateLessThanAMonth.setTime(updateLessThanAMonth.getTime() - twoDayAgoInMs);
+
 const updateLastMonth = new Date();
 updateLastMonth.setMonth(updateLastMonth.getMonth() - 1);
 
@@ -238,6 +242,30 @@ export const PrivateArchivedReuse: StoryObj<typeof meta> = {
   },
 };
 
+export const ReuseUpdatedLessThanAMonth: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { ReuseCard },
+    setup() {
+      return { args };
+    },
+    template: `<div class="fr-grid-row fr-grid-row--middle">
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+                <div class="fr-col-6">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+              </div>`,
+  }),
+  args: {
+    reuse: {
+      ...argsWithOrganizationWithLogo.reuse,
+      last_update: updateLessThanAMonth.toDateString(),
+    },
+    reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
+  },
+};
+
 export const ReuseUpdatedLastMonth: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { ReuseCard },
@@ -256,7 +284,7 @@ export const ReuseUpdatedLastMonth: StoryObj<typeof meta> = {
   args: {
     reuse: {
       ...argsWithOrganizationWithLogo.reuse,
-      created_at: updateLastMonth.toDateString(),
+      last_update: updateLastMonth.toDateString(),
     },
     reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
   },
@@ -280,7 +308,7 @@ export const ReuseUpdatedLastYear: StoryObj<typeof meta> = {
   args: {
     reuse: {
       ...argsWithOrganizationWithLogo.reuse,
-      created_at: updateLastYear.toDateString(),
+      last_update: updateLastYear.toDateString(),
     },
     reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
   },

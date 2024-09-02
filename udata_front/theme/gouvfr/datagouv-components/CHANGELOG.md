@@ -8,6 +8,7 @@
 - show permalink for community resources [#486](https://github.com/datagouv/udata-front/pull/486)
 - fix dataset card tooltip bug [#493](https://github.com/datagouv/udata-front/pull/493)
 - add url to reuse type [#494](https://github.com/datagouv/udata-front/pull/494)
+- fix reuse card date shown [#496](https://github.com/datagouv/udata-front/pull/496)
 - add vue-clamp to cards title and description [#497](https://github.com/datagouv/udata-front/pull/497)
 
 ## 1.2.0 (2024-08-21)
