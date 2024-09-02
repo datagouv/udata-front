@@ -7,7 +7,6 @@ import useUserAvatar from "./useUserAvatar";
 import useOrganizationCertified, { CERTIFIED } from "./organizations/useOrganizationCertified";
 import useOrganizationType, { hasBadge, isType, ASSOCIATION, COMPANY, LOCAL_AUTHORITY, PUBLIC_SERVICE, type OrganizationTypes } from "./organizations/useOrganizationType";
 import useOwnerName from "./organizations/useOwnerName";
-import useResourceImage from "./resources/useResourceImage";
 import useSchema from "./resources/useSchema";
 export {
   hasBadge,
@@ -19,7 +18,6 @@ export {
   useOrganizationCertified,
   useOrganizationType,
   useOwnerName,
-  useResourceImage,
   useSchema,
   useTabs,
   useToast,
