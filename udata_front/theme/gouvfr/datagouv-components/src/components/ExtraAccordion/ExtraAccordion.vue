@@ -5,7 +5,7 @@
     >
       <div class="fr-col">
         <component :is="titleLevel" class="subtitle subtitle--uppercase fr-m-0">
-          {{ titleText }}
+          {{ titleText }} {{  !extra  }}
         </component>
       </div>
       <div class="fr-col-auto">

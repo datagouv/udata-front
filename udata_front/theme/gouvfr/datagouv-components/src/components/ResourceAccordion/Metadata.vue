@@ -7,10 +7,13 @@ import DescriptionList from '../DescriptionList/DescriptionList.vue';
 import DescriptionTerm from '../DescriptionList/DescriptionTerm.vue';
 import { filesize, formatDate, getResourceLabel } from "../../helpers";
 import ExtraAccordion from '../ExtraAccordion/ExtraAccordion.vue';
+import { computed } from 'vue';
 
 const props = defineProps<{
     resource: Resource;
 }>();
+
+const hasExtras = computed(() => Object.keys(props.resource.extras).length)
 
 const { t } = useI18n();
 </script>
@@ -95,7 +98,7 @@ const { t } = useI18n();
                 :title-text="t('Resource Extras')"
                 title-level="h5"
                 :extra="resource.extras"
-                v-if="resource.extras"
+                v-if="hasExtras"
             />
         </div>
     </div>
