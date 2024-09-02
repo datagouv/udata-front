@@ -11,7 +11,7 @@
             <ResourceIcon :resource class="fr-icon--sm fr-mr-1v" />
             <span :class="{
               'font-bold': open,
-            }">{{ resource.title || t('Nameless file') }}</span>
+            }"><TextClamp :max-lines="1" :text="resource.title || t('Nameless file')"/></span>
 
             <span class="absolute inset-0"></span>
           </button>

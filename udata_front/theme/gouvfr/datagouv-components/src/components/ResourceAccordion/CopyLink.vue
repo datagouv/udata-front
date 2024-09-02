@@ -1,5 +1,5 @@
 <template>
-    <button type="button" @click="copy" class="fr-text--xs fr-mb-0">
+    <button type="button" @click="copy" class="fr-text--xs fr-mb-0 whitespace-nowrap">
         <span v-if="copied" style="color: #3558a2;">
             <OhVueIcon name="ri-file-copy-line" class="fr-icon--sm fr-mr-1v" />
             <span>{{ t("Link copied!") }}</span>  

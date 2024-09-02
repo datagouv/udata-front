@@ -145,7 +145,7 @@ export const ResourceUrl: StoryObj<typeof meta> = {
     },
     template: '<ResourceAccordion v-bind="args" />',
   }),
-  args: { ...argsWithSchema, resource: { ...argsWithSchema.resource, format: "url", title: "tondeuse_batterie_fr.zip",
+  args: { ...argsWithSchema, resource: { ...argsWithSchema.resource, format: "url", title: "External documentation",
   } },
 };
 
