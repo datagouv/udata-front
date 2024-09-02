@@ -27,7 +27,7 @@ const { t } = useI18n();
                         <a :href="resource.url">{{resource.url}}</a>
                     </div>
                     <div class="fr-ml-1w fr-col-auto">
-                        <CopyButton :text="resource.url"/>
+                        <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resource.url"/>
                     </div>
                 </DescriptionDetails>
                 <DescriptionTerm>{{ t('Stable URL') }}</DescriptionTerm>
@@ -36,7 +36,7 @@ const { t } = useI18n();
                         <a :href="resource.latest">{{resource.latest}}</a>
                     </div>
                     <div class="fr-ml-1w fr-col-auto">
-                        <CopyButton :text="resource.latest"/>
+                        <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resource.latest"/>
                     </div>
                 </DescriptionDetails>
                 <DescriptionTerm>{{ t('Identifier') }}</DescriptionTerm>
@@ -45,7 +45,7 @@ const { t } = useI18n();
                         {{ resource.id }}
                     </div>
                     <div class="fr-ml-1w fr-col-auto">
-                        <CopyButton :text="resource.id"/>
+                        <CopyButton :label="$t('Copy ID')" :copied-label="$t('ID copied!')" :text="resource.id"/>
                     </div>
                 </DescriptionDetails>
                 <template v-if="resource.checksum">
@@ -55,7 +55,7 @@ const { t } = useI18n();
                             {{resource.checksum.value}}
                         </div>
                         <div class="fr-col-auto">
-                            <CopyButton :text="resource.checksum.value"/>
+                            <CopyButton :label="$t('Copy checksum')" :copied-label="$t('Checksum copied!')" :text="resource.checksum.value"/>
                         </div>
                     </DescriptionDetails>
                 </template>

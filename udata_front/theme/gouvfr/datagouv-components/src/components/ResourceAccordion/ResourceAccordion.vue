@@ -15,7 +15,7 @@
 
             <span class="absolute inset-0"></span>
           </button>
-          <CopyLink :value="resourceExternalUrl" class="relative" />
+          <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resourceExternalUrl" class="relative" />
         </h4>
         <div class="text-grey-380">
           <SchemaBadge :resource class="dash-after" />
@@ -124,7 +124,7 @@
                       <span>{{ $t('Format {format}', { format: resource.format }) }}<span v-if="resource.filesize"> - {{ filesize(resource.filesize) }}</span></span>
                     </a>
                   </span>
-                  <CopyLink :value="resource.latest" class="relative" />
+                  <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resource.latest" class="relative" />
                 </dd>
               </dl>
             </div>
@@ -148,7 +148,6 @@ import { filesize, formatRelativeIfRecentDate, markdown } from "../../helpers";
 import type { CommunityResource, Resource } from "../../types/resources";
 import ResourceIcon from "./ResourceIcon.vue";
 import SchemaBadge from "./SchemaBadge.vue";
-import CopyLink from "./CopyLink.vue";
 import SchemaTab from "./SchemaTab.vue";
 import Metadata from "./Metadata.vue";
 import TextClamp from 'vue3-text-clamp';
@@ -158,6 +157,7 @@ import Tab from "../Tabs/Tab.vue";
 import TabPanels from "../Tabs/TabPanels.vue";
 import TabPanel from "../Tabs/TabPanel.vue";
 import { trackEvent } from "../../helpers/matomo";
+import CopyButton from "../CopyButton/CopyButton.vue";
 
 defineOptions({
   inheritAttrs: false,
