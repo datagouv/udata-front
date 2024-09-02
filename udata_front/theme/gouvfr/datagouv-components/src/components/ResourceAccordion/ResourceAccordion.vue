@@ -102,6 +102,18 @@
             <div v-if="tab.key === 'metadata'" class="fr-p-5v">
               <Metadata :resource />
             </div>
+            <div v-if="tab.key === 'downloads'" class="fr-p-5v">
+              <dl class="fr-pl-0">
+                <dt class="font-bold fr-text--sm fr-mb-0">{{ $t('Original format') }}</dt>
+                <dd class="fr-pl-0 flex items-center">
+                  <span class="text-color-blue-link fr-icon-download-line fr-icon--sm fr-mr-1v fr-mt-1v"></span>
+                  <a :href="resource.latest" class="fr-link">
+                    <span>{{ $t('Format {format}', { format: resource.format }) }}<span v-if="resource.filesize"> - {{ filesize(resource.filesize) }}</span></span>
+                  </a>
+                  <CopyLink :value="resource.latest" class="relative" />
+                </dd>
+              </dl>
+            </div>
           </TabPanel>
         </TabPanels>
       </TabGroup>

@@ -1,11 +1,11 @@
 <template>
     <button type="button" @click="copy" class="fr-text--xs fr-mb-0">
         <span v-if="copied" style="color: #3558a2;">
-            <span class="fr-icon-check-line fr-icon--sm fr-mr-1v"></span>
+            <OhVueIcon name="ri-file-copy-line" class="fr-icon--sm fr-mr-1v" />
             <span>{{ t("Link copied!") }}</span>  
         </span>
         <span v-if="!copied">
-            <span class="copy-icon fr-icon-todo-line fr-icon--sm fr-mr-1v"></span>
+            <OhVueIcon name="ri-file-copy-line" class="copy-icon fr-icon--sm fr-mr-1v" />
             <span class="copy-link">{{ t("Copy link") }}</span>  
         </span>
     </button>
@@ -13,6 +13,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { RiFileCopyLine } from "oh-vue-icons/icons";
+import { OhVueIcon, addIcons } from 'oh-vue-icons';
+
+addIcons(RiFileCopyLine)
 
 const props = defineProps<{
     value: string;

@@ -106,5 +106,13 @@
   "Other": "Other",
   "{n} views": "{n} views",
   "{n} followers": "{n} followers",
-  "unknown": "unknown"
+  "unknown": "unknown",
+  "Link copied!": "Link copied!",
+  "Copy link": "Copy link",
+  "Original format": "Original format",
+  "Format {format}": "Format {format}",
+  "Data": "Data",
+  "Description": "Description",
+  "Downloads": "Downloads",
+  "Schema:": "Schema"
 }
