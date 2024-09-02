@@ -5,7 +5,7 @@ import CopyButton from '../CopyButton/CopyButton.vue';
 import DescriptionDetails from '../DescriptionList/DescriptionDetails.vue';
 import DescriptionList from '../DescriptionList/DescriptionList.vue';
 import DescriptionTerm from '../DescriptionList/DescriptionTerm.vue';
-import { filesize, formatDate } from "../../helpers";
+import { filesize, formatDate, getResourceLabel } from "../../helpers";
 import ExtraAccordion from '../ExtraAccordion/ExtraAccordion.vue';
 
 const props = defineProps<{
@@ -14,12 +14,10 @@ const props = defineProps<{
 
 const { t } = useI18n();
 </script>
-
 <template>
     <div>
-
         <div class="fr-grid-row fr-grid-row--gutters">
-            <DescriptionList>
+            <DescriptionList class="fr-col-12 fr fr-col-md-6">
                 <DescriptionTerm>{{ t('URL') }}</DescriptionTerm>
                 <DescriptionDetails :withEllipsis="false">
                     <div class="fr-col text-overflow-ellipsis">
@@ -29,7 +27,7 @@ const { t } = useI18n();
                         <CopyButton :text="resource.url"/>
                     </div>
                 </DescriptionDetails>
-                <DescriptionTerm>{{ t('Permalink') }}</DescriptionTerm>
+                <DescriptionTerm>{{ t('Stable URL') }}</DescriptionTerm>
                 <DescriptionDetails :withEllipsis="false">
                     <div class="fr-col text-overflow-ellipsis">
                         <a :href="resource.latest">{{resource.latest}}</a>
@@ -38,7 +36,7 @@ const { t } = useI18n();
                         <CopyButton :text="resource.latest"/>
                     </div>
                 </DescriptionDetails>
-                <DescriptionTerm>{{ t('ID') }}</DescriptionTerm>
+                <DescriptionTerm>{{ t('Identifier') }}</DescriptionTerm>
                 <DescriptionDetails :withEllipsis="false">
                     <div class="fr-col text-overflow-ellipsis">
                         {{ resource.id }}
@@ -46,22 +44,6 @@ const { t } = useI18n();
                     <div class="fr-ml-1w fr-col-auto">
                         <CopyButton :text="resource.id"/>
                     </div>
-                </DescriptionDetails>
-                <template v-if="resource.mime">
-                    <DescriptionTerm>{{ t('MIME Type') }}</DescriptionTerm>
-                    <DescriptionDetails>
-                        {{resource.mime}}
-                    </DescriptionDetails>
-                </template>
-            </DescriptionList>
-            <DescriptionList>
-                <DescriptionTerm>{{ t('Created on') }}</DescriptionTerm>
-                <DescriptionDetails>
-                    {{formatDate(resource.created_at)}}
-                </DescriptionDetails>
-                <DescriptionTerm>{{ t('Modified on') }}</DescriptionTerm>
-                <DescriptionDetails>
-                    {{formatDate(resource.last_modified)}}
                 </DescriptionDetails>
                 <template v-if="resource.checksum">
                     <DescriptionTerm>{{resource.checksum.type}}</DescriptionTerm>
@@ -75,11 +57,33 @@ const { t } = useI18n();
                     </DescriptionDetails>
                 </template>
             </DescriptionList>
-            <DescriptionList>
+            <DescriptionList class="fr-col-12 fr fr-col-md-3">
+                <DescriptionTerm>{{ t('Created on') }}</DescriptionTerm>
+                <DescriptionDetails>
+                    {{formatDate(resource.created_at)}}
+                </DescriptionDetails>
+                <DescriptionTerm>{{ t('Modified on') }}</DescriptionTerm>
+                <DescriptionDetails>
+                    {{formatDate(resource.last_modified)}}
+                </DescriptionDetails>
+            </DescriptionList>
+            <DescriptionList class="fr-col-12 fr fr-col-md-3">
                 <template v-if="resource.filesize">
                     <DescriptionTerm>{{ t('Size') }}</DescriptionTerm>
                     <DescriptionDetails>
                         {{ filesize(resource.filesize) }}
+                    </DescriptionDetails>
+                </template>
+                <template v-if="resource.mime">
+                    <DescriptionTerm>{{ t('MIME Type') }}</DescriptionTerm>
+                    <DescriptionDetails>
+                        {{getResourceLabel(resource.type)}}
+                    </DescriptionDetails>
+                </template>
+                <template v-if="resource.mime">
+                    <DescriptionTerm>{{ t('MIME Type') }}</DescriptionTerm>
+                    <DescriptionDetails>
+                        {{resource.mime}}
                     </DescriptionDetails>
                 </template>
             </DescriptionList>

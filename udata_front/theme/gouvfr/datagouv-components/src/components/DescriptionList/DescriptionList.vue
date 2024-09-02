@@ -1,5 +1,5 @@
 <template>
-  <dl class="fr-col-12 fr-col-sm-6 fr-col-md-4 fr-my-0">
+  <dl class="fr-my-0">
     <slot></slot>
   </dl>
 </template>
