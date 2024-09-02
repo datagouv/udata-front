@@ -63,13 +63,13 @@ CAPTCHETAT_CLIENT_ID = None
 CAPTCHETAT_CLIENT_SECRET = None
 CAPTCHETAT_TOKEN_CACHE_KEY = 'captchetat-bearer-token'
 
-# AgentConnect
+# ProConnect
 
-# You can activate AgentConnect SSO, a https://agentconnect.gouv.fr/ login integration
-AGENTCONNECT_OPENID_CONF_URL = None
-AGENTCONNECT_SCOPE = None
-AGENTCONNECT_CLIENT_ID = None
-AGENTCONNECT_CLIENT_SECRET = None
+# You can activate ProConnect SSO, a https://proconnect.gouv.fr/ login integration
+PROCONNECT_OPENID_CONF_URL = None
+PROCONNECT_SCOPE = None
+PROCONNECT_CLIENT_ID = None
+PROCONNECT_CLIENT_SECRET = None
 
 # Newsletter
 NEWSLETTER_SUBSCRIPTION_URL = 'https://f.info.data.gouv.fr/f/lp/infolettre-data-gouv-fr-landing-page/lk3q01y6'  # noqa

@@ -6,24 +6,8 @@
 - show contact point in dataset and dataservice page [#479](https://github.com/datagouv/udata-front/pull/479)
 - always show authorization_request_url if present (even on open API) [#481](https://github.com/datagouv/udata-front/pull/481)
 - Show organization type [#472](https://github.com/datagouv/udata-front/pull/472)
-- Replace the "MonComptePro" SSO login button with a "AgentConnect" button [#482](https://github.com/datagouv/udata-front/pull/482)
-  This needs the following settings:
-  ```
-  # During development:
-  #AGENTCONNECT_REDIRECT_URL = "http://dev.local:7000/agentconnect/auth"
-  AGENTCONNECT_REDIRECT_URL = "https://data.gouv.fr/agentconnect/auth"
-
-  # During development:
-  #AGENTCONNECT_OPENID_CONF_URL = "https://fca.integ01.dev-agentconnect.fr/api/v2/.well-known/openid-configuration"
-  # For production:
-  AGENTCONNECT_OPENID_CONF_URL = "https://auth.agentconnect.gouv.fr/api/v2/.well-known/openid-configuration"
-
-  AGENTCONNECT_SCOPE = "openid email given_name usual_name"
-
-  # Use appropriate client ID and client secret
-  AGENTCONNECT_CLIENT_ID = "client id here"
-  AGENTCONNECT_CLIENT_SECRET = "client secret here"
-  ```
+- Replace the "MonComptePro" SSO login button with a "ProConnect" button [#482](https://github.com/datagouv/udata-front/pull/482)
+  This needs the `PROCONNECT_*` related settings in `settings.py`, and an active [ProConnect flow](https://github.com/numerique-gouv/agentconnect-documentation/blob/main/doc_fs/implementation_technique.md)
 
 
 

@@ -2084,7 +2084,7 @@ msgstr ""
 
 #: udata_front/theme/gouvfr/templates/security/login_user.html:54
 #: udata_front/theme/gouvfr/templates/security/register_user.html:76
-msgid "What is AgentConnect ?"
+msgid "What is ProConnect ?"
 msgstr ""
 
 #: udata_front/theme/gouvfr/templates/security/login_user.html:66

@@ -1,30 +1,28 @@
 from datetime import datetime
 
-from flask import abort, current_app, redirect, url_for
+from flask import abort, redirect, url_for
 from udata.i18n import I18nBlueprint
 from udata_front.frontend import oauth
 from udata.models import datastore
 from udata.auth import login_user
 
 
-blueprint = I18nBlueprint('agentconnect', __name__, url_prefix='/agentconnect')
+blueprint = I18nBlueprint('proconnect', __name__, url_prefix='/proconnect')
 
 
 @blueprint.route('/login', endpoint='login')
 def login():
-    client = oauth.create_client('agentconnect')
+    client = oauth.create_client('proconnect')
     if not client:
         abort(404)
 
-    redirect_uri = url_for('agentconnect.auth', _external=True)
-    if current_app.config.get('AGENTCONNECT_REDIRECT_URL'):
-        redirect_uri = current_app.config.get('AGENTCONNECT_REDIRECT_URL')
+    redirect_uri = url_for('proconnect.auth', _external=True)
     return client.authorize_redirect(redirect_uri, acr_values='eidas1')
 
 
 @blueprint.route('/auth', endpoint='auth')
 def auth():
-    client = oauth.create_client('agentconnect')
+    client = oauth.create_client('proconnect')
     if not client:
         abort(404)
 
@@ -33,7 +31,7 @@ def auth():
     # authlib expects the userinfo to either be in the token["id_token"] as a jwt...
     # but in this case, it's not there, it's some other information.
     # We thus need to go get the userinfo from the userinfo_endpoint, but authlib
-    # expects it to be plain json. However, agentconnect returns a jwt.
+    # expects it to be plain json. However, proconnect returns a jwt.
     # So we can't use authlib's client.userinfo() helper, we need to do it ourselves.
     metadata = client.load_server_metadata()
     resp = client.get(metadata["userinfo_endpoint"])
@@ -42,18 +40,18 @@ def auth():
     # `id_token` with the jwt we received from the `userinfo_endpoint`.
     userinfo_token = token.copy()
     userinfo_token["id_token"] = resp.content
-    agentconnect_user = client.parse_id_token(userinfo_token, nonce=None)
+    proconnect_user = client.parse_id_token(userinfo_token, nonce=None)
     # We now have the user information decoded from the jwt, ready to be used.
-    user = datastore.find_user(email=agentconnect_user["email"])
+    user = datastore.find_user(email=proconnect_user["email"])
     if not user:
         user = datastore.create_user(
-            email=agentconnect_user['email'],
-            first_name=agentconnect_user.get('given_name'),
-            last_name=agentconnect_user.get('usual_name'),
+            email=proconnect_user['email'],
+            first_name=proconnect_user.get('given_name'),
+            last_name=proconnect_user.get('usual_name'),
             confirmed_at=datetime.now()
             )
 
     if not login_user(user):
-        return {'message': 'AgentConnect Authentication failed'}, 401
+        return {'message': 'ProConnect Authentication failed'}, 401
 
     return redirect('/')

@@ -36,7 +36,7 @@ def _load_views(app, module):
 
 
 VIEWS = ['gouvfr', 'dataset', 'dataservice', 'organization', 'follower', 'post',
-         'reuse', 'site', 'territories', 'topic', 'user', 'agentconnect', 'beta']
+         'reuse', 'site', 'territories', 'topic', 'user', 'proconnect', 'beta']
 
 
 def init_app(app):
@@ -91,15 +91,15 @@ def init_app(app):
             security.forms['confirm_register_form'].cls = ExtendedRegisterForm
             security.forms['forgot_password_form'].cls = ExtendedForgotPasswordForm
 
-    if app.config.get('AGENTCONNECT_OPENID_CONF_URL'):
-        # AgentConnect SSO
+    if app.config.get('PROCONNECT_OPENID_CONF_URL'):
+        # ProConnect SSO
         oauth.init_app(app)
         oauth.register(
-            name='agentconnect',
-            client_id=app.config.get('AGENTCONNECT_CLIENT_ID'),
-            client_secret=app.config.get('AGENTCONNECT_CLIENT_SECRET'),
-            server_metadata_url=app.config.get('AGENTCONNECT_OPENID_CONF_URL'),
+            name='proconnect',
+            client_id=app.config.get('PROCONNECT_CLIENT_ID'),
+            client_secret=app.config.get('PROCONNECT_CLIENT_SECRET'),
+            server_metadata_url=app.config.get('PROCONNECT_OPENID_CONF_URL'),
             client_kwargs={
-                'scope': app.config.get('AGENTCONNECT_SCOPE')
+                'scope': app.config.get('PROCONNECT_SCOPE')
             }
         )
