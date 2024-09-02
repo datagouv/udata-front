@@ -14,10 +14,10 @@
         {{ t('Archived') }}
       </p>
     </div>
-    <h4 class="fr-text--md fr-mb-0 fr-grid-row">
+    <h4 class="fr-text--md fr-mb-0">
       <slot name="dataserviceUrl" :dataservice="dataservice" :dataserviceUrl="dataserviceUrl">
         <span class="fr-icon-terminal-line fr-icon--sm fr-mr-1v" aria-hidden="true"></span>
-        <AppLink :to="dataserviceUrl">
+        <AppLink class="inline-flex" :to="dataserviceUrl">
           <TextClamp :auto-resize="true" :text='dataservice.title' :max-lines='1'/>
         </AppLink>
       </slot>
