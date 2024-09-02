@@ -69,9 +69,13 @@
             </p>
           </div>
         </div>
-        <div v-if="showDescription" class="fr-pt-2v">
-          <p class="fr-text--sm fr-m-0 overflow-wrap-anywhere">{{ excerpt(dataset.description, 160) }}</p>
-        </div>
+        <TextClamp
+          v-if="showDescription"
+          class="fr-text--sm fr-mt-1w fr-mb-0 overflow-wrap-anywhere"
+          :auto-resize="true"
+          :text="dataset.description"
+          :max-lines='2'
+        />
       </div>
     </div>
   </article>

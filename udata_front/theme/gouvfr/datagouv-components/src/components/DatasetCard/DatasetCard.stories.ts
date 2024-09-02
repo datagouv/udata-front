@@ -67,7 +67,7 @@ const dataset: DatasetV2 = {
   title: "Données changement climatique - SQR",
   acronym: "DCC",
   archived: false,
-  description: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+  description: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Eaque ipsa quae s iste natus error siab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
   tags: null,
   license: "lov2",
   frequency: "Unknown",
