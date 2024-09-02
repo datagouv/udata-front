@@ -41,106 +41,31 @@ export default {
       await delay();
       return HttpResponse.json(
         [
-          {
-            "id": "unknown",
-            "label": "Inconnu"
-          },
-          {
-            "id": "punctual",
-            "label": "Ponctuelle"
-          },
-          {
-            "id": "continuous",
-            "label": "Temps réel"
-          },
-          {
-            "id": "hourly",
-            "label": "Toutes les heures"
-          },
-          {
-            "id": "fourTimesADay",
-            "label": "Quatre fois par jour"
-          },
-          {
-            "id": "threeTimesADay",
-            "label": "Trois fois par jour"
-          },
-          {
-            "id": "semidaily",
-            "label": "Deux fois par jour"
-          },
-          {
-            "id": "daily",
-            "label": "Quotidienne"
-          },
-          {
-            "id": "fourTimesAWeek",
-            "label": "Quatre fois par semaine"
-          },
-          {
-            "id": "threeTimesAWeek",
-            "label": "Trois fois par semaine"
-          },
-          {
-            "id": "semiweekly",
-            "label": "Deux fois par semaine"
-          },
-          {
-            "id": "weekly",
-            "label": "Hebdomadaire"
-          },
-          {
-            "id": "biweekly",
-            "label": "Toutes les deux semaines"
-          },
-          {
-            "id": "threeTimesAMonth",
-            "label": "Trois fois par mois"
-          },
-          {
-            "id": "semimonthly",
-            "label": "Deux fois par mois"
-          },
-          {
-            "id": "monthly",
-            "label": "Mensuelle"
-          },
-          {
-            "id": "bimonthly",
-            "label": "Bimestrielle"
-          },
-          {
-            "id": "quarterly",
-            "label": "Trimestrielle"
-          },
-          {
-            "id": "threeTimesAYear",
-            "label": "Trois fois par an"
-          },
-          {
-            "id": "semiannual",
-            "label": "Semestrielle"
-          },
-          {
-            "id": "annual",
-            "label": "Annuelle"
-          },
-          {
-            "id": "biennial",
-            "label": "Biennale"
-          },
-          {
-            "id": "triennial",
-            "label": "Triennale"
-          },
-          {
-            "id": "quinquennial",
-            "label": "Quinquennale"
-          },
-          {
-            "id": "irregular",
-            "label": "Sans régularité"
-          }
+          {"id": "unknown", "label": "Unknown"},
+          {"id": "punctual", "label": "Punctual"},
+          {"id": "continuous", "label": "Real time"},
+          {"id": "hourly", "label": "Hourly"},
+          {"id": "fourTimesADay", "label": "Four times a day"},
+          {"id": "threeTimesADay", "label": "Three times a day"},
+          {"id": "semidaily", "label": "Semidaily"},
+          {"id": "daily", "label": "Daily"},
+          {"id": "fourTimesAWeek", "label": "Four times a week"},
+          {"id": "threeTimesAWeek", "label": "Three times a week"},
+          {"id": "semiweekly", "label": "Semiweekly"},
+          {"id": "weekly", "label": "Weekly"},
+          {"id": "biweekly", "label": "Biweekly"},
+          {"id": "threeTimesAMonth", "label": "Three times a month"},
+          {"id": "semimonthly", "label": "Semimonthly"},
+          {"id": "monthly", "label": "Monthly"},
+          {"id": "bimonthly", "label": "Bimonthly"},
+          {"id": "quarterly", "label": "Quarterly"},
+          {"id": "threeTimesAYear", "label": "Three times a year"},
+          {"id": "semiannual", "label": "Biannual"},
+          {"id": "annual", "label": "Annual"},
+          {"id": "biennial", "label": "Biennial"},
+          {"id": "triennial", "label": "Triennial"},
+          {"id": "quinquennial", "label": "Quinquennial"},
+          {"id": "irregular", "label": "Irregular"}
         ]
       )
     }),
@@ -334,38 +259,14 @@ export default {
       await delay();
       return HttpResponse.json(
         [
-          {
-            "id": "api",
-            "label": "API"
-          },
-          {
-            "id": "application",
-            "label": "Application"
-          },
-          {
-            "id": "idea",
-            "label": "Idée"
-          },
-          {
-            "id": "news_article",
-            "label": "Article de presse"
-          },
-          {
-            "id": "paper",
-            "label": "Papier"
-          },
-          {
-            "id": "post",
-            "label": "Article de blog"
-          },
-          {
-            "id": "visualization",
-            "label": "Visualisation"
-          },
-          {
-            "id": "hardware",
-            "label": "Objet connecté"
-          }
+          {"id": "api", "label": "API"},
+          {"id": "application", "label": "Application"},
+          {"id": "idea", "label": "Idea"},
+          {"id": "news_article", "label": "News Article"},
+          {"id": "paper", "label": "Paper"},
+          {"id": "post", "label": "Post"},
+          {"id": "visualization", "label": "Visualization"},
+          {"id": "hardware", "label": "Connected device"}
         ]
       )
     }),
@@ -400,60 +301,23 @@ export default {
     }),
     http.get('*/api/1/spatial/granularities/*', async () => {
       await delay();
-      return HttpResponse.json([
-        {
-          "id": "country-group",
-          "name": "Groupement de pays"
-        },
-        {
-          "id": "country",
-          "name": "Pays"
-        },
-        {
-          "id": "country-subset",
-          "name": "Sous-ensemble de pays"
-        },
-        {
-          "id": "fr:region",
-          "name": "Région française"
-        },
-        {
-          "id": "fr:departement",
-          "name": "Département français"
-        },
-        {
-          "id": "fr:arrondissement",
-          "name": "Arrondissement français"
-        },
-        {
-          "id": "fr:commune",
-          "name": "Commune française"
-        },
-        {
-          "id": "fr:iris",
-          "name": "Iris (quartiers INSEE)"
-        },
-        {
-          "id": "fr:canton",
-          "name": "Canton français"
-        },
-        {
-          "id": "fr:collectivite",
-          "name": "Collectivités d'outre-mer françaises"
-        },
-        {
-          "id": "fr:epci",
-          "name": "Intercommunalité française (EPCI)"
-        },
-        {
-          "id": "poi",
-          "name": "Point d'Intérêt"
-        },
-        {
-          "id": "other",
-          "name": "Autre"
-        }
-      ]);
+      return HttpResponse.json(
+        [
+          {"id": "country-group", "name": "Country group"},
+          {"id": "country", "name": "Country"},
+          {"id": "country-subset", "name": "Country subset"},
+          {"id": "fr:region", "name": "French region"},
+          {"id": "fr:departement", "name": "French county"},
+          {"id": "fr:arrondissement", "name": "French arrondissement"},
+          {"id": "fr:commune", "name": "French town"},
+          {"id": "fr:iris", "name": "Iris (Insee districts)"},
+          {"id": "fr:canton", "name": "French canton"},
+          {"id": "fr:collectivite", "name": "French overseas collectivities"},
+          {"id": "fr:epci", "name": "French intermunicipal (EPCI)"},
+          {"id": "poi", "name": "POI"},
+          {"id": "other", "name": "Other"}
+        ]
+      );
     }),
     http.get('*/api/1/spatial/zones/country:fr/*', async () => {
       await delay();
