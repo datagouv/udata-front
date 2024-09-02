@@ -260,7 +260,7 @@ export const ReuseUpdatedLessThanAMonth: StoryObj<typeof meta> = {
   args: {
     reuse: {
       ...argsWithOrganizationWithLogo.reuse,
-      created_at: updateLessThanAMonth.toDateString(),
+      last_update: updateLessThanAMonth.toDateString(),
     },
     reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
   },
@@ -284,7 +284,7 @@ export const ReuseUpdatedLastMonth: StoryObj<typeof meta> = {
   args: {
     reuse: {
       ...argsWithOrganizationWithLogo.reuse,
-      created_at: updateLastMonth.toDateString(),
+      last_update: updateLastMonth.toDateString(),
     },
     reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
   },
@@ -308,7 +308,7 @@ export const ReuseUpdatedLastYear: StoryObj<typeof meta> = {
   args: {
     reuse: {
       ...argsWithOrganizationWithLogo.reuse,
-      created_at: updateLastYear.toDateString(),
+      last_update: updateLastYear.toDateString(),
     },
     reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
   },
