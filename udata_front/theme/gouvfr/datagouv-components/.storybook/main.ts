@@ -11,7 +11,7 @@ const config : StorybookConfig = {
     name: "@storybook/vue3-vite",
     options: {},
   },
-  staticDirs: ['./msw'],
+  staticDirs: ['./msw', '../../templates/svg'],
   docs: {
     autodocs: "tag",
   },
