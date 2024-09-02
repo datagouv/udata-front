@@ -10,7 +10,7 @@ import mswRequests from '../udata_front/theme/gouvfr/datagouv-components/.storyb
 initialize({
   onUnhandledRequest: ({ url }, print) => {
     const pathname = new URL(url).pathname
-    if (pathname.startsWith("/udata_front") || pathname.startsWith("/@fs") || pathname.startsWith("/node_modules")) {
+    if (pathname.startsWith("/udata_front") || pathname.startsWith("/@fs") || pathname.startsWith("/node_modules") || pathname.endsWith("/.svg")) {
       return;
     }
     print.warning();

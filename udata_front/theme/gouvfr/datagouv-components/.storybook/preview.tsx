@@ -27,8 +27,8 @@ setup((app) => {
  */
 initialize({
   onUnhandledRequest: ({ url }, print) => {
-    const pathname = new URL(url).pathname
-    if (pathname.startsWith("/src") || pathname.startsWith("/@fs") || pathname.startsWith("/node_modules")) {
+    const pathname = new URL(url).pathname;
+    if (pathname.startsWith("/src") || pathname.startsWith("/@fs") || pathname.startsWith("/node_modules") || pathname.endsWith("/.svg")) {
       return;
     }
     print.warning();
