@@ -9,7 +9,9 @@
         <h4 class="fr-mb-1v flex items-center" :id="resourceTitleId">
           <button type="button" @click="toggle" class="flex items-center">
             <ResourceIcon :resource class="fr-icon--sm fr-mr-1v" />
-            <span>{{ resource.title || t('Nameless file') }}</span>
+            <span :class="{
+              'font-bold': open,
+            }">{{ resource.title || t('Nameless file') }}</span>
 
             <span class="absolute inset-0"></span>
           </button>
