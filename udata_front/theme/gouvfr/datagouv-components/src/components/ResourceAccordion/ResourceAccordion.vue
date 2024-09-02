@@ -25,7 +25,7 @@
             <span v-if="resource.filesize">({{ filesize(resource.filesize) }})</span>
           </span>
           <span class="inline-flex items-center fr-text--xs fr-mb-0">
-            <span class="fr-icon-download-2-line fr-icon--sm fr-mr-1v"></span>
+            <span class="fr-icon-download-line fr-icon--sm fr-mr-1v"></span>
             <span>{{ resource.metrics.views || 0 }}</span>
           </span>
         </div>
