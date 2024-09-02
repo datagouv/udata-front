@@ -38,9 +38,10 @@ button:hover .copy-icon {
 }
 
 .copy-link {
-    display: none;
+    /* Using opacity here to prevent moving object with display:none (for example when clamping a text before the button) */
+    opacity: 0%; 
 }
 button:hover .copy-link {
-    display: inline;
+    opacity: 100%;
 }
 </style>

@@ -47,8 +47,9 @@
             :title="t('File link - opens a new window')"
             rel="ugc nofollow noopener"
             target="_blank"
-            class="fr-btn fr-btn--icon-left fr-icon-test-tube-line fr-icon-external-link-line fr-icon--sm"
+            class="fr-btn"
           >
+            {{ $t('Visit') }}
           </a>
         </p>
         <p class="fr-col-auto fr-ml-3v fr-m-0" v-else>
@@ -104,12 +105,25 @@
             </div>
             <div v-if="tab.key === 'downloads'" class="fr-p-5v">
               <dl class="fr-pl-0">
-                <dt class="font-bold fr-text--sm fr-mb-0">{{ $t('Original format') }}</dt>
+                <dt class="font-bold fr-text--sm fr-mb-0" v-if="resource.format === 'url'">{{ $t('Original URL') }}</dt>
+                <dt class="font-bold fr-text--sm fr-mb-0" v-else>{{ $t('Original format') }}</dt>
                 <dd class="fr-pl-0 flex items-center">
-                  <span class="text-color-blue-link fr-icon-download-line fr-icon--sm fr-mr-1v fr-mt-1v"></span>
-                  <a :href="resource.latest" class="fr-link">
-                    <span>{{ $t('Format {format}', { format: resource.format }) }}<span v-if="resource.filesize"> - {{ filesize(resource.filesize) }}</span></span>
-                  </a>
+                  <span v-if="resource.format === 'url'">
+                    <a :href="resource.latest" class="fr-link fr-link--no-after" rel="ugc nofollow noopener" target="_blank">
+                      <TextClamp :auto-resize="true" :max-lines="1" :text="resource.url">
+                        <template #after>
+                          <span class="fr-ml-1v fr-icon-external-link-line fr-icon--sm"></span>
+                        </template>
+                      </TextClamp>
+
+                    </a>
+                  </span>
+                  <span v-else>
+                    <span class="text-color-blue-link fr-icon-download-line fr-icon--sm fr-mr-1v fr-mt-1v"></span>
+                    <a :href="resource.latest" class="fr-link" rel="ugc nofollow noopener">
+                      <span>{{ $t('Format {format}', { format: resource.format }) }}<span v-if="resource.filesize"> - {{ filesize(resource.filesize) }}</span></span>
+                    </a>
+                  </span>
                   <CopyLink :value="resource.latest" class="relative" />
                 </dd>
               </dl>
@@ -137,6 +151,7 @@ import SchemaBadge from "./SchemaBadge.vue";
 import CopyLink from "./CopyLink.vue";
 import SchemaTab from "./SchemaTab.vue";
 import Metadata from "./Metadata.vue";
+import TextClamp from 'vue3-text-clamp';
 import TabGroup from "../Tabs/TabGroup.vue";
 import TabList from "../Tabs/TabList.vue";
 import Tab from "../Tabs/Tab.vue";
@@ -233,3 +248,8 @@ const resourceContentId = 'resource-' + props.resource.id;
 const resourceHeaderId = 'resource-' + props.resource.id + '-header';
 const resourceTitleId = 'resource-' + props.resource.id + '-title';
 </script>
+<style scoped>
+.fr-link--no-after::after {
+  display: none !important;
+}
+</style>

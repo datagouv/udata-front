@@ -136,6 +136,19 @@ export const ResourceZip: StoryObj<typeof meta> = {
   } },
 };
 
+
+export const ResourceUrl: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { ResourceAccordion },
+    setup() {
+      return { args };
+    },
+    template: '<ResourceAccordion v-bind="args" />',
+  }),
+  args: { ...argsWithSchema, resource: { ...argsWithSchema.resource, format: "url", title: "tondeuse_batterie_fr.zip",
+  } },
+};
+
 export const OpenedResource: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { ResourceAccordion },
