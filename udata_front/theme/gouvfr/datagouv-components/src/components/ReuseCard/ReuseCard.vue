@@ -4,7 +4,7 @@
       <div class="fr-card__content fr-px-2w fr-py-1v">
         <h3 class="fr-card__title fr-text--md fr-mt-1v fr-mb-0">
           <AppLink class="text-grey-500" :to="reuseUrl">
-            {{ truncate(reuse.title, 55) }}
+            <TextClamp :auto-resize="true" :text='reuse.title' :max-lines='1' />
           </AppLink>
         </h3>
         <div class="fr-card__desc fr-mt-0 text-mention-grey">

@@ -18,7 +18,7 @@
       <slot name="dataserviceUrl" :dataservice="dataservice" :dataserviceUrl="dataserviceUrl">
         <span class="fr-icon-terminal-line fr-icon--sm fr-mr-1v" aria-hidden="true"></span>
         <AppLink :to="dataserviceUrl">
-          {{ dataservice.title }}
+          <TextClamp :auto-resize="true" :text='dataservice.title' :max-lines='1'/>
         </AppLink>
       </slot>
     </h4>
@@ -60,7 +60,6 @@ import type { RouteLocationRaw } from "vue-router";
 import TextClamp from 'vue3-text-clamp';
 import AppLink from "../AppLink/AppLink.vue";
 import type { Dataservice } from "../../types/dataservices";
-import { excerpt } from "../../helpers";
 import { formatRelativeIfRecentDate } from "../../helpers";
 import OrganizationNameWithCertificate from "../Organization/OrganizationNameWithCertificate.vue";
 import { useOwnerName } from "../../composables";
