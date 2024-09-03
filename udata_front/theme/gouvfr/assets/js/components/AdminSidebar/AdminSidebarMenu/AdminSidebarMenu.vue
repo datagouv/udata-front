@@ -125,11 +125,10 @@ watchPostEffect(() => {
 });
 </script>
 <style scoped>
-
 .fr-sidemenu__btn {
   background-color: var(--background-alt-grey);
   border-bottom: 1px solid var(--border-default-grey);
-  color: var(--text-action-high-blue-cumulus);
+  color: var(--text-default-grey);
 }
 
 .fr-sidemenu__btn:hover {
