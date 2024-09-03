@@ -8,7 +8,9 @@ function InitSentry(app: App) {
     Sentry.init({
       app,
       dsn: sentry.dsn,
+      environment: sentry.environment,
       integrations: [new Integrations.BrowserTracing()],
+      sampleRate: sentry.sampleRate,
       release: sentry.release,
       ignoreErrors: [
         'Auth required',
