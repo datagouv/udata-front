@@ -12,7 +12,6 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useI18n } from 'vue-i18n';
 import { RiFileCopyLine } from "oh-vue-icons/icons";
 import { OhVueIcon, addIcons } from 'oh-vue-icons';
 
@@ -27,9 +26,9 @@ const props = defineProps<{
 const copied = ref(false);
 
 const copy = () => {
-navigator.clipboard.writeText(props.text);
-copied.value = true;
-setTimeout(() => copied.value = false, 2000);
+  navigator.clipboard.writeText(props.text);
+  copied.value = true;
+  setTimeout(() => copied.value = false, 2000);
 }
 </script>
 <style scoped>
