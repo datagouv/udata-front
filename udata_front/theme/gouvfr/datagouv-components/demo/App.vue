@@ -2,6 +2,7 @@
 import { DatasetCard, type DatasetV2, DataserviceCard, type Dataservice, InformationPanel, type License, Pagination, type Quality, QualityComponent, QualityComponentInline, QualityItem, QualityScore, ReadMore, type Reuse, ReuseCard, type Resource, ResourceAccordion, Toggletip, Well } from "../src";
 import { ref } from "vue";
 import editIcon from "../../templates/svg/illustrations/edit.svg";
+import { DsfrBadge } from "@gouvminint/vue-dsfr";
 
 const resource = ref<Resource>({
   id: "cf3cc17f-955a-42bb-a4ef-77f59e703940",
