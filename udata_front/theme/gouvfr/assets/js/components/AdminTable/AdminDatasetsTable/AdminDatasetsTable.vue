@@ -93,7 +93,7 @@
         </td>
         <td>
           <Tooltip>
-            <QualityScore :score="dataset.quality.score" />
+            <QualityScore class="w-100" :score="dataset.quality.score" />
             <template #tooltip>
               <QualityScoreTooltipContent :dataset="dataset" />
             </template>
