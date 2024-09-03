@@ -58,7 +58,7 @@ const args: ReuseProps = {
       views: 36
     },
     organization: null,
-    title: "My new reuse",
+    title: "My new reuse reuse reuse with with with a a a very very very long long long name name name",
     image: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",
     image_thumbnail: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",
   },
