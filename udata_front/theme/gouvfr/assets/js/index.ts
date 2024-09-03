@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import { setupComponents, DataserviceCard, OwnerType, ReadMore, Toggletip, OwnerTypeIcon } from "@datagouv/components";
+import { setupComponents, DataserviceCard, OwnerType, ReadMore, ReuseCard, Toggletip, OwnerTypeIcon } from "@datagouv/components";
 
 import "./dsfr.ts";
 // @ts-ignore
@@ -81,6 +81,7 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("owner-type", OwnerType);
   app.component("owner-type-icon", OwnerTypeIcon);
   app.component("publishing-form", PublishingForm);
+  app.component("reuse-card", ReuseCard);
   app.component("search", Search);
   app.component("toggletip", Toggletip);
   app.component("user-dataset-list", UserDatasetList);
