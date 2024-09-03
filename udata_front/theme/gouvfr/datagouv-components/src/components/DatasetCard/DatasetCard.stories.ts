@@ -64,10 +64,10 @@ const dataset: DatasetV2 = {
     update_fulfilled_in_time: false,
   },
   metrics: { discussions: 12, followers: 25, reuses: 8, views: 59, resources_downloads:	18705 },
-  title: "Données changement climatique - SQR",
+  title: "Données changement climatique - Données changement climatique - Données changement climatique - Données changement climatique - SQR",
   acronym: "DCC",
   archived: false,
-  description: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+  description: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Eaque ipsa quae s iste natus error siab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
   tags: null,
   license: "lov2",
   frequency: "Unknown",
@@ -111,6 +111,10 @@ const dataset: DatasetV2 = {
     url: ""
   }
 };
+
+const updateLessThanAMonth = new Date();
+const twoDayAgoInMs = 2 * 24 * 60  * 60 * 1000;
+updateLessThanAMonth.setTime(updateLessThanAMonth.getTime() - twoDayAgoInMs);
 
 const updateLastMonth = new Date();
 updateLastMonth.setMonth(updateLastMonth.getMonth() - 1);
@@ -285,6 +289,20 @@ export const RouterArchivedDatasetCard: StoryObj<typeof meta> = {
   decorators: [vueRouter(datasetRoutes)],
   args: {
     ...argsArchived,
+  },
+};
+
+export const DatasetCardUpdatedLessThanAMonth: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCard },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCard v-bind="args"/>`,
+  }),
+  args: {
+    dataset: {...dataset, last_update: updateLessThanAMonth.toDateString()},
+    datasetUrl: "/datasets/6571faa17f46a65ee05c4d17",
   },
 };
 

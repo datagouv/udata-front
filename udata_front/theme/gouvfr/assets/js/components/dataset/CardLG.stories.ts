@@ -79,6 +79,10 @@ const args: CardLGProps = {
   showMetrics: true,
 };
 
+const updateLessThanAMonth = new Date();
+const twoDayAgoInMs = 2 * 24 * 60  * 60 * 1000;
+updateLessThanAMonth.setTime(updateLessThanAMonth.getTime() - twoDayAgoInMs);
+
 const updateLastMonth = new Date();
 updateLastMonth.setMonth(updateLastMonth.getMonth() - 1, updateLastMonth.getDate());
 
@@ -234,6 +238,27 @@ export const CardLGWithDescriptionAndCertifiedOrganization: StoryObj<typeof meta
         Les différentes couches d'information géographique sont constituées par juxtaposition des feuilles, sans correction.`
       },
     }
+};
+
+/**
+ * #### Card Large updated less than a month with an organization logo
+ * This is how a dataset owned by an organization is shown.
+ */
+export const CardLGUpdatedLessThanAMonthWithOrganizationLogo: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { CardLG },
+    setup() {
+      return { args };
+    },
+    template: '<CardLG v-bind="args"/>',
+  }),
+  args: {
+    ...argsWithOrganizationWithLogo,
+    dataset: {
+      ...argsWithOrganizationWithLogo.dataset,
+      last_update: updateLessThanAMonth.toISOString()
+    }
+  },
 };
 
 /**

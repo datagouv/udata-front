@@ -26,7 +26,7 @@
     "publish-dev": "npm run publish-stable -- --tag=dev",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "npx chromatic --only-changed --externals './src/locales/**/*.json'"
+    "chromatic": "npx chromatic --only-changed --externals '*.less' --externals '*.json' --externals '*/msw-requests.ts'"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.22",
@@ -60,6 +60,8 @@
     "dayjs": "^1.11.10",
     "less": "^4.2.0",
     "markdown-it": "^13.0.2",
+    "msw": "^2.4.1",
+    "msw-storybook-addon": "^2.0.3",
     "oh-vue-icons": "^1.0.0-rc3",
     "popmotion": "^8.7.6",
     "react": "^18.2.0",
@@ -86,5 +88,10 @@
   "bugs": {
     "url": "https://github.com/datagouv/udata-front/issues"
   },
-  "homepage": "https://github.com/datagouv/udata-front#readme"
+  "homepage": "https://github.com/datagouv/udata-front#readme",
+  "msw": {
+    "workerDirectory": [
+      ".storybook/msw"
+    ]
+  }
 }
