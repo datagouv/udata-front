@@ -162,8 +162,6 @@ const resourceWithoutSchema = ref<Resource>({
   schema: null,
   title: "tondeuse_batterie_fr.csv",
   type: "main",
-  owner: { id: "someId", first_name: "john", last_name: "Doe" },
-  organization: null,
   url: "https://static.data.gouv.fr/resources/indice-de-reparabilite-organisation-ribimex/20231115-104022/data.csv"
 });
 
@@ -253,6 +251,21 @@ const dataset : DatasetV2 = {
   organization: {
     id: "some_id",
     acronym: null,
+    business_number_id: null,
+    description: "",
+    url: "",
+    created_at: "2023-10-26T13:34:50.156000+00:00",
+    last_modified: "2023-12-07T16:51:02.937000+00:00",
+    last_update: "2023-12-07T16:51:02.937000+00:00",
+    deleted: null,
+    members: [],
+    metrics: {
+      datasets: 3,
+      followers: 4,
+      members: 0,
+      reuses: 1,
+      views: 2,
+    },
     logo: "https://demo-static.data.gouv.fr/avatars/a2/b135634de04fb8a76c8ec3100e5e4b.png",
     logo_thumbnail:"https://demo-static.data.gouv.fr/avatars/a2/b135634de04fb8a76c8ec3100e5e4b-100.png",
     page: "https://demo.data.gouv.fr/fr/organizations/test-meteo-france/",
@@ -282,6 +295,8 @@ const reuse : Reuse = {
   created_at: (new Date()).toDateString(),
   last_update: (new Date()).toDateString(),
   page: "https://www.data.gouv.fr",
+  url: "https://www.data.gouv.fr",
+  archived: false,
   deleted: false,
   private: true,
   datasets: [],
@@ -375,25 +390,9 @@ const dataservice: Dataservice = {
   self_api_url: "",
   self_web_url: "",
   slug: "",
-  tags: null,
+  tags: [],
   title: "That Awesome API",
 };
-
-const tabTitles = [
-  {
-    title: "Tab 1",
-    tabId: "tab-0",
-    panelId: "tab-content-0"
-  },
-  {
-    title: "Tab 2",
-    tabId: "tab-1",
-    panelId: "tab-content-1"
-  },
-];
-
-const selectedTabIndex = ref(0);
-const id = "12";
 </script>
 
 <template>
@@ -482,22 +481,22 @@ const id = "12";
       reuse-url="/datasets/6571faa17f46a65ee05c4d17"
     />
   </div>
-  <DataserviceCard 
+  <DataserviceCard
     :dataservice="dataservice"
     dataservice-url="/dataservices/6571faa17f46a65ee05c4d17"
     :show-description="false"
   />
-  <DataserviceCard 
+  <DataserviceCard
     :dataservice="dataservice"
     dataservice-url="/dataservices/6571faa17f46a65ee05c4d17"
     organization-url="/organizations/another-url-easier-to-distinguish"
     :show-description="false"
   />
-  <DataserviceCard 
+  <DataserviceCard
     :dataservice="dataservice"
     dataservice-url="/dataservices/6571faa17f46a65ee05c4d17"
   />
-  <DataserviceCard 
+  <DataserviceCard
     :dataservice="dataservice"
     dataservice-url="/dataservices/6571faa17f46a65ee05c4d17"
     organization-url="/organizations/another-url-easier-to-distinguish"

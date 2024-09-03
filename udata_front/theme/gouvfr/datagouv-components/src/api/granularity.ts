@@ -10,7 +10,7 @@ export function getGranularity(granularities: Granularities, id: string): string
 }
 
 export function getGranularitiesUrl() {
-  return getLocalizedUrl('/spatial/granularities/');
+  return getLocalizedUrl('spatial/granularities/');
 }
 
 export function fetchGranularities(): Promise<Granularities> {

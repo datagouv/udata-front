@@ -35,9 +35,9 @@
       <div class="fr-col-12 fr-col-sm">
         <h4 class="fr-text--md fr-mb-0 fr-grid-row">
           <slot name="datasetUrl" :dataset="dataset" :datasetUrl="datasetUrl">
-            <AppLink :to="datasetUrl" class="text-grey-500">
-              {{ dataset.title }}
-              <small v-if="dataset.acronym">{{ dataset.acronym }}</small>
+            <AppLink :to="datasetUrl" class="text-grey-500 fr-grid-row">
+              <TextClamp class="fr-col" :auto-resize="true" :text='dataset.title' :max-lines='1' />
+              <small class="fr-col-auto fr-ml-1w" v-if="dataset.acronym">{{ dataset.acronym }}</small>
             </AppLink>
           </slot>
         </h4>
@@ -69,9 +69,13 @@
             </p>
           </div>
         </div>
-        <div v-if="showDescription" class="fr-pt-1w">
-          <p class="fr-text--sm fr-m-0 overflow-wrap-anywhere">{{ excerpt(dataset.description, 160) }}</p>
-        </div>
+        <TextClamp
+          v-if="showDescription"
+          class="fr-text--sm fr-mt-1w fr-mb-0 overflow-wrap-anywhere"
+          :auto-resize="true"
+          :text="dataset.description"
+          :max-lines='2'
+        />
       </div>
     </div>
   </article>

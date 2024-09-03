@@ -479,9 +479,9 @@
   "An unexpected error occured while reporting this content.": "Une erreur inattendue s'est produite lors du signalement de ce contenu.",
   "Producer": "Producteur",
   "You need to select a Producer": "Vous devez sélectionner un Producteur",
-  "Email": "",
-  "Member since": "",
-  "Last connection": "",
-  "No connection": "",
-  "You are seeing a specific community resource of this dataset": ""
+  "Email": "E-mail",
+  "Member since": "Membre depuis",
+  "Last connection": "Dernière connexion",
+  "No connection": "Aucune connection",
+  "You are seeing a specific community resource of this dataset": "Vous consultez une ressource communautaire spécifique sur ce jeu de données"
 }
