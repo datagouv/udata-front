@@ -13,9 +13,9 @@
               'font-bold': open,
             }"><TextClamp :max-lines="1" :text="resource.title || t('Nameless file')"/></span>
 
-            <span class="absolute inset-0"></span>
+            <span class="absolute inset-0 z-1"></span>
           </button>
-          <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resourceExternalUrl" class="relative" />
+          <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resourceExternalUrl" class="relative z-2" />
         </h4>
         <div class="text-grey-380">
           <SchemaBadge :resource class="dash-after" />
@@ -47,7 +47,7 @@
             :title="t('File link - opens a new window')"
             rel="ugc nofollow noopener"
             target="_blank"
-            class="fr-btn"
+            class="fr-btn z-2"
           >
             {{ $t('Visit') }}
           </a>
@@ -58,7 +58,7 @@
             rel="ugc nofollow noopener"
             :title="t('Download file')"
             download
-            class="relative text-transform-uppercase fr-btn fr-btn--sm fr-btn--icon-left fr-icon-test-tube-line fr-icon-download-line fr-icon--sm matomo_download"
+            class="relative text-transform-uppercase fr-btn fr-btn--sm fr-btn--icon-left fr-icon-test-tube-line fr-icon-download-line fr-icon--sm matomo_download z-2"
           >
             {{ resource.format }}
           </a>
@@ -68,10 +68,11 @@
             :dataset-id="datasetId"
             :resource-id="resource.id"
             :is-community-resource="isCommunityResource"
+            class="z-2"
           />
         </p>
         <div
-          class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-btn--secondary-grey-500"
+          class="fr-icon--sm fr-ml-4v"
           :class="{'fr-icon-arrow-up-s-line': open, 'fr-icon-arrow-down-s-line': !open}"
         ></div>
       </div>
@@ -251,5 +252,15 @@ const resourceTitleId = 'resource-' + props.resource.id + '-title';
 <style scoped>
 .fr-link--no-after::after {
   display: none !important;
+}
+
+/**
+If we do not put z-index, the header is fully clickable except for the DSFR icons (bad because one of the icons is the chevron up/down). It may be due to the usage of ::before to add the icon in the markup or the `mask-image`. We need to put a `z-2` on all elements that we want to be clickable over the header.
+*/
+.z-1 {
+  z-index: 1;
+}
+.z-2 {
+  z-index: 2;
 }
 </style>
