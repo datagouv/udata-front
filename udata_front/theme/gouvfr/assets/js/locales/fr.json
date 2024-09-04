@@ -483,5 +483,19 @@
   "Member since": "Membre depuis",
   "Last connection": "Dernière connexion",
   "No connection": "Aucune connection",
-  "You are seeing a specific community resource of this dataset": "Vous consultez une ressource communautaire spécifique sur ce jeu de données"
+  "You are seeing a specific community resource of this dataset": "Vous consultez une ressource communautaire spécifique sur ce jeu de données",
+  "Publish on": "",
+  "Title of the dataset": "",
+  "Created at": "",
+  "Updated at": "",
+  "Score": "",
+  "Discussions": "",
+  "Views": "",
+  "Downloads": "",
+  "Favorites": "",
+  "Deleted": "",
+  "Public": "",
+  "Sort": "",
+  "Download catalog": "",
+  "You haven't published a dataset yet": ""
 }

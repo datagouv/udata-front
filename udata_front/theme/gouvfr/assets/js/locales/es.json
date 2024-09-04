@@ -483,5 +483,19 @@
   "Member since": "Member since",
   "Last connection": "Last connection",
   "No connection": "No connection",
-  "You are seeing a specific community resource of this dataset": "You are seeing a specific community resource of this dataset"
+  "You are seeing a specific community resource of this dataset": "You are seeing a specific community resource of this dataset",
+  "Publish on": "",
+  "Title of the dataset": "",
+  "Created at": "",
+  "Updated at": "",
+  "Score": "",
+  "Discussions": "",
+  "Views": "",
+  "Downloads": "",
+  "Favorites": "",
+  "Deleted": "",
+  "Public": "",
+  "Sort": "",
+  "Download catalog": "",
+  "You haven't published a dataset yet": ""
 }
