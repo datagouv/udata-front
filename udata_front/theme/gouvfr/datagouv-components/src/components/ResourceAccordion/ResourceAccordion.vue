@@ -63,12 +63,11 @@
             {{ resource.format }}
           </a>
         </p>
-        <p class="fr-col-auto fr-ml-3v fr-m-0" v-if="canEdit">
+        <p class="fr-col-auto fr-ml-3v fr-m-0 z-2" v-if="canEdit">
           <EditButton
             :dataset-id="datasetId"
             :resource-id="resource.id"
             :is-community-resource="isCommunityResource"
-            class="z-2"
           />
         </p>
         <div
