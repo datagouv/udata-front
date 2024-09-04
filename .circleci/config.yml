@@ -226,7 +226,7 @@ jobs:
           working_directory: ./udata_front/theme/gouvfr/datagouv-components
       - run:
           name: publish to chromatic
-          command: CHROMATIC_PROJECT_TOKEN=$CHROMATIC_COMPONENTS_TOKEN npm run chromatic -- --exit-once-uploaded --externals "*.less" --externals "*.json"
+          command: CHROMATIC_PROJECT_TOKEN=$CHROMATIC_COMPONENTS_TOKEN npm run chromatic -- --exit-once-uploaded
           working_directory: ./udata_front/theme/gouvfr/datagouv-components
 
   publish_datagouv_components:
@@ -301,7 +301,7 @@ jobs:
           cypress-command: npm run ci
       - run:
           name: publish to chromatic
-          command: CHROMATIC_PROJECT_TOKEN=$CHROMATIC_UDATA_FRONT_TOKEN npm run chromatic -- --exit-once-uploaded --externals "*.less" --externals "*.json"
+          command: CHROMATIC_PROJECT_TOKEN=$CHROMATIC_UDATA_FRONT_TOKEN npm run chromatic -- --exit-once-uploaded
 
   lighthouse:
     docker:

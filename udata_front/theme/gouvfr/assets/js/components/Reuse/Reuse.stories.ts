@@ -43,10 +43,11 @@ const args: ReuseProps = {
 };
 
 const updateLessThanAMonth = new Date();
-updateLessThanAMonth.setMonth(updateLessThanAMonth.getMonth() - 1, updateLessThanAMonth.getDate() + 2);
+const twoDayAgoInMs = 2 * 24 * 60  * 60 * 1000;
+updateLessThanAMonth.setTime(updateLessThanAMonth.getTime() - twoDayAgoInMs);
 
 const updateLastMonth = new Date();
-updateLastMonth.setMonth(updateLastMonth.getMonth() - 1, updateLastMonth.getDate());
+updateLastMonth.setMonth(updateLastMonth.getMonth() - 1);
 
 const updateLastYear = new Date();
 updateLastYear.setFullYear(updateLastYear.getFullYear() - 1, 0, 1);

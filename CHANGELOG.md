@@ -8,6 +8,7 @@
 - always show authorization_request_url if present (even on open API) [#481](https://github.com/datagouv/udata-front/pull/481)
 - Show organization type [#472](https://github.com/datagouv/udata-front/pull/472)
 - show permalink for community resources [#486](https://github.com/datagouv/udata-front/pull/486)
+- update sentry configuration [#498](https://github.com/datagouv/udata-front/pull/498)
 
 ## 5.1.2 (2024-08-01)
 

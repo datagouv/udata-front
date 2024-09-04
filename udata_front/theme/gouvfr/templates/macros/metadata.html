@@ -58,9 +58,11 @@
 <meta name="terms-url" content="{{ url_for('gouvfr.show_page', slug='legal/cgu') }}" />
 {{ i18n_alternate_links() }}
 {% if config.SENTRY_PUBLIC_DSN %}
-<meta name="sentry" content="{{config.SENTRY_PUBLIC_DSN}}"
-    data-release="{{config.SENTRY_RELEASE}}"
-    data-tags="{{config.SENTRY_TAGS|default({})|tojson|urlencode}}"
+<meta name="sentry" content="{{ config.SENTRY_PUBLIC_DSN }}"
+    data-release="{{ _('udata-front@{version}').format(version=package_version('udata-front')) }}"
+    data-tags="{{ config.SENTRY_TAGS|default({})|tojson|urlencode }}"
+    data-environment="{{ config.SITE_ID }}"
+    data-sample-rate="{{ config.SENTRY_SAMPLE_RATE }}"
 />
 {% endif %}
 {% if config.DATA_SEARCH_FEEDBACK_FORM_URL %}
