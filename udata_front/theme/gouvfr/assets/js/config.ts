@@ -213,19 +213,25 @@ const sentryEl = document.querySelector("meta[name=sentry]");
 type SentryConfiguration = {
   dsn: string | undefined;
   release: string | undefined;
-  tags: Record<string, Primitive>
+  tags: Record<string, Primitive>;
+  environment: string;
+  sampleRate: number;
 }
 
 export const sentry: SentryConfiguration = {
   dsn: undefined,
   release: undefined,
   tags: {},
+  environment: "",
+  sampleRate: 0,
 };
 
 if (sentryEl instanceof HTMLElement) {
   sentry.dsn = sentryEl.getAttribute("content") || undefined;
   sentry.release = sentryEl.dataset.release || undefined;
   sentry.tags = JSON.parse(decodeURIComponent(sentryEl.dataset.tags || "{}"));
+  sentry.environment = sentryEl.dataset.environment || "";
+  sentry.sampleRate = parseFloat(sentryEl.dataset.sampleRate ?? "0");
 }
 
 /**
