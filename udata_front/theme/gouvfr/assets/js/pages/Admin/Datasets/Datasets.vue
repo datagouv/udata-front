@@ -22,7 +22,7 @@
       <div class="fr-col">
         <h2 class="subtitle subtitle--uppercase fr-m-0">{{ t('{n} datasets', totalResult) }}</h2>
       </div>
-      <div class="fr-col-auto fr-grid-row fr-grid-row--middle">
+      <div v-if="totalResult" class="fr-col-auto fr-grid-row fr-grid-row--middle">
         <div>
           <a :href="getOrganizationDatasetsCatalogUrl(oid)" class="fr-btn fr-btn--sm fr-icon-download-line fr-btn--icon-left">
             {{ t('Download catalog') }}
@@ -30,11 +30,24 @@
         </div>
       </div>
     </div>
+    <Container v-if="loading" class="fr-mt-1w fr-p-4w fr-mb-2w text-align-center">
+      <AdminLoader/>
+    </Container>
     <DatasetsTable
-      class="fr-mt-1v"
+      v-else-if="totalResult"
+      class="fr-mt-1w"
       :datasets="datasets"
       @sort="(newSort) => sortDirection = newSort"
     />
+    <Container v-else class="fr-mt-1w fr-mb-2w">
+      <div class="text-align-center fr-py-1w">
+        <img :src="datasetIcon" alt="" loading="lazy"/>
+        <p class="fr-text--bold fr-my-3v">
+          {{ t(`You haven't published a dataset yet`) }}
+        </p>
+        <AdminPublishButton />
+      </div>
+    </Container>
     <Pagination
       v-if="totalResult > pageSize"
       :page="page"
@@ -54,11 +67,16 @@ import DatasetsTable from "../../../components/AdminTable/AdminDatasetsTable/Adm
 import { useCurrentOrganization } from '../../../composables/admin/useCurrentOrganization';
 import { refDebounced } from "@vueuse/core";
 import { search_autocomplete_debounce } from "../../../config";
+import datasetIcon from "../../../../../templates/svg/illustrations/dataset.svg";
+import Container from "../../../components/Ui/Container/Container.vue";
+import AdminPublishButton from "../../../components/AdminPublishButton/AdminPublishButton.vue";
+import AdminLoader from "../../../components/AdminLoader/AdminLoader.vue";
 
 const { t } = useI18n();
 const props = defineProps<{oid: string}>();
 
 const datasets = ref<Array<Dataset>>([]);
+const loading = ref(false);
 const page = ref(1);
 const pageSize = ref(10);
 const totalResult = ref(0);
@@ -69,10 +87,15 @@ const qDebounced = refDebounced(q, search_autocomplete_debounce);
 const { currentOrganization } = useCurrentOrganization();
 
 watchEffect(async () => {
-  const response = await getOrganizationDatasets(props.oid, qDebounced.value, page.value, pageSize.value, sortDirection.value);
-  datasets.value = response.data;
-  page.value = response.page;
-  pageSize.value = response.page_size;
-  totalResult.value = response.total;
+  loading.value = true;
+  try {
+    const response = await getOrganizationDatasets(props.oid, qDebounced.value, page.value, pageSize.value, sortDirection.value);
+    datasets.value = response.data;
+    page.value = response.page;
+    pageSize.value = response.page_size;
+    totalResult.value = response.total;
+  } finally {
+    loading.value = false;
+  }
 });
 </script>

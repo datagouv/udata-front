@@ -138,6 +138,11 @@ export const demo_server_url = _meta("demo-server-url");
 export const demo_server_name = _meta("demo-server-name");
 
 /**
+ * The dataset publishing form
+ */
+export const dataset_publishing_form_url = _meta("dataset-publishing-form-url");
+
+/**
  * The publishing form feedback URL
  */
 export const publishing_form_feedback_url = _meta("publishing-form-feedback-url");
@@ -305,6 +310,7 @@ export default {
   check_urls,
   csrf_token,
   data_search_feedback_form_url,
+  dataset_publishing_form_url,
   debug,
   demo_server_url,
   demo_server_name,

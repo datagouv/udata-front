@@ -39,14 +39,16 @@ export function getFrequenciesUrl () {
   return getLocalizedUrl("datasets/frequencies/");
 }
 
-export function getSpatialGranularities () {
-  return api.get<Array<SpatialGranularity>>(getLocalizedUrl("spatial/granularities/")).then(resp => resp.data);
+export async function getSpatialGranularities () {
+  const resp = await api.get<Array<SpatialGranularity>>(getLocalizedUrl("spatial/granularities/"));
+  return resp.data;
 }
 
-export function getOrganizationDatasets(oid: string, q: string, page: number, pageSize: number, sortDirection: string) {
-  return api.get<GetPaginatedData<Dataset>>(getLocalizedUrl(`organizations/${oid}/datasets/`), {
+export async function getOrganizationDatasets(oid: string, q: string, page: number, pageSize: number, sortDirection: string) {
+  const resp = await api.get<GetPaginatedData<Dataset>>(getLocalizedUrl(`organizations/${oid}/datasets/`), {
     params: { q, sort: sortDirection, page_size: pageSize, page }
-  }).then(resp => resp.data);
+  });
+  return resp.data;
 }
 
 export function getOrganizationDatasetsCatalogUrl(oid: string) {
