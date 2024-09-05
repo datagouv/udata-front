@@ -54,6 +54,7 @@ def auth():
 
     return redirect('/')
 
+
 @blueprint.route('/logout_oauth', endpoint='logout_oauth')
 def logout():
     # At the time of this writing, authlib didn't implement OpenIDC session management:
@@ -77,8 +78,9 @@ def logout():
         ('state', state),
         ('post_logout_redirect_uri', redirect_uri),
     ))
-    
+
     return redirect(end_session_url)
+
 
 @blueprint.route('/logout', endpoint='logout')
 def oauth_logged_out():
@@ -91,5 +93,5 @@ def oauth_logged_out():
     # We're logged out from ProConnect, cleanup the ProConnect related data from the session.
     session.pop(ID_TOKEN_KEY, None)
     session.pop(STATE_KEY, None)
-    
+
     return redirect(url_for("security.logout"))
