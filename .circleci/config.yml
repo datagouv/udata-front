@@ -459,7 +459,7 @@ workflows:
           filters:
             tags:
               only: /@datagouv\/components@([0-9]+(?:\.[0-9]+)*(?:-(?:a|b|dev|rc)\.[0-9]+)?)/
-       - storybook_datagouv_components:
+      - storybook_datagouv_components:
           requires:
             - datagouv_components
       - publish_datagouv_components:
