@@ -12,35 +12,27 @@ blueprint = I18nBlueprint('proconnect', __name__, url_prefix='/proconnect')
 
 @blueprint.route('/login', endpoint='login')
 def login():
-    client = oauth.create_client('proconnect')
-    if not client:
-        abort(404)
-
     redirect_uri = url_for('proconnect.auth', _external=True)
-    return client.authorize_redirect(redirect_uri, acr_values='eidas1')
+    return oauth.proconnect.authorize_redirect(redirect_uri, acr_values='eidas1')
 
 
 @blueprint.route('/auth', endpoint='auth')
 def auth():
-    client = oauth.create_client('proconnect')
-    if not client:
-        abort(404)
-
-    token = client.authorize_access_token()
+    token = oauth.proconnect.authorize_access_token()
     # /!\ DIRTY HACK.
     # authlib expects the userinfo to either be in the token["id_token"] as a jwt...
     # but in this case, it's not there, it's some other information.
     # We thus need to go get the userinfo from the userinfo_endpoint, but authlib
     # expects it to be plain json. However, proconnect returns a jwt.
     # So we can't use authlib's client.userinfo() helper, we need to do it ourselves.
-    metadata = client.load_server_metadata()
-    resp = client.get(metadata["userinfo_endpoint"])
+    metadata = oauth.proconnect.load_server_metadata()
+    resp = oauth.proconnect.get(metadata["userinfo_endpoint"])
     resp.raise_for_status()
     # Create a new token that `client.parse_id_token` expects. Replace the initial
     # `id_token` with the jwt we received from the `userinfo_endpoint`.
     userinfo_token = token.copy()
     userinfo_token["id_token"] = resp.content
-    proconnect_user = client.parse_id_token(userinfo_token, nonce=None)
+    proconnect_user = oauth.proconnect.parse_id_token(userinfo_token, nonce=None)
     # We now have the user information decoded from the jwt, ready to be used.
     user = datastore.find_user(email=proconnect_user["email"])
     if not user:
