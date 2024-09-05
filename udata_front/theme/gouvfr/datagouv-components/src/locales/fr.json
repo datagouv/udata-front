@@ -105,5 +105,6 @@
   "Restricted access": "Accès restreint",
   "Other": "Autre",
   "{n} views": "{n} vues",
-  "{n} followers": "{n} abonnés"
+  "{n} followers": "{n} abonnés",
+  "unknown": "inconnue"
 }

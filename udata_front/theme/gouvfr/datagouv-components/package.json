@@ -26,13 +26,14 @@
     "publish-dev": "npm run publish-stable -- --tag=dev",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "npx chromatic --only-changed --externals './src/locales/**/*.json'"
+    "chromatic": "npx chromatic --only-changed --externals '*.less' --externals '*.json' --externals '*/msw-requests.ts'"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.22",
     "vue": "^3.3.8"
   },
   "peerDependencies": {
-    "@gouvfr/dsfr": "~1.9.2",
+    "@gouvfr/dsfr": "~1.11.2",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
@@ -59,6 +60,8 @@
     "dayjs": "^1.11.10",
     "less": "^4.2.0",
     "markdown-it": "^13.0.2",
+    "msw": "^2.4.1",
+    "msw-storybook-addon": "^2.0.3",
     "oh-vue-icons": "^1.0.0-rc3",
     "popmotion": "^8.7.6",
     "react": "^18.2.0",
@@ -71,7 +74,8 @@
     "vue-content-loader": "^2.0.1",
     "vue-i18n": "^9.13.1",
     "vue-i18n-extract": "^2.0.7",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "vue3-text-clamp": "^0.1.2"
   },
   "author": {
     "name": "DINUM"
@@ -84,5 +88,10 @@
   "bugs": {
     "url": "https://github.com/datagouv/udata-front/issues"
   },
-  "homepage": "https://github.com/datagouv/udata-front#readme"
+  "homepage": "https://github.com/datagouv/udata-front#readme",
+  "msw": {
+    "workerDirectory": [
+      ".storybook/msw"
+    ]
+  }
 }

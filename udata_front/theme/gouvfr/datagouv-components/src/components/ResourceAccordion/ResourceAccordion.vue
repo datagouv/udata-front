@@ -306,7 +306,7 @@
                   </DescriptionDetails>
                 </template>
               </DescriptionList>
-              <div class="fr-col-auto fr-ml-auto" v-if="config.show_copy_resource_permalink && !isCommunityResource">
+              <div class="fr-col-auto fr-ml-auto" v-if="config.show_copy_resource_permalink">
                 <button
                   :id="resourceCopyId"
                   ref="copyRef"
@@ -466,7 +466,7 @@ const lastUpdate = props.resource.last_modified;
 const unavailable = availabilityChecked && props.resource.extras['check:available'] === false;
 const { authorizeValidation, documentationUrl, loading, validationUrl, schemaReport} = useSchema(props.resource);
 const hasSchemaErrors = !!schemaReport.value.size;
-const resourceExternalUrl = window.location.origin + window.location.pathname + "#/resources/" + props.resource.id;
+const resourceExternalUrl = computed(() => `${window.location.origin}${window.location.pathname}#/${props.isCommunityResource ? 'community-resources' : 'resources'}/${props.resource.id}`);
 
 const resourceContentId = 'resource-' + props.resource.id;
 const resourceHeaderId = 'resource-' + props.resource.id + '-header';

@@ -23,7 +23,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test-storybook": "test-storybook",
-    "chromatic": "npx chromatic --only-changed"
+    "chromatic": "npx chromatic --only-changed --externals '*.less' --externals '*.json' --externals '*/msw-requests.ts'"
   },
   "overrides": {
     "fsevents": "^2.3.3"
@@ -31,7 +31,6 @@
   "devDependencies": {
     "@conciergerie.dev/vue-toaster": "^2.4.4",
     "@etalab/udata-front-plugins-helper": "1.1.0",
-    "@gouvfr/dsfr": "~1.9.2",
     "@intlify/unplugin-vue-i18n": "^1.5.0",
     "@lhci/cli": "^0.10.0",
     "@milkdown/components": "^7.3.3",
@@ -102,8 +101,9 @@
   },
   "license": "LGPL-2.1-only",
   "dependencies": {
-    "@datagouv/components": "^1.2.0",
+    "@datagouv/components": "^1.1.1-dev.41",
     "@datagouv/select-a11y": "^3.6.1",
+    "@gouvfr/dsfr": "~1.11.2",
     "leaflet": "^1.9.4"
   },
   "msw": {

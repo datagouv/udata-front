@@ -50,6 +50,14 @@
     display: flex;
 }
 
+.inline-flex {
+    display: inline-flex !important;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
 .no-wrap {
     flex-wrap: nowrap;
 }
@@ -114,6 +122,10 @@
     align-self: flex-end;
 }
 
+.align-items-baseline {
+    align-items: baseline;
+}
+
 .w-1px {
     width: 1px;
 }
@@ -174,4 +186,10 @@
 
 .fr-mt-n9v {
     margin-top: -2.5rem !important;
+}
+
+@media @dsfr-query-xl {
+    .fr-hidden-xl {
+        display: none !important;
+    }
 }

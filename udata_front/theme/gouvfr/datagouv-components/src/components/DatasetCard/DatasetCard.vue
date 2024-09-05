@@ -32,29 +32,27 @@
           />
         </div>
       </div>
-      <div class="fr-col">
+      <div class="fr-col-12 fr-col-sm">
         <h4 class="fr-text--md fr-mb-0 fr-grid-row">
           <slot name="datasetUrl" :dataset="dataset" :datasetUrl="datasetUrl">
-            <AppLink :to="datasetUrl" class="text-grey-500">
-              {{ dataset.title }}
-              <small v-if="dataset.acronym">{{ dataset.acronym }}</small>
+            <AppLink :to="datasetUrl" class="text-grey-500 fr-grid-row">
+              <TextClamp class="fr-col" :auto-resize="true" :text='dataset.title' :max-lines='1' />
+              <small class="fr-col-auto fr-ml-1w" v-if="dataset.acronym">{{ dataset.acronym }}</small>
             </AppLink>
           </slot>
         </h4>
-        <div class="fr-text--sm fr-m-0" v-if="dataset.organization || dataset.owner">
-          <template v-if="dataset.organization">
-            <span class="not-enlarged dash-after-sm fr-mr-1v">
-              <AppLink class="fr-link fr-text--sm" v-if="organizationUrl" :to="organizationUrl">
-                <OrganizationNameWithCertificate :organization="dataset.organization" />
-              </AppLink>
-              <OrganizationNameWithCertificate v-else :organization="dataset.organization" />
-            </span>
-          </template>
-          <span class="not-enlarged dash-after-sm fr-mr-1v" v-else>
-            {{ ownerName }}
-          </span>
-          <span class="text-mention-grey">{{ $t('Updated {date}', {date: formatRelativeIfRecentDate(dataset.last_update)}) }}</span>
-        </div>
+        <div class="fr-text--sm fr-m-0 inline-flex" v-if="dataset.organization || dataset.owner">
+            <template v-if="dataset.organization">
+              <span class="not-enlarged fr-mr-1v">
+                <AppLink class="fr-link fr-text--sm" v-if="organizationUrl" :to="organizationUrl">
+                  <OrganizationNameWithCertificate :organization="dataset.organization" />
+                </AppLink>
+                <OrganizationNameWithCertificate v-else :organization="dataset.organization" />
+              </span>
+            </template>
+            <TextClamp class="not-enlarged fr-mr-1v" :auto-resize="true" :text='ownerName' :max-lines='1' v-else />
+            <span class="text-mention-grey dash-before-sm whitespace-nowrap">{{ $t('Updated {date}', {date: formatRelativeIfRecentDate(dataset.last_update)}) }}</span>
+          </div>
         <div class="fr-mx-0 fr-mb-n1v fr-grid-row fr-grid-row--middle fr-text--sm text-mention-grey">
           <div class="fr-hidden flex-sm dash-after-sm text-grey-500 not-enlarged">
             <QualityComponentInline :quality="dataset.quality"/>
@@ -71,17 +69,22 @@
             </p>
           </div>
         </div>
-        <div v-if="showDescription" class="fr-pt-2v">
-          <p class="fr-text--sm fr-m-0 overflow-wrap-anywhere">{{ excerpt(dataset.description, 160) }}</p>
-        </div>
+        <TextClamp
+          v-if="showDescription"
+          class="fr-text--sm fr-mt-1w fr-mb-0 overflow-wrap-anywhere"
+          :auto-resize="true"
+          :text="dataset.description"
+          :max-lines='2'
+        />
       </div>
     </div>
   </article>
 </template>
 
 <script setup lang="ts">
-import type { RouteLocationRaw } from "vue-router";
 import { useI18n } from "vue-i18n";
+import type { RouteLocationRaw } from "vue-router";
+import TextClamp from 'vue3-text-clamp';
 import AppLink from "../AppLink/AppLink.vue";
 import Avatar from "../Avatar/Avatar.vue";
 import type { Dataset, DatasetV2 } from "../../types/datasets";

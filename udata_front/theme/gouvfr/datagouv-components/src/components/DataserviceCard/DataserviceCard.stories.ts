@@ -55,7 +55,7 @@ const dataservice: Dataservice = {
     }
   ],
   deleted_at: null,
-  description: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+  description: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
   endpoint_description_url: "",
   extras: {},
   format: "json",
@@ -98,8 +98,8 @@ const dataservice: Dataservice = {
   self_api_url: "",
   self_web_url: "",
   slug: "",
-  tags: null,
-  title: "That Awesome API",
+  tags: [],
+  title: "That Awesome API That Awesome API That Awesome API That Awesome API That Awesome API ",
 };
 
 const args = {
@@ -126,6 +126,24 @@ export const SimpleDataserviceCard: StoryObj<typeof meta> = {
     template: `<DataserviceCard v-bind="args"/>`,
   }),
   args,
+};
+
+
+export const DataserviceWithoutAvailabilityCard: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DataserviceCard },
+    setup() {
+      return { args };
+    },
+    template: `<DataserviceCard v-bind="args"/>`,
+  }),
+  args: {
+    ...args,
+    dataservice: {
+      ...args.dataservice,
+      availability: null,
+    }
+  },
 };
 
 export const DataserviceCardWithoutDescription: StoryObj<typeof meta> = {

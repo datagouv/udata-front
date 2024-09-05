@@ -64,10 +64,10 @@ const dataset: DatasetV2 = {
     update_fulfilled_in_time: false,
   },
   metrics: { discussions: 12, followers: 25, reuses: 8, views: 59, resources_downloads:	18705 },
-  title: "Données changement climatique - SQR",
+  title: "Données changement climatique - Données changement climatique - Données changement climatique - Données changement climatique - SQR",
   acronym: "DCC",
   archived: false,
-  description: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+  description: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Eaque ipsa quae s iste natus error siab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
   tags: null,
   license: "lov2",
   frequency: "Unknown",
@@ -112,6 +112,10 @@ const dataset: DatasetV2 = {
   }
 };
 
+const updateLessThanAMonth = new Date();
+const twoDayAgoInMs = 2 * 24 * 60  * 60 * 1000;
+updateLessThanAMonth.setTime(updateLessThanAMonth.getTime() - twoDayAgoInMs);
+
 const updateLastMonth = new Date();
 updateLastMonth.setMonth(updateLastMonth.getMonth() - 1);
 
@@ -139,6 +143,29 @@ export const DatasetCardSimple: StoryObj<typeof meta> = {
     template: `<DatasetCard v-bind="args"/>`,
   }),
   args,
+};
+
+export const DatasetCardSimpleWithOwner: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCard },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCard v-bind="args"/>`,
+  }),
+  args: {
+    ...args,
+    dataset: {
+      ...args.dataset,
+      organization: null,
+      owner: {
+        id: "someUserId",
+        first_name: "John",
+        last_name: "Doedoedoedoedoedoedoedoedoedoedoedoe",
+        page: "https://demo.data.gouv.fr/en/users/antonin-garrone/",
+      },
+    }
+  },
 };
 
 export const DatasetCardSimpleWithOrganizationUrl: StoryObj<typeof meta> = {
@@ -265,6 +292,20 @@ export const RouterArchivedDatasetCard: StoryObj<typeof meta> = {
   },
 };
 
+export const DatasetCardUpdatedLessThanAMonth: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCard },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCard v-bind="args"/>`,
+  }),
+  args: {
+    dataset: {...dataset, last_update: updateLessThanAMonth.toDateString()},
+    datasetUrl: "/datasets/6571faa17f46a65ee05c4d17",
+  },
+};
+
 export const DatasetCardUpdatedLastMonth: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { DatasetCard },
@@ -276,5 +317,18 @@ export const DatasetCardUpdatedLastMonth: StoryObj<typeof meta> = {
   args: {
     dataset: {...dataset, last_update: updateLastMonth.toDateString()},
     datasetUrl: "/datasets/6571faa17f46a65ee05c4d17",
+  },
+};
+
+export const DatasetCardWithLongOrganization: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DatasetCard },
+    setup() {
+      return { args };
+    },
+    template: `<DatasetCard v-bind="args"/>`,
+  }),
+  args: {
+    dataset: {...dataset, organization: { ...dataset.organization, name: "Ministère de l’Économie, des Finances et de la Souveraineté industrielle et numérique de France, et encore un peu plus long"}},
   },
 };
