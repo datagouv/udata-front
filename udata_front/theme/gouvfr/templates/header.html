@@ -92,10 +92,17 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a
-                                        href="{{ url_for('security.logout') }}"
-                                        class="fr-btn fr-icon-logout-box-r-line"
-                                    >
+                                    {% if current_user.is_authenticated and current_user.password %}
+                                        <a
+                                            href="{{ url_for('security.logout') }}"
+                                            class="fr-btn fr-icon-logout-box-r-line"
+                                        >
+                                    {% else %}
+                                        <a
+                                            href="{{ url_for('proconnect.logout_oauth') }}"
+                                            class="fr-btn fr-icon-logout-box-r-line"
+                                        >
+                                    {% endif %}
                                         {{ _('Logout') }}
                                     </a>
                                 </li>
