@@ -266,6 +266,24 @@ Writing tests is very easy thanks to its syntax :
   });
 ```
 
+To run the Cypress tests, you need a local webserver. Run the following command in the same Python virtual environment as `udata`:
+
+```shell
+npm run serve-e2e
+```
+
+In another terminal (still in the same Python virtual environment), load the fixtures needed by the end-to-end tests:
+
+```shell
+npm run prepare-e2e
+```
+
+You also need a `cypress/udata-front-e2e.cfg` file:
+
+```shell
+cp cypress/udata-front-e2e.cfg.example  cypress/udata-front-e2e.cfg
+```
+
 Then, tests can be run using the following command :
 
 ```shell
