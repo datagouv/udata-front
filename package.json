@@ -20,11 +20,11 @@
     "prepare-and-serve-e2e": "npm run prepare-e2e && npm run serve-e2e",
     "local-testing": "start-server-and-test prepare-and-serve-e2e http://localhost:7000 cypress",
     "ci": "start-server-and-test prepare-and-serve-e2e http://localhost:7000 test",
-    "ci:storybook": "start-server-and-test serve-storybook http://localhost:6006 test-storybook",
+    "ci:storybook": "start-server-and-test serve-storybook http://localhost:7000 test-storybook",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "serve-storybook": "npx http-server storybook-static --port 6006 --silent",
-    "test-storybook": "test-storybook",
+    "serve-storybook": "npx http-server storybook-static --port 7000 --silent",
+    "test-storybook": "test-storybook --url http://localhost:7000",
     "chromatic": "npx chromatic --only-changed --externals '*.less' --externals '*.json' --externals '*/msw-requests.ts'"
   },
   "overrides": {
