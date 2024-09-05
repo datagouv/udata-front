@@ -244,6 +244,9 @@ jobs:
           command: npm run build-storybook
           working_directory: ./udata_front/theme/gouvfr/datagouv-components
       - run:
+          name: Install udata-front dependencies
+          command: npm ci
+      - run:
           name: Test storybook
           command: npm run ci:storybook
           working_directory: ./udata_front/theme/gouvfr/datagouv-components
