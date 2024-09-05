@@ -329,7 +329,7 @@ jobs:
     resource_class: medium+
     steps:
       - checkout
-       - run:
+      - run:
           name: Install NodeJS and dependencies
           command: npm ci
       - run:
