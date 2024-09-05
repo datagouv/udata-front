@@ -201,6 +201,7 @@ jobs:
       - image: cimg/node:lts
     steps:
       - checkout
+      - browser-tools/install-chrome
       - run:
           name: Compute JS dependencies key
           command: cat ./udata_front/theme/gouvfr/datagouv-components/package.json > datagouv-components-js.deps
@@ -224,6 +225,12 @@ jobs:
           name: Compile and test package
           command: npm run preversion
           working_directory: ./udata_front/theme/gouvfr/datagouv-components
+      - run:
+          name: Install playwright
+          command: npx playwright install
+      - run:
+          name: test storybook
+          command: npm run ci:storybook
       - run:
           name: publish to chromatic
           command: CHROMATIC_PROJECT_TOKEN=$CHROMATIC_COMPONENTS_TOKEN npm run chromatic -- --exit-once-uploaded
@@ -297,6 +304,15 @@ jobs:
                 echo "CAPTCHETAT_BASE_URL = '${CAPTCHETAT_BASE_URL}'" >> cypress/udata-front-e2e.cfg
                 echo "CAPTCHETAT_OAUTH_BASE_URL = '${CAPTCHETAT_OAUTH_BASE_URL}'" >> cypress/udata-front-e2e.cfg
             fi
+      - run:
+          name: build storybook
+          command: npm run build-storybook
+      - run:
+          name: Install playwright
+          command: npx playwright install
+      - run:
+          name: test storybook
+          command: npm run ci:storybook
       - cypress/run-tests:
           cypress-command: npm run ci
       - run:
