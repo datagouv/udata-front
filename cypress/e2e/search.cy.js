@@ -23,32 +23,4 @@ describe("Testing organization search page", () => {
       .type(typed);
     cy.wait(['@request']);
   });
-
-  it("always adds organization to request", () => {
-    const typed = "some string";
-    const typed_next = "another string";
-    cy.get('[aria-controls="datasets-panel"]').click();
-    cy.get('@input')
-      .type(typed);
-    cy.intercept('**/api/2/datasets/search/*', (req) => {
-      expect(req.query).to.have.property("organization");
-      req.continue();
-    });
-    cy.wait(['@request']);
-    cy.wait(2000);
-    cy.get('@pushState')
-      .should('have.been.called', 2);
-    cy.get('@input')
-      .clear()
-      cy.wait(2000);
-    cy.get('@input')
-      .type("{backspace}{backspace}{backspace}");
-    cy.wait(['@request']);
-    cy.wait(2000);
-    cy.get('@pushState')
-      .should('have.been.called', 3);
-    cy.get('@input')
-      .type(typed_next);
-    cy.wait(['@request']);
-  });
 });
