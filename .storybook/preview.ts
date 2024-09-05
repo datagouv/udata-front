@@ -1,5 +1,6 @@
 import type { Preview } from '@storybook/vue3';
 import { initialize, mswLoader } from 'msw-storybook-addon';
+import { INITIAL_VIEWPORTS, MINIMAL_VIEWPORTS } from '@storybook/addon-viewport';
 import mswRequests from '../udata_front/theme/gouvfr/datagouv-components/.storybook/msw-requests';
 
 /*
@@ -20,6 +21,13 @@ initialize({
 const preview: Preview = {
   loaders: [mswLoader],
   parameters: {
+    viewport: {
+      viewports: {
+        ...INITIAL_VIEWPORTS,
+        ...MINIMAL_VIEWPORTS,
+      },
+      defaultViewport: 'iphone14promax',
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,

@@ -137,6 +137,19 @@ export const ResourceZip: StoryObj<typeof meta> = {
 };
 
 
+export const ResourceBinary: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { ResourceAccordion },
+    setup() {
+      return { args };
+    },
+    template: '<ResourceAccordion v-bind="args" />',
+  }),
+  args: { ...argsWithSchema, resource: { ...argsWithSchema.resource, format: "octet-stream", title: "tondeuse_batterie_fr.binary",
+  } },
+};
+
+
 export const ResourceUrl: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { ResourceAccordion },

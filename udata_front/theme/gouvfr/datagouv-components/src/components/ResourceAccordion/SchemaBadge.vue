@@ -1,5 +1,5 @@
 <template>
-    <span class="inline-flex items-center fr-text--xs" v-if="title">
+    <span class="inline-flex fr-mb-0 items-center fr-text--xs" v-if="title">
         <span class="fr-icon-information-line fr-icon--sm fr-mr-1v"></span>
         <span class="fr-mr-1v">{{ t("Schema:") }}</span>
         <span class="fr-tag fr-tag--sm">

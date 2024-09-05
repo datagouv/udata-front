@@ -17,16 +17,17 @@
           </button>
           <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resourceExternalUrl" class="relative z-2" />
         </h4>
-        <div class="text-grey-380">
+        <div class="text-grey-380 subheaders-infos">
           <SchemaBadge :resource class="dash-after" />
           <span class="fr-text--xs fr-mb-0 dash-after">{{ t('Updated {date}', {date: formatRelativeIfRecentDate(lastUpdate)}) }}</span>
           <span v-if="resource.format" class="fr-text--xs fr-mb-0 dash-after">
+            <span class="hidden show-on-small">{{ t("Format") }}</span>
             {{ resource.format.trim().toLowerCase() }}
             <span v-if="resource.filesize">({{ filesize(resource.filesize) }})</span>
           </span>
           <span class="inline-flex items-center fr-text--xs fr-mb-0">
             <span class="fr-icon-download-line fr-icon--sm fr-mr-1v"></span>
-            <span>{{ resource.metrics.views || 0 }}</span>
+            <span>{{ resource.metrics.views || 0 }} <span class="hidden show-on-small">{{ t("downloads") }}</span></span>
           </span>
         </div>
         <p class="fr-mb-0 fr-mt-1v fr-text--xs text-grey-380" v-if="communityResource">
@@ -37,17 +38,17 @@
           <template v-else-if="owner">{{owner}}</template>
         </p>
       </div>
-      <div class="flex items-center fr-ml-5v">
+      <div class="flex items-center fr-ml-5v buttons">
         <p class="text-default-warning fr-m-0 fr-mr-2v" v-if="unavailable">
           {{ t('Unavailable') }}
         </p>
-        <p class="fr-col-auto fr-ml-3v fr-m-0" v-if="resource.format === 'url'">
+        <p class="fr-col-auto fr-ml-3v fr-m-0 z-2" v-if="resource.format === 'url'">
           <a
             :href="resource.latest"
             :title="t('File link - opens a new window')"
             rel="ugc nofollow noopener"
             target="_blank"
-            class="fr-btn z-2"
+            class="fr-btn"
           >
             {{ $t('Visit') }}
           </a>
@@ -60,7 +61,7 @@
             download
             class="relative text-transform-uppercase fr-btn fr-btn--sm fr-btn--icon-left fr-icon-test-tube-line fr-icon-download-line fr-icon--sm matomo_download z-2"
           >
-            {{ resource.format }}
+            {{ format }}
           </a>
         </p>
         <p class="fr-col-auto fr-ml-3v fr-m-0 z-2" v-if="canEdit">
@@ -115,7 +116,6 @@
                           <span class="fr-ml-1v fr-icon-external-link-line fr-icon--sm"></span>
                         </template>
                       </TextClamp>
-
                     </a>
                   </span>
                   <span v-else>
@@ -158,6 +158,7 @@ import TabPanels from "../Tabs/TabPanels.vue";
 import TabPanel from "../Tabs/TabPanel.vue";
 import { trackEvent } from "../../helpers/matomo";
 import CopyButton from "../CopyButton/CopyButton.vue";
+import { getResourceFormatIconSvg } from "../../helpers/resources";
 
 defineOptions({
   inheritAttrs: false,
@@ -187,6 +188,8 @@ const hasSchema = computed(() => {
   return props.resource.schema && (props.resource.schema.name || props.resource.schema.url)
 })
 
+const format = computed(() => getResourceFormatIconSvg(props.resource) ? props.resource.format : t("File"))
+
 const open = ref(false);
 const toggle = () => {
   open.value = ! open.value;
@@ -197,7 +200,6 @@ const toggle = () => {
     trackEvent(['Close resource', props.resource.id]);
   }
 };
-
 
 const tabsOptions = computed(() => {
   let options = [];
@@ -262,4 +264,32 @@ If we do not put z-index, the header is fully clickable except for the DSFR icon
 .z-2 {
   z-index: 2;
 }
+
+article {
+  container-type: inline-size;
+}
+
+@container (max-width: 600px) {
+  article header.flex {
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+  }
+  article header .buttons {
+    margin-top: 1.25rem;
+    margin-left: auto !important;
+  }
+
+  article header .subheaders-infos {
+    display: flex;
+    flex-direction: column
+  }
+  article header .subheaders-infos .hidden.show-on-small {
+    display: inline !important;
+  }
+  article header .dash-after::after {
+    content: ''
+  }
+}
+
 </style>
