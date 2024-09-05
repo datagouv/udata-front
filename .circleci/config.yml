@@ -198,10 +198,9 @@ jobs:
 
   datagouv_components:
     docker:
-      - image: cimg/node:lts
+      - image: mcr.microsoft.com/playwright:v1.46.1-jammy
     steps:
       - checkout
-      - browser-tools/install-chrome
       - run:
           name: Compute JS dependencies key
           command: cat ./udata_front/theme/gouvfr/datagouv-components/package.json > datagouv-components-js.deps
@@ -224,10 +223,6 @@ jobs:
       - run:
           name: Compile and test package
           command: npm run preversion
-          working_directory: ./udata_front/theme/gouvfr/datagouv-components
-      - run:
-          name: Install playwright
-          command: npx playwright install
           working_directory: ./udata_front/theme/gouvfr/datagouv-components
       - run:
           name: test storybook
