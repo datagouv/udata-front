@@ -199,6 +199,7 @@ jobs:
   datagouv_components:
     docker:
       - image: mcr.microsoft.com/playwright:v1.46.1-jammy
+    resource_class: medium
     steps:
       - checkout
       - run:
