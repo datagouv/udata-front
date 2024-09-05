@@ -12,6 +12,9 @@ module.exports = {
    *  to merge testRunnerConfig properties with your own
    * @see https://jestjs.io/docs/configuration
    */
+  cache: false,
+  noStackTrace: true,
+  runner: "./.storybook/custom-runner.js",
   testEnvironmentOptions: {
     'jest-playwright': {
       contextOptions: {

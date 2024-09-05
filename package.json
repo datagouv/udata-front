@@ -20,11 +20,11 @@
     "prepare-and-serve-e2e": "npm run prepare-e2e && npm run serve-e2e",
     "local-testing": "start-server-and-test prepare-and-serve-e2e http://localhost:7000 cypress",
     "ci": "start-server-and-test prepare-and-serve-e2e http://localhost:7000 test",
-    "ci:storybook": "start-server-and-test serve-storybook http://127.0.0.1:7000 test-storybook",
+    "ci:storybook": "start-server-and-test serve-storybook http://127.0.0.1:6006 test-storybook",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "serve-storybook": "npx http-server storybook-static --port 7000 --silent",
-    "test-storybook": "test-storybook --url http://127.0.0.1:7000",
+    "serve-storybook": "npx http-server storybook-static --port 6006 --silent",
+    "test-storybook": "test-storybook",
     "chromatic": "npx chromatic --only-changed --externals '*.less' --externals '*.json' --externals '*/msw-requests.ts'"
   },
   "overrides": {
@@ -83,6 +83,7 @@
     "mitt": "^3.0.0",
     "msw": "^2.3.1",
     "msw-storybook-addon": "^2.0.2",
+    "playwright": "^1.46.1",
     "popmotion": "^8.7",
     "postcss": "^8.4.12",
     "postcss-normalize": "^10.0.1",

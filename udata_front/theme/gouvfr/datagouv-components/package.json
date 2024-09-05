@@ -26,9 +26,9 @@
     "publish-dev": "npm run publish-stable -- --tag=dev",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "serve-storybook": "npx http-server storybook-static --port 7000 --silent",
-    "test-storybook": "test-storybook --url http://localhost:7000 --browsers chrome",
-    "ci:storybook": "start-server-and-test serve-storybook http://localhost:7000 test-storybook",
+    "serve-storybook": "npx http-server storybook-static --port 6006 --silent",
+    "test-storybook": "test-storybook",
+    "ci:storybook": "start-server-and-test serve-storybook http://localhost:6006 test-storybook",
     "chromatic": "npx chromatic --only-changed --externals '*.less' --externals '*.json' --externals '*/msw-requests.ts'"
   },
   "dependencies": {
@@ -67,6 +67,7 @@
     "msw": "^2.4.1",
     "msw-storybook-addon": "^2.0.3",
     "oh-vue-icons": "^1.0.0-rc3",
+    "playwright": "^1.46.1",
     "popmotion": "^8.7.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
