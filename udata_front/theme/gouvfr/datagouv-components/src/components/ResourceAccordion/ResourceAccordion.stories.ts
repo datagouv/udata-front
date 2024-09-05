@@ -56,7 +56,14 @@ Enable typographer option to see result.
 test.. test... test..... test?..... test!....
 
 !!!!!! ???? ,,  -- ---
- and 'single quotes'`,
+ and 'single quotes'
+ 
+| Item | Price | Quantity |
+|————–|——-|———-|
+| Apple | $1 | 5 |
+| Bread | $2 | 2 |
+ 
+ `,
     extras: {},
     filesize: 9167,
     filetype: "file",

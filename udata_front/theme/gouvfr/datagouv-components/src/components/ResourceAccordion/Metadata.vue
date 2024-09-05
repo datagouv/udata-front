@@ -19,48 +19,28 @@ const { t } = useI18n();
 </script>
 <template>
     <div>
-        <div class="fr-grid-row fr-grid-row--gutters">
-            <DescriptionList class="fr-col-12 fr fr-col-md-6">
-                <DescriptionTerm>{{ t('URL') }}</DescriptionTerm>
-                <DescriptionDetails :withEllipsis="false">
-                    <div class="fr-col text-overflow-ellipsis">
-                        <a :href="resource.url">{{resource.url}}</a>
-                    </div>
-                    <div class="fr-ml-1w fr-col-auto">
-                        <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resource.url"/>
-                    </div>
+        <div class="fr-grid-row fr-grid-row--gutters-5v">
+            <DescriptionList class="fr-col fr-p-5v">
+                <DescriptionTerm>{{ t('URL') }} <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resource.url"/></DescriptionTerm>
+                <DescriptionDetails>
+                    <code><a :href="resource.url">{{resource.url}}</a></code>
                 </DescriptionDetails>
-                <DescriptionTerm>{{ t('Stable URL') }}</DescriptionTerm>
-                <DescriptionDetails :withEllipsis="false">
-                    <div class="fr-col text-overflow-ellipsis">
-                        <a :href="resource.latest">{{resource.latest}}</a>
-                    </div>
-                    <div class="fr-ml-1w fr-col-auto">
-                        <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resource.latest"/>
-                    </div>
+                <DescriptionTerm>{{ t('Stable URL') }} <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resource.latest"/></DescriptionTerm>
+                <DescriptionDetails>
+                    <code><a :href="resource.latest">{{resource.latest}}</a></code>
                 </DescriptionDetails>
-                <DescriptionTerm>{{ t('Identifier') }}</DescriptionTerm>
-                <DescriptionDetails :withEllipsis="false">
-                    <div class="fr-col text-overflow-ellipsis">
-                        {{ resource.id }}
-                    </div>
-                    <div class="fr-ml-1w fr-col-auto">
-                        <CopyButton :label="$t('Copy ID')" :copied-label="$t('ID copied!')" :text="resource.id"/>
-                    </div>
+                <DescriptionTerm>{{ t('Identifier') }} <CopyButton :label="$t('Copy ID')" :copied-label="$t('ID copied!')" :text="resource.id"/></DescriptionTerm>
+                <DescriptionDetails >
+                    <code>{{ resource.id }}</code>
                 </DescriptionDetails>
                 <template v-if="resource.checksum">
-                    <DescriptionTerm>{{resource.checksum.type}}</DescriptionTerm>
-                    <DescriptionDetails :withEllipsis="false">
-                        <div class="fr-col text-overflow-ellipsis">
-                            {{resource.checksum.value}}
-                        </div>
-                        <div class="fr-col-auto">
-                            <CopyButton :label="$t('Copy checksum')" :copied-label="$t('Checksum copied!')" :text="resource.checksum.value"/>
-                        </div>
+                    <DescriptionTerm>{{resource.checksum.type}} <CopyButton :label="$t('Copy checksum')" :copied-label="$t('Checksum copied!')" :text="resource.checksum.value"/></DescriptionTerm>
+                    <DescriptionDetails>
+                        <code>{{resource.checksum.value}}</code>
                     </DescriptionDetails>
                 </template>
             </DescriptionList>
-            <DescriptionList class="fr-col-12 fr fr-col-md-3">
+            <DescriptionList class="fr-p-5v">
                 <DescriptionTerm>{{ t('Created on') }}</DescriptionTerm>
                 <DescriptionDetails>
                     {{formatDate(resource.created_at)}}
@@ -70,7 +50,7 @@ const { t } = useI18n();
                     {{formatDate(resource.last_modified)}}
                 </DescriptionDetails>
             </DescriptionList>
-            <DescriptionList class="fr-col-12 fr fr-col-md-3">
+            <DescriptionList class="fr-p-5v">
                 <template v-if="resource.filesize">
                     <DescriptionTerm>{{ t('Size') }}</DescriptionTerm>
                     <DescriptionDetails>
@@ -78,7 +58,7 @@ const { t } = useI18n();
                     </DescriptionDetails>
                 </template>
                 <template v-if="resource.mime">
-                    <DescriptionTerm>{{ t('MIME Type') }}</DescriptionTerm>
+                    <DescriptionTerm>{{ t('Type') }}</DescriptionTerm>
                     <DescriptionDetails>
                         {{getResourceLabel(resource.type)}}
                     </DescriptionDetails>
@@ -86,7 +66,7 @@ const { t } = useI18n();
                 <template v-if="resource.mime">
                     <DescriptionTerm>{{ t('MIME Type') }}</DescriptionTerm>
                     <DescriptionDetails>
-                        {{resource.mime}}
+                        <code>{{resource.mime}}</code>
                     </DescriptionDetails>
                 </template>
             </DescriptionList>
@@ -103,3 +83,8 @@ const { t } = useI18n();
         </div>
     </div>
 </template>
+<style scoped>
+.fr-grid-row--gutters-5v {
+    margin: -1.25rem;
+}
+</style>

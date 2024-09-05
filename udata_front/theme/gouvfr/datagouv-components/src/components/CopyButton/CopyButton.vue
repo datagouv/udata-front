@@ -1,11 +1,11 @@
 <template>
   <button type="button" @click="copy" class="fr-text--xs fr-mb-0 whitespace-nowrap relative">
       <span v-if="copied" style="color: #3558a2;">
-          <OhVueIcon name="ri-file-copy-line" class="fr-icon--sm fr-mr-1v" />
+          <OhVueIcon name="ri-file-copy-line" class="fr-mr-1v" />
           <span class="copy-label">{{ copiedLabel }}</span>  
       </span>
       <span v-if="!copied">
-          <OhVueIcon name="ri-file-copy-line" class="copy-icon fr-icon--sm fr-mr-1v" />
+          <OhVueIcon name="ri-file-copy-line" class="copy-icon fr-mr-1v" />
           <span class="copy-link copy-label">{{ label }}</span>  
       </span>
   </button>

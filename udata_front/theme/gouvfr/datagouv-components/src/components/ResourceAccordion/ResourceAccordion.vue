@@ -1,14 +1,13 @@
 <template>
-  <article :class="{'drop-shadow': open}">
+  <article class="border border-default-grey">
     <header
-      class="fr-p-5v flex items-center justify-between border-default-grey relative"
-      :class="{'border-bottom': !open}"
+      class="fr-p-4v flex items-center justify-between relative"
       :id="resourceHeaderId"
     >
       <div>
         <h4 class="fr-mb-1v flex items-center" :id="resourceTitleId">
-          <button type="button" @click="toggle" class="flex items-center">
-            <ResourceIcon :resource class="fr-icon--sm fr-mr-1v" />
+          <button type="button" @click="toggle" class="fr-p-0 flex items-center">
+            <ResourceIcon :resource class="fr-icon--xs fr-mr-1v" />
             <span :class="{
               'font-bold': open,
             }"><TextClamp :max-lines="1" :text="resource.title || t('Nameless file')"/></span>
@@ -26,7 +25,7 @@
             <span v-if="resource.filesize">({{ filesize(resource.filesize) }})</span>
           </span>
           <span class="inline-flex items-center fr-text--xs fr-mb-0">
-            <span class="fr-icon-download-line fr-icon--sm fr-mr-1v"></span>
+            <span class="fr-icon-download-line fr-icon--xs fr-mr-1v"></span>
             <span>{{ resource.metrics.views || 0 }} <span class="hidden show-on-small">{{ t("downloads") }}</span></span>
           </span>
         </div>
@@ -38,7 +37,7 @@
           <template v-else-if="owner">{{owner}}</template>
         </p>
       </div>
-      <div class="flex items-center fr-ml-5v buttons">
+      <div class="flex items-center fr-ml-4v buttons">
         <p class="text-default-warning fr-m-0 fr-mr-2v" v-if="unavailable">
           {{ t('Unavailable') }}
         </p>
@@ -83,7 +82,7 @@
       :id="resourceContentId"
     >
       <TabGroup size="sm" @change="switchTab">
-        <div class="fr-p-5v" >
+        <div class="fr-pl-4v fr-pr-4v fr-pb-4v" >
           <TabList style="max-width: 100%; overflow-y: auto;">
             <Tab v-for="tab in tabsOptions" :key="tab.key">{{ tab.label }}</Tab>
           </TabList>
@@ -93,18 +92,18 @@
             <div v-if="tab.key === 'data'">
               <Preview :resource="resource" />
             </div>
-            <div v-if="tab.key === 'description'"  class="fr-p-5v">
+            <div v-if="tab.key === 'description'"  class="fr-pl-4v fr-pr-4v">
               <div class="fr-mt-0 markdown fr-text--sm text-mention-grey" v-html="markdown(resource.description || '')"></div>
             </div>
-            <div v-if="tab.key === 'data-structure'" class="fr-p-5v">
+            <div v-if="tab.key === 'data-structure'" class="fr-pl-4v fr-pr-4v">
               <DataStructure v-if="hasPreview" :resource="resource" />
-              <hr class="fr-my-5v fr-p-1v" v-if="hasPreview && hasSchema"/>
+              <hr class="fr-my-4v fr-p-1v" v-if="hasPreview && hasSchema"/>
               <SchemaTab :resource />
             </div>
-            <div v-if="tab.key === 'metadata'" class="fr-p-5v">
+            <div v-if="tab.key === 'metadata'" class="fr-pl-4v fr-pr-4v">
               <Metadata :resource />
             </div>
-            <div v-if="tab.key === 'downloads'" class="fr-p-5v">
+            <div v-if="tab.key === 'downloads'" class="fr-pl-4v fr-pr-4v">
               <dl class="fr-pl-0">
                 <dt class="font-bold fr-text--sm fr-mb-0" v-if="resource.format === 'url'">{{ $t('Original URL') }}</dt>
                 <dt class="font-bold fr-text--sm fr-mb-0" v-else>{{ $t('Original format') }}</dt>
@@ -255,6 +254,10 @@ const resourceTitleId = 'resource-' + props.resource.id + '-title';
   display: none !important;
 }
 
+header:hover {
+  background-color: #f6f6f6;
+}
+
 /**
 If we do not put z-index, the header is fully clickable except for the DSFR icons (bad because one of the icons is the chevron up/down). It may be due to the usage of ::before to add the icon in the markup or the `mask-image`. We need to put a `z-2` on all elements that we want to be clickable over the header.
 */
@@ -292,9 +295,9 @@ article {
     content: ''
   } */
 
-  article .fr-p-5v {
+  /* article .fr-pl-4v fr-pr-4v {
     padding: 0.75rem !important;
-  }
+  } */
 }
 
 </style>
