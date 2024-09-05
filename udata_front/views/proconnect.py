@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import abort, redirect, url_for
+from flask import redirect, url_for
 from udata.i18n import I18nBlueprint
 from udata_front.frontend import oauth
 from udata.models import datastore
