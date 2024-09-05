@@ -279,7 +279,8 @@ article {
     margin-top: 1.25rem;
     margin-left: auto !important;
   }
-
+/* 
+  If we want to put subheaders info in column on mobile…
   article header .subheaders-infos {
     display: flex;
     flex-direction: column
@@ -289,6 +290,10 @@ article {
   }
   article header .dash-after::after {
     content: ''
+  } */
+
+  article .fr-p-5v {
+    padding: 0.75rem !important;
   }
 }
 
