@@ -78,6 +78,7 @@
     "es-module-shims": "^1.7.0",
     "glob": "^10.2.2",
     "iconoir": "^7.4.0",
+    "jest-playwright-preset": "^4.0.0",
     "less": "^4.1.3",
     "markdown-it": "^12.3.2",
     "mitt": "^3.0.0",

@@ -1,5 +1,5 @@
 import { withActions } from '@storybook/addon-actions/decorator';
-import { userEvent, expect, screen, within, waitFor, fn } from '@storybook/test';
+import { userEvent, expect, screen, within, fn } from '@storybook/test';
 import type { Meta, StoryObj } from "@storybook/vue3";
 import AdminMembershipRequest from './AdminMembershipRequest.vue';
 import { DefaultIdenticonAvatar } from "../discussions/Avatar/Avatar.stories";
