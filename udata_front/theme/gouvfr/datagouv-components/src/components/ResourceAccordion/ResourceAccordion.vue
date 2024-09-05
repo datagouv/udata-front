@@ -83,8 +83,8 @@
       :id="resourceContentId"
     >
       <TabGroup size="sm" @change="switchTab">
-        <div class="fr-p-5v">
-          <TabList>
+        <div class="fr-p-5v" >
+          <TabList style="max-width: 100%; overflow-y: auto;">
             <Tab v-for="tab in tabsOptions" :key="tab.key">{{ tab.label }}</Tab>
           </TabList>
         </div>
@@ -190,7 +190,7 @@ const hasSchema = computed(() => {
 
 const format = computed(() => getResourceFormatIconSvg(props.resource) ? props.resource.format : t("File"))
 
-const open = ref(false);
+const open = ref(props.expandedOnMount);
 const toggle = () => {
   open.value = ! open.value;
 
