@@ -8,6 +8,7 @@ import DescriptionTerm from '../DescriptionList/DescriptionTerm.vue';
 import { filesize, formatDate, getResourceLabel } from "../../helpers";
 import ExtraAccordion from '../ExtraAccordion/ExtraAccordion.vue';
 import { computed } from 'vue';
+import TextClamp from 'vue3-text-clamp';
 
 const props = defineProps<{
     resource: Resource;
@@ -22,21 +23,29 @@ const { t } = useI18n();
         <div class="flex gap-5v flex-col-on-small">
             <DescriptionList class="flex-1">
                 <DescriptionTerm>{{ t('URL') }} <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resource.url"/></DescriptionTerm>
-                <DescriptionDetails>
-                    <code class="code text-overflow-ellipsis" ><a :href="resource.url">{{resource.url}}</a></code>
+                <DescriptionDetails :with-ellipsis="false">
+                    <code class="code">
+                        <a :href="resource.url"><TextClamp :max-lines="1" :autoresize="true" :text="resource.url" /></a>
+                    </code>
                 </DescriptionDetails>
                 <DescriptionTerm>{{ t('Stable URL') }} <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resource.latest"/></DescriptionTerm>
-                <DescriptionDetails>
-                    <code class="code text-overflow-ellipsis" ><a :href="resource.latest">{{resource.latest}}</a></code>
+                <DescriptionDetails :with-ellipsis="false">
+                    <code class="code">
+                        <a :href="resource.latest"><TextClamp :max-lines="1" :autoresize="true" :text="resource.latest"/></a>
+                    </code>
                 </DescriptionDetails>
                 <DescriptionTerm>{{ t('Identifier') }} <CopyButton :label="$t('Copy ID')" :copied-label="$t('ID copied!')" :text="resource.id"/></DescriptionTerm>
-                <DescriptionDetails >
-                    <code class="code text-overflow-ellipsis" >{{ resource.id }}</code>
+                <DescriptionDetails :with-ellipsis="false">
+                    <code class="code">
+                        <TextClamp :max-lines="1" :autoresize="true" :text="resource.id" />
+                    </code>
                 </DescriptionDetails>
                 <template v-if="resource.checksum">
                     <DescriptionTerm>{{resource.checksum.type}} <CopyButton :label="$t('Copy checksum')" :copied-label="$t('Checksum copied!')" :text="resource.checksum.value"/></DescriptionTerm>
                     <DescriptionDetails>
-                        <code class="code text-overflow-ellipsis" >{{resource.checksum.value}}</code>
+                        <code class="code">
+                            <TextClamp :max-lines="1" :autoresize="true" :text="resource.checksum.value" />
+                        </code>
                     </DescriptionDetails>
                 </template>
             </DescriptionList>
