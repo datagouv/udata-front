@@ -18,10 +18,12 @@
     "prepare-e2e": "UDATA_SETTINGS=${INIT_CWD}/cypress/udata-front-e2e.cfg udata import-fixtures",
     "serve-e2e": "UDATA_SETTINGS=${INIT_CWD}/cypress/udata-front-e2e.cfg udata serve",
     "prepare-and-serve-e2e": "npm run prepare-e2e && npm run serve-e2e",
-    "ci": "start-server-and-test prepare-and-serve-e2e http://localhost:7000 test",
     "local-testing": "start-server-and-test prepare-and-serve-e2e http://localhost:7000 cypress",
+    "ci": "start-server-and-test prepare-and-serve-e2e http://localhost:7000 test",
+    "ci:storybook": "start-server-and-test serve-storybook http://127.0.0.1:6006 test-storybook",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "serve-storybook": "npx http-server storybook-static --port 6006 --silent",
     "test-storybook": "test-storybook",
     "chromatic": "npx chromatic --only-changed --externals '*.less' --externals '*.json' --externals '*/msw-requests.ts'"
   },

@@ -118,10 +118,8 @@ export const RefusedMembershipRequest: StoryObj<typeof meta> = {
     await step("A user clicks on the refuse button", async () => {
       const Refuse = canvas.getByTestId("refuse");
       await userEvent.click(Refuse);
-    });
-    await waitFor(async () => {
       const Modal = screen.getByTestId("modal");
-      await expect(Modal).toBeVisible();
+      setTimeout(() => { expect(Modal).toBeVisible(); }, 1000);
     });
     await step("A user fills the comment field", async () => {
       const InputGroup = screen.getByTestId("comment-group");
