@@ -107,7 +107,7 @@
               <dl class="fr-pl-0">
                 <dt class="font-bold fr-text--sm fr-mb-0" v-if="resource.format === 'url'">{{ $t('Original URL') }}</dt>
                 <dt class="font-bold fr-text--sm fr-mb-0" v-else>{{ $t('Original format') }}</dt>
-                <dd class="fr-pl-0 flex items-center">
+                <dd class="fr-text--sm fr-ml-0 fr-mt-0 fr-mb-2w text-mention-grey h-4w fr-grid-row fr-grid-row--middle">
                   <span v-if="resource.format === 'url'">
                     <a :href="resource.latest" class="fr-link fr-link--no-after" rel="ugc nofollow noopener" target="_blank">
                       <TextClamp :auto-resize="true" :max-lines="1" :text="resource.url">
