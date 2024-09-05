@@ -231,7 +231,7 @@ jobs:
     resource_class: medium+
     steps:
       - checkout
-       - run:
+      - run:
           name: Install NodeJS and dependencies
           command: npm ci
           working_directory: ./udata_front/theme/gouvfr/datagouv-components
