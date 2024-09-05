@@ -58,6 +58,7 @@ export function getResourceFormatIconSvg(resource: Resource): string | null {
         case 'ods':
         case 'xls':
         case 'xlsx':
+        case 'parquet':
             return table;
         default:
             return null;
