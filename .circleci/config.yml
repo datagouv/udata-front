@@ -228,9 +228,11 @@ jobs:
       - run:
           name: Install playwright
           command: npx playwright install
+          working_directory: ./udata_front/theme/gouvfr/datagouv-components
       - run:
           name: test storybook
           command: npm run ci:storybook
+          working_directory: ./udata_front/theme/gouvfr/datagouv-components
       - run:
           name: publish to chromatic
           command: CHROMATIC_PROJECT_TOKEN=$CHROMATIC_COMPONENTS_TOKEN npm run chromatic -- --exit-once-uploaded
