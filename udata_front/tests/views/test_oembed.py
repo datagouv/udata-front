@@ -102,7 +102,7 @@ class OEmbedAPITest:
         assert 'maxheight' in response.json
         assert response.json['type'] == 'rich'
         assert response.json['version'] == '1.0'
-        card = theme.render('reuse/card.html', reuse=reuse)
+        card = theme.render('reuse/oembed.html', reuse=reuse)
         assert card in response.json['html']
 
     def test_oembed_for_org(self, api):
