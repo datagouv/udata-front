@@ -1,5 +1,5 @@
 <template>
-  <article class="border border-default-grey">
+  <article class="border border-default-grey" :class="{ 'fr-pb-4v': open }">
     <header
       class="fr-p-4v flex items-center justify-between relative"
       :id="resourceHeaderId"
@@ -97,8 +97,6 @@
             </div>
             <div v-if="tab.key === 'data-structure'" class="fr-pl-4v fr-pr-4v">
               <DataStructure v-if="hasPreview" :resource="resource" />
-              <hr class="fr-my-4v fr-p-1v" v-if="hasPreview && hasSchema"/>
-              <SchemaTab :resource />
             </div>
             <div v-if="tab.key === 'metadata'" class="fr-pl-4v fr-pr-4v">
               <Metadata :resource />
@@ -147,7 +145,6 @@ import { filesize, formatRelativeIfRecentDate, markdown } from "../../helpers";
 import type { CommunityResource, Resource } from "../../types/resources";
 import ResourceIcon from "./ResourceIcon.vue";
 import SchemaBadge from "./SchemaBadge.vue";
-import SchemaTab from "./SchemaTab.vue";
 import Metadata from "./Metadata.vue";
 import TextClamp from 'vue3-text-clamp';
 import TabGroup from "../Tabs/TabGroup.vue";
@@ -211,7 +208,7 @@ const tabsOptions = computed(() => {
     options.push({ key: "description", label: t("Description") })
   }
   
-  if (hasPreview.value || hasSchema.value) {
+  if (hasPreview.value) {
     options.push({ key: "data-structure", label: t("Data structure") })
   }
 

@@ -20,7 +20,7 @@ const { t } = useI18n();
 </script>
 <template>
     <div>
-        <div class="flex gap-5v flex-col-on-small">
+        <div class="flex gap-3rem flex-col-on-small">
             <DescriptionList class="flex-1">
                 <DescriptionTerm>{{ t('URL') }} <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resource.url"/></DescriptionTerm>
                 <DescriptionDetails :with-ellipsis="false">
@@ -93,10 +93,10 @@ const { t } = useI18n();
     </div>
 </template>
 <style scoped>
-.gap-5v {
-    gap: 1.25rem;
+.gap-3rem {
+    gap: 3rem;
 }
-.gap-5v dl {
+.gap-3rem dl {
     padding-inline-start: 0;
 }
 @container (max-width: 600px) {

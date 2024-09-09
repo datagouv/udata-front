@@ -15,8 +15,10 @@
     >
       <slot></slot>
     </button>
-    <div class="toggletip" :id="id" v-show="shown" ref="toggletip">
-      <slot name="toggletip"></slot>
+    <div class="toggletip" :id="id" v-show="shown" ref="toggletip" :class="{
+      'fr-p-0': noMargin,
+    }">
+      <slot name="toggletip" :hide></slot>
     </div>
   </div>
 </template>
@@ -24,6 +26,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { getRandomId } from "@gouvminint/vue-dsfr";
+withDefaults(defineProps<{
+  noMargin?: boolean;
+}>(), {
+  noMargin: false,
+});
 defineOptions({inheritAttrs: false})
 const button = ref<HTMLButtonElement | null>(null);
 const toggletip = ref<HTMLElement | null>(null);

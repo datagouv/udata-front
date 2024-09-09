@@ -1,6 +1,42 @@
 <template>
     <span class="inline-flex fr-mb-0 items-center fr-text--xs" v-if="title">
-        <span class="fr-icon-information-line fr-icon--sm fr-mr-1v"></span>
+        <Toggletip noMargin>
+            <span class="fr-icon-information-line fr-icon--sm fr-mr-1v"></span>
+            <template #toggletip="{ hide }">
+                <div class="flex justify-between border-bottom">
+                    <h5 class="fr-text--sm fr-my-0 fr-p-2v">{{$t("Data schema")}}</h5>
+                    <button type="button" @click="hide" class="border-left close-button flex items-center justify-center">&times;</button>
+                </div>
+                <div class="fr-p-3v">
+                    <div v-if="validataErrors.length === 0">
+                        {{ t("This file is valid for the shema:") }} <component :is="documentationUrl ? 'a' : 'span'" :href="documentationUrl">{{ title }}</component>.
+                    </div>
+                    <div v-else-if="validataErrors.length === validataWarnings.length">
+                        {{ t("This file is valid for the shema:") }} <component :is="documentationUrl ? 'a' : 'span'" :href="documentationUrl">{{ title }}</component>. {{ t("But its compliance could be improved.") }}
+                    </div>
+                    <div v-else>
+                        {{ t("This file indicates to follow the schema:") }} <component :is="documentationUrl ? 'a' : 'span'" :href="documentationUrl">{{ title }}</component>. {{ t("But is not compliant.") }}
+                    </div>
+
+                    <div class="text-default-warning flex items-center fr-mt-4v" v-if="validataWarnings.length">
+                        <span class="fr-icon-alert-line fr-icon--sm fr-mr-1v"></span>
+                        <span>{{ validataWarnings.length }} {{ t('advices') }}</span>
+                    </div>
+                    <div class="text-default-warning flex items-center fr-mt-4v" v-if="validataStructureErrors.length">
+                        <span class="fr-icon-alert-line fr-icon--sm fr-mr-1v"></span>
+                        <span>{{ validataStructureErrors.length }} {{ t('structure errors') }}</span>
+                    </div>
+                    <div class="text-default-warning flex items-center fr-mt-4v" v-if="validataBodyErrors.length">
+                        <span class="fr-icon-alert-line fr-icon--sm fr-mr-1v"></span>
+                        <span>{{ validataBodyErrors.length }} {{ t('body errors') }}</span>
+                    </div>
+
+                    <div class="w-100 text-align-right fr-mt-5v" v-if="validationUrl">
+                        <a :href="validationUrl">{{ t('See validation report') }}</a>
+                    </div>
+                </div>
+            </template>
+        </Toggletip>
         <span class="fr-mr-1v">{{ t("Schema:") }}</span>
         <span class="fr-tag fr-tag--sm">
             <span>{{ title }}</span>
@@ -12,9 +48,11 @@
     </span>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import type { Resource } from '../../types/resources';
 import { useI18n } from 'vue-i18n';
+import Toggletip from '../Toggletip/Toggletip.vue';
+import { findSchemaInCatalog, getCatalog, getSchemaDocumentation, getSchemaValidationUrl, RegisteredSchema, ValidataError } from '../../api/schemas';
 
 const props = withDefaults(defineProps<{
     resource: Resource;
@@ -25,8 +63,29 @@ const props = withDefaults(defineProps<{
 
 const { t } = useI18n();
 
+const catalog = ref<Array<RegisteredSchema> | null>(null);
+onMounted(async () => {
+    catalog.value = await getCatalog();
+})
+const catalogSchema = computed(() => catalog.value ? findSchemaInCatalog(catalog.value, props.resource.schema) : null)
+const validationUrl = computed(() => catalogSchema.value ? getSchemaValidationUrl(props.resource, catalogSchema.value) : null)
+const documentationUrl = computed(() => catalogSchema.value ? getSchemaDocumentation(catalogSchema.value.name) : null)
+
 const title = computed(() => {
     if (! props.resource.schema) return null;
     return props.resource.schema.name || props.resource.schema.url
 })
+
+const validataErrors = computed<Array<ValidataError>>(() => props.resource.extras["validation-report:errors"] || [])
+const validataWarnings = computed(() => validataErrors.value.filter((error) => [""].includes(error.code)))
+const validataBodyErrors = computed(() => validataErrors.value.filter((error) => ["#body", "#cell", "#content", "#row", "#table"].some((tag) => error.tags.includes(tag))))
+const validataStructureErrors = computed(() => validataErrors.value.filter((error) => ["#head", "#structure", "#header"].some((tag) => error.tags.includes(tag))))
+
 </script>
+<style scoped>
+.close-button {
+    width: 40px;
+    font-size: 1.2rem;
+    line-height: 0;
+}
+</style>
