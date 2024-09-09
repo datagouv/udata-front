@@ -114,6 +114,7 @@ const dataset: DatasetV2 = {
 
 const updateLessThanAMonth = new Date();
 const twoDayAgoInMs = 2 * 24 * 60  * 60 * 1000;
+updateLessThanAMonth.setHours(1, 0, 0, 0);
 updateLessThanAMonth.setTime(updateLessThanAMonth.getTime() - twoDayAgoInMs);
 
 const updateLastMonth = new Date();
