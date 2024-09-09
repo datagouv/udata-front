@@ -47,7 +47,7 @@
             :title="t('File link - opens a new window')"
             rel="ugc nofollow noopener"
             target="_blank"
-            class="fr-btn"
+            class="fr-btn fr-btn--sm"
           >
             {{ $t('Visit') }}
           </a>
