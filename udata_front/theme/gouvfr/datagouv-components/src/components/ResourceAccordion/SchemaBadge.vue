@@ -1,7 +1,7 @@
 <template>
     <span class="inline-flex fr-mb-0 items-center fr-text--xs" v-if="title">
         <Toggletip noMargin>
-            <span class="fr-icon-information-line fr-icon--sm fr-mr-1v"></span>
+            <span class="z-2 fr-icon-information-line fr-icon--sm fr-mr-1v"></span>
             <template #toggletip="{ hide }">
                 <div class="flex justify-between border-bottom">
                     <h5 class="fr-text--sm fr-my-0 fr-p-2v">{{$t("Data schema")}}</h5>
