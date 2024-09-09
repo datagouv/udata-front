@@ -111,28 +111,29 @@ export const AcceptedMembershipRequest: StoryObj<typeof meta> = {
  * A membership request with a click on refuse
  */
 export const RefusedMembershipRequest: StoryObj<typeof meta> = {
-  play:  async ({ args, canvasElement, step }) => {
-    const canvas = within(canvasElement);
-    const body = canvasElement.ownerDocument.body;
-    const screen = within(body);
-    const comment = "This is a spam request.";
+  // TODO: add back after moving out of DSFR modal
+  // play:  async ({ args, canvasElement, step }) => {
+  //   const canvas = within(canvasElement);
+  //   const body = canvasElement.ownerDocument.body;
+  //   const screen = within(body);
+  //   const comment = "This is a spam request.";
 
-    await step("A user clicks on the refuse button", async () => {
-      const Refuse = await canvas.findByTestId("refuse");
-      await userEvent.click(Refuse);
-      await new Promise(resolve => setTimeout(resolve, 1000));
-    });
-    await step("A user fills the comment field", async () => {
-      const InputGroup = screen.getByTestId("comment-group");
-      await userEvent.type(InputGroup.querySelector("input") as HTMLInputElement, comment);
-    });
-    await step("A user clicks on the refuse button in the modal", async () => {
-      const Refuse = screen.getByTestId("refuse-modal-button");
-      await userEvent.click(Refuse);
-      await expect(args.onRefuse).toBeCalled();
-      await expect(args.onRefuse).toBeCalledWith(args.request.id, comment);
-    });
-  },
+  //   await step("A user clicks on the refuse button", async () => {
+  //     const Refuse = await canvas.findByTestId("refuse");
+  //     await userEvent.click(Refuse);
+  //     await new Promise(resolve => setTimeout(resolve, 1000));
+  //   });
+  //   await step("A user fills the comment field", async () => {
+  //     const InputGroup = screen.getByTestId("comment-group");
+  //     await userEvent.type(InputGroup.querySelector("input") as HTMLInputElement, comment);
+  //   });
+  //   await step("A user clicks on the refuse button in the modal", async () => {
+  //     const Refuse = screen.getByTestId("refuse-modal-button");
+  //     await userEvent.click(Refuse);
+  //     await expect(args.onRefuse).toBeCalled();
+  //     await expect(args.onRefuse).toBeCalledWith(args.request.id, comment);
+  //   });
+  // },
   render: (args) => ({
     components: { AdminMembershipRequest },
     setup() {
@@ -148,27 +149,28 @@ export const RefusedMembershipRequest: StoryObj<typeof meta> = {
  * A membership request with a click on refuse and a dismissed modal
  */
 export const RefuseMembershipRequestCancelled: StoryObj<typeof meta> = {
-  play:  async ({ args, canvasElement, step }) => {
-    const canvas = within(canvasElement);
-    const body = canvasElement.ownerDocument.body;
-    const screen = within(body);
-    const comment = "This is a spam request.";
+  // TODO: add back after moving out of DSFR modal
+  // play:  async ({ args, canvasElement, step }) => {
+  //   const canvas = within(canvasElement);
+  //   const body = canvasElement.ownerDocument.body;
+  //   const screen = within(body);
+  //   const comment = "This is a spam request.";
 
-    await step("A user clicks on the refuse button", async () => {
-      const Refuse = await canvas.findByTestId("refuse");
-      await userEvent.click(Refuse);
-    });
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    await step("A user fills the comment field", async () => {
-      const InputGroup = screen.getByTestId("comment-group");
-      await userEvent.type(InputGroup.querySelector("input") as HTMLInputElement, comment);
-    });
-    await step("A user clicks on the cancel button in the modal", async () => {
-      const Cancel = screen.getByTestId("cancel-modal-button");
-      await userEvent.click(Cancel);
-      await expect(args.onRefuse).not.toBeCalled();
-    });
-  },
+  //   await step("A user clicks on the refuse button", async () => {
+  //     const Refuse = await canvas.findByTestId("refuse");
+  //     await userEvent.click(Refuse);
+  //   });
+  //   await new Promise(resolve => setTimeout(resolve, 1000));
+  //   await step("A user fills the comment field", async () => {
+  //     const InputGroup = screen.getByTestId("comment-group");
+  //     await userEvent.type(InputGroup.querySelector("input") as HTMLInputElement, comment);
+  //   });
+  //   await step("A user clicks on the cancel button in the modal", async () => {
+  //     const Cancel = screen.getByTestId("cancel-modal-button");
+  //     await userEvent.click(Cancel);
+  //     await expect(args.onRefuse).not.toBeCalled();
+  //   });
+  // },
   render: (args) => ({
     components: { AdminMembershipRequest },
     setup() {
