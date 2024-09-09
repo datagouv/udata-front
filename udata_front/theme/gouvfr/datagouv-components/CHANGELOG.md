@@ -10,6 +10,7 @@
 - add url to reuse type [#494](https://github.com/datagouv/udata-front/pull/494)
 - fix reuse card date shown [#496](https://github.com/datagouv/udata-front/pull/496)
 - add vue-clamp to cards title and description [#497](https://github.com/datagouv/udata-front/pull/497)
+- fix dsfr CSS for badge imported into components [#500](https://github.com/datagouv/udata-front/pull/500)
 
 ## 1.2.0 (2024-08-21)
 
