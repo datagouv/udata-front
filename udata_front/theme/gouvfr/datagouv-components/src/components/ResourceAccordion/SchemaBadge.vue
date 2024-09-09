@@ -1,5 +1,5 @@
 <template>
-    <span class="inline-flex fr-mb-0 items-center fr-text--xs" v-if="title">
+    <span class="inline-flex fr-mb-0 align-items-baseline fr-text--xs" v-if="title">
         <Toggletip noMargin class="fr-p-0">
             <span class="z-2 fr-icon-information-line fr-icon--sm fr-mr-1v text-grey-380"></span>
             <template #toggletip="{ hide }">
