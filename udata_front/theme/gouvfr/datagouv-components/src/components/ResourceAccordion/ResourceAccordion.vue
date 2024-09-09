@@ -6,7 +6,7 @@
     >
       <div>
         <h4 class="fr-mb-1v flex items-center" :id="resourceTitleId">
-          <button type="button" @click="toggle" class="fr-p-0 flex items-center">
+          <button type="button" @click="toggle" class="fr-p-0 flex items-center" data-testid="expand-button">
             <ResourceIcon :resource class="fr-icon--xs fr-mr-1v" />
             <span :class="{
               'font-bold': open,
