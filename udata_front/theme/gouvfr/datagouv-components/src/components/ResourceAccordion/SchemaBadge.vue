@@ -1,7 +1,7 @@
 <template>
     <span class="inline-flex fr-mb-0 items-center fr-text--xs" v-if="title">
         <Toggletip noMargin class="fr-p-0">
-            <span class="z-2 fr-icon-information-line fr-icon--sm fr-mr-1v"></span>
+            <span class="z-2 fr-icon-information-line fr-icon--sm fr-mr-1v text-grey-380"></span>
             <template #toggletip="{ hide }">
                 <div class="flex justify-between border-bottom">
                     <h5 class="fr-text--sm fr-my-0 fr-p-2v">{{$t("Data schema")}}</h5>
@@ -37,7 +37,7 @@
                 </div>
             </template>
         </Toggletip>
-        <span class="fr-mr-1v">{{ t("Schema:") }}</span>
+        <span class="fr-mr-1v text-grey-380">{{ t("Schema:") }}</span>
         <span class="fr-tag fr-tag--sm">
             <span>{{ title }}</span>
             <span v-if="validataStatus === 'warnings'" class="fr-ml-2v flex items-center">
