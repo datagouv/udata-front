@@ -8,13 +8,13 @@
                     <button type="button" @click="hide" class="border-left close-button flex items-center justify-center">&times;</button>
                 </div>
                 <div class="fr-p-3v">
-                    <div v-if="validataErrors.length === 0">
+                    <div v-if="validataStatus === 'ok'">
                         {{ t("This file is valid for the shema:") }} <component :is="documentationUrl ? 'a' : 'span'" :href="documentationUrl">{{ title }}</component>.
                     </div>
-                    <div v-else-if="validataErrors.length === validataWarnings.length">
+                    <div v-if="validataStatus === 'warnings'">
                         {{ t("This file is valid for the shema:") }} <component :is="documentationUrl ? 'a' : 'span'" :href="documentationUrl">{{ title }}</component>. {{ t("But its compliance could be improved.") }}
                     </div>
-                    <div v-else>
+                    <div v-if="validataStatus === 'ko'">
                         {{ t("This file indicates to follow the schema:") }} <component :is="documentationUrl ? 'a' : 'span'" :href="documentationUrl">{{ title }}</component>. {{ t("But is not compliant.") }}
                     </div>
 
@@ -40,8 +40,12 @@
         <span class="fr-mr-1v">{{ t("Schema:") }}</span>
         <span class="fr-tag fr-tag--sm">
             <span>{{ title }}</span>
-            <span v-if="isInvalid" class="fr-ml-2v flex items-center text-default-error">
-                <span class="fr-icon-error-line fr-icon--sm fr-mr-1v"></span>
+            <span v-if="validataStatus === 'warnings'" class="fr-ml-2v flex items-center">
+                <span class="fr-icon-alert-line fr-icon--sm fr-mr-1v"></span>
+                <span>{{ t("Invalid") }}</span>
+            </span>
+            <span v-if="validataStatus === 'ko'" class="fr-ml-2v flex items-center text-default-error">
+                <span class="fr-icon-alert-line fr-icon--sm fr-mr-1v"></span>
                 <span>{{ t("Invalid") }}</span>
             </span>
         </span>
@@ -54,12 +58,9 @@ import { useI18n } from 'vue-i18n';
 import Toggletip from '../Toggletip/Toggletip.vue';
 import { findSchemaInCatalog, getCatalog, getSchemaDocumentation, getSchemaValidationUrl, RegisteredSchema, ValidataError } from '../../api/schemas';
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
     resource: Resource;
-    isInvalid?: boolean;
-}>(), {
-    isInvalid: false,
-});
+}>();
 
 const { t } = useI18n();
 
@@ -80,6 +81,13 @@ const validataErrors = computed<Array<ValidataError>>(() => props.resource.extra
 const validataWarnings = computed(() => validataErrors.value.filter((error) => [""].includes(error.code)))
 const validataBodyErrors = computed(() => validataErrors.value.filter((error) => ["#body", "#cell", "#content", "#row", "#table"].some((tag) => error.tags.includes(tag))))
 const validataStructureErrors = computed(() => validataErrors.value.filter((error) => ["#head", "#structure", "#header"].some((tag) => error.tags.includes(tag))))
+
+
+const validataStatus = computed<'ok' | 'warnings' | 'ko'>(() => {
+    if (validataErrors.value.length === 0) return 'ok';
+    if (validataErrors.value.length === validataWarnings.value.length) return 'warnings';
+    return 'ko';
+})
 
 </script>
 <style scoped>
