@@ -1,6 +1,6 @@
 <template>
     <span class="inline-flex fr-mb-0 items-center fr-text--xs" v-if="title">
-        <Toggletip noMargin>
+        <Toggletip noMargin class="fr-p-0">
             <span class="z-2 fr-icon-information-line fr-icon--sm fr-mr-1v"></span>
             <template #toggletip="{ hide }">
                 <div class="flex justify-between border-bottom">
