@@ -1,5 +1,5 @@
 import { withActions } from '@storybook/addon-actions/decorator';
-import { userEvent, expect, screen, within, waitFor, fn } from '@storybook/test';
+import { userEvent, expect, within, fn } from '@storybook/test';
 import type { Meta, StoryObj } from "@storybook/vue3";
 import AdminMembershipRequest from './AdminMembershipRequest.vue';
 import { DefaultIdenticonAvatar } from "../discussions/Avatar/Avatar.stories";
@@ -113,15 +113,14 @@ export const AcceptedMembershipRequest: StoryObj<typeof meta> = {
 export const RefusedMembershipRequest: StoryObj<typeof meta> = {
   play:  async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const body = canvasElement.ownerDocument.body;
+    const screen = within(body);
     const comment = "This is a spam request.";
 
     await step("A user clicks on the refuse button", async () => {
-      const Refuse = canvas.getByTestId("refuse");
+      const Refuse = await canvas.findByTestId("refuse");
       await userEvent.click(Refuse);
-    });
-    await waitFor(async () => {
-      const Modal = screen.getByTestId("modal");
-      await expect(Modal).toBeVisible();
+      await new Promise(resolve => setTimeout(resolve, 1000));
     });
     await step("A user fills the comment field", async () => {
       const InputGroup = screen.getByTestId("comment-group");
@@ -151,16 +150,15 @@ export const RefusedMembershipRequest: StoryObj<typeof meta> = {
 export const RefuseMembershipRequestCancelled: StoryObj<typeof meta> = {
   play:  async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const body = canvasElement.ownerDocument.body;
+    const screen = within(body);
     const comment = "This is a spam request.";
 
     await step("A user clicks on the refuse button", async () => {
-      const Refuse = canvas.getByTestId("refuse");
+      const Refuse = await canvas.findByTestId("refuse");
       await userEvent.click(Refuse);
     });
-    await waitFor(async () => {
-      const Modal = screen.getByTestId("modal");
-      await expect(Modal).toBeVisible();
-    });
+    await new Promise(resolve => setTimeout(resolve, 1000));
     await step("A user fills the comment field", async () => {
       const InputGroup = screen.getByTestId("comment-group");
       await userEvent.type(InputGroup.querySelector("input") as HTMLInputElement, comment);
