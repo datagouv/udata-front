@@ -180,9 +180,6 @@ const hasPreview = computed(() => {
     && !props.resource.extras['analysis:parsing:error']
     && (config.tabular_allow_remote || props.resource.filetype === "file");
 })
-const hasSchema = computed(() => {
-  return props.resource.schema && (props.resource.schema.name || props.resource.schema.url)
-})
 
 const format = computed(() => getResourceFormatIconSvg(props.resource) ? props.resource.format : t("File"))
 
