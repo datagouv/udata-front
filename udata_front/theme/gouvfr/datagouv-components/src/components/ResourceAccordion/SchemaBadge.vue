@@ -44,8 +44,8 @@
                 <span class="fr-icon-alert-line fr-icon--sm fr-mr-1v"></span>
                 <span>{{ t("Invalid") }}</span>
             </span>
-            <span v-if="validataStatus === 'ko'" class="fr-ml-2v flex items-center text-default-error">
-                <span class="fr-icon-alert-line fr-icon--sm fr-mr-1v"></span>
+            <span v-if="validataStatus === 'ko'" class="fr-ml-2v flex items-center text-schema-error">
+                <span class="fr-icon-error-line fr-icon--sm fr-mr-1v"></span>
                 <span>{{ t("Invalid") }}</span>
             </span>
         </span>
@@ -95,5 +95,8 @@ const validataStatus = computed<'ok' | 'warnings' | 'ko'>(() => {
     width: 40px;
     font-size: 1.2rem;
     line-height: 0;
+}
+.text-schema-error {
+    color: #B34000;
 }
 </style>
