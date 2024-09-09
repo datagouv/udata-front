@@ -73,7 +73,7 @@ const updateLastMonth = new Date();
 updateLastMonth.setMonth(updateLastMonth.getMonth() - 1);
 
 const updateLastYear = new Date();
-updateLastYear.setFullYear(updateLastYear.getFullYear() - 1);
+updateLastYear.setFullYear(updateLastYear.getFullYear() - 1, 2, 2);
 
 const organization: Organization = {
   id: "someId",
