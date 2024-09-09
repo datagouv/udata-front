@@ -70,7 +70,8 @@ const args: CardLGProps = {
       discussions: 20,
       reuses: 100,
       followers: 500,
-      views: 50000
+      views: 50000,
+      resources_downloads: 150,
     },
     extras: {},
     harvest: {},
