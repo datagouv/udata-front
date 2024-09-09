@@ -292,6 +292,7 @@ jobs:
       - image: cimg/python:3.11-browsers
       - image: mongo:6.0.4
       - image: redis:alpine
+    resource_class: medium+
     steps:
       - checkout
       - cypress/install
