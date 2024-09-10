@@ -116,7 +116,7 @@
                     </a>
                   </span>
                   <span v-else>
-                    <span class="text-color-blue-link fr-icon-download-line fr-icon--sm fr-mr-1v fr-mt-1v"></span>
+                    <span class="text-blue-400 fr-icon-download-line fr-icon--sm fr-mr-1v fr-mt-1v"></span>
                     <a :href="resource.latest" class="fr-link" rel="ugc nofollow noopener">
                       <span>{{ $t('Format {format}', { format: resource.format }) }}<span v-if="resource.filesize"> - {{ filesize(resource.filesize) }}</span></span>
                     </a>
