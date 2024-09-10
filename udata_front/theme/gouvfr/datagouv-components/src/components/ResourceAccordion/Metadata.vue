@@ -42,7 +42,7 @@ const { t } = useI18n();
                 </DescriptionDetails>
                 <template v-if="resource.checksum">
                     <DescriptionTerm>{{resource.checksum.type}} <CopyButton :label="$t('Copy checksum')" :copied-label="$t('Checksum copied!')" :text="resource.checksum.value"/></DescriptionTerm>
-                    <DescriptionDetails>
+                    <DescriptionDetails :with-ellipsis="false">
                         <code class="code">
                             <TextClamp :max-lines="1" :autoresize="true" :text="resource.checksum.value" />
                         </code>
