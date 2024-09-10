@@ -9,7 +9,7 @@ export type ReuseType = {
 };
 
 export function getReuseTypesUrl() {
-  return getLocalizedUrl("/reuses/types/");
+  return getLocalizedUrl("reuses/types/");
 }
 
 export async function fetchReuseTypes() {

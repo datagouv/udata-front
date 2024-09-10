@@ -189,11 +189,7 @@
                     class="fr-tabs__tab"
                     tabindex="0"
                     role="tab"
-                    {% if is_current_tab(request, "reuses_page") %}
-                        aria-selected="false"
-                    {% else %}
-                        aria-selected="true"
-                    {% endif %}
+                    aria-selected="false"
                     aria-controls="resources-panel"
                     data-update-url="resources"
                     data-previous-url="resource-"
@@ -208,11 +204,7 @@
                     class="fr-tabs__tab"
                     tabindex="-1"
                     role="tab"
-                    {% if is_current_tab(request, "reuses_page") %}
-                        aria-selected="true"
-                    {% else %}
-                        aria-selected="false"
-                    {% endif %}
+                    aria-selected="false"
                     aria-controls="community-reuses-panel"
                     data-update-url="community-reuses"
                 >

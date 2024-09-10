@@ -1,6 +1,7 @@
+import type { Meta, StoryObj } from '@storybook/vue3';
 import Accordion from './Accordion.vue';
 
-export default {
+const meta = {
   title: 'Components/Accordion',
   component: Accordion,
   argTypes: {
@@ -15,7 +16,9 @@ export default {
       control: 'select',
     },
   }
-};
+} satisfies Meta<typeof Accordion>;
+
+export default meta;
 
 const args = {
   title: "The accordion",
@@ -23,7 +26,7 @@ const args = {
   opened: false,
 };
 
-export const ClosedAccordion = {
+export const ClosedAccordion: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Accordion },
     setup() {
@@ -34,7 +37,7 @@ export const ClosedAccordion = {
   args,
 };
 
-export const AccordionInInfoState = {
+export const AccordionInInfoState: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Accordion },
     setup() {
@@ -48,7 +51,7 @@ export const AccordionInInfoState = {
   },
 };
 
-export const AccordionInDisabledState = {
+export const AccordionInDisabledState: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Accordion },
     setup() {
@@ -62,7 +65,7 @@ export const AccordionInDisabledState = {
   },
 };
 
-export const AccordionInErrorState = {
+export const AccordionInErrorState: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Accordion },
     setup() {
@@ -76,7 +79,7 @@ export const AccordionInErrorState = {
   },
 };
 
-export const AccordionInWarningState = {
+export const AccordionInWarningState: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Accordion },
     setup() {
@@ -90,7 +93,7 @@ export const AccordionInWarningState = {
   },
 };
 
-export const AccordionInSuccessState = {
+export const AccordionInSuccessState: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Accordion },
     setup() {
@@ -104,7 +107,7 @@ export const AccordionInSuccessState = {
   },
 };
 
-export const OpenedAccordion = {
+export const OpenedAccordion: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Accordion },
     setup() {
@@ -118,7 +121,7 @@ export const OpenedAccordion = {
   },
 };
 
-export const ClosedAccordionWithCustomId = {
+export const ClosedAccordionWithCustomId: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Accordion },
     setup() {
@@ -131,7 +134,7 @@ export const ClosedAccordionWithCustomId = {
     id: "some-id",
   },
 };
-export const OpenedAccordionWithCustomId = {
+export const OpenedAccordionWithCustomId: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Accordion },
     setup() {

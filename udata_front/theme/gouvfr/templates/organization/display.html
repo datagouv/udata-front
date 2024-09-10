@@ -99,11 +99,7 @@
                     role="tab"
                     aria-controls="presentation-panel"
                     data-update-url="presentation"
-                    {% if is_current_tab(request, "page") or is_current_tab(request, "reuses_page") %}
-                        aria-selected="false"
-                    {% else %}
-                        aria-selected="true"
-                    {% endif %}
+                    aria-selected="false"
                 >
                     {{ _('Presentation') }}
                 </button>
@@ -114,11 +110,7 @@
                     class="fr-tabs__tab"
                     tabindex="-1"
                     role="tab"
-                    {% if is_current_tab(request, "page") %}
-                        aria-selected="true"
-                    {% else %}
-                        aria-selected="false"
-                    {% endif %}
+                    aria-selected="false"
                     aria-controls="datasets-panel"
                     data-update-url="datasets"
                 >
@@ -132,11 +124,7 @@
                     class="fr-tabs__tab"
                     tabindex="-1"
                     role="tab"
-                    {% if is_current_tab(request, "reuses_page") %}
-                        aria-selected="true"
-                    {% else %}
-                        aria-selected="false"
-                    {% endif %}
+                    aria-selected="false"
                     aria-controls="reuses-panel"
                     data-update-url="reuses"
                 >

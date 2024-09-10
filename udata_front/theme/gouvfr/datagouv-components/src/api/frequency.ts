@@ -10,7 +10,7 @@ export function getFrequencies(frequencies: Frequencies, id: string): string | n
 }
 
 export function getFrequenciesUrl() {
-  return getLocalizedUrl('/datasets/frequencies/');
+  return getLocalizedUrl('datasets/frequencies/');
 }
 
 export function fetchFrequencies(): Promise<Frequencies> {
