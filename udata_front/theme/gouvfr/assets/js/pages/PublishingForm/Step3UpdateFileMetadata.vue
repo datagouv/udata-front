@@ -237,7 +237,7 @@
   </div>
 </template>
 <script>
-import { Well, RESOURCE_TYPE, getResourceLabel } from "@datagouv/components";
+import { Well, RESOURCE_TYPE } from "@datagouv/components";
 import { computed, defineComponent, ref } from 'vue';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -253,6 +253,7 @@ import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import useUid from "../../composables/useUid";
 import useFileValidation from '../../composables/form/useFileValidation';
 import { schema_documentation_url } from "../../config";
+import { getResourceLabel } from '../../helpers';
 import { useI18n } from 'vue-i18n';
 import { getAllowedExtensionsUrl } from '../../api/resources';
 
