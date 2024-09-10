@@ -9,6 +9,7 @@
 - Show organization type [#472](https://github.com/datagouv/udata-front/pull/472)
 - show permalink for community resources [#486](https://github.com/datagouv/udata-front/pull/486)
 - update sentry configuration [#498](https://github.com/datagouv/udata-front/pull/498)
+- update DSFR to v1.11 [#502](https://github.com/datagouv/udata-front/pull/502) [#506](https://github.com/datagouv/udata-front/pull/506)
 - Add beta admin datasets page [#371](https://github.com/etalab/udata-front/pull/371)
 
 ## 5.1.2 (2024-08-01)

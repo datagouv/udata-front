@@ -28,7 +28,7 @@ import "./components/vanilla/accordion.js";
 import "./components/vanilla/clipboard.js";
 import "./components/vanilla/dialog.js";
 import "./components/vanilla/sort-search.js";
-import handleUpdateUrlButtons from "./components/vanilla/update-url.js";
+import fixupTabsOnStartup from "./components/vanilla/fixup-tabs-on-startup.js";
 import i18n from "./i18n.ts";
 import { admin_root, api_root, api_2_root, schema_documentation_url, schema_validata_url, tabular_api_url, tabular_page_size, title } from "./config.ts";
 import Api from "./plugins/api.ts";
@@ -117,4 +117,5 @@ elements.forEach((el) => {
 // @ts-ignore dsfr is added by @gouvfr/dsfr
 globalThis.dsfr.start();
 console.log("JS is injected !");
-handleUpdateUrlButtons();
+fixupTabsOnStartup();
+
