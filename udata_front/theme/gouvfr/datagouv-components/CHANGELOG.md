@@ -11,6 +11,7 @@
 - fix reuse card date shown [#496](https://github.com/datagouv/udata-front/pull/496)
 - add vue-clamp to cards title and description [#497](https://github.com/datagouv/udata-front/pull/497)
 - fix dsfr CSS for badge imported into components [#500](https://github.com/datagouv/udata-front/pull/500)
+- update DSFR to v1.11 [#466](https://github.com/datagouv/udata-front/pull/466) [#506](https://github.com/datagouv/udata-front/pull/506)
 
 ## 1.2.0 (2024-08-21)
 
