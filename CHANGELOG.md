@@ -9,6 +9,7 @@
 - Show organization type [#472](https://github.com/datagouv/udata-front/pull/472)
 - show permalink for community resources [#486](https://github.com/datagouv/udata-front/pull/486)
 - update sentry configuration [#498](https://github.com/datagouv/udata-front/pull/498)
+- update DSFR to v1.11 [#502](https://github.com/datagouv/udata-front/pull/502) [#506](https://github.com/datagouv/udata-front/pull/506)
 - Replace the "MonComptePro" SSO login button with a "ProConnect" button [#482](https://github.com/datagouv/udata-front/pull/482)
   This needs the `PROCONNECT_*` related settings in `settings.py`, and an active [ProConnect flow](https://github.com/numerique-gouv/agentconnect-documentation/blob/main/doc_fs/implementation_technique.md)
 

@@ -1,5 +1,4 @@
 import UploadModalButton from './UploadModalButton.vue';
-import UploadModalStories from "./UploadModal.stories";
 import { withActions } from '@storybook/addon-actions/decorator';
 import type { Meta, StoryObj } from '@storybook/vue3';
 
@@ -9,7 +8,8 @@ const meta = {
   parameters: {
     actions: {
       handles: [
-        ...UploadModalStories.parameters.actions.handles,
+        'click .fr-modal__header fr-btn--close',
+        'click .fr-modal__footer button',
         'click .fr-upload-group button[data-fr-js-modal-button]',
       ],
     },
