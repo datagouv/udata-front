@@ -32,8 +32,8 @@
     "chromatic": "npx chromatic --only-changed --externals '*.less' --externals '*.json' --externals '*/msw-requests.ts'"
   },
   "dependencies": {
-    "@headlessui/vue": "^1.7.22",
-    "vue": "^3.3.8"
+    "vue": "^3.4.38",
+    "@headlessui/vue": "^1.7.22"
   },
   "peerDependencies": {
     "@gouvfr/dsfr": "~1.11.2",

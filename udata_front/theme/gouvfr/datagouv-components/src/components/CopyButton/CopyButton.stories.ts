@@ -37,9 +37,11 @@ export const Primary: StoryObj<typeof meta> = {
     setup() {
       return { args };
     },
-    template: '<CopyButton :text="args.text" />',
+    template: '<CopyButton :label="args.label" :copied-label="args.copiedLabel" :text="args.text" />',
   }),
   args: {
+    label: "Copy",
+    copiedLabel: "Copied!",
     text: "someTextToCopy"
   }
 };
