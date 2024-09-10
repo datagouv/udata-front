@@ -92,14 +92,14 @@
                                     </a>
                                 </li>
                                 <li>
-                                    {% if current_user.is_authenticated and current_user.password %}
+                                    {% if session.get("id_token") %}
                                         <a
-                                            href="{{ url_for('security.logout') }}"
+                                            href="{{ url_for('proconnect.logout_oauth') }}"
                                             class="fr-btn fr-icon-logout-box-r-line"
                                         >
                                     {% else %}
                                         <a
-                                            href="{{ url_for('proconnect.logout_oauth') }}"
+                                            href="{{ url_for('security.logout') }}"
                                             class="fr-btn fr-icon-logout-box-r-line"
                                         >
                                     {% endif %}

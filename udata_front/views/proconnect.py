@@ -63,7 +63,7 @@ def logout():
     # if we update to a version that supports it.
     metadata = oauth.proconnect.load_server_metadata()
     end_session_endpoint = metadata["end_session_endpoint"]
-    # Generate a random state that we send to ProConncet, they'll return it so we can check it.
+    # Generate a random state that we send to ProConnect, they'll return it so we can check it.
     state = gen_salt(50)
     session[STATE_KEY] = state
     redirect_uri = url_for('proconnect.logout', _external=True)
