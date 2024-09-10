@@ -63,13 +63,13 @@ CAPTCHETAT_CLIENT_ID = None
 CAPTCHETAT_CLIENT_SECRET = None
 CAPTCHETAT_TOKEN_CACHE_KEY = 'captchetat-bearer-token'
 
-# MonComptePro
+# ProConnect
 
-# You can activate MonComptePro SSO, a moncomptepro.beta.gouv.fr login integration
-MONCOMPETPRO_OPENID_CONF_URL = None
-MONCOMPETPRO_SCOPE = None
-MONCOMPETPRO_CLIENT_ID = None
-MONCOMPETPRO_CLIENT_SECRET = None
+# You can activate ProConnect SSO, a https://proconnect.gouv.fr/ login integration
+PROCONNECT_OPENID_CONF_URL = None
+PROCONNECT_SCOPE = None
+PROCONNECT_CLIENT_ID = None
+PROCONNECT_CLIENT_SECRET = None
 
 # Newsletter
 NEWSLETTER_SUBSCRIPTION_URL = 'https://f.info.data.gouv.fr/f/lp/infolettre-data-gouv-fr-landing-page/lk3q01y6'  # noqa

@@ -399,8 +399,10 @@ const dataservice: Dataservice = {
   <h1>
     data.gouv.fr Components
   </h1>
-  <ResourceAccordion dataset-id="someId" :resource="resource" :expanded-on-mount="false" />
-  <ResourceAccordion dataset-id="someId" :resource="resourceWithoutSchema" :expanded-on-mount="false" />
+  <div>
+    <ResourceAccordion dataset-id="someId" :resource="resource" :expanded-on-mount="false" class="fr-mb-2v" />
+    <ResourceAccordion dataset-id="someId" :resource="resourceWithoutSchema" :expanded-on-mount="false" />
+  </div>
   <InformationPanel :dataset="dataset" :license="license" />
   <QualityScore :score="0.5" class="w-100"></QualityScore>
   <QualityItem :passed="true" message-passed="Oui" message-failed="Non"></QualityItem>
@@ -440,30 +442,32 @@ const dataservice: Dataservice = {
   <Well class="fr-my-2w">
     Simple Well
   </Well>
-  <DatasetCard
-    :dataset="dataset"
-    dataset-url="/datasets/6571faa17f46a65ee05c4d17"
-    organization-url=""
-    style="z-index: 3;"
-  />
-  <DatasetCard
-    :dataset="dataset"
-    dataset-url="/datasets/6571faa17f46a65ee05c4d17"
-    organization-url="/organizations/another-url-easier-to-distinguish"
-    style="z-index: 2;"
-  />
-  <DatasetCard
-    :dataset="dataset"
-    dataset-url="/datasets/6571faa17f46a65ee05c4d17"
-    organization-url=""
-    style="z-index: 1;"
-  />
-  <DatasetCard
-    :dataset="dataset"
-    dataset-url="/datasets/6571faa17f46a65ee05c4d17"
-    organization-url=""
-    style="z-index: 1;"
-  />
+  <div>
+    <DatasetCard
+      :dataset="dataset"
+      dataset-url="/datasets/6571faa17f46a65ee05c4d17"
+      organization-url=""
+      style="z-index: 3;"
+    />
+    <DatasetCard
+      :dataset="dataset"
+      dataset-url="/datasets/6571faa17f46a65ee05c4d17"
+      organization-url="/organizations/another-url-easier-to-distinguish"
+      style="z-index: 2;"
+    />
+    <DatasetCard
+      :dataset="dataset"
+      dataset-url="/datasets/6571faa17f46a65ee05c4d17"
+      organization-url=""
+      style="z-index: 1;"
+    />
+    <DatasetCard
+      :dataset="dataset"
+      dataset-url="/datasets/6571faa17f46a65ee05c4d17"
+      organization-url=""
+      style="z-index: 1;"
+    />
+  </div>
   <div class="fr-grid-row">
     <ReuseCard
       class="fr-col-4"
@@ -481,25 +485,27 @@ const dataservice: Dataservice = {
       reuse-url="/datasets/6571faa17f46a65ee05c4d17"
     />
   </div>
-  <DataserviceCard
-    :dataservice="dataservice"
-    dataservice-url="/dataservices/6571faa17f46a65ee05c4d17"
-    :show-description="false"
-  />
-  <DataserviceCard
-    :dataservice="dataservice"
-    dataservice-url="/dataservices/6571faa17f46a65ee05c4d17"
-    organization-url="/organizations/another-url-easier-to-distinguish"
-    :show-description="false"
-  />
-  <DataserviceCard
-    :dataservice="dataservice"
-    dataservice-url="/dataservices/6571faa17f46a65ee05c4d17"
-  />
-  <DataserviceCard
-    :dataservice="dataservice"
-    dataservice-url="/dataservices/6571faa17f46a65ee05c4d17"
-    organization-url="/organizations/another-url-easier-to-distinguish"
-  />
+  <div>
+    <DataserviceCard
+      :dataservice="dataservice"
+      dataservice-url="/dataservices/6571faa17f46a65ee05c4d17"
+      :show-description="false"
+    />
+    <DataserviceCard
+      :dataservice="dataservice"
+      dataservice-url="/dataservices/6571faa17f46a65ee05c4d17"
+      organization-url="/organizations/another-url-easier-to-distinguish"
+      :show-description="false"
+    />
+    <DataserviceCard
+      :dataservice="dataservice"
+      dataservice-url="/dataservices/6571faa17f46a65ee05c4d17"
+    />
+    <DataserviceCard
+      :dataservice="dataservice"
+      dataservice-url="/dataservices/6571faa17f46a65ee05c4d17"
+      organization-url="/organizations/another-url-easier-to-distinguish"
+    />
+  </div>
   <Pagination class="fr-mt-3v" :total-results="52" @change="p => console.log(p)" />
 </template>
