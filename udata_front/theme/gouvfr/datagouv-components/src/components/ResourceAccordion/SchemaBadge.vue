@@ -9,13 +9,13 @@
                 </div>
                 <div class="fr-p-3v">
                     <div v-if="validataStatus === 'ok'">
-                        {{ t("This file is valid for the shema:") }} <component :is="documentationUrl ? 'a' : 'span'" :href="documentationUrl">{{ title }}</component>.
+                        {{ t("This file is valid for the shema:") }} <component :is="documentationUrl ? 'a' : 'span'" :href="documentationUrl" class="fr-link">{{ title }}</component>.
                     </div>
                     <div v-if="validataStatus === 'warnings'">
-                        {{ t("This file is valid for the shema:") }} <component :is="documentationUrl ? 'a' : 'span'" :href="documentationUrl">{{ title }}</component>. {{ t("But its compliance could be improved.") }}
+                        {{ t("This file is valid for the shema:") }} <component :is="documentationUrl ? 'a' : 'span'" :href="documentationUrl" class="fr-link">{{ title }}</component>. {{ t("But its compliance could be improved.") }}
                     </div>
                     <div v-if="validataStatus === 'ko'">
-                        {{ t("This file indicates to follow the schema:") }} <component :is="documentationUrl ? 'a' : 'span'" :href="documentationUrl">{{ title }}</component>. {{ t("But is not compliant.") }}
+                        {{ t("This file indicates to follow the schema:") }} <component :is="documentationUrl ? 'a' : 'span'" :href="documentationUrl" class="fr-link">{{ title }}</component>. {{ t("But is not compliant.") }}
                     </div>
 
                     <div class="text-default-warning flex items-center fr-mt-4v" v-if="validataWarnings.length">
@@ -31,20 +31,20 @@
                         <span>{{ validataBodyErrors.length }} {{ t('body errors') }}</span>
                     </div>
 
-                    <div class="w-100 text-align-right fr-mt-5v" v-if="validationUrl">
+                    <div class="w-100 text-align-right fr-mt-5v" v-if="validationUrl" target="_blank">
                         <a :href="validationUrl">{{ t('See validation report') }}</a>
                     </div>
                 </div>
             </template>
         </Toggletip>
         <span class="fr-mr-1v text-grey-380">{{ t("Schema:") }}</span>
-        <span class="fr-tag fr-tag--sm">
-            <span>{{ title }}</span>
-            <span v-if="validataStatus === 'warnings'" class="fr-ml-2v flex items-center">
+        <span class="flex items-center bg-error-950 rounded-sm">
+            <span class="fr-tag fr-tag--sm">{{ title }}</span>
+            <span v-if="validataStatus === 'warnings'" class="flex items-center padding-sm">
                 <span class="fr-icon-alert-line fr-icon--sm fr-mr-1v"></span>
                 <span>{{ t("Invalid") }}</span>
             </span>
-            <span v-if="validataStatus === 'ko'" class="fr-ml-2v flex items-center text-schema-error">
+            <span v-if="validataStatus === 'ko'" class="flex items-center text-warning-425 padding-sm">
                 <span class="fr-icon-error-line fr-icon--sm fr-mr-1v"></span>
                 <span>{{ t("Invalid") }}</span>
             </span>
@@ -96,7 +96,10 @@ const validataStatus = computed<'ok' | 'warnings' | 'ko'>(() => {
     font-size: 1.2rem;
     line-height: 0;
 }
-.text-schema-error {
-    color: #B34000;
+.rounded-sm {
+    border-radius: 0.75rem;
+}
+.padding-sm {
+    padding: .125rem .5rem .125rem .25rem;
 }
 </style>
