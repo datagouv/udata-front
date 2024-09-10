@@ -4,7 +4,7 @@
       <div class="fr-col-auto min-width-0">
         <div class="fr-grid-row no-wrap">
           <div class="fr-col-auto fr-mr-1v fr-icon-svg fr-icon--sm">
-            <img :src="resourceImage" alt="" />
+            <ResourceIcon :resource="resource" />
           </div>
           <h4 class="fr-col fr-m-0 fr-text--sm overflow-wrap-anywhere text-overflow-ellipsis">
             {{ file.title || $t('Nameless resource') }}
@@ -55,7 +55,7 @@
 </template>
 <script>
 import { computed, defineComponent, onMounted, ref, watch } from 'vue';
-import { useResourceImage, filesize as formatFilesize, formatRelativeIfRecentDate } from '@datagouv/components';
+import { filesize as formatFilesize, formatRelativeIfRecentDate, ResourceIcon } from '@datagouv/components';
 import FileLoader from './FileLoader.vue';
 import useFileValidation from '../../../composables/form/useFileValidation';
 import { isLoaded, isLoading } from '../../../api/resources';
@@ -82,7 +82,6 @@ export default defineComponent({
     const file = ref({...props.file});
     const loading = computed(() => isLoading(file.value));
     const loaded = computed(() => isLoaded(file.value));
-    const {url: resourceImage} = useResourceImage(file.value);
     const { stateErrors, stateWarnings, validateRequiredRules } = useFileValidation(file);
 
     onMounted(() => validateRequiredRules());
