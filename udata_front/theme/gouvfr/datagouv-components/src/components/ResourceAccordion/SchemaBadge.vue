@@ -9,13 +9,13 @@
                 </div>
                 <div class="fr-p-3v">
                     <div v-if="validataStatus === 'ok'">
-                        {{ t("This file is valid for the shema:") }} <component :is="documentationUrl ? 'a' : 'span'" :href="documentationUrl" class="fr-link">{{ title }}</component>.
+                        {{ t("This file is valid for the shema:") }} <component :is="documentationUrl ? 'a' : 'span'" :href="documentationUrl" class="fr-link fr-text--sm">{{ title }}</component>.
                     </div>
                     <div v-if="validataStatus === 'warnings'">
-                        {{ t("This file is valid for the shema:") }} <component :is="documentationUrl ? 'a' : 'span'" :href="documentationUrl" class="fr-link">{{ title }}</component>. {{ t("But its compliance could be improved.") }}
+                        {{ t("This file is valid for the shema:") }} <component :is="documentationUrl ? 'a' : 'span'" :href="documentationUrl" class="fr-link fr-text--sm">{{ title }}</component>. {{ t("But its compliance could be improved.") }}
                     </div>
                     <div v-if="validataStatus === 'ko'">
-                        {{ t("This file indicates to follow the schema:") }} <component :is="documentationUrl ? 'a' : 'span'" :href="documentationUrl" class="fr-link">{{ title }}</component>. {{ t("But is not compliant.") }}
+                        {{ t("This file indicates to follow the schema:") }} <component :is="documentationUrl ? 'a' : 'span'" :href="documentationUrl" class="fr-link fr-text--sm">{{ title }}</component>. {{ t("But is not compliant.") }}
                     </div>
 
                     <div class="text-default-warning flex items-center fr-mt-4v" v-if="validataWarnings.length">
