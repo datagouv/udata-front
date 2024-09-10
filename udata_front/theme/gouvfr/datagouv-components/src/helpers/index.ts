@@ -4,8 +4,27 @@ import markdown from "./markdown";
 import { toggleAccordion } from "./toggleAccordion";
 import RemoveMarkdown from "remove-markdown";
 import { readonly } from "vue";
+import { ResourceType } from "../types/resources";
 
 export const RESOURCE_TYPE = readonly(["main", "documentation", "update", "api", "code", "other"] as const);
+
+export const getResourceLabel = (type: ResourceType) => {
+  const { t } = useI18n();
+  switch(type) {
+    case "main":
+      return t("Main file");
+    case "documentation":
+      return t("Documentation");
+    case "update":
+      return t("Update");
+    case "api":
+      return t("API");
+    case "code":
+      return t("Source code");
+    case "other":
+      return t("Other");
+  }
+}
 
 export const filesize = (val: number) => {
   const { t } = useI18n();
