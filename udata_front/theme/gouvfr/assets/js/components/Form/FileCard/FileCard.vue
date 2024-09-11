@@ -3,9 +3,7 @@
     <div class="fr-grid-row fr-grid-row--middle no-wrap wrap-md justify-between">
       <div class="fr-col-auto min-width-0">
         <div class="fr-grid-row no-wrap">
-          <div class="fr-col-auto fr-mr-1v fr-icon-svg fr-icon--sm">
-            <ResourceIcon :resource="file" />
-          </div>
+          <ResourceIcon class="fr-col-auto fr-mr-1v fr-icon--sm" :resource="file" />
           <h4 class="fr-col fr-m-0 fr-text--sm overflow-wrap-anywhere text-overflow-ellipsis">
             {{ file.title || $t('Nameless resource') }}
           </h4>
