@@ -4,7 +4,7 @@
       <div class="fr-col-auto min-width-0">
         <div class="fr-grid-row no-wrap">
           <div class="fr-col-auto fr-mr-1v fr-icon-svg fr-icon--sm">
-            <ResourceIcon :resource="resource" />
+            <ResourceIcon :resource="file" />
           </div>
           <h4 class="fr-col fr-m-0 fr-text--sm overflow-wrap-anywhere text-overflow-ellipsis">
             {{ file.title || $t('Nameless resource') }}
