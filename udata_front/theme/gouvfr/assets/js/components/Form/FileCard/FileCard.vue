@@ -61,7 +61,7 @@ import useFileValidation from '../../../composables/form/useFileValidation';
 import { isLoaded, isLoading } from '../../../api/resources';
 
 export default defineComponent({
-  components: { FileLoader },
+  components: { FileLoader, ResourceIcon },
   emits: ["delete", "edit"],
   props: {
     showEditAndWarning: {
@@ -95,7 +95,6 @@ export default defineComponent({
       formatRelativeIfRecentDate,
       loaded,
       loading,
-      resourceImage,
       stateErrors,
       stateWarnings,
     };
