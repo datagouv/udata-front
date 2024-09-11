@@ -59,10 +59,12 @@
   <div class="fr-pb-3w fr-mb-3w border-bottom border-default-grey">
     <h2 class="subtitle subtitle--uppercase">Actions</h2>
     <div class="fr-text--sm fr-m-0">
-      <h3 class="subtitle fr-mb-1v">{{ $t('Integrate on your website') }}</h3>
+      <h3 class="subtitle fr-mb-1v">
+        {{ $t('Integrate on your website') }}
+        <CopyButton :label="$t('Copy embed')" :copied-label="$t('Embed copied')" class="fr-my-1w fr-mr-1w" :text="embedText" />
+      </h3>
       <div class="embed-wrapper">
         <textarea ref="textAreaRef" readonly="true" rows="1" v-model="embedText" @click="selectContent"></textarea>
-        <CopyButton class="fr-my-1w fr-mr-1w" :text="embedText" />
       </div>
     </div>
   </div>

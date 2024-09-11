@@ -1,56 +1,11 @@
-/*
----
-name: Sidemenu
-category: 3 - Components
----
-
-You can use sidemenus from DSFR. You can find documented usage on [DSFR documentation](https://gouvfr.atlassian.net/wiki/spaces/DB/pages/258998801/Menu+lat+ral+-+Side+menu) with their classes.
-
-
-```sidemenu.html
-<nav class="fr-sidemenu" aria-label="Menu latéral">
-    <div class="fr-sidemenu__inner">
-        <button class="fr-sidemenu__btn" hidden aria-controls="fr-sidemenu-wrapper" aria-expanded="false">Dans cette rubrique</button>
-        <div class="fr-collapse" id="fr-sidemenu-wrapper">
-            <div class="fr-sidemenu__title">Titre de rubrique</div>
-            <ul class="fr-sidemenu__list">
-                <li class="fr-sidemenu__item fr-sidemenu__item--active">
-                    <a class="fr-sidemenu__link" href="#" target="_self" aria-current="page">Accès direct</a>
-                </li>
-                <li class="fr-sidemenu__item">
-                    <a class="fr-sidemenu__link" href="#" target="_self">Accès direct</a>
-                </li>
-                <li class="fr-sidemenu__item">
-                    <a class="fr-sidemenu__link" href="#" target="_self">Accès direct</a>
-                </li>
-                <li class="fr-sidemenu__item">
-                    <a class="fr-sidemenu__link" href="#" target="_self">Accès direct</a>
-                </li>
-                <li class="fr-sidemenu__item">
-                    <a class="fr-sidemenu__link" href="#" target="_self">Accès direct</a>
-                </li>
-                <li class="fr-sidemenu__item">
-                    <a class="fr-sidemenu__link" href="#" target="_self">Accès direct</a>
-                </li>
-                <li class="fr-sidemenu__item">
-                    <a class="fr-sidemenu__link" href="#" target="_self">Accès direct</a>
-                </li>
-                <li class="fr-sidemenu__item">
-                    <a class="fr-sidemenu__link" href="#" target="_self">Accès direct</a>
-                </li>
-                <li class="fr-sidemenu__item">
-                    <a class="fr-sidemenu__link" href="#" target="_self">Accès direct</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-```
-*/
-
 @import (less) "@gouvfr/dsfr/dist/component/sidemenu/sidemenu.css";
 
-// Data.gouv customization
+.fr-sidemenu__btn[aria-expanded=true] {
+    --background-open-blue-france: @background-action-low-blue-cumulus;
+    --hover: @background-action-low-blue-cumulus-hover;
+    --active: @background-action-low-blue-cumulus-active;
+}
+
 .fr-sidemenu--no-border .fr-sidemenu__inner {
     box-shadow: none;
     padding-right: 0.25rem;

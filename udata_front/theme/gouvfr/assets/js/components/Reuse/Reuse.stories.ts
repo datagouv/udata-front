@@ -50,6 +50,53 @@ const args = {
   } satisfies Reuse,
 };
 
+const updateLessThanAMonth = new Date();
+const twoDayAgoInMs = 2 * 24 * 60  * 60 * 1000;
+updateLessThanAMonth.setHours(1, 0, 0, 0);
+updateLessThanAMonth.setTime(updateLessThanAMonth.getTime() - twoDayAgoInMs);
+
+const updateLastMonth = new Date();
+updateLastMonth.setMonth(updateLastMonth.getMonth() - 1);
+
+const updateLastYear = new Date();
+updateLastYear.setFullYear(updateLastYear.getFullYear() - 1, 0, 1);
+
+const organization: Organization = {
+  id: "someId",
+  acronym: null,
+  name: "My Organization",
+  badges: [],
+  page: "https://www.data.gouv.fr/fr/organizations/data-gouv-fr/",
+  uri: "https://www.data.gouv.fr/fr/organizations/data-gouv-fr/",
+  slug: "data-gouv-fr",
+  logo: "https://static.data.gouv.fr/avatars/09/1ba932cbfa48dc8c158981de6c700a.jpeg",
+  logo_thumbnail: "https://static.data.gouv.fr/avatars/09/1ba932cbfa48dc8c158981de6c700a-100.jpeg",
+};
+
+const organizationWithLogo: Organization = {
+  ...organization,
+  logo_thumbnail: "https://static.data.gouv.fr/avatars/09/1ba932cbfa48dc8c158981de6c700a-100.jpeg"
+};
+
+const argsWithOrganizationWithLogo: ReuseProps = {
+  reuse: {
+    ...args.reuse,
+    organization: organizationWithLogo,
+    owner: null,
+  }
+};
+
+const argsWithCertifiedOrganization: ReuseProps = {
+  reuse: {
+    ...argsWithOrganizationWithLogo.reuse,
+    organization: {
+      ...organizationWithLogo,
+      badges: [{kind: PUBLIC_SERVICE}, {kind: CERTIFIED}]
+    },
+    owner: null
+  }
+};
+
 /**
  * #### Reuse for udata-front
  * Reuse card with its udata page as url
