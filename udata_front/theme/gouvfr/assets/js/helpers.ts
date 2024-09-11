@@ -16,25 +16,6 @@ export const excerpt = (val: string, length = 300) => {
 
 export const CLOSED_FORMATS = readonly(['pdf', 'doc', 'docx', 'word', 'xls', 'excel', 'xlsx'] as const);
 
-export const getResourceLabel = (type: ResourceType) => {
-  const { t } = useI18n();
-  switch(type) {
-    case "main":
-      return t("Main file");
-    case "documentation":
-      return t("Documentation");
-    case "update":
-      return t("Update");
-    case "api":
-      return t("API");
-    case "code":
-      return t("Source code");
-    case "other":
-      return t("Other");
-  }
-}
-
-
 const includeInSubtype = <T, U extends T>(array: ReadonlyArray<U>, value: T): value is U => {
   return array.includes(value as U);
 };
