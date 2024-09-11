@@ -1,6 +1,6 @@
 {% from theme('macros/organization_name_with_certificate.html') import organization_name_with_certificate %}
 {% set image_src = organization.logo(32)|placeholder('organization') if producer_type == 'organization' else organization|avatar_url(32)%}
-<div class="fr-grid-row fr-grid-row--middle">
+<div class="fr-grid-row fr-grid-row--top">
     <div class="fr-col-auto">
     {% if producer_type == 'organization' %}
         <div class="border border-default-grey rounded-2 fr-p-1-5v fr-mr-1-5v">
