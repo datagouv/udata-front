@@ -58,14 +58,14 @@
             <QualityComponentInline :quality="dataset.quality"/>
           </div>
           <div class="fr-grid-row fr-grid-row--middle fr-mr-1v">
-            <p class="fr-text--sm fr-my-0">
-              <span class="fr-icon-download-line fr-icon--sm fr-px-1v" aria-hidden="true"></span>{{ dataset.metrics.resources_downloads }}
+            <p class="fr-text--sm fr-my-0" :aria-label="t('{n} resources downloads', dataset.metrics.resources_downloads)">
+              <span class="fr-icon-download-line fr-icon--sm fr-px-1v" aria-hidden="true"></span>{{ summarize(dataset.metrics.resources_downloads) }}
             </p>
-            <p class="fr-text--sm fr-my-0">
-              <span class="fr-icon-star-line fr-icon--sm fr-px-1v" aria-hidden="true"></span>{{ dataset.metrics.followers }}
+            <p class="fr-text--sm fr-my-0" :aria-label="t('{n} followers', dataset.metrics.followers)">
+              <span class="fr-icon-star-line fr-icon--sm fr-px-1v" aria-hidden="true"></span>{{ summarize(dataset.metrics.followers) }}
             </p>
-            <p class="fr-text--sm fr-my-0">
-              <span class="fr-icon-line-chart-line fr-icon--sm fr-px-1v" aria-hidden="true"></span>{{ dataset.metrics.reuses }}
+            <p class="fr-text--sm fr-my-0" :aria-label="t('{n} reuses', dataset.metrics.reuses)">
+              <span class="fr-icon-line-chart-line fr-icon--sm fr-px-1v" aria-hidden="true"></span>{{ summarize(dataset.metrics.reuses) }}
             </p>
           </div>
         </div>
@@ -89,7 +89,7 @@ import TextClamp from 'vue3-text-clamp';
 import AppLink from "../AppLink/AppLink.vue";
 import Avatar from "../Avatar/Avatar.vue";
 import type { Dataset, DatasetV2 } from "../../types/datasets";
-import { formatRelativeIfRecentDate } from "../../helpers";
+import { formatRelativeIfRecentDate, summarize } from "../../helpers";
 import OrganizationNameWithCertificate from "../Organization/OrganizationNameWithCertificate.vue";
 import { Placeholder } from "../utils/";
 import { QualityComponentInline } from "../QualityComponentInline";

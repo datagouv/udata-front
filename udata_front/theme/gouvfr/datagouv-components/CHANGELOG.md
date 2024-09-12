@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix toggletip and use summarize for metrics
 
 ## 1.3.0 (2024-09-10)
 

@@ -24,9 +24,9 @@
             {{ resource.format.trim().toLowerCase() }}
             <span v-if="resource.filesize">({{ filesize(resource.filesize) }})</span>
           </span>
-          <span class="inline-flex items-center fr-text--xs fr-mb-0">
+          <span class="inline-flex items-center fr-text--xs fr-mb-0" :aria-label="t('{n} downloads', resource.metrics.views)">
             <span class="fr-icon-download-line fr-icon--xs fr-mr-1v"></span>
-            <span>{{ resource.metrics.views ? summarize(resource.metrics.views) : 0 }} <span class="hidden show-on-small">{{ t("downloads") }}</span></span>
+            <span>{{ summarize(resource.metrics.views) }} <span class="hidden show-on-small">{{ t("downloads") }}</span></span>
           </span>
         </div>
         <p class="fr-mb-0 fr-mt-1v fr-text--xs text-grey-380" v-if="communityResource">

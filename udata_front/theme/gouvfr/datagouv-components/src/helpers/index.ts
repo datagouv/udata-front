@@ -40,6 +40,9 @@ export const filesize = (val: number) => {
 }
 
 export const summarize = (val: number) => {
+  if(!val) {
+    return "0";
+  }
   const units = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z']
   for (let unit of units) {
       if (Math.abs(val) < 1000.0) {
