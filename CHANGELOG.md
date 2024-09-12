@@ -14,6 +14,7 @@
   This needs the `PROCONNECT_*` related settings in `settings.py`, and an active [ProConnect flow](https://github.com/numerique-gouv/agentconnect-documentation/blob/main/doc_fs/implementation_technique.md)
 - update/remove code following the datagouv/components update [#507](https://github.com/datagouv/udata-front/pull/507)
 - When disconnecting from udata, first disconnect from ProConnect if relevant [#504](https://github.com/datagouv/udata-front/pull/504)
+- update privacy policy [#510](https://github.com/datagouv/udata-front/pull/510)
 
 ## 5.1.2 (2024-08-01)
 
