@@ -105,11 +105,7 @@ const resource = ref<Resource>({
     "analysis:parsing:started_at": "2024-06-04T20:05:17.151069+00:00"
   },
   preview_url: "https://explore.data.gouv.fr/fr/resources/cf3cc17f-955a-42bb-a4ef-77f59e703940",
-  "schema": {
-    "name": null,
-    "version": null,
-    "url": null
-  },
+  schema: {name: "etalab/schema-indice-reparabilite", version: "0.1.2"},
   internal: {
     "created_at_internal": "2022-07-13T02:11:56.414000+00:00",
     "last_modified_internal": "2024-01-09T06:59:37.726000+00:00"
@@ -401,6 +397,7 @@ const dataservice: Dataservice = {
   </h1>
   <div>
     <ResourceAccordion dataset-id="someId" :resource="resource" :expanded-on-mount="false" class="fr-mb-2v" />
+    <ResourceAccordion dataset-id="someId" :resource="resource" :expanded-on-mount="false" class="fr-mb-2v" />
     <ResourceAccordion dataset-id="someId" :resource="resourceWithoutSchema" :expanded-on-mount="false" />
   </div>
   <InformationPanel :dataset="dataset" :license="license" />
@@ -447,25 +444,21 @@ const dataservice: Dataservice = {
       :dataset="dataset"
       dataset-url="/datasets/6571faa17f46a65ee05c4d17"
       organization-url=""
-      style="z-index: 3;"
     />
     <DatasetCard
       :dataset="dataset"
       dataset-url="/datasets/6571faa17f46a65ee05c4d17"
       organization-url="/organizations/another-url-easier-to-distinguish"
-      style="z-index: 2;"
     />
     <DatasetCard
       :dataset="dataset"
       dataset-url="/datasets/6571faa17f46a65ee05c4d17"
       organization-url=""
-      style="z-index: 1;"
     />
     <DatasetCard
       :dataset="dataset"
       dataset-url="/datasets/6571faa17f46a65ee05c4d17"
       organization-url=""
-      style="z-index: 1;"
     />
   </div>
   <div class="fr-grid-row">
