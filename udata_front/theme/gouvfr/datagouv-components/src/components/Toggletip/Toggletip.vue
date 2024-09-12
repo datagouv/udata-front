@@ -1,58 +1,33 @@
 <template>
-  <div
-    class="toggletip__wrapper text-grey-500"
-    ref="wrapper"
-    @focusout="hideIfOutside"
-    @keydown.esc="hide"
-  >
-    <button
+  <Popover class="relative text-grey-500" :focus="true">
+    <PopoverButton
       v-bind="$attrs"
-      :aria-expanded="shown"
-      :aria-controls="id"
       ref="button"
-      role="button"
-      @click.prevent="toggle"
+      :as="ToggletipButton"
     >
       <slot></slot>
-    </button>
-    <div class="toggletip" :id="id" v-show="shown" ref="toggletip" :class="{
+    </PopoverButton>
+    <PopoverPanel class="toggletip" ref="toggletip" :class="{
       'fr-p-0': noMargin,
-    }">
-      <slot name="toggletip" :hide></slot>
-    </div>
-  </div>
+    }" v-slot="{ close }">
+      <slot name="toggletip" :close></slot>
+    </PopoverPanel>
+  </Popover>
 </template>
-    
+
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import { getRandomId } from "@gouvminint/vue-dsfr";
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue';
+import ToggletipButton from './ToggletipButton.vue';
+
 withDefaults(defineProps<{
   noMargin?: boolean;
 }>(), {
   noMargin: false,
 });
-defineOptions({inheritAttrs: false})
-const button = ref<HTMLButtonElement | null>(null);
-const toggletip = ref<HTMLElement | null>(null);
-const wrapper = ref<HTMLElement | null>(null);
-const shown = ref(false);
-const id = getRandomId("toggletip");
-const toggle = () => {
-  shown.value = !shown.value;
-}
-const hide = () => {
-  shown.value = false;
-}
-const hideIfOutside = (e: FocusEvent) => {
-  const target = (e.relatedTarget || e.target) as HTMLElement | null;
-  if(button.value !== target &&
-    !button.value?.contains(target) &&
-    !toggletip.value?.contains(target)
-  ) {
-    hide();
-  }
-};
-onMounted(() => {
-  document.addEventListener("click", hideIfOutside);
-});
+defineOptions({inheritAttrs: false});
 </script>
+<style scoped>
+.z-10 {
+  z-index: 10;
+}
+</style>
