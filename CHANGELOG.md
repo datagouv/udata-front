@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 5.2.0 (2024-09-13)
 
 - add dataservices to dataset page [#476](https://github.com/datagouv/udata-front/pull/476)
