@@ -156,8 +156,8 @@
           </div>
           <div v-else-if="results.length">
             <ul class="fr-mt-1w border-default-grey border-top relative z-2">
-              <li v-for="(result, key) in results" :key="result.id">
-                <CardLg :dataset="result" :style="zIndex(key)" />
+              <li v-for="result in results" :key="result.id">
+                <CardLg :dataset="result" />
               </li>
             </ul>
             <Pagination
@@ -294,10 +294,6 @@ const searchSort = ref('');
  * Search results
  */
 const results = ref<Array<Dataset>>([]);
-
-const zIndex = (key: number) => {
-  return {zIndex: results.value.length - key}
-};
 
 /**
  * Count of search results
