@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 5.2.0 (2024-09-13)
 
 - add dataservices to dataset page [#476](https://github.com/datagouv/udata-front/pull/476)
 - show contact point in dataset and dataservice page [#479](https://github.com/datagouv/udata-front/pull/479)
