@@ -85,7 +85,7 @@ import { useI18n } from 'vue-i18n';
 import TextClamp from 'vue3-text-clamp';
 import Placeholder from '../utils/Placeholder.vue';
 import { OrganizationNameWithCertificate } from "../Organization";
-import { summarize, truncate } from "../../helpers";
+import { summarize } from "../../helpers";
 import type { Reuse } from '../../types/reuses';
 import { formatRelativeIfRecentDate } from '../../helpers';
 import { useOwnerName } from '../../composables';

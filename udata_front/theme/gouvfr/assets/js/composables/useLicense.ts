@@ -1,4 +1,4 @@
-import type { License } from "@datagouv/components";
+import type { License } from "@datagouv/components/ts";
 import { MaybeRefOrGetter, ref, toValue, watchEffect } from "vue";
 import fetchLicenses from "../api/licenses";
 

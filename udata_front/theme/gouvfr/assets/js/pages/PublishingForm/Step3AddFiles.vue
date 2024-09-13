@@ -156,7 +156,7 @@ export type Step3AddFilesProps = {
 };
 </script>
 <script setup lang="ts">
-import { Well } from "@datagouv/components";
+import { Well } from "@datagouv/components/ts";
 import { computed, ref, toValue, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Accordion from '../../components/Accordion/Accordion.vue';

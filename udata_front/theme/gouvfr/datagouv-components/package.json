@@ -7,6 +7,13 @@
     "dist",
     "src"
   ],
+  "exports": {
+    ".": {
+      "types": "./dist/data-gouv-fr-components.d.ts",
+      "import": "./dist/data-gouv-fr-components.js"
+    },
+    "./ts": "./src/index.ts"
+  },
   "module": "./dist/data-gouv-fr-components.js",
   "types": "./dist/data-gouv-fr-components.d.ts",
   "scripts": {
@@ -32,8 +39,8 @@
     "chromatic": "npx chromatic --only-changed --externals '*.less' --externals '*.json' --externals '*/msw-requests.ts'"
   },
   "dependencies": {
-    "vue": "^3.4.38",
-    "@headlessui/vue": "^1.7.22"
+    "@headlessui/vue": "^1.7.22",
+    "vue": "^3.4.38"
   },
   "peerDependencies": {
     "@gouvfr/dsfr": "~1.11.2",

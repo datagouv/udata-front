@@ -6,7 +6,7 @@ export default {
 };
 
 const args = {
-  /** @type {import("@datagouv/components").User} */
+  /** @type {import("@datagouv/components/ts").User} */
   author: {
     id: "someUserId",
     first_name: "John",

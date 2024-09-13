@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import type { User } from "@datagouv/components";
+import type { User } from "@datagouv/components/ts";
 import useUserAvatar from "../../composables/useUserAvatar";
 type Props = {
     user: User;
