@@ -141,7 +141,7 @@
   "Update": "Mise à jour",
   "API": "API",
   "Source code": "Code source",
-  "{n} resources downloads": "{n} resources downloads",
-  "{n} reuses": "{n} reuses",
-  "Close": "Close"
+  "{n} resources downloads": "{n} téléchargements des ressources",
+  "{n} reuses": "{n} réutilisations",
+  "Close": "Fermer"
 }
