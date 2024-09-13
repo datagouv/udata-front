@@ -7,17 +7,22 @@
     "dist",
     "src"
   ],
+  "sideEffetcs": [
+    "**/*.css"
+  ],
   "exports": {
     ".": {
       "types": "./dist/data-gouv-fr-components.d.ts",
       "import": "./dist/data-gouv-fr-components.js"
     },
-    "./ts": "./src/index.ts"
+    "./ts": "./src/index.ts",
+    "./dist/style.css": "./dist/style.css"
   },
   "module": "./dist/data-gouv-fr-components.js",
   "types": "./dist/data-gouv-fr-components.d.ts",
   "scripts": {
     "dev": "vite",
+    "dev:udata_front": "vite build --watch",
     "build": "vite build",
     "preview": "vite preview",
     "i18n:report": "vue-i18n-extract report --vueFiles './src/**/*.?(ts|js|vue)' --languageFiles './src/locales/*.json' --separator '^'",
