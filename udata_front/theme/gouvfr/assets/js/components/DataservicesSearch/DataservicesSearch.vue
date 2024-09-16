@@ -147,7 +147,7 @@ import { refDebounced } from '@vueuse/core'
 
 const { t } = useI18n();
 
-const organization = ref('');
+const organization = ref<string | null>(null);
 const page = ref(1);
 
 const hasFilters = computed(() => {
@@ -170,12 +170,15 @@ const url = computed(() => {
   if (searchQueryDebounced.value) {
     filters.q = searchQueryDebounced.value;
   }
-  if (page.value) {
+  if (page.value && page.value !== 1) {
     filters.page = page.value.toString();
   }
-
   const params = new URLSearchParams(filters);
-  console.log(`/dataservices?${params}`)
+
+  let url = new URL(window.location.href);
+  url.search = params.toString();
+  window.history.pushState(null, "", url);
+
   return `/dataservices?${params}`
 })
 
@@ -193,6 +196,14 @@ watch(organization, () => {
 
 onMounted(() => {
   searchInput.value?.focus();
+
+  window.addEventListener('popstate', () => {
+    const url = new URL(window.location.href);
+
+    organization.value = url.searchParams.get('organization');
+    searchQuery.value = url.searchParams.get('q') || '';
+    page.value = parseInt(url.searchParams.get('page') || '1' );
+  });
 })
 watchEffect(() => {
   search()
