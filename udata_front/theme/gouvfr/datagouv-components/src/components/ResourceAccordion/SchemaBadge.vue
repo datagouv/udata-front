@@ -1,11 +1,10 @@
 <template>
     <span class="inline-flex fr-mb-0 align-items-baseline fr-text--xs" v-if="title">
-        <Toggletip noMargin class="fr-p-0">
-            <span class="z-2 fr-icon-information-line fr-icon--sm fr-mr-1v text-grey-380"></span>
-            <template #toggletip="{ hide }">
+        <Toggletip noMargin class="relative z-2">
+            <template #toggletip="{ close }">
                 <div class="flex justify-between border-bottom">
                     <h5 class="fr-text--sm fr-my-0 fr-p-2v">{{$t("Data schema")}}</h5>
-                    <button type="button" @click="hide" class="border-left close-button flex items-center justify-center">&times;</button>
+                    <button type="button" @click="close" :title="t('Close')" class="border-left close-button flex items-center justify-center">&times;</button>
                 </div>
                 <div class="fr-p-3v">
                     <div v-if="validataStatus === 'ok'">

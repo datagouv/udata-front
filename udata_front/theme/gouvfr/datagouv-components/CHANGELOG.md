@@ -4,6 +4,10 @@
 
 - Nothing yet
 
+## 1.3.1 (2024-09-12)
+
+- Fix toggletip and use summarize for metrics [#512](https://github.com/datagouv/udata-front/pull/512)
+
 ## 1.3.0 (2024-09-10)
 
 - Use resource downloads for download icon on dataset card [#484](https://github.com/datagouv/udata-front/pull/484)

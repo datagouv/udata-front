@@ -23,10 +23,10 @@
               {{ reuseType }}
             </p>
             <p class="fr-text--sm fr-my-0" :aria-label="t('{n} views', reuse.metrics.views)">
-              <span class="fr-icon-eye-line fr-icon--xs fr-px-1v" aria-hidden="true"></span>{{ reuse.metrics.views }}
+              <span class="fr-icon-eye-line fr-icon--xs fr-px-1v" aria-hidden="true"></span>{{ summarize(reuse.metrics.views) }}
             </p>
             <p class="fr-text--sm fr-my-0" :aria-label="t('{n} followers', reuse.metrics.followers)">
-              <span class="fr-icon-star-line fr-icon--xs fr-px-1v" aria-hidden="true"></span>{{ reuse.metrics.followers }}
+              <span class="fr-icon-star-line fr-icon--xs fr-px-1v" aria-hidden="true"></span>{{ summarize(reuse.metrics.followers) }}
             </p>
           </div>
         </div>
@@ -85,7 +85,7 @@ import { useI18n } from 'vue-i18n';
 import TextClamp from 'vue3-text-clamp';
 import Placeholder from '../utils/Placeholder.vue';
 import { OrganizationNameWithCertificate } from "../Organization";
-import { truncate } from "../../helpers";
+import { summarize, truncate } from "../../helpers";
 import type { Reuse } from '../../types/reuses';
 import { formatRelativeIfRecentDate } from '../../helpers';
 import { useOwnerName } from '../../composables';

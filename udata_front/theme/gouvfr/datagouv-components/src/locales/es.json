@@ -140,5 +140,8 @@
   "Documentation": "Documentation",
   "Update": "Update",
   "API": "API",
-  "Source code": "Source code"
+  "Source code": "Source code",
+  "{n} resources downloads": "{n} resources downloads",
+  "{n} reuses": "{n} reuses",
+  "Close": "Close"
 }
