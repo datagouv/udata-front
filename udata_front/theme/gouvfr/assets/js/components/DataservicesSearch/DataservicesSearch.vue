@@ -80,7 +80,7 @@
         </div>
         <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle justify-between fr-pb-1w" v-if="dataservices !== null">
           <p class="fr-col-auto fr-my-0" role="status">
-            {{ t("{count} results", dataservices.total) }}
+            {{ t("{count} API", dataservices.total) }}
           </p>
         </div>
         <div v-if="dataservices !== null && dataservices.data.length">
