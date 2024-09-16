@@ -46,13 +46,13 @@ def recent_feed():
     return response
 
 
-
 @blueprint.route("/", endpoint="list")
 def dataservices_list():
     try:
         return theme.render("dataservice/list.html")
     except TemplateNotFound:
         abort(404)
+
 
 class DataserviceView(object):
     model = Dataservice
