@@ -48,7 +48,7 @@ import { read_only_enabled } from "../../../config";
 import { api } from "../../../plugins/api";
 import { auth } from "../../../plugins/auth";
 import { useI18n } from "vue-i18n";
-import { getRandomId } from "@datagouv/components";
+import { getRandomId } from "@datagouv/components/ts";
 import { useToast } from "../../../composables/useToast";
 
 const props = defineProps<{

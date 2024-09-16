@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import { setupComponents, DataserviceCard, OwnerType, ReadMore, Toggletip, OwnerTypeIcon } from "@datagouv/components";
+import { setupComponents, DataserviceCard, OwnerType, ReadMore, Toggletip, OwnerTypeIcon } from "@datagouv/components/ts";
 
 import "./dsfr.ts";
 // @ts-ignore

@@ -39,8 +39,7 @@ const defaultPageSize = 20;
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Pagination } from '@datagouv/components';
-import ReuseCard from "../Reuse/Reuse.vue";
+import { Pagination } from '@datagouv/components/ts';
 import Loader from "./loader.vue";
 
 withDefaults(defineProps<ReuseListProps>(), {

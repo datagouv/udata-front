@@ -21,6 +21,7 @@
     - [☕ Javascript development](#-javascript-development)
       - [🏗 Installing the javascript dependencies](#-installing-the-javascript-dependencies)
       - [💪 Starting the javascript development server](#-starting-the-javascript-development-server)
+      - [📦 @datagouv/components](#-datagouvcomponents)
     - [👀 Other dev commands](#-other-dev-commands)
   - [🏰 General architecture](#-general-architecture)
     - [🚜 Jinja2 templates](#-jinja2-templates)
@@ -167,6 +168,10 @@ npm start
 This will start a development server that will listen to changes and automatically rebuild the project when needed.
 Note that a webserver is started by Vite (default port is `1234`), however we will not be using it as our CSS and JS files will be served by Jinja instead. More on that later.
 
+##### 📦 @datagouv/components
+
+We are using our own package of components. Their sources are in this repository in `udata_front/theme/gouvfr/datagouv-components`. They are included in udata-front without any build or release required. They are also available [on NPM](https://www.npmjs.com/package/@datagouv/components) for others to use.
+
 #### 👀 Other dev commands
 
 Finally, we have a bunch of commands to make your life a tad easier.
@@ -229,15 +234,15 @@ it's best if we can avoid having too much specific styling, but sometimes you ju
 ### 🛠️ Build tools
 
 This project uses [Vite](https://vitejs.dev/) to build and transform our source files into nice bundles for browsers.
-Its config can be found in the `vite.config.js` file.
+Its config can be found in the `vite.config.ts` file.
 
 Vile does multiple custom things in this project :
 
-- Transform the `.js` files into modern Javascript for browsers
+- Transform the `.ts` files into modern Javascript for browsers
 - Transform the `less` files into modern CSS using `PostCSS`
-- Copy the static assets when they change (config is in the `vite.config.js`)
+- Copy the static assets when they change (config is in the `vite.config.ts`)
 
-Vite uses package.json version to name files and udata-front uses its version to load the correct one.
+Vite uses `udata_front.egg-info/PKG-INFO` version to name files and udata-front uses its version to load the correct one.
 If you're udata-front version doesn't match the one loaded in the theme, you may have to do a `pip install -e .` to update the package information.
 
 ### 🏭 Javascript architecture
@@ -246,7 +251,7 @@ If you're udata-front version doesn't match the one loaded in the theme, you may
 
 We are using the full build of VueJS that includes the compiler in order to compile templates directly in the browser.
 
-There is a single VueJS app (in `index.js`) that contains every component and plugins.
+There is a single VueJS app (in `index.ts`) that contains every component and plugins.
 However, this app is mounted multiple times, on each DOM node containing a `vuejs` class.
 
 This allows us to mount the app only where it's needed, because each subsequent mount is more DOM to compile and thus has an impact on performance. Moreover, mounting to the smallest possible HTML allows us to prevent accidental XSS vulnerability by forbidding users to compile their content with the Vue engine.

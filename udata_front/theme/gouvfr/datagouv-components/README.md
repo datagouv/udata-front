@@ -77,17 +77,7 @@ If you want to do the same, you should do :
 npm run update-version -- prerelease --preid=dev
 ```
 
-## Testing a local version in udata-front
+## Using a local version in udata-front
 
-You can use the local version of the package thanks to `npm link`.
-Make sure to build the package first.
-
-```
-# build package
-cd udata_front/theme/gouvfr/datagouv-components
-npm run build
-cd ../../../../ # return to udata-front
-
-# link package
-npm link ./udata_front/theme/gouvfr/datagouv-components
-```
+The local version of the package is used in udata-front.
+There is no `dev` or `build` required, your changes should be picked up with the `inv assets-watch` of udata-front.

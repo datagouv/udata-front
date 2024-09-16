@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { DatasetCard, type Dataset, type DatasetV2 } from '@datagouv/components';
+import { DatasetCard, type Dataset, type DatasetV2 } from '@datagouv/components/ts';
 import type { StyleValue } from "vue";
 
 withDefaults(defineProps<{

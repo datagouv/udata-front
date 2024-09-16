@@ -1,7 +1,7 @@
 import { delay, http, HttpResponse } from 'msw';
 import OrganizationPublishingForm from './OrganizationPublishingForm.vue';
 import type { Meta, StoryObj } from "@storybook/vue3";
-import { Dataset, NewDataset, Organization } from '@datagouv/components';
+import { Dataset, NewDataset, Organization } from '@datagouv/components/ts';
 
 const meta = {
   title: 'Pages/OrganizationPublishingForm/Form',
