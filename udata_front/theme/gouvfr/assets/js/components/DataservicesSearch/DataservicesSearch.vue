@@ -74,7 +74,7 @@
         <div v-if="dataservices !== null && dataservices.data.length">
           <ul class="fr-mt-1w border-default-grey border-top relative z-2">
             <li v-for="dataservice in dataservices.data" :key="dataservice.id">
-              <DataserviceCard :dataservice dataserviceUrl="" />
+              <DataserviceCard :dataservice :dataserviceUrl="dataservice.self_web_url" />
             </li>
           </ul>
           <Pagination
