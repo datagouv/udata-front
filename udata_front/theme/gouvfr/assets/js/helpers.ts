@@ -1,8 +1,5 @@
-// @ts-ignore
-import type { ResourceType } from "@datagouv/components";
 import RemoveMarkdown from "remove-markdown";
 import { readonly } from "vue";
-import { useI18n } from "vue-i18n";
 
 export const truncate = (val: string, length = 300) => {
   if (typeof val !== "string") return;
@@ -41,7 +38,7 @@ export const communityResourceUrlRegExp = new RegExp(
 
 export const getResourceIdFromHash = (hash: string, isCommunityResource: boolean): string | null => {
   for (const regex of isCommunityResource ? [communityResourceUrlRegExp] : [resourceUrlRegExp, previousResourceUrlRegExp]) {
-    let [a, foundId, b] = regex.exec(hash) || [];
+    let [_a, foundId, _b] = regex.exec(hash) || [];
     if(foundId) {
       return foundId;
     }

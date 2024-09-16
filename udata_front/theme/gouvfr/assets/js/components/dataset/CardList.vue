@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import type { Dataset, DatasetV2 } from '@datagouv/components';
+import type { Dataset, DatasetV2 } from '@datagouv/components/ts';
 export type CardListProps = {
   datasets: Array<Dataset | DatasetV2>,
   loading?: boolean,
@@ -34,7 +34,7 @@ const defaultPageSize = 20;
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Pagination } from '@datagouv/components';
+import { Pagination } from '@datagouv/components/ts';
 import Loader from "./loader.vue";
 import CardLG from './card-lg.vue';
 

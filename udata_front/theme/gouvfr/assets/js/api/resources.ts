@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import type { Resource } from '@datagouv/components';
+import type { Resource } from '@datagouv/components/ts';
 import { api, apiv2 } from "../plugins/api";
 import { getLocalizedUrl } from '../i18n';
 import type { DatasetChunkUpload, DatasetFile, DatasetFileUpload, DatasetLocalFile, DatasetRemoteFile, NewDatasetFile } from '../types';

@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import type { Dataset } from '@datagouv/components';
+import type { Dataset } from '@datagouv/components/ts';
 
 export type UserDatasetListProps = {
   owner: string,

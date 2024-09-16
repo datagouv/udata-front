@@ -85,7 +85,7 @@ export type AdminAddMemberModalProps = {
 </script>
 
 <script setup lang="ts">
-import type { User } from '@datagouv/components';
+import type { User } from '@datagouv/components/ts';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { addMember } from "../../api/organizations";

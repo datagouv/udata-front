@@ -53,7 +53,7 @@
 </template>
 <script>
 import { computed, defineComponent, onMounted, ref, watch } from 'vue';
-import { filesize as formatFilesize, formatRelativeIfRecentDate, ResourceIcon } from '@datagouv/components';
+import { filesize as formatFilesize, formatRelativeIfRecentDate, ResourceIcon } from '@datagouv/components/ts';
 import FileLoader from './FileLoader.vue';
 import useFileValidation from '../../../composables/form/useFileValidation';
 import { isLoaded, isLoading } from '../../../api/resources';

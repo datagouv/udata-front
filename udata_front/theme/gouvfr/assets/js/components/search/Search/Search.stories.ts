@@ -1,4 +1,4 @@
-import { apiv2 } from "@datagouv/components";
+import { apiv2 } from "@datagouv/components/ts";
 import { expect, fn, userEvent, waitFor, within } from "@storybook/test";
 import type { Meta, StoryObj } from "@storybook/vue3";
 import { delay, http, HttpResponse } from "msw";

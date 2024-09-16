@@ -125,7 +125,7 @@ import Avatar from '../discussions/Avatar/Avatar.vue';
 import Container from '../Ui/Container/Container.vue';
 import type { PendingMembershipRequest } from '../../types';
 import InputGroup from '../Form/InputGroup/InputGroup.vue';
-import { getRandomId } from '@datagouv/components';
+import { getRandomId } from '@datagouv/components/ts';
 
 const props = defineProps<{
   loading: boolean,
