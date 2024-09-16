@@ -70,27 +70,6 @@
           <p class="fr-col-auto fr-my-0" role="status">
             {{ t("{count} results", dataservices.total) }}
           </p>
-          <!-- <div class="fr-col-auto fr-grid-row fr-grid-row--middle">
-            <label for="sort-search" class="fr-col-auto fr-text--sm fr-m-0 fr-mr-1w">
-                {{ t('Sort by:') }}
-            </label>
-            <div class="fr-col">
-                <select
-                  id="sort-search"
-                  class="fr-select fr-select--blue"
-                  name="sort"
-                  v-model="searchSort"
-                  @change="handleSortChange"
-                >
-                  <option value="">
-                    {{ t('Relevance') }}
-                  </option>
-                  <option v-for="{value, label} in sortOptions" :value='value'>
-                    {{ label }}
-                  </option>
-                </select>
-            </div>
-          </div> -->
         </div>
         <div v-if="dataservices !== null && dataservices.data.length">
           <ul class="fr-mt-1w border-default-grey border-top relative z-2">

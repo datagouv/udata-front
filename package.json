@@ -108,7 +108,6 @@
     "@datagouv/components": "file:udata_front/theme/gouvfr/datagouv-components",
     "@datagouv/select-a11y": "^3.6.1",
     "@gouvfr/dsfr": "~1.11.2",
-    "@vueuse/router": "^11.0.3",
     "leaflet": "^1.9.4"
   },
   "msw": {
