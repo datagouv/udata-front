@@ -49,6 +49,18 @@
                     :isBlue="true"
                   />
                 </div>
+                <div class="fr-col-12">
+                  <div class="fr-select-group">
+                    <label class="fr-label" :for="isRestrictedId">
+                      {{ t("Access terms") }}
+                    </label>
+                    <select class="fr-select" :id="isRestrictedId" v-model="isRestricted">
+                      <option :value="null" selected disabled hidden>Sélectionner une option</option>
+                      <option :value="false">{{ t("Open APIs to everyone") }}</option>
+                      <option :value="true">{{ t("Restricted access APIs") }}</option>
+                    </select>
+                  </div>
+                </div>
                 <div class="fr-col-12 fr-mb-3w text-align-center" v-if="hasFilters">
                   <button
                     class="fr-btn fr-btn--secondary fr-icon-close-circle-line fr-btn--icon-left justify-center w-100"
@@ -127,13 +139,17 @@ import { refDebounced } from '@vueuse/core'
 const { t } = useI18n();
 
 const organization = ref<string | null>(null);
+const isRestricted = ref<boolean | null>(null);
+const isRestrictedId = useId();
+
 const page = ref(1);
 
 const hasFilters = computed(() => {
-  return organization.value
+  return organization.value || isRestricted.value !== null
 });
 const resetFilters = () => {
   organization.value = '';
+  isRestricted.value = null;
 }
 
 const searchId = useId();
@@ -142,12 +158,15 @@ const searchQueryDebounced = refDebounced(searchQuery, 500);
 const searchInput = useTemplateRef('searchInput');
 
 const url = computed(() => {
-  const filters: { organization?: string, q?: string, page?: string } = {}
+  const filters: { organization?: string, q?: string, is_restricted?: string, page?: string } = {}
   if (organization.value) {
     filters.organization = organization.value;
   }
   if (searchQueryDebounced.value) {
     filters.q = searchQueryDebounced.value;
+  }
+  if (isRestricted.value !== null) {
+    filters.is_restricted = isRestricted.value.toString();
   }
   if (page.value && page.value !== 1) {
     filters.page = page.value.toString();
