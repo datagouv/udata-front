@@ -21,7 +21,7 @@
     - [☕ Javascript development](#-javascript-development)
       - [🏗 Installing the javascript dependencies](#-installing-the-javascript-dependencies)
       - [💪 Starting the javascript development server](#-starting-the-javascript-development-server)
-      - [📦 @datagouv/components](#-starting-the-javascript-development-server)
+      - [📦 @datagouv/components](#-datagouvcomponents)
     - [👀 Other dev commands](#-other-dev-commands)
   - [🏰 General architecture](#-general-architecture)
     - [🚜 Jinja2 templates](#-jinja2-templates)
