@@ -1,9 +1,5 @@
 <div class="vuejs">
     <reuse-card
         :reuse='{{ reuse|to_reuse_api_format|tojson }}'
-        reuse-url="{{ reuse.url_for() }}"
-        {% if reuse.organization %}
-            organization-url="{{ reuse.organization.url_for() }}"
-        {% endif %}
     ></reuse-card>
 </div>
