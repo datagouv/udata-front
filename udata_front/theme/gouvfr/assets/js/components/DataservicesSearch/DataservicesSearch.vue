@@ -143,6 +143,7 @@ import { data_search_feedback_form_url } from "../../config";
 import { api } from "../../plugins/api";
 import franceWithMagnifyingGlassIcon from "../../../../templates/svg/illustrations/france_with_magnifying_glass.svg";
 import { PaginatedArray } from "../../api/types";
+import { refDebounced } from '@vueuse/core'
 
 const { t } = useI18n();
 
@@ -158,6 +159,7 @@ const resetFilters = () => {
 
 const searchId = useId();
 const searchQuery = ref('');
+const searchQueryDebounced = refDebounced(searchQuery, 500);
 const searchInput = useTemplateRef('searchInput');
 
 const url = computed(() => {
@@ -165,8 +167,8 @@ const url = computed(() => {
   if (organization.value) {
     filters.organization = organization.value;
   }
-  if (searchQuery.value) {
-    filters.q = searchQuery.value;
+  if (searchQueryDebounced.value) {
+    filters.q = searchQueryDebounced.value;
   }
   if (page.value) {
     filters.page = page.value.toString();
