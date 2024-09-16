@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import type { Reuse } from "@datagouv/components";
+import type { Reuse } from "@datagouv/components/ts";
 export type ReuseListProps = {
   reuses: Array<Reuse>,
   loading?: boolean,
