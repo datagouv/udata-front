@@ -51,17 +51,6 @@ const args = {
   } satisfies Reuse,
 };
 
-const updateLessThanAMonth = new Date();
-const twoDayAgoInMs = 2 * 24 * 60  * 60 * 1000;
-updateLessThanAMonth.setHours(1, 0, 0, 0);
-updateLessThanAMonth.setTime(updateLessThanAMonth.getTime() - twoDayAgoInMs);
-
-const updateLastMonth = new Date();
-updateLastMonth.setMonth(updateLastMonth.getMonth() - 1);
-
-const updateLastYear = new Date();
-updateLastYear.setFullYear(updateLastYear.getFullYear() - 1, 0, 1);
-
 /**
  * #### Reuse for udata-front
  * Reuse card with its udata page as url
