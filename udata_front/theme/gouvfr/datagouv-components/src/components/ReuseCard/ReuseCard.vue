@@ -108,4 +108,8 @@ const { label: reuseType } = useReuseType(() => props.reuse.type);
   aspect-ratio: 1.4;
   object-fit: cover;
 }
+
+.fr-card.fr-enlarge-link .fr-card__title a::after {
+  content: none;
+}
 </style>
