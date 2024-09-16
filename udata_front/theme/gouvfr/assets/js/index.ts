@@ -36,6 +36,7 @@ import EventBus from "./plugins/eventbus.ts";
 import Auth from "./plugins/auth.ts";
 import InitSentry from "./sentry.ts";
 import ReportModalButton from "./components/Report/ReportModalButton.vue";
+import DataservicesSearch from "./components/DataservicesSearch/DataservicesSearch.vue";
 
 setupComponents({
   admin_root,
@@ -82,6 +83,7 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("owner-type-icon", OwnerTypeIcon);
   app.component("publishing-form", PublishingForm);
   app.component("search", Search);
+  app.component("dataservices-search", DataservicesSearch);
   app.component("toggletip", Toggletip);
   app.component("user-dataset-list", UserDatasetList);
   app.component("user-reuse-list", UserReuseList);
