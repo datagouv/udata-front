@@ -3,7 +3,7 @@
     <div class="fr-grid-row fr-grid-row--middle justify-between" ref="searchRef" data-cy="search">
       <section class="fr-search-bar fr-search-bar--lg w-100">
         <label class="fr-label" :for="searchId">
-          {{ $t("Search") }}
+          {{ t("Search") }}
         </label>
         <input
           :id="searchId"
@@ -17,7 +17,7 @@
           data-testid="search-input"
         />
         <button class="fr-btn" type="submit">
-          {{ $t('Search') }}
+          {{ t('Search') }}
         </button>
       </section>
     </div>
@@ -100,7 +100,7 @@
           </ul>
           <Pagination
               v-if="dataservices !== null && dataservices.total > dataservices.page_size"
-              :page="dataservices.page"
+              :page="page"
               :pageSize="dataservices.page_size"
               :totalResults="dataservices.total"
               @change="changePage"
@@ -147,6 +147,7 @@ import { PaginatedArray } from "../../api/types";
 const { t } = useI18n();
 
 const organization = ref('');
+const page = ref(1);
 
 const hasFilters = computed(() => {
   return organization.value
@@ -160,12 +161,15 @@ const searchQuery = ref('');
 const searchInput = useTemplateRef('searchInput');
 
 const url = computed(() => {
-  const filters: { organization?: string, q?: string } = {}
+  const filters: { organization?: string, q?: string, page?: string } = {}
   if (organization.value) {
     filters.organization = organization.value;
   }
   if (searchQuery.value) {
     filters.q = searchQuery.value;
+  }
+  if (page.value) {
+    filters.page = page.value.toString();
   }
 
   const params = new URLSearchParams(filters);
@@ -185,8 +189,8 @@ watchEffect(() => {
   search()
 })
 
-const changePage = (value) => {
-  console.log(value)
+const changePage = (newPage: number) => {
+  page.value = newPage
 };
 
 
