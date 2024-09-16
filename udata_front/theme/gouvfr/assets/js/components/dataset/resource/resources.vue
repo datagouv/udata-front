@@ -14,17 +14,17 @@
         </a>
       </div>
     </div>
-    <div v-if="showSearch" class="fr-mt-3v">
+    <div v-if="showSearch" class="fr-my-3v">
       <SearchBar :eventName="RESOURCES_SEARCH" :type="type"></SearchBar>
     </div>
     <transition mode="out-in">
       <div v-if="loading">
         <ResourceAccordionLoader v-for="_i in pageSize" class="fr-mt-2w" />
       </div>
-      <div v-else>
+      <div class="flex flex-direction-column gap-10px" v-else>
         <p
           v-if="filteredResults"
-          class="fr-py-3v fr-my-0 fr-text--sm border-default-grey border-bottom"
+          class="fr-my-0 fr-text--sm border-bottom"
           role="status"
         >
           {{ t("{count} results", totalResults) }}
@@ -175,3 +175,8 @@ const firstLoad = () => {
 
 onMounted(() => firstLoad());
 </script>
+<style scoped>
+.gap-10px {
+  gap: 10px;
+}
+</style>
