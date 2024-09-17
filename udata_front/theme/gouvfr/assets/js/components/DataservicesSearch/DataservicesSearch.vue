@@ -124,7 +124,7 @@
 </template>
 
 <script setup lang="ts">
-import { Dataservice, DataserviceCard, Pagination } from "@datagouv/components";
+import { Dataservice, DataserviceCard, Pagination } from "@datagouv/components/ts";
 import { ref, onMounted, computed, useId, useTemplateRef, watchEffect, watch } from "vue";
 import { useI18n } from 'vue-i18n';
 import Loader from "../dataset/loader.vue";
