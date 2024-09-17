@@ -1,6 +1,6 @@
 <template>
   <form class="fr-pt-3v" @submit.prevent="search">
-    <div class="fr-grid-row fr-grid-row--middle justify-between" ref="searchRef" data-cy="search">
+    <div class="fr-grid-row fr-grid-row--middle justify-between" data-cy="search">
       <section class="fr-search-bar fr-search-bar--lg w-100">
         <label class="fr-label" :for="searchId">
           {{ t("Search") }}
@@ -55,7 +55,7 @@
                       {{ t("Access terms") }}
                     </label>
                     <select class="fr-select" :id="isRestrictedId" v-model="isRestricted">
-                      <option :value="null" selected disabled hidden>Sélectionner une option</option>
+                      <option :value="null" selected disabled hidden>{{ t("Select an option") }}</option>
                       <option :value="false">{{ t("Open APIs to everyone") }}</option>
                       <option :value="true">{{ t("Restricted access APIs") }}</option>
                     </select>
@@ -139,7 +139,11 @@ import { refDebounced } from '@vueuse/core'
 const { t } = useI18n();
 
 const organization = ref<string | null>(null);
+watch(organization, () => page.value = 1)
+
 const isRestricted = ref<boolean | null>(null);
+watch(isRestricted, () => page.value = 1)
+
 const isRestrictedId = useId();
 
 const page = ref(1);
@@ -188,9 +192,7 @@ const search = async () => {
   dataservices.value = response.data;
 };
 
-watch(organization, () => {
-  page.value = 1;
-})
+
 
 onMounted(() => {
   searchInput.value?.focus();
