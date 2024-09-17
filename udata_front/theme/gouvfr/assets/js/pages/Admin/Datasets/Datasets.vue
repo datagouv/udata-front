@@ -37,7 +37,7 @@
       v-else-if="totalResult"
       class="fr-mt-1w"
       :datasets="datasets"
-      @sort="(newSort) => sortDirection = newSort"
+      @sort="(newSort: string) => sortDirection = newSort"
     />
     <Container v-else class="fr-mt-1w fr-mb-2w">
       <div class="text-align-center fr-py-1w">

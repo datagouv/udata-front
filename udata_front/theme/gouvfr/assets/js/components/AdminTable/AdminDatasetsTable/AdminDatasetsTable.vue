@@ -3,7 +3,7 @@
     <thead>
       <tr>
         <AdminTableTh
-          @sort="(direction) => updateSort('title', direction)"
+          @sort="(direction: SortDirection) => updateSort('title', direction)"
           :sorted="sorted('title')"
           scope="col"
         >
@@ -11,14 +11,14 @@
         </AdminTableTh>
         <AdminTableTh scope="col">{{ t("Status") }}</AdminTableTh>
         <AdminTableTh
-          @sort="(direction) => updateSort('created', direction)"
+          @sort="(direction: SortDirection) => updateSort('created', direction)"
           :sorted="sorted('created')"
           scope="col"
         >
           {{ t('Created at') }}
         </AdminTableTh>
         <AdminTableTh
-          @sort="(direction) => updateSort('last_update', direction)"
+          @sort="(direction: SortDirection) => updateSort('last_update', direction)"
           :sorted="sorted('last_update')"
           scope="col"
         >
@@ -33,7 +33,7 @@
           </Tooltip>
         </AdminTableTh>
         <AdminTableTh
-          @sort="(direction) => updateSort('views', direction)"
+          @sort="(direction: SortDirection) => updateSort('views', direction)"
           :sorted="sorted('views')"
           scope="col"
         >
@@ -49,7 +49,7 @@
           </Tooltip>
         </AdminTableTh>
         <AdminTableTh
-          @sort="(direction) => updateSort('reuses', direction)"
+          @sort="(direction: SortDirection) => updateSort('reuses', direction)"
           :sorted="sorted('reuses')"
           scope="col"
         >
@@ -59,7 +59,7 @@
           </Tooltip>
         </AdminTableTh>
         <AdminTableTh
-          @sort="(direction) => updateSort('followers', direction)"
+          @sort="(direction: SortDirection) => updateSort('followers', direction)"
           :sorted="sorted('followers')"
           scope="col"
         >
