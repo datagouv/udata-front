@@ -9,7 +9,7 @@
           :id="searchId"
           type="search"
           v-model="searchQuery"
-          ref="searchInput"
+          ref="searchInputRef"
           class="fr-input"
           :aria-label="t('Search...')"
           :placeholder="t('Search...')"
@@ -125,7 +125,7 @@
 
 <script setup lang="ts">
 import { Dataservice, DataserviceCard, Pagination, useToast } from "@datagouv/components/ts";
-import { ref, onMounted, computed, useId, useTemplateRef, watchEffect, watch } from "vue";
+import { ref, onMounted, computed, useId, useTemplateRef, watch } from "vue";
 import { useI18n } from 'vue-i18n';
 import Loader from "../dataset/loader.vue";
 import MultiSelect from "../MultiSelect/MultiSelect.vue";
@@ -134,7 +134,7 @@ import { data_search_feedback_form_url } from "../../config";
 import { api } from "../../plugins/api";
 import franceWithMagnifyingGlassIcon from "../../../../templates/svg/illustrations/france_with_magnifying_glass.svg";
 import { PaginatedArray } from "../../api/types";
-import { refDebounced } from '@vueuse/core'
+import { refDebounced, watchIgnorable } from '@vueuse/core'
 import axios from "axios";
 
 const { t } = useI18n();
@@ -161,9 +161,9 @@ const resetFilters = () => {
 const searchId = useId();
 const searchQuery = ref('');
 const searchQueryDebounced = refDebounced(searchQuery, 500);
-const searchInput = useTemplateRef('searchInput');
+const searchInput = useTemplateRef('searchInputRef');
 
-const url = computed(() => {
+const params = computed(() => {
   const filters: { organization?: string, q?: string, is_restricted?: string, page?: string } = {}
   if (organization.value) {
     filters.organization = organization.value;
@@ -177,14 +177,15 @@ const url = computed(() => {
   if (page.value && page.value !== 1) {
     filters.page = page.value.toString();
   }
-  const params = new URLSearchParams(filters);
-
-  let url = new URL(window.location.href);
-  url.search = params.toString();
-  window.history.pushState(null, "", url);
-
-  return `/dataservices?${params}`
+  return new URLSearchParams(filters);
 })
+const { ignoreUpdates } = watchIgnorable(params, () => {
+  let url = new URL(window.location.href);
+  url.search = params.value.toString();
+  window.history.pushState(null, "", url);
+});
+
+const url = computed(() => `/dataservices?${params.value}`)
 
 const dataservices = ref<null | PaginatedArray<Dataservice>>(null);
 
@@ -211,24 +212,42 @@ const search = async () => {
   }
 };
 
+const populateFromUrl = () => {
+  const url = new URL(window.location.href);
+
+  organization.value = url.searchParams.get('organization');
+  searchQuery.value = url.searchParams.get('q') || '';
+
+  if (url.searchParams.get('is_restricted') === "true") {
+    isRestricted.value = true;
+  } else if (url.searchParams.get('is_restricted') === "false") {
+    isRestricted.value = false;
+  } else {
+    isRestricted.value = null;
+  }
+
+  page.value = parseInt(url.searchParams.get('page') || '1' );
+}
+
+
 onMounted(() => {
+  populateFromUrl();
+  search()
   searchInput.value?.focus();
 
   window.addEventListener('popstate', () => {
-    const url = new URL(window.location.href);
-
-    organization.value = url.searchParams.get('organization');
-    searchQuery.value = url.searchParams.get('q') || '';
-    isRestricted.value = {
-      "true": true,
-      "false": false,
-    }[url.searchParams.get('is_restricted') || ''] || null;
-    page.value = parseInt(url.searchParams.get('page') || '1' );
+    // We don't want to trigger the watcher that 
+    // push url history on this change (otherwise we create a new 
+    // history step each time we use the back button and we cannot
+    // go forward anymore)
+    ignoreUpdates(() => {
+      populateFromUrl();
+    })
   });
 })
 watch(url, () => {
   search()
-}, { immediate: true })
+})
 
 const changePage = (newPage: number) => {
   page.value = newPage
