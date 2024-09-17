@@ -54,7 +54,9 @@
                     <label class="fr-label" :for="isRestrictedId">
                       {{ t("Access terms") }}
                     </label>
-                    <select class="fr-select" :id="isRestrictedId" v-model="isRestricted">
+                    <select class="fr-select" :id="isRestrictedId" v-model="isRestricted" :class="{
+                      'text-mention-grey': isRestricted === null,
+                    }">
                       <option :value="null">{{ t("All access terms") }}</option>
                       <option :value="false">{{ t("Open APIs to everyone") }}</option>
                       <option :value="true">{{ t("Restricted access APIs") }}</option>
