@@ -1,5 +1,5 @@
 <template>
-  <div class="fr-table fr-mb-2w">
+  <div class="fr-table fr-mb-0">
     <table>
       <slot></slot>
     </table>

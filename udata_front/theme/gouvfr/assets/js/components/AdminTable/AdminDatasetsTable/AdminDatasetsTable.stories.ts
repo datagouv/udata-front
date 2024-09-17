@@ -24,6 +24,9 @@ export const DatasetsTable: StoryObj<typeof meta> = {
       CardLGPrivateWithOrganizationLogo.args.dataset as Dataset,
       CardLGUpdatedLastYearWithOrganizationLogo.args.dataset as Dataset,
       CardLGWithDescriptionAndCertifiedOrganization.args.dataset as Dataset,
-    ]
+    ],
+    loading: false,
+    sortDirection: "asc",
+    sortedBy: "created"
   },
 };

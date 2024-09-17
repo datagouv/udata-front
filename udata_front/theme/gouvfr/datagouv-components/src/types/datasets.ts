@@ -46,6 +46,7 @@ export type Rel = {
 export type Dataset = NewDataset & {
   id: string;
   badges: Badges;
+  deleted: string | null;
   page: string;
   resources: Array<Resource>;
   community_resources: Array<Resource>;

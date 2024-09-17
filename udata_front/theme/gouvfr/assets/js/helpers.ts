@@ -1,5 +1,6 @@
 import RemoveMarkdown from "remove-markdown";
 import { readonly } from "vue";
+import { lang } from "./config";
 
 export const truncate = (val: string, length = 300) => {
   if (typeof val !== "string") return;
