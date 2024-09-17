@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import { setupComponents, DataserviceCard, OwnerType, ReadMore, Toggletip, OwnerTypeIcon } from "@datagouv/components";
+import { setupComponents, DataserviceCard, OwnerType, ReadMore, Toggletip, OwnerTypeIcon } from "@datagouv/components/ts";
 
 import "./dsfr.ts";
 // @ts-ignore
@@ -16,6 +16,7 @@ import FeaturedButton from './components/utils/featured.vue';
 import FollowButton from "./components/utils/follow-button.vue";
 import RequestMembership from "./components/organization/request-membership.vue";
 import ResourceFromHash from "./components/dataset/resource/resourceFromHash.vue";
+import ReuseCard from "./components/Reuse/Reuse.vue";
 import Resources from "./components/dataset/resource/resources.vue";
 import Captcha from "./components/utils/captcha.vue";
 import UserDatasetList from "./components/UserDatasetList/UserDatasetList.vue";
@@ -81,6 +82,7 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("owner-type", OwnerType);
   app.component("owner-type-icon", OwnerTypeIcon);
   app.component("publishing-form", PublishingForm);
+  app.component("reuse-card", ReuseCard);
   app.component("search", Search);
   app.component("toggletip", Toggletip);
   app.component("user-dataset-list", UserDatasetList);

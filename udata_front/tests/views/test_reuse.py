@@ -10,7 +10,6 @@ from udata.core.user.factories import UserFactory
 from udata.core.organization.factories import OrganizationFactory
 from udata_front.tests import GouvFrSettings
 from udata_front.tests.frontend import GouvfrFrontTestCase
-from udata.frontend.markdown import mdstrip
 
 
 class ReuseBlueprintTest(GouvfrFrontTestCase):
@@ -140,4 +139,4 @@ class ReuseBlueprintTest(GouvfrFrontTestCase):
         response = self.get(url)
         self.assert200(response)
         for reuse in reuses:
-            assert mdstrip(reuse.title, 55).encode('utf-8') in response.data
+            assert reuse.title in response.data.decode('utf-8')

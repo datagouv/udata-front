@@ -29,7 +29,7 @@ export function getTheme(): string {
   return theme;
 }
 
-export async function getVersion(version: string): Promise<string | null> {
+export async function getVersion(version?: string): Promise<string | null> {
   if(version) {
     return version;
   }
@@ -48,7 +48,7 @@ export async function getVersion(version: string): Promise<string | null> {
       }
     }
   }
-  return version;
+  return version ?? null;
 }
 
 export async function getConfig(): Promise<UserConfig> {
@@ -62,7 +62,10 @@ export async function getConfig(): Promise<UserConfig> {
       VueI18nPlugin({
         compositionOnly: false,
         /* options */
-        include: resolve(dirname(fileURLToPath(import.meta.url)), `udata_front/theme/${theme}/assets/js/locales/**`),
+        include: [
+          resolve(dirname(fileURLToPath(import.meta.url)), `udata_front/theme/${theme}/assets/js/locales/**`),
+          resolve(dirname(fileURLToPath(import.meta.url)), `udata_front/theme/gouvfr/datagouv-components/src/locales/**`)
+        ],
       }),
       legacy({
         targets: "> 0.1%, last 15 versions, Firefox ESR, not dead",
@@ -78,7 +81,9 @@ export async function getConfig(): Promise<UserConfig> {
         hook: 'writeBundle'
       }),
     ],
+    envDir: "udata_front/theme/gouvfr/datagouv-components",
     build: {
+      cssCodeSplit: false,
       rollupOptions: {
         input: [
           `udata_front/theme/${theme}/assets/js/index.ts`,

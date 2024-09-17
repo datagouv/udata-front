@@ -70,8 +70,8 @@
   </li>
 </template>
 <script lang="ts">
-import type { Organization, User } from '@datagouv/components';
-export type AdminSidebarOrganizationMenuProps = {
+import type { Organization, User } from '@datagouv/components/ts';
+export type AdminSidebarMenuProps = {
   /**
    * The logged in user, to show a menu with an avatar and "My Profil"
    */
@@ -93,9 +93,9 @@ import { useI18n } from "vue-i18n";
 import Avatar from "../../../components/discussions/Avatar/Avatar.vue";
 import Placeholder from "../../../components/utils/placeholder.vue";
 import AdminSidebarLink from "../AdminSidebarLink/AdminSidebarLink.vue";
-import { getRandomId } from '@datagouv/components';
+import { getRandomId } from '@datagouv/components/ts';
 
-const props = defineProps<AdminSidebarOrganizationMenuProps>();
+const props = defineProps<AdminSidebarMenuProps>();
 
 defineEmits<{
   (event: 'open'): void,

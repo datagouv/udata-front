@@ -1,4 +1,4 @@
-import { CERTIFIED, PUBLIC_SERVICE, type Dataset, type Organization, type User } from '@datagouv/components';
+import { CERTIFIED, PUBLIC_SERVICE, type Dataset, type Organization, type User } from '@datagouv/components/ts';
 import CardLG from './card-lg.vue';
 import { withActions } from '@storybook/addon-actions/decorator';
 import { Meta, StoryObj } from '@storybook/vue3';

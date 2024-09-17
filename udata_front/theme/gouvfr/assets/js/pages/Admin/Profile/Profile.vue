@@ -112,7 +112,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { getRandomId } from '@datagouv/components';
+import { getRandomId } from '@datagouv/components/ts';
 import { onMounted, ref } from 'vue';
 import { useI18n } from "vue-i18n";
 import { useRouter } from 'vue-router';

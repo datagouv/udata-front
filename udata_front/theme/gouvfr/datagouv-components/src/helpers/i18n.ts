@@ -1,11 +1,10 @@
 import dayjs from "dayjs/esm";
 import LocalizedFormat from 'dayjs/esm/plugin/localizedFormat';
 import RelativeTime from "dayjs/esm/plugin/relativeTime";
-import { DefineLocaleMessage, I18n, Locale, createI18n } from "vue-i18n";
+import { type I18n, createI18n } from "vue-i18n";
 import messages from '@intlify/unplugin-vue-i18n/messages';
 import { config } from "../config";
 import { api_root_absolute } from "../api/api";
-import { getRegisteredTranslations } from "@etalab/udata-front-plugins-helper";
 
 dayjs.extend(LocalizedFormat);
 dayjs.extend(RelativeTime, {
@@ -70,34 +69,12 @@ const setupI18nWithExistingInstance = (newI18n: I18n) => {
   return i18n;
 }
 
-const loadedModules: Record<string, boolean> = {};
-
 export function getLocalizedUrl (path: string) {
   const lang = i18n?.global.locale.value ?? config.default_lang;
   const url = new URL(api_root_absolute + path);
   const params = new URLSearchParams({ lang });
   url.search = params.toString();
   return url.toString();
-}
-
-/**
- * Reload translations from plugins if they aren't already loaded
- */
-export function reloadLocale() {
-  const translations = getRegisteredTranslations();
-  let messages: Record<string, any> = {};
-  for (let translation of translations) {
-    if(translation.module) {
-      if (loadedModules[translation.module]) {
-        continue;
-      }
-      loadedModules[translation.module] = true;
-    }
-    messages = {...messages, ...(translation.messages as Record<Locale, DefineLocaleMessage>)[config.default_lang]};
-  }
-  if(i18n) {
-    i18n.global.mergeLocaleMessage(config.default_lang, messages);
-  }
 }
 
 export { dayjs, i18n, setupI18n, setupI18nWithExistingInstance };

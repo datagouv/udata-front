@@ -1,5 +1,5 @@
 import type { App } from "vue";
-import { api_root_absolute, api_2_root_absolute, api, apiv2, generateCancelToken } from "@datagouv/components";
+import { api_root_absolute, api_2_root_absolute, api, apiv2, generateCancelToken } from "@datagouv/components/ts";
 
 export { api_root_absolute, api_2_root_absolute, api, apiv2, generateCancelToken };
 

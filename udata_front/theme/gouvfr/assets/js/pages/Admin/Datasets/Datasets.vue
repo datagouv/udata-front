@@ -58,7 +58,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Pagination, type Dataset } from "@datagouv/components";
+import { Pagination, type Dataset } from "@datagouv/components/ts";
 import { ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { getOrganizationDatasets, getOrganizationDatasetsCatalogUrl } from "../../../api/datasets";

@@ -88,7 +88,7 @@
 </template>
 
 <script setup lang="ts">
-import { formatDate, formatFromNow } from '@datagouv/components';
+import { formatDate, formatFromNow } from '@datagouv/components/ts';
 import { computed, onMounted, ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { acceptRequest, formatRolesAsOptions, getOrganization, getPendingMemberships, getRoles, refuseRequest } from "../../../api/organizations";

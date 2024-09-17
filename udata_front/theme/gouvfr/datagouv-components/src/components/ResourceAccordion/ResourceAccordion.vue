@@ -1,5 +1,5 @@
 <template>
-  <article class="border border-default-grey" :class="{ 'fr-pb-4v': open }">
+  <div class="border border-default-grey" :class="{ 'fr-pb-4v': open }">
     <header
       class="fr-p-4v flex items-center justify-between relative"
       :id="resourceHeaderId"
@@ -14,7 +14,7 @@
 
             <span class="absolute inset-0 z-1"></span>
           </button>
-          <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resourceExternalUrl" class="relative z-2" />
+          <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resourceExternalUrl" class="z-2" />
         </h4>
         <div class="text-grey-380 subheaders-infos">
           <SchemaBadge :resource class="dash-after" />
@@ -24,9 +24,9 @@
             {{ resource.format.trim().toLowerCase() }}
             <span v-if="resource.filesize">({{ filesize(resource.filesize) }})</span>
           </span>
-          <span class="inline-flex items-center fr-text--xs fr-mb-0">
+          <span class="inline-flex items-center fr-text--xs fr-mb-0" :aria-label="t('{n} downloads', resource.metrics.views)">
             <span class="fr-icon-download-line fr-icon--xs fr-mr-1v"></span>
-            <span>{{ resource.metrics.views || 0 }} <span class="hidden show-on-small">{{ t("downloads") }}</span></span>
+            <span>{{ summarize(resource.metrics.views) }} <span class="hidden show-on-small">{{ t("downloads") }}</span></span>
           </span>
         </div>
         <p class="fr-mb-0 fr-mt-1v fr-text--xs text-grey-380" v-if="communityResource">
@@ -129,7 +129,7 @@
         </TabPanels>
       </TabGroup>
     </section>
-  </article>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -141,7 +141,7 @@ import EditButton from "./EditButton.vue";
 import OrganizationNameWithCertificate from "../Organization/OrganizationNameWithCertificate.vue";
 import useOwnerName from "../../composables/organizations/useOwnerName";
 import { config } from "../../config";
-import { filesize, formatRelativeIfRecentDate, markdown } from "../../helpers";
+import { filesize, formatRelativeIfRecentDate, markdown, summarize } from "../../helpers";
 import type { CommunityResource, Resource } from "../../types/resources";
 import ResourceIcon from "./ResourceIcon.vue";
 import SchemaBadge from "./SchemaBadge.vue";
@@ -155,10 +155,6 @@ import TabPanel from "../Tabs/TabPanel.vue";
 import { trackEvent } from "../../helpers/matomo";
 import CopyButton from "../CopyButton/CopyButton.vue";
 import { getResourceFormatIconSvg } from "../../helpers/resources";
-
-defineOptions({
-  inheritAttrs: false,
-});
 
 const props = withDefaults(defineProps<{
   datasetId: string,
@@ -204,7 +200,7 @@ const tabsOptions = computed(() => {
   if (props.resource.description) {
     options.push({ key: "description", label: t("Description") })
   }
-  
+
   if (hasPreview.value) {
     options.push({ key: "data-structure", label: t("Data structure") })
   }
@@ -217,7 +213,7 @@ const tabsOptions = computed(() => {
 const switchTab = (index: number) => {
   const option = tabsOptions.value[index];
   trackEvent(['View resource tab', props.resource.id, option.label])
-  
+
   if (option.key === 'data') {
     trackEvent(['Show preview', props.resource.id])
   }
@@ -262,6 +258,10 @@ If we do not put z-index, the header is fully clickable except for the DSFR icon
   z-index: 2;
 }
 
+.z-3 {
+  z-index: 3;
+}
+
 article {
   container-type: inline-size;
 }
@@ -276,7 +276,7 @@ article {
     margin-top: 1.25rem;
     margin-left: auto !important;
   }
-/* 
+/*
   If we want to put subheaders info in column on mobile…
   article header .subheaders-infos {
     display: flex;

@@ -1,4 +1,4 @@
-import type { Dataset, NewDataset } from "@datagouv/components";
+import type { Dataset, NewDataset } from "@datagouv/components/ts";
 import { toValue, type MaybeRefOrGetter } from "vue";
 import { api } from "../plugins/api";
 import { getLocalizedUrl } from "../i18n";

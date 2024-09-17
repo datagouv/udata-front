@@ -237,7 +237,7 @@
   </div>
 </template>
 <script>
-import { Well, RESOURCE_TYPE } from "@datagouv/components";
+import { Well, RESOURCE_TYPE, getResourceLabel } from "@datagouv/components/ts";
 import { computed, defineComponent, ref } from 'vue';
 import Accordion from '../../components/Accordion/Accordion.vue';
 import AccordionGroup from '../../components/Accordion/AccordionGroup.vue';
@@ -253,7 +253,6 @@ import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import useUid from "../../composables/useUid";
 import useFileValidation from '../../composables/form/useFileValidation';
 import { schema_documentation_url } from "../../config";
-import { getResourceLabel } from '../../helpers';
 import { useI18n } from 'vue-i18n';
 import { getAllowedExtensionsUrl } from '../../api/resources';
 
@@ -291,7 +290,7 @@ export default defineComponent({
     const nameAFile = computed(() => isRemote.value ? t("Name a link") : t("Name a file"));
     const fileTitle = computed(() => isRemote.value ? t("Link title") : t("File title"));
 
-    /** @type {Array<{label: string, value: import("@datagouv/components").ResourceType}>} */
+    /** @type {Array<{label: string, value: import("@datagouv/components/ts").ResourceType}>} */
     const fileTypes = RESOURCE_TYPE.map(type => ({label: getResourceLabel(type), value: type}));
 
      const submit = () => {

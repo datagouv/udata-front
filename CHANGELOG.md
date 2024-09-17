@@ -2,6 +2,10 @@
 
 ## Current (in progress)
 
+- Add beta admin datasets page [#371](https://github.com/etalab/udata-front/pull/371)
+
+## 5.2.0 (2024-09-13)
+
 - add dataservices to dataset page [#476](https://github.com/datagouv/udata-front/pull/476)
 - show contact point in dataset and dataservice page [#479](https://github.com/datagouv/udata-front/pull/479)
 - add email, member since and last login at to org members table [#480](https://github.com/datagouv/udata-front/pull/480)
@@ -12,7 +16,9 @@
 - update DSFR to v1.11 [#502](https://github.com/datagouv/udata-front/pull/502) [#506](https://github.com/datagouv/udata-front/pull/506)
 - Replace the "MonComptePro" SSO login button with a "ProConnect" button [#482](https://github.com/datagouv/udata-front/pull/482)
   This needs the `PROCONNECT_*` related settings in `settings.py`, and an active [ProConnect flow](https://github.com/numerique-gouv/agentconnect-documentation/blob/main/doc_fs/implementation_technique.md)
-- Add beta admin datasets page [#371](https://github.com/etalab/udata-front/pull/371)
+- update/remove code following the datagouv/components update [#507](https://github.com/datagouv/udata-front/pull/507) [#513](https://github.com/datagouv/udata-front/pull/513)
+- When disconnecting from udata, first disconnect from ProConnect if relevant [#504](https://github.com/datagouv/udata-front/pull/504)
+- update privacy policy [#510](https://github.com/datagouv/udata-front/pull/510)
 
 ## 5.1.2 (2024-08-01)
 

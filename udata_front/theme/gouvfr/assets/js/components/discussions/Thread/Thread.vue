@@ -81,7 +81,7 @@ import Author from "../Author/Author.vue";
 import ThreadReply from "../ThreadReply/ThreadReply.vue";
 import MarkAsNoSpam from "../../MarkAsNoSpam/MarkAsNoSpam.vue";
 import { read_only_enabled } from "../../../config";
-import { formatDate, ReadMore } from "@datagouv/components";
+import { formatDate, ReadMore } from "@datagouv/components/ts";
 import { computed, ref } from "vue";
 import { auth } from "../../../plugins/auth";
 import { api } from "../../../plugins/api";

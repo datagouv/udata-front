@@ -1,6 +1,6 @@
 import { createApp } from "vue";
 import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router';
-import { setupComponents } from "@datagouv/components";
+import { setupComponents } from "@datagouv/components/ts";
 
 import "./dsfr.ts";
 // @ts-ignore
