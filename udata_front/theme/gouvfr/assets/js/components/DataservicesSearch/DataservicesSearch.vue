@@ -124,7 +124,7 @@
 </template>
 
 <script setup lang="ts">
-import { Dataservice, DataserviceCard, Pagination } from "@datagouv/components/ts";
+import { Dataservice, DataserviceCard, Pagination, useToast } from "@datagouv/components/ts";
 import { ref, onMounted, computed, useId, useTemplateRef, watchEffect, watch } from "vue";
 import { useI18n } from 'vue-i18n';
 import Loader from "../dataset/loader.vue";
@@ -135,8 +135,10 @@ import { api } from "../../plugins/api";
 import franceWithMagnifyingGlassIcon from "../../../../templates/svg/illustrations/france_with_magnifying_glass.svg";
 import { PaginatedArray } from "../../api/types";
 import { refDebounced } from '@vueuse/core'
+import axios from "axios";
 
 const { t } = useI18n();
+const { toast } = useToast();
 
 const organization = ref<string | null>(null);
 watch(organization, () => page.value = 1)
@@ -186,13 +188,28 @@ const url = computed(() => {
 
 const dataservices = ref<null | PaginatedArray<Dataservice>>(null);
 
+const abortController = ref<AbortController | null>(null);
+watch(searchQuery, () => {
+  // We want to cancel the ongoing request as soon as the user start typing
+  // again.
+  if (abortController.value) {
+    abortController.value.abort();
+  }
+})
 const search = async () => {
   dataservices.value = null
-  const response = await api.get(url.value);
-  dataservices.value = response.data;
+
+  abortController.value = new AbortController();
+  try {
+    const response = await api.get(url.value, { signal: abortController.value.signal });
+    abortController.value = null;
+    dataservices.value = response.data;
+  } catch(e) {
+    if (! axios.isCancel(e)) {
+      toast.error(t("Error getting search results."));
+    }
+  }
 };
-
-
 
 onMounted(() => {
   searchInput.value?.focus();
@@ -205,9 +222,9 @@ onMounted(() => {
     page.value = parseInt(url.searchParams.get('page') || '1' );
   });
 })
-watchEffect(() => {
+watch(url, () => {
   search()
-})
+}, { immediate: true })
 
 const changePage = (newPage: number) => {
   page.value = newPage
