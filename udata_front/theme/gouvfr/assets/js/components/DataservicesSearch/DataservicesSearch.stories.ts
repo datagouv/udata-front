@@ -1,11 +1,9 @@
-import { withActions } from '@storybook/addon-actions/decorator';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import DataservicesSearch from './DataservicesSearch.vue';
 
 const meta = {
   title: 'Components/DataservicesSearch',
   component: DataservicesSearch,
-  decorators: [withActions],
   args: {},
 } satisfies Meta<typeof DataservicesSearch>;
 
