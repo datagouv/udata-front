@@ -40,17 +40,21 @@ export const filesize = (val: number) => {
 }
 
 export const summarize = (val: number, fractionDigits = 0) => {
+  const toFixedIfNotZero = (value: number) => {
+    return value.toFixed(fractionDigits).replace(/0+$/, '').replace(/\.$/, '')
+  }
+
   if(!val) {
     return "0";
   }
   const units = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z']
   for (let unit of units) {
       if (Math.abs(val) < 1000.0) {
-        return `${val.toFixed(fractionDigits)}${unit}`
+        return `${toFixedIfNotZero(val)}${unit}`
       }
       val /= 1000.0
   }
-  return `${val.toFixed(1)}Y`
+  return `${toFixedIfNotZero(val)}Y`
 }
 
 /**
