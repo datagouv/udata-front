@@ -219,6 +219,10 @@ onMounted(() => {
 
     organization.value = url.searchParams.get('organization');
     searchQuery.value = url.searchParams.get('q') || '';
+    isRestricted.value = {
+      "true": true,
+      "false": false,
+    }[url.searchParams.get('is_restricted') || ''] || null;
     page.value = parseInt(url.searchParams.get('page') || '1' );
   });
 })
