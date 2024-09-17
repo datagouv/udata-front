@@ -55,7 +55,7 @@
                       {{ t("Access terms") }}
                     </label>
                     <select class="fr-select" :id="isRestrictedId" v-model="isRestricted">
-                      <option :value="null" selected disabled hidden>{{ t("Select an option") }}</option>
+                      <option :value="null">{{ t("All access terms") }}</option>
                       <option :value="false">{{ t("Open APIs to everyone") }}</option>
                       <option :value="true">{{ t("Restricted access APIs") }}</option>
                     </select>
