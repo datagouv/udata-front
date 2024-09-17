@@ -71,7 +71,7 @@ export const formatFromNow = (date: Date | string) => {
   if(today.isSame(dateWithoutTime)) {
     return t("today");
   }
-  return dayjs(date).fromNow();
+  return dateWithoutTime.fromNow();
 }
 
 /**
