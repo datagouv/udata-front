@@ -484,9 +484,9 @@
   "Last connection": "Dernière connexion",
   "No connection": "Aucune connection",
   "You are seeing a specific community resource of this dataset": "Vous consultez une ressource communautaire spécifique sur ce jeu de données",
-  "Access terms": "",
-  "Open APIs to everyone": "",
-  "Restricted access APIs": "",
-  "{count} API": "",
-  "All access terms": ""
+  "Access terms": "Access terms",
+  "Open APIs to everyone": "Open APIs to everyone",
+  "Restricted access APIs": "Restricted access APIs",
+  "{count} API": "{count} API",
+  "All access terms": "All access terms"
 }
