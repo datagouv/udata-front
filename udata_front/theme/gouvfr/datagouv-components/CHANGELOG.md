@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add `StatBox` and `SmallChart` components [#517](https://github.com/datagouv/udata-front/pull/517)
 
 ## 1.3.1 (2024-09-12)
 
