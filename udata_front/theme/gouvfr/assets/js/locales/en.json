@@ -483,5 +483,10 @@
   "Member since": "Member since",
   "Last connection": "Last connection",
   "No connection": "No connection",
-  "You are seeing a specific community resource of this dataset": "You are seeing a specific community resource of this dataset"
+  "You are seeing a specific community resource of this dataset": "You are seeing a specific community resource of this dataset",
+  "Access terms": "Access terms",
+  "Open APIs to everyone": "Open APIs to everyone",
+  "Restricted access APIs": "Restricted access APIs",
+  "{count} API": "{count} API",
+  "All access terms": "All access terms"
 }
