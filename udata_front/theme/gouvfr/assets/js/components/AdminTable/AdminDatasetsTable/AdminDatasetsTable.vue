@@ -119,8 +119,8 @@
   </AdminTable>
 </template>
 <script setup lang="ts">
-import { formatDate, QualityScore } from "@datagouv/components";
-import type { Dataset, DatasetV2 } from '@datagouv/components';
+import { formatDate, QualityScore } from "@datagouv/components/ts";
+import type { Dataset, DatasetV2 } from '@datagouv/components/ts';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import TextClamp from "vue3-text-clamp";

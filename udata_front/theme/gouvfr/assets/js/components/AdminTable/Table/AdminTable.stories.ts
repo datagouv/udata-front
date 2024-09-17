@@ -1,4 +1,4 @@
-import { QualityScore } from "@datagouv/components";
+import { QualityScore } from "@datagouv/components/ts";
 import type { Meta, StoryObj } from "@storybook/vue3";
 import AdminBadge from "../../AdminBadge/AdminBadge.vue";
 import AdminContentWithTooltip from "../../AdminContentWithTooltip/AdminContentWithTooltip.vue";

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import AdminDatasetsTable from "./AdminDatasetsTable.vue";
 import { CardLGArchivedWithOrganizationLogo, CardLGPrivateWithOrganizationLogo, CardLGUpdatedLastYearWithOrganizationLogo, CardLGWithDescriptionAndCertifiedOrganization } from "../../dataset/CardLG.stories";
-import type { Dataset } from "@datagouv/components";
+import type { Dataset } from "@datagouv/components/ts";
 
 const meta = {
   title: "Admin/AdminTable/AdminDatasetsTable",
