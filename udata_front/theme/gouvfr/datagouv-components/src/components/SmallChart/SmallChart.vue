@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { Chart, ChartOptions } from 'chart.js/auto';
+import { Chart, type ChartOptions } from 'chart.js/auto';
 import { computed, onMounted, ref, useTemplateRef, watchEffect } from 'vue';
 import { formatDate } from '@datagouv/components/ts';
 
