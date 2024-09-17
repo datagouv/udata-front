@@ -16,6 +16,7 @@ import FeaturedButton from './components/utils/featured.vue';
 import FollowButton from "./components/utils/follow-button.vue";
 import RequestMembership from "./components/organization/request-membership.vue";
 import ResourceFromHash from "./components/dataset/resource/resourceFromHash.vue";
+import ReuseCard from "./components/Reuse/Reuse.vue";
 import Resources from "./components/dataset/resource/resources.vue";
 import Captcha from "./components/utils/captcha.vue";
 import UserDatasetList from "./components/UserDatasetList/UserDatasetList.vue";
@@ -36,6 +37,7 @@ import EventBus from "./plugins/eventbus.ts";
 import Auth from "./plugins/auth.ts";
 import InitSentry from "./sentry.ts";
 import ReportModalButton from "./components/Report/ReportModalButton.vue";
+import DataservicesSearch from "./components/DataservicesSearch/DataservicesSearch.vue";
 
 setupComponents({
   admin_root,
@@ -81,7 +83,9 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("owner-type", OwnerType);
   app.component("owner-type-icon", OwnerTypeIcon);
   app.component("publishing-form", PublishingForm);
+  app.component("reuse-card", ReuseCard);
   app.component("search", Search);
+  app.component("dataservices-search", DataservicesSearch);
   app.component("toggletip", Toggletip);
   app.component("user-dataset-list", UserDatasetList);
   app.component("user-reuse-list", UserReuseList);

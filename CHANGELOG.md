@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add index page with search for dataservices [#516](https://github.com/datagouv/udata-front/pull/516)
 
 ## 5.2.0 (2024-09-13)
 

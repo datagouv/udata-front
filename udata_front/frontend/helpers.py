@@ -25,6 +25,7 @@ from udata.core.organization.constants import (
     LOCAL_AUTHORITY,
     PUBLIC_SERVICE,
 )
+from udata.core.reuse.models import Reuse
 from udata.models import db
 from udata.i18n import get_locale, format_date, format_timedelta, _, pgettext
 from udata.search.result import SearchResult
@@ -425,6 +426,11 @@ def to_dataset_api_format(dataset):
 @front.app_template_filter()
 def to_dataservice_api_format(dataservice):
     return marshal(dataservice, Dataservice.__read_fields__)
+
+
+@front.app_template_filter()
+def to_reuse_api_format(reuse):
+    return marshal(reuse, Reuse.__read_fields__)
 
 
 @front.app_template_filter()
