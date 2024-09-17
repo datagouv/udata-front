@@ -11,8 +11,8 @@
 </template>
 
 <script setup lang="ts">
-import type { User } from "@datagouv/components";
 import useUserAvatar from "../../composables/useUserAvatar";
+import type { User } from "../../types/users";
 type Props = {
     user: User;
     size?: number;

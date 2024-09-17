@@ -14,17 +14,17 @@
         </a>
       </div>
     </div>
-    <div v-if="showSearch" class="fr-mt-3v">
+    <div v-if="showSearch" class="fr-my-3v">
       <SearchBar :eventName="RESOURCES_SEARCH" :type="type"></SearchBar>
     </div>
     <transition mode="out-in">
       <div v-if="loading">
         <ResourceAccordionLoader v-for="_i in pageSize" class="fr-mt-2w" />
       </div>
-      <div v-else>
+      <div class="flex flex-direction-column gap-10px" v-else>
         <p
           v-if="filteredResults"
-          class="fr-py-3v fr-my-0 fr-text--sm border-default-grey border-bottom"
+          class="fr-my-0 fr-text--sm border-bottom"
           role="status"
         >
           {{ t("{count} results", totalResults) }}
@@ -56,7 +56,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { onMounted, ref, computed } from 'vue';
-import { ResourceAccordion, ResourceAccordionLoader, type Resource, Pagination } from "@datagouv/components";
+import { ResourceAccordion, ResourceAccordionLoader, type Resource, Pagination } from "@datagouv/components/ts";
 import SearchBar from "../../utils/search-bar.vue";
 import config from "../../../config";
 import { useToast } from "../../../composables/useToast";
@@ -65,9 +65,8 @@ import {
   bus,
   RESOURCES_SEARCH,
 } from "../../../plugins/eventbus";
-import useIdFromHash from '../../../composables/useIdFromHash';
-import { previousResourceUrlRegExp, resourceUrlRegExp } from '../../../helpers';
-import type { GetPaginatedData } from '../../../types';
+import { getResourceIdFromHash } from '../../../helpers';
+import { useHash } from '../../../composables/useHash';
 
 type Props = {
   canEdit?: boolean,
@@ -88,8 +87,10 @@ const props = withDefaults(defineProps<Props>(), {
 
 const { t } = useI18n();
 const { toast } = useToast();
-const { id: resourceIdFromHash } = useIdFromHash([resourceUrlRegExp, previousResourceUrlRegExp]);
 const currentPage = ref(1);
+
+const { hash } = useHash();
+const resourceIdFromHash = computed(() => getResourceIdFromHash(hash.value, props.type === "community"));
 
 const resources = ref<Array<Resource>>([]);
 const pageSize = config.resources_default_page_size;
@@ -175,3 +176,8 @@ const firstLoad = () => {
 
 onMounted(() => firstLoad());
 </script>
+<style scoped>
+.gap-10px {
+  gap: 10px;
+}
+</style>

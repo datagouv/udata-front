@@ -65,7 +65,7 @@
 <script setup lang="ts">
 import { read_only_enabled } from "../../../config";
 import { useI18n } from "vue-i18n";
-import { getRandomId } from "@datagouv/components";
+import { getRandomId } from "@datagouv/components/ts";
 import { useToast } from "../../../composables/useToast";
 import { deleteUser, deleteUserWithoutSendingMail } from "../../../api/users"
 

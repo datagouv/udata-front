@@ -10,5 +10,5 @@
   </Well>
 </template>
 <script setup lang="ts">
-import { Well } from '@datagouv/components';
+import { Well } from '@datagouv/components/ts';
 </script>

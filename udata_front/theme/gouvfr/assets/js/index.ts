@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import { setupComponents, ReadMore, Toggletip } from "@datagouv/components";
+import { setupComponents, DataserviceCard, OwnerType, ReadMore, Toggletip, OwnerTypeIcon } from "@datagouv/components/ts";
 
 import "./dsfr.ts";
 // @ts-ignore
@@ -16,6 +16,7 @@ import FeaturedButton from './components/utils/featured.vue';
 import FollowButton from "./components/utils/follow-button.vue";
 import RequestMembership from "./components/organization/request-membership.vue";
 import ResourceFromHash from "./components/dataset/resource/resourceFromHash.vue";
+import ReuseCard from "./components/Reuse/Reuse.vue";
 import Resources from "./components/dataset/resource/resources.vue";
 import Captcha from "./components/utils/captcha.vue";
 import UserDatasetList from "./components/UserDatasetList/UserDatasetList.vue";
@@ -28,7 +29,7 @@ import "./components/vanilla/accordion.js";
 import "./components/vanilla/clipboard.js";
 import "./components/vanilla/dialog.js";
 import "./components/vanilla/sort-search.js";
-import handleUpdateUrlButtons from "./components/vanilla/update-url.js";
+import fixupTabsOnStartup from "./components/vanilla/fixup-tabs-on-startup.js";
 import i18n from "./i18n.ts";
 import { admin_root, api_root, api_2_root, schema_documentation_url, schema_validata_url, tabular_api_url, tabular_page_size, title } from "./config.ts";
 import Api from "./plugins/api.ts";
@@ -66,6 +67,7 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("chart", Chart);
   app.component("dataset-resources", Resources);
   app.component("dataset-resource-from-hash", ResourceFromHash);
+  app.component("dataservice-card", DataserviceCard);
   app.component("delete-button", DeleteButton);
   app.component("delete-user-button", DeleteUserButton);
   app.component("discussion-threads", Threads);
@@ -77,7 +79,10 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("report-button", ReportModalButton);
   app.component("request-membership", RequestMembership);
   app.component("organization-publishing-form", OrganizationPublishingForm);
+  app.component("owner-type", OwnerType);
+  app.component("owner-type-icon", OwnerTypeIcon);
   app.component("publishing-form", PublishingForm);
+  app.component("reuse-card", ReuseCard);
   app.component("search", Search);
   app.component("toggletip", Toggletip);
   app.component("user-dataset-list", UserDatasetList);
@@ -114,4 +119,5 @@ elements.forEach((el) => {
 // @ts-ignore dsfr is added by @gouvfr/dsfr
 globalThis.dsfr.start();
 console.log("JS is injected !");
-handleUpdateUrlButtons();
+fixupTabsOnStartup();
+

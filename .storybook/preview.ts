@@ -1,5 +1,6 @@
 import type { Preview } from '@storybook/vue3';
-import { initialize, mswDecorator } from 'msw-storybook-addon';
+import { initialize, mswLoader } from 'msw-storybook-addon';
+import mswRequests from '../udata_front/theme/gouvfr/datagouv-components/.storybook/msw-requests';
 
 /*
  * Initializes MSW
@@ -9,7 +10,7 @@ import { initialize, mswDecorator } from 'msw-storybook-addon';
 initialize({
   onUnhandledRequest: ({ url }, print) => {
     const pathname = new URL(url).pathname
-    if(pathname.startsWith("/udata_front") || pathname.startsWith("/@fs") || pathname.startsWith("/node_modules")) {
+    if (pathname.startsWith("/udata_front") || pathname.startsWith("/@fs") || pathname.startsWith("/node_modules") || pathname.endsWith("/.svg")) {
       return;
     }
     print.warning();
@@ -17,7 +18,7 @@ initialize({
 });
 
 const preview: Preview = {
-  decorators: [mswDecorator],
+  loaders: [mswLoader],
   parameters: {
     controls: {
       matchers: {
@@ -25,7 +26,9 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    msw: mswRequests,
   },
 };
 
 export default preview;
+

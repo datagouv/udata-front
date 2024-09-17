@@ -1,4 +1,4 @@
-import type { Dataset, FileResourceFileType, NewDataset as BaseNewDataset, Organization, Owned, RemoteResourceFileType, ResourceType, User } from "@datagouv/components";
+import type { Dataset, FileResourceFileType, NewDataset as BaseNewDataset, Organization, Owned, RemoteResourceFileType, ResourceType, User } from "@datagouv/components/ts";
 
 import { CLOSED_FORMATS } from "./helpers";
 
@@ -192,9 +192,16 @@ export type RefusedMembershipRequest = MembershipRequest & {
 
 export type MemberRole = "admin" | "editor";
 
+// In org endpoint we get these two private information if we have edit rights on the org.
+export type MemberUser = User & {
+  email: string | null;
+  last_login_at: string | null;
+}
+
 export type Member = {
   role: MemberRole;
-  user: User;
+  user: MemberUser;
+  since: string;
 };
 
 export type EditingMember = Member & {

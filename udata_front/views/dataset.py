@@ -8,6 +8,7 @@ from udata.core.dataset.models import Dataset, get_resource
 from udata.core.dataset.constants import RESOURCE_TYPES
 from udata.core.dataset.search import DatasetSearch
 from udata.core.dataset.permissions import ResourceEditPermission, DatasetEditPermission
+from udata.core.dataservices.models import Dataservice
 from udata.core.site.models import current_site
 
 from udata_front.theme import render as render_template
@@ -78,6 +79,7 @@ class ProtectedDatasetView(DatasetView):
 @blueprint.route('/<dataset:dataset>/', endpoint='show')
 class DatasetDetailView(DatasetView, DetailView):
     template_name = 'dataset/display.html'
+    dataservice_page_size = 8
     reuse_page_size = 8
 
     def dispatch_request(self, *args, **kwargs):
@@ -85,6 +87,10 @@ class DatasetDetailView(DatasetView, DetailView):
 
     def get_context(self):
         context = super(DatasetDetailView, self).get_context()
+
+        params_dataservices_page = request.args.get("dataservices_page", 1, type=int)
+        dataservices = Dataservice.objects(datasets=self.dataset).visible()
+
         params_reuses_page = request.args.get('reuses_page', 1, type=int)
         reuses = Reuse.objects(datasets=self.dataset).visible()
 
@@ -93,8 +99,15 @@ class DatasetDetailView(DatasetView, DetailView):
                 abort(404)
             elif self.dataset.deleted:
                 abort(410)
+
+        context["dataservices"] = dataservices.paginate(
+            params_dataservices_page, self.dataservice_page_size
+        )
+        context["total_dataservices"] = len(dataservices)
+
         context['reuses'] = reuses.paginate(params_reuses_page, self.reuse_page_size)
         context['total_reuses'] = len(reuses)
+
         context['can_edit'] = DatasetEditPermission(self.dataset)
         context['can_edit_resource'] = ResourceEditPermission
         return context

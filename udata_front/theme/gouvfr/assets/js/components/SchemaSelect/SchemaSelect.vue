@@ -19,7 +19,7 @@ export type SchemaSelectProps = {
 };
 </script>
 <script setup lang="ts">
-import { getCatalog } from "@datagouv/components";
+import { getCatalog } from "@datagouv/components/ts";
 import MultiSelect from "../MultiSelect/MultiSelect.vue";
 
 withDefaults(defineProps<SchemaSelectProps>(), {

@@ -4,7 +4,7 @@
  * Lots of variables here are probably useless for the front-end
  */
 
-import type { User } from "@datagouv/components";
+import type { User } from "@datagouv/components/ts";
 import type { Primitive } from "@sentry/types";
 
 /**
@@ -208,19 +208,25 @@ const sentryEl = document.querySelector("meta[name=sentry]");
 type SentryConfiguration = {
   dsn: string | undefined;
   release: string | undefined;
-  tags: Record<string, Primitive>
+  tags: Record<string, Primitive>;
+  environment: string;
+  sampleRate: number;
 }
 
 export const sentry: SentryConfiguration = {
   dsn: undefined,
   release: undefined,
   tags: {},
+  environment: "",
+  sampleRate: 0,
 };
 
 if (sentryEl instanceof HTMLElement) {
   sentry.dsn = sentryEl.getAttribute("content") || undefined;
   sentry.release = sentryEl.dataset.release || undefined;
   sentry.tags = JSON.parse(decodeURIComponent(sentryEl.dataset.tags || "{}"));
+  sentry.environment = sentryEl.dataset.environment || "";
+  sentry.sampleRate = parseFloat(sentryEl.dataset.sampleRate ?? "0");
 }
 
 /**
@@ -288,7 +294,7 @@ export const search_autocomplete_debounce = _jsonMeta("search-autocomplete-debou
 
 export const tabular_api_url = _meta("tabular-api-url");
 
-export const tabular_page_size = _meta("tabular-page-size");
+export const tabular_page_size = parseInt(_meta("tabular-page-size") ?? "5");
 
 export const search_siren_url = _meta("search-siren-url");
 

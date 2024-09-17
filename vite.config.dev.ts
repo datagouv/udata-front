@@ -17,7 +17,10 @@ async function getConfig(): Promise<UserConfig> {
       VueI18nPlugin({
         compositionOnly: false,
         /* options */
-        include: resolve(dirname(fileURLToPath(import.meta.url)), `udata_front/theme/${theme}/assets/js/locales/**`),
+        include: [
+          resolve(dirname(fileURLToPath(import.meta.url)), `udata_front/theme/${theme}/assets/js/locales/**`),
+          resolve(dirname(fileURLToPath(import.meta.url)), `udata_front/theme/gouvfr/datagouv-components/src/locales/**`),
+        ],
       }),
       copy({
         targets: [
@@ -43,8 +46,10 @@ async function getConfig(): Promise<UserConfig> {
         hook: 'writeBundle'
       }),
     ],
+    envDir: "udata_front/theme/gouvfr/datagouv-components",
     build: {
       minify: false,
+      cssCodeSplit: false,
       rollupOptions: {
         input: [
           `udata_front/theme/${theme}/assets/js/index.ts`,

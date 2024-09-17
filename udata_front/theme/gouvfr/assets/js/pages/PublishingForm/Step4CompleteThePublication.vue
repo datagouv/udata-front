@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { Dataset, Well } from "@datagouv/components";
+import { Dataset, Well } from "@datagouv/components/ts";
 import { reactive } from 'vue';
 import Container from '../../components/Ui/Container/Container.vue';
 import Stepper, { Step } from '../../components/Form/Stepper/Stepper.vue';

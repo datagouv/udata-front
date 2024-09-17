@@ -13,6 +13,8 @@ export function getReuseTypesUrl() {
   return getLocalizedUrl("reuses/types/");
 }
 
+/** TODO : those should be removed and the types from datagouv/components should be used instead when the package will be updated */
+
 export function fetchReuseTypes() {
   if (reuseTypesRequest) {
     return reuseTypesRequest;

@@ -2,7 +2,7 @@
   <Container class="drop-shadow rounded-xxs fr-mt-3w">
     <div class="fr-mt-n9v fr-mb-2w">
       <p class="fr-badge fr-badge--info fr-badge--no-icon">
-        <span class="fr-icon-user-add-line" aria-hidden="true"></span>
+        <span class="fr-icon-user-add-line fr-icon--sm" aria-hidden="true"></span>
         {{ t("Membership Request") }}
       </p>
     </div>
@@ -125,7 +125,7 @@ import Avatar from '../discussions/Avatar/Avatar.vue';
 import Container from '../Ui/Container/Container.vue';
 import type { PendingMembershipRequest } from '../../types';
 import InputGroup from '../Form/InputGroup/InputGroup.vue';
-import { getRandomId } from '@datagouv/components';
+import { getRandomId } from '@datagouv/components/ts';
 
 const props = defineProps<{
   loading: boolean,
