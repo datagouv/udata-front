@@ -38,7 +38,7 @@ const user = {
       acronym: null,
       badges: [],
       class: "Organization",
-      id: "65e9b7cf830c3b5a515ee4ed",
+      id: "65e9b7cf830c3b5a515ee4ee",
       logo: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
       logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
       name: "My Second Organization",

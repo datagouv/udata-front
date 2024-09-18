@@ -32,6 +32,8 @@ export type PublishingFormAccordionState = AccordionFunctionalState | DSFRInfoSt
 
 export type AccordionState = DSFRFormDefaultState | AccordionFunctionalState | DSFRInfoState;
 
+export type AdminBadgeState = DSFRFormDefaultState | FormFunctionalState | DSFRInfoState;
+
 export type ClosedFormats = typeof CLOSED_FORMATS[number];
 
 export type DatasetRemoteFile = { description?: string; filetype: RemoteResourceFileType; format: string; mime: string; schema?: string; title: string; type: ResourceType; url: string; };
@@ -113,22 +115,17 @@ export type OwnedWithId = { organization: string, owner: never | null } | { orga
 
 export type NewDataset = Omit<BaseNewDataset, keyof OwnedWithId> & OwnedWithId;
 
-export type Reuse = Owned & {
-  id: string;
+export type BaseNewReuse = Owned & {
   title: string;
   description: string;
   tags: Array<string> | null;
-  page: string;
-  private: boolean;
-  deleted: boolean;
-  datasets: Array<Dataset>;
-  image: string;
-  image_thumbnail: string;
-  slug: string;
+  datasets: Array<Dataset | string>;
   topic: string;
   type: string;
-  last_update: string;
+  url: string;
 };
+
+export type NewReuse = Omit<BaseNewReuse, keyof OwnedWithId> & OwnedWithId;
 
 export type Me = User & {
   about: string,
@@ -146,6 +143,10 @@ export type Me = User & {
 }
 
 export type AxisAlignment = "start" | "center" | "end";
+
+export type SortDirection = 'asc' | 'desc';
+
+export type DatasetSortedBy = 'title' | 'created' | 'last_update' | 'reuses' | 'followers' | 'views';
 
 export type SpatialZone = {
   code: string;
@@ -213,5 +214,14 @@ export type OrganizationV1 = Organization & {
   };
   url: string | null;
 }
+
+export type GetPaginatedData<T> = {
+  data: Array<T>;
+  next_page: string | null;
+  page: number;
+  page_size: number;
+  previous_page: string | null;
+  total: number;
+};
 
 export default {};
