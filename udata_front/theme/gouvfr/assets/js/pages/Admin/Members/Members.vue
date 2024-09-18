@@ -96,7 +96,7 @@ import type { EditingMember, MemberRole, PendingMembershipRequest } from "../../
 import { useToast } from "../../../composables/useToast";
 import { user, userIsAdmin } from "../../../config";
 import AdminAddMemberButton from "../../../components/AdminAddMember/AdminAddMemberButton.vue";
-import { formatDate, formatFromNow } from '@datagouv/components';
+import { formatDate, formatFromNow } from '@datagouv/components/ts';
 
 const props = defineProps<{oid: string}>();
 

@@ -1,7 +1,9 @@
 <template>
   <div class="fr-grid-row fr-grid-row--middle fr-ml-n1v">
   <Toggletip
-    class="fr-btn fr-btn--tertiary-no-outline fr-btn--secondary-grey-500 fr-icon-info-line"
+    class="fr-btn--secondary-grey-500"
+    icon="fr-icon-info-line"
+    size="md"
   >
     {{$t('Metadata quality:')}}
     <template #toggletip>

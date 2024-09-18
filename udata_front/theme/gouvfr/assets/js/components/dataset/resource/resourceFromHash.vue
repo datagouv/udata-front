@@ -28,7 +28,7 @@
 </section>
 </template>
 <script setup lang="ts">
-import { ResourceAccordion, ResourceAccordionLoader, type Resource, Well } from "@datagouv/components";
+import { ResourceAccordion, ResourceAccordionLoader, type Resource, Well } from "@datagouv/components/ts";
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from "vue-i18n";
 import { useToast } from "../../../composables/useToast";

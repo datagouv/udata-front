@@ -1,4 +1,4 @@
-import { CERTIFIED, PUBLIC_SERVICE, type Dataset, type Organization, type User } from '@datagouv/components';
+import { CERTIFIED, PUBLIC_SERVICE, type Dataset, type Organization, type User } from '@datagouv/components/ts';
 import CardLG from './card-lg.vue';
 import { withActions } from '@storybook/addon-actions/decorator';
 import { Meta, StoryObj } from '@storybook/vue3';
@@ -70,7 +70,8 @@ const args: CardLGProps = {
       discussions: 20,
       reuses: 100,
       followers: 500,
-      views: 50000
+      views: 50000,
+      resources_downloads: 150,
     },
     extras: {},
     harvest: {},
@@ -81,6 +82,7 @@ const args: CardLGProps = {
 
 const updateLessThanAMonth = new Date();
 const twoDayAgoInMs = 2 * 24 * 60  * 60 * 1000;
+updateLessThanAMonth.setHours(1, 0, 0, 0);
 updateLessThanAMonth.setTime(updateLessThanAMonth.getTime() - twoDayAgoInMs);
 
 const updateLastMonth = new Date();

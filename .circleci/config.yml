@@ -224,8 +224,34 @@ jobs:
           name: Compile and test package
           command: npm run preversion
           working_directory: ./udata_front/theme/gouvfr/datagouv-components
+
+  storybook_datagouv_components:
+    docker:
+      - image: mcr.microsoft.com/playwright:v1.46.1-jammy
+    resource_class: medium+
+    steps:
+      - checkout
       - run:
-          name: publish to chromatic
+          name: Install NodeJS and dependencies
+          command: npm ci
+          working_directory: ./udata_front/theme/gouvfr/datagouv-components
+      - run:
+          name: Build package
+          command: npm run build
+          working_directory: ./udata_front/theme/gouvfr/datagouv-components
+      - run:
+          name: Build storybook
+          command: npm run build-storybook
+          working_directory: ./udata_front/theme/gouvfr/datagouv-components
+      - run:
+          name: Install udata-front dependencies
+          command: npm ci
+      - run:
+          name: Test storybook
+          command: npm run ci:storybook
+          working_directory: ./udata_front/theme/gouvfr/datagouv-components
+      - run:
+          name: Publish to chromatic
           command: CHROMATIC_PROJECT_TOKEN=$CHROMATIC_COMPONENTS_TOKEN npm run chromatic -- --exit-once-uploaded
           working_directory: ./udata_front/theme/gouvfr/datagouv-components
 
@@ -266,6 +292,7 @@ jobs:
       - image: cimg/python:3.11-browsers
       - image: mongo:6.0.4
       - image: redis:alpine
+    resource_class: medium+
     steps:
       - checkout
       - cypress/install
@@ -299,8 +326,27 @@ jobs:
             fi
       - cypress/run-tests:
           cypress-command: npm run ci
+
+  storybook_udata_front:
+    docker:
+      - image: mcr.microsoft.com/playwright:v1.46.1-jammy
+    resource_class: medium+
+    steps:
+      - checkout
       - run:
-          name: publish to chromatic
+          name: Install NodeJS and dependencies
+          command: npm ci
+      - run:
+          name: Build package
+          command: npm run build
+      - run:
+          name: Build storybook
+          command: npm run build-storybook
+      - run:
+          name: Test storybook
+          command: npm run ci:storybook
+      - run:
+          name: Publish to chromatic
           command: CHROMATIC_PROJECT_TOKEN=$CHROMATIC_UDATA_FRONT_TOKEN npm run chromatic -- --exit-once-uploaded
 
   lighthouse:
@@ -406,6 +452,9 @@ workflows:
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
+      - storybook_udata_front:
+          requires:
+            - assets
       - udata_front_plugins_helper:
           filters:
             tags:
@@ -414,9 +463,15 @@ workflows:
           filters:
             tags:
               only: /@datagouv\/components@([0-9]+(?:\.[0-9]+)*(?:-(?:a|b|dev|rc)\.[0-9]+)?)/
-      - publish_datagouv_components:
+      - storybook_datagouv_components:
           requires:
             - datagouv_components
+          filters:
+            tags:
+              only: /@datagouv\/components@([0-9]+(?:\.[0-9]+)*(?:-(?:a|b|dev|rc)\.[0-9]+)?)/
+      - publish_datagouv_components:
+          requires:
+            - storybook_datagouv_components
           filters:
             branches:
               only:

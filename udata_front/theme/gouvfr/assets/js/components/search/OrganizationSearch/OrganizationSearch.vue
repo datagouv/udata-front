@@ -52,7 +52,7 @@ import { useI18n } from 'vue-i18n';
 import OrganizationSearchOption from "./OrganizationSearchOption.vue";
 import useUid from "../../../composables/useUid";
 import { api } from "../../../plugins/api";
-import type { Organization } from "@datagouv/components";
+import type { Organization } from "@datagouv/components/ts";
 import { watchDebounced } from "@vueuse/core";
 import { useDropdown } from "../../../composables/useDropdown";
 import { useToast } from "../../../composables/useToast";

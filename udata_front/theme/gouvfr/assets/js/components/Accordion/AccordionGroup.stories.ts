@@ -1,15 +1,18 @@
+import type { Meta, StoryObj } from '@storybook/vue3';
 import Accordion from './Accordion.vue';
 import AccordionGroup from './AccordionGroup.vue';
 
-export default {
+const meta = {
   title: 'Components/AccordionGroup',
   component: AccordionGroup,
-};
+} satisfies Meta<typeof AccordionGroup>;
+
+export default meta;
 
 const args = {
 };
 
-export const ClosedAccordionGroup = {
+export const ClosedAccordionGroup: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { Accordion, AccordionGroup },
     setup() {

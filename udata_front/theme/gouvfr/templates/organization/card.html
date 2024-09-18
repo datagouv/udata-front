@@ -8,7 +8,7 @@
                     <img src="{{ organization.logo(70)|placeholder('organization') }}" class="fr-responsive-img" alt="">
                 </div>
             </div>
-            <h3 class="fr-tile__title fr-col fr-ml-1w">
+            <h3 class="fr-tile__title fr-text--md fr-col fr-ml-1w">
                 <a class="fr-tile__link inline" href="{{ url_for('organizations.show', org=organization) }}">{{ organization_name_with_certificate(organization) }}</a>
             </h3>
         </div>

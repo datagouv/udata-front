@@ -115,7 +115,7 @@
 import { onMounted, ref, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from "vue-i18n";
-import { getRandomId } from '@datagouv/components';
+import { getRandomId } from '@datagouv/components/ts';
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
 import AdminDangerZone from "../../../components/AdminDangerZone/AdminDangerZone.vue";
 import DescribeOrganizationFrom from "../../OrganizationPublishingForm/Step2DescribeOrganization.vue";

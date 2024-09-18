@@ -44,7 +44,7 @@ import { getDatepickerLocale } from "../../i18n";
 import Datepicker from "vue3-datepicker";
 import { format } from "date-fns/esm";
 import { defineComponent, ref, watch } from "vue";
-import { formatDate } from "@datagouv/components";
+import { formatDate } from "@datagouv/components/ts";
 import { templateRef } from "@vueuse/core";
 
 export default defineComponent({
