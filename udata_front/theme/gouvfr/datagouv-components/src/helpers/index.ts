@@ -41,7 +41,13 @@ export const filesize = (val: number) => {
 
 export const summarize = (val: number, fractionDigits = 0) => {
   const toFixedIfNotZero = (value: number) => {
-    return value.toFixed(fractionDigits).replace(/0+$/, '').replace(/\.$/, '')
+    const asString = value.toFixed(fractionDigits);
+    if (! asString.includes('.')) {
+      return asString; 
+    }
+
+    // Remove trailing "0" to not show "1.0" but only "1"
+    return asString.replace(/0+$/, '').replace(/\.$/, '')
   }
 
   if(!val) {
