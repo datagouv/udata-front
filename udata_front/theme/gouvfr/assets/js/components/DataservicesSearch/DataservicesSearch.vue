@@ -92,16 +92,17 @@
             </li>
           </ul>
           <Pagination
-              v-if="dataservices !== null && dataservices.total > dataservices.page_size"
-              :page="page"
-              :pageSize="dataservices.page_size"
-              :totalResults="dataservices.total"
-              @change="changePage"
-              class="fr-mt-2w"
-            />
+            v-if="dataservices !== null && dataservices.total > dataservices.page_size"
+            :page="page"
+            :pageSize="dataservices.page_size"
+            :totalResults="dataservices.total"
+            @change="changePage"
+            class="fr-mt-2w"
+          />
+          <NoSearchResults v-else :title="t('Didn\'t find what you are looking for?')" @reset-filters="resetFiltersAndSearch" />
         </div>
         <div v-if="dataservices !== null && dataservices.data.length === 0" class="fr-mt-2w">
-          <NoSearchResults @reset-filters="resetFilters" />
+          <NoSearchResults :title="t('No results match your search.')" @reset-filters="resetFiltersAndSearch" />
         </div>
       </section>
     </div>
@@ -139,6 +140,11 @@ const hasFilters = computed(() => {
 const resetFilters = () => {
   organization.value = '';
   isRestricted.value = null;
+}
+
+const resetFiltersAndSearch = () => {
+  searchQuery.value = '';
+  resetFilters();
 }
 
 const searchId = useId();
