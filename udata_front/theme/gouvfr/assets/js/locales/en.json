@@ -488,5 +488,19 @@
   "Open APIs to everyone": "Open APIs to everyone",
   "Restricted access APIs": "Restricted access APIs",
   "{count} API": "{count} API",
-  "All access terms": "All access terms"
+  "All access terms": "All access terms",
+  "Publish on": "Publish on",
+  "Title of the dataset": "Title of the dataset",
+  "Created at": "Created at",
+  "Updated at": "Updated at",
+  "Score": "Score",
+  "Discussions": "Discussions",
+  "Views": "Views",
+  "Downloads": "Downloads",
+  "Favorites": "Favorites",
+  "Deleted": "Deleted",
+  "Public": "Public",
+  "Sort": "Sort",
+  "Download catalog": "Download catalog",
+  "You haven't published a dataset yet": "You haven't published a dataset yet"
 }
