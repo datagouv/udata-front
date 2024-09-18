@@ -502,5 +502,10 @@
   "Public": "Public",
   "Sort": "Sort",
   "Download catalog": "Download catalog",
-  "You haven't published a dataset yet": "You haven't published a dataset yet"
+  "You haven't published a dataset yet": "You haven't published a dataset yet",
+  "Didn\\'t find what you are looking for?": "Didn\\'t find what you are looking for?",
+  "No results match your search.": "No results match your search.",
+  "Try resetting the filters to broaden your search.": "Try resetting the filters to broaden your search.",
+  "You can also check ongoing requests and submit your own on our forum dedicated to data discovery and openness.": "You can also check ongoing requests and submit your own on our forum dedicated to data discovery and openness.",
+  "Check our forum": "Check our forum"
 }
