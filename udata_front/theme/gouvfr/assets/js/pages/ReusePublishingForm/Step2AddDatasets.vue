@@ -90,6 +90,7 @@
 import { computed, reactive, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { type Dataset, Well } from '@datagouv/components/ts';
+import { useSortable } from '@vueuse/integrations/useSortable';
 import { helpers } from '@vuelidate/validators'
 import Container from '../../components/Ui/Container/Container.vue';
 import CardLg from '../../components/dataset/card-lg.vue';
@@ -100,7 +101,6 @@ import Alert from '../../components/Alert/Alert.vue';
 import useFunctionalState from '../../composables/form/useFunctionalState';
 import { api } from '../../plugins/api';
 import draggableIcon from "../../../../templates/svg/illustrations/draggable.svg";
-import { useSortable } from '@vueuse/integrations';
 
 defineProps<{
   errors: Array<string>,
