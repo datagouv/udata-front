@@ -1,12 +1,14 @@
 from flask import abort, make_response, request, url_for
 from feedgenerator.django.utils.feedgenerator import Atom1Feed
 
+from jinja2 import TemplateNotFound
 from udata.core.dataservices.models import Dataservice
 from udata.core.dataservices.permissions import DataserviceEditPermission
 from udata.core.site.models import current_site
 from udata.i18n import I18nBlueprint, gettext as _
 from udata.sitemap import sitemap
 
+from udata_front import theme
 from udata_front.theme import render as render_template
 from udata_front.views.base import DetailView
 
@@ -42,6 +44,14 @@ def recent_feed():
     response = make_response(feed.writeString('utf-8'))
     response.headers['Content-Type'] = 'application/atom+xml'
     return response
+
+
+@blueprint.route("/", endpoint="list")
+def dataservices_list():
+    try:
+        return theme.render("dataservice/list.html")
+    except TemplateNotFound:
+        abort(404)
 
 
 class DataserviceView(object):

@@ -1,9 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
-import type { Resource } from '@datagouv/components/ts';
+import type { CommunityResource, Resource } from '@datagouv/components/ts';
 import { api, apiv2 } from "../plugins/api";
 import { getLocalizedUrl } from '../i18n';
 import type { DatasetChunkUpload, DatasetFile, DatasetFileUpload, DatasetLocalFile, DatasetRemoteFile, GetPaginatedData, NewDatasetFile } from '../types';
-import type { Resource } from '@etalab/data.gouv.fr-components';
 
 export async function fetchDatasetResources(datasetId: string, type: string, page: number, pageSize: number, search: string) {
   const resp = await apiv2
@@ -18,10 +17,9 @@ export async function fetchDatasetResources(datasetId: string, type: string, pag
   return resp.data;
 }
 
-// TODO: use CommunityResource from datagouv/components when merged
 export async function fetchDatasetCommunityResources (datasetId: string, page: number, pageSize: number) {
   const resp = await api
-    .get<GetPaginatedData<Resource>>("datasets/community_resources/", {
+    .get<GetPaginatedData<CommunityResource>>("datasets/community_resources/", {
       params: {
         page,
         dataset: datasetId,

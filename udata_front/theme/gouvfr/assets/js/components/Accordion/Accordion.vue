@@ -2,7 +2,7 @@
   <section class="fr-accordion">
     <h3 class="fr-accordion__title">
       <button
-        class="fr-accordion__btn"
+        class="fr-accordion__btn text-grey-500"
         :aria-expanded="opened"
         :aria-controls="id"
       >
