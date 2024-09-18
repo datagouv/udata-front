@@ -1,7 +1,8 @@
 import { getLocalizedUrl } from "../i18n";
 import { toValue } from "vue";
 import { api } from "../plugins/api";
-import type { Reuse, NewReuse } from "../types";
+import { type NewReuse } from "../types";
+import { type Reuse } from "@datagouv/components/ts";
 
 let reuseTypesRequest: Promise<Array<ReuseType>> | null = null;
 
