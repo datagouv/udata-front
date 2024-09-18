@@ -101,24 +101,7 @@
             />
         </div>
         <div v-if="dataservices !== null && dataservices.data.length === 0" class="fr-mt-2w">
-          <ActionCard
-          :title="t('No result found for your search')"
-          :icon="franceWithMagnifyingGlassIcon"
-          type="primary"
-          >
-            <p class="fr-mt-1v fr-mb-3v">
-              {{ t("Try to reset filters to widen your search.") }}<br/>
-              {{ t("You can also give us more details with our feedback form.") }}
-            </p>
-            <template v-slot:actions>
-              <button @click="resetFilters" class="fr-btn fr-btn--secondary">
-                {{ t("Reset filters") }}
-              </button>
-              <a :href="data_search_feedback_form_url" class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line fr-ml-1w">
-                {{ t("Tell us what you are looking for") }}
-              </a>
-            </template>
-          </ActionCard>
+          <NoSearchResults @reset-filters="resetFilters" />
         </div>
       </section>
     </div>
@@ -131,13 +114,11 @@ import { ref, onMounted, computed, useId, useTemplateRef, watch } from "vue";
 import { useI18n } from 'vue-i18n';
 import Loader from "../dataset/loader.vue";
 import MultiSelect from "../MultiSelect/MultiSelect.vue";
-import ActionCard from "../Form/ActionCard/ActionCard.vue";
-import { data_search_feedback_form_url } from "../../config";
 import { api } from "../../plugins/api";
-import franceWithMagnifyingGlassIcon from "../../../../templates/svg/illustrations/france_with_magnifying_glass.svg";
 import { PaginatedArray } from "../../api/types";
 import { refDebounced, watchIgnorable } from '@vueuse/core'
 import axios from "axios";
+import NoSearchResults from "../Form/NoSearchResults.vue";
 
 const { t } = useI18n();
 const { toast } = useToast();
