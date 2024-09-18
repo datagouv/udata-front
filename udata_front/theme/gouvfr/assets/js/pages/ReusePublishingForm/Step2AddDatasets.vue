@@ -53,7 +53,7 @@
         @change="handleDatasetChange"
         :hasError="fieldHasError('datasets')"
         :errorText="t('You need to provide at least one dataset')"
-        :allOption="$t('Select a dataset')"
+        :allOption="t('Select a dataset')"
         :addAllOption="false"
         :values="selectedDataset"
       />

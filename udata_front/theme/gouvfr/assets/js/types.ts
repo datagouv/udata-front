@@ -1,4 +1,4 @@
-import type { FileResourceFileType, NewDataset as BaseNewDataset, Organization, RemoteResourceFileType, ResourceType, User } from "@datagouv/components/ts";
+import type { FileResourceFileType, Organization, RemoteResourceFileType, ResourceType, User } from "@datagouv/components/ts";
 
 import { CLOSED_FORMATS } from "./helpers";
 
@@ -91,41 +91,6 @@ export type Sort = {
   name: string,
   key: string
 }
-
-export type Quality = {
-  all_resources_available: boolean;
-  dataset_description_quality: boolean;
-  has_open_format: boolean;
-  has_resources: boolean;
-  license: boolean;
-  resources_documentation: boolean;
-  score: number;
-  spatial: boolean;
-  temporal_coverage: boolean;
-  update_frequency: boolean;
-  update_fulfilled_in_time: boolean;
-}
-
-// TODO : import from datagouv/components when available
-export type Harvest = {
-  backend: string;
-}
-
-export type OwnedWithId = { organization: string, owner: never | null } | { organization: never | null, owner: string };
-
-export type NewDataset = Omit<BaseNewDataset, keyof OwnedWithId> & OwnedWithId;
-
-export type BaseNewReuse = Owned & {
-  title: string;
-  description: string;
-  tags: Array<string> | null;
-  datasets: Array<Dataset | string>;
-  topic: string;
-  type: string;
-  url: string;
-};
-
-export type NewReuse = Omit<BaseNewReuse, keyof OwnedWithId> & OwnedWithId;
 
 export type Me = User & {
   about: string,

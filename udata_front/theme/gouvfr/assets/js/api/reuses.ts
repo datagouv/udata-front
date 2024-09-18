@@ -1,8 +1,8 @@
-import type { Reuse } from "@datagouv/components/ts";
+import type { NewReuse, Reuse } from "@datagouv/components/ts";
 import { getLocalizedUrl } from "../i18n";
 import { toValue } from "vue";
 import { api } from "../plugins/api";
-import type { PaginatedArray, NewReuse } from "./types";
+import type { PaginatedArray } from "./types";
 
 export async function getOrganizationReuses(oid: string, page: number, pageSize: number, sort: string) {
   const resp = await api.get<PaginatedArray<Reuse>>(getLocalizedUrl(`reuses/`), {
@@ -13,12 +13,6 @@ export async function getOrganizationReuses(oid: string, page: number, pageSize:
 type UploadLogoResponse = {
   image: string;
   success: boolean;
-}
-
-
-
-export function getReuseTopicsUrl() {
-  return getLocalizedUrl("reuses/topics/");
 }
 
 export function createReuse(reuse: NewReuse) {

@@ -1,14 +1,25 @@
-import type { Owned } from "./owned";
+import type { Owned, OwnedWithId } from "./owned";
 import type { Dataset } from "./datasets";
 import { Badges } from "./badges";
 
-export type Reuse = Owned & {
+export type BaseReuse = Owned & {
+  title: string;
+  description: string;
+  tags: Array<string> | null;
+  datasets: Array<Dataset | string>;
+  topic: string;
+  type: string;
+  url: string;
+};
+
+export type NewReuse = Omit<BaseReuse, keyof OwnedWithId> & OwnedWithId;
+
+export type Reuse = BaseReuse & {
   badges: Badges;
   created_at: string;
   datasets: Array<Dataset>;
   archived: string | null;
   deleted: string | null;
-  description: string;
   extras: Record<string, any>;
   featured: boolean;
   id: string;
@@ -21,13 +32,13 @@ export type Reuse = Owned & {
     followers: number;
     views: number;
   };
-  title: string;
   private: boolean;
   slug: string;
-  tags: Array<string> | null;
   page: string;
-  topic: string;
-  type: string;
   uri: string;
-  url: string;
+};
+
+export type ReuseType = {
+  id: string,
+  label: string,
 };
