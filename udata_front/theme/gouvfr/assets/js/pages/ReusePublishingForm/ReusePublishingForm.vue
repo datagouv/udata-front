@@ -29,7 +29,7 @@
 import type { AxiosError } from 'axios';
 import { onMounted, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { Dataset, Reuse } from '@datagouv/components';
+import type { Dataset, Reuse } from '@datagouv/components/ts';
 import Step1DescribeReuse from './Step1DescribeReuse.vue';
 import Step2AddDatasets from './Step2AddDatasets.vue';
 import Step3CompleteThePublication from './Step3CompleteThePublication.vue';

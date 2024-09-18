@@ -89,7 +89,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref, toValue } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { type Dataset, Well } from '@datagouv/components';
+import { type Dataset, Well } from '@datagouv/components/ts';
 import { useSortable } from '@vueuse/integrations/useSortable';
 import { helpers } from '@vuelidate/validators'
 import Container from '../../components/Ui/Container/Container.vue';

@@ -273,7 +273,7 @@
 
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue';
-import { Well } from '@datagouv/components';
+import { Well } from '@datagouv/components/ts';
 import { useI18n } from 'vue-i18n';
 import { url } from '@vuelidate/validators';
 import { minLengthWarning, required } from '../../i18n';

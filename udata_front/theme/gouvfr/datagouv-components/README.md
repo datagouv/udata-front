@@ -19,7 +19,7 @@ import '@gouvfr/dsfr/dist/dsfr.min.css';
 import '@gouvfr/dsfr/dist/utility/utility.min.css';
 import '@gouvfr/dsfr/dist/dsfr.module.min.js'; // or vue-dsfr
 import '@datagouv/components/dist/style.css';
-import { setupI18n } from '@datagouv/components';
+import { setupI18n } from '@datagouv/components/ts';
 
 import { createApp } from 'vue';
 import App from './App.vue';

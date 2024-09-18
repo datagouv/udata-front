@@ -49,7 +49,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { type Reuse , Well } from '@datagouv/components';
+import { type Reuse , Well } from '@datagouv/components/ts';
 import Container from '../../components/Ui/Container/Container.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import successIcon from "../../../../templates/svg/illustrations/success.svg";
