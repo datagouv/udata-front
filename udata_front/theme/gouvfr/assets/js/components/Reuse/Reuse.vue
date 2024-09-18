@@ -1,5 +1,5 @@
 <template>
-  <ReuseCard :reuse :reuseUrl="reuse.page" />
+  <ReuseCard :reuse :reuseUrl="reuse.page" :organizationUrl="reuse.organization?.page" />
 </template>
 
 <script setup lang="ts">
