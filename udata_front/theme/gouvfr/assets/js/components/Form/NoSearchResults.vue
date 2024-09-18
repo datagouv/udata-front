@@ -20,7 +20,7 @@
 </template>
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import magnifyingGlassIcon from "../../../../../templates/svg/illustrations/magnifying_glass.svg";
+import magnifyingGlassIcon from "../../../../templates/svg/illustrations/magnifying_glass.svg";
 import { data_search_feedback_form_url } from "../../config";
 import ActionCard from './ActionCard/ActionCard.vue';
 
