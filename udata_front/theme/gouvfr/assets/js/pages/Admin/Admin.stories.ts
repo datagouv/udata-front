@@ -117,6 +117,17 @@ export const HomeAdmin: StoryObj<typeof meta> = {
           "total": 0,
         });
       }),
+      http.get("*/api/1/reuses/*", async () => {
+        await delay();
+        return HttpResponse.json({
+          "data": [],
+          "next_page": null,
+          "page": 1,
+          "page_size": 10,
+          "previous_page": null,
+          "total": 0,
+        });
+      }),
     ],
   },
   render: (args) => ({

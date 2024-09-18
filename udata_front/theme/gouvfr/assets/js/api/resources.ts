@@ -2,11 +2,12 @@ import { v4 as uuidv4 } from 'uuid';
 import type { CommunityResource, Resource } from '@datagouv/components/ts';
 import { api, apiv2 } from "../plugins/api";
 import { getLocalizedUrl } from '../i18n';
-import type { DatasetChunkUpload, DatasetFile, DatasetFileUpload, DatasetLocalFile, DatasetRemoteFile, GetPaginatedData, NewDatasetFile } from '../types';
+import type { DatasetChunkUpload, DatasetFile, DatasetFileUpload, DatasetLocalFile, DatasetRemoteFile, NewDatasetFile } from '../types';
+import type { PaginatedArray } from './types';
 
 export async function fetchDatasetResources(datasetId: string, type: string, page: number, pageSize: number, search: string) {
   const resp = await apiv2
-    .get<GetPaginatedData<Resource>>("/datasets/" + datasetId + "/resources/", {
+    .get<PaginatedArray<Resource>>("/datasets/" + datasetId + "/resources/", {
       params: {
         page,
         type: type,
@@ -19,7 +20,7 @@ export async function fetchDatasetResources(datasetId: string, type: string, pag
 
 export async function fetchDatasetCommunityResources (datasetId: string, page: number, pageSize: number) {
   const resp = await api
-    .get<GetPaginatedData<CommunityResource>>("datasets/community_resources/", {
+    .get<PaginatedArray<CommunityResource>>("datasets/community_resources/", {
       params: {
         page,
         dataset: datasetId,

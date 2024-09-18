@@ -1,28 +1,33 @@
 import type { Owned } from "./owned";
 import type { Dataset } from "./datasets";
+import { Badges } from "./badges";
 
 export type Reuse = Owned & {
-  id: string;
-  title: string;
+  badges: Badges;
+  created_at: string;
+  datasets: Array<Dataset>;
+  archived: string | null;
+  deleted: string | null;
   description: string;
-  archived: boolean | null;
+  extras: Record<string, any>;
+  featured: boolean;
+  id: string;
+  image: string | null;
+  image_thumbnail: string | null;
+  last_modified: string;
+  metrics: {
+    datasets: number;
+    discussions: number;
+    followers: number;
+    views: number;
+  };
+  title: string;
+  private: boolean;
+  slug: string;
   tags: Array<string> | null;
   page: string;
-  private: boolean;
-  deleted: boolean;
-  datasets: Array<Dataset>;
-  image: string;
-  image_thumbnail: string;
-  slug: string;
   topic: string;
   type: string;
+  uri: string;
   url: string;
-  created_at: string,
-  last_update: string;
-  metrics: {
-    datasets: number,
-    discussions: number,
-    followers: number,
-    views: number,
-  }
 };

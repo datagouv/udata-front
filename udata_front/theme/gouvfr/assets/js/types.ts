@@ -1,4 +1,4 @@
-import type { Dataset, FileResourceFileType, NewDataset as BaseNewDataset, Organization, Owned, RemoteResourceFileType, ResourceType, User } from "@datagouv/components/ts";
+import type { FileResourceFileType, NewDataset as BaseNewDataset, Organization, RemoteResourceFileType, ResourceType, User } from "@datagouv/components/ts";
 
 import { CLOSED_FORMATS } from "./helpers";
 
@@ -115,35 +115,6 @@ export type OwnedWithId = { organization: string, owner: never | null } | { orga
 
 export type NewDataset = Omit<BaseNewDataset, keyof OwnedWithId> & OwnedWithId;
 
-export type Reuse = Owned & {
-  badges: Badges;
-  created_at: string;
-  datasets: Array<Dataset>;
-  deleted: boolean;
-  description: string;
-  extras: Record<string, any>;
-  featured: boolean | null;
-  id: string;
-  image: string | null;
-  image_thumbnail: string | null;
-  last_modified: string;
-  metrics: {
-    datasets: number;
-    discussions: number;
-    followers: number;
-    view: number;
-  };
-  title: string;
-  private: boolean;
-  slug: string;
-  tags: Array<string> | null;
-  page: string;
-  topic: string;
-  type: string;
-  uri: string;
-  url: string;
-};
-
 export type Me = User & {
   about: string,
   active: boolean,
@@ -164,6 +135,8 @@ export type AxisAlignment = "start" | "center" | "end";
 export type SortDirection = 'asc' | 'desc';
 
 export type DatasetSortedBy = 'title' | 'created' | 'last_update' | 'reuses' | 'followers' | 'views';
+
+export type ReuseSortedBy = 'title' | 'created' | 'datasets' | 'followers' | 'views';
 
 export type SpatialZone = {
   code: string;
@@ -231,14 +204,5 @@ export type OrganizationV1 = Organization & {
   };
   url: string | null;
 }
-
-export type GetPaginatedData<T> = {
-  data: Array<T>;
-  next_page: string | null;
-  page: number;
-  page_size: number;
-  previous_page: string | null;
-  total: number;
-};
 
 export default {};
