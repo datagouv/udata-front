@@ -32,6 +32,8 @@ export type PublishingFormAccordionState = AccordionFunctionalState | DSFRInfoSt
 
 export type AccordionState = DSFRFormDefaultState | AccordionFunctionalState | DSFRInfoState;
 
+export type AdminBadgeState = DSFRFormDefaultState | FormFunctionalState | DSFRInfoState;
+
 export type ClosedFormats = typeof CLOSED_FORMATS[number];
 
 export type DatasetRemoteFile = { description?: string; filetype: RemoteResourceFileType; format: string; mime: string; schema?: string; title: string; type: ResourceType; url: string; };
@@ -147,6 +149,10 @@ export type Me = User & {
 
 export type AxisAlignment = "start" | "center" | "end";
 
+export type SortDirection = 'asc' | 'desc';
+
+export type DatasetSortedBy = 'title' | 'created' | 'last_update' | 'reuses' | 'followers' | 'views';
+
 export type SpatialZone = {
   code: string;
   id: string;
@@ -213,5 +219,14 @@ export type OrganizationV1 = Organization & {
   };
   url: string | null;
 }
+
+export type GetPaginatedData<T> = {
+  data: Array<T>;
+  next_page: string | null;
+  page: number;
+  page_size: number;
+  previous_page: string | null;
+  total: number;
+};
 
 export default {};
