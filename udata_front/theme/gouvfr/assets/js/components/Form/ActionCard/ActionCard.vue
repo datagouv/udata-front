@@ -55,7 +55,6 @@ export default defineComponent({
     },
     content: {
       type: String,
-      required: true,
     },
     type: {
       type: String,
