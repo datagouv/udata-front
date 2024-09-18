@@ -131,7 +131,7 @@
                 :errorText="t('This SIRET is not valid')"
               />
             </LinkedToAccordion>
-            <div v-if="checkOrga.exists !== null" class="fr-col fr-mx-2v fr-mb-2v bg-contrast-grey text-align-center fr-p-2w">
+            <div v-if="checkOrga.exists !== null" class="fr-col fr-mx-1w fr-mb-1w bg-contrast-grey text-align-center fr-p-2w">
               <div v-if="checkOrga.exists">
                 <p class="fr-m-0 fr-text--sm fr-text--bold">{{ t('The SIRET n° {number} is matching', { number: organization.business_number_id }) }}</p>
                 <p class="fr-m-0 fr-text--xs">{{ checkOrga.name }}</p>
@@ -203,7 +203,7 @@
                 @change="addFiles"
               />
               <div class="text-align-center" v-show="imagePreview?.src">
-                <img class="fr-col fr-mx-2v fr-mb-2v" ref="imagePreview" width="300px" />
+                <img class="fr-col fr-mx-1w fr-mb-1w" ref="imagePreview" width="300px" />
               </div>
             </LinkedToAccordion>
           </fieldset>

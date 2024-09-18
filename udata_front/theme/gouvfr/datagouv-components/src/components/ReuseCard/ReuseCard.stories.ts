@@ -4,6 +4,9 @@ import { CERTIFIED, PUBLIC_SERVICE } from "../../composables";
 import type { Organization } from "../../types/organizations";
 import ReuseCard, { type ReuseProps } from './ReuseCard.vue';
 import TestComponent from "../DatasetCard/TestComponent.vue"
+import { CertifiedPublicServiceName } from "../Organization/OrganizationNameWithCertificate.stories";
+import type { Reuse } from "../../types/reuses";
+import { User } from "../../types/users";
 
 const meta = {
   title: 'Components/ReuseCard',
@@ -38,6 +41,7 @@ const args: ReuseProps = {
     created_at: (new Date()).toDateString(),
     last_update: (new Date()).toDateString(),
     page: "https://www.data.gouv.fr",
+    archived: false,
     deleted: false,
     private: false,
     datasets: [],
@@ -51,17 +55,18 @@ const args: ReuseProps = {
       last_name: "Doedoedoedoedoe",
       page: "https://demo.data.gouv.fr/en/users/antonin-garrone/",
     },
+    organization: null,
     metrics: {
       datasets: 3,
       discussions: 7,
       followers: 12,
-      views: 36
+      views: 36,
     },
     organization: null,
     title: "My new reuse reuse reuse with with with a a a very very very long long long name name name",
     image: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",
     image_thumbnail: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",
-  },
+  } as Reuse,
   reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
 };
 
@@ -76,17 +81,7 @@ updateLastMonth.setMonth(updateLastMonth.getMonth() - 1);
 const updateLastYear = new Date();
 updateLastYear.setFullYear(updateLastYear.getFullYear() - 1, 2, 2);
 
-const organization: Organization = {
-  id: "someId",
-  acronym: null,
-  name: "My Organization",
-  badges: [],
-  page: "https://www.data.gouv.fr/fr/organizations/data-gouv-fr/",
-  uri: "https://www.data.gouv.fr/fr/organizations/data-gouv-fr/",
-  slug: "data-gouv-fr",
-  logo: "https://static.data.gouv.fr/avatars/09/1ba932cbfa48dc8c158981de6c700a.jpeg",
-  logo_thumbnail: "https://static.data.gouv.fr/avatars/09/1ba932cbfa48dc8c158981de6c700a-100.jpeg",
-};
+const organization: Organization = CertifiedPublicServiceName.args.organization;
 
 const organizationWithLogo: Organization = {
   ...organization,
@@ -371,6 +366,14 @@ export const ReuseCardWithLongOrganizationName: StoryObj<typeof meta> = {
   decorators: [vueRouter(datasetRoutes)],
   args: {
     ...args,
-    reuse: {...args.reuse, owner: { ...args.reuse.owner, first_name: "Really really long first name", last_name: "Really really long last name" } },
+    reuse: {
+      ...args.reuse,
+      organization: null,
+      owner: {
+        ...args.reuse.owner as User,
+        first_name: "Really really long first name",
+        last_name: "Really really long last name"
+      }
+    },
   },
 };
