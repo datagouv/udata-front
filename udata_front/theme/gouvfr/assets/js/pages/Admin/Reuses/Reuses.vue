@@ -20,7 +20,7 @@
     <h1 class="fr-h3">{{ t("Reuses") }}</h1>
     <h2 class="subtitle subtitle--uppercase">{{ t("{n} reuses of your organization", reuses.length) }}</h2>
     <AdminReusesTable
-    v-if="loading || totalResult > 0"
+      v-if="loading || totalResult > 0"
       :reuses
       :loading
       :sortDirection="direction"
@@ -33,7 +33,7 @@
         <p class="fr-text--bold fr-my-3v">
           {{ t(`You haven't published a reuse yet`) }}
         </p>
-        <AdminPublishButton />
+        <AdminPublishButton type="reuse"/>
       </div>
     </Container>
     <Pagination

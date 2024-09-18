@@ -143,6 +143,11 @@ export const demo_server_name = _meta("demo-server-name");
 export const dataset_publishing_form_url = _meta("dataset-publishing-form-url");
 
 /**
+ * The reuse publishing form
+ */
+export const reuse_publishing_form_url = _meta("reuse-publishing-form-url");
+
+/**
  * The publishing form feedback URL
  */
 export const publishing_form_feedback_url = _meta("publishing-form-feedback-url");
@@ -334,6 +339,7 @@ export default {
   read_only_enabled,
   resources_default_page_size,
   resources_min_count_to_show_search,
+  reuse_publishing_form_url,
   schema_documentation_url,
   schema_publishing_url,
   schema_validata_url,

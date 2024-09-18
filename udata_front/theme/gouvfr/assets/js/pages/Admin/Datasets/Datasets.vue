@@ -31,20 +31,20 @@
       </div>
     </div>
     <DatasetsTable
-      class="fr-mt-1w"
+      v-if="loading || totalResult > 0"
       :datasets
       :loading
       :sort-direction="direction"
       :sortedBy
       @sort="sort"
     />
-    <Container v-if="!loading && totalResult === 0" class="fr-mb-2w">
+    <Container v-else class="fr-my-2w">
       <div class="text-align-center fr-py-1w">
         <img :src="datasetIcon" alt="" loading="lazy"/>
         <p class="fr-text--bold fr-my-3v">
           {{ t(`You haven't published a dataset yet`) }}
         </p>
-        <AdminPublishButton />
+        <AdminPublishButton type="dataset" />
       </div>
     </Container>
     <Pagination
