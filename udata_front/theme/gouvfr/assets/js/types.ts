@@ -115,22 +115,17 @@ export type OwnedWithId = { organization: string, owner: never | null } | { orga
 
 export type NewDataset = Omit<BaseNewDataset, keyof OwnedWithId> & OwnedWithId;
 
-export type Reuse = Owned & {
-  id: string;
+export type BaseNewReuse = Owned & {
   title: string;
   description: string;
   tags: Array<string> | null;
-  page: string;
-  private: boolean;
-  deleted: boolean;
-  datasets: Array<Dataset>;
-  image: string;
-  image_thumbnail: string;
-  slug: string;
+  datasets: Array<Dataset | string>;
   topic: string;
   type: string;
-  last_update: string;
+  url: string;
 };
+
+export type NewReuse = Omit<BaseNewReuse, keyof OwnedWithId> & OwnedWithId;
 
 export type Me = User & {
   about: string,
