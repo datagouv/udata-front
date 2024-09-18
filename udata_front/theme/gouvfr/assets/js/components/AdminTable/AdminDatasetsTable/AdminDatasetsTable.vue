@@ -124,7 +124,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { formatDate, QualityScore } from "@datagouv/components/ts";
+import { formatDate, QualityScore, summarize } from "@datagouv/components/ts";
 import type { Dataset, DatasetV2 } from '@datagouv/components/ts';
 import { useI18n } from 'vue-i18n';
 import TextClamp from "vue3-text-clamp";
@@ -135,7 +135,6 @@ import AdminTable from "../Table/AdminTable.vue";
 import AdminTableTh from "../Table/AdminTableTh.vue";
 import Tooltip from '../../Tooltip/Tooltip.vue';
 import { admin_root } from '../../../config';
-import { summarize } from '../../../helpers';
 import type { AdminBadgeState, DatasetSortedBy, SortDirection } from '../../../types';
 import Container from "../../Ui/Container/Container.vue";
 import AdminLoader from "../../AdminLoader/AdminLoader.vue";

@@ -1,6 +1,5 @@
 import RemoveMarkdown from "remove-markdown";
 import { readonly } from "vue";
-import { lang } from "./config";
 
 export const truncate = (val: string, length = 300) => {
   if (typeof val !== "string") return;
@@ -10,17 +9,6 @@ export const truncate = (val: string, length = 300) => {
 export const excerpt = (val: string, length = 300) => {
   if (typeof val !== "string") return;
   return truncate(RemoveMarkdown(val), length);
-};
-
-export const summarize = (value: number) => {
-  for (const unit of ['', 'k', 'M', 'G', 'T', 'P', 'E', 'Z']) {
-    if (Math.abs(value) < 1000) {
-      return new Intl.NumberFormat(lang, {
-        maximumFractionDigits: 1,
-      }).format(value) + unit;
-    }
-    value /= 1000;
-  }
 };
 
 export const CLOSED_FORMATS = readonly(['pdf', 'doc', 'docx', 'word', 'xls', 'excel', 'xlsx'] as const);
