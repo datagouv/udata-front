@@ -408,6 +408,7 @@ const resetFilters = () => {
 
 const resetForm = () => {
   reloadForm();
+  scrollToTop();
 };
 
 const reloadForm = ({q = '', ...params} = {}, saveToHistory = SAVE_TO_HISTORY) => {

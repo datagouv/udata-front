@@ -145,12 +145,18 @@ const resetFilters = () => {
 const resetFiltersAndSearch = () => {
   searchQuery.value = '';
   resetFilters();
+  scrollToTop();
 }
 
 const searchId = useId();
 const searchQuery = ref('');
 const searchQueryDebounced = refDebounced(searchQuery, 500);
 const searchInput = useTemplateRef('searchInputRef');
+const scrollToTop = () => {
+  if (searchInput.value) {
+    searchInput.value.scrollIntoView({ behavior: "smooth" })
+  }
+}
 
 const params = computed(() => {
   const filters: { organization?: string, q?: string, is_restricted?: string, page?: string } = {}
