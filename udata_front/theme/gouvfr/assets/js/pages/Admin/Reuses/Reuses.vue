@@ -70,7 +70,7 @@ import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
 import type { Me, Reuse } from "../../../types";
 import { fetchMe } from "../../../api/me";
 import { watchEffect } from 'vue';
-import { formatDate, type Organization } from '@datagouv/components';
+import { formatDate, type Organization } from '@datagouv/components/ts';
 import { getOrganizationReuses } from '../../../api/reuses';
 
 const { t } = useI18n();
