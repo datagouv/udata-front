@@ -23,6 +23,11 @@
 {% set body_class = 'dataset-display' %}
 {% set community_subtitle = _('Explore with %(certifier)s', certifier=config.SITE_TITLE ) %}
 {% set read_only_mode = config.READ_ONLY_MODE %}
+
+{% set publishers = dataset.extras.get('harvest', {}).get('dct:publishers', [])%}
+{% set creators = dataset.extras.get('harvest', {}).get('dct:creators', [])%}
+{% set contributors = dataset.extras.get('harvest', {}).get('dct:contributors', [])%}
+
 {# Harvesting source #}
 
 {% block extra_head %}
@@ -116,7 +121,11 @@
             </div>
             {% endif %}
             {% if dataset.organization %}
-                <h2 id="producer" class="subtitle fr-mb-1v">{{ _('Producer') }}</h2>
+                {% if publishers or creators %}
+                    <h2 id="organization" class="subtitle fr-mb-1v">{{ _('Organization') }}</h2>
+                {% else %}
+                    <h2 id="producer" class="subtitle fr-mb-1v">{{ _('Producer') }}</h2>
+                {% endif %}
                 {% with organization=dataset.organization, producer_type='organization' %}
                 {% include theme('organization/producer-name-with-logo.html') %}
                 {% endwith %}
@@ -132,6 +141,18 @@
                     }}
                 </p>
             {% endif %}
+            {% for publisher in publishers %}
+                <h2 id="publisher" class="subtitle fr-mt-1w fr-mb-0">{{ _('Publisher') }}</h2>
+                {{ publisher }}
+            {% endfor %}
+            {% for creator in creators %}
+                <h2 id="creator" class="subtitle fr-mt-1w fr-mb-0">{{ _('Creator') }}</h2>
+                {{ creator }}
+            {% endfor %}
+            {% for contributor in contributors %}
+                <h2 id="contributor" class="subtitle fr-mt-1w fr-mb-0">{{ _('Contributor') }}</h2>
+                {{ contributor }}
+            {% endfor %}
             {% with contact_point=dataset.contact_point %}
                 {% include theme('contact_point.html') %}
             {% endwith %}
