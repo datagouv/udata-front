@@ -1,7 +1,7 @@
 <template>
     <ActionCard
-        :title
-        :icon="franceWithMagnifyingGlassIcon"
+        :title="t('Didn\'t find what you are looking for?')"
+        :icon="magnifyingGlassIcon"
         type="primary"
     >
         <p class="fr-mt-1v fr-mb-3v">
@@ -20,15 +20,11 @@
 </template>
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import franceWithMagnifyingGlassIcon from "../../../../templates/svg/illustrations/france_with_magnifying_glass.svg";
+import magnifyingGlassIcon from "../../../../../templates/svg/illustrations/magnifying_glass.svg";
 import { data_search_feedback_form_url } from "../../config";
 import ActionCard from './ActionCard/ActionCard.vue';
 
 const { t } = useI18n();
-
-defineProps<{
-    title: string;
-}>();
 
 defineEmits<{
     (e: 'resetFilters'): void

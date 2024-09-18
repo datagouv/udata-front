@@ -168,10 +168,10 @@
               @change="changePage"
               class="fr-mt-2w"
             />
-            <NoSearchResults v-else :title="t('Didn\'t find what you are looking for?')" @reset-filters="resetForm" />
+            <NoSearchResults v-else @reset-filters="resetForm" />
           </div>
           <div v-else class="fr-mt-2w">
-            <NoSearchResults :title="t('No results match your search.')" @reset-filters="resetForm" />
+            <NoSearchResults @reset-filters="resetForm" />
           </div>
         </transition>
       </section>

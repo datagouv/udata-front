@@ -99,10 +99,10 @@
             @change="changePage"
             class="fr-mt-2w"
           />
-          <NoSearchResults v-else :title="t('Didn\'t find what you are looking for?')" @reset-filters="resetFiltersAndSearch" />
+          <NoSearchResults v-else @reset-filters="resetFiltersAndSearch" />
         </div>
         <div v-if="dataservices !== null && dataservices.data.length === 0" class="fr-mt-2w">
-          <NoSearchResults :title="t('No results match your search.')" @reset-filters="resetFiltersAndSearch" />
+          <NoSearchResults @reset-filters="resetFiltersAndSearch" />
         </div>
       </section>
     </div>
