@@ -1,22 +1,20 @@
+import { withActions } from '@storybook/addon-actions/decorator';
+import { fn } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
-import ProducerSelector from './ProducerSelector.vue';
+import Step1DescribeReuse from './Step1DescribeReuse.vue';
 
 const meta = {
-  title: 'Components/ProducerSelector',
-  component: ProducerSelector,
-  tags: ['autodocs'],
-  parameters: {
-    docs: {
-      description: {
-        component: "The Producer Selector Item allows the user to select one of its organizations or himself in order to publish datasets or reuses. If the user has admin rights, he cas access all organizations."
-      }
-    }
-  },
-} satisfies Meta<typeof ProducerSelector>;
+  title: 'Pages/ReusePublishingForm/Step1',
+  component: Step1DescribeReuse,
+  decorators: [withActions],
+  args: {
+    onNext: fn(),
+  }
+} satisfies Meta<typeof Step1DescribeReuse>;
 
 export default meta;
 
-const user = {
+const myUser = {
   id: "someId",
   first_name: "John",
   last_name: "Doe",
@@ -51,53 +49,80 @@ const user = {
   page: ""
 };
 
-export const ProducerSelectorWithNoOrganization: StoryObj<typeof meta> = {
+const originalReuse = {
+  title: "",
+  description: "",
+  tags: null,
+  private: false,
+  datasets: [],
+  image: "",
+  image_thumbnail: "",
+  topic: "",
+  type: "",
+  organization: null,
+  owner: myUser.id
+};
+
+const args = {
+  originalReuse,
+  steps: ["Describe your reuse", "Add datasets", "Complete your publishing"],
+  errors: [],
+  user: myUser
+};
+
+export const Step1WithNoOrganizations: StoryObj<typeof meta> = {
   render: (args) => ({
-    components: { ProducerSelector },
+    components: { Step1DescribeReuse },
     setup() {
       return { args };
     },
     template: ` <div class="bg-grey-50 fr-p-4w">
-                  <ProducerSelector v-bind="args" />
+                  <div class="fr-container">
+                    <Step1DescribeReuse v-bind="args" />
+                  </div>
                 </div>`,
   }),
   args: {
+    ...args,
     user: {
-      ...user,
+      ...myUser,
       organizations: []
-    },
+    }
   },
 };
 
-export const ProducerSelectorWithOrganizations: StoryObj<typeof meta> = {
+export const Step1WithOrganizations: StoryObj<typeof meta> = {
   render: (args) => ({
-    components: { ProducerSelector },
+    components: { Step1DescribeReuse },
     setup() {
       return { args };
     },
     template: ` <div class="bg-grey-50 fr-p-4w">
-                  <ProducerSelector v-bind="args" />
+                  <div class="fr-container">
+                    <Step1DescribeReuse v-bind="args" />
+                  </div>
                 </div>`,
   }),
-  args: {
-    user: user
-  },
+  args,
 };
 
-export const ProducerSelectorWithAdmin: StoryObj<typeof meta> = {
+export const Step1WithAdmin: StoryObj<typeof meta> = {
   render: (args) => ({
-    components: { ProducerSelector },
+    components: { Step1DescribeReuse },
     setup() {
       return { args };
     },
     template: ` <div class="bg-grey-50 fr-p-4w">
-                  <ProducerSelector v-bind="args" />
+                  <div class="fr-container">
+                    <Step1DescribeReuse v-bind="args" />
+                  </div>
                 </div>`,
   }),
   args: {
+    ...args,
     user: {
-      ...user,
-      roles: [...user.roles, 'admin']
-    },
+      ...myUser,
+      roles: [...myUser?.roles, 'admin']
+    }
   },
 };

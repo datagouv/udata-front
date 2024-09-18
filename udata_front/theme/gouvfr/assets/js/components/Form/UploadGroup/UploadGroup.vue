@@ -3,6 +3,10 @@
     class="fr-upload-group"
     :class="containerClass"
   >
+    <label v-show="showLabel" class="fr-label fr-mb-1w" :for="id">
+      {{ label }}
+      <Required :required="required"/>
+    </label>
     <Container
       color="alt-grey"
       class="fr-grid-row fr-grid-row--middle flex-direction-column border border-default-grey border-dashed text-mention-grey fr-text--bold"
@@ -13,24 +17,18 @@
       <p class="fr-hr-or w-50 text-transform-lowercase fr-text--regular fr-mt-3v">
         <span class="fr-hr-or-text">{{ $t('or') }}</span>
       </p>
-      <div class="fr-hidden">
-        <label class="fr-label" :for="id">
-          {{ label }}
-          <Required :required="required"/>
-        </label>
-        <input
-          class="fr-upload"
-          type="file"
-          :id="id"
-          :aria-describedby="ariaDescribedBy"
-          ref="inputRef"
-          @change="change"
-          :accept="accept"
-          :multiple="multiple"
-          :required="required"
-          :disabled="disabled"
-        />
-      </div>
+      <input
+        class="fr-upload fr-hidden"
+        type="file"
+        :id="id"
+        :aria-describedby="ariaDescribedBy"
+        ref="inputRef"
+        @change="change"
+        :accept="accept"
+        :multiple="multiple"
+        :required="required"
+        :disabled="disabled"
+      />
       <button
         @click="open"
         :disabled="disabled"
@@ -110,6 +108,10 @@ export default defineComponent({
     required: {
       type: Boolean,
       default: false
+    },
+    showLabel: {
+      type: Boolean,
+      default: false,
     },
     validText: {
       type: String,

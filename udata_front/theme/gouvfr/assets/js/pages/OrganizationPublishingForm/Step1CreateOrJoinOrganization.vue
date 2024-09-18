@@ -9,7 +9,7 @@
       >
       <template #actions>
         <div class="fr-col-12 fr-grid-row fr-grid-row--top relative">
-          <div class="fr-col-12 fr-col-lg-9 fr-py-2v">
+          <div class="fr-col-12 fr-col-lg-9 fr-py-1w">
             <OrganizationSearch />
           </div>
           <div class="fr-col-12 fr-col-lg-3 fr-ml-auto">

@@ -107,6 +107,8 @@
   "dependencies": {
     "@datagouv/components": "file:udata_front/theme/gouvfr/datagouv-components",
     "@datagouv/select-a11y": "^3.6.1",
+    "@vueuse/integrations": "^10.11.0",
+    "sortablejs": "^1.15.2",
     "@gouvfr/dsfr": "~1.11.2",
     "leaflet": "^1.9.4",
     "oh-vue-icons": "^1.0.0-rc3",
