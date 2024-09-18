@@ -108,6 +108,7 @@ msgstr ""
 #: udata_front/theme/gouvfr/templates/reuse/list.html:6
 #: udata_front/theme/gouvfr/templates/reuse/list.html:17
 #: udata_front/theme/gouvfr/templates/reuse/list.html:49
+#: udata_front/theme/gouvfr/templates/reuse/publishing-form.html:16
 #: udata_front/theme/gouvfr/templates/topic/browse.html:15
 #: udata_front/theme/gouvfr/templates/topic/reuses.html:25
 #: udata_front/theme/gouvfr/templates/user/following.html:32
@@ -1213,6 +1214,8 @@ msgstr ""
 #: udata_front/theme/gouvfr/templates/dataset/publishing-form.html:21
 #: udata_front/theme/gouvfr/templates/organization/publishing-form.html:5
 #: udata_front/theme/gouvfr/templates/organization/publishing-form.html:21
+#: udata_front/theme/gouvfr/templates/reuse/publishing-form.html:5
+#: udata_front/theme/gouvfr/templates/reuse/publishing-form.html:21
 msgid "Publishing Form"
 msgstr ""
 
@@ -2034,6 +2037,11 @@ msgstr ""
 
 #: udata_front/theme/gouvfr/templates/reuse/list.html:84
 msgid "All"
+msgstr ""
+
+#: udata_front/theme/gouvfr/templates/reuse/publishing-form.html:6
+#, python-format
+msgid "%(site)s reuse publishing form"
 msgstr ""
 
 #: udata_front/theme/gouvfr/templates/security/change_email.html:10
