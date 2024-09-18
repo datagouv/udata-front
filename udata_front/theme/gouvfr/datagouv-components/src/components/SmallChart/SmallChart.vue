@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import { Chart, type ChartOptions } from 'chart.js/auto';
 import { computed, onMounted, ref, useTemplateRef, watchEffect } from 'vue';
-import { formatDate } from '@datagouv/components/ts';
+import { formatDate } from '../../helpers/index';
 
 const LIGHT_COLOR = "#B6CFFB";
 const COLOR = "#3558A2";
