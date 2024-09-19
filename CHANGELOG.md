@@ -5,6 +5,7 @@
 - Add index page with search for dataservices [#516](https://github.com/datagouv/udata-front/pull/516)
 - Add beta admin datasets page [#371](https://github.com/etalab/udata-front/pull/371)
 - Redirect to forum on no search results /!\ set the `DATA_SEARCH_FEEDBACK_FORM_URL` to the forum [#526](https://github.com/datagouv/udata-front/pull/526)
+- Update proconnect button and link [#530](https://github.com/datagouv/udata-front/pull/530)
 - Fix scroll to resource [#531](https://github.com/datagouv/udata-front/pull/531)
 
 ## 5.2.0 (2024-09-13)
