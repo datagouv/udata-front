@@ -71,7 +71,7 @@ watchEffect(async () => {
     const data = await response.data;
     if (data) {
       resource.value = data;
-      if (top.value) top.value.scrollIntoView({ behavior: "smooth" })
+      if (top.value) top.value.scrollIntoView()
     }
   } catch (e) {
     console.error(e);
