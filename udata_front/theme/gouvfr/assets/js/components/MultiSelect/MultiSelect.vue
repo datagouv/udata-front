@@ -362,7 +362,6 @@ export default defineComponent({
         const text = option.label || option.value;
         return text.toLocaleLowerCase().indexOf(q) !== -1;
       }).slice(0, maxOptionsCount);
-      console.log(filteredOptions);
       return mapToOption(filteredOptions);
     }
 
