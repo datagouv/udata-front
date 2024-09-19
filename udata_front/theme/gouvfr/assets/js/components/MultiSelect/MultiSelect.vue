@@ -356,6 +356,16 @@ export default defineComponent({
       };
     });
 
+    const defaultSearch = async (q = '') => {
+      const options = initialOptions.value;
+      const filteredOptions = options.filter(option => {
+        const text = option.label || option.value;
+        return text.toLocaleLowerCase().indexOf(q) !== -1;
+      }).slice(0, maxOptionsCount);
+      console.log(filteredOptions);
+      return mapToOption(filteredOptions);
+    }
+
     /**
      * Get options from suggest API
      * It uses list API if no query is provided
@@ -364,9 +374,14 @@ export default defineComponent({
      * @returns {Promise<Array<import("../../types").MultiSelectOption>>}
      */
     const suggest = (q) => {
-      if(q.length < props.minimumCharacterBeforeSuggest || !props.suggestUrl) {
+      if(q.length < props.minimumCharacterBeforeSuggest) {
         return getInitialOptions();
       }
+
+      if(!props.suggestUrl) {
+        return defaultSearch(q);
+      }
+
       if (currentRequest.value) {
         currentRequest.value.cancel();
       }
@@ -397,7 +412,10 @@ export default defineComponent({
     };
 
     const suggestAndMapToOption = (q = '') => suggest(q).then(addAllOptionAndMapToOption);
-    const suggestMapAndSetOption = (q = '') => suggestAndMapToOption(q).then(setOptions);
+    const suggestMapAndSetOption = (q = '') => suggestAndMapToOption(q).then(values => {
+      options.value = values;
+      return values.slice(0, maxOptionsCount);
+    });
 
     /**
      * Get options from suggest API
@@ -451,16 +469,6 @@ export default defineComponent({
      */
     const setInitialOptions = (values) => {
       initialOptions.value = values;
-      options.value = values;
-      return values;
-    };
-
-    /**
-     * Set initial options from DOM processing
-     * @param {Array<import("../../types").MultiSelectOption>} values
-     * @returns {Array<import("../../types").MultiSelectOption>}
-     */
-    const setOptions = (values) => {
       options.value = values;
       return values;
     };
@@ -645,9 +653,7 @@ export default defineComponent({
         text: texts,
         clearable: true,
       };
-      if(props.suggestUrl) {
-        options.fillSuggestions = suggestMapAndSetOption;
-      }
+      options.fillSuggestions = suggestMapAndSetOption;
       try {
         selectA11y.value = new Select(selectRef.value, options);
         updateStylesAndEvents();
