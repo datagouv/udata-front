@@ -540,7 +540,6 @@
   "No dataset has been found on the provided url": "Aucun jeu de données n'a été trouvé à l'URL fournie",
   "Your reuse is created !": "Votre réutilisation a été créée !",
   "Publish the reuse": "Publier la réutilisation",
-  "{n} reuses of your organization": "",
-  "Reuse title": "",
-  "Created at": ""
+  "{n} reuses of your organization": "{n} réutilisations de votre organisation",
+  "Reuse title": "Titre de la réutilisation"
 }

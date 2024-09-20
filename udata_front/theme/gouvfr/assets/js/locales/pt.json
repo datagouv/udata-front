@@ -540,7 +540,6 @@
   "No dataset has been found on the provided url": "No dataset has been found on the provided url",
   "Your reuse is created !": "Your reuse is created !",
   "Publish the reuse": "Publish the reuse",
-  "{n} reuses of your organization": "",
-  "Reuse title": "",
-  "Created at": ""
+  "{n} reuses of your organization": "{n} reuses of your organization",
+  "Reuse title": "Reuse title"
 }
