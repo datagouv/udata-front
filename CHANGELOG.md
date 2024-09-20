@@ -8,6 +8,7 @@
 - Update proconnect button and link [#530](https://github.com/datagouv/udata-front/pull/530)
 - Fix scroll to resource [#531](https://github.com/datagouv/udata-front/pull/531)
 - Add beta admin reuses page [#527](https://github.com/datagouv/udata-front/pull/527)
+- Fix schema filter [#532](https://github.com/datagouv/udata-front/pull/532)
 
 ## 5.2.0 (2024-09-13)
 
