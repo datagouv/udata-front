@@ -2044,6 +2044,10 @@ msgstr ""
 msgid "%(site)s reuse publishing form"
 msgstr ""
 
+#: udata_front/theme/gouvfr/templates/reuse/oembed.html:20
+msgid " by "
+msgstr ""
+
 #: udata_front/theme/gouvfr/templates/security/change_email.html:10
 #: udata_front/theme/gouvfr/templates/security/change_email.html:17
 msgid "Change email"
