@@ -19,24 +19,23 @@
     </Breadcrumb>
     <h1 class="fr-h3">{{ t("Discussions") }}</h1>
     <h2 class="subtitle subtitle--uppercase">{{ t("{n} discussions", discussions.length) }}</h2>
-    <div class="fr-table">
-      <table>
+      <AdminTable :loading>
         <thead>
-          <th>
+          <AdminTableTh scope="col">
             {{ t("Discussion") }}
-          </th>
-          <th>
+          </AdminTableTh>
+          <AdminTableTh scope="col">
             {{ t("Status") }}
-          </th>
-          <th>
+          </AdminTableTh>
+          <AdminTableTh scope="col">
             {{ t("Created at") }}
-          </th>
-          <th>
+          </AdminTableTh>
+          <AdminTableTh scope="col">
             {{ t("Closed at") }}
-          </th>
-          <th>
+          </AdminTableTh>
+          <AdminTableTh scope="col">
             {{ t("URL") }}
-          </th>
+          </AdminTableTh>
         </thead>
         <tbody>
           <tr v-for="discussion in discussions">
@@ -44,11 +43,11 @@
               <p class="fr-text--bold">{{ discussion.title }}</p>
               <p v-if="subjects[discussion.subject.id]">
                 <a
-                  class="fr-link"
+                  class="fr-link inline-flex"
                   :href="subjects[discussion.subject.id].page"
                 >
-                  <Vicon :name="getSubjectTypeIcon(discussion.subject)"/>
-                  {{ getSubjectTitle(subjects[discussion.subject.id]) }}
+                  <Vicon :height="12" class="self-center" :name="getSubjectTypeIcon(discussion.subject)"/>
+                  <TextClamp :text="getSubjectTitle(subjects[discussion.subject.id])" :auto-resize="true" :max-lines="1"/>
                 </a>
               </p>
             </td>
@@ -58,27 +57,42 @@
             <td>{{ formatDate(discussion.created) }}</td>
             <td>
               <template v-if="discussion.closed">{{ formatDate(discussion.closed) }}</template></td>
-            <td>{{ getDiscussionUrl(discussion.id) }}</td>
+            <td>
+              <a
+                class="fr-link inline-flex"
+                :href="getDiscussionUrl(discussion.id)"
+                target="_blank"
+              >
+                <TextClamp
+                  :text="getDiscussionUrl(discussion.id)"
+                  :auto-resize="true"
+                  :max-lines="1"
+                />
+              </a>
+            </td>
           </tr>
         </tbody>
-      </table>
-    </div>
+      </AdminTable>
   </div>
 </template>
 <script setup lang="ts">
 import { formatDate } from '@datagouv/components';
 import { OhVueIcon as Vicon } from "oh-vue-icons";
-import { ref, watchPostEffect } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { useI18n } from "vue-i18n";
+import TextClamp from "vue3-text-clamp";
 import { getOrganizationDiscussions, getSubject, getSubjectTitle, getSubjectTypeIcon } from '../../../api/discussions';
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
 import { useCurrentOrganization } from '../../../composables/admin/useCurrentOrganization';
 import { dataset_url } from '../../../config';
 import type { DiscussionSubjectTypes, Thread } from "../../../types";
+import AdminTable from '../../../components/AdminTable/Table/AdminTable.vue';
+import AdminTableTh from '../../../components/AdminTable/Table/AdminTableTh.vue';
 
 const { t } = useI18n();
 const props = defineProps<{oid: string}>();
 
+const loading = ref(false);
 const discussions = ref<Array<Thread>>([]);
 const subjectPromises = ref<Record<string, Promise<DiscussionSubjectTypes>>>({});
 const subjects = ref<Record<string, DiscussionSubjectTypes>>({});
@@ -91,8 +105,14 @@ function getDiscussionUrl(discussionId: string) {
   return window.location.origin + dataset_url + "#/" + discussionUrl;
 }
 
-watchPostEffect(async () => {
-  discussions.value = await getOrganizationDiscussions(props.oid);
+watchEffect(async () => {
+  loading.value = true;
+  discussions.value = [];
+  try {
+    discussions.value = await getOrganizationDiscussions(props.oid);
+  } finally {
+    loading.value = false;
+  }
   for (const discussion of discussions.value) {
     if(!(discussion.subject.id in subjectPromises.value)) {
       subjectPromises.value[discussion.subject.id] = getSubject(discussion.subject);
