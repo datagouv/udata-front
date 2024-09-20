@@ -1,10 +1,9 @@
+import type { NewDataset } from '@datagouv/components/ts';
 import { withActions } from '@storybook/addon-actions/decorator';
 import { expect, fn, userEvent, waitFor, within  } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Step2DescribeDataset, { Step2DescribeDatasetProps } from './Step2DescribeDataset.vue';
 import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
-import { NewDataset } from '../../types';
-
 
 const meta = {
   title: 'Pages/PublishingForm/Step2',

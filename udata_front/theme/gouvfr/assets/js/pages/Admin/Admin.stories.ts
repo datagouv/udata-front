@@ -20,7 +20,7 @@ const args = {
 export const HomeAdmin: StoryObj<typeof meta> = {
   parameters: {
     msw: [
-      http.get("*/api/1/me", async () => {
+      http.get("*/api/1/me*", async () => {
         const me: Me = {
           "about": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
           "active": true,
@@ -107,6 +107,17 @@ export const HomeAdmin: StoryObj<typeof meta> = {
         return HttpResponse.json(requests);
       }),
       http.get("*/api/1/organizations/6481e3f7959723cf9f8bc98a/datasets/*", async () => {
+        await delay();
+        return HttpResponse.json({
+          "data": [],
+          "next_page": null,
+          "page": 1,
+          "page_size": 10,
+          "previous_page": null,
+          "total": 0,
+        });
+      }),
+      http.get("*/api/1/reuses/*", async () => {
         await delay();
         return HttpResponse.json({
           "data": [],

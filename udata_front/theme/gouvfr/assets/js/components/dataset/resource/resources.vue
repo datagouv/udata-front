@@ -56,7 +56,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { onMounted, ref, computed } from 'vue';
-import { ResourceAccordion, ResourceAccordionLoader, type Resource, Pagination } from "@datagouv/components/ts";
+import { ResourceAccordion, ResourceAccordionLoader, type Resource, Pagination, CommunityResource } from "@datagouv/components/ts";
 import SearchBar from "../../utils/search-bar.vue";
 import config from "../../../config";
 import { useToast } from "../../../composables/useToast";
@@ -67,6 +67,7 @@ import {
 } from "../../../plugins/eventbus";
 import { getResourceIdFromHash } from '../../../helpers';
 import { useHash } from '../../../composables/useHash';
+import { PaginatedArray } from '../../../api/types';
 
 type Props = {
   canEdit?: boolean,
@@ -117,7 +118,7 @@ const loadPage = (page = 1, scroll = false) => {
   if (scroll && top.value) {
     top.value.scrollIntoView({ behavior: "smooth" });
   }
-  let fetchData: Promise<import("../../../api/resources").ResourceApiWrapper>;
+  let fetchData: Promise<PaginatedArray<Resource | CommunityResource>>;
   if(isCommunityResources.value) {
     fetchData = fetchDatasetCommunityResources(props.datasetId, page, pageSize);
   } else {

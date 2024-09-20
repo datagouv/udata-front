@@ -16,7 +16,7 @@
       @next="updateDatasetsAndMoveToNextStep"
     />
     <Step3CompleteThePublication
-      v-else-if="currentStep === 2"
+      v-else-if="currentStep === 2 && savedReuse"
       :steps="steps"
       :feedbackUrl="publishing_form_feedback_url ?? ''"
       :originalReuse="savedReuse"
@@ -27,15 +27,15 @@
 
 <script setup lang="ts">
 import type { AxiosError } from 'axios';
-import { onMounted, ref, toValue } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { Dataset, Reuse } from '@datagouv/components/ts';
+import type { Dataset, NewReuse, Reuse } from '@datagouv/components/ts';
 import Step1DescribeReuse from './Step1DescribeReuse.vue';
 import Step2AddDatasets from './Step2AddDatasets.vue';
 import Step3CompleteThePublication from './Step3CompleteThePublication.vue';
 import { publishing_form_feedback_url } from '../../config';
 import { createReuse, updateReuse, uploadLogo } from '../../api/reuses';
-import type { Me, NewReuse } from '../../types';
+import type { Me } from '../../types';
 import { fetchMe } from '../../api/me';
 import { auth } from '../../plugins/auth';
 
@@ -65,25 +65,7 @@ const reuse = ref<NewReuse>({
   owner: user.id,
 });
 
-const savedReuse = ref<Reuse & {datasets: Array<string>}>({
-  id: "",
-  page: "",
-  private: false,
-  deleted: false,
-  image: "",
-  image_thumbnail: "",
-  slug: "",
-  last_update: "",
-  title: "",
-  description: "",
-  tags: null,
-  url: "",
-  datasets: [],
-  topic: "",
-  type: "",
-  organization: null,
-  owner: user,
-});
+const savedReuse = ref<Reuse | null>(null);
 
 const errors = ref<Array<string>>([]);
 
@@ -137,11 +119,14 @@ async function createReuseAndMoveToNextStep(newReuse: NewReuse, file: File) {
 async function updateDatasetsAndMoveToNextStep(datasets: Array<Dataset>) {
   errors.value = [];
   let moveToNextStep = false;
-  datasets.forEach(dataset => {
+  if(!savedReuse.value) {
+    return moveToStep(0);
+  }
+  for (const dataset of datasets) {
     savedReuse.value.datasets.push(dataset.id);
-  });
+  }
   try {
-    savedReuse.value = await updateReuse(toValue(savedReuse));
+    savedReuse.value = await updateReuse(savedReuse.value);
     moveToNextStep = true;
   } catch (e) {
     if(e instanceof Error) {

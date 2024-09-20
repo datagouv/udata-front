@@ -6,9 +6,9 @@
           {{ t('Administration') }}
         </router-link>
       </li>
-      <li v-if="organization">
+      <li v-if="currentOrganization">
         <router-link class="fr-breadcrumb__link" to="/">
-          {{ organization.name }}
+          {{ currentOrganization.name }}
         </router-link>
       </li>
       <li>
@@ -17,31 +17,77 @@
         </a>
       </li>
     </Breadcrumb>
-    <div class="fr-alert fr-alert--info">
-      <h3 class="fr-alert__title">{{ t('This is a WIP page') }}</h3>
-      <p><a :href="url">{{ t('You can manage your reuses on the current admin.') }}</a></p>
-    </div>
+    <h1 class="fr-h3">{{ t("Reuses") }}</h1>
+    <h2 class="subtitle subtitle--uppercase">{{ t("{n} reuses of your organization", reuses.length) }}</h2>
+    <AdminReusesTable
+      v-if="loading || totalResult > 0"
+      :reuses
+      :loading
+      :sortDirection="direction"
+      :sortedBy
+      @sort="sort"
+    />
+    <Container v-else class="fr-mt-1w fr-mb-2w">
+      <div class="text-align-center fr-py-1w">
+        <img :src="reuseBlankState" alt="" loading="lazy"/>
+        <p class="fr-text--bold fr-my-3v">
+          {{ t(`You haven't published a reuse yet`) }}
+        </p>
+        <AdminPublishButton type="reuse"/>
+      </div>
+    </Container>
+    <Pagination
+      v-if="totalResult > pageSize"
+      :page="page"
+      :page-size="pageSize"
+      :total-results="totalResult"
+      @change="(changedPage: number) => page = changedPage"
+    />
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { Pagination, Reuse } from '@datagouv/components/ts';
+import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from "vue-i18n";
+import { getOrganizationReuses } from '../../../api/reuses';
+import AdminReusesTable from '../../../components/AdminTable/AdminReusesTable/AdminReusesTable.vue';
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
-import type { Me } from "../../../types";
-import { fetchMe } from "../../../api/me";
-import { watchEffect } from 'vue';
-import type { Organization } from '@datagouv/components/ts';
+import Container from '../../../components/Ui/Container/Container.vue';
+import { useCurrentOrganization } from '../../../composables/admin/useCurrentOrganization';
+import reuseBlankState from "../../../../../templates/svg/blank_state/reuse.svg";
+import { ReuseSortedBy, SortDirection } from '../../../types';
+import AdminPublishButton from '../../../components/AdminPublishButton/AdminPublishButton.vue';
 
 const { t } = useI18n();
 const props = defineProps<{oid: string}>();
-const url = `/admin/organization/${props.oid}/`;
 
-const me = ref<Me | null>(null);
-const organization = ref<Organization | null>(null);
+const reuses = ref<Array<Reuse>>([]);
+const loading = ref(false);
+const page = ref(1);
+const pageSize = ref(10);
+const totalResult = ref(0);
+const sortedBy = ref<ReuseSortedBy>('created');
+const direction = ref<SortDirection>('asc');
+const sortDirection = computed(() => `${direction.value === 'asc' ? "" : "-"}${sortedBy.value}`);
 
-onMounted(async () => me.value = await fetchMe());
+const { currentOrganization } = useCurrentOrganization();
 
-watchEffect(() => {
-  organization.value = me.value?.organizations.find(organization => organization.id === props.oid) ?? null;
+function sort(column: ReuseSortedBy, newDirection: SortDirection) {
+  sortedBy.value = column;
+  direction.value = newDirection;
+}
+
+watchEffect(async () => {
+  loading.value = true;
+  reuses.value = [];
+  try {
+    const response = await getOrganizationReuses(props.oid, page.value, pageSize.value, sortDirection.value);
+    reuses.value = response.data;
+    page.value = response.page;
+    pageSize.value = response.page_size;
+    totalResult.value = response.total;
+  } finally {
+    loading.value = false;
+  }
 });
 </script>

@@ -241,3 +241,24 @@ export const DatasetsTable: StoryObj<typeof meta> = {
   }),
   args: {},
 };
+
+export const LoadingTable: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { AdminTable, AdminTableTh },
+    setup() {
+      return { args };
+    },
+    template: ` <AdminTable v-bind="args">
+                  <thead>
+                    <tr>
+                        <AdminTableTh scope="col">some column</AdminTableTh>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </AdminTable>`,
+  }),
+  args: {
+    loading: true,
+  },
+};

@@ -1,10 +1,23 @@
 <template>
-  <div class="fr-table fr-mb-0">
+  <div class="fr-table fr-mb-2w">
     <table>
       <slot></slot>
     </table>
+    <Container v-if="loading" class="fr-p-4w text-align-center">
+      <AdminLoader/>
+    </Container>
   </div>
 </template>
+<script setup lang="ts">
+import AdminLoader from '../../AdminLoader/AdminLoader.vue';
+import Container from '../../Ui/Container/Container.vue';
+
+withDefaults(defineProps<{
+  loading?: boolean
+}>(), {
+  loading: false,
+});
+</script>
 <style lang="less" scoped>
 
 @import "../../../../less/variables.less";

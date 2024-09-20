@@ -115,14 +115,14 @@
           <fieldset class="fr-fieldset" aria-labelledby="description-legend">
             <legend class="fr-fieldset__legend" id="description-legend">
               <h2 class="subtitle subtitle--uppercase fr-mb-3v">
-                {{ $t("Producer") }}
+                {{ t("Producer") }}
               </h2>
             </legend>
             <div class="fr-fieldset__element">
               <ProducerSelector
                 :user="user"
                 :hasError="fieldHasError('owned')"
-                :errorText="$t('You need to select a Producer')"
+                :errorText="t('You need to select a Producer')"
                 @update:owned="updateOwned"
               />
             </div>
@@ -273,7 +273,8 @@
 
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue';
-import { Well } from '@datagouv/components/ts';
+import { getReuseTopicsUrl, getReuseTypesUrl, Well } from '@datagouv/components/ts';
+import type { NewReuse, OwnedWithId } from '@datagouv/components/ts';
 import { useI18n } from 'vue-i18n';
 import { url } from '@vuelidate/validators';
 import { minLengthWarning, required } from '../../i18n';
@@ -290,9 +291,8 @@ import useUid from "../../composables/useUid";
 import useFunctionalState from '../../composables/form/useFunctionalState';
 import reuseIcon from "../../../../templates/svg/illustrations/reuse.svg";
 import { quality_description_length } from "../../config";
-import { getReuseTypesUrl, getReuseTopicsUrl } from '../../api/reuses';
 import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
-import type { Me, OwnedWithId, PublishingFormAccordionState, NewReuse } from '../../types';
+import type { Me, PublishingFormAccordionState } from '../../types';
 import Alert from '../../components/Alert/Alert.vue';
 
 const props = defineProps<{
