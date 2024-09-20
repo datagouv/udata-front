@@ -1,10 +1,9 @@
+import type { NewDataset } from '@datagouv/components/ts';
 import { withActions } from '@storybook/addon-actions/decorator';
 import { expect, fn, userEvent, waitFor, within  } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Step2DescribeDataset, { Step2DescribeDatasetProps } from './Step2DescribeDataset.vue';
 import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
-import { NewDataset } from '../../types';
-
 
 const meta = {
   title: 'Pages/PublishingForm/Step2',
@@ -65,7 +64,7 @@ const myUser = {
       acronym: null,
       badges: [],
       class: "Organization",
-      id: "65e9b7cf830c3b5a515ee4ed",
+      id: "65e9b7cf830c3b5a515ee4ee",
       logo: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
       logo_thumbnail: "https://demo-static.data.gouv.fr/avatars/84/3194d831264f769fa817e58813d413-100.png",
       name: "My Second Organization",

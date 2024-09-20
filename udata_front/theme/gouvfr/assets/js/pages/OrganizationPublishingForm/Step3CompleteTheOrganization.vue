@@ -66,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { Well, type Organization} from "@datagouv/components";
+import { Well, type Organization} from "@datagouv/components/ts";
 import Alert from '../../components/Alert/Alert.vue';
 import Container from '../../components/Ui/Container/Container.vue';
 import Placeholder from '../../components/utils/placeholder.vue';

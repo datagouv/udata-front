@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import OwnerTypeIcon from './OwnerTypeIcon.vue';
-import { ASSOCIATION, COMPANY, LOCAL_AUTHORITY, PUBLIC_SERVICE } from '../../composables/organizations/useOrganizationType';
+import { ASSOCIATION, COMPANY, LOCAL_AUTHORITY, OTHER, PUBLIC_SERVICE } from '../../composables/organizations/useOrganizationType';
 
 const meta = {
-  title: "Components/Owners/Internals/Owner Type Icon",
+  title: "Components/Owners/Owner Type Icon",
   component: OwnerTypeIcon,
   tags: ['autodocs'],
   parameters: {
@@ -79,5 +79,18 @@ export const CompanyOwnerTypeIcon: StoryObj<typeof meta> = {
   }),
   args: {
     type: COMPANY,
+  }
+};
+
+export const OtherTypeIcon: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { OwnerTypeIcon },
+    setup() {
+      return { args };
+    },
+    template: '<OwnerTypeIcon v-bind="args" />',
+  }),
+  args: {
+    type: OTHER,
   }
 };

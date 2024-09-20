@@ -6,9 +6,9 @@
           {{ t('Administration') }}
         </router-link>
       </li>
-      <li v-if="organization">
+      <li v-if="currentOrganization">
         <router-link class="fr-breadcrumb__link" to="/">
-          {{ organization.name }}
+          {{ currentOrganization.name }}
         </router-link>
       </li>
       <li>
@@ -21,8 +21,8 @@
       {{ t("Edit profile") }}
     </h2>
     <DescribeOrganizationFrom
-      v-if="organization"
-      :organization="organization"
+      v-if="currentOrganization"
+      :organization="currentOrganization"
       :errors="errors"
       :showLegend="false"
       :showWell="false"
@@ -112,36 +112,36 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref, watchEffect } from 'vue';
-import { useRouter } from 'vue-router';
+import { getRandomId } from '@datagouv/components/ts';
+import { onMounted, ref } from 'vue';
 import { useI18n } from "vue-i18n";
-import { getRandomId } from '@datagouv/components';
+import { useRouter } from 'vue-router';
+import { fetchMe } from "../../../api/me";
+import { deleteOrganization, updateOrganization } from '../../../api/organizations';
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
 import AdminDangerZone from "../../../components/AdminDangerZone/AdminDangerZone.vue";
+import { useCurrentOrganization } from '../../../composables/admin/useCurrentOrganization';
+import { useToast } from '../../../composables/useToast';
 import DescribeOrganizationFrom from "../../OrganizationPublishingForm/Step2DescribeOrganization.vue";
 import type { Me, OrganizationV1 } from "../../../types";
-import { fetchMe } from "../../../api/me";
-import { deleteOrganization, getOrganization, updateOrganization } from '../../../api/organizations';
-import { useToast } from '../../../composables/useToast';
 
 const { t } = useI18n();
 const { toast } = useToast();
-const props = defineProps<{oid: string}>();
+defineProps<{oid: string}>();
 const router = useRouter();
 const me = ref<Me | null>(null);
 const form = ref<InstanceType<typeof DescribeOrganizationFrom> | null>(null);
 
-// TODO : use `useCurrentOrganization` when merged
-const organization = ref<OrganizationV1 | null>(null);
+const { currentOrganization } = useCurrentOrganization();
 const errors = ref([]);
 const loading = ref(false);
 const modalId = getRandomId("modal");
 const modalTitleId = getRandomId("modalTitle");
 
 function deleteCurrentOrganization() {
-  if(organization.value) {
+  if(currentOrganization.value) {
     loading.value = true;
-    deleteOrganization(organization.value.id)
+    deleteOrganization(currentOrganization.value.id)
     .then(() => {
       router.replace("/");
       window.location.reload();
@@ -151,7 +151,7 @@ function deleteCurrentOrganization() {
   }
 }
 
-function updateCurrentOrganization(organization: OrganizationV1, logo: File | null) {
+function updateCurrentOrganization(organization: OrganizationV1) {
   loading.value = true;
   updateOrganization(organization)
   .then(() => toast.success(t("Organization updated !")))
@@ -160,8 +160,4 @@ function updateCurrentOrganization(organization: OrganizationV1, logo: File | nu
 }
 
 onMounted(async () => me.value = await fetchMe());
-
-watchEffect(async () => {
-  organization.value = await getOrganization(props.oid);
-});
 </script>

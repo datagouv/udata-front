@@ -12,8 +12,6 @@
 </template>
 
 <script lang="ts">
-import type { Reuse } from '../../types';
-
 export type UserReuseListProps = {
   owner: string,
 };
@@ -26,6 +24,7 @@ import { useI18n } from 'vue-i18n';
 import { useToast } from '../../composables/useToast';
 import { apiv2, generateCancelToken } from '../../plugins/api';
 import ReuseList from '../Reuse/ReuseList.vue';
+import { Reuse } from '@datagouv/components/ts';
 
 const { t } = useI18n();
 const { toast } = useToast();

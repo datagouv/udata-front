@@ -1,4 +1,4 @@
-import type { License } from "@datagouv/components";
+import type { License } from "@datagouv/components/ts";
 import { getLocalizedUrl } from "../i18n";
 import { api } from "../plugins/api";
 

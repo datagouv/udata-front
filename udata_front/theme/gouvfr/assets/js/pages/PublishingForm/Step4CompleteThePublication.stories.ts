@@ -1,9 +1,8 @@
 import Step4CompleteThePublication from './Step4CompleteThePublication.vue';
 import * as Stepper from '../../components/Form/Stepper/Stepper.stories';
-import * as Step2 from './Step2DescribeDataset.stories';
 import * as CardLG from '../../components/dataset/CardLG.stories';
 import { Meta, StoryObj } from '@storybook/vue3';
-import { Dataset } from '@datagouv/components';
+import { Dataset } from '@datagouv/components/ts';
 
 
 const meta =  {

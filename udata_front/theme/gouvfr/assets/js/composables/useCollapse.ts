@@ -1,6 +1,6 @@
-import { MaybeRefOrGetter, Ref, ref, toValue } from 'vue'
+import { MaybeRefOrGetter, ref, toValue } from 'vue'
 import useKeyCodes from "./useKeyCodes";
-import { getRandomId } from '@datagouv/components';
+import { getRandomId } from '@datagouv/components/ts';
 
 export function useCollapse() {
   const { KEYCODES } = useKeyCodes();

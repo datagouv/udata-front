@@ -666,6 +666,12 @@ export default defineComponent({
       }
     };
 
+    async function selectOption(value) {
+      await suggestMapAndSetOption(value);
+      selectA11y.value?.selectOptionSilently(value);
+      selected.value = value;
+    }
+
     watch(() => props.values, async () => {
       const selectedValues = selected.value;
       await fillSelectedFromValues();
@@ -689,6 +695,7 @@ export default defineComponent({
       offset,
       selected,
       selectGroupClass,
+      selectOption,
       validTextId,
     }
   }

@@ -1,6 +1,6 @@
 import type { Badges } from "./badges";
 import { Harvest } from "./harvest";
-import type { Owned } from "./owned";
+import type { Owned, OwnedWithId } from "./owned";
 import type { Resource } from "./resources";
 
 export type Quality = {
@@ -17,7 +17,7 @@ export type Quality = {
   update_fulfilled_in_time: boolean;
 };
 
-export type NewDataset = Owned & {
+export type BaseDataset = Owned & {
   title: string;
   acronym: string;
   archived: boolean;
@@ -36,6 +36,8 @@ export type NewDataset = Owned & {
   } | null;
 };
 
+export type NewDataset = Omit<BaseDataset, keyof OwnedWithId> & OwnedWithId;
+
 export type Rel = {
   rel: string;
   href: string;
@@ -43,9 +45,10 @@ export type Rel = {
   type: string;
 };
 
-export type Dataset = NewDataset & {
+export type Dataset = BaseDataset & {
   id: string;
   badges: Badges;
+  deleted: string | null;
   page: string;
   resources: Array<Resource>;
   community_resources: Array<Resource>;
@@ -55,12 +58,18 @@ export type Dataset = NewDataset & {
   uri: string;
   slug: string;
   quality: Quality;
-  metrics: { discussions: number; followers: number; reuses: number; views: number; };
+  metrics: {
+    discussions: number;
+    followers: number;
+    resources_downloads: number;
+    reuses: number;
+    views: number;
+  };
   harvest: Harvest;
   extras: Record<string, any>;
 };
 
-export type DatasetV2 = NewDataset & Omit<Dataset, 'resources' | 'community_resources'> & {
+export type DatasetV2 = Omit<Dataset, 'resources' | 'community_resources'> & {
   resources: Rel;
   community_resources: Rel;
 };

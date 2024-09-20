@@ -2,7 +2,28 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add index page with search for dataservices [#516](https://github.com/datagouv/udata-front/pull/516)
+- Add beta admin datasets page [#371](https://github.com/etalab/udata-front/pull/371)
+- Redirect to forum on no search results /!\ set the `DATA_SEARCH_FEEDBACK_FORM_URL` to the forum [#526](https://github.com/datagouv/udata-front/pull/526)
+- Update proconnect button and link [#530](https://github.com/datagouv/udata-front/pull/530)
+- Fix scroll to resource [#531](https://github.com/datagouv/udata-front/pull/531)
+- Add beta admin reuses page [#527](https://github.com/datagouv/udata-front/pull/527)
+
+## 5.2.0 (2024-09-13)
+
+- add dataservices to dataset page [#476](https://github.com/datagouv/udata-front/pull/476)
+- show contact point in dataset and dataservice page [#479](https://github.com/datagouv/udata-front/pull/479)
+- add email, member since and last login at to org members table [#480](https://github.com/datagouv/udata-front/pull/480)
+- always show authorization_request_url if present (even on open API) [#481](https://github.com/datagouv/udata-front/pull/481)
+- Show organization type [#472](https://github.com/datagouv/udata-front/pull/472)
+- show permalink for community resources [#486](https://github.com/datagouv/udata-front/pull/486)
+- update sentry configuration [#498](https://github.com/datagouv/udata-front/pull/498)
+- update DSFR to v1.11 [#502](https://github.com/datagouv/udata-front/pull/502) [#506](https://github.com/datagouv/udata-front/pull/506)
+- Replace the "MonComptePro" SSO login button with a "ProConnect" button [#482](https://github.com/datagouv/udata-front/pull/482)
+  This needs the `PROCONNECT_*` related settings in `settings.py`, and an active [ProConnect flow](https://github.com/numerique-gouv/agentconnect-documentation/blob/main/doc_fs/implementation_technique.md)
+- update/remove code following the datagouv/components update [#507](https://github.com/datagouv/udata-front/pull/507) [#513](https://github.com/datagouv/udata-front/pull/513)
+- When disconnecting from udata, first disconnect from ProConnect if relevant [#504](https://github.com/datagouv/udata-front/pull/504)
+- update privacy policy [#510](https://github.com/datagouv/udata-front/pull/510)
 
 ## 5.1.2 (2024-08-01)
 

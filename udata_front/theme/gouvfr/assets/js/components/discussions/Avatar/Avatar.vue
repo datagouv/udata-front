@@ -11,7 +11,7 @@
   </div>
 </template>
 <script lang="ts">
-import type { User } from "@datagouv/components";
+import type { User } from "@datagouv/components/ts";
 export type AvatarProps = {
   user: User,
   rounded?: boolean,

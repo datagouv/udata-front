@@ -12,6 +12,9 @@
         </router-link>
       </li>
       <li>
+        <a class="fr-breadcrumb__link" aria-current="page">
+          {{ t('Members') }}
+        </a>
       </li>
     </Breadcrumb>
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle justify-center">
@@ -50,15 +53,24 @@
         <thead>
           <tr>
             <th scope="col">{{ t("Members") }}</th>
+            <th scope="col">{{ t("Email") }}</th>
             <th scope="col">{{ t("Status") }}</th>
+            <th scope="col">{{ t("Member since") }}</th>
+            <th scope="col">{{ t("Last connection") }}</th>
             <th scope="col" v-if="isAdmin">{{ t("Action") }}</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="member in members" :key="member.user.id">
             <td>{{ member.user.first_name }} {{ member.user.last_name }}</td>
+            <td>{{ member.user.email }}</td>
             <td>
               <p class="fr-badge">{{ getRoleLabel(member.role) }}</p>
+            </td>
+            <td>{{ formatDate(member.since) }}</td>
+            <td>
+              <span v-if="member.user.last_login_at">{{ formatFromNow(member.user.last_login_at) }}</span>
+              <span v-else>{{ t("No connection") }}</span>
             </td>
             <td v-if="isAdmin">
               <AdminEditMemberButton
@@ -76,17 +88,19 @@
 </template>
 
 <script setup lang="ts">
+import { formatDate, formatFromNow } from '@datagouv/components/ts';
 import { computed, onMounted, ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { acceptRequest, formatRolesAsOptions, getOrganization, getPendingMemberships, getRoles, refuseRequest } from "../../../api/organizations";
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
 import { type Option } from "../../../components/Form/SelectGroup/SelectGroup.vue";
+import AdminAddMemberButton from "../../../components/AdminAddMember/AdminAddMemberButton.vue";
 import AdminEditMemberButton from "../../../components/AdminEditMember/AdminEditMemberButton.vue";
 import AdminMembershipRequest from "../../../components/AdminMembershipRequest/AdminMembershipRequest.vue";
-import type { EditingMember, MemberRole, PendingMembershipRequest } from "../../../types";
+import { useCurrentOrganization } from "../../../composables/admin/useCurrentOrganization";
 import { useToast } from "../../../composables/useToast";
 import { user, userIsAdmin } from "../../../config";
-import AdminAddMemberButton from "../../../components/AdminAddMember/AdminAddMemberButton.vue";
+import type { EditingMember, MemberRole, PendingMembershipRequest } from "../../../types";
 
 const props = defineProps<{oid: string}>();
 
@@ -100,8 +114,7 @@ const isAdmin = computed(() => userIsAdmin || members.value.some(member => membe
 
 const roles = ref<Array<Option>>([]);
 
-// TODO : use `useCurrentOrganization` when merged
-const currentOrganization = {name: "SomeName"};
+const { currentOrganization } = useCurrentOrganization();
 
 const members = ref<Array<EditingMember>>([]);
 

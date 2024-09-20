@@ -1,6 +1,6 @@
 import { createApp } from "vue";
 import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router';
-import { setupComponents } from "@datagouv/components";
+import { setupComponents } from "@datagouv/components/ts";
 
 import "./dsfr.ts";
 // @ts-ignore
@@ -32,7 +32,7 @@ setupComponents({
 });
 
 const routes: Array<RouteRecordRaw> = [
-  { path: '/me', component: Me },
+  { path: '/me', component: Me, name: "me" },
   {
     path: '/organizations/:oid',
     children: [

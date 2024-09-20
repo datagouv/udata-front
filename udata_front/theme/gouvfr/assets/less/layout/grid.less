@@ -18,6 +18,10 @@
     position: absolute;
 }
 
+.align-middle {
+    vertical-align: middle;
+}
+
 .left-0 {
     left: 0;
 }
@@ -34,8 +38,20 @@
     right: 1px;
 }
 
+.right-1w {
+    right: 0.5rem;
+}
+
+.inset-0 {
+    inset: 0px;
+}
+
 .top-0 {
     top: 0;
+}
+
+.top-3w {
+    top: 1.5rem;
 }
 
 .top-n3-5v {
@@ -50,12 +66,24 @@
     display: flex;
 }
 
+.inline-flex {
+    display: inline-flex !important;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
 .no-wrap {
     flex-wrap: nowrap;
 }
 
 .wrap {
     flex-wrap: wrap;
+}
+
+.items-center {
+    align-items: center;
 }
 
 @media @query-md {
@@ -112,6 +140,10 @@
 
 .self-end {
     align-self: flex-end;
+}
+
+.align-items-baseline {
+    align-items: baseline;
 }
 
 .w-1px {
@@ -174,4 +206,10 @@
 
 .fr-mt-n9v {
     margin-top: -2.5rem !important;
+}
+
+@media @dsfr-query-xl {
+    .fr-hidden-xl {
+        display: none !important;
+    }
 }

@@ -1,29 +1,36 @@
+import type { NewReuse, Reuse } from "@datagouv/components/ts";
 import { getLocalizedUrl } from "../i18n";
+import { toValue } from "vue";
 import { api } from "../plugins/api";
-import { Reuse } from "../types";
+import type { PaginatedArray } from "./types";
 
-let reuseTypesRequest: Promise<Array<ReuseType>> | null = null;
-
-export type ReuseType = {
-  id: string,
-  label: string,
-};
-
-export function getReuseTypesUrl() {
-  return getLocalizedUrl("reuses/types/");
+export async function getOrganizationReuses(oid: string, page: number, pageSize: number, sort: string) {
+  const resp = await api.get<PaginatedArray<Reuse>>(getLocalizedUrl(`reuses/`), {
+    params: { organization: oid, sort, page_size: pageSize, page }
+  });
+  return resp.data;
+}
+type UploadLogoResponse = {
+  image: string;
+  success: boolean;
 }
 
-export function fetchReuseTypes() {
-  if (reuseTypesRequest) {
-    return reuseTypesRequest;
-  }
-  return reuseTypesRequest = api.get<Promise<Array<ReuseType>>>(getReuseTypesUrl())
-  .then((resp) => resp.data);
+export function createReuse(reuse: NewReuse) {
+  return api.post<Reuse>("reuses/", {
+    ...toValue(reuse),
+  }).then(resp => resp.data);
 }
 
-export function getType(types: Array<ReuseType>, id: string): string {
-  const type = types.find(t => t.id === id);
-  return type ? type.label : "";
+export function updateReuse(reuse: Reuse) {
+  return api.put<Reuse>(`reuses/${reuse.id}/`, {
+    ...toValue(reuse),
+  }).then(resp => resp.data);
+}
+
+export function uploadLogo(reuseId: string, file: File) {
+  return api.postForm<UploadLogoResponse>(`reuses/${reuseId}/image`, {
+    file: file
+  });
 }
 
 export async function getReuse(id: string) {

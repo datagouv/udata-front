@@ -27,6 +27,7 @@ You can also pass it a `value` prop that will populate the field.
       :aria-label="placeholder || $t('Search...')"
       :placeholder="placeholder || $t('Search...')"
       data-cy="search-input"
+      data-testid="search-input"
     />
     <button class="fr-btn" type="submit">
       {{ $t('Search') }}

@@ -1,4 +1,4 @@
-import type { Dataset, FileResourceFileType, NewDataset as BaseNewDataset, Organization, Owned, RemoteResourceFileType, ResourceType, User } from "@datagouv/components";
+import type { FileResourceFileType, Organization, RemoteResourceFileType, ResourceType, User } from "@datagouv/components/ts";
 
 import { CLOSED_FORMATS } from "./helpers";
 
@@ -31,6 +31,8 @@ export type DSFRInfoState = "info";
 export type PublishingFormAccordionState = AccordionFunctionalState | DSFRInfoState;
 
 export type AccordionState = DSFRFormDefaultState | AccordionFunctionalState | DSFRInfoState;
+
+export type AdminBadgeState = DSFRFormDefaultState | FormFunctionalState | DSFRInfoState;
 
 export type ClosedFormats = typeof CLOSED_FORMATS[number];
 
@@ -99,47 +101,6 @@ export type Sort = {
   key: string
 }
 
-export type Quality = {
-  all_resources_available: boolean;
-  dataset_description_quality: boolean;
-  has_open_format: boolean;
-  has_resources: boolean;
-  license: boolean;
-  resources_documentation: boolean;
-  score: number;
-  spatial: boolean;
-  temporal_coverage: boolean;
-  update_frequency: boolean;
-  update_fulfilled_in_time: boolean;
-}
-
-// TODO : import from datagouv/components when available
-export type Harvest = {
-  backend: string;
-}
-
-export type OwnedWithId = { organization: string, owner: never | null } | { organization: never | null, owner: string };
-
-export type NewDataset = Omit<BaseNewDataset, keyof OwnedWithId> & OwnedWithId;
-
-export type Reuse = Owned & {
-  id: string;
-  title: string;
-  description: string;
-  tags: Array<string> | null;
-  page: string;
-  private: boolean;
-  deleted: boolean;
-  datasets: Array<Dataset>;
-  image: string;
-  image_thumbnail: string;
-  slug: string;
-  topic: string;
-  type: string;
-  last_update: string;
-  uri: string;
-};
-
 export type Me = User & {
   about: string,
   active: boolean,
@@ -156,6 +117,12 @@ export type Me = User & {
 }
 
 export type AxisAlignment = "start" | "center" | "end";
+
+export type SortDirection = 'asc' | 'desc';
+
+export type DatasetSortedBy = 'title' | 'created' | 'last_update' | 'reuses' | 'followers' | 'views';
+
+export type ReuseSortedBy = 'title' | 'created' | 'datasets' | 'followers' | 'views';
 
 export type SpatialZone = {
   code: string;
@@ -190,9 +157,16 @@ export type RefusedMembershipRequest = MembershipRequest & {
 
 export type MemberRole = "admin" | "editor";
 
+// In org endpoint we get these two private information if we have edit rights on the org.
+export type MemberUser = User & {
+  email: string | null;
+  last_login_at: string | null;
+}
+
 export type Member = {
   role: MemberRole;
-  user: User;
+  user: MemberUser;
+  since: string;
 };
 
 export type EditingMember = Member & {

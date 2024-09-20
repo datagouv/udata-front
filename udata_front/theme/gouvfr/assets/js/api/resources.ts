@@ -1,41 +1,33 @@
 import { v4 as uuidv4 } from 'uuid';
-import type { Resource } from '@datagouv/components';
+import type { CommunityResource, Resource } from '@datagouv/components/ts';
 import { api, apiv2 } from "../plugins/api";
 import { getLocalizedUrl } from '../i18n';
 import type { DatasetChunkUpload, DatasetFile, DatasetFileUpload, DatasetLocalFile, DatasetRemoteFile, NewDatasetFile } from '../types';
+import type { PaginatedArray } from './types';
 
-export type ResourceApiWrapper = {
-  data: Array<Resource>;
-  next_page: string | null;
-  page: number;
-  page_size: number;
-  previous_page: string | null;
-  total: number;
-};
-
-export function fetchDatasetResources(datasetId: string, type: string, page: number, pageSize: number, search: string) {
-  return apiv2
-    .get<ResourceApiWrapper>("/datasets/" + datasetId + "/resources/", {
+export async function fetchDatasetResources(datasetId: string, type: string, page: number, pageSize: number, search: string) {
+  const resp = await apiv2
+    .get<PaginatedArray<Resource>>("/datasets/" + datasetId + "/resources/", {
       params: {
         page,
         type: type,
         page_size: pageSize,
         q: search,
       },
-    })
-    .then((resp) => resp.data);
+    });
+  return resp.data;
 }
 
-export function fetchDatasetCommunityResources (datasetId: string, page: number, pageSize: number) {
-  return api
-    .get<ResourceApiWrapper>("datasets/community_resources/", {
+export async function fetchDatasetCommunityResources (datasetId: string, page: number, pageSize: number) {
+  const resp = await api
+    .get<PaginatedArray<CommunityResource>>("datasets/community_resources/", {
       params: {
         page,
         dataset: datasetId,
         page_size: pageSize,
       },
-    })
-    .then((resp) => resp.data)
+    });
+  return resp.data;
 }
 
 export function getAllowedExtensionsUrl () {

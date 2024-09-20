@@ -10,53 +10,52 @@
             <div class="text-align-center form-container fr-col-12 fr-col-md-6 fr-col-offset-md-3">
                 <form class="form" method="post" action="{{ url_for('security.login') }}">
                     <h1 class="fr-h4 fr-mb-0">{{ _('Log in') }}</h1>
-                        <p class="fr-mt-2w fr-mb-1w fr-text--xs text-align-left">
-                            {{ _("Fields preceded by a star (<span class='required-field-star'>*</span>) are required.") }}
-                        </p>
-                        {% for error in login_user_form.form_errors %}
+                    <p class="fr-mt-2w fr-mb-1w fr-text--xs text-align-left">
+                        {{ _("Fields preceded by a star (<span class='required-field-star'>*</span>) are required.") }}
+                    </p>
+                    {% for error in login_user_form.form_errors %}
                         <p class="fr-error-text fr-mt-1v">{{ error }}</p>
-                        {% endfor %}
-                        {% for f in login_user_form %}
-                            {% if f.type in ('CSRFTokenField', 'HiddenField') %}
-                                {{ f() }}
-                            {% endif %}
-                        {% endfor %}
-                        {{ forms.render_single_field(login_user_form.email)}}
-                        {{ forms.render_single_field(login_user_form.password)}}
-                        {{ forms.render_boolean_field(login_user_form.remember)}}
-                        <button type="submit" class="fr-btn">{{ _('Log in') }}</button>
-                        <div class="fr-mt-3w">
-                            <p class="fr-text--sm fr-mb-3v">
-                                {{ _('Forgot your password?') }}
-                                <a href="{{ url_for('security.forgot_password', next=next_url) }}">
-                                    {{ _('Recover your password') }}
-                                </a>
-                            </p>
-                            {% if config.SECURITY_CONFIRMABLE %}
-                            <p class="fr-text--sm fr-mb-3v">
-                                {{ _('Confirmation instructions not received?') }}
-                                <a href="{{ url_for('security.send_confirmation') }}">
-                                    {{ _('Send the instructions again') }}
-                                </a>
-                            </p>
-                            {% endif %}
-                        </div>
-                    </form>
-                    {% if config.MONCOMPETPRO_OPENID_CONF_URL %}
-                    <p class="fr-hr-or"><span class="fr-hr-or-text">{{ _('or') }}</span></p>
-                    <form class="form" method="get" action="{{ url_for('mcp.login') }}">
-                        <div class="fr-connect-group">
-                            <button class="fr-connect">
-                                <span class="fr-connect__login">{{ _('Log in with') }}</span>
-                                <span class="fr-connect__brand">MonComptePro</span>
-                            </button>
-                            <p>
-                                <a href="https://moncomptepro.beta.gouv.fr/" target="_blank"  rel="noopener" title="What is MonComptePro ?">{{ _('What is MonComptePro ?') }}</a>
-                            </p>
-                        </div>
-                    </form>
-                    {% endif %}
-                </div>
+                    {% endfor %}
+                    {% for f in login_user_form %}
+                        {% if f.type in ('CSRFTokenField', 'HiddenField') %}
+                            {{ f() }}
+                        {% endif %}
+                    {% endfor %}
+                    {{ forms.render_single_field(login_user_form.email)}}
+                    {{ forms.render_single_field(login_user_form.password)}}
+                    {{ forms.render_boolean_field(login_user_form.remember)}}
+                    <button type="submit" class="fr-btn">{{ _('Log in') }}</button>
+                    <div class="fr-mt-3w">
+                        <p class="fr-text--sm fr-mb-3v">
+                            {{ _('Forgot your password?') }}
+                            <a href="{{ url_for('security.forgot_password', next=next_url) }}">
+                                {{ _('Recover your password') }}
+                            </a>
+                        </p>
+                        {% if config.SECURITY_CONFIRMABLE %}
+                        <p class="fr-text--sm fr-mb-3v">
+                            {{ _('Confirmation instructions not received?') }}
+                            <a href="{{ url_for('security.send_confirmation') }}">
+                                {{ _('Send the instructions again') }}
+                            </a>
+                        </p>
+                        {% endif %}
+                    </div>
+                </form>
+                {% if config.PROCONNECT_OPENID_CONF_URL %}
+                <p class="fr-hr-or"><span class="fr-hr-or-text">{{ _('or') }}</span></p>
+                <form class="form" method="get" action="{{ url_for('proconnect.login') }}">
+                    <div class="fr-connect-group">
+                        <button class="fr-connect">
+                            <span class="fr-connect__login">{{ _('Log in with') }}</span>
+                            <span class="fr-connect__brand">ProConnect</span>
+                        </button>
+                        <p>
+                            <a href="https://agentconnect.gouv.fr/" target="_blank"  rel="noopener">{{ _('What is ProConnect ?') }}</a>
+                        </p>
+                    </div>
+                </form>
+                {% endif %}
             </div>
         </div>
         <div class="fr-grid-row">

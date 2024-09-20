@@ -1,8 +1,8 @@
 {% macro badge_if_certified(org, size="sm") %}
-{% if org.public_service %}
+{% if org.certified %}
 <span
     class="fr-icon-success-line fr-icon--{{size}} text-blue-400"
-    title="{{_('The identity of this public service is certified by %(certifier)s', certifier=config.SITE_AUTHOR)}}"
+    title="{{_('The identity of this organization is certified by %(certifier)s', certifier=config.SITE_AUTHOR)}}"
     aria-hidden="true"
   >
 {% endif %}

@@ -1,0 +1,17 @@
+import { Canvas, Controls, Meta } from '@storybook/blocks';
+
+import * as AdminTableStories from './Table/AdminTable.stories';
+
+<Meta of={AdminTableStories} />
+
+# Table
+
+A table with sortable column and content limited to 2 lines.
+
+<Canvas of={AdminTableStories.DatasetsTable} />
+
+Note: tooltips aren't shown at the correct place on the canvas above but you can test them on the individual story.
+
+## Props
+
+<Controls />

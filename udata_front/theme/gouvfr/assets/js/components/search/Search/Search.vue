@@ -156,58 +156,22 @@
           </div>
           <div v-else-if="results.length">
             <ul class="fr-mt-1w border-default-grey border-top relative z-2">
-              <li v-for="(result, key) in results" :key="result.id">
-                <CardLg :dataset="result" :style="zIndex(key)" />
+              <li v-for="result in results" :key="result.id">
+                <CardLg :dataset="result" />
               </li>
             </ul>
             <Pagination
-                v-if="totalResults > pageSize"
-                :page="currentPage"
-                :pageSize="pageSize"
-                :totalResults="totalResults"
-                @change="changePage"
-                class="fr-mt-2w"
-              />
-            <div v-else>
-              <ActionCard
-                :title="t(`Didn't find what you are looking for ?`)"
-                :icon="magnifyingGlassIcon"
-                type="primary"
-                >
-                <p class="fr-m-0 fr-text--sm">
-                  {{ t("Try to reset filters to widen your search.") }}<br/>
-                  {{ t("You can also give us more details with our feedback form.") }}
-                </p>
-                  <template v-slot:actions>
-                    <button @click="resetForm" class="fr-btn fr-btn--secondary">
-                      {{ t("Reset filters") }}
-                    </button>
-                    <a :href="data_search_feedback_form_url" class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line fr-ml-1w">
-                      {{ t("Tell us what you are looking for") }}
-                    </a>
-                  </template>
-                </ActionCard>
-            </div>
+              v-if="totalResults > pageSize"
+              :page="currentPage"
+              :pageSize="pageSize"
+              :totalResults="totalResults"
+              @change="changePage"
+              class="fr-mt-2w"
+            />
+            <NoSearchResults v-else @reset-filters="resetForm" />
           </div>
           <div v-else class="fr-mt-2w">
-            <ActionCard
-            :title="t('No result found for your search')"
-            :icon="franceWithMagnifyingGlassIcon"
-            type="primary"
-            >
-              <p class="fr-mt-1v fr-mb-3v">
-                {{ t("Try to reset filters to widen your search.") }}<br/>
-                {{ t("You can also give us more details with our feedback form.") }}
-              </p>
-              <template v-slot:actions>
-                <button @click="resetForm" class="fr-btn fr-btn--secondary">
-                  {{ t("Reset filters") }}
-                </button>
-                <a :href="data_search_feedback_form_url" class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line fr-ml-1w">
-                  {{ t("Tell us what you are looking for") }}
-                </a>
-              </template>
-            </ActionCard>
+            <NoSearchResults @reset-filters="resetForm" />
           </div>
         </transition>
       </section>
@@ -216,7 +180,7 @@
 </template>
 
 <script setup lang="ts">
-import { Pagination, type Dataset } from "@datagouv/components";
+import { Pagination, type Dataset } from "@datagouv/components/ts";
 import { ref, onMounted, computed } from "vue";
 import { useI18n } from 'vue-i18n';
 import axios, { type CancelTokenSource } from "axios";
@@ -225,16 +189,14 @@ import CardLg from "../../dataset/card-lg.vue";
 import Loader from "../../dataset/loader.vue";
 import SchemaSelect from "../../SchemaSelect/SchemaSelect.vue";
 import MultiSelect from "../../MultiSelect/MultiSelect.vue";
-import ActionCard from "../../Form/ActionCard/ActionCard.vue";
 import { getLicensesUrl } from "../../../api/licenses";
 import { getAllowedExtensionsUrl } from "../../../api/resources";
-import { data_search_feedback_form_url, search_autocomplete_debounce } from "../../../config";
+import { search_autocomplete_debounce } from "../../../config";
 import { debounce } from "../../../composables/useDebouncedRef";
 import useSearchUrl from "../../../composables/useSearchUrl";
 import { useToast } from "../../../composables/useToast";
 import { generateCancelToken, apiv2 } from "../../../plugins/api";
-import franceWithMagnifyingGlassIcon from "../../../../../templates/svg/illustrations/france_with_magnifying_glass.svg";
-import magnifyingGlassIcon from "../../../../../templates/svg/illustrations/magnifying_glass.svg";
+import NoSearchResults from "../../Form/NoSearchResults.vue";
 
 type Props = {
   downloadLink?: string,
@@ -294,10 +256,6 @@ const searchSort = ref('');
  * Search results
  */
 const results = ref<Array<Dataset>>([]);
-
-const zIndex = (key: number) => {
-  return {zIndex: results.value.length - key}
-};
 
 /**
  * Count of search results
@@ -450,6 +408,7 @@ const resetFilters = () => {
 
 const resetForm = () => {
   reloadForm();
+  scrollToTop();
 };
 
 const reloadForm = ({q = '', ...params} = {}, saveToHistory = SAVE_TO_HISTORY) => {

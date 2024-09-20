@@ -4,8 +4,27 @@ import markdown from "./markdown";
 import { toggleAccordion } from "./toggleAccordion";
 import RemoveMarkdown from "remove-markdown";
 import { readonly } from "vue";
+import { ResourceType } from "../types/resources";
 
 export const RESOURCE_TYPE = readonly(["main", "documentation", "update", "api", "code", "other"] as const);
+
+export const getResourceLabel = (type: ResourceType) => {
+  const { t } = useI18n();
+  switch(type) {
+    case "main":
+      return t("Main file");
+    case "documentation":
+      return t("Documentation");
+    case "update":
+      return t("Update");
+    case "api":
+      return t("API");
+    case "code":
+      return t("Source code");
+    case "other":
+      return t("Other");
+  }
+}
 
 export const filesize = (val: number) => {
   const { t } = useI18n();
@@ -18,6 +37,30 @@ export const filesize = (val: number) => {
       val /= 1024.0
   }
   return `${val.toFixed(1)}Y${suffix}`
+}
+
+export const summarize = (val: number, fractionDigits = 0) => {
+  const toFixedIfNotZero = (value: number) => {
+    const asString = value.toFixed(fractionDigits);
+    if (! asString.includes('.')) {
+      return asString; 
+    }
+
+    // Remove trailing "0" to not show "1.0" but only "1"
+    return asString.replace(/0+$/, '').replace(/\.$/, '')
+  }
+
+  if(!val) {
+    return "0";
+  }
+  const units = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z']
+  for (let unit of units) {
+      if (Math.abs(val) < 1000.0) {
+        return `${toFixedIfNotZero(val)}${unit}`
+      }
+      val /= 1000.0
+  }
+  return `${toFixedIfNotZero(val)}Y`
 }
 
 /**
@@ -38,7 +81,7 @@ export const formatFromNow = (date: Date | string) => {
   if(today.isSame(dateWithoutTime)) {
     return t("today");
   }
-  return dayjs(date).fromNow();
+  return dateWithoutTime.fromNow();
 }
 
 /**
