@@ -6,9 +6,9 @@
           {{ t('Administration') }}
         </router-link>
       </li>
-      <li v-if="organization">
+      <li v-if="currentOrganization">
         <router-link class="fr-breadcrumb__link" to="/">
-          {{ organization.name }}
+          {{ currentOrganization.name }}
         </router-link>
       </li>
       <li>
@@ -66,36 +66,30 @@
   </div>
 </template>
 <script setup lang="ts">
-import { formatDate, type Organization } from '@datagouv/components';
+import { formatDate } from '@datagouv/components';
 import { OhVueIcon as Vicon } from "oh-vue-icons";
-import { onMounted, ref, watchEffect, watchPostEffect } from 'vue';
+import { ref, watchPostEffect } from 'vue';
 import { useI18n } from "vue-i18n";
 import { getOrganizationDiscussions, getSubject, getSubjectTitle, getSubjectTypeIcon } from '../../../api/discussions';
-import { fetchMe } from "../../../api/me";
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
+import { useCurrentOrganization } from '../../../composables/admin/useCurrentOrganization';
 import { dataset_url } from '../../../config';
-import type { DiscussionSubjectTypes, Me, Thread } from "../../../types";
+import type { DiscussionSubjectTypes, Thread } from "../../../types";
 
 const { t } = useI18n();
 const props = defineProps<{oid: string}>();
 
-const me = ref<Me | null>(null);
-const organization = ref<Organization | null>(null);
 const discussions = ref<Array<Thread>>([]);
 const subjectPromises = ref<Record<string, Promise<DiscussionSubjectTypes>>>({});
 const subjects = ref<Record<string, DiscussionSubjectTypes>>({});
+
+const { currentOrganization } = useCurrentOrganization();
 
 function getDiscussionUrl(discussionId: string) {
   const discussionUrl = "discussions/" + discussionId;
 
   return window.location.origin + dataset_url + "#/" + discussionUrl;
 }
-
-onMounted(async () => me.value = await fetchMe());
-
-watchEffect(() => {
-  organization.value = me.value?.organizations.find(organization => organization.id === props.oid) ?? null;
-});
 
 watchPostEffect(async () => {
   discussions.value = await getOrganizationDiscussions(props.oid);
