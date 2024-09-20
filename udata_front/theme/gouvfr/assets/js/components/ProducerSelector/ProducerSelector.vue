@@ -50,9 +50,9 @@
 <script setup lang="ts">
 import { ref, computed, toValue, onMounted } from 'vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
-import type { User, Organization } from '@datagouv/components/ts';
+import type { User, Organization, OwnedWithId } from '@datagouv/components/ts';
 import { organization_url } from '../../config';
-import type { Me, OwnedWithId } from '../../types';
+import type { Me } from '../../types';
 import { useI18n } from 'vue-i18n';
 import useUserAvatar from "../../composables/useUserAvatar";
 

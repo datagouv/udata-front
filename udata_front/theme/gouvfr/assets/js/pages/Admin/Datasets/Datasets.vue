@@ -31,20 +31,20 @@
       </div>
     </div>
     <DatasetsTable
-      class="fr-mt-1w"
-      :datasets="datasets"
-      :loading="loading"
+      v-if="loading || totalResult > 0"
+      :datasets
+      :loading
       :sort-direction="direction"
-      :sorted-by="sortedBy"
+      :sortedBy
       @sort="sort"
     />
-    <Container v-if="!loading && totalResult === 0" class="fr-mt-1w fr-mb-2w">
+    <Container v-else class="fr-my-2w">
       <div class="text-align-center fr-py-1w">
         <img :src="datasetIcon" alt="" loading="lazy"/>
         <p class="fr-text--bold fr-my-3v">
           {{ t(`You haven't published a dataset yet`) }}
         </p>
-        <AdminPublishButton />
+        <AdminPublishButton type="dataset" />
       </div>
     </Container>
     <Pagination
@@ -81,7 +81,7 @@ const pageSize = ref(10);
 const totalResult = ref(0);;
 const sortedBy = ref<DatasetSortedBy>('created');
 const direction = ref<SortDirection>('asc');
-const sortDirection = computed(() => `${direction.value === 'asc' ? "" : "-"}${sortedBy.value}`)
+const sortDirection = computed(() => `${direction.value === 'asc' ? "" : "-"}${sortedBy.value}`);
 const q = ref("");
 const qDebounced = refDebounced(q, search_autocomplete_debounce);
 

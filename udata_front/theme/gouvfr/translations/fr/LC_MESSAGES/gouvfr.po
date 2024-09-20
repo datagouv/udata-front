@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: udata-front\n"
 "Report-Msgid-Bugs-To: data.gouv@data.gouv.fr\n"
-"POT-Creation-Date: 2024-09-17 11:05+0200\n"
-"PO-Revision-Date: 2024-09-18 13:30\n"
+"POT-Creation-Date: 2024-09-18 15:54+0200\n"
+"PO-Revision-Date: 2024-09-20 07:54\n"
 "Last-Translator: Data.gouv.fr Team <data.gouv@data.gouv.fr>\n"
 "Language: fr\n"
 "Language-Team: French\n"
@@ -58,30 +58,30 @@ msgstr "Données de référence"
 msgid "Transport"
 msgstr "Transport"
 
-#: udata_front/frontend/helpers.py:174
+#: udata_front/frontend/helpers.py:175
 msgid "Anonymous user"
 msgstr "Utilisateur anonyme"
 
-#: udata_front/frontend/helpers.py:303
+#: udata_front/frontend/helpers.py:304
 msgctxt "month-format"
 msgid "yyyy/MM"
 msgstr "MM/yyyy"
 
-#: udata_front/frontend/helpers.py:307
+#: udata_front/frontend/helpers.py:308
 msgctxt "day-format"
 msgid "yyyy/MM/dd"
 msgstr "dd/MM/yyyy"
 
-#: udata_front/frontend/helpers.py:326
+#: udata_front/frontend/helpers.py:327
 #, python-format
 msgid "%(start)s to %(end)s"
 msgstr "%(start)s à %(end)s"
 
-#: udata_front/frontend/helpers.py:358
+#: udata_front/frontend/helpers.py:359
 msgid "today"
 msgstr "aujourd'hui"
 
-#: udata_front/frontend/helpers.py:370
+#: udata_front/frontend/helpers.py:371
 #, python-format
 msgid "on %(date)s"
 msgstr "le %(date)s"
@@ -721,8 +721,8 @@ msgstr "Cette API est privée et ne sera pas visible des autres utilisateurs"
 #: udata_front/theme/gouvfr/templates/dataset/card-sm.html:9
 #: udata_front/theme/gouvfr/templates/dataset/card-xs.html:10
 #: udata_front/theme/gouvfr/templates/dataset/display.html:78
-#: udata_front/theme/gouvfr/templates/reuse/card.html:11
 #: udata_front/theme/gouvfr/templates/reuse/display.html:81
+#: udata_front/theme/gouvfr/templates/reuse/oembed.html:11
 msgid "Private"
 msgstr "Privé"
 
@@ -1328,7 +1328,7 @@ msgstr "Copier ceci"
 msgid "Share, improve and reuse public data"
 msgstr "Partagez, améliorez et réutilisez les données publiques"
 
-#: udata_front/theme/gouvfr/templates/macros/metadata.html:62
+#: udata_front/theme/gouvfr/templates/macros/metadata.html:63
 msgid "udata-front@{version}"
 msgstr "udata-front@{version}"
 
@@ -1812,7 +1812,7 @@ msgid "%(site)s organization publishing form"
 msgstr "Formulaire de publication d'une organisation sur %(site)s"
 
 #: udata_front/theme/gouvfr/templates/post/display.html:35
-#: udata_front/theme/gouvfr/templates/reuse/card.html:18
+#: udata_front/theme/gouvfr/templates/reuse/oembed.html:18
 #, python-format
 msgid "Published on %(date)s"
 msgstr "Publié le %(date)s"
@@ -1871,10 +1871,6 @@ msgstr "Publiée le"
 #: udata_front/theme/gouvfr/templates/post/subnav.html:39
 msgid "Read more"
 msgstr "Lire plus"
-
-#: udata_front/theme/gouvfr/templates/reuse/card.html:20
-msgid " by "
-msgstr " par "
 
 #: udata_front/theme/gouvfr/templates/reuse/display.html:11
 msgid "reuse"
@@ -2002,10 +1998,18 @@ msgstr "Rechercher une réutilisation"
 msgid "All"
 msgstr "Tout"
 
+#: udata_front/theme/gouvfr/templates/reuse/oembed.html:20
+msgid " by "
+msgstr " par "
+
 #: udata_front/theme/gouvfr/templates/reuse/publishing-form.html:6
 #, python-format
 msgid "%(site)s reuse publishing form"
 msgstr "Formulaire de publication d'une réutilisation sur %(site)s"
+
+#: udata_front/theme/gouvfr/templates/reuse/oembed.html:20
+msgid " by "
+msgstr " par "
 
 #: udata_front/theme/gouvfr/templates/security/change_email.html:10
 #: udata_front/theme/gouvfr/templates/security/change_email.html:17
