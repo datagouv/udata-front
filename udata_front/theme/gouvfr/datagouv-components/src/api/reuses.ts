@@ -1,15 +1,15 @@
 import { getLocalizedUrl } from "../helpers/i18n";
 import { api } from "../api";
+import type { ReuseType } from "../types/reuses";
 
 let reuseTypesRequest: Array<ReuseType> | null = null;
 
-export type ReuseType = {
-  id: string,
-  label: string,
-};
-
 export function getReuseTypesUrl() {
   return getLocalizedUrl("reuses/types/");
+}
+
+export function getReuseTopicsUrl() {
+  return getLocalizedUrl("reuses/topics/");
 }
 
 export async function fetchReuseTypes() {

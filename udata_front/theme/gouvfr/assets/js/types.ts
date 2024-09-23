@@ -1,4 +1,4 @@
-import type { Dataset, FileResourceFileType, NewDataset as BaseNewDataset, Organization, Owned, RemoteResourceFileType, ResourceType, User } from "@datagouv/components/ts";
+import type { FileResourceFileType, Organization, RemoteResourceFileType, ResourceType, User } from "@datagouv/components/ts";
 
 import { CLOSED_FORMATS } from "./helpers";
 
@@ -92,41 +92,6 @@ export type Sort = {
   key: string
 }
 
-export type Quality = {
-  all_resources_available: boolean;
-  dataset_description_quality: boolean;
-  has_open_format: boolean;
-  has_resources: boolean;
-  license: boolean;
-  resources_documentation: boolean;
-  score: number;
-  spatial: boolean;
-  temporal_coverage: boolean;
-  update_frequency: boolean;
-  update_fulfilled_in_time: boolean;
-}
-
-// TODO : import from datagouv/components when available
-export type Harvest = {
-  backend: string;
-}
-
-export type OwnedWithId = { organization: string, owner: never | null } | { organization: never | null, owner: string };
-
-export type NewDataset = Omit<BaseNewDataset, keyof OwnedWithId> & OwnedWithId;
-
-export type BaseNewReuse = Owned & {
-  title: string;
-  description: string;
-  tags: Array<string> | null;
-  datasets: Array<Dataset | string>;
-  topic: string;
-  type: string;
-  url: string;
-};
-
-export type NewReuse = Omit<BaseNewReuse, keyof OwnedWithId> & OwnedWithId;
-
 export type Me = User & {
   about: string,
   active: boolean,
@@ -147,6 +112,8 @@ export type AxisAlignment = "start" | "center" | "end";
 export type SortDirection = 'asc' | 'desc';
 
 export type DatasetSortedBy = 'title' | 'created' | 'last_update' | 'reuses' | 'followers' | 'views';
+
+export type ReuseSortedBy = 'title' | 'created' | 'datasets' | 'followers' | 'views';
 
 export type SpatialZone = {
   code: string;
@@ -214,14 +181,5 @@ export type OrganizationV1 = Organization & {
   };
   url: string | null;
 }
-
-export type GetPaginatedData<T> = {
-  data: Array<T>;
-  next_page: string | null;
-  page: number;
-  page_size: number;
-  previous_page: string | null;
-  total: number;
-};
 
 export default {};

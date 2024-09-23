@@ -2,7 +2,13 @@
 
 ## Current (in progress)
 
+- Nothing yet
+
+## 1.4.0 (2024-09-23)
+
 - Add `StatBox` and `SmallChart` components [#517](https://github.com/datagouv/udata-front/pull/517)
+- Move api calls and types from udata-front [#527](https://github.com/datagouv/udata-front/pull/527)
+- Fix api urls [#473](https://github.com/datagouv/udata-front/pull/473)
 
 ## 1.3.1 (2024-09-12)
 

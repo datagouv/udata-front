@@ -14,9 +14,9 @@ export const Form = {
   parameters: {
     msw: [
       http.post('*/api/1/datasets/', async ({ request }) => {
-        /** @type {import("../../types").NewDataset} */
+        /** @type {import('@datagouv/components/ts').NewDataset} */
         const body = await request.json();
-        /** @type {import("../../types").Dataset} */
+        /** @type {import('@datagouv/components/ts').Dataset} */
         const dataset = {...body, id: "someId", last_update: new Date()};
         await delay();
         return HttpResponse.json(dataset);
@@ -47,9 +47,9 @@ export const FormWithFailedRequests = {
   parameters: {
     msw: [
       http.post('*/api/1/datasets/', async ({ request }) => {
-        /** @type {import("../../types").NewDataset} */
+        /** @type {import('@datagouv/components/ts').NewDataset} */
         const body = await request.json();
-        /** @type {import("../../types").Dataset} */
+        /** @type {import('@datagouv/components/ts').Dataset} */
         const dataset = {...body, id: "someId", last_update: new Date()};
         await delay();
         return HttpResponse.json(dataset);
@@ -62,7 +62,7 @@ export const FormWithFailedRequests = {
       }),
       http.post('*/api/1/datasets/:datasetId/resources', async () => {
         await delay();
-        return new HttpResponse.json({}, {
+        return HttpResponse.json({}, {
           status: 400,
           statusText: "This endpoint only supports remote resources",
         });
