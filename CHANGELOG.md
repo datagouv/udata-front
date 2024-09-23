@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 5.2.2 (2024-09-23)
 
 - Fix translations not shown [#541](https://github.com/datagouv/udata-front/pull/541)
