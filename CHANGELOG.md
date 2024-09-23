@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 5.2.1 (2024-09-23)
 
 - Add index page with search for dataservices [#516](https://github.com/datagouv/udata-front/pull/516)
