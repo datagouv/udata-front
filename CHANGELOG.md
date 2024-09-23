@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix translations not shown [#541](https://github.com/datagouv/udata-front/pull/541)
 
 ## 5.2.1 (2024-09-23)
 
