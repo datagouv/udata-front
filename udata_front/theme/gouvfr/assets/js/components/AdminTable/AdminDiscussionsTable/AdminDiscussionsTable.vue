@@ -1,5 +1,5 @@
 <template>
-  <AdminTable :loading>
+  <AdminTable class="fr-table--layout-fixed" :loading>
     <thead>
       <AdminTableTh
         @sort="(direction: SortDirection) => $emit('sort', 'title', direction)"
@@ -25,21 +25,32 @@
       >
         {{ t("Closed at") }}
       </AdminTableTh>
-      <AdminTableTh scope="col">
+      <AdminTableTh scope="col" style="width: 25%;">
         {{ t("URL") }}
       </AdminTableTh>
     </thead>
     <tbody>
       <tr v-for="discussion in discussions">
         <td>
-          <p class="fr-text--bold">{{ discussion.title }}</p>
+          <p class="fr-text--bold">
+            <TextClamp
+              :text="discussion.title"
+              :auto-resize="true"
+              :max-lines="1"
+            />
+          </p>
           <p v-if="subjects[discussion.subject.id]">
             <a
               class="fr-link inline-flex"
               :href="subjects[discussion.subject.id].page"
             >
               <Vicon :height="12" class="self-center" :name="subjects[discussion.subject.id].icon"/>
-              <TextClamp :text="subjects[discussion.subject.id].title" :auto-resize="true" :max-lines="1"/>
+              <TextClamp
+                class="overflow-wrap-anywhere"
+                :text="subjects[discussion.subject.id].title"
+                :auto-resize="true"
+                :max-lines="1"
+              />
             </a>
           </p>
         </td>
