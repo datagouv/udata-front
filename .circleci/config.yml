@@ -136,6 +136,7 @@ jobs:
     docker:
       # TODO make an image based on 2-alpine w/ nvm and phantom deps
       - image: cimg/python:3.11-node
+    resource_class: medium+
     steps:
       - checkout
       - attach_workspace:
