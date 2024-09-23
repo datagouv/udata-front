@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 5.2.1 (2024-09-23)
 
 - Add index page with search for dataservices [#516](https://github.com/datagouv/udata-front/pull/516)
 - Add beta admin datasets page [#371](https://github.com/etalab/udata-front/pull/371)
