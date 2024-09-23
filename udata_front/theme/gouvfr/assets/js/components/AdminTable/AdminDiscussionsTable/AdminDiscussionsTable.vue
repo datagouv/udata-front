@@ -1,0 +1,118 @@
+<template>
+  <AdminTable :loading>
+    <thead>
+      <AdminTableTh
+        @sort="(direction: SortDirection) => $emit('sort', 'title', direction)"
+        :sorted="sorted('title')"
+        scope="col"
+      >
+        {{ t("Discussion") }}
+      </AdminTableTh>
+      <AdminTableTh scope="col">
+        {{ t("Status") }}
+      </AdminTableTh>
+      <AdminTableTh
+        @sort="(direction: SortDirection) => $emit('sort', 'created', direction)"
+        :sorted="sorted('created')"
+        scope="col"
+      >
+        {{ t("Created at") }}
+      </AdminTableTh>
+      <AdminTableTh
+        @sort="(direction: SortDirection) => $emit('sort', 'closed', direction)"
+        :sorted="sorted('closed')"
+        scope="col"
+      >
+        {{ t("Closed at") }}
+      </AdminTableTh>
+      <AdminTableTh scope="col">
+        {{ t("URL") }}
+      </AdminTableTh>
+    </thead>
+    <tbody>
+      <tr v-for="discussion in discussions">
+        <td>
+          <p class="fr-text--bold">{{ discussion.title }}</p>
+          <p v-if="subjects[discussion.subject.id]">
+            <a
+              class="fr-link inline-flex"
+              :href="subjects[discussion.subject.id].page"
+            >
+              <Vicon :height="12" class="self-center" :name="subjects[discussion.subject.id].icon"/>
+              <TextClamp :text="subjects[discussion.subject.id].title" :auto-resize="true" :max-lines="1"/>
+            </a>
+          </p>
+        </td>
+        <td>
+          {{ discussion.closed ? "Closed" : "Public" }}
+        </td>
+        <td>{{ formatDate(discussion.created) }}</td>
+        <td>
+          <template v-if="discussion.closed">{{ formatDate(discussion.closed) }}</template></td>
+        <td>
+          <a
+            v-if="subjects[discussion.subject.id]"
+            class="fr-link inline-flex"
+            :href="getDiscussionUrl(discussion.id, subjects[discussion.subject.id])"
+            target="_blank"
+          >
+            <TextClamp
+              :text="getDiscussionUrl(discussion.id, subjects[discussion.subject.id])"
+              :auto-resize="true"
+              :max-lines="1"
+            />
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </AdminTable>
+</template>
+<script setup lang="ts">
+import { formatDate } from "@datagouv/components/ts";
+import { OhVueIcon as Vicon } from "oh-vue-icons";
+import { ref, watchEffect } from "vue";
+import { useI18n } from "vue-i18n";
+import TextClamp from "vue3-text-clamp";
+import { formatSubject, getSubject, SubjectSummary } from "../../../api/discussions";
+import AdminTableTh from "../Table/AdminTableTh.vue";
+import type { DiscussionSortedBy, DiscussionSubjectTypes, SortDirection, Thread } from '../../../types';
+import AdminTable from "../Table/AdminTable.vue";
+
+const props = defineProps<{
+  discussions: Array<Thread>;
+  loading: boolean;
+  sortDirection: SortDirection;
+  sortedBy: DiscussionSortedBy;
+}>();
+
+defineEmits<{
+  (event: 'sort', column: DiscussionSortedBy, direction: SortDirection): void
+}>();
+
+const { t } = useI18n();
+
+const subjectPromises = ref<Record<string, Promise<DiscussionSubjectTypes>>>({});
+const subjects = ref<Record<string, SubjectSummary>>({});
+
+watchEffect(async () => {
+  for (const discussion of props.discussions) {
+    if(!(discussion.subject.id in subjectPromises.value)) {
+      const subjectPromise = getSubject(discussion.subject);
+      subjectPromises.value[discussion.subject.id] = subjectPromise;
+      const subject = await subjectPromises.value[discussion.subject.id];
+      subjects.value[discussion.subject.id] = formatSubject(subject, discussion.subject.class);
+    }
+  }
+});
+
+function getDiscussionUrl(discussionId: string, subject: SubjectSummary) {
+  return subject.page + "#/discussions/" + discussionId;
+}
+
+function sorted(column: DiscussionSortedBy) {
+  if(props.sortedBy === column) {
+    return props.sortDirection;
+  }
+  return null;
+}
+</script>

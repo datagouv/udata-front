@@ -1,5 +1,5 @@
 import { addIcons } from "oh-vue-icons";
-import { RiArticleLine, RiDatabase2Line, RiLineChartLine } from "oh-vue-icons/icons";
+import { RiArticleLine, RiDatabase2Line, RiLineChartLine, RiTerminalLine } from "oh-vue-icons/icons";
 import { api } from "@datagouv/components";
 import type { DiscussionSubject, DiscussionSubjectTypes, Thread } from "../types";
 import { getLocalizedUrl } from "../i18n";
@@ -8,21 +8,32 @@ import { getDataset } from "./datasets";
 import { getReuse } from "./reuses";
 import { getPost } from "./posts";
 import { getDataservice } from "./dataservices";
+import { PaginatedArray } from "./types";
 
-addIcons(RiArticleLine, RiDatabase2Line, RiLineChartLine);
+addIcons(RiArticleLine, RiDatabase2Line, RiLineChartLine, RiTerminalLine);
 
-export async function getOrganizationDiscussions(oid: string, pageSize = 10) {
-  const resp = await api.get<Array<Thread>>(getLocalizedUrl(`organizations/${oid}/discussions/`), {
+export type SubjectSummary = {
+  title: string;
+  icon: string;
+  page: string;
+};
+
+export async function getOrganizationDiscussions(oid: string, page: number, pageSize: number, sortDirection: string) {
+  const resp = await api.get<PaginatedArray<Thread>>(getLocalizedUrl("discussions/"), {
     params: {
+      org: oid,
+      sort: sortDirection,
       page_size: pageSize,
+      page,
     }
   });
   return resp.data;
 }
 
-
 export async function getSubject(subject: DiscussionSubject) {
   switch (subject.class) {
+    case 'Dataservice':
+      return getDataservice(subject.id);
     case 'Dataset':
       return getDataset(subject.id);
     case 'Post':
@@ -31,6 +42,14 @@ export async function getSubject(subject: DiscussionSubject) {
       return getReuse(subject.id);
     default:
       return throwOnNever(subject.class, `Unknown type ${subject.class}`);
+  };
+}
+
+export function formatSubject(subject: DiscussionSubjectTypes, subjectClass: DiscussionSubject["class"]): SubjectSummary {
+  return {
+    title: getSubjectTitle(subject),
+    icon: getSubjectTypeIcon(subjectClass),
+    page: getSubjectPage(subject),
   };
 }
 
@@ -44,8 +63,20 @@ export function getSubjectTitle(subject: DiscussionSubjectTypes) {
   return throwOnNever(subject, `Unknown type ${subject}`);
 };
 
-export function getSubjectTypeIcon(subject: DiscussionSubject) {
-  switch (subject.class) {
+export function getSubjectPage(subject: DiscussionSubjectTypes) {
+  if('page' in subject) {
+    return subject.page;
+  }
+  if('self_web_url' in subject) {
+    return subject.self_web_url;
+  }
+  return throwOnNever(subject, `Unknown type ${subject}`);
+};
+
+export function getSubjectTypeIcon(subjectClass: DiscussionSubject["class"]) {
+  switch (subjectClass) {
+    case 'Dataservice':
+      return "ri-terminal-line";
     case 'Dataset':
       return "ri-database-2-line";
     case 'Post':
@@ -53,6 +84,6 @@ export function getSubjectTypeIcon(subject: DiscussionSubject) {
     case 'Reuse':
       return "ri-line-chart-line";
     default:
-      return throwOnNever(subject.class, `Unknown type ${subject.class}`);
+      return throwOnNever(subjectClass, `Unknown type ${subjectClass}`);
   };
 };

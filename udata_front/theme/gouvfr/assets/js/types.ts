@@ -1,6 +1,7 @@
-import type { FileResourceFileType, Organization, RemoteResourceFileType, ResourceType, User } from "@datagouv/components/ts";
+import type { Dataset, FileResourceFileType, Organization, RemoteResourceFileType, ResourceType, Reuse, User } from "@datagouv/components/ts";
 
 import { CLOSED_FORMATS } from "./helpers";
+import { Dataservice } from "@datagouv/components";
 
 export type MultiSelectOption = {
   label: string;
@@ -77,10 +78,10 @@ export type Spam = {
 
 export type Discussion = Array<{content: string, posted_by: User, posted_on: string, spam?: Spam}>;
 
-export type DiscussionSubjectTypes = Dataset | Reuse | Post;
+export type DiscussionSubjectTypes = Dataservice | Dataset | Reuse | Post;
 
 export type DiscussionSubject = {
-  class: 'Dataset' | 'Reuse' | 'Dataservice' | 'Post';
+  class: 'Dataservice' | 'Dataset' | 'Reuse' | 'Post';
   id: string;
 };
 
@@ -123,6 +124,8 @@ export type SortDirection = 'asc' | 'desc';
 export type DatasetSortedBy = 'title' | 'created' | 'last_update' | 'reuses' | 'followers' | 'views';
 
 export type ReuseSortedBy = 'title' | 'created' | 'datasets' | 'followers' | 'views';
+
+export type DiscussionSortedBy = 'title' | 'created' | 'closed';
 
 export type SpatialZone = {
   code: string;
