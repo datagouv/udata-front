@@ -1,7 +1,6 @@
-import type { Dataset, FileResourceFileType, Organization, RemoteResourceFileType, ResourceType, Reuse, User } from "@datagouv/components/ts";
+import type { Dataservice, Dataset, FileResourceFileType, Organization, RemoteResourceFileType, ResourceType, Reuse, User } from "@datagouv/components/ts";
 
 import { CLOSED_FORMATS } from "./helpers";
-import { Dataservice } from "@datagouv/components";
 
 export type MultiSelectOption = {
   label: string;

@@ -1,4 +1,4 @@
-import { api } from "@datagouv/components";
+import { api } from "@datagouv/components/ts";
 import type { Post } from "../types";
 
 export async function getPost(id: string) {
