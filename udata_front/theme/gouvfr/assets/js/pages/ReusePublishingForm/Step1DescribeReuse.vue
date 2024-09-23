@@ -87,7 +87,7 @@
               :state="state.image"
             >
               <p class="fr-m-0">
-                {{ t("If your reuse takes the form of a graphical representation, you can provide a preview to other users through an image or screenshot. This image will appear in the \"Reuses\" section of the associated dataset page. When relevant, screenshots are more effective in conveying what the reuse is about, so they are preferable to logos or illustrations, for example.") }}
+                {{ t(`If your reuse takes the form of a graphical representation, you can provide a preview to other users through an image or screenshot. This image will appear in the "Reuses" section of the associated dataset page. When relevant, screenshots are more effective in conveying what the reuse is about, so they are preferable to logos or illustrations, for example.`) }}
               </p>
               <Well class="fr-mt-1w" v-if="fieldHasWarning('image')" color="orange-terre-battue">
                 {{ getWarningText("image") }}
@@ -108,7 +108,7 @@
               </div>
               <div class="fr-col">
                 <p class="fr-m-0 fr-text--bold">{{ t('What is a reuse?') }}</p>
-                <p class="fr-m-0 fr-text--xs">{{ t('A reuse is an exemple of public data\'s usage.') }} {{ t('Publishing a reuse can allow you to gain visibility and start start a dialogue with the dataset producer.') }}</p>
+                <p class="fr-m-0 fr-text--xs">{{ t("A reuse is an exemple of public data's usage.") }} {{ t('Publishing a reuse can allow you to gain visibility and start start a dialogue with the dataset producer.') }}</p>
               </div>
             </div>
           </Well>

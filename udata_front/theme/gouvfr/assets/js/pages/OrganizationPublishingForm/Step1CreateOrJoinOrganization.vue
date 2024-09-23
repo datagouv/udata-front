@@ -3,7 +3,7 @@
     <Container class="fr-mb-6v">
       <ActionCard
         :title="t('Join an Organization')"
-        :content="t('An organization is an entity in which many users can collaborate. The published datasets on the organization\'s name can be edited by its members.')"
+        :content="t(`An organization is an entity in which many users can collaborate. The published datasets on the organization's name can be edited by its members.`)"
         :icon="organizationIcon"
         :stretchHeight="true"
       >
