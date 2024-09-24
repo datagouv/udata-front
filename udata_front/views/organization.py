@@ -12,8 +12,9 @@ from udata.models import (
 )
 from udata.sitemap import sitemap
 from udata.core.dataset.csv import (
-    DatasetCsvAdapter, DiscussionCsvAdapter, ResourcesCsvAdapter
+    DatasetCsvAdapter, ResourcesCsvAdapter
 )
+from udata.core.discussion.csv import DiscussionCsvAdapter
 from udata.core.dataset.search import DatasetSearch
 from udata.core.organization.permissions import (
     EditOrganizationPermission, OrganizationPrivatePermission
