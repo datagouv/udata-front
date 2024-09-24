@@ -69,7 +69,7 @@
               </p>
             </td>
             <td>
-              <p class="fr-badge">{{ getRoleLabel(member.role) }}</p>
+              <AdminBadge :type="getStatus(member.role).type">{{ getStatus(member.role).label }}</AdminBadge>
             </td>
             <td>{{ formatDate(member.since) }}</td>
             <td>
@@ -108,7 +108,8 @@ import AdminTableTh from '../../../components/AdminTable/Table/AdminTableTh.vue'
 import { useCurrentOrganization } from "../../../composables/admin/useCurrentOrganization";
 import { useToast } from "../../../composables/useToast";
 import { user, userIsAdmin } from "../../../config";
-import type { EditingMember, MemberRole, PendingMembershipRequest } from "../../../types";
+import type { AdminBadgeState, EditingMember, MemberRole, PendingMembershipRequest } from "../../../types";
+import AdminBadge from '../../../components/AdminBadge/AdminBadge.vue';
 
 const props = defineProps<{oid: string}>();
 
@@ -130,8 +131,11 @@ const members = ref<Array<EditingMember>>([]);
 
 const loading = ref(false);
 
-function getRoleLabel(role: MemberRole) {
-  return roles.value.find(memberRole => memberRole.value === role)?.label ?? role;
+function getStatus(role: MemberRole): {label: string, type: AdminBadgeState} {
+  return {
+    label: roles.value.find(memberRole => memberRole.value === role)?.label ?? role,
+    type: role === "admin" ? 'info' : 'default',
+  };
 }
 
 async function updateMembers() {
