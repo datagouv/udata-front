@@ -1,6 +1,6 @@
 <template>
     <ActionCard
-        :title="t('Didn\'t find what you are looking for?')"
+        :title="t(`Didn't find what you are looking for?`)"
         :icon="magnifyingGlassIcon"
         type="primary"
     >

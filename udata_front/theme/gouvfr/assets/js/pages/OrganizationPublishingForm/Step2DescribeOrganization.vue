@@ -69,7 +69,7 @@
             :state="state.logo"
           >
             <p class="fr-m-0">
-              {{ t("If your organization has a logo or a profile picture, please upload it here. To upload a logo, click on the \"Choose a file from your computer\" button. The following image formats are accepted: png, jpg/jpeg.") }}
+              {{ t(`If your organization has a logo or a profile picture, please upload it here. To upload a logo, click on the "Choose a file from your computer" button. The following image formats are accepted: png, jpg/jpeg.`) }}
             </p>
             <Well class="fr-mt-1w" v-if="fieldHasWarning('frequency')" color="orange-terre-battue">
               {{ getWarningText("frequency") }}

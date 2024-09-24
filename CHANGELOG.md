@@ -4,6 +4,10 @@
 
 - Nothing yet
 
+## 5.2.2 (2024-09-23)
+
+- Fix translations not shown [#541](https://github.com/datagouv/udata-front/pull/541)
+
 ## 5.2.1 (2024-09-23)
 
 - Add index page with search for dataservices [#516](https://github.com/datagouv/udata-front/pull/516)
