@@ -55,7 +55,9 @@
           </p>
         </td>
         <td>
-          {{ discussion.closed ? "Closed" : "Public" }}
+          <AdminBadge :type="getStatus(discussion).type">
+            {{ getStatus(discussion).label }}
+          </AdminBadge>
         </td>
         <td>{{ formatDate(discussion.created) }}</td>
         <td>
@@ -85,9 +87,11 @@ import { ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import TextClamp from "vue3-text-clamp";
 import { formatSubject, getSubject, SubjectSummary } from "../../../api/discussions";
-import AdminTableTh from "../Table/AdminTableTh.vue";
-import type { DiscussionSortedBy, DiscussionSubjectTypes, SortDirection, Thread } from '../../../types';
 import AdminTable from "../Table/AdminTable.vue";
+import AdminTableTh from "../Table/AdminTableTh.vue";
+import type { AdminBadgeState, DiscussionSortedBy, DiscussionSubjectTypes, SortDirection, Thread } from '../../../types';
+import { user } from "../../../config";
+import AdminBadge from "../../AdminBadge/AdminBadge.vue";
 
 const props = defineProps<{
   discussions: Array<Thread>;
@@ -97,7 +101,7 @@ const props = defineProps<{
 }>();
 
 defineEmits<{
-  (event: 'sort', column: DiscussionSortedBy, direction: SortDirection): void
+  (event: 'sort', column: DiscussionSortedBy, direction: SortDirection): void;
 }>();
 
 const { t } = useI18n();
@@ -125,5 +129,31 @@ function sorted(column: DiscussionSortedBy) {
     return props.sortDirection;
   }
   return null;
+}
+
+function getStatus(discussion: Thread): {label: string, type: AdminBadgeState} {
+  if (discussion.closed) {
+    return {
+      label: t("Closed"),
+      type: "default",
+    };
+  } else if (discussion.discussion.length === 1) {
+    return {
+      label: t("New"),
+      type: "info",
+    };
+  }
+  const lastComment = discussion.discussion.slice(-1)[0];
+  if (lastComment.posted_by.id === user?.id) {
+    return {
+      label: t("Answered"),
+      type: "default",
+    };
+  } else {
+    return {
+      label: t("New comment"),
+      type: "info"
+    };
+  }
 }
 </script>

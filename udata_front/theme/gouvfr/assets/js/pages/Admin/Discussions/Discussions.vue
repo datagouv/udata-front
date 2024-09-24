@@ -27,6 +27,14 @@
       :sortedBy
       @sort="sort"
     />
+    <Container v-else class="fr-my-2w">
+      <div class="text-align-center fr-py-1w">
+        <img :src="discussionIcon" alt="" loading="lazy"/>
+        <p class="fr-text--bold fr-my-3v">
+          {{ t(`There is no discussion yet`) }}
+        </p>
+      </div>
+    </Container>
     <Pagination
       v-if="totalResult > pageSize"
       :page="page"
@@ -41,10 +49,12 @@ import { Pagination } from '@datagouv/components/ts';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from "vue-i18n";
 import { getOrganizationDiscussions } from '../../../api/discussions';
+import AdminDiscussionsTable from '../../../components/AdminTable/AdminDiscussionsTable/AdminDiscussionsTable.vue';
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
+import Container from '../../../components/Ui/Container/Container.vue';
 import { useCurrentOrganization } from '../../../composables/admin/useCurrentOrganization';
 import type { DiscussionSortedBy, SortDirection, Thread } from "../../../types";
-import AdminDiscussionsTable from '../../../components/AdminTable/AdminDiscussionsTable/AdminDiscussionsTable.vue';
+import discussionIcon from "../../../../../templates/svg/blank_state/discussion.svg";
 
 const { t } = useI18n();
 const props = defineProps<{oid: string}>();
