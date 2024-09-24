@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Adapt to discussion csv export refactor [#3152](https://github.com/opendatateam/udata/pull/3152)
 
 ## 5.2.2 (2024-09-23)
 
