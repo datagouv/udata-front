@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add beta admin discussion page [#539](https://github.com/datagouv/udata-front/pull/539)
 
 ## 5.2.2 (2024-09-23)
 
