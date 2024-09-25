@@ -198,7 +198,7 @@
                 :title="t('Logo')"
                 hintText="Max size: 4Mo. Accepted formats: JPG, JPEG, PNG"
                 accept=".jpeg, .jpg, .png"
-                :isValid="file"
+                :isValid="!!file"
                 :validText="t('Your file is valid')"
                 @change="addFiles"
               />
@@ -227,11 +227,10 @@
   </div>
 </template>
 <script lang="ts">
-  import type { NewOrganization } from '@datagouv/components/ts';
-  import type { OrganizationV1 } from '../../types';
+  import type { NewOrganization, Organization } from '@datagouv/components/ts';
 
   export type DescribeOrganizationProps = {
-    organization: NewOrganization | OrganizationV1;
+    organization: NewOrganization | Organization;
     errors: Array<string>;
     showLegend?: boolean;
     showWell?: boolean;
@@ -264,7 +263,7 @@
   });
 
   const emit = defineEmits<{
-    (event: 'submit', submittedOrganization: typeof organization, file: File | null): void,
+    (event: 'submit', submittedOrganization: typeof props.organization, file: File | null): void,
   }>();
 
   const legend = "description-legend";
@@ -280,7 +279,7 @@
 
   const { t } = useI18n();
 
-  const organization = reactive({...props.organization});
+  const organization = reactive<NewOrganization | Organization>({...props.organization});
   const file = ref<File | null>(null);
   const imagePreview = ref<HTMLImageElement | null>(null);
 

@@ -20,9 +20,10 @@
     <h2 class="subtitle subtitle--uppercase fr-mb-5v" v-if="form" :id="form.legend">
       {{ t("Edit profile") }}
     </h2>
+    <AdminLoader :loading="loading && !organization" />
     <DescribeOrganizationFrom
-      v-if="currentOrganization"
-      :organization="currentOrganization"
+      v-if="organization"
+      :organization="organization"
       :errors="errors"
       :showLegend="false"
       :showWell="false"
@@ -112,27 +113,26 @@
   </div>
 </template>
 <script setup lang="ts">
-import { getRandomId } from '@datagouv/components/ts';
+import { getRandomId, type Organization } from '@datagouv/components/ts';
 import { onMounted, ref } from 'vue';
 import { useI18n } from "vue-i18n";
 import { useRouter } from 'vue-router';
-import { fetchMe } from "../../../api/me";
-import { deleteOrganization, updateOrganization } from '../../../api/organizations';
+import { deleteOrganization, getOrganization, updateOrganization } from '../../../api/organizations';
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
 import AdminDangerZone from "../../../components/AdminDangerZone/AdminDangerZone.vue";
 import { useCurrentOrganization } from '../../../composables/admin/useCurrentOrganization';
 import { useToast } from '../../../composables/useToast';
 import DescribeOrganizationFrom from "../../OrganizationPublishingForm/Step2DescribeOrganization.vue";
-import type { Me, OrganizationV1 } from "../../../types";
+import AdminLoader from '../../../components/AdminLoader/AdminLoader.vue';
 
 const { t } = useI18n();
 const { toast } = useToast();
-defineProps<{oid: string}>();
+const props = defineProps<{oid: string}>();
 const router = useRouter();
-const me = ref<Me | null>(null);
 const form = ref<InstanceType<typeof DescribeOrganizationFrom> | null>(null);
 
 const { currentOrganization } = useCurrentOrganization();
+const organization = ref<Organization | null>(null);
 const errors = ref([]);
 const loading = ref(false);
 const modalId = getRandomId("modal");
@@ -151,7 +151,7 @@ function deleteCurrentOrganization() {
   }
 }
 
-function updateCurrentOrganization(organization: OrganizationV1) {
+function updateCurrentOrganization(organization: Organization) {
   loading.value = true;
   updateOrganization(organization)
   .then(() => toast.success(t("Organization updated !")))
@@ -159,5 +159,12 @@ function updateCurrentOrganization(organization: OrganizationV1) {
   .finally(() => loading.value = false);
 }
 
-onMounted(async () => me.value = await fetchMe());
+onMounted(async () => {
+  loading.value = true;
+  try {
+    organization.value = await getOrganization(props.oid);
+  } finally {
+    loading.value = false;
+  }
+  });
 </script>
