@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Upade beta admin members page [#544](https://github.com/datagouv/udata-front/pull/544)
 
 ## 5.2.2 (2024-09-23)
 
