@@ -20,7 +20,7 @@
     <h2 class="subtitle subtitle--uppercase fr-mb-5v" v-if="form" :id="form.legend">
       {{ t("Edit profile") }}
     </h2>
-    <AdminLoader :loading="loading && !organization" />
+    <AdminLoader v-if="loading && !organization" />
     <DescribeOrganizationFrom
       v-if="organization"
       :organization="organization"

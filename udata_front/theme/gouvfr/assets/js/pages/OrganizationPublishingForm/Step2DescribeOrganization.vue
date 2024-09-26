@@ -135,10 +135,11 @@
               <div v-if="checkOrga.exists">
                 <p class="fr-m-0 fr-text--sm fr-text--bold">{{ t('The SIRET n° {number} is matching', { number: organization.business_number_id }) }}</p>
                 <p class="fr-m-0 fr-text--xs">{{ checkOrga.name }}</p>
-                <p class="fr-m-0 fr-text--xs" v-if="checkOrga.isPublicService">
-                  <span class="fr-icon-bank-line" aria-hidden="true"></span>
-                  {{ t('Public Service') }}
-                </p>
+                <OwnerType
+                  :type="checkOrga.type"
+                  color="black"
+                  size="xs"
+                />
               </div>
               <div v-else>
                 <p>{{ t('No organization found matching this SIRET on annuaire-entreprises.data.gouv.fr') }}</p>
@@ -227,7 +228,7 @@
   </div>
 </template>
 <script lang="ts">
-  import type { NewOrganization, Organization } from '@datagouv/components/ts';
+  import type { NewOrganization, Organization, OrganizationTypes } from '@datagouv/components/ts';
 
   export type DescribeOrganizationProps = {
     organization: NewOrganization | Organization;
@@ -237,7 +238,7 @@
   };
 </script>
 <script setup lang="ts">
-  import { Well } from '@datagouv/components/ts';
+  import { OwnerType, Well } from '@datagouv/components/ts';
   import { url } from '@vuelidate/validators';
   import axios from 'axios';
   import { computed, reactive, ref, watchEffect } from 'vue';
@@ -286,7 +287,7 @@
   const checkOrga = ref({
     name: '',
     siren: '',
-    isPublicService: false,
+    type: "other" as OrganizationTypes,
     exists: null as boolean | null
   });
 
@@ -352,6 +353,25 @@
     }
   }
 
+  type RechercheEntrepriseComplements = {
+    collectivite_territoriale: { code: number } | null;
+    est_service_public: boolean;
+    est_association: boolean;
+  };
+
+  function getOrganizationType(complements: RechercheEntrepriseComplements): OrganizationTypes {
+    if(complements.collectivite_territoriale) {
+      return 'Local authority';
+    }
+    if(complements.est_service_public) {
+      return 'public-service';
+    }
+    if(complements.est_association) {
+      return 'Association';
+    }
+    return 'Company';
+  }
+
   watchEffect(() => {
     let siret = organization.business_number_id?.replace(/\s/g,'')
     if (search_siren_url && siret?.length === 14) {
@@ -360,9 +380,7 @@
         results: Array<{
           nom_complet: string;
           siren: string;
-          complements: {
-            est_service_public: boolean;
-          };
+          complements: RechercheEntrepriseComplements;
         }>;
       };
       axios.get<SearchSirenResponse>(search_siren_url, {
@@ -375,10 +393,11 @@
       .then((result) => {
         if (result.total_results === 0) {
           checkOrga.value.exists = false;
+          checkOrga.value.type = 'other';
         } else {
           checkOrga.value.name = result.results[0].nom_complet;
           checkOrga.value.siren = result.results[0].siren;
-          checkOrga.value.isPublicService = result.results[0].complements.est_service_public;
+          checkOrga.value.type = getOrganizationType(result.results[0].complements);
           checkOrga.value.exists = true;
         }
       });
