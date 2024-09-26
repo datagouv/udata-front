@@ -64,7 +64,7 @@ const page = ref(1);
 const pageSize = ref(10);
 const totalResult = ref(0);;
 const sortedBy = ref<DiscussionSortedBy>('created');
-const direction = ref<SortDirection>('asc');
+const direction = ref<SortDirection>('desc');
 const sortDirection = computed(() => `${direction.value === 'asc' ? "" : "-"}${sortedBy.value}`);
 const discussions = ref<Array<Thread>>([]);
 
