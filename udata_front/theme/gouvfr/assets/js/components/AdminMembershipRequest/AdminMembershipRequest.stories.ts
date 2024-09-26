@@ -2,8 +2,9 @@ import { withActions } from '@storybook/addon-actions/decorator';
 import { userEvent, expect, within, fn } from '@storybook/test';
 import type { Meta, StoryObj } from "@storybook/vue3";
 import AdminMembershipRequest from './AdminMembershipRequest.vue';
-import { DefaultIdenticonAvatar } from "../discussions/Avatar/Avatar.stories";
 import { MembershipStatus } from '../../types';
+import { CardLGWithAcronymAndOwnerWithAvatar } from '../dataset/CardLG.stories';
+import { User } from '@datagouv/components/ts';
 
 const meta = {
   title: 'Admin/AdminMembershipRequest',
@@ -24,7 +25,7 @@ const args = {
     status: "pending" as MembershipStatus,
     created: (new Date()).toISOString(),
     comment : "I want to join your organization.",
-    user: DefaultIdenticonAvatar.args.user,
+    user: CardLGWithAcronymAndOwnerWithAvatar.args.dataset.owner as User,
   },
   loading: false,
   showActions: true,
