@@ -9,14 +9,10 @@
         {{ t("Discussion") }}
       </AdminTableTh>
       <AdminTableTh scope="col">
-        {{ t("Status") }}
+        {{ t("Number of comments") }}
       </AdminTableTh>
-      <AdminTableTh
-        @sort="(direction: SortDirection) => $emit('sort', 'created', direction)"
-        :sorted="sorted('created')"
-        scope="col"
-      >
-        {{ t("Created at") }}
+      <AdminTableTh scope="col">
+        {{ t("Last comment") }}
       </AdminTableTh>
       <AdminTableTh
         @sort="(direction: SortDirection) => $emit('sort', 'closed', direction)"
@@ -55,11 +51,17 @@
           </p>
         </td>
         <td>
-          <AdminBadge :type="getStatus(discussion).type">
-            {{ getStatus(discussion).label }}
-          </AdminBadge>
+          {{  discussion.discussion.length  }}
         </td>
-        <td>{{ formatDate(discussion.created) }}</td>
+        <td>
+          <div>
+            <p>{{ formatDate(getLastComment(discussion).posted_on) }}</p>
+            <p class="inline-flex">
+              {{ t('by ') }}
+              <AvatarWithName class="fr-ml-1v" :user="getLastComment(discussion).posted_by" />
+            </p>
+          </div>
+        </td>
         <td>
           <template v-if="discussion.closed">{{ formatDate(discussion.closed) }}</template></td>
         <td>
@@ -81,7 +83,7 @@
   </AdminTable>
 </template>
 <script setup lang="ts">
-import { formatDate } from "@datagouv/components/ts";
+import { AvatarWithName, formatDate } from "@datagouv/components/ts";
 import { OhVueIcon as Vicon } from "oh-vue-icons";
 import { ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
@@ -89,9 +91,7 @@ import TextClamp from "vue3-text-clamp";
 import { formatSubject, getSubject, SubjectSummary } from "../../../api/discussions";
 import AdminTable from "../Table/AdminTable.vue";
 import AdminTableTh from "../Table/AdminTableTh.vue";
-import type { AdminBadgeState, DiscussionSortedBy, DiscussionSubjectTypes, SortDirection, Thread } from '../../../types';
-import { user } from "../../../config";
-import AdminBadge from "../../AdminBadge/AdminBadge.vue";
+import type { Comment, DiscussionSortedBy, DiscussionSubjectTypes, SortDirection, Thread } from '../../../types';
 
 const props = defineProps<{
   discussions: Array<Thread>;
@@ -134,29 +134,7 @@ function sorted(column: DiscussionSortedBy) {
   return null;
 }
 
-function getStatus(discussion: Thread): {label: string, type: AdminBadgeState} {
-  if (discussion.closed) {
-    return {
-      label: t("Closed"),
-      type: "default",
-    };
-  } else if (discussion.discussion.length === 1) {
-    return {
-      label: t("New"),
-      type: "info",
-    };
-  }
-  const lastComment = discussion.discussion.slice(-1)[0];
-  if (lastComment.posted_by.id === user?.id) {
-    return {
-      label: t("Answered"),
-      type: "default",
-    };
-  } else {
-    return {
-      label: t("New comment"),
-      type: "info"
-    };
-  }
+function getLastComment(discussion: Thread): Comment {
+  return discussion.discussion.slice(-1)[0];
 }
 </script>

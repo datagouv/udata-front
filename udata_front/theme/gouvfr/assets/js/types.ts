@@ -75,7 +75,9 @@ export type Spam = {
   status?: string;
 }
 
-export type Discussion = Array<{content: string, posted_by: User, posted_on: string, spam?: Spam}>;
+export type Comment = {content: string, posted_by: User, posted_on: string, spam?: Spam};
+
+export type Discussion = Array<Comment>;
 
 export type DiscussionSubjectTypes = Dataservice | Dataset | Reuse | Post;
 
