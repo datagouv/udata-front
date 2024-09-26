@@ -80,7 +80,7 @@ export type Discussion = Array<{content: string, posted_by: User, posted_on: str
 export type DiscussionSubjectTypes = Dataservice | Dataset | Reuse | Post;
 
 export type DiscussionSubject = {
-  class: 'Dataservice' | 'Dataset' | 'Reuse' | 'Post';
+  class: 'Dataservice' | 'Dataset' | 'Reuse' | 'Post' | 'Topic' | 'Organization';
   id: string;
 };
 

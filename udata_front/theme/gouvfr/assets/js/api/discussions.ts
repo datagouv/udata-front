@@ -30,7 +30,7 @@ export async function getOrganizationDiscussions(oid: string, page: number, page
   return resp.data;
 }
 
-export async function getSubject(subject: DiscussionSubject) {
+export async function getSubject(subject: DiscussionSubject): Promise<DiscussionSubjectTypes | null> {
   switch (subject.class) {
     case 'Dataservice':
       return getDataservice(subject.id);
@@ -41,11 +41,14 @@ export async function getSubject(subject: DiscussionSubject) {
     case 'Reuse':
       return getReuse(subject.id);
     default:
-      return throwOnNever(subject.class, `Unknown type ${subject.class}`);
+      return null;
   };
 }
 
-export function formatSubject(subject: DiscussionSubjectTypes, subjectClass: DiscussionSubject["class"]): SubjectSummary {
+export function formatSubject(subject: DiscussionSubjectTypes | null, subjectClass: DiscussionSubject["class"]): SubjectSummary | null {
+  if(subject === null) {
+    return null;
+  }
   return {
     title: getSubjectTitle(subject),
     icon: getSubjectTypeIcon(subjectClass),
@@ -54,6 +57,9 @@ export function formatSubject(subject: DiscussionSubjectTypes, subjectClass: Dis
 }
 
 export function getSubjectTitle(subject: DiscussionSubjectTypes) {
+  if(subject === null) {
+    return "";
+  }
   if('title' in subject) {
     return subject.title;
   }
@@ -64,6 +70,9 @@ export function getSubjectTitle(subject: DiscussionSubjectTypes) {
 };
 
 export function getSubjectPage(subject: DiscussionSubjectTypes) {
+  if(subject === null) {
+    return "";
+  }
   if('page' in subject) {
     return subject.page;
   }
@@ -84,6 +93,6 @@ export function getSubjectTypeIcon(subjectClass: DiscussionSubject["class"]) {
     case 'Reuse':
       return "ri-line-chart-line";
     default:
-      return throwOnNever(subjectClass, `Unknown type ${subjectClass}`);
+      return "";
   };
 };

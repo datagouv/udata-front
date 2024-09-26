@@ -42,12 +42,12 @@
           <p v-if="subjects[discussion.subject.id]">
             <a
               class="fr-link inline-flex"
-              :href="subjects[discussion.subject.id].page"
+              :href="subjects[discussion.subject.id]?.page"
             >
-              <Vicon :height="12" class="self-center" :name="subjects[discussion.subject.id].icon"/>
+              <Vicon :height="12" class="self-center" :name="subjects[discussion.subject.id]?.icon"/>
               <TextClamp
                 class="overflow-wrap-anywhere"
-                :text="subjects[discussion.subject.id].title"
+                :text="subjects[discussion.subject.id]?.title"
                 :auto-resize="true"
                 :max-lines="1"
               />
@@ -106,8 +106,8 @@ defineEmits<{
 
 const { t } = useI18n();
 
-const subjectPromises = ref<Record<string, Promise<DiscussionSubjectTypes>>>({});
-const subjects = ref<Record<string, SubjectSummary>>({});
+const subjectPromises = ref<Record<string, Promise<DiscussionSubjectTypes | null>>>({});
+const subjects = ref<Record<string, SubjectSummary | null>>({});
 
 watchEffect(async () => {
   for (const discussion of props.discussions) {
@@ -120,7 +120,10 @@ watchEffect(async () => {
   }
 });
 
-function getDiscussionUrl(discussionId: string, subject: SubjectSummary) {
+function getDiscussionUrl(discussionId: string, subject: SubjectSummary | null) {
+  if(!subject) {
+    return "";
+  }
   return subject.page + "#/discussions/" + discussionId;
 }
 
