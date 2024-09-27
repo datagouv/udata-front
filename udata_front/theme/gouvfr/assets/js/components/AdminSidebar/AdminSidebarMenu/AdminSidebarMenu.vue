@@ -55,6 +55,12 @@
             @click="$emit('click')"
           />
           <AdminSidebarLink
+            icon="fr-icon-chat-3-line"
+            :label="t('Discussions')"
+            :to="{name: 'organization-discussions', params: {oid: organization.id}}"
+            @click="$emit('click')"
+          />
+          <AdminSidebarLink
             icon="fr-icon-parent-line"
             :label="t('Members')"
             :to="{name: 'organization-members', params: {oid: organization.id}}"
@@ -87,13 +93,12 @@ export type AdminSidebarMenuProps = {
 };
 </script>
 <script setup lang="ts">
+import { Avatar, getRandomId } from '@datagouv/components/ts';
 import DatabaseIcon from 'iconoir/icons/regular/database.svg?raw';
 import { watchPostEffect } from "vue";
 import { useI18n } from "vue-i18n";
-import Avatar from "../../../components/discussions/Avatar/Avatar.vue";
 import Placeholder from "../../../components/utils/placeholder.vue";
 import AdminSidebarLink from "../AdminSidebarLink/AdminSidebarLink.vue";
-import { getRandomId } from '@datagouv/components/ts';
 
 const props = defineProps<AdminSidebarMenuProps>();
 

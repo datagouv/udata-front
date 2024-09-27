@@ -1,4 +1,4 @@
-import type { FileResourceFileType, Organization, RemoteResourceFileType, ResourceType, User } from "@datagouv/components/ts";
+import type { Dataservice, Dataset, FileResourceFileType, Organization, RemoteResourceFileType, ResourceType, Reuse, User } from "@datagouv/components/ts";
 
 import { CLOSED_FORMATS } from "./helpers";
 
@@ -75,16 +75,27 @@ export type Spam = {
   status?: string;
 }
 
-export type Discussion = Array<{content: string, posted_by: User, posted_on: string, spam?: Spam}>;
+export type Comment = {content: string, posted_by: User, posted_on: string, spam?: Spam};
+
+export type Discussion = Array<Comment>;
+
+export type DiscussionSubjectTypes = Dataservice | Dataset | Reuse | Post;
+
+export type DiscussionSubject = {
+  class: 'Dataservice' | 'Dataset' | 'Reuse' | 'Post' | 'Topic' | 'Organization';
+  id: string;
+};
 
 export type Thread = {
   id: string;
   discussion: Discussion;
   title: string;
   url: string;
+  created: string;
   closed: string;
   closed_by: User;
   spam?: Spam;
+  subject: DiscussionSubject;
 };
 
 export type Sort = {
@@ -114,6 +125,8 @@ export type SortDirection = 'asc' | 'desc';
 export type DatasetSortedBy = 'title' | 'created' | 'last_update' | 'reuses' | 'followers' | 'views';
 
 export type ReuseSortedBy = 'title' | 'created' | 'datasets' | 'followers' | 'views';
+
+export type DiscussionSortedBy = 'title' | 'created' | 'closed';
 
 export type SpatialZone = {
   code: string;
@@ -181,5 +194,26 @@ export type OrganizationV1 = Organization & {
   };
   url: string | null;
 }
+
+export type Post = {
+  body_type: 'markdown' | 'html';
+  content: string;
+  created_at: string;
+  credit_to: string;
+  credit_url: string;
+  datasets: Array<Pick<Dataset, "acronym" | "id" | "page" | "title" | "uri">>;
+  headline: string;
+  id: string;
+  image: string | null;
+  last_modified: string;
+  name: string;
+  owner: User;
+  page: string;
+  published: string;
+  reuses: Array<Pick<Reuse, "id" | "image" | "image_thumbnail" | "page" | "title" | "uri">>;
+  slug: string;
+  tags: Array<string>;
+  url: string;
+};
 
 export default {};

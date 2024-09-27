@@ -13,27 +13,26 @@
       </li>
       <li>
         <a class="fr-breadcrumb__link" aria-current="page">
-          {{ t('Reuses') }}
+          {{ t('Discussions') }}
         </a>
       </li>
     </Breadcrumb>
-    <h1 class="fr-h3">{{ t("Reuses") }}</h1>
-    <h2 class="subtitle subtitle--uppercase">{{ t("{n} reuses of your organization", reuses.length) }}</h2>
-    <AdminReusesTable
+    <h1 class="fr-h3">{{ t("Discussions") }}</h1>
+    <h2 class="subtitle subtitle--uppercase">{{ t("{n} discussions", totalResult) }}</h2>
+    <AdminDiscussionsTable
       v-if="loading || totalResult > 0"
-      :reuses
+      :discussions
       :loading
-      :sortDirection="direction"
+      :sort-direction="direction"
       :sortedBy
       @sort="sort"
     />
-    <Container v-else class="fr-mt-1w fr-mb-2w">
+    <Container v-else class="fr-my-2w">
       <div class="text-align-center fr-py-1w">
-        <img :src="reuseBlankState" alt="" loading="lazy"/>
+        <img :src="discussionIcon" alt="" loading="lazy"/>
         <p class="fr-text--bold fr-my-3v">
-          {{ t(`You haven't published a reuse yet`) }}
+          {{ t(`There is no discussion yet`) }}
         </p>
-        <AdminPublishButton type="reuse"/>
       </div>
     </Container>
     <Pagination
@@ -46,43 +45,42 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Pagination, Reuse } from '@datagouv/components/ts';
+import { Pagination } from '@datagouv/components/ts';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from "vue-i18n";
-import { getOrganizationReuses } from '../../../api/reuses';
-import AdminReusesTable from '../../../components/AdminTable/AdminReusesTable/AdminReusesTable.vue';
+import { getOrganizationDiscussions } from '../../../api/discussions';
+import AdminDiscussionsTable from '../../../components/AdminTable/AdminDiscussionsTable/AdminDiscussionsTable.vue';
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
 import Container from '../../../components/Ui/Container/Container.vue';
 import { useCurrentOrganization } from '../../../composables/admin/useCurrentOrganization';
-import reuseBlankState from "../../../../../templates/svg/blank_state/reuse.svg";
-import { ReuseSortedBy, SortDirection } from '../../../types';
-import AdminPublishButton from '../../../components/AdminPublishButton/AdminPublishButton.vue';
+import type { DiscussionSortedBy, SortDirection, Thread } from "../../../types";
+import discussionIcon from "../../../../../templates/svg/blank_state/discussion.svg";
 
 const { t } = useI18n();
 const props = defineProps<{oid: string}>();
 
-const reuses = ref<Array<Reuse>>([]);
 const loading = ref(false);
 const page = ref(1);
 const pageSize = ref(10);
-const totalResult = ref(0);
-const sortedBy = ref<ReuseSortedBy>('created');
+const totalResult = ref(0);;
+const sortedBy = ref<DiscussionSortedBy>('created');
 const direction = ref<SortDirection>('desc');
 const sortDirection = computed(() => `${direction.value === 'asc' ? "" : "-"}${sortedBy.value}`);
+const discussions = ref<Array<Thread>>([]);
 
 const { currentOrganization } = useCurrentOrganization();
 
-function sort(column: ReuseSortedBy, newDirection: SortDirection) {
+function sort(column: DiscussionSortedBy, newDirection: SortDirection) {
   sortedBy.value = column;
   direction.value = newDirection;
 }
 
 watchEffect(async () => {
   loading.value = true;
-  reuses.value = [];
+  discussions.value = [];
   try {
-    const response = await getOrganizationReuses(props.oid, page.value, pageSize.value, sortDirection.value);
-    reuses.value = response.data;
+    const response = await getOrganizationDiscussions(props.oid, page.value, pageSize.value, sortDirection.value);
+    discussions.value = response.data;
     page.value = response.page;
     pageSize.value = response.page_size;
     totalResult.value = response.total;

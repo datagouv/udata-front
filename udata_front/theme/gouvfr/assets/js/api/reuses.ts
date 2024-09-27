@@ -32,3 +32,8 @@ export function uploadLogo(reuseId: string, file: File) {
     file: file
   });
 }
+
+export async function getReuse(id: string) {
+  const resp = await api.get<Reuse>(`/reuses/${id}/`);
+  return resp.data;
+}
