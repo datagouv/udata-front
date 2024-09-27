@@ -541,5 +541,11 @@
   "Publish the reuse": "Publier la réutilisation",
   "{n} reuses of your organization": "{n} réutilisations de votre organisation",
   "Reuse title": "Titre de la réutilisation",
-  "You haven't published a reuse yet": "Vous n'avez pas encore publié de réutilisation"
+  "You haven't published a reuse yet": "Vous n'avez pas encore publié de réutilisation",
+  "Discussion": "",
+  "Number of comments": "",
+  "Last comment": "",
+  "Closed at": "",
+  "by ": "",
+  "There is no discussion yet": ""
 }
