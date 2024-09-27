@@ -119,6 +119,17 @@
             </LinkedToAccordion>
             <LinkedToAccordion
               class="fr-fieldset__element"
+              :accordion="addAcronymAccordionId"
+            >
+            <InputGroup
+                data-testid="acronymInput"
+                :aria-describedby="addAcronymAccordionId"
+                :label="t('Acronym')"
+                v-model="organization.acronym"
+              />
+            </LinkedToAccordion>
+            <LinkedToAccordion
+              class="fr-fieldset__element"
               :accordion="addSiretAccordionId"
             >
               <InputGroup
@@ -145,17 +156,6 @@
                 <p>{{ t('No organization found matching this SIRET on annuaire-entreprises.data.gouv.fr') }}</p>
               </div>
             </div>
-            <LinkedToAccordion
-              class="fr-fieldset__element"
-              :accordion="addAcronymAccordionId"
-            >
-            <InputGroup
-                data-testid="acronymInput"
-                :aria-describedby="addAcronymAccordionId"
-                :label="t('Acronym')"
-                v-model="organization.acronym"
-              />
-            </LinkedToAccordion>
             <LinkedToAccordion
               class="fr-fieldset__element"
               :accordion="addDescriptionAccordionId"

@@ -6,17 +6,42 @@ import InformationPanel from "./InformationPanel";
 import { OrganizationNameWithCertificate } from "./Organization";
 import { OwnerType, OwnerTypeIcon } from "./Owner";
 import Pagination from "./Pagination";
-import { ResourceAccordion, Loader as ResourceAccordionLoader } from "./ResourceAccordion";
-import ResourceIcon from "./ResourceAccordion/ResourceIcon.vue"
+import { Placeholder } from "./Placeholder";
+import { QualityComponent } from "./QualityComponent";
+import { QualityComponentInline } from "./QualityComponentInline";
 import { QualityItem } from "./QualityItem";
 import { QualityItemWarning } from "./QualityItemWarning";
 import { QualityScore } from "./QualityScore";
+import { ReadMore } from "./ReadMore";
+import { ResourceAccordion, Loader as ResourceAccordionLoader } from "./ResourceAccordion";
+import ResourceIcon from "./ResourceAccordion/ResourceIcon.vue";
 import { ReuseCard } from "./ReuseCard";
+import { StatBox } from "./StatBox";
 import { Toggletip } from "./Toggletip";
-import { QualityComponent } from "./QualityComponent"
-import { QualityComponentInline } from "./QualityComponentInline"
-import { ReadMore } from "./ReadMore"
-import { StatBox } from "./StatBox"
 import Well from "./Well";
 
-export { AppLink, CopyButton, DataserviceCard, DatasetCard, InformationPanel, OrganizationNameWithCertificate, OwnerType, OwnerTypeIcon, Pagination, QualityComponent, QualityComponentInline, QualityItem, QualityItemWarning, QualityScore, ReadMore, ResourceAccordion, ResourceAccordionLoader, ResourceIcon, ReuseCard, StatBox, Toggletip, Well };
+export {
+  AppLink,
+  CopyButton,
+  DataserviceCard,
+  DatasetCard,
+  InformationPanel,
+  OrganizationNameWithCertificate,
+  OwnerType,
+  OwnerTypeIcon,
+  Pagination,
+  Placeholder,
+  QualityComponent,
+  QualityComponentInline,
+  QualityItem,
+  QualityItemWarning,
+  QualityScore,
+  ReadMore,
+  ResourceAccordion,
+  ResourceAccordionLoader,
+  ResourceIcon,
+  ReuseCard,
+  StatBox,
+  Toggletip,
+  Well,
+};

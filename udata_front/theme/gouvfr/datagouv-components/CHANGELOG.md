@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Export `Placeholder` component, use reuse last_modified [#546](https://github.com/datagouv/udata-front/pull/546)
 
 ## 1.4.0 (2024-09-23)
 
