@@ -353,13 +353,13 @@
     }
   }
 
-  type RechercheEntrepriseComplements = {
+  type SearchAdditionalData = {
     collectivite_territoriale: { code: number } | null;
     est_service_public: boolean;
     est_association: boolean;
   };
 
-  function getOrganizationType(complements: RechercheEntrepriseComplements): OrganizationTypes {
+  function getOrganizationType(complements: SearchAdditionalData): OrganizationTypes {
     if(complements.collectivite_territoriale) {
       return 'Local authority';
     }
@@ -380,7 +380,7 @@
         results: Array<{
           nom_complet: string;
           siren: string;
-          complements: RechercheEntrepriseComplements;
+          complements: SearchAdditionalData;
         }>;
       };
       axios.get<SearchSirenResponse>(search_siren_url, {
