@@ -1,2 +1,3 @@
 import Avatar from "./Avatar.vue";
-export { Avatar };
+import AvatarWithName from "./AvatarWithName.vue";
+export { Avatar, AvatarWithName };

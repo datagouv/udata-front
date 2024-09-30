@@ -95,11 +95,11 @@ export type AdminEditMemberModalProps = {
 </script>
 
 <script setup lang="ts">
+import { Avatar } from '@datagouv/components/ts';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { removeMember, updateMemberRole } from "../../api/organizations";
 import AdminDangerZone from "../AdminDangerZone/AdminDangerZone.vue";
-import Avatar from "../discussions/Avatar/Avatar.vue";
 import SelectGroup, { type Option } from "../Form/SelectGroup/SelectGroup.vue";
 import type { EditingMember, Member, MemberRole } from '../../types';
 import { useToast } from '../../composables/useToast';

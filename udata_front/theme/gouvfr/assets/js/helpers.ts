@@ -11,6 +11,10 @@ export const excerpt = (val: string, length = 300) => {
   return truncate(RemoveMarkdown(val), length);
 };
 
+export function throwOnNever(_: never, message: string): never {
+  throw new Error(message);
+}
+
 export const CLOSED_FORMATS = readonly(['pdf', 'doc', 'docx', 'word', 'xls', 'excel', 'xlsx'] as const);
 
 const includeInSubtype = <T, U extends T>(array: ReadonlyArray<U>, value: T): value is U => {

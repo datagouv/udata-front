@@ -129,13 +129,12 @@
   </Container>
 </template>
 <script setup lang="ts">
+import { Avatar, getRandomId } from '@datagouv/components/ts';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import Avatar from '../discussions/Avatar/Avatar.vue';
 import Container from '../Ui/Container/Container.vue';
 import type { PendingMembershipRequest } from '../../types';
 import InputGroup from '../Form/InputGroup/InputGroup.vue';
-import { getRandomId } from '@datagouv/components/ts';
 import AdminEmail from '../AdminEmail/AdminEmail.vue';
 
 const props = defineProps<{
