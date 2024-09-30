@@ -80,7 +80,7 @@
         <p class="fr-text--bold fr-my-3v">
           {{ t(`There is no harvesters yet`) }}
         </p>
-        <AdminPublishButton type="dataset" />
+        <AdminPublishButton type="harvester" />
       </div>
     </Container>
     <Pagination
