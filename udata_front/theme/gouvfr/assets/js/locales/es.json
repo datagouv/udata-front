@@ -547,5 +547,19 @@
   "Last comment": "",
   "Closed at": "",
   "by ": "",
-  "There is no discussion yet": ""
+  "There is no discussion yet": "",
+  "Harvesters": "",
+  "{n} harvesters": "",
+  "Last run": "",
+  "Dataservices": "",
+  "Not yet": "",
+  "There is no harvesters yet": "",
+  "Pending": "",
+  "Initializing": "",
+  "Initialized": "",
+  "Processing": "",
+  "Done": "",
+  "Done with erros": "",
+  "Failed": "",
+  "No job yet": ""
 }
