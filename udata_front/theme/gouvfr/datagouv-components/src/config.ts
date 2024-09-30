@@ -30,6 +30,8 @@ const tabular_page_size = ref<number>(parseInt(import.meta.env.VITE_TABULAR_PAGE
 
 const tabular_allow_remote = ref<boolean>(import.meta.env.VITE_TABULAR_ALLOW_REMOTE);
 
+const tabular_api_dataservice_id = ref<string | null>(import.meta.env.VITE_TABULAR_API_DATASERVICE_ID);
+
 const localConfig = reactive({
   admin_root,
   api_root,
@@ -45,6 +47,7 @@ const localConfig = reactive({
   tabular_allow_remote,
   tabular_api_url,
   tabular_page_size,
+  tabular_api_dataservice_id,
   title,
 });
 
