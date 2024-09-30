@@ -542,5 +542,11 @@
   "{n} reuses of your organization": "{n} reuses of your organization",
   "Reuse title": "Reuse title",
   "You haven't published a reuse yet": "You haven't published a reuse yet",
+  "Discussion": "Discussion",
+  "Number of comments": "Number of comments",
+  "Last comment": "Last comment",
+  "Closed at": "Closed at",
+  "by ": "by ",
+  "There is no discussion yet": "There is no discussion yet",
   "See the organization page": "See the organization page"
 }

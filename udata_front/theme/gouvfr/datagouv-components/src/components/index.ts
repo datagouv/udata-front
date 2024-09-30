@@ -1,4 +1,5 @@
 import AppLink from "./AppLink/AppLink.vue";
+import { Avatar, AvatarWithName } from "./Avatar";
 import { CopyButton } from "./CopyButton";
 import { DatasetCard } from "./DatasetCard";
 import { DataserviceCard } from "./DataserviceCard"
@@ -22,6 +23,8 @@ import Well from "./Well";
 
 export {
   AppLink,
+  Avatar,
+  AvatarWithName,
   CopyButton,
   DataserviceCard,
   DatasetCard,

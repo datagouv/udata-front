@@ -1,5 +1,5 @@
 <template>
-  <div class="fr-my-2w fr-p-2w border border-default-grey fr-enlarge-link" :style="props.style">
+  <div class="fr-my-2w fr-p-2w border border-default-grey fr-enlarge-link">
     <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v fr-ml-n1v" v-if="dataset.private || dataset.archived">
       <p class="fr-badge fr-badge--sm fr-badge--mention-grey text-grey-380 fr-mr-1w" v-if="dataset.private">
         <span class="fr-icon-lock-line fr-icon--sm" aria-hidden="true"></span>
