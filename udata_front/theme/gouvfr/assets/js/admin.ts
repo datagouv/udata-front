@@ -18,6 +18,7 @@ import Admin from "./pages/Admin/Admin.vue";
 import Members from "./pages/Admin/Members/Members.vue";
 import Profile from "./pages/Admin/Profile/Profile.vue";
 import Discussions from "./pages/Admin/Discussions/Discussions.vue";
+import Harvesters from "./pages/Admin/Harvesters/Harvesters.vue";
 
 setupComponents({
   admin_root,
@@ -40,6 +41,7 @@ const routes: Array<RouteRecordRaw> = [
       { path: 'reuses', component: Reuses, props: true, name: "organization-reuses" },
       { path: 'discussions', component: Discussions, props: true, name: "organization-discussions" },
       { path: 'members', component: Members, props: true, name: "organization-members" },
+      { path: 'harvesters', component: Harvesters, props: true, name: "organization-harvesters" },
       { path: 'profile', component: Profile, props: true, name: "organization-profile" },
     ],
   },

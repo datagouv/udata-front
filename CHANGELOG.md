@@ -4,6 +4,7 @@
 
 - Adapt to discussion csv export refactor [#543](https://github.com/datagouv/udata-front/pull/543)
 - Add beta admin discussion page [#539](https://github.com/datagouv/udata-front/pull/539)
+- Add beta admin harvester page [#547](https://github.com/datagouv/udata-front/pull/547)
 - Update beta admin members page [#544](https://github.com/datagouv/udata-front/pull/544)
 
 ## 5.2.2 (2024-09-23)
