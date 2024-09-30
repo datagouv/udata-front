@@ -69,6 +69,7 @@
             icon="fr-icon-server-line"
             :label="t('Harvesters')"
             :to="{name: 'organization-harvesters', params: {oid: organization.id}}"
+            @click="$emit('click')"
           />
           <AdminSidebarLink
           icon="fr-icon-user-line"
