@@ -62,14 +62,10 @@
             </template>
           </td>
           <td>
-            <template v-if="jobs[harvester.id]">
-              {{ getHarvesterDatasets(harvester) }}
-            </template>
+            {{ getHarvesterDatasets(harvester) }}
           </td>
           <td>
-            <template v-if="jobs[harvester.id]">
-              {{ getHarvesterDataservices(harvester) }}
-            </template>
+            {{ getHarvesterDataservices(harvester) }}
           </td>
         </tr>
       </tbody>
@@ -127,11 +123,17 @@ function getHarvesterLinkToAdmin(harvester: HarvesterSource) {
 }
 
 function getHarvesterDataservices(harvester: HarvesterSource) {
-  return jobs.value[harvester.id].items.filter(item => item.dataservice).length;
+  if(!harvester.last_job) {
+    return 0;
+  }
+  return jobs.value[harvester.last_job.id].items.filter(item => item.dataservice).length;
 }
 
 function getHarvesterDatasets(harvester: HarvesterSource) {
-  return jobs.value[harvester.id].items.filter(item => item.dataset).length;
+  if(!harvester.last_job) {
+    return 0;
+  }
+  return jobs.value[harvester.last_job.id].items.filter(item => item.dataset).length;
 }
 
 function getStatus(harvester: HarvesterSource): { label: string, type: AdminBadgeState } {
@@ -188,9 +190,17 @@ watchEffect(async () => {
     page.value = response.page;
     pageSize.value = response.page_size;
     totalResult.value = response.total;
+    const jobRequests = [];
     for (const source of harvesters.value) {
       if(source.last_job?.id) {
-        jobs.value[source.id] = (await api.get<HarvesterJob>(`harvest/job/${source.last_job.id}/`)).data;
+        jobRequests.push(api.get<HarvesterJob>(`harvest/job/${source.last_job.id}/`));
+      }
+    }
+    const requests = await Promise.allSettled(jobRequests);
+    for(const request of requests) {
+      if(request.status === "fulfilled") {
+        console.log(request.value.data)
+        jobs.value[request.value.data.id] = request.value.data;
       }
     }
   } finally {
