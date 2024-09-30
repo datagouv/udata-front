@@ -188,7 +188,7 @@ function deleteCurrentOrganization() {
   }
 }
 
-async function updateCurrentOrganization(updatedOrganization: NewOrganization | Organization, file: File | null) {
+async function updateCurrentOrganization(updatedOrganization: NewOrganization | Organization, logo_file: File | null) {
   loading.value = true;
   try {
     organization.value = await updateOrganization(updatedOrganization as Organization)
@@ -198,10 +198,10 @@ async function updateCurrentOrganization(updatedOrganization: NewOrganization | 
   } finally {
     loading.value = false;
   }
-  if (file && organization.value) {
+  if (logo_file && organization.value) {
     loading.value = true;
     try {
-      const resp = await uploadLogo(organization.value.id, file);
+      const resp = await uploadLogo(organization.value.id, logo_file);
       organization.value.logo_thumbnail = resp.image;
     } catch (e) {
       toast.error(t("Failed to upload logo, you can upload it again in your management panel"));
