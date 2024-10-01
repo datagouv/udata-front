@@ -69,7 +69,7 @@
               </p>
             </td>
             <td>
-              <AdminBadge :type="getStatus(member.role).type">{{ getStatus(member.role).label }}</AdminBadge>
+              <AdminBadge :type="getStatusType(member.role)">{{ getStatus(member.role) }}</AdminBadge>
             </td>
             <td>{{ formatDate(member.since) }}</td>
             <td>
@@ -131,11 +131,12 @@ const members = ref<Array<EditingMember>>([]);
 
 const loading = ref(false);
 
-function getStatus(role: MemberRole): {label: string, type: AdminBadgeState} {
-  return {
-    label: roles.value.find(memberRole => memberRole.value === role)?.label ?? role,
-    type: role === "admin" ? 'info' : 'default',
-  };
+function getStatus(role: MemberRole): string {
+  return roles.value.find(memberRole => memberRole.value === role)?.label ?? role;
+}
+
+function getStatusType(role: MemberRole): AdminBadgeState {
+  return role === "admin" ? 'info' : 'default';
 }
 
 async function updateMembers() {
