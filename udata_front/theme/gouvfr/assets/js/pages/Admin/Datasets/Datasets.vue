@@ -22,7 +22,7 @@
       <div class="fr-col">
         <h2 class="subtitle subtitle--uppercase fr-m-0">{{ t('{n} datasets', totalResult) }}</h2>
       </div>
-      <div v-if="totalResult" class="fr-col-auto fr-grid-row fr-grid-row--middle">
+      <div v-if="totalResult && oid" class="fr-col-auto fr-grid-row fr-grid-row--middle">
         <div>
           <a :href="getOrganizationDatasetsCatalogUrl(oid)" class="fr-btn fr-btn--sm fr-icon-download-line fr-btn--icon-left">
             {{ t('Download catalog') }}
