@@ -559,7 +559,9 @@
   "Initialized": "Initialized",
   "Processing": "Processing",
   "Done": "Done",
-  "Done with errors": "Done with errors",
+  "Done with errors": "",
   "Failed": "Failed",
-  "No job yet": "No job yet"
+  "No job yet": "No job yet",
+  "See the organization page": "See the organization page",
+  "asks to join the organization.": "asks to join the organization."
 }
