@@ -76,7 +76,7 @@
               <span v-if="member.user.last_login_at">{{ formatFromNow(member.user.last_login_at) }}</span>
               <span v-else>{{ t("No connection") }}</span>
             </td>
-            <td style=""v-if="isAdmin">
+            <td v-if="isAdmin">
               <AdminEditMemberButton
                 :member="member"
                 :oid="oid"
