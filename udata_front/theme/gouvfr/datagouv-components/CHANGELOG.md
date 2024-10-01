@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add special style to tabular API dataservice card [#548](https://github.com/datagouv/udata-front/pull/548)
 
 ## 1.4.0 (2024-09-23)
 
