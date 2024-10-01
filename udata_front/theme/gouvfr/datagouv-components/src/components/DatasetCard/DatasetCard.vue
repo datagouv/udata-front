@@ -91,7 +91,7 @@ import Avatar from "../Avatar/Avatar.vue";
 import type { Dataset, DatasetV2 } from "../../types/datasets";
 import { formatRelativeIfRecentDate, summarize } from "../../helpers";
 import OrganizationNameWithCertificate from "../Organization/OrganizationNameWithCertificate.vue";
-import { Placeholder } from "../utils/";
+import { Placeholder } from "../Placeholder";
 import { QualityComponentInline } from "../QualityComponentInline";
 import { useOwnerName } from "../../composables";
 

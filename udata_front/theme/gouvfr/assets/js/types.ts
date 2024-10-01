@@ -177,24 +177,6 @@ export type EditingMember = Member & {
   newRole?: MemberRole;
 };
 
-export type OrganizationV1 = Organization & {
-  business_number_id: string | null;
-  created_at: string;
-  deleted: string | null;
-  description: string;
-  extras: Record<string, any>;
-  last_modified: string;
-  members: Array<Member>;
-  metrics: {
-    datasets: number;
-    followers: number;
-    members: number;
-    reuses: number;
-    views: number;
-  };
-  url: string | null;
-}
-
 export type Post = {
   body_type: 'markdown' | 'html';
   content: string;

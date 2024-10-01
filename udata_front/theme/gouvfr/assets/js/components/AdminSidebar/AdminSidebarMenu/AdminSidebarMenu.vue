@@ -76,6 +76,7 @@
           icon="fr-icon-user-line"
           :label="t('Profile')"
           :to="{name: 'organization-profile', params: {oid: organization.id}}"
+          @click="$emit('click')"
         />
         </template>
       </ul>
