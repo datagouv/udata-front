@@ -1,6 +1,6 @@
 <template>
   <button
-    class="fr-btn fr-btn--sm fr-btn--tertiary-no-outline fr-icon-pencil-line"
+    class="fr-btn fr-btn--sm fr-btn--secondary-grey-500 fr-btn--tertiary-no-outline fr-icon-pencil-line"
     data-fr-opened="false"
     :aria-controls="modalId"
   >

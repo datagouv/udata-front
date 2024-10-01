@@ -15,7 +15,17 @@
           :rounded="true"
           :size="24"
         />
-        {{ t("{fullName} asks to join the organization.", {fullName: request.user.first_name + " " + request.user.last_name}) }}
+        <p class="fr-text--bold fr-m-0 fr-mr-1v">
+          {{ request.user.first_name }} {{ request.user.last_name }}
+        </p>
+        <AdminEmail
+          v-if="request.user.email"
+          :email="request.user.email"
+          class="fr-mr-1v"
+        />
+        <p class="fr-m-0">
+          {{ t("asks to join the organization.") }}
+        </p>
        </div>
        <div class="fr-ml-3v fr-mt-1-5v fr-mb-0 filet filet-default-grey fr-text--sm">
         {{ request.comment }}
@@ -125,6 +135,7 @@ import { useI18n } from 'vue-i18n';
 import Container from '../Ui/Container/Container.vue';
 import type { PendingMembershipRequest } from '../../types';
 import InputGroup from '../Form/InputGroup/InputGroup.vue';
+import AdminEmail from '../AdminEmail/AdminEmail.vue';
 
 const props = defineProps<{
   loading: boolean,
