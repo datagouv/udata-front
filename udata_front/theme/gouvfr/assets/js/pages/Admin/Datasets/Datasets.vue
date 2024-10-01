@@ -61,7 +61,7 @@ import { Pagination, type Dataset } from "@datagouv/components/ts";
 import { refDebounced } from "@vueuse/core";
 import { computed, ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
-import { getOrganizationDatasets, getOrganizationDatasetsCatalogUrl } from "../../../api/datasets";
+import { getOrganizationDatasets, getOrganizationDatasetsCatalogUrl, getUserDatasets } from "../../../api/datasets";
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
 import DatasetsTable from "../../../components/AdminTable/AdminDatasetsTable/AdminDatasetsTable.vue";
 import { useCurrentOrganization } from '../../../composables/admin/useCurrentOrganization';
@@ -70,9 +70,10 @@ import datasetIcon from "../../../../../templates/svg/illustrations/dataset.svg"
 import Container from "../../../components/Ui/Container/Container.vue";
 import AdminPublishButton from "../../../components/AdminPublishButton/AdminPublishButton.vue";
 import type { DatasetSortedBy, SortDirection } from "../../../types";
+import { useMe } from "../../../api/me";
 
 const { t } = useI18n();
-const props = defineProps<{oid: string}>();
+const props = defineProps<{oid?: string}>();
 
 const datasets = ref<Array<Dataset>>([]);
 const loading = ref(false);
@@ -86,6 +87,7 @@ const q = ref("");
 const qDebounced = refDebounced(q, search_autocomplete_debounce);
 
 const { currentOrganization } = useCurrentOrganization();
+const me = useMe();
 
 function sort(column: DatasetSortedBy, newDirection: SortDirection) {
   sortedBy.value = column;
@@ -96,7 +98,14 @@ watchEffect(async () => {
   loading.value = true;
   datasets.value = [];
   try {
-    const response = await getOrganizationDatasets(props.oid, qDebounced.value, page.value, pageSize.value, sortDirection.value);
+    let response;
+    if (props.oid) {
+      response = await getOrganizationDatasets(props.oid, qDebounced.value, page.value, pageSize.value, sortDirection.value);
+    } else if (me.value) {
+      response = await getUserDatasets(me.value.id, qDebounced.value, page.value, pageSize.value, sortDirection.value);
+    } else {
+      return
+    }
     datasets.value = response.data;
     page.value = response.page;
     pageSize.value = response.page_size;
