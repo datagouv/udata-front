@@ -144,7 +144,7 @@ export type MembershipStatus = "pending" | "accepted" | "refused";
 
 export type PendingMembershipRequest = {
   id: string;
-  user: User;
+  user: User & {email: string;};
   status: MembershipStatus;
   created: string;
   comment: string;

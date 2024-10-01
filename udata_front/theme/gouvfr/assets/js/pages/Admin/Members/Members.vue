@@ -19,7 +19,7 @@
     </Breadcrumb>
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle justify-center">
       <div class="fr-col-12 fr-col-md">
-        <h1 class="fr-h1 fr-mb-2w">{{ t("Members") }}</h1>
+        <h1 class="fr-h3 fr-mb-5v">{{ t("Members") }}</h1>
       </div>
       <div class="fr-col-auto" v-if="isAdmin">
         <AdminAddMemberButton
@@ -30,7 +30,7 @@
       </div>
     </div>
     <template v-if="membershipRequests.length">
-      <h2 class="subtitle subtitle--uppercase">
+      <h2 class="subtitle subtitle--uppercase fr-m-0">
         {{ t("{n} requests", {n: membershipRequests.length}) }}
       </h2>
       <AdminMembershipRequest
@@ -49,23 +49,27 @@
       {{ t("{n} members", {n: members.length}) }}
     </h2>
     <div class="fr-table fr-table--layout-fixed">
-      <table>
+      <AdminTable :loading>
         <thead>
           <tr>
-            <th scope="col">{{ t("Members") }}</th>
-            <th scope="col">{{ t("Email") }}</th>
-            <th scope="col">{{ t("Status") }}</th>
-            <th scope="col">{{ t("Member since") }}</th>
-            <th scope="col">{{ t("Last connection") }}</th>
-            <th scope="col" v-if="isAdmin">{{ t("Action") }}</th>
+            <AdminTableTh scope="col">{{ t("Members") }}</AdminTableTh>
+            <AdminTableTh scope="col">{{ t("Status") }}</AdminTableTh>
+            <AdminTableTh scope="col">{{ t("Member since") }}</AdminTableTh>
+            <AdminTableTh scope="col">{{ t("Last connection") }}</AdminTableTh>
+            <AdminTableTh scope="col" v-if="isAdmin">{{ t("Action") }}</AdminTableTh>
           </tr>
         </thead>
         <tbody>
           <tr v-for="member in members" :key="member.user.id">
-            <td>{{ member.user.first_name }} {{ member.user.last_name }}</td>
-            <td>{{ member.user.email }}</td>
             <td>
-              <p class="fr-badge">{{ getRoleLabel(member.role) }}</p>
+              <p class="fr-text--bold fr-m-0">{{ member.user.first_name }} {{ member.user.last_name }}</p>
+              <p class="fr-m-0 fr-text--xs text-mention-grey f-italic">
+                <Vicon :height="11" :width="11" name="ri-mail-line"/>
+                {{ member.user.email }}
+              </p>
+            </td>
+            <td>
+              <AdminBadge :type="getStatusType(member.role)">{{ getStatus(member.role) }}</AdminBadge>
             </td>
             <td>{{ formatDate(member.since) }}</td>
             <td>
@@ -82,13 +86,15 @@
             </td>
           </tr>
         </tbody>
-      </table>
+      </AdminTable>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { formatDate, formatFromNow } from '@datagouv/components/ts';
+import { OhVueIcon as Vicon, addIcons } from "oh-vue-icons";
+import { RiMailLine } from "oh-vue-icons/icons";
 import { computed, onMounted, ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { acceptRequest, formatRolesAsOptions, getOrganization, getPendingMemberships, getRoles, refuseRequest } from "../../../api/organizations";
@@ -97,12 +103,17 @@ import { type Option } from "../../../components/Form/SelectGroup/SelectGroup.vu
 import AdminAddMemberButton from "../../../components/AdminAddMember/AdminAddMemberButton.vue";
 import AdminEditMemberButton from "../../../components/AdminEditMember/AdminEditMemberButton.vue";
 import AdminMembershipRequest from "../../../components/AdminMembershipRequest/AdminMembershipRequest.vue";
+import AdminTable from '../../../components/AdminTable/Table/AdminTable.vue';
+import AdminTableTh from '../../../components/AdminTable/Table/AdminTableTh.vue';
 import { useCurrentOrganization } from "../../../composables/admin/useCurrentOrganization";
 import { useToast } from "../../../composables/useToast";
 import { user, userIsAdmin } from "../../../config";
-import type { EditingMember, MemberRole, PendingMembershipRequest } from "../../../types";
+import type { AdminBadgeState, EditingMember, MemberRole, PendingMembershipRequest } from "../../../types";
+import AdminBadge from '../../../components/AdminBadge/AdminBadge.vue';
 
 const props = defineProps<{oid: string}>();
+
+addIcons(RiMailLine);
 
 const { t } = useI18n();
 
@@ -120,13 +131,23 @@ const members = ref<Array<EditingMember>>([]);
 
 const loading = ref(false);
 
-function getRoleLabel(role: MemberRole) {
+function getStatus(role: MemberRole): string {
   return roles.value.find(memberRole => memberRole.value === role)?.label ?? role;
 }
 
+function getStatusType(role: MemberRole): AdminBadgeState {
+  return role === "admin" ? 'info' : 'default';
+}
+
 async function updateMembers() {
-  const organization = await getOrganization(props.oid);
-  members.value = organization.members;
+  loading.value = true;
+  members.value = [];
+  try {
+    const organization = await getOrganization(props.oid);
+    members.value = organization.members;
+  } finally {
+    loading.value = false;
+  }
 }
 
 async function updateMemberships() {
