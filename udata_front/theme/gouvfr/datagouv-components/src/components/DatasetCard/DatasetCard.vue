@@ -1,5 +1,5 @@
 <template>
-  <div class="fr-my-2w fr-p-2w border border-default-grey fr-enlarge-link" :style="props.style">
+  <div class="fr-my-2w fr-p-2w border border-default-grey fr-enlarge-link">
     <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v fr-ml-n1v" v-if="dataset.private || dataset.archived">
       <p class="fr-badge fr-badge--sm fr-badge--mention-grey text-grey-380 fr-mr-1w" v-if="dataset.private">
         <span class="fr-icon-lock-line fr-icon--sm" aria-hidden="true"></span>
@@ -91,7 +91,7 @@ import Avatar from "../Avatar/Avatar.vue";
 import type { Dataset, DatasetV2 } from "../../types/datasets";
 import { formatRelativeIfRecentDate, summarize } from "../../helpers";
 import OrganizationNameWithCertificate from "../Organization/OrganizationNameWithCertificate.vue";
-import { Placeholder } from "../utils/";
+import { Placeholder } from "../Placeholder";
 import { QualityComponentInline } from "../QualityComponentInline";
 import { useOwnerName } from "../../composables";
 

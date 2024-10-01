@@ -28,6 +28,6 @@
     "udata_front/theme/*/assets/js/**/*.vue",
     "udata_front/theme/*/assets/js/**/*.d.ts",
     "udata_front/theme/*/assets/js/**/*.ts",
-    "vite.config.ts",
+    "vite.config.ts", "udata_front/theme/gouvfr/datagouv-components/src/components/Avatar/AvatarWithName.vue",
   ],
 }

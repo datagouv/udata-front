@@ -1,5 +1,5 @@
 <template>
-  <p class="text-mention-grey fr-text--sm fr-my-0">
+  <p :class="`${colorClass} fr-text--${size} fr-my-0`">
     <OwnerTypeIcon :type="type" /> {{ name }}
   </p>
 </template>
@@ -10,13 +10,27 @@ import OwnerTypeIcon from "./OwnerTypeIcon.vue";
 import { ASSOCIATION, COMPANY, LOCAL_AUTHORITY, OTHER, PUBLIC_SERVICE, USER, type OrganizationTypes, type UserType } from "../../composables/organizations/useOrganizationType";
 import { throwOnNever } from "../../helpers/throwOnNever";
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   type: OrganizationTypes | UserType;
-}>();
+  size?: 'sm' | 'xs';
+  color?: 'black' | 'grey';
+}>(), {
+  size: 'sm',
+  color: 'grey',
+});
+
+const colorClass = computed(() => {
+  switch(props.color) {
+    case "black":
+      return 'text-grey-500';
+    case "grey":
+      return 'text-mention-grey'
+  }
+});
 
 const { t } = useI18n();
 
- const name = computed(() => {
+const name = computed(() => {
   switch (props.type) {
     case PUBLIC_SERVICE:
       return t("Public service");

@@ -12,8 +12,8 @@
       @submit="createOrganizationAndMoveToNextStep"
     />
     <Step3CompleteTheOrganization
-      v-else-if="currentStep === 2"
-      :organization="organization"
+      v-else-if="currentStep === 2 && savedOrganization"
+      :organization="savedOrganization"
       :errors="errors"
       :datasetLink="datasetAdminUrl"
       :reuseLink="reuseAdminUrl"
@@ -21,7 +21,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { type NewOrganization } from '@datagouv/components/ts';
+import type { NewOrganization, Organization } from '@datagouv/components/ts';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Stepper from "../../components/Form/Stepper/Stepper.vue";
@@ -49,8 +49,9 @@ const organization = ref<NewOrganization>({
   description: "",
   url: "",
   logo: "",
-  logo_thumbnail: "",
 });
+
+const savedOrganization = ref<Organization | null>(null);
 
 const errors = ref<Array<string>>([]);
 
@@ -67,15 +68,17 @@ async function createOrganizationAndMoveToNextStep(org: NewOrganization, file: F
   errors.value = [];
   let moveToNextStep = false;
   try {
-    organization.value = await createOrganization(org);
+    savedOrganization.value = await createOrganization(org);
     moveToNextStep = true;
-  } catch (e: Error) {
-    errors.value.push(e.message);
+  } catch (e) {
+    if(e instanceof Error) {
+      errors.value.push(e.message);
+    }
   }
-  if (file) {
+  if (file && savedOrganization.value) {
     try {
-      const resp = await uploadLogo(organization.value.id, file);
-      organization.value.logo_thumbnail = resp.image
+      const resp = await uploadLogo(savedOrganization.value.id, file);
+      savedOrganization.value.logo_thumbnail = resp.image
     } catch (e) {
       errors.value.push(t("Failed to upload logo, you can upload it again in your management panel"));
     }
