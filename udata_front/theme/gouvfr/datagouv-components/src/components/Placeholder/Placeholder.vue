@@ -13,8 +13,8 @@
 import { computed } from "vue";
 import { computedAsync } from '@vueuse/core';
 const props = defineProps<{
-  type: string,
-  src?: string,
+  type: "author" | "dataset" | "news" | "organization" | "reuse",
+  src?: string | null,
   alt?: string,
   size: number
 }>();

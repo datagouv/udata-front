@@ -16,7 +16,7 @@
               <OrganizationNameWithCertificate v-else :organization="reuse.organization" />
             </span>
             <TextClamp class="not-enlarged fr-mr-1v" :auto-resize="true" :text='ownerName' :max-lines='1' v-else />
-            <span class="dash-before-sm whitespace-nowrap">{{ t('published {date}', { date: formatRelativeIfRecentDate(reuse.last_update) }) }}</span>
+            <span class="dash-before-sm whitespace-nowrap">{{ t('published {date}', { date: formatRelativeIfRecentDate(reuse.last_modified) }) }}</span>
           </p>
           <div class="fr-grid-row fr-grid-row--middle">
             <p class="fr-text--sm fr-my-0 dash-after-sm">
@@ -83,7 +83,7 @@ export type ReuseProps = {
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import TextClamp from 'vue3-text-clamp';
-import Placeholder from '../utils/Placeholder.vue';
+import Placeholder from '../Placeholder/Placeholder.vue';
 import { OrganizationNameWithCertificate } from "../Organization";
 import { summarize } from "../../helpers";
 import type { Reuse } from '../../types/reuses';

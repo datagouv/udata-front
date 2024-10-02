@@ -17,12 +17,47 @@
         </a>
       </li>
     </Breadcrumb>
+    <h1 class="fr-h3 fr-mb-5v">{{ t("Profile") }}</h1>
+    <Container
+      v-if="organization"
+      class="fr-mb-5v"
+    >
+      <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle justify-between">
+        <div class="fr-col-12 fr-col-md fr-grid-row fr-grid-row--middle">
+          <Placeholder
+              :src="organization.logo"
+              type="organization"
+              :size="80"
+              class="rounded-xxs border"
+            />
+          <div class="fr-ml-3v fr-my-0 fr-h3">
+            {{ organization.name }}
+            <span
+              v-if="organizationCertified"
+              class="fr-icon-success-line fr-icon--lg text-blue-400"
+              :title="t('The identity of this public service is certified by {certifier}', { certifier: title })"
+              aria-hidden="true"
+            >
+            </span>
+          </div>
+        </div>
+        <div class="fr-col-auto">
+          <a
+            :href="organization.page"
+            class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-eye-line"
+          >
+            {{ t('See the organization page') }}
+          </a>
+        </div>
+      </div>
+    </Container>
     <h2 class="subtitle subtitle--uppercase fr-mb-5v" v-if="form" :id="form.legend">
       {{ t("Edit profile") }}
     </h2>
+    <AdminLoader v-if="loading && !organization" />
     <DescribeOrganizationFrom
-      v-if="currentOrganization"
-      :organization="currentOrganization"
+      v-if="organization"
+      :organization="organization"
       :errors="errors"
       :showLegend="false"
       :showWell="false"
@@ -112,27 +147,29 @@
   </div>
 </template>
 <script setup lang="ts">
-import { getRandomId } from '@datagouv/components/ts';
+import { getRandomId, NewOrganization, Placeholder, useOrganizationCertified, type Organization } from '@datagouv/components/ts';
 import { onMounted, ref } from 'vue';
 import { useI18n } from "vue-i18n";
 import { useRouter } from 'vue-router';
-import { fetchMe } from "../../../api/me";
-import { deleteOrganization, updateOrganization } from '../../../api/organizations';
+import { deleteOrganization, getOrganization, updateOrganization, uploadLogo } from '../../../api/organizations';
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
 import AdminDangerZone from "../../../components/AdminDangerZone/AdminDangerZone.vue";
 import { useCurrentOrganization } from '../../../composables/admin/useCurrentOrganization';
 import { useToast } from '../../../composables/useToast';
 import DescribeOrganizationFrom from "../../OrganizationPublishingForm/Step2DescribeOrganization.vue";
-import type { Me, OrganizationV1 } from "../../../types";
+import AdminLoader from '../../../components/AdminLoader/AdminLoader.vue';
+import Container from '../../../components/Ui/Container/Container.vue';
+import { title } from '../../../config';
 
 const { t } = useI18n();
 const { toast } = useToast();
-defineProps<{oid: string}>();
+const props = defineProps<{oid: string}>();
 const router = useRouter();
-const me = ref<Me | null>(null);
 const form = ref<InstanceType<typeof DescribeOrganizationFrom> | null>(null);
 
 const { currentOrganization } = useCurrentOrganization();
+const organization = ref<Organization | null>(null);
+const { organizationCertified } = useOrganizationCertified(organization);
 const errors = ref([]);
 const loading = ref(false);
 const modalId = getRandomId("modal");
@@ -151,13 +188,35 @@ function deleteCurrentOrganization() {
   }
 }
 
-function updateCurrentOrganization(organization: OrganizationV1) {
+async function updateCurrentOrganization(updatedOrganization: NewOrganization | Organization, logo_file: File | null) {
   loading.value = true;
-  updateOrganization(organization)
-  .then(() => toast.success(t("Organization updated !")))
-  .catch(() => toast.error(t("An error occured when updating the organization.")))
-  .finally(() => loading.value = false);
+  try {
+    organization.value = await updateOrganization(updatedOrganization as Organization)
+    toast.success(t("Organization updated !"))
+  } catch (e) {
+    toast.error(t("An error occured when updating the organization."))
+  } finally {
+    loading.value = false;
+  }
+  if (logo_file && organization.value) {
+    loading.value = true;
+    try {
+      const resp = await uploadLogo(organization.value.id, logo_file);
+      organization.value.logo_thumbnail = resp.image;
+    } catch (e) {
+      toast.error(t("Failed to upload logo, you can upload it again in your management panel"));
+    } finally {
+      loading.value = false;
+    }
+  }
 }
 
-onMounted(async () => me.value = await fetchMe());
+onMounted(async () => {
+  loading.value = true;
+  try {
+    organization.value = await getOrganization(props.oid);
+  } finally {
+    loading.value = false;
+  }
+});
 </script>

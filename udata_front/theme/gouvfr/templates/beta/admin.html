@@ -5,10 +5,6 @@
     'description': _("%(site)s administration panel", site=config['SITE_TITLE']),
 } %}
 
-{% block extra_css %}
-<link href="{{ theme_static('assets/admin.css') }}" rel="stylesheet">
-{% endblock %}
-
 {% block body %}
     {% include theme("banners/feedback.html") %}
     {% include theme("header.html") with context %}
