@@ -46,6 +46,11 @@
           :to="{name: 'me-datasets'}"
           />
           <AdminSidebarLink
+            icon="fr-icon-line-chart-line"
+            :label="t('Reuses')"
+            :to="{name: 'me-reuses'}"
+          />
+          <AdminSidebarLink
           icon="fr-icon-git-pull-request-line"
           :label="t('Community Resources')"
           :to="{name: 'me-community-resources'}"
