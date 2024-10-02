@@ -563,5 +563,12 @@
   "Failed": "Failed",
   "No job yet": "No job yet",
   "See the organization page": "See the organization page",
-  "asks to join the organization.": "asks to join the organization."
+  "asks to join the organization.": "asks to join the organization.",
+  "Community Resources": "Community Resources",
+  "Resource title": "Resource title",
+  "Modified at": "Modified at",
+  "Available": "Available",
+  "Not checked yet": "Not checked yet",
+  "{n} community resources": "{n} community resources",
+  "You haven't published a community resource yet": "You haven't published a community resource yet"
 }
