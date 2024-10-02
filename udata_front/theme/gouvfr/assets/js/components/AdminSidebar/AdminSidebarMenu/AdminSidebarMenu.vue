@@ -50,6 +50,11 @@
             :label="t('Reuses')"
             :to="{name: 'me-reuses'}"
           />
+          <AdminSidebarLink
+          icon="fr-icon-git-pull-request-line"
+          :label="t('Community Resources')"
+          :to="{name: 'me-community-resources'}"
+          />
         </template>
         <template v-else-if="organization">
           <AdminSidebarLink
@@ -80,6 +85,12 @@
             icon="fr-icon-server-line"
             :label="t('Harvesters')"
             :to="{name: 'organization-harvesters', params: {oid: organization.id}}"
+            @click="$emit('click')"
+          />
+          <AdminSidebarLink
+            icon="fr-icon-git-pull-request-line"
+            :label="t('Community Resources')"
+            :to="{name: 'organization-community-resources', params: {oid: organization.id}}"
             @click="$emit('click')"
           />
           <AdminSidebarLink

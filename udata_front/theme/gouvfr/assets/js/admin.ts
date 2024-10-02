@@ -19,6 +19,7 @@ import Members from "./pages/Admin/Members/Members.vue";
 import Profile from "./pages/Admin/Profile/Profile.vue";
 import Discussions from "./pages/Admin/Discussions/Discussions.vue";
 import Harvesters from "./pages/Admin/Harvesters/Harvesters.vue";
+import CommunityResources from "./pages/Admin/CommunityResources/CommunityResources.vue";
 
 setupComponents({
   admin_root,
@@ -39,6 +40,7 @@ const routes: Array<RouteRecordRaw> = [
       { path: '', component: Me, name: "me" },
       { path: 'datasets', component: Datasets, name: "me-datasets" },
       { path: 'reuses', component: Reuses, name: "me-reuses" },
+      { path: 'community-resources', component: CommunityResources, name: "me-community-resources" },
     ]
   },
   {
@@ -49,6 +51,7 @@ const routes: Array<RouteRecordRaw> = [
       { path: 'discussions', component: Discussions, props: true, name: "organization-discussions" },
       { path: 'members', component: Members, props: true, name: "organization-members" },
       { path: 'harvesters', component: Harvesters, props: true, name: "organization-harvesters" },
+      { path: 'community-resources', component: CommunityResources, props: true, name: "organization-community-resources" },
       { path: 'profile', component: Profile, props: true, name: "organization-profile" },
     ],
   },

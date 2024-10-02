@@ -128,6 +128,8 @@ export type ReuseSortedBy = 'title' | 'created' | 'datasets' | 'followers' | 'vi
 
 export type DiscussionSortedBy = 'title' | 'created' | 'closed';
 
+export type CommunityResourceSortedBy = 'created_at_internal' | 'last_modified_internal' | 'title';
+
 export type SpatialZone = {
   code: string;
   id: string;
