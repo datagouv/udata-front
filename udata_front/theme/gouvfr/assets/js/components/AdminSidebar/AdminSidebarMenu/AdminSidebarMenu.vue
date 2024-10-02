@@ -45,6 +45,11 @@
           :label="t('Datasets')"
           :to="{name: 'me-datasets'}"
           />
+          <AdminSidebarLink
+          icon="fr-icon-git-pull-request-line"
+          :label="t('Community Resources')"
+          :to="{name: 'me-community-resources'}"
+          />
         </template>
         <template v-else-if="organization">
           <AdminSidebarLink

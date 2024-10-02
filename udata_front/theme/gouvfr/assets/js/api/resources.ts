@@ -43,6 +43,20 @@ export async function getOrganizationCommunityResources(oid: string, page: numbe
   return resp.data;
 }
 
+
+export async function getUserCommunityResources(userId: string, page: number, pageSize: number, sort: string) {
+  const resp = await api
+    .get<PaginatedArray<CommunityResource>>("datasets/community_resources/", {
+      params: {
+        owner: userId,
+        page,
+        page_size: pageSize,
+        sort,
+      },
+    });
+  return resp.data;
+}
+
 export function getAllowedExtensionsUrl () {
   return getLocalizedUrl("datasets/extensions/");
 }

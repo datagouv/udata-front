@@ -27,6 +27,7 @@ setup((app) => {
       children: [
         { path: '', component: Me, name: "me" },
         { path: 'datasets', component: Datasets, name: "me-datasets" },
+        { path: 'community-resources', component: CommunityRessources, name: "me-community-resources" },
       ]
     },
     {

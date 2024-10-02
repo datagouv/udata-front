@@ -39,6 +39,7 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       { path: '', component: Me, name: "me" },
       { path: 'datasets', component: Datasets, name: "me-datasets" },
+      { path: 'community-resources', component: CommunityResources, name: "me-community-resources" },
     ]
   },
   {

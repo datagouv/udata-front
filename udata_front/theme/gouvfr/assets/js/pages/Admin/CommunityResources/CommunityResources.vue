@@ -33,7 +33,6 @@
         <p class="fr-text--bold fr-my-3v">
           {{ t(`You haven't published a community resource yet`) }}
         </p>
-        <AdminPublishButton type="reuse"/>
       </div>
     </Container>
     <Pagination
@@ -49,7 +48,7 @@
 import { type CommunityResource, Pagination } from '@datagouv/components/ts';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from "vue-i18n";
-import { getOrganizationCommunityResources } from '../../../api/resources';
+import { getOrganizationCommunityResources, getUserCommunityResources } from '../../../api/resources';
 import AdminPublishButton from '../../../components/AdminPublishButton/AdminPublishButton.vue';
 import AdminCommunityResourcesTable from '../../../components/AdminTable/AdminCommunityResourcesTable/AdminCommunityResourcesTable.vue';
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
@@ -57,9 +56,10 @@ import Container from '../../../components/Ui/Container/Container.vue';
 import { useCurrentOrganization } from '../../../composables/admin/useCurrentOrganization';
 import communityResourceBlankState from "../../../../../templates/svg/illustrations/schema.svg";
 import { CommunityResourceSortedBy, SortDirection } from '../../../types';
+import { useMe } from '../../../api/me';
 
 const { t } = useI18n();
-const props = defineProps<{oid: string}>();
+const props = defineProps<{oid?: string}>();
 
 const communityResources = ref<Array<CommunityResource>>([]);
 const loading = ref(false);
@@ -71,6 +71,7 @@ const direction = ref<SortDirection>('desc');
 const sortDirection = computed(() => `${direction.value === 'asc' ? "" : "-"}${sortedBy.value}`);
 
 const { currentOrganization } = useCurrentOrganization();
+const me = useMe();
 
 function sort(column: CommunityResourceSortedBy, newDirection: SortDirection) {
   sortedBy.value = column;
@@ -81,7 +82,14 @@ watchEffect(async () => {
   loading.value = true;
   communityResources.value = [];
   try {
-    const response = await getOrganizationCommunityResources(props.oid, page.value, pageSize.value, sortDirection.value);
+    let response;
+    if (props.oid) {
+      response = await getOrganizationCommunityResources(props.oid, page.value, pageSize.value, sortDirection.value);
+    } else if (me.value) {
+      response = await getUserCommunityResources(me.value.id, page.value, pageSize.value, sortDirection.value);
+    } else {
+      return
+    }
     communityResources.value = response.data;
     page.value = response.page;
     pageSize.value = response.page_size;
