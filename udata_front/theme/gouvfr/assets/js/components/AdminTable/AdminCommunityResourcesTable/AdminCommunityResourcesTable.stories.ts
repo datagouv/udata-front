@@ -50,8 +50,18 @@ export const CommunityResourcesTable: StoryObj<typeof meta> = {
   args: {
     communityResources: [
       resource,
-      resource,
-      resource,
+      {
+        ...resource,
+        extras: {
+          'check:available': true,
+        },
+      },
+      {
+        ...resource,
+        extras: {
+          'check:available': false,
+        },
+      },
       resource,
       resource,
     ],
