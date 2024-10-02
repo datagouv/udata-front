@@ -52,6 +52,13 @@ export async function getOrganizationDatasets(oid: string, q: string, page: numb
   return resp.data;
 }
 
+export async function getUserDatasets(userId: string, q: string, page: number, pageSize: number, sortDirection: string) {
+  const resp = await api.get<PaginatedArray<Dataset>>(getLocalizedUrl(`datasets/`), {
+    params: { q, sort: sortDirection, page_size: pageSize, page, owner: userId }
+  });
+  return resp.data;
+}
+
 export function getOrganizationDatasetsCatalogUrl(oid: string) {
   return `/organizations/${oid}/datasets.csv`;
 }

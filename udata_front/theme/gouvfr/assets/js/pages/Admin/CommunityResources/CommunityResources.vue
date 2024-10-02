@@ -13,15 +13,15 @@
       </li>
       <li>
         <a class="fr-breadcrumb__link" aria-current="page">
-          {{ t('Reuses') }}
+          {{ t('Community Resources') }}
         </a>
       </li>
     </Breadcrumb>
-    <h1 class="fr-h3">{{ t("Reuses") }}</h1>
-    <h2 class="subtitle subtitle--uppercase">{{ t("{n} reuses of your organization", reuses.length) }}</h2>
-    <AdminReusesTable
+    <h1 class="fr-h3">{{ t("Community Resources") }}</h1>
+    <h2 class="subtitle subtitle--uppercase">{{ t("{n} community resources", communityResources.length) }}</h2>
+    <AdminCommunityResourcesTable
       v-if="loading || totalResult > 0"
-      :reuses
+      :community-resources
       :loading
       :sortDirection="direction"
       :sortedBy
@@ -29,11 +29,10 @@
     />
     <Container v-else class="fr-mt-1w fr-mb-2w">
       <div class="text-align-center fr-py-1w">
-        <img :src="reuseBlankState" alt="" loading="lazy"/>
+        <img :src="communityResourceBlankState" alt="" loading="lazy"/>
         <p class="fr-text--bold fr-my-3v">
-          {{ t(`You haven't published a reuse yet`) }}
+          {{ t(`You haven't published a community resource yet`) }}
         </p>
-        <AdminPublishButton type="reuse"/>
       </div>
     </Container>
     <Pagination
@@ -46,52 +45,52 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Pagination, Reuse } from '@datagouv/components/ts';
+import { type CommunityResource, Pagination } from '@datagouv/components/ts';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from "vue-i18n";
-import { getOrganizationReuses, getUserReuses } from '../../../api/reuses';
-import AdminReusesTable from '../../../components/AdminTable/AdminReusesTable/AdminReusesTable.vue';
+import { getOrganizationCommunityResources, getUserCommunityResources } from '../../../api/resources';
+import AdminPublishButton from '../../../components/AdminPublishButton/AdminPublishButton.vue';
+import AdminCommunityResourcesTable from '../../../components/AdminTable/AdminCommunityResourcesTable/AdminCommunityResourcesTable.vue';
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
 import Container from '../../../components/Ui/Container/Container.vue';
 import { useCurrentOrganization } from '../../../composables/admin/useCurrentOrganization';
-import reuseBlankState from "../../../../../templates/svg/blank_state/reuse.svg";
-import { ReuseSortedBy, SortDirection } from '../../../types';
-import AdminPublishButton from '../../../components/AdminPublishButton/AdminPublishButton.vue';
+import communityResourceBlankState from "../../../../../templates/svg/illustrations/schema.svg";
+import { CommunityResourceSortedBy, SortDirection } from '../../../types';
 import { useMe } from '../../../api/me';
 
 const { t } = useI18n();
 const props = defineProps<{oid?: string}>();
 
-const reuses = ref<Array<Reuse>>([]);
+const communityResources = ref<Array<CommunityResource>>([]);
 const loading = ref(false);
 const page = ref(1);
 const pageSize = ref(10);
 const totalResult = ref(0);
-const sortedBy = ref<ReuseSortedBy>('created');
+const sortedBy = ref<CommunityResourceSortedBy>('created_at_internal');
 const direction = ref<SortDirection>('desc');
 const sortDirection = computed(() => `${direction.value === 'asc' ? "" : "-"}${sortedBy.value}`);
 
 const { currentOrganization } = useCurrentOrganization();
 const me = useMe();
 
-function sort(column: ReuseSortedBy, newDirection: SortDirection) {
+function sort(column: CommunityResourceSortedBy, newDirection: SortDirection) {
   sortedBy.value = column;
   direction.value = newDirection;
 }
 
 watchEffect(async () => {
   loading.value = true;
-  reuses.value = [];
+  communityResources.value = [];
   try {
     let response;
     if (props.oid) {
-      response = await getOrganizationReuses(props.oid, page.value, pageSize.value, sortDirection.value);
+      response = await getOrganizationCommunityResources(props.oid, page.value, pageSize.value, sortDirection.value);
     } else if (me.value) {
-      response = await getUserReuses(me.value.id, page.value, pageSize.value, sortDirection.value);
+      response = await getUserCommunityResources(me.value.id, page.value, pageSize.value, sortDirection.value);
     } else {
-      return;
+      return
     }
-    reuses.value = response.data;
+    communityResources.value = response.data;
     page.value = response.page;
     pageSize.value = response.page_size;
     totalResult.value = response.total;
