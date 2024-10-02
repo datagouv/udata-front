@@ -1,5 +1,6 @@
 import type { Schema } from "../api/schemas";
 import { RESOURCE_TYPE } from "../helpers";
+import { Dataset } from "./datasets";
 import { Harvest } from "./harvest";
 import { Owned } from "./owned";
 
@@ -33,4 +34,4 @@ export type Resource = {
   url: string;
 };
 
-export type CommunityResource = Owned & Resource;
+export type CommunityResource = Owned & Resource & { dataset: Omit<Dataset, "resources" | "community_resources"> };

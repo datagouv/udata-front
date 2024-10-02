@@ -73,6 +73,12 @@
             @click="$emit('click')"
           />
           <AdminSidebarLink
+            icon="fr-icon-git-pull-request-line"
+            :label="t('Community Resources')"
+            :to="{name: 'organization-community-resources', params: {oid: organization.id}}"
+            @click="$emit('click')"
+          />
+          <AdminSidebarLink
           icon="fr-icon-user-line"
           :label="t('Profile')"
           :to="{name: 'organization-profile', params: {oid: organization.id}}"
