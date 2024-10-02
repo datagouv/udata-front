@@ -21,7 +21,13 @@ setup((app) => {
 
   const routes: Array<RouteRecordRaw> = [
     { path: '/', component: Me },
-    { path: '/me', component: Me },
+    {
+      path: '/me',
+      children: [
+        { path: '', component: Me, name: "me" },
+        { path: 'datasets', component: Datasets, name: "me-datasets" },
+      ]
+    },
     {
       path: '/organizations/:oid',
       children: [
