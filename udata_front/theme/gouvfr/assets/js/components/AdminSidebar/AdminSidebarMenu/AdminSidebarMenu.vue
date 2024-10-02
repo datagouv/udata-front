@@ -38,7 +38,12 @@
           <AdminSidebarLink
             icon="fr-icon-account-circle-line"
             :label="t('Me')"
-            to="/me"
+            :to="{name: 'me'}"
+            />
+          <AdminSidebarLink
+          :iconHtml="DatabaseIcon"
+          :label="t('Datasets')"
+          :to="{name: 'me-datasets'}"
           />
         </template>
         <template v-else-if="organization">

@@ -7,6 +7,7 @@
 - Add beta admin harvester page [#547](https://github.com/datagouv/udata-front/pull/547)
 - Update beta admin members page [#544](https://github.com/datagouv/udata-front/pull/544)
 - Fix Beta admin profile page [#546](https://github.com/datagouv/udata-front/pull/546)
+- Add beta admin user datasets page [#549](https://github.com/datagouv/udata-front/pull/549)
 
 ## 5.2.2 (2024-09-23)
 
