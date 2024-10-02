@@ -45,6 +45,11 @@
           :label="t('Datasets')"
           :to="{name: 'me-datasets'}"
           />
+          <AdminSidebarLink
+            icon="fr-icon-line-chart-line"
+            :label="t('Reuses')"
+            :to="{name: 'me-reuses'}"
+          />
         </template>
         <template v-else-if="organization">
           <AdminSidebarLink
