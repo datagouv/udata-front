@@ -32,15 +32,7 @@
         </div>
         <div class="flex items-center fr-ml-4v buttons">
           <p class="fr-col-auto fr-ml-3v fr-m-0">
-            <a
-              :href="'xx'"
-              rel="ugc nofollow noopener"
-              :title="t('Download file')"
-              download
-              class="relative fr-btn fr-btn--sm fr-btn--icon-left fr-icon-test-tube-line fr-icon-download-line fr-icon--sm z-2"
-            >
-              {{ $t('Download') }}
-            </a>
+            <!-- TODO add download -->
           </p>
           <div
             class="fr-icon--sm fr-ml-4v"
