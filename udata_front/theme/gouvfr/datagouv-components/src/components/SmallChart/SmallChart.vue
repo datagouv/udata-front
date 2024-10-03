@@ -1,7 +1,7 @@
 <template>
   <div>
     <canvas
-      ref="canvas"
+      ref="canvasRef"
       width="120"
       height="30"
     ></canvas>
@@ -25,11 +25,21 @@ const props = defineProps<{
   type: "line" | "bar",
 }>();
 
-const canvas = useTemplateRef('canvas');
+const canvas = useTemplateRef('canvasRef');
 const context = ref<CanvasRenderingContext2D | null>(null);
 const chart = ref<Chart | null>(null);
-const months = computed(() => Object.keys(props.data))
-const values = computed(() => Object.values(props.data))
+
+const data = computed(() => {
+  const months = Object.keys(props.data);
+  months.sort();
+  let orderedData: Record<string, number> = {};
+  for (const month of months) {
+    orderedData[month] = props.data[month];
+  }
+  return orderedData;
+});
+const months = computed(() => Object.keys(data.value))
+const values = computed(() => Object.values(data.value))
 
 const additionalDatasetConfig = computed(() => {
   if (props.type === 'bar') {
