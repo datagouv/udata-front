@@ -32,7 +32,16 @@
         </div>
         <div class="flex items-center fr-ml-4v buttons">
           <p class="fr-col-auto fr-ml-3v fr-m-0">
-            <!-- TODO add download -->
+            <a
+              :disabled="!downloadStatsUrl"
+              :href="downloadStatsUrl || ''"
+              rel="ugc nofollow noopener"
+              :title="t('Download file')"
+              download="stats.csv"
+              class="relative fr-btn fr-btn--sm fr-btn--icon-left fr-icon-test-tube-line fr-icon-download-line fr-icon--sm z-2"
+            >
+              {{ $t('Download') }}
+            </a>
           </p>
           <div
             class="fr-icon--sm fr-ml-4v"
@@ -185,6 +194,20 @@ watchEffect(async () => {
     metricsDownloadsTotal.value = page.data[0].download_resource;
     metricsReusesTotal.value = page.data[0].visit_reuse;
   }
+})
+
+const downloadStatsUrl = computed(() => {
+  if (! metricsViews.value || ! metricsDownloads.value || ! metricsReuses.value) {
+    return null;
+  }
+
+  let data = 'month,visit_datasets,download_resource,visit_reuse\n'
+
+  for (const month in metricsViews.value) {
+    data += `${month},${metricsViews.value[month]},${metricsDownloads.value[month]},${metricsReuses.value[month]}\n`
+  }
+
+  return URL.createObjectURL(new Blob([data], { type: 'text/csv' }));
 })
 
 
