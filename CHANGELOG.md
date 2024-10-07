@@ -10,6 +10,7 @@
 - Add beta admin user's datasets page [#549](https://github.com/datagouv/udata-front/pull/549)
 - Add beta admin user's reuses page [#550](https://github.com/datagouv/udata-front/pull/550)
 - Add beta admin community resources page [#551](https://github.com/datagouv/udata-front/pull/551)
+- Display contact point contact form [#555](https://github.com/datagouv/udata-front/pull/555)
 
 ## 5.2.2 (2024-09-23)
 
