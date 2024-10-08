@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 5.2.3 (2024-10-08)
 
 - Adapt to discussion csv export refactor [#543](https://github.com/datagouv/udata-front/pull/543)
