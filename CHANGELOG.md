@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 5.2.3 (2024-10-08)
 
 - Adapt to discussion csv export refactor [#543](https://github.com/datagouv/udata-front/pull/543)
 - Add beta admin discussion page [#539](https://github.com/datagouv/udata-front/pull/539)
