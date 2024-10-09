@@ -65,9 +65,16 @@
         <tr v-for="member in members" :key="member.user.id">
           <td>
             <p class="fr-text--bold fr-m-0">{{ member.user.first_name }} {{ member.user.last_name }}</p>
-            <p class="fr-m-0 fr-text--xs text-mention-grey f-italic">
-              <Vicon :height="11" :width="11" name="ri-mail-line"/>
-              {{ member.user.email }}
+            <p class="fr-m-0 fr-text--xs text-mention-grey f-italic inline-flex items-center">
+              <Vicon
+                :height="12"
+                :width="12"
+                name="ri-mail-line"
+                class="fr-mr-1v"
+              />
+              <Tooltip>
+                <TextClamp :text="member.user.email" :auto-resize="true" :max-lines="1" />
+              </Tooltip>
             </p>
           </td>
           <td>
@@ -97,20 +104,22 @@ import { formatDate, formatFromNow } from '@datagouv/components/ts';
 import { OhVueIcon as Vicon, addIcons } from "oh-vue-icons";
 import { RiMailLine } from "oh-vue-icons/icons";
 import { computed, onMounted, ref, watchEffect } from "vue";
+import TextClamp from 'vue3-text-clamp';
 import { useI18n } from "vue-i18n";
 import { acceptRequest, formatRolesAsOptions, getOrganization, getPendingMemberships, getRoles, refuseRequest } from "../../../api/organizations";
-import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
-import { type Option } from "../../../components/Form/SelectGroup/SelectGroup.vue";
 import AdminAddMemberButton from "../../../components/AdminAddMember/AdminAddMemberButton.vue";
+import AdminBadge from '../../../components/AdminBadge/AdminBadge.vue';
 import AdminEditMemberButton from "../../../components/AdminEditMember/AdminEditMemberButton.vue";
 import AdminMembershipRequest from "../../../components/AdminMembershipRequest/AdminMembershipRequest.vue";
 import AdminTable from '../../../components/AdminTable/Table/AdminTable.vue';
 import AdminTableTh from '../../../components/AdminTable/Table/AdminTableTh.vue';
+import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
+import { type Option } from "../../../components/Form/SelectGroup/SelectGroup.vue";
+import Tooltip from '../../../components/Tooltip/Tooltip.vue';
 import { useCurrentOrganization } from "../../../composables/admin/useCurrentOrganization";
 import { useToast } from "../../../composables/useToast";
 import { user, userIsAdmin } from "../../../config";
 import type { AdminBadgeState, EditingMember, MemberRole, PendingMembershipRequest } from "../../../types";
-import AdminBadge from '../../../components/AdminBadge/AdminBadge.vue';
 
 const props = defineProps<{oid: string}>();
 

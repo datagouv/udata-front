@@ -49,7 +49,6 @@ import { type CommunityResource, Pagination } from '@datagouv/components/ts';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from "vue-i18n";
 import { getOrganizationCommunityResources, getUserCommunityResources } from '../../../api/resources';
-import AdminPublishButton from '../../../components/AdminPublishButton/AdminPublishButton.vue';
 import AdminCommunityResourcesTable from '../../../components/AdminTable/AdminCommunityResourcesTable/AdminCommunityResourcesTable.vue';
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
 import Container from '../../../components/Ui/Container/Container.vue';
