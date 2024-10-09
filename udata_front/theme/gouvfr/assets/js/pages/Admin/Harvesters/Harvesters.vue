@@ -17,7 +17,7 @@
         </a>
       </li>
     </Breadcrumb>
-    <h1 class="fr-h3">{{ t("Harvesters") }}</h1>
+    <h1 class="fr-h3 fr-mb-5v">{{ t("Harvesters") }}</h1>
     <h2 class="subtitle subtitle--uppercase">{{ t("{n} harvesters", totalResult) }}</h2>
     <AdminTable :loading v-if="loading || totalResult">
       <thead>
