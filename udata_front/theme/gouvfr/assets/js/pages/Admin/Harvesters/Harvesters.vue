@@ -123,14 +123,14 @@ function getHarvesterLinkToAdmin(harvester: HarvesterSource) {
 }
 
 function getHarvesterDataservices(harvester: HarvesterSource) {
-  if(!harvester.last_job) {
+  if(!harvester.last_job|| !jobs.value[harvester.last_job.id]) {
     return 0;
   }
   return jobs.value[harvester.last_job.id].items.filter(item => item.dataservice).length;
 }
 
 function getHarvesterDatasets(harvester: HarvesterSource) {
-  if(!harvester.last_job) {
+  if(!harvester.last_job || !jobs.value[harvester.last_job.id]) {
     return 0;
   }
   return jobs.value[harvester.last_job.id].items.filter(item => item.dataset).length;
@@ -199,7 +199,6 @@ watchEffect(async () => {
     const requests = await Promise.allSettled(jobRequests);
     for(const request of requests) {
       if(request.status === "fulfilled") {
-        console.log(request.value.data)
         jobs.value[request.value.data.id] = request.value.data;
       }
     }
