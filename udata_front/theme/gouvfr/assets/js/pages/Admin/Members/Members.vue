@@ -19,7 +19,7 @@
     </Breadcrumb>
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle justify-center">
       <div class="fr-col-12 fr-col-md">
-        <h1 class="fr-h3 fr-mb-5v">{{ t("Members") }}</h1>
+        <h1 class="fr-h3 fr-mb-0">{{ t("Members") }}</h1>
       </div>
       <div class="fr-col-auto" v-if="isAdmin">
         <AdminAddMemberButton
@@ -30,7 +30,7 @@
       </div>
     </div>
     <template v-if="membershipRequests.length">
-      <h2 class="subtitle subtitle--uppercase fr-m-0">
+      <h2 class="subtitle subtitle--uppercase fr-mt-5v fr-mb-0">
         {{ t("{n} requests", {n: membershipRequests.length}) }}
       </h2>
       <AdminMembershipRequest
@@ -45,49 +45,50 @@
         @refuse="refuse"
       />
     </template>
-    <h2 class="subtitle subtitle--uppercase fr-mt-2w fr-mb-1v">
+    <h2
+      class="subtitle subtitle--uppercase fr-mb-0"
+      :class="{'fr-mt-n3v': membershipRequests.length, 'fr-mt-5v': !membershipRequests.length}"
+    >
       {{ t("{n} members", {n: members.length}) }}
     </h2>
-    <div class="fr-table fr-table--layout-fixed">
-      <AdminTable :loading>
-        <thead>
-          <tr>
-            <AdminTableTh scope="col">{{ t("Members") }}</AdminTableTh>
-            <AdminTableTh scope="col">{{ t("Status") }}</AdminTableTh>
-            <AdminTableTh scope="col">{{ t("Member since") }}</AdminTableTh>
-            <AdminTableTh scope="col">{{ t("Last connection") }}</AdminTableTh>
-            <AdminTableTh scope="col" v-if="isAdmin">{{ t("Action") }}</AdminTableTh>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="member in members" :key="member.user.id">
-            <td>
-              <p class="fr-text--bold fr-m-0">{{ member.user.first_name }} {{ member.user.last_name }}</p>
-              <p class="fr-m-0 fr-text--xs text-mention-grey f-italic">
-                <Vicon :height="11" :width="11" name="ri-mail-line"/>
-                {{ member.user.email }}
-              </p>
-            </td>
-            <td>
-              <AdminBadge :type="getStatusType(member.role)">{{ getStatus(member.role) }}</AdminBadge>
-            </td>
-            <td>{{ formatDate(member.since) }}</td>
-            <td>
-              <span v-if="member.user.last_login_at">{{ formatFromNow(member.user.last_login_at) }}</span>
-              <span v-else>{{ t("No connection") }}</span>
-            </td>
-            <td v-if="isAdmin">
-              <AdminEditMemberButton
-                :member="member"
-                :oid="oid"
-                :roles="roles"
-                @member-updated="updateMembers"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </AdminTable>
-    </div>
+    <AdminTable class="fr-table--layout-fixed" :loading>
+      <thead>
+        <tr>
+          <AdminTableTh scope="col">{{ t("Members") }}</AdminTableTh>
+          <AdminTableTh scope="col">{{ t("Status") }}</AdminTableTh>
+          <AdminTableTh scope="col">{{ t("Member since") }}</AdminTableTh>
+          <AdminTableTh scope="col">{{ t("Last connection") }}</AdminTableTh>
+          <AdminTableTh scope="col" v-if="isAdmin">{{ t("Action") }}</AdminTableTh>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="member in members" :key="member.user.id">
+          <td>
+            <p class="fr-text--bold fr-m-0">{{ member.user.first_name }} {{ member.user.last_name }}</p>
+            <p class="fr-m-0 fr-text--xs text-mention-grey f-italic">
+              <Vicon :height="11" :width="11" name="ri-mail-line"/>
+              {{ member.user.email }}
+            </p>
+          </td>
+          <td>
+            <AdminBadge :type="getStatusType(member.role)">{{ getStatus(member.role) }}</AdminBadge>
+          </td>
+          <td>{{ formatDate(member.since) }}</td>
+          <td>
+            <span v-if="member.user.last_login_at">{{ formatFromNow(member.user.last_login_at) }}</span>
+            <span v-else>{{ t("No connection") }}</span>
+          </td>
+          <td v-if="isAdmin">
+            <AdminEditMemberButton
+              :member="member"
+              :oid="oid"
+              :roles="roles"
+              @member-updated="updateMembers"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </AdminTable>
   </div>
 </template>
 

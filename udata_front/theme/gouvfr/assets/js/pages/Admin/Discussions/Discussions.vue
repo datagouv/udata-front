@@ -18,7 +18,7 @@
       </li>
     </Breadcrumb>
     <h1 class="fr-h3 fr-mb-5v">{{ t("Discussions") }}</h1>
-    <h2 class="subtitle subtitle--uppercase">{{ t("{n} discussions", totalResult) }}</h2>
+    <h2 class="subtitle subtitle--uppercase fr-m-0">{{ t("{n} discussions", totalResult) }}</h2>
     <AdminDiscussionsTable
       v-if="loading || totalResult > 0"
       :discussions

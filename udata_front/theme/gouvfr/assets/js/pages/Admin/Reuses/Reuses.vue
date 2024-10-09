@@ -18,7 +18,7 @@
       </li>
     </Breadcrumb>
     <h1 class="fr-h3 fr-mb-5v">{{ t("Reuses") }}</h1>
-    <h2 class="subtitle subtitle--uppercase">{{ t("{n} reuses of your organization", reuses.length) }}</h2>
+    <h2 class="subtitle subtitle--uppercase fr-mb-0">{{ t("{n} reuses of your organization", reuses.length) }}</h2>
     <AdminReusesTable
       v-if="loading || totalResult > 0"
       :reuses

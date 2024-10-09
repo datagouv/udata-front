@@ -18,7 +18,7 @@
       </li>
     </Breadcrumb>
     <h1 class="fr-h3 fr-mb-5v">{{ t("Community Resources") }}</h1>
-    <h2 class="subtitle subtitle--uppercase">{{ t("{n} community resources", communityResources.length) }}</h2>
+    <h2 class="subtitle subtitle--uppercase fr-m-0">{{ t("{n} community resources", communityResources.length) }}</h2>
     <AdminCommunityResourcesTable
       v-if="loading || totalResult > 0"
       :community-resources
