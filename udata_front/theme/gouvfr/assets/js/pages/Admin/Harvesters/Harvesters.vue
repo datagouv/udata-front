@@ -17,8 +17,8 @@
         </a>
       </li>
     </Breadcrumb>
-    <h1 class="fr-h3">{{ t("Harvesters") }}</h1>
-    <h2 class="subtitle subtitle--uppercase">{{ t("{n} harvesters", totalResult) }}</h2>
+    <h1 class="fr-h3 fr-mb-5v">{{ t("Harvesters") }}</h1>
+    <h2 class="subtitle subtitle--uppercase fr-m-0">{{ t("{n} harvesters", totalResult) }}</h2>
     <AdminTable :loading v-if="loading || totalResult">
       <thead>
         <AdminTableTh scope="col">
@@ -123,14 +123,14 @@ function getHarvesterLinkToAdmin(harvester: HarvesterSource) {
 }
 
 function getHarvesterDataservices(harvester: HarvesterSource) {
-  if(!harvester.last_job) {
+  if(!harvester.last_job|| !jobs.value[harvester.last_job.id]) {
     return 0;
   }
   return jobs.value[harvester.last_job.id].items.filter(item => item.dataservice).length;
 }
 
 function getHarvesterDatasets(harvester: HarvesterSource) {
-  if(!harvester.last_job) {
+  if(!harvester.last_job || !jobs.value[harvester.last_job.id]) {
     return 0;
   }
   return jobs.value[harvester.last_job.id].items.filter(item => item.dataset).length;
@@ -199,7 +199,6 @@ watchEffect(async () => {
     const requests = await Promise.allSettled(jobRequests);
     for(const request of requests) {
       if(request.status === "fulfilled") {
-        console.log(request.value.data)
         jobs.value[request.value.data.id] = request.value.data;
       }
     }

@@ -17,8 +17,8 @@
         </a>
       </li>
     </Breadcrumb>
-    <h1 class="fr-h3">{{ t("Community Resources") }}</h1>
-    <h2 class="subtitle subtitle--uppercase">{{ t("{n} community resources", communityResources.length) }}</h2>
+    <h1 class="fr-h3 fr-mb-5v">{{ t("Community Resources") }}</h1>
+    <h2 class="subtitle subtitle--uppercase fr-m-0">{{ t("{n} community resources", communityResources.length) }}</h2>
     <AdminCommunityResourcesTable
       v-if="loading || totalResult > 0"
       :community-resources
@@ -49,7 +49,6 @@ import { type CommunityResource, Pagination } from '@datagouv/components/ts';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from "vue-i18n";
 import { getOrganizationCommunityResources, getUserCommunityResources } from '../../../api/resources';
-import AdminPublishButton from '../../../components/AdminPublishButton/AdminPublishButton.vue';
 import AdminCommunityResourcesTable from '../../../components/AdminTable/AdminCommunityResourcesTable/AdminCommunityResourcesTable.vue';
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
 import Container from '../../../components/Ui/Container/Container.vue';
