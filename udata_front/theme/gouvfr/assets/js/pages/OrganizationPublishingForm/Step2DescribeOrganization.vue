@@ -166,7 +166,7 @@
                 :aria-describedby="addDescriptionAccordionId"
                 :label="t('Description')"
                 :required="true"
-                type="textarea"
+                type="markdown"
                 v-model="organization.description"
                 :hasError="fieldHasError('description')"
                 :hasWarning="fieldHasWarning('description')"
