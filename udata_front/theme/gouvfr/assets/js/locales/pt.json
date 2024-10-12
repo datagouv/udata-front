@@ -570,5 +570,13 @@
   "Available": "Available",
   "Not checked yet": "Not checked yet",
   "{n} community resources": "{n} community resources",
-  "You haven't published a community resource yet": "You haven't published a community resource yet"
+  "You haven't published a community resource yet": "You haven't published a community resource yet",
+  "{n} dataservices": "{n} dataservices",
+  "You haven't published a dataservice yet": "You haven't published a dataservice yet",
+  "Dataservice title": "Dataservice title",
+  "Access": "Access",
+  "Restricted": "Restricted",
+  "Open": "Open",
+  "Rate Limiting": "Rate Limiting",
+  "Availability": "Availability"
 }

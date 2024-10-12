@@ -570,5 +570,13 @@
   "Available": "Disponible",
   "Not checked yet": "Pas encore contrôlé",
   "{n} community resources": "{n} ressources communautaires",
-  "You haven't published a community resource yet": "Vous n'avez pas encore publié de ressource communautaire"
+  "You haven't published a community resource yet": "Vous n'avez pas encore publié de ressource communautaire",
+  "{n} dataservices": "{n} APIs",
+  "You haven't published a dataservice yet": "Vous n'avez pas encore publié d'API",
+  "Dataservice title": "Titre de l'API",
+  "Access": "Accès",
+  "Restricted": "Restreint",
+  "Open": "Ouvert",
+  "Rate Limiting": "Limites d'appels",
+  "Availability": "Disponibilité"
 }

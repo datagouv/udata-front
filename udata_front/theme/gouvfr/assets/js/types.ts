@@ -124,6 +124,8 @@ export type SortDirection = 'asc' | 'desc';
 
 export type DatasetSortedBy = 'title' | 'created' | 'last_update' | 'reuses' | 'followers' | 'views';
 
+export type DataserviceSortedBy = 'title'
+
 export type ReuseSortedBy = 'title' | 'created' | 'datasets' | 'followers' | 'views';
 
 export type DiscussionSortedBy = 'title' | 'created' | 'closed';
