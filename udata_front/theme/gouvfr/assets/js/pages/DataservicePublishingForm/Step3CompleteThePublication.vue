@@ -60,7 +60,7 @@ const props = defineProps<{
   steps: Array<Step>;
 }>();
 
-const dataservice = reactive({...props.originalDataservice, private: false});
+const dataservice = reactive({...props.originalDataservice});
 
 const reuse = reactive({...props.originalReuse});
 
