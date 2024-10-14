@@ -70,10 +70,9 @@
                 :height="12"
                 :width="12"
                 name="ri-mail-line"
-                class="fr-mr-1v"
               />
               <Tooltip>
-                <TextClamp :text="member.user.email" :auto-resize="true" :max-lines="1" />
+                <TextClamp class="fr-px-1v" :text="member.user.email" :auto-resize="true" :max-lines="1" />
               </Tooltip>
             </p>
           </td>
