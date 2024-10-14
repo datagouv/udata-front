@@ -83,10 +83,18 @@ class DataserviceDetailView(DataserviceView, DetailView):
             elif self.dataservice.deleted_at:
                 abort(410)
 
-        datasets = Pagination(self.dataservice.datasets, request.args.get('datasets_page', 1, type=int), 8)
-        datasets_items = [dataset.fetch() for dataset in datasets.items] # load the lazy reference
+        datasets = Pagination(
+            self.dataservice.datasets,
+            request.args.get('datasets_page', 1, type=int),
+            8,
+        )
+
         context['datasets'] = datasets
-        context['datasets_items'] = datasets_items
+
+        # Load the lazy references (could be better to fetch them in one request instead of 8)
+        # We need to have a seperate variable because .fetch() return the object instead of 
+        # setting it inside the LazyReference object.
+        context['datasets_items'] = [dataset.fetch() for dataset in datasets.items]
 
         context['can_edit'] = DataserviceEditPermission(self.dataservice)
         return context
