@@ -37,7 +37,7 @@
         <td><AdminBadge :type="getAccess(dataservice).type">{{ getAccess(dataservice).label }}</AdminBadge></td>
         <td>{{ formatDate(dataservice.created_at) }}</td>
         <td>{{ dataservice.rate_limiting }}</td>
-        <td>{{ dataservice.availability }}%</td>
+        <td><span v-if="dataservice.availability">{{ dataservice.availability }}%</span></td>
       </tr>
     </tbody>
   </AdminTable>
