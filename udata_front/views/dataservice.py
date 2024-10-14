@@ -10,7 +10,7 @@ from udata.sitemap import sitemap
 
 from udata_front import theme
 from udata_front.theme import render as render_template
-from udata_front.views.base import DetailView
+from udata_front.views.base import DetailView, LoginOnlyView
 
 blueprint = I18nBlueprint('dataservices', __name__, url_prefix='/dataservices')
 
@@ -83,6 +83,11 @@ class DataserviceDetailView(DataserviceView, DetailView):
                 abort(410)
         context['can_edit'] = DataserviceEditPermission(self.dataservice)
         return context
+
+
+@blueprint.route('/publishing-form/', endpoint='publishing-form')
+class DataservicePublishingFormView(LoginOnlyView):
+    template_name = 'dataservice/publishing-form.html'
 
 
 @sitemap.register_generator
