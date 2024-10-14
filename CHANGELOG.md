@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Paginate datasets in dataservice display [#560](https://github.com/datagouv/udata-front/pull/560)
 
 ## 5.2.3 (2024-10-08)
 
