@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Beta admin adjustments [#557](https://github.com/datagouv/udata-front/pull/557)
+- Fix schema tooltip position [#561](https://github.com/datagouv/udata-front/pull/561)
 
 ## 5.2.3 (2024-10-08)
 
