@@ -92,7 +92,7 @@ class DataserviceDetailView(DataserviceView, DetailView):
         context['datasets'] = datasets
 
         # Load the lazy references (could be better to fetch them in one request instead of 8)
-        # We need to have a seperate variable because .fetch() return the object instead of 
+        # We need to have a seperate variable because .fetch() return the object instead of
         # setting it inside the LazyReference object.
         context['datasets_items'] = [dataset.fetch() for dataset in datasets.items]
 
