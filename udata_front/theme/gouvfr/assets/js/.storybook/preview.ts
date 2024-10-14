@@ -6,9 +6,10 @@ import { setup } from '@storybook/vue3';
 import i18n from "../i18n";
 import Api from "../plugins/api";
 import Datasets from "../pages/Admin/Datasets/Datasets.vue";
+import Dataservices from "../pages/Admin/Dataservices/Dataservices.vue";
 import Discussions from "../pages/Admin/Discussions/Discussions.vue";
 import Harvesters from "../pages/Admin/Harvesters/Harvesters.vue";
-import CommunityRessources from "../pages/Admin/CommunityResources/CommunityResources.vue";
+import CommunityResources from "../pages/Admin/CommunityResources/CommunityResources.vue";
 import Members from "../pages/Admin/Members/Members.vue";
 import Profile from "../pages/Admin/Profile/Profile.vue";
 import Reuses from "../pages/Admin/Reuses/Reuses.vue";
@@ -27,19 +28,21 @@ setup((app) => {
       children: [
         { path: '', component: Me, name: "me" },
         { path: 'datasets', component: Datasets, name: "me-datasets" },
+        { path: 'dataservices', component: Dataservices, name: "me-dataservices" },
         { path: 'reuses', component: Reuses, name: "me-reuses" },
-        { path: 'community-resources', component: CommunityRessources, name: "me-community-resources" },
+        { path: 'community-resources', component: CommunityResources, name: "me-community-resources" },
       ]
     },
     {
       path: '/organizations/:oid',
       children: [
         { path: 'datasets', component: Datasets, props: true, name: "organization-datasets" },
+        { path: 'dataservices', component: Dataservices, props: true, name: "organization-dataservices" },
         { path: 'reuses', component: Reuses, props: true, name: "organization-reuses" },
         { path: 'discussions', component: Discussions, props: true, name: "organization-discussions" },
         { path: 'members', component: Members, props: true, name: "organization-members" },
         { path: 'harvesters', component: Harvesters, props: true, name: "organization-harvesters" },
-        { path: 'community-resources', component: CommunityRessources, props: true, name: "organization-community-resources" },
+        { path: 'community-resources', component: CommunityResources, props: true, name: "organization-community-resources" },
         { path: 'profile', component: Profile, props: true, name: "organization-profile" },
       ],
     },
