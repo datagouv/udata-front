@@ -8,10 +8,8 @@ export async function getDataservice(id: string) {
 }
 
 export async function getOrganizationDataservices(oid: string, page: number, pageSize: number, sortDirection: string) {
-  //TODO : need to update back with this api first
-  //const resp = await api.get<PaginatedArray<Dataservice>>(getLocalizedUrl(`organizations/${oid}/dataservices/`), {
   const resp = await api.get<PaginatedArray<Dataservice>>(getLocalizedUrl(`dataservices/`), {
-    params: { sort: sortDirection, page_size: pageSize, page }
+    params: { organization: oid, sort: sortDirection, page_size: pageSize, page }
   });
   return resp.data;
 }
