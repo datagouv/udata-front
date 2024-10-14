@@ -95,11 +95,10 @@ const moveToStep = (step: number, saveToHistory = true) => {
 async function createDataserviceAndMoveToNextStep(newDataservice: NewDataservice) {
   loading.value = true;
   errors.value = [];
-  let moveToNextStep = false;
   if (newDataservice.availability) { newDataservice.availability = Number(newDataservice.availability) } 
   try {
     savedDataservice.value = await createDataservice(newDataservice);
-    moveToNextStep = true;
+    moveToStep(1);
   } catch (e) {
     errors.value.push(t("An error occured while creating your dataservice."));
     if(e instanceof Error && 'response' in e) {
@@ -111,9 +110,6 @@ async function createDataserviceAndMoveToNextStep(newDataservice: NewDataservice
     }
   } finally {
     loading.value = false;
-  }
-  if (moveToNextStep) {
-    moveToStep(1);
   }
 }
 
