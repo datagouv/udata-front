@@ -427,12 +427,9 @@ const licensesGroups = license_groups_options?.map(([name, values]) => ({
 const isRestrictedValues = [{ id: true, label: t("Open")}, { id: false, label: t("Restricted")}]
 const hasTokenValues = [{ id: true, label: t("Yes")}, { id: false, label: t("No")}]
 
-const isSelectedProducer = ref<boolean>(false);
-
 function updateOwned(owned: OwnedWithId) {
   dataservice.organization = owned.organization;
   dataservice.owner = owned.owner;
-  isSelectedProducer.value = true;
 }
 
 const requiredRules = {

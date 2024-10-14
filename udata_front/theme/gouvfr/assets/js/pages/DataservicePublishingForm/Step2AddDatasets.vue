@@ -135,12 +135,6 @@ useSortable(el, form.datasets);
 
 const selectedDatasetRef = ref<InstanceType<typeof MultiSelect> | null>(null);
 
-function checkDatasets() {
-  return form.datasets.length > 0;
-};
-
-const { withAsync } = helpers;
-
 const requiredRules = {
   datasets: { },
   linkedDataset: { },
@@ -173,29 +167,6 @@ async function handleDatasetChange(datasetId: string) {
   if (datasetId) {
     addDataset(datasetId);
     selectedDatasetRef.value?.selectOption("");
-  }
-};
-
-async function handleLinkedDatasetChange(value: string) {
-  if (value == "") {
-    return true;
-  } else if (value.includes('/datasets/')) {
-    try {
-      linkedDatasetLoading.value = true;
-      const url = new URL(value);
-      const slug = getSlug(url.pathname);
-      const resp = await api.get(`datasets/${slug}/`);
-      const newDatasetId = resp.data.id;
-      addDataset(newDatasetId);
-      form.linkedDataset = "";
-      return true;
-    } catch {
-      return false;
-    } finally {
-      linkedDatasetLoading.value = false;
-    }
-  } else {
-    return false;
   }
 };
 
