@@ -37,10 +37,6 @@ const last = (ctx, value) => {
 const canvas = useTemplateRef('canvas');
 const context = ref<CanvasRenderingContext2D | null>(null);
 const chart = ref<Chart | null>(null);
-<<<<<<< Updated upstream
-const months = computed(() => Object.keys(props.data))
-const values = computed(() => Object.values(props.data))
-=======
 
 const data = computed(() => {
   const months = Object.keys(props.data);
@@ -54,7 +50,6 @@ const data = computed(() => {
 });
 const months = computed(() => Object.keys(data.value))
 const values = computed(() => Object.values(data.value))
->>>>>>> Stashed changes
 
 const additionalDatasetConfig = computed(() => {
   if (props.type === 'bar') {
