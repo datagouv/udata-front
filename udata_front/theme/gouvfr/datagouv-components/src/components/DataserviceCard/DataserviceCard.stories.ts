@@ -310,3 +310,22 @@ export const ArchivedRouterDataserviceCardWithOrganizationUrl: StoryObj<typeof m
     organizationUrl: "/organizations/another-url-easier-to-distinguish"
   },
 };
+
+export const DataserviceCardTabularApi: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DataserviceCard },
+    setup() {
+      return { args };
+    },
+    template: `<DataserviceCard v-bind="args"/>`,
+  }),
+  args: {
+    ...args,
+    dataservice: {
+      ...args.dataservice,
+      title: 'API automatique data.gouv.fr',
+      organization: { ...args.dataservice.organization, name: 'data.gouv.fr' },
+      id: 'dataservice-tabular-api-test-id', // Set in the meta of `preview-head.html`
+    }
+  },
+};
