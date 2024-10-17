@@ -571,6 +571,7 @@
   "Not checked yet": "Not checked yet",
   "{n} community resources": "{n} community resources",
   "You haven't published a community resource yet": "You haven't published a community resource yet",
+<<<<<<< HEAD
   "Describe your dataservice": "Describe your dataservice",
   "An error occured while creating your dataservice.": "An error occured while creating your dataservice.",
   "A dataservice already exists for this URL.": "A dataservice already exists for this URL.",
@@ -605,5 +606,6 @@
   "It is important to associate all the datasets used, as this allows to understand the cross-references and improve the visibility of your dataservice.": "It is important to associate all the datasets used, as this allows to understand the cross-references and improve the visibility of your dataservice.",
   "Your dataservice is created!": "Your dataservice is created!",
   "Publish the dataservice": "Publish the dataservice",
-  "The title of your dataservice should be as precise and specific as possible.": "The title of your dataservice should be as precise and specific as possible."
+  "The title of your dataservice should be as precise and specific as possible.": "The title of your dataservice should be as precise and specific as possible.",
+  "Link to the discussion": ""
 }

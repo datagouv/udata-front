@@ -14,6 +14,11 @@ const meta = {
 
 export default meta;
 
+const reuse : Reuse = {
+  ...ReuseWithOwner.args.reuse as Reuse,
+  created_at: new Date("2024-10-12").toDateString(),
+};
+
 export const ReusesTable: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { AdminReusesTable },
@@ -24,19 +29,19 @@ export const ReusesTable: StoryObj<typeof meta> = {
   }),
   args: {
     reuses: [
-      ReuseWithOwner.args.reuse as Reuse,
+      reuse,
       {
-        ...ReuseWithOwner.args.reuse,
+        ...reuse,
         archived: new Date().toDateString(),
-      } as Reuse,
+      },
       {
-        ...ReuseWithOwner.args.reuse,
+        ...reuse,
         deleted: new Date().toDateString(),
-      } as Reuse,
+      },
       {
-        ...ReuseWithOwner.args.reuse,
+        ...reuse,
         private: true,
-      } as Reuse,
+      },
     ],
     loading: false,
     sortDirection: "desc",

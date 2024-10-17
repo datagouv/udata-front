@@ -19,7 +19,7 @@
     </Breadcrumb>
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle justify-center">
       <div class="fr-col-12 fr-col-md">
-        <h1 class="fr-h3 fr-mb-5v">{{ t("Members") }}</h1>
+        <h1 class="fr-h3 fr-mb-0">{{ t("Members") }}</h1>
       </div>
       <div class="fr-col-auto" v-if="isAdmin">
         <AdminAddMemberButton
@@ -30,7 +30,7 @@
       </div>
     </div>
     <template v-if="membershipRequests.length">
-      <h2 class="subtitle subtitle--uppercase fr-m-0">
+      <h2 class="subtitle subtitle--uppercase fr-mt-5v fr-mb-0">
         {{ t("{n} requests", {n: membershipRequests.length}) }}
       </h2>
       <AdminMembershipRequest
@@ -45,49 +45,56 @@
         @refuse="refuse"
       />
     </template>
-    <h2 class="subtitle subtitle--uppercase fr-mt-2w fr-mb-1v">
+    <h2
+      class="subtitle subtitle--uppercase fr-mb-0"
+      :class="{'fr-mt-n3v': membershipRequests.length, 'fr-mt-5v': !membershipRequests.length}"
+    >
       {{ t("{n} members", {n: members.length}) }}
     </h2>
-    <div class="fr-table fr-table--layout-fixed">
-      <AdminTable :loading>
-        <thead>
-          <tr>
-            <AdminTableTh scope="col">{{ t("Members") }}</AdminTableTh>
-            <AdminTableTh scope="col">{{ t("Status") }}</AdminTableTh>
-            <AdminTableTh scope="col">{{ t("Member since") }}</AdminTableTh>
-            <AdminTableTh scope="col">{{ t("Last connection") }}</AdminTableTh>
-            <AdminTableTh scope="col" v-if="isAdmin">{{ t("Action") }}</AdminTableTh>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="member in members" :key="member.user.id">
-            <td>
-              <p class="fr-text--bold fr-m-0">{{ member.user.first_name }} {{ member.user.last_name }}</p>
-              <p class="fr-m-0 fr-text--xs text-mention-grey f-italic">
-                <Vicon :height="11" :width="11" name="ri-mail-line"/>
-                {{ member.user.email }}
-              </p>
-            </td>
-            <td>
-              <AdminBadge :type="getStatusType(member.role)">{{ getStatus(member.role) }}</AdminBadge>
-            </td>
-            <td>{{ formatDate(member.since) }}</td>
-            <td>
-              <span v-if="member.user.last_login_at">{{ formatFromNow(member.user.last_login_at) }}</span>
-              <span v-else>{{ t("No connection") }}</span>
-            </td>
-            <td v-if="isAdmin">
-              <AdminEditMemberButton
-                :member="member"
-                :oid="oid"
-                :roles="roles"
-                @member-updated="updateMembers"
+    <AdminTable class="fr-table--layout-fixed" :loading>
+      <thead>
+        <tr>
+          <AdminTableTh scope="col">{{ t("Members") }}</AdminTableTh>
+          <AdminTableTh scope="col">{{ t("Status") }}</AdminTableTh>
+          <AdminTableTh scope="col">{{ t("Member since") }}</AdminTableTh>
+          <AdminTableTh scope="col">{{ t("Last connection") }}</AdminTableTh>
+          <AdminTableTh scope="col" v-if="isAdmin">{{ t("Action") }}</AdminTableTh>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="member in members" :key="member.user.id">
+          <td>
+            <p class="fr-text--bold fr-m-0">{{ member.user.first_name }} {{ member.user.last_name }}</p>
+            <p class="fr-m-0 fr-text--xs text-mention-grey f-italic inline-flex items-center">
+              <Vicon
+                :height="12"
+                :width="12"
+                name="ri-mail-line"
               />
-            </td>
-          </tr>
-        </tbody>
-      </AdminTable>
-    </div>
+              <Tooltip>
+                <TextClamp class="fr-px-1v" :text="member.user.email" :auto-resize="true" :max-lines="1" />
+              </Tooltip>
+            </p>
+          </td>
+          <td>
+            <AdminBadge :type="getStatusType(member.role)">{{ getStatus(member.role) }}</AdminBadge>
+          </td>
+          <td>{{ formatDate(member.since) }}</td>
+          <td>
+            <span v-if="member.user.last_login_at">{{ formatFromNow(member.user.last_login_at) }}</span>
+            <span v-else>{{ t("No connection") }}</span>
+          </td>
+          <td v-if="isAdmin">
+            <AdminEditMemberButton
+              :member="member"
+              :oid="oid"
+              :roles="roles"
+              @member-updated="updateMembers"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </AdminTable>
   </div>
 </template>
 
@@ -96,20 +103,22 @@ import { formatDate, formatFromNow } from '@datagouv/components/ts';
 import { OhVueIcon as Vicon, addIcons } from "oh-vue-icons";
 import { RiMailLine } from "oh-vue-icons/icons";
 import { computed, onMounted, ref, watchEffect } from "vue";
+import TextClamp from 'vue3-text-clamp';
 import { useI18n } from "vue-i18n";
 import { acceptRequest, formatRolesAsOptions, getOrganization, getPendingMemberships, getRoles, refuseRequest } from "../../../api/organizations";
-import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
-import { type Option } from "../../../components/Form/SelectGroup/SelectGroup.vue";
 import AdminAddMemberButton from "../../../components/AdminAddMember/AdminAddMemberButton.vue";
+import AdminBadge from '../../../components/AdminBadge/AdminBadge.vue';
 import AdminEditMemberButton from "../../../components/AdminEditMember/AdminEditMemberButton.vue";
 import AdminMembershipRequest from "../../../components/AdminMembershipRequest/AdminMembershipRequest.vue";
 import AdminTable from '../../../components/AdminTable/Table/AdminTable.vue';
 import AdminTableTh from '../../../components/AdminTable/Table/AdminTableTh.vue';
+import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
+import { type Option } from "../../../components/Form/SelectGroup/SelectGroup.vue";
+import Tooltip from '../../../components/Tooltip/Tooltip.vue';
 import { useCurrentOrganization } from "../../../composables/admin/useCurrentOrganization";
 import { useToast } from "../../../composables/useToast";
 import { user, userIsAdmin } from "../../../config";
 import type { AdminBadgeState, EditingMember, MemberRole, PendingMembershipRequest } from "../../../types";
-import AdminBadge from '../../../components/AdminBadge/AdminBadge.vue';
 
 const props = defineProps<{oid: string}>();
 

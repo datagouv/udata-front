@@ -605,5 +605,6 @@
   "It is important to associate all the datasets used, as this allows to understand the cross-references and improve the visibility of your dataservice.": "Il est important d'associer tous les jeux de données utilisés, car cela permet de comprendre les références croisées et d'améliorer la visibilité de votre API.",
   "Your dataservice is created!": "Votre API à été créé !",
   "Publish the dataservice": "Publier l'API",
-  "The title of your dataservice should be as precise and specific as possible.": "Le titre de votre API doit être le plus précis et spécifique possible."
+  "The title of your dataservice should be as precise and specific as possible.": "Le titre de votre API doit être le plus précis et spécifique possible.",
+  "Link to the discussion": ""
 }

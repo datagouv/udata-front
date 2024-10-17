@@ -605,5 +605,6 @@
   "It is important to associate all the datasets used, as this allows to understand the cross-references and improve the visibility of your dataservice.": "It is important to associate all the datasets used, as this allows to understand the cross-references and improve the visibility of your dataservice.",
   "Your dataservice is created!": "Your dataservice is created!",
   "Publish the dataservice": "Publish the dataservice",
-  "The title of your dataservice should be as precise and specific as possible.": "The title of your dataservice should be as precise and specific as possible."
+  "The title of your dataservice should be as precise and specific as possible.": "The title of your dataservice should be as precise and specific as possible.",
+  "Link to the discussion": "Link to the discussion"
 }
