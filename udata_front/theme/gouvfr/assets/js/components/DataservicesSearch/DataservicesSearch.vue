@@ -115,7 +115,7 @@ import { ref, onMounted, computed, useId, useTemplateRef, watch } from "vue";
 import { useI18n } from 'vue-i18n';
 import Loader from "../dataset/loader.vue";
 import MultiSelect from "../MultiSelect/MultiSelect.vue";
-import { api } from "../../plugins/api";
+import { apiv2 } from "../../plugins/api";
 import { PaginatedArray } from "../../api/types";
 import { refDebounced, watchIgnorable } from '@vueuse/core'
 import axios from "axios";
@@ -180,7 +180,7 @@ const { ignoreUpdates } = watchIgnorable(params, () => {
   window.history.pushState(null, "", url);
 });
 
-const url = computed(() => `/dataservices?${params.value}`)
+const url = computed(() => `/dataservices/search/?${params.value}`)
 
 const dataservices = ref<null | PaginatedArray<Dataservice>>(null);
 
@@ -197,7 +197,7 @@ const search = async () => {
 
   abortController.value = new AbortController();
   try {
-    const response = await api.get(url.value, { signal: abortController.value.signal });
+    const response = await apiv2.get(url.value, { signal: abortController.value.signal });
     abortController.value = null;
     dataservices.value = response.data;
   } catch(e) {
