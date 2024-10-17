@@ -59,7 +59,10 @@ export async function getUserDatasets(userId: string, q: string, page: number, p
   return resp.data;
 }
 
-export function getOrganizationDatasetsCatalogUrl(oid: string) {
+export function getOrganizationDatasetsCatalogUrl(oid: string, totalResults: number) {
+  if(!totalResults) {
+    return "";
+  }
   return `/organizations/${oid}/datasets.csv`;
 }
 

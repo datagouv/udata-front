@@ -123,6 +123,18 @@
                   </span>
                   <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resource.latest" class="relative" />
                 </dd>
+                <template v-if="resource.extras['analysis:parsing:parquet_url']">
+                  <dt class="font-bold fr-text--sm fr-mb-0">{{ $t('Auto-generated formats from {platform}', { platform: config.title }) }}</dt>
+                  <dd class="fr-text--sm fr-ml-0 fr-mt-0 fr-mb-2w text-mention-grey h-4w fr-grid-row fr-grid-row--middle">
+                    <span>
+                      <span class="text-blue-400 fr-icon-download-line fr-icon--sm fr-mr-1v fr-mt-1v"></span>
+                      <a :href="resource.extras['analysis:parsing:parquet_url']" class="fr-link" rel="ugc nofollow noopener">
+                        <span>{{ $t('Format {format}', { format: 'parquet' }) }}<span v-if="resource.extras['analysis:parsing:parquet_size']"> - {{ filesize(resource.extras['analysis:parsing:parquet_size']) }}</span></span>
+                      </a>
+                    </span>
+                    <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resource.extras['analysis:parsing:parquet_url']" class="relative" />
+                  </dd>
+                </template>
               </dl>
             </div>
           </TabPanel>

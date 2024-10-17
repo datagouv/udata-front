@@ -2,6 +2,10 @@
 
 ## Current (in progress)
 
+- Beta admin adjustments [#557](https://github.com/datagouv/udata-front/pull/557)
+
+## 5.2.3 (2024-10-08)
+
 - Adapt to discussion csv export refactor [#543](https://github.com/datagouv/udata-front/pull/543)
 - Add beta admin discussion page [#539](https://github.com/datagouv/udata-front/pull/539)
 - Add beta admin harvester page [#547](https://github.com/datagouv/udata-front/pull/547)
@@ -10,6 +14,8 @@
 - Add beta admin user's datasets page [#549](https://github.com/datagouv/udata-front/pull/549)
 - Add beta admin user's reuses page [#550](https://github.com/datagouv/udata-front/pull/550)
 - Add beta admin community resources page [#551](https://github.com/datagouv/udata-front/pull/551)
+- Display contact point contact form [#555](https://github.com/datagouv/udata-front/pull/555)
+- Use created_at date in reuse card [#556](https://github.com/datagouv/udata-front/pull/556)
 
 ## 5.2.2 (2024-09-23)
 

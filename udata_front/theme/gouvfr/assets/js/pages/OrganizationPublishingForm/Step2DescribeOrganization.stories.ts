@@ -53,7 +53,7 @@ export const Step2WithInteraction: StoryObj<typeof meta> = {
       await userEvent.type(canvas.getByTestId('nameInput').querySelector('input') as HTMLInputElement, 'My organization');
       await userEvent.type(canvas.getByTestId('siretInput').querySelector('input') as HTMLInputElement, '13002526500013');
       await userEvent.type(canvas.getByTestId('acronymInput').querySelector('input') as HTMLInputElement, 'MYO');
-      await userEvent.type(canvas.getByTestId('descriptionInput').querySelector('textarea') as HTMLTextAreaElement, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac mauris faucibus lectus gravida et.');
+      await userEvent.type(canvas.getByTestId("markdown-editor"), 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac mauris faucibus lectus gravida et.');
       await userEvent.type(canvas.getByTestId('websiteInput').querySelector('input') as HTMLInputElement, 'https://data.gouv.fr');
     });
 
