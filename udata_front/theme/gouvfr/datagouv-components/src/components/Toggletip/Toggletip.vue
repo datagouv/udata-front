@@ -9,6 +9,7 @@
     </PopoverButton>
     <PopoverPanel class="toggletip" ref="toggletip" :class="{
       'fr-p-0': noMargin,
+      'left-0': position === 'right',
     }" v-slot="{ close }">
       <slot name="toggletip" :close></slot>
     </PopoverPanel>
@@ -21,13 +22,18 @@ import ToggletipButton from './ToggletipButton.vue';
 
 withDefaults(defineProps<{
   noMargin?: boolean;
+  position?: 'left' | 'right';
 }>(), {
   noMargin: false,
+  position: 'left',
 });
 defineOptions({inheritAttrs: false});
 </script>
 <style scoped>
 .z-10 {
   z-index: 10;
+}
+.left-0 {
+  left: 0;
 }
 </style>

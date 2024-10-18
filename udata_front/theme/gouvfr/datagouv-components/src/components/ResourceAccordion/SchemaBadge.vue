@@ -1,6 +1,6 @@
 <template>
     <span class="inline-flex fr-mb-0 align-items-baseline fr-text--xs" v-if="title">
-        <Toggletip noMargin class="relative z-2">
+        <Toggletip position="right" noMargin class="relative z-2">
             <template #toggletip="{ close }">
                 <div class="flex justify-between border-bottom">
                     <h5 class="fr-text--sm fr-my-0 fr-p-2v">{{$t("Data schema")}}</h5>
