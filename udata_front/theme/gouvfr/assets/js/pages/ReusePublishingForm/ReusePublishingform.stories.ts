@@ -10,14 +10,16 @@ const meta = {
 
 export default meta;
 
-const args = {};
+const args = {
+  redirectDraftUrl: "https://demo.data.gouv.fr/fr/reuses/?q=draft",
+};
 
 export const FormWithNoOrganizations: StoryObj<typeof meta> = {
   parameters: {
     msw: [
       http.get('*/api/1/me', async () => {
         await delay();
-        return HttpResponse.json({ 
+        return HttpResponse.json({
           first_name: "John",
           last_name: "Doe",
           roles: [],
@@ -60,7 +62,7 @@ export const FormWithOrganizations: StoryObj<typeof meta> = {
     msw: [
       http.get('*/api/1/me', async () => {
         await delay();
-        return HttpResponse.json({ 
+        return HttpResponse.json({
           first_name: "John",
           last_name: "Doe",
           roles: [],
@@ -128,7 +130,7 @@ export const FormWithFailedRequests: StoryObj<typeof meta> = {
     msw: [
       http.get('*/api/1/me', async () => {
         await delay();
-        return HttpResponse.json({ 
+        return HttpResponse.json({
           first_name: "John",
           last_name: "Doe",
           roles: [],

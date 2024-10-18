@@ -35,9 +35,9 @@
         {{ t('Give us your feedback on the publishing form') }}
       </a>
       <div class="fr-grid-row fr-grid-row--right">
-        <button @click="draft" class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v">
+        <a :href="redirectDraftUrl" class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500 fr-mr-3v">
           {{ t("Save as draft") }}
-        </button>
+        </a>
         <button @click="publish" class="fr-btn">
           {{ t("Publish the reuse") }}
         </button>
@@ -60,6 +60,7 @@ const props = defineProps<{
   steps: Array<string>,
   feedbackUrl: string,
   originalReuse: Reuse,
+  redirectDraftUrl: string,
 }>();
 
 const emit = defineEmits<{
@@ -69,13 +70,9 @@ const emit = defineEmits<{
 const { t } = useI18n();
 
 const reuse = reactive({...props.originalReuse});
-function draft() {
-  reuse.private = true
-  emit("update", reuse);
-}
+
 function publish() {
   reuse.private = false
   emit("update", reuse);
 };
-
 </script>

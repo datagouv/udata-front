@@ -19,6 +19,7 @@
       v-else-if="currentStep === 2 && savedReuse"
       :steps="steps"
       :feedbackUrl="publishing_form_feedback_url ?? ''"
+      :redirectDraftUrl="draftUrl"
       :originalReuse="savedReuse"
       @update="updateReuseData"
     />
@@ -38,6 +39,10 @@ import { createReuse, updateReuse, uploadLogo } from '../../api/reuses';
 import type { Me } from '../../types';
 import { fetchMe } from '../../api/me';
 import { auth } from '../../plugins/auth';
+
+const props = defineProps<{
+  redirectDraftUrl: string;
+}>();
 
 const { t } = useI18n();
 
@@ -63,11 +68,14 @@ const reuse = ref<NewReuse>({
   type: "",
   organization: null,
   owner: user.id,
+  private: true,
 });
 
 const savedReuse = ref<Reuse | null>(null);
 
 const errors = ref<Array<string>>([]);
+
+const draftUrl = ref<string>("");
 
 const moveToStep = (step: number, saveToHistory = true) => {
   if(containerRef.value) {
@@ -92,6 +100,7 @@ async function createReuseAndMoveToNextStep(newReuse: NewReuse, file: File) {
   let moveToNextStep = false;
   try {
     savedReuse.value = await createReuse(newReuse);
+    draftUrl.value = props.redirectDraftUrl + savedReuse.value.id;
     moveToNextStep = true;
     try {
       const resp = await uploadLogo(savedReuse.value.id, file);
@@ -141,6 +150,7 @@ async function updateDatasetsAndMoveToNextStep(datasets: Array<Dataset>) {
 async function updateReuseData(newReuse: Reuse) {
   try {
     savedReuse.value = await updateReuse(newReuse);
+    window.open(savedReuse.value.page, "_self")
   } catch (e) {
     if(e instanceof Error) {
       errors.value.push(e.message);
