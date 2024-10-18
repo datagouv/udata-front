@@ -137,6 +137,6 @@
   "{n} resources downloads": "{n} resources downloads",
   "{n} reuses": "{n} reuses",
   "Close": "Close",
-  " in ": "",
-  "Auto-generated formats from {platform}": ""
+  " in ": " in ",
+  "Auto-generated formats from {platform}": "Auto-generated formats from {platform}"
 }
