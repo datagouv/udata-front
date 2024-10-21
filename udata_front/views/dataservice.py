@@ -7,6 +7,7 @@ from udata.core.dataservices.permissions import DataserviceEditPermission
 from udata.core.site.models import current_site
 from udata.i18n import I18nBlueprint, gettext as _
 from udata.sitemap import sitemap
+from flask_mongoengine.pagination import Pagination
 
 from udata_front import theme
 from udata_front.theme import render as render_template
@@ -81,6 +82,20 @@ class DataserviceDetailView(DataserviceView, DetailView):
                 abort(404)
             elif self.dataservice.deleted_at:
                 abort(410)
+
+        datasets = Pagination(
+            self.dataservice.datasets,
+            request.args.get('datasets_page', 1, type=int),
+            8,
+        )
+
+        context['datasets'] = datasets
+
+        # Load the lazy references (could be better to fetch them in one request instead of 8)
+        # We need to have a seperate variable because .fetch() return the object instead of
+        # setting it inside the LazyReference object.
+        context['datasets_items'] = [dataset.fetch() for dataset in datasets.items]
+
         context['can_edit'] = DataserviceEditPermission(self.dataservice)
         return context
 
