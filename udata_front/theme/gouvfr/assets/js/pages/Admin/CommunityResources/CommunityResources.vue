@@ -13,25 +13,25 @@
       </li>
       <li>
         <a class="fr-breadcrumb__link" aria-current="page">
-          {{ t('Discussions') }}
+          {{ t('Community Resources') }}
         </a>
       </li>
     </Breadcrumb>
-    <h1 class="fr-h3 fr-mb-5v">{{ t("Discussions") }}</h1>
-    <h2 class="subtitle subtitle--uppercase fr-m-0">{{ t("{n} discussions", totalResult) }}</h2>
-    <AdminDiscussionsTable
+    <h1 class="fr-h3 fr-mb-5v">{{ t("Community Resources") }}</h1>
+    <h2 class="subtitle subtitle--uppercase fr-m-0">{{ t("{n} community resources", communityResources.length) }}</h2>
+    <AdminCommunityResourcesTable
       v-if="loading || totalResult > 0"
-      :discussions
+      :community-resources
       :loading
-      :sort-direction="direction"
+      :sortDirection="direction"
       :sortedBy
       @sort="sort"
     />
-    <Container v-else class="fr-my-2w">
+    <Container v-else class="fr-mt-1w fr-mb-2w">
       <div class="text-align-center fr-py-1w">
-        <img :src="discussionIcon" alt="" loading="lazy"/>
+        <img :src="communityResourceBlankState" alt="" loading="lazy"/>
         <p class="fr-text--bold fr-my-3v">
-          {{ t(`There is no discussion yet`) }}
+          {{ t(`You haven't published a community resource yet`) }}
         </p>
       </div>
     </Container>
@@ -45,42 +45,51 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Pagination } from '@datagouv/components/ts';
+import { type CommunityResource, Pagination } from '@datagouv/components/ts';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from "vue-i18n";
-import { getOrganizationDiscussions } from '../../../api/discussions';
-import AdminDiscussionsTable from '../../../components/AdminTable/AdminDiscussionsTable/AdminDiscussionsTable.vue';
+import { getOrganizationCommunityResources, getUserCommunityResources } from '../../../api/resources';
+import AdminCommunityResourcesTable from '../../../components/AdminTable/AdminCommunityResourcesTable/AdminCommunityResourcesTable.vue';
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
 import Container from '../../../components/Ui/Container/Container.vue';
 import { useCurrentOrganization } from '../../../composables/admin/useCurrentOrganization';
-import type { DiscussionSortedBy, SortDirection, Thread } from "../../../types";
-import discussionIcon from "../../../../../templates/svg/blank_state/discussion.svg";
+import communityResourceBlankState from "../../../../../templates/svg/illustrations/schema.svg";
+import { CommunityResourceSortedBy, SortDirection } from '../../../types';
+import { useMe } from '../../../api/me';
 
 const { t } = useI18n();
-const props = defineProps<{oid: string}>();
+const props = defineProps<{oid?: string}>();
 
+const communityResources = ref<Array<CommunityResource>>([]);
 const loading = ref(false);
 const page = ref(1);
 const pageSize = ref(10);
-const totalResult = ref(0);;
-const sortedBy = ref<DiscussionSortedBy>('created');
+const totalResult = ref(0);
+const sortedBy = ref<CommunityResourceSortedBy>('created_at_internal');
 const direction = ref<SortDirection>('desc');
 const sortDirection = computed(() => `${direction.value === 'asc' ? "" : "-"}${sortedBy.value}`);
-const discussions = ref<Array<Thread>>([]);
 
 const { currentOrganization } = useCurrentOrganization();
+const me = useMe();
 
-function sort(column: DiscussionSortedBy, newDirection: SortDirection) {
+function sort(column: CommunityResourceSortedBy, newDirection: SortDirection) {
   sortedBy.value = column;
   direction.value = newDirection;
 }
 
 watchEffect(async () => {
   loading.value = true;
-  discussions.value = [];
+  communityResources.value = [];
   try {
-    const response = await getOrganizationDiscussions(props.oid, page.value, pageSize.value, sortDirection.value);
-    discussions.value = response.data;
+    let response;
+    if (props.oid) {
+      response = await getOrganizationCommunityResources(props.oid, page.value, pageSize.value, sortDirection.value);
+    } else if (me.value) {
+      response = await getUserCommunityResources(me.value.id, page.value, pageSize.value, sortDirection.value);
+    } else {
+      return
+    }
+    communityResources.value = response.data;
     page.value = response.page;
     pageSize.value = response.page_size;
     totalResult.value = response.total;

@@ -10,6 +10,13 @@ export async function getOrganizationReuses(oid: string, page: number, pageSize:
   });
   return resp.data;
 }
+export async function getUserReuses(userId: string, page: number, pageSize: number, sort: string) {
+  const resp = await api.get<PaginatedArray<Reuse>>(getLocalizedUrl(`reuses/`), {
+    params: { owner: userId, sort, page_size: pageSize, page }
+  });
+  return resp.data;
+}
+
 type UploadLogoResponse = {
   image: string;
   success: boolean;

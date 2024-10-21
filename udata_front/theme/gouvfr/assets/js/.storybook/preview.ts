@@ -8,6 +8,7 @@ import Api from "../plugins/api";
 import Datasets from "../pages/Admin/Datasets/Datasets.vue";
 import Discussions from "../pages/Admin/Discussions/Discussions.vue";
 import Harvesters from "../pages/Admin/Harvesters/Harvesters.vue";
+import CommunityRessources from "../pages/Admin/CommunityResources/CommunityResources.vue";
 import Members from "../pages/Admin/Members/Members.vue";
 import Profile from "../pages/Admin/Profile/Profile.vue";
 import Reuses from "../pages/Admin/Reuses/Reuses.vue";
@@ -21,7 +22,15 @@ setup((app) => {
 
   const routes: Array<RouteRecordRaw> = [
     { path: '/', component: Me },
-    { path: '/me', component: Me },
+    {
+      path: '/me',
+      children: [
+        { path: '', component: Me, name: "me" },
+        { path: 'datasets', component: Datasets, name: "me-datasets" },
+        { path: 'reuses', component: Reuses, name: "me-reuses" },
+        { path: 'community-resources', component: CommunityRessources, name: "me-community-resources" },
+      ]
+    },
     {
       path: '/organizations/:oid',
       children: [
@@ -30,6 +39,7 @@ setup((app) => {
         { path: 'discussions', component: Discussions, props: true, name: "organization-discussions" },
         { path: 'members', component: Members, props: true, name: "organization-members" },
         { path: 'harvesters', component: Harvesters, props: true, name: "organization-harvesters" },
+        { path: 'community-resources', component: CommunityRessources, props: true, name: "organization-community-resources" },
         { path: 'profile', component: Profile, props: true, name: "organization-profile" },
       ],
     },

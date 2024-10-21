@@ -22,7 +22,7 @@
         {{ t("Closed at") }}
       </AdminTableTh>
       <AdminTableTh scope="col" style="width: 25%;">
-        {{ t("URL") }}
+        {{ t("Link to the discussion") }}
       </AdminTableTh>
     </thead>
     <tbody>
@@ -56,7 +56,7 @@
         <td>
           <div>
             <p>{{ formatDate(getLastComment(discussion).posted_on) }}</p>
-            <p class="inline-flex">
+            <p class="inline-flex items-center">
               {{ t('by ') }}
               <AvatarWithName class="fr-ml-1v" :user="getLastComment(discussion).posted_by" />
             </p>
