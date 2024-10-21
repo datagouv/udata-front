@@ -2,7 +2,9 @@
 
 ## Current (in progress)
 
+- Paginate datasets in dataservice display [#560](https://github.com/datagouv/udata-front/pull/560)
 - Beta admin adjustments [#557](https://github.com/datagouv/udata-front/pull/557)
+- Add Parquet file url in download tab [#563](https://github.com/datagouv/udata-front/pull/563)
 
 ## 5.2.3 (2024-10-08)
 
