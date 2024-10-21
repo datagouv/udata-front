@@ -545,7 +545,7 @@
   "Discussion": "Discussion",
   "Number of comments": "Nombre de commentaires",
   "Last comment": "Dernier commentaire",
-  "Closed at": "Fermée à",
+  "Closed at": "Fermée le",
   "by ": "par ",
   "There is no discussion yet": "Il n'y a pas encore de discussion",
   "Harvesters": "Moissonneurs",
@@ -571,5 +571,5 @@
   "Not checked yet": "Pas encore contrôlé",
   "{n} community resources": "{n} ressources communautaires",
   "You haven't published a community resource yet": "Vous n'avez pas encore publié de ressource communautaire",
-  "Link to the discussion": ""
+  "Link to the discussion": "Lien vers la discussion"
 }
