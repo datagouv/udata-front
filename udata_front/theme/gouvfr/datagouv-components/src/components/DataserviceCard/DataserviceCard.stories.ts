@@ -325,7 +325,7 @@ export const DataserviceCardTabularApi: StoryObj<typeof meta> = {
       ...args.dataservice,
       title: 'API automatique data.gouv.fr',
       organization: { ...args.dataservice.organization, name: 'data.gouv.fr' },
-      slug: 'api-tabulaire-data-gouv-fr-beta', // Set in the meta of `preview-head.html`
+      id: '6716420e0cf1cfbbd07b4c8b', // Set in `.env`
     }
   },
 };
