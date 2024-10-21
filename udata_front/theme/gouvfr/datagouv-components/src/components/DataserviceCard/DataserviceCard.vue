@@ -96,7 +96,7 @@ const { t } = useI18n();
 const ownerName = useOwnerName(props.dataservice);
 
 const isTabularApi = computed(() => {
-  return config.tabular_api_dataservice_id === props.dataservice.id
+  return config.tabular_api_dataservice_id === props.dataservice.slug
 })
 </script>
 <style scoped>
