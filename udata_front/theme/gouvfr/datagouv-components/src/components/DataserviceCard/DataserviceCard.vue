@@ -51,13 +51,14 @@
       v-if="showDescription"
       class="fr-text--sm fr-mt-1w fr-mb-0 overflow-wrap-anywhere"
       :auto-resize="true"
-      :text="dataservice.description"
+      :text="RemoveMarkdown(dataservice.description)"
       :max-lines='2'
     />
   </article>
 </template>
 
 <script setup lang="ts">
+import RemoveMarkdown from "remove-markdown";
 import { useI18n } from "vue-i18n";
 import type { RouteLocationRaw } from "vue-router";
 import TextClamp from 'vue3-text-clamp';
