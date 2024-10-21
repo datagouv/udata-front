@@ -32,7 +32,7 @@ import "./components/vanilla/dialog.js";
 import "./components/vanilla/sort-search.js";
 import fixupTabsOnStartup from "./components/vanilla/fixup-tabs-on-startup.js";
 import i18n from "./i18n.ts";
-import { admin_root, api_root, api_2_root, schema_documentation_url, schema_validata_url, tabular_api_url, tabular_page_size, title } from "./config.ts";
+import { admin_root, api_root, api_2_root, schema_documentation_url, schema_validata_url, tabular_api_dataservice_id, tabular_api_url, tabular_page_size, title } from "./config.ts";
 import Api from "./plugins/api.ts";
 import EventBus from "./plugins/eventbus.ts";
 import Auth from "./plugins/auth.ts";
@@ -49,6 +49,7 @@ setupComponents({
   schema_documentation_url,
   schema_validata_url,
   show_copy_resource_permalink: true,
+  tabular_api_dataservice_id,
   tabular_api_url,
   tabular_page_size,
   title,

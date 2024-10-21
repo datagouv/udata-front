@@ -306,6 +306,8 @@ export const tabular_api_url = _meta("tabular-api-url");
 
 export const tabular_page_size = parseInt(_meta("tabular-page-size") ?? "5");
 
+export const tabular_api_dataservice_id = _meta("tabular-api-dataservice-id");
+
 export const search_siren_url = _meta("search-siren-url");
 
 export const quality_metadata_backend_ignore: Array<string> = _jsonMeta("quality-metadata-backend-ignore") || [];
@@ -349,6 +351,7 @@ export default {
   support_url,
   tabular_api_url,
   tabular_page_size,
+  tabular_api_dataservice_id,
   tags,
   theme_static,
   terms_url,
