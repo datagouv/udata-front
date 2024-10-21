@@ -1,6 +1,5 @@
 <template>
   <article class="fr-my-2w fr-p-2w border fr-enlarge-link" :style="props.style" :class="{
-    'border-default-grey': !isTabularApi,
     'border-tabular-api': isTabularApi,
   }">
     <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v fr-ml-n1v" v-if="dataservice.is_restricted || dataservice.private || dataservice.archived_at">
@@ -101,6 +100,6 @@ const isTabularApi = computed(() => {
 </script>
 <style scoped>
 .border-tabular-api {
-  border-color: #373C42;
+  border-color: #373C42 !important;
 }
 </style>
