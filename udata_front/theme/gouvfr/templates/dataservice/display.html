@@ -41,7 +41,7 @@
 {% endblock %}
 
 {% block content %}
-{% cache cache_duration, 'dataservice-content', dataservice.id|string, g.lang_code, current_user.slug or 'anonymous', dataservice.metadata_modified_at|string %}
+{% cache cache_duration, 'dataservice-content', dataservice.id|string, datasets.page|string, g.lang_code, current_user.slug or 'anonymous', dataservice.metadata_modified_at|string %}
 
 {{ breadcrumb(self) }}
 
