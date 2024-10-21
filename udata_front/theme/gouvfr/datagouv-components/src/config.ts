@@ -69,6 +69,7 @@ const setupComponents = (config: Partial<typeof localConfig>) => {
   tabular_allow_remote.value = mergedConfig.tabular_allow_remote;
   tabular_page_size.value = mergedConfig.tabular_page_size;
   tabular_api_url.value = mergedConfig.tabular_api_url;
+  tabular_api_dataservice_id.value = mergedConfig.tabular_api_dataservice_id;
   title.value = mergedConfig.title;
 };
 
