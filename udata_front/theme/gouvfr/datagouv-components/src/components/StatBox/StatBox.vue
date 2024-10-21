@@ -8,7 +8,7 @@
             {{ summarize(summary, 2) }}
         </p>
         <div class="fr-ml-1w" v-if="changesThisYear">
-          <SmallChart :type :data />
+          <SmallChart :type :data :lastWithLowEnphasis="true" />
         </div>
     </div>
       <p class="fr-mt-1w fr-text--regular text-transform-none fr-badge fr-badge--no-icon fr-badge--success" v-if="lastValue && lastMonth">
