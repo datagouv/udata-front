@@ -29,12 +29,13 @@
 import type { AxiosError } from 'axios';
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { Dataset, NewDataservice, Dataservice } from '@datagouv/components/ts';
+import type { Dataset, NewDataservice, Dataservice, ContactPoint} from '@datagouv/components/ts';
 import Step1DescribeDataservice from './Step1DescribeDataservice.vue';
 import Step2AddDatasets from './Step2AddDatasets.vue';
 import Step3CompleteThePublication from './Step3CompleteThePublication.vue';
 import { publishing_form_feedback_url } from '../../config';
 import { createDataservice, updateDataservice } from '../../api/dataservices';
+import { createContactPointOrganization } from '../../api/organizations';
 import type { Me } from '../../types';
 import { fetchMe } from '../../api/me';
 import { auth } from '../../plugins/auth';
@@ -69,6 +70,7 @@ const dataservice = ref<NewDataservice>({
   title: "",
   organization: null,
   owner: user.id,
+  contact_point: null,
 });
 
 const savedDataservice = ref<Dataservice | null>(null);
@@ -92,11 +94,18 @@ const moveToStep = (step: number, saveToHistory = true) => {
   }
 };
 
-async function createDataserviceAndMoveToNextStep(newDataservice: NewDataservice) {
+async function createDataserviceAndMoveToNextStep(newDataservice: NewDataservice, isNewContact: boolean, contactPoint: ContactPoint) {
   loading.value = true;
   errors.value = [];
   if (newDataservice.availability) { newDataservice.availability = Number(newDataservice.availability) } 
   try {
+    if (!isNewContact) {
+      newDataservice.contact_point = contactPoint.id;
+    } else if (contactPoint) {
+      alert(newDataservice.organization)
+      let contactData = await createContactPointOrganization(newDataservice.organization, contactPoint);
+      newDataservice.contact_point = contactData.id;
+    }
     savedDataservice.value = await createDataservice(newDataservice);
     moveToStep(1);
   } catch (e) {

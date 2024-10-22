@@ -1,8 +1,6 @@
 import type { Harvest } from "./harvest";
 import type { Owned, OwnedWithId } from "./owned";
 
-
-
 export type BaseDataservice = Owned & {
   acronym: string;
   authorization_request_url: string | null;
@@ -24,18 +22,10 @@ export type BaseDataservice = Owned & {
   private: boolean;
   rate_limiting: string;
   title: string;
+  contact_point: string | null;
 };
 
 export type NewDataservice = Omit<BaseDataservice, keyof OwnedWithId> & OwnedWithId;
-
-
-export type ContactPoint = {
-  email: string;
-  id: string;
-  name: string;
-  organization: string | null;
-  owner: string | null;
-} | null;
 
 export type Dataservice = Owned & {
   acronym: string;
@@ -43,7 +33,7 @@ export type Dataservice = Owned & {
   authorization_request_url: string | null;
   availability: number | null;
   base_api_url: string | null;
-  contact_point: ContactPoint;
+  contact_point:  string | null;
   created_at: string;
   datasets: Array<{
       class: string;

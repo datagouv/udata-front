@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3';
 import { delay, http, HttpResponse } from 'msw';
 import { user } from '../../config';
 import DataservicePublishingForm from './DataservicePublishingForm.vue';
+import { ContactPoint } from '../../types';
 
 const meta = {
   title: 'Pages/DataservicePublishingForm/Form',
@@ -80,6 +81,28 @@ export const FormWithOrganizations: StoryObj<typeof meta> = {
         const dataservice = {...body};
         await delay();
         return HttpResponse.json(dataservice);
+      }),
+      http.get('*/organizations/*/contacts', async () => {
+        await delay();
+        return HttpResponse.json({ 
+          data: [
+            { 
+              name:"Service DILA 1",
+              id: "66db24fe79d274a6092717xx",
+              email: "donnees-dila@dila.gouv.fr"
+            },
+            { 
+              name:"Service DILA 2",
+              id: "66db24fe79d274a6092717a2",
+              url: "https://dila.gouv.fr"
+            }
+          ]
+        })
+      }),
+      http.post('*/contacts', async ({}) => {
+        const contact: ContactPoint = { id: "someId", name: "test", email: "test@test.com" };
+        await delay();
+        return HttpResponse.json(contact);
       }),
     ],
   },

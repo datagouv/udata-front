@@ -14,21 +14,21 @@
           </template>
           <AccordionGroup>
             <Accordion
-              :title= "t('Naming your dataservice')"
+              :title= "t('Name your API')"
               :id="nameDataserviceAccordionId"
               :state="state.title"
             >
               <p class="fr-m-0">
-                {{ t('The title of your dataservice should be as precise and specific as possible.') }}
+                {{ t('Give your API a relevant and explicit name to reflect its function or application domain. A good name helps users search for and identify the API easily.') }}
               </p>
             </Accordion>
             <Accordion
-              :title= "t('Add an acronym')"
+              :title= "t('Add an acronym to the API')"
               :id="acronymDataserviceAccordionId"
               :state="state.acronym"
             >
               <p class="fr-m-0"> 
-                {{ t('You have the option to add an acronym to your dataservice. The letters that make up this acronym do not need to be separated by periods.') }}
+                {{ t('You have the option to add an acronym to your API. The letters that make up this acronym do not need to be separated by periods.') }}
               </p>
             </Accordion>
             <Accordion
@@ -37,19 +37,29 @@
               :state="state.description"
             >
               <p class="fr-m-0">
-                {{ t("The description of your dataservice allows to obtain information about the content and structure of the accessible resources. Please be as most detailed as you can.") }}
+                {{ t("Write a clear and precise description of the API. Users need to understand the purpose of the API, the data provided, the scope covered (is the data exhaustive, are there any gaps?), the frequency of data updates, as well as the parameters with which they can make a call.") }}
               </p>
               <Well class="fr-mt-1w" v-if="fieldHasWarning('description')" color="orange-terre-battue">
                 {{ getWarningText("description") }}
               </Well>
             </Accordion>
             <Accordion
-              :title= "$t('Access type')"
+              :title= "$t('Define a point of contact')"
+              :id="contactPointAccordionId"
+              :state="state.contact_point"
+              v-if="dataservice.organization"
+            >
+              <p class="fr-m-0">
+                {{ $t("Specify a contact point, such as an email or a link to a form, so users can reach you in case of issues or for questions.") }}
+              </p>
+            </Accordion>
+            <Accordion
+              :title= "$t('Select an access type')"
               :id="selectIsRestrictedAccordionId"
               :state="state.is_restricted"
             >
               <p class="fr-m-0">
-                {{ $t("Please indicate whether the dataservice is restricted to a particular type of public or is open to all.") }}
+                {{ $t("Choose the access type (open or restricted). Select open if the data is open data.") }}
               </p>
               <Well class="fr-mt-1w" v-if="fieldHasWarning('is_restricted')" color="orange-terre-battue">
                 {{ getWarningText("is_restricted") }}
@@ -68,51 +78,39 @@
               </Well>
             </Accordion>
             <Accordion
-              :title= "$t('Select a license')"
-              :id="selectLicenseAccordionId"
-              :state="state.license"
-            >
-              <p class="fr-m-0">
-                {{ $t("Licenses define the rules for dataservice. By choosing a dataservice license, you ensure that the published dataservice will be reused according to the usage conditions you have defined.") }}
-              </p>
-              <Well class="fr-mt-1w" v-if="fieldHasWarning('license')" color="orange-terre-battue">
-                {{ getWarningText("license") }}
-              </Well>
-            </Accordion>
-            <Accordion
-              :title= "t('Dataservice Base URL')"
+              :title= "t('Define the correct link to the API')"
               :id="addBaseUrlAccordionId"
               :state="state.base_api_url"
             >
               <p class="fr-m-0">
-                {{ t("The base url is the root url of your dataservice.") }}
+                {{ t("The base URL of an API is the common entry point for all requests, often consisting of a domain or server address. It serves as the foundation to which specific paths (endpoints) are added to access the various resources of the API.") }}
               </p>
             </Accordion>
             <Accordion
-              :title= "t('Dataservice authorization request URL')"
+              :title= "t('Add a link to the authorization')"
               :id="addAuthorizationUrlAccordionId"
               :state="state.authorization_request_url"
             >
               <p class="fr-m-0">
-                {{ t("The authorization request url is the url of the webpage to orient the user where he needs to fulfill an autorization request to access the data. You do not need to fulfill this field if the dataservice is freely open.") }}
+                {{ t("If your API is restricted access, please add the link to the access request form. Are you an administration? The Datapass solution allows you to easily create and manage access request forms for data.") }}
               </p>
             </Accordion>
             <Accordion
-              :title= "t('Dataservice endpoint URL')"
+              :title= "t('Add a link to the technical documentation')"
               :id="addEndpointUrlAccordionId"
               :state="state.endpoint_description_url"
             >
               <p class="fr-m-0">
-                {{ t("The endpoint url is the url where we can find technical documentation of the dataservice. It is a url to the yaml or json file of the swagger.") }}
+                {{ t("Ideally, provide an OpenAPI (swagger) link that allows developers to explore the endpoints, see the available methods, and test requests directly from the documentation. In the case of geographic services, you can provide a link to the service with a GetCapabilities request to obtain the service's metadata.") }}
               </p>
             </Accordion>
             <Accordion
-              :title= "t('Rate limiting')"
+              :title= "t('Set the rate limiting')"
               :id="rateLimitingDataserviceAccordionId"
               :state="state.rate_limiting"
             >
               <p class="fr-m-0"> 
-                {{ t('Describe the eventual rate limiting applied to the dataservice.') }}
+                {{ t('You can specify the rate limiting for your API.') }}
               </p>
             </Accordion>
             <Accordion
@@ -210,6 +208,25 @@
               />
             </LinkedToAccordion>
           </fieldset>
+          <fieldset class="fr-fieldset" aria-labelledby="description-legend" v-if="dataservice.organization">
+            <legend class="fr-fieldset__legend" id="description-legend">
+              <h2 class="subtitle subtitle--uppercase fr-mb-3v">
+                {{ t("Access Point") }}
+              </h2>
+            </legend>
+            <div 
+              class="fr-fieldset__element"
+              :accordion="contactPointAccordionId"
+            >
+              <ContactPointSelector
+                :oid="dataservice.organization"
+                :hasError="fieldHasError('owned')"
+                :errorText="t('You need to select a Producer')"
+                @update:contact="updateContact"
+                @update:newcontact="updateNewContact"
+              />
+            </div>
+          </fieldset>
           <fieldset class="fr-fieldset" aria-labelledby="description-legend">
             <legend class="fr-fieldset__legend" id="description-legend">
               <h2 class="subtitle subtitle--uppercase fr-mb-3v">
@@ -245,23 +262,6 @@
                 @change="(value: string) => dataservice.has_token = JSON.parse(value)"
                 :allOption="$t('Access token')"
                 :addAllOption="false"
-                :showDescription="true"
-              />
-            </LinkedToAccordion>
-            <LinkedToAccordion
-              class="fr-fieldset__element"
-              :accordion="selectLicenseAccordionId"
-              @blur="vWarning$.license.$touch"
-            >
-              <MultiSelect
-                :placeholder="$t('License')"
-                :searchPlaceholder="$t('Search a license...')"
-                :listUrl="licensesUrl"
-                :values="dataservice.license"
-                @change="(value: string) => dataservice.license = value"
-                :allOption="$t('Select a license')"
-                :addAllOption="false"
-                :groups="licensesGroups"
                 :showDescription="true"
               />
             </LinkedToAccordion>
@@ -368,7 +368,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue';
 import { Well } from '@datagouv/components/ts';
-import type { NewDataservice, Dataservice, OwnedWithId } from '@datagouv/components/ts';
+import type { NewDataservice, Dataservice, OwnedWithId, ContactPoint } from '@datagouv/components/ts';
 import { useI18n } from 'vue-i18n';
 import { url, numeric } from '@vuelidate/validators';
 import { minLengthWarning, required } from '../../i18n';
@@ -379,6 +379,7 @@ import InputGroup from '../../components/Form/InputGroup/InputGroup.vue';
 import LinkedToAccordion from '../../components/Form/LinkedToAccordion/LinkedToAccordion.vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
 import ProducerSelector from '../../components/ProducerSelector/ProducerSelector.vue';
+import ContactPointSelector from '../../components/ContactPointSelector/ContactPointSelector.vue'
 import Stepper from '../../components/Form/Stepper/Stepper.vue';
 import Sidemenu from '../../components/Sidemenu/Sidemenu.vue';
 import useUid from "../../composables/useUid";
@@ -414,7 +415,7 @@ const { id: addAuthorizationUrlAccordionId } = useUid("accordion");
 const { id: addEndpointUrlAccordionId } = useUid("accordion");
 const { id: rateLimitingDataserviceAccordionId } = useUid("accordion");
 const { id: availabilityDataserviceAccordionId } = useUid("accordion");
-
+const { id: contactPointAccordionId } = useUid("accordion");
 
 const dataservice = reactive<NewDataservice>({...props.dataservice});
 
@@ -427,9 +428,18 @@ const licensesGroups = license_groups_options?.map(([name, values]) => ({
 const isRestrictedValues = [{ id: true, label: t("Open")}, { id: false, label: t("Restricted")}]
 const hasTokenValues = [{ id: true, label: t("Yes")}, { id: false, label: t("No")}]
 
+
 function updateOwned(owned: OwnedWithId) {
   dataservice.organization = owned.organization;
   dataservice.owner = owned.owner;
+}
+
+const isNewContact = ref<boolean>(false);
+const contactPoint = ref<ContactPoint>(null);
+
+function updateContact(isNew: boolean, contact: ContactPoint) {
+  isNewContact.value = isNew;
+  contactPoint.value = contact;
 }
 
 const requiredRules = {
@@ -441,6 +451,7 @@ const requiredRules = {
   rate_limiting: {},
   title: { required },
   description: { required },
+  contact_point: {},
 };
 
 const warningRules = {
@@ -455,6 +466,7 @@ const warningRules = {
   rate_limiting: {},
   title: { required },
   description: {required, minLengthValue: minLengthWarning(quality_description_length), },
+  contact_point: {},
 };
 
 const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(dataservice, requiredRules, warningRules);
@@ -472,6 +484,7 @@ const state = computed<Record<string, PublishingFormAccordionState>>(() => {
     rate_limiting: getFunctionalState(vWarning$.value.rate_limiting.$dirty, v$.value.rate_limiting.$invalid, vWarning$.value.rate_limiting.$error),
     title: getFunctionalState(vWarning$.value.title.$dirty, v$.value.title.$invalid, vWarning$.value.title.$error),
     description: getFunctionalState(vWarning$.value.description.$dirty, v$.value.description.$invalid, vWarning$.value.description.$error),
+    contact_point: getFunctionalState(vWarning$.value.contact_point.$dirty, v$.value.contact_point.$invalid, vWarning$.value.contact_point.$error),
   };
 });
 
@@ -482,7 +495,7 @@ const fieldHasWarning = (field: string) => hasWarning(state, field);
 function submit() {
   validateRequiredRules().then(valid => {
     if(valid) {
-      emit("next", dataservice);
+      emit("next", dataservice, isNewContact.value, contactPoint.value);
     }
   });
 };
