@@ -1,4 +1,4 @@
-import type { Dataservice, Dataset, FileResourceFileType, Organization, Owned, RemoteResourceFileType, ResourceType, Reuse, User, Contact } from "@datagouv/components/ts";
+import type { Dataservice, Dataset, FileResourceFileType, Organization, Owned, RemoteResourceFileType, ResourceType, Reuse, User } from "@datagouv/components/ts";
 
 import { CLOSED_FORMATS } from "./helpers";
 
