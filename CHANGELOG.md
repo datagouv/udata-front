@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 5.2.4 (2024-10-22)
 
 - Paginate datasets in dataservice display [#560](https://github.com/datagouv/udata-front/pull/560) [#568](https://github.com/datagouv/udata-front/pull/568)
