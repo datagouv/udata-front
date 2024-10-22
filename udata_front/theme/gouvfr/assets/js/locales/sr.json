@@ -611,7 +611,7 @@
   "Select a contact point": "",
   "Contact Name": "",
   "Contact Email": "",
-  "contact@organization.org": "",
+  "contact [at] organization.org": "",
   "The value is not a valid email": "",
   "Contact URL": "",
   "The value is not a valid URL address": "",

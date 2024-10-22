@@ -21,7 +21,7 @@
       />
       <InputGroup
         :label="t('Contact Email')"
-        :placeholder="t('contact@organization.org')"
+        :placeholder="t('contact [at] organization.org')"
         v-model="newContact.email"
         @change="updateNewContact"
         :hasError="validateEmail()"

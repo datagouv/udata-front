@@ -576,7 +576,7 @@
   "Select a contact point": "Select a contact point",
   "Contact Name": "Contact Name",
   "Contact Email": "Contact Email",
-  "contact@organization.org": "contact@organization.org",
+  "contact [at] organization.org": "contact [at] organization.org",
   "The value is not a valid email": "The value is not a valid email",
   "Contact URL": "Contact URL",
   "The value is not a valid URL address": "The value is not a valid URL address",
