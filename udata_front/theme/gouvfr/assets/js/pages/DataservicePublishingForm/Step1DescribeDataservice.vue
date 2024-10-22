@@ -223,7 +223,6 @@
                 :hasError="fieldHasError('owned')"
                 :errorText="t('You need to select a Producer')"
                 @update:contact="updateContact"
-                @update:newcontact="updateNewContact"
               />
             </div>
           </fieldset>

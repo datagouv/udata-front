@@ -99,12 +99,13 @@ async function createDataserviceAndMoveToNextStep(newDataservice: NewDataservice
   errors.value = [];
   if (newDataservice.availability) { newDataservice.availability = Number(newDataservice.availability) } 
   try {
-    if (!isNewContact) {
-      newDataservice.contact_point = contactPoint.id;
-    } else if (contactPoint) {
-      alert(newDataservice.organization)
-      let contactData = await createContactPointOrganization(newDataservice.organization, contactPoint);
-      newDataservice.contact_point = contactData.id;
+    if (contactPoint) {
+      if (!isNewContact) {
+        newDataservice.contact_point = contactPoint.id;
+      } else {
+        let contactData = await createContactPointOrganization(newDataservice.organization, contactPoint);
+        newDataservice.contact_point = contactData.id;
+      }
     }
     savedDataservice.value = await createDataservice(newDataservice);
     moveToStep(1);

@@ -56,12 +56,12 @@ import useFunctionalState from '../../composables/form/useFunctionalState';
 
 const { t } = useI18n();
 
-const contactsWithNewOption = ref<any>(null)
+const contactsWithNewOption = ref<any>(null);
 
-const contacts = ref<Array<ContactPoint>>(null)
-const contact = ref<ContactPoint>(null)
-const isNewContact = ref(false)
-const newContact = ref({})
+const contacts = ref<Array<ContactPoint>>(null);
+const contact = ref<ContactPoint>(null);
+const isNewContact = ref(false);
+const newContact = ref({});
 
 
 const props = defineProps<{
@@ -79,6 +79,8 @@ const emit = defineEmits<{
 const updateContactPoint = (contactPointId: any) => {
   if (contactPointId == "new"){
     isNewContact.value = true;
+    contact.value = null;
+    emit('update:contact', isNewContact.value, contact.value);
   } else {
     isNewContact.value = false;
     contact.value = contacts.value.find((contact: ContactPoint) => contact.id === contactPointId);
