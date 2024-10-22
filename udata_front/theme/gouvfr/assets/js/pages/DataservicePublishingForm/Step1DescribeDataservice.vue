@@ -221,7 +221,7 @@
               <ContactPointSelector
                 :oid="dataservice.organization"
                 :hasError="fieldHasError('owned')"
-                :errorText="t('You need to select a Producer')"
+                :errorText="t('You need to select a contact point')"
                 @update:contact="updateContact"
               />
             </div>

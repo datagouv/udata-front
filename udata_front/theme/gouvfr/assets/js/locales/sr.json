@@ -635,5 +635,6 @@
   "Ideally, provide an OpenAPI (swagger) link that allows developers to explore the endpoints, see the available methods, and test requests directly from the documentation. In the case of geographic services, you can provide a link to the service with a GetCapabilities request to obtain the service's metadata.": "",
   "Set the rate limiting": "",
   "You can specify the rate limiting for your API.": "",
-  "Access Point": ""
+  "Access Point": "",
+  "You need to select a contact point": ""
 }
