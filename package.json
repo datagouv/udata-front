@@ -48,7 +48,7 @@
     "@milkdown/vue": "^7.3.3",
     "@prosemirror-adapter/vue": "^0.2.6",
     "@sentry/tracing": "^6.10.0",
-    "@sentry/vue": "^6.10.0",
+    "@sentry/vue": "^8.35.0",
     "@storybook/addon-essentials": "^8.3.0",
     "@storybook/addon-interactions": "^8.3.0",
     "@storybook/addon-links": "^8.3.0",
