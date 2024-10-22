@@ -424,7 +424,7 @@ const licensesGroups = license_groups_options?.map(([name, values]) => ({
   values
 }));
 
-const isRestrictedValues = [{ id: true, label: t("Open")}, { id: false, label: t("Restricted")}]
+const isRestrictedValues = [{ id: false, label: t("Open")}, { id: true, label: t("Restricted")}]
 const hasTokenValues = [{ id: true, label: t("Yes")}, { id: false, label: t("No")}]
 
 

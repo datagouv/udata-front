@@ -108,6 +108,7 @@ async function createDataserviceAndMoveToNextStep(newDataservice: NewDataservice
       }
     }
     savedDataservice.value = await createDataservice(newDataservice);
+    savedDataservice.value.datasets = []
     moveToStep(1);
   } catch (e) {
     errors.value.push(t("An error occured while creating your dataservice."));
@@ -147,6 +148,7 @@ async function updateDatasetsAndMoveToNextStep(datasets: Array<Dataset>) {
 
 async function updateDataserviceData(newDataservice: Dataservice) {
   try {
+    delete newDataservice.datasets;
     savedDataservice.value = await updateDataservice(newDataservice);
   } catch (e) {
     if(e instanceof Error) {
