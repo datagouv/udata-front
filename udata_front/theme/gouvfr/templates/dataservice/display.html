@@ -2,6 +2,7 @@
 {% from theme('macros/breadcrumb.html') import breadcrumb with context %}
 {% from theme('macros/follow.html') import follow_btn with context %}
 {% from theme('macros/report.html') import report_btn with context %}
+{% from theme('macros/paginator.html') import paginator with context %}
 
 {% set meta = {
     'title': dataservice.title,
@@ -40,7 +41,7 @@
 {% endblock %}
 
 {% block content %}
-{% cache cache_duration, 'dataservice-content', dataservice.id|string, g.lang_code, current_user.slug or 'anonymous', dataservice.metadata_modified_at|string %}
+{% cache cache_duration, 'dataservice-content', dataservice.id|string, datasets.page|string, g.lang_code, current_user.slug or 'anonymous', dataservice.metadata_modified_at|string %}
 
 {{ breadcrumb(self) }}
 
@@ -182,9 +183,10 @@
             <h2 class="subtitle subtitle--uppercase fr-m-0">
                 {{ ngettext('%(num)d used dataset', '%(num)d used datasets', dataservice.datasets|length) }}
             </h2>
-            {% with datasets = dataservice.datasets %}
+            {% with datasets = datasets_items %}
             {% include theme('dataset/search-results.html') %}
             {% endwith %}
+            {{ paginator(datasets, arg_name='datasets_page', url='#/datasets') }}
         </section>
     {% else %}
         <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-mt-5w">

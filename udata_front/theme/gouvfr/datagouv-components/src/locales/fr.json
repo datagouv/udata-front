@@ -137,5 +137,6 @@
   "{n} resources downloads": "{n} téléchargements des ressources",
   "{n} reuses": "{n} réutilisations",
   "Close": "Fermer",
-  " in ": ""
+  " in ": " dans ",
+  "Auto-generated formats from {platform}": "Formats générés automatiquement par {platform}"
 }

@@ -29,7 +29,7 @@
           <rect x="0" y="0" rx="3" ry="3" width="120" height="30" />
         </ContentLoader>
         <div class="fr-ml-1w" v-else-if="changesThisYear">
-          <SmallChart :type :data/>
+          <SmallChart :type :data :lastWithLowEnphasis />
         </div>
     </div>
       <p class="fr-mt-1w fr-text--regular text-transform-none fr-badge fr-badge--no-icon fr-badge--success" v-if="lastValue && lastMonth">

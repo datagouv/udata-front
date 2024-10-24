@@ -44,7 +44,11 @@
         <div class="fr-text--sm fr-m-0 inline-flex" v-if="dataset.organization || dataset.owner">
             <template v-if="dataset.organization">
               <span class="not-enlarged fr-mr-1v">
-                <AppLink class="fr-link fr-text--sm" v-if="organizationUrl" :to="organizationUrl">
+                <AppLink
+                  class="fr-link fr-text--sm inline-flex items-center"
+                  v-if="organizationUrl"
+                  :to="organizationUrl"
+                >
                   <OrganizationNameWithCertificate :organization="dataset.organization" />
                 </AppLink>
                 <OrganizationNameWithCertificate v-else :organization="dataset.organization" />

@@ -10,6 +10,7 @@ export type BaseReuse = Owned & {
   topic: string;
   type: string;
   url: string;
+  private: boolean;
 };
 
 export type NewReuse = Omit<BaseReuse, keyof OwnedWithId> & OwnedWithId;
@@ -32,7 +33,6 @@ export type Reuse = BaseReuse & {
     followers: number;
     views: number;
   };
-  private: boolean;
   slug: string;
   page: string;
   uri: string;

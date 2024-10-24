@@ -26,6 +26,7 @@
 
 {% block main_content %}
     <reuse-publishing-form
+        redirect-draft-url="{{ url_for('admin.index', path='reuse/', _external=True) }}"
         class="fr-pb-10w"
     ></reuse-publishing-form>
 {% endblock %}
