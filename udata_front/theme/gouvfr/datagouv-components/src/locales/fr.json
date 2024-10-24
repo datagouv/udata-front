@@ -72,7 +72,6 @@
   "Learn more about this indicator": "En savoir plus sur cet indicateur",
   "Read less": "Lire moins",
   "Read more": "Lire plus",
-  "Private": "Privé",
   "Archived": "Archivé",
   "Metadata :": "Métadonnées :",
   "Availability :": "Disponibilité :",
@@ -138,5 +137,6 @@
   "{n} reuses": "{n} réutilisations",
   "Close": "Fermer",
   " in ": " dans ",
-  "Auto-generated formats from {platform}": "Formats générés automatiquement par {platform}"
+  "Auto-generated formats from {platform}": "Formats générés automatiquement par {platform}",
+  "Draft": "Draft"
 }
