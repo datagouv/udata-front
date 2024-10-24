@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add beta admin `dataservice` page [#558](https://github.com/datagouv/udata-front/pull/558)
 
 ## 5.2.3 (2024-10-08)
 
