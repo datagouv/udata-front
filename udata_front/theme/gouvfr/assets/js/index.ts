@@ -24,6 +24,7 @@ import UserReuseList from "./components/UserReuseList/UserReuseList.vue";
 import PublishingForm from "./pages/PublishingForm/PublishingForm.vue";
 import ReusePublishingForm from "./pages/ReusePublishingForm/ReusePublishingForm.vue";
 import OrganizationPublishingForm from "./pages/OrganizationPublishingForm/OrganizationPublishingForm.vue";
+import DataservicePublishingForm from "./pages/DataservicePublishingForm/DataservicePublishingForm.vue";
 
 import "./components/vanilla/tabs.js";
 import "./components/vanilla/accordion.js";
@@ -92,6 +93,7 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("toggletip", Toggletip);
   app.component("user-dataset-list", UserDatasetList);
   app.component("user-reuse-list", UserReuseList);
+  app.component("dataservice-publishing-form", DataservicePublishingForm);
 
   // @ts-ignore disable delimiters used in html templates see [#386](https://github.com/etalab/udata-front/pull/386) for more details
   app.config.compilerOptions.delimiters = ["", ""];

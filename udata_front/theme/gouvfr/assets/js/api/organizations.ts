@@ -9,6 +9,12 @@ type UploadLogoResponse = {
   success: boolean;
 };
 
+type ContactPoint = {
+  name: string,
+  email: string,
+  contact_form: string,
+}
+
 export function createOrganization(organization: MaybeRefOrGetter<NewOrganization>) {
   return api.post<Organization>("organizations/", {
     ...toValue(organization),
@@ -92,4 +98,16 @@ export function addMember(oid: string, userId: string, role: MemberRole) {
     role,
   })
     .then(resp => resp.data);
+}
+
+export function createContactPointOrganization(oid: string, contactPoint: ContactPoint) {
+  return api.post<ContactPoint>(`contacts`, {
+    ...toValue(contactPoint),
+    organization: oid,
+  }).then(resp => resp.data);
+}
+
+export function getContactsOrganization(oid: string) {
+  return api.get<Array<Organization>>(getLocalizedUrl(`organizations/${oid}/contacts`))
+    .then(res => res.data);
 }
