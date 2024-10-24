@@ -87,7 +87,6 @@
   "Spatial granularity": "Spatial granularity",
   "Finest level of geographic detail covered by data.": "Finest level of geographic detail covered by data.",
   "Ex. 2022 presidential election": "Ex. 2022 presidential election",
-  "Private": "Private",
   "{n} favorites": "{n} favorites | {n} favorite | {n} favorites",
   "The identity of this public service is certified by {certifier}": "The identity of this public service is certified by {certifier}",
   "{n} reuses": "{n} reuses | {n} reuse | {n} reuses",
@@ -571,5 +570,9 @@
   "Not checked yet": "Not checked yet",
   "{n} community resources": "{n} community resources",
   "You haven't published a community resource yet": "You haven't published a community resource yet",
-  "Link to the discussion": "Link to the discussion"
+  "Link to the discussion": "Link to the discussion",
+  "Draft": "",
+  "Statistics on your datasets": "",
+  "Download": "",
+  "Reuses Visits": ""
 }
