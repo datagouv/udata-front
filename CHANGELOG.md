@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add Dataservice publishing form [#358](https://github.com/datagouv/udata-front/pull/559)
 
 ## 5.2.4 (2024-10-22)
 
