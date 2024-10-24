@@ -19,7 +19,11 @@
     </Breadcrumb>
     <h1 class="fr-h3 fr-mb-5v">{{ t("Datasets") }}</h1>
 
-    <div class="bg-white border rounded-xxs fr-mb-3w" v-if="oid" :class="{ 'fr-pb-4v': metricsOpen }">
+    <div
+      class="bg-white border rounded-xxs fr-mb-3w"
+      v-if="oid && !loading && totalResult > 0"
+      :class="{ 'fr-pb-4v': metricsOpen }"
+    >
       <header class="fr-p-3w flex items-center justify-between relative">
         <div>
           <h4 class="fr-mb-1v flex items-center" :id="metricsTitleId">
@@ -173,11 +177,11 @@ watchEffect(async () => {
     // Fetching last 12 months
     const response = await fetch(`https://metric-api.data.gouv.fr/api/organizations/data/?organization_id__exact=${props.oid}&metric_month__sort=desc&page_size=12`)
     const page = await response.json();
-  
+
     metricsViews.value = {};
     metricsDownloads.value = {};
     metricsReuses.value = {};
-    
+
     for (const { metric_month, monthly_download_resource, monthly_visit_dataset, monthly_visit_reuse } of page.data) {
       metricsViews.value[metric_month] = monthly_visit_dataset;
       metricsDownloads.value[metric_month] = monthly_download_resource;
@@ -189,10 +193,11 @@ watchEffect(async () => {
     // Fetching totals
     const response = await fetch(`https://metric-api.data.gouv.fr/api/organizations_total/data/?organization_id__exact=${props.oid}`)
     const page = await response.json();
-  
-    metricsViewsTotal.value = page.data[0].visit_dataset;
-    metricsDownloadsTotal.value = page.data[0].download_resource;
-    metricsReusesTotal.value = page.data[0].visit_reuse;
+    if(page.data[0]) {
+      metricsViewsTotal.value = page.data[0].visit_dataset;
+      metricsDownloadsTotal.value = page.data[0].download_resource;
+      metricsReusesTotal.value = page.data[0].visit_reuse;
+    }
   }
 })
 

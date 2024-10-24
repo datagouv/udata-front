@@ -29,7 +29,7 @@
           <rect x="0" y="0" rx="3" ry="3" width="120" height="30" />
         </ContentLoader>
         <div class="fr-ml-1w" v-else-if="changesThisYear">
-          <SmallChart :type :data :lastWithLowEnphasis />
+          <SmallChart :type :data :lastWithLowEmphasis="true" />
         </div>
     </div>
       <p class="fr-mt-1w fr-text--regular text-transform-none fr-badge fr-badge--no-icon fr-badge--success" v-if="lastValue && lastMonth">
@@ -56,7 +56,7 @@ const props = defineProps<{
   summary: number | null;
 }>();
 
-const { t } = useI18n(); 
+const { t } = useI18n();
 
 const months = computed(() => props.data ? Object.keys(props.data) : []);
 const values = computed(() => props.data ? Object.values(props.data) : []);
