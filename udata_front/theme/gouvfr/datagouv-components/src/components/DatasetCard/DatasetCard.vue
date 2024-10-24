@@ -3,7 +3,7 @@
     <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v fr-ml-n1v" v-if="dataset.private || dataset.archived">
       <p class="fr-badge fr-badge--sm fr-badge--mention-grey text-grey-380 fr-mr-1w" v-if="dataset.private">
         <span class="fr-icon-lock-line fr-icon--sm" aria-hidden="true"></span>
-        {{ t('Private') }}
+        {{ t('Draft') }}
       </p>
       <p class="fr-badge fr-badge--sm fr-badge--mention-grey text-grey-380 fr-mr-1w" v-if="dataset.archived">
         <span class="fr-icon-archive-line fr-icon--sm" aria-hidden="true"></span>

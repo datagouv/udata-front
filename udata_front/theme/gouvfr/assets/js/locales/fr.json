@@ -87,7 +87,6 @@
   "Spatial granularity": "Granularité spatiale",
   "Finest level of geographic detail covered by data.": "Niveau de détail géographique le plus fin que peut couvrir les données.",
   "Ex. 2022 presidential election": "Ex : élection présidentielle 2022",
-  "Private": "Privé",
   "{n} favorites": "{n} favoris | {n} favori | {n} favoris",
   "The identity of this public service is certified by {certifier}": "L'identité de ce service public est certifiée par {certifier}",
   "{n} reuses": "{n} réutilisations | {n} réutilisation | {n} réutilisations",
@@ -571,5 +570,9 @@
   "Not checked yet": "Pas encore contrôlé",
   "{n} community resources": "{n} ressources communautaires",
   "You haven't published a community resource yet": "Vous n'avez pas encore publié de ressource communautaire",
-  "Link to the discussion": "Lien vers la discussion"
+  "Link to the discussion": "Lien vers la discussion",
+  "Draft": "",
+  "Statistics on your datasets": "",
+  "Download": "",
+  "Reuses Visits": ""
 }

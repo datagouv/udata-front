@@ -9,7 +9,7 @@
       </p>
       <p class="fr-badge fr-badge--sm fr-badge--mention-grey text-grey-380 fr-mr-1w" v-if="dataservice.private">
         <span class="fr-icon-lock-line fr-icon--sm" aria-hidden="true"></span>
-        {{ t('Private') }}
+        {{ t('Draft') }}
       </p>
       <p class="fr-badge fr-badge--sm fr-badge--mention-grey text-grey-380 fr-mr-1w" v-if="dataservice.archived_at">
         <span class="fr-icon-lock-line fr-icon--sm" aria-hidden="true"></span>
