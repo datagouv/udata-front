@@ -1,7 +1,7 @@
 <template>
   <div>
     <canvas
-      ref="canvas"
+      ref="canvasRef"
       width="120"
       height="30"
     ></canvas>
@@ -19,17 +19,36 @@ import { formatDate } from '../../helpers/index';
 
 const LIGHT_COLOR = "#B6CFFB";
 const COLOR = "#3558A2";
+const COLOR_WITH_OPACITY = 'rgba(53, 88, 162, 0.7)'
+const LIGHT_COLOR_WITH_OPACITY = 'rgba(182, 207, 251, 0.7)'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   data: Record<string, number>,
   type: "line" | "bar",
-}>();
+  lastWithLowEmphasis?: boolean;
+}>(), {
+  lastWithLowEmphasis: false,
+});
 
-const canvas = useTemplateRef('canvas');
+const last = (ctx, value) => {
+  return ctx.p1DataIndex === months.value.length - 1 ? value : null
+};
+
+const canvas = useTemplateRef('canvasRef');
 const context = ref<CanvasRenderingContext2D | null>(null);
 const chart = ref<Chart | null>(null);
-const months = computed(() => Object.keys(props.data))
-const values = computed(() => Object.values(props.data))
+
+const data = computed(() => {
+  const months = Object.keys(props.data);
+  months.sort();
+  let orderedData: Record<string, number> = {};
+  for (const month of months) {
+    orderedData[month] = props.data[month];
+  }
+  return orderedData;
+});
+const months = computed(() => Object.keys(data.value))
+const values = computed(() => Object.values(data.value))
 
 const additionalDatasetConfig = computed(() => {
   if (props.type === 'bar') {
@@ -37,8 +56,17 @@ const additionalDatasetConfig = computed(() => {
       barPercentage: 1,
       categoryPercentage: 0.9,
       // Change the color of the last bar only
-      backgroundColor: months.value.map((_value, index) => index === months.value.length - 1 ? COLOR : LIGHT_COLOR),
+      backgroundColor: months.value.map((_value, index) => index === months.value.length - 1 ? (props.lastWithLowEmphasis ? LIGHT_COLOR_WITH_OPACITY : COLOR) : LIGHT_COLOR),
     };
+  }
+
+  if (props.type === 'line' && props.lastWithLowEmphasis) {
+    return {
+      segment: {
+        borderColor: ctx => last(ctx, COLOR_WITH_OPACITY) || COLOR,
+        borderDash: ctx => last(ctx, [3, 3]) || [6, 0],
+      },
+    }
   }
 
   return {};
@@ -100,7 +128,7 @@ onMounted(() => {
 watchEffect(() => {
   if (! context.value) return;
   if (chart.value) chart.value.destroy();
-  
+
   chart.value = new Chart(context.value, {
     data: {
       labels: months.value,

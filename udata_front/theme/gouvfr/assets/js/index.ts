@@ -24,6 +24,7 @@ import UserReuseList from "./components/UserReuseList/UserReuseList.vue";
 import PublishingForm from "./pages/PublishingForm/PublishingForm.vue";
 import ReusePublishingForm from "./pages/ReusePublishingForm/ReusePublishingForm.vue";
 import OrganizationPublishingForm from "./pages/OrganizationPublishingForm/OrganizationPublishingForm.vue";
+import DataservicePublishingForm from "./pages/DataservicePublishingForm/DataservicePublishingForm.vue";
 
 import "./components/vanilla/tabs.js";
 import "./components/vanilla/accordion.js";
@@ -32,7 +33,7 @@ import "./components/vanilla/dialog.js";
 import "./components/vanilla/sort-search.js";
 import fixupTabsOnStartup from "./components/vanilla/fixup-tabs-on-startup.js";
 import i18n from "./i18n.ts";
-import { admin_root, api_root, api_2_root, schema_documentation_url, schema_validata_url, tabular_api_url, tabular_page_size, title } from "./config.ts";
+import { admin_root, api_root, api_2_root, schema_documentation_url, schema_validata_url, tabular_api_dataservice_id, tabular_api_url, tabular_page_size, title } from "./config.ts";
 import Api from "./plugins/api.ts";
 import EventBus from "./plugins/eventbus.ts";
 import Auth from "./plugins/auth.ts";
@@ -49,6 +50,7 @@ setupComponents({
   schema_documentation_url,
   schema_validata_url,
   show_copy_resource_permalink: true,
+  tabular_api_dataservice_id,
   tabular_api_url,
   tabular_page_size,
   title,
@@ -91,6 +93,7 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("toggletip", Toggletip);
   app.component("user-dataset-list", UserDatasetList);
   app.component("user-reuse-list", UserReuseList);
+  app.component("dataservice-publishing-form", DataservicePublishingForm);
 
   // @ts-ignore disable delimiters used in html templates see [#386](https://github.com/etalab/udata-front/pull/386) for more details
   app.config.compilerOptions.delimiters = ["", ""];

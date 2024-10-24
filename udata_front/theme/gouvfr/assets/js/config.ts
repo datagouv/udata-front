@@ -143,6 +143,11 @@ export const demo_server_name = _meta("demo-server-name");
 export const dataset_publishing_form_url = _meta("dataset-publishing-form-url");
 
 /**
+ * The dataservice publishing form
+ */
+export const dataservice_publishing_form_url = _meta("dataservice-publishing-form-url");
+
+/**
  * The reuse publishing form
  */
 export const reuse_publishing_form_url = _meta("reuse-publishing-form-url");
@@ -306,6 +311,8 @@ export const tabular_api_url = _meta("tabular-api-url");
 
 export const tabular_page_size = parseInt(_meta("tabular-page-size") ?? "5");
 
+export const tabular_api_dataservice_id = _meta("tabular-api-dataservice-id");
+
 export const search_siren_url = _meta("search-siren-url");
 
 export const quality_metadata_backend_ignore: Array<string> = _jsonMeta("quality-metadata-backend-ignore") || [];
@@ -321,6 +328,7 @@ export default {
   check_urls,
   csrf_token,
   data_search_feedback_form_url,
+  dataservice_publishing_form_url,
   dataset_publishing_form_url,
   debug,
   demo_server_url,
@@ -349,6 +357,7 @@ export default {
   support_url,
   tabular_api_url,
   tabular_page_size,
+  tabular_api_dataservice_id,
   tags,
   theme_static,
   terms_url,

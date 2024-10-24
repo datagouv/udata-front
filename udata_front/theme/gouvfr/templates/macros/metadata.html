@@ -33,6 +33,7 @@
 <meta name="demo-server-name" content="{{ config.DEMO_SERVER_NAME }}" />
 {% endif %}
 <meta name="dataset-publishing-form-url" content="{{ url_for('datasets.publishing-form') }}" />
+<meta name="dataservice-publishing-form-url" content="{{ url_for('dataservices.publishing-form') }}" />
 <meta name="reuse-publishing-form-url" content="{{ url_for('reuses.publishing-form') }}" />
 {% if config.PUBLISHING_FORM_FEEDBACK_URL %}
 <meta name="publishing-form-feedback-url" content="{{ config.PUBLISHING_FORM_FEEDBACK_URL }}" />
@@ -116,4 +117,6 @@
 {% if config.SEARCH_SIREN_URL %}
 <meta name="search-siren-url" content="{{ config.SEARCH_SIREN_URL }}" />
 {% endif %}
+
+<meta name="tabular-api-dataservice-id" content="{{config.TABULAR_API_DATASERVICE_ID}}" />
 {% endmacro %}

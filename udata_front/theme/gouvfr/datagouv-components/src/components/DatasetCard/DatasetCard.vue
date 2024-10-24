@@ -3,7 +3,7 @@
     <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v fr-ml-n1v" v-if="dataset.private || dataset.archived">
       <p class="fr-badge fr-badge--sm fr-badge--mention-grey text-grey-380 fr-mr-1w" v-if="dataset.private">
         <span class="fr-icon-lock-line fr-icon--sm" aria-hidden="true"></span>
-        {{ t('Private') }}
+        {{ t('Draft') }}
       </p>
       <p class="fr-badge fr-badge--sm fr-badge--mention-grey text-grey-380 fr-mr-1w" v-if="dataset.archived">
         <span class="fr-icon-archive-line fr-icon--sm" aria-hidden="true"></span>
@@ -44,7 +44,11 @@
         <div class="fr-text--sm fr-m-0 inline-flex" v-if="dataset.organization || dataset.owner">
             <template v-if="dataset.organization">
               <span class="not-enlarged fr-mr-1v">
-                <AppLink class="fr-link fr-text--sm" v-if="organizationUrl" :to="organizationUrl">
+                <AppLink
+                  class="fr-link fr-text--sm inline-flex items-center"
+                  v-if="organizationUrl"
+                  :to="organizationUrl"
+                >
                   <OrganizationNameWithCertificate :organization="dataset.organization" />
                 </AppLink>
                 <OrganizationNameWithCertificate v-else :organization="dataset.organization" />

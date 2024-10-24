@@ -3,7 +3,7 @@
 
 {% set meta = {
     'title': _("Publishing Form"),
-    'description': _("%(site)s reuse publishing form", site=config['SITE_TITLE']),
+    'description': _("%(site)s dataservice publishing form", site=config['SITE_TITLE']),
 } %}
 
 {% set section_class = 'bg-grey-50' %}
@@ -12,8 +12,8 @@
 {% block breadcrumb %}
 {% cache cache_duration, 'reuse-breadcrumb', g.lang_code %}
         <li>
-            <a class="fr-breadcrumb__link" href="{{ url_for('reuses.list') }}">
-                {{ _('Reuses') }}
+            <a class="fr-breadcrumb__link" href="{{ url_for('dataservices.list') }}">
+                {{ _('Dataservices') }}
             </a>
         </li>
         <li>
@@ -25,8 +25,7 @@
 {% endblock %}
 
 {% block main_content %}
-    <reuse-publishing-form
-        redirect-draft-url="{{ url_for('admin.index', path='reuse/', _external=True) }}"
+    <dataservice-publishing-form
         class="fr-pb-10w"
-    ></reuse-publishing-form>
+    ></dataservice-publishing-form>
 {% endblock %}

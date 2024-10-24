@@ -180,7 +180,7 @@ function getStatus(dataset: Dataset | DatasetV2): {label: string, type: AdminBad
     };
   } else if (dataset.private) {
     return {
-      label: t("Private"),
+      label: t("Draft"),
       type: "default",
     };
   } else {

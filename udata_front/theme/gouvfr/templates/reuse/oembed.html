@@ -8,7 +8,7 @@
                     href="{{ url_for('reuses.show', reuse=reuse, _external=True) }}"
                 >
                 {{ reuse.title|mdstrip(55) }}
-                {% if reuse.private %}<span class="fr-badge fr-ml-1w">{{ _('Private') }}</span>{% endif %}
+                {% if reuse.private %}<span class="fr-badge fr-ml-1w">{{ _('Draft') }}</span>{% endif %}
                 </a>
             </h3>
             <p class="fr-card__detail fr-m-0">

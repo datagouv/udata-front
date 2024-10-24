@@ -16,6 +16,7 @@ interface ImportMetaEnv {
   readonly VITE_TABULAR_API_URL: string;
   readonly VITE_TABULAR_PAGE_SIZE: string;
   readonly VITE_TABULAR_ALLOW_REMOTE: boolean;
+  readonly VITE_TABULAR_API_DATASERVICE_ID: string | null;
 }
 
 interface ImportMeta {

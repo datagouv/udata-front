@@ -25,7 +25,9 @@
           :key="`comment-${thread.id}-${index}`"
         >
           <div class="fr-grid-row fr-grid-row--gutters">
-            <Avatar class="fr-col-auto" :user="comment.posted_by"/>
+            <div class="fr-col-auto">
+              <Avatar :user="comment.posted_by"/>
+            </div>
             <div class="fr-col">
               <p class="fr-my-0"><Author :author="comment.posted_by" :badge="false" /></p>
               <p class="fr-text--sm text-mention-grey fr-m-0">

@@ -38,7 +38,7 @@
           </div>
         </nav>
       </div>
-      <div class="fr-col-12 fr-col-md-8 fr-col-lg-9 fr-col-xl-10 h-100 fr-px-2w">
+      <div class="fr-col-12 fr-col-md-8 fr-col-lg-9 fr-col-xl-10 h-100 fr-px-2w overflow-auto">
         <router-view :key="route.fullPath" class="fr-container--fluid"></router-view>
       </div>
     </div>
@@ -87,7 +87,7 @@ onMounted(async () => {
   // Opens the menu on "My Profil", this logic will change when we add more pages to this section
   if(route.name === "me") {
     opened.value = user?.id;
-    // On another page, opens the 
+    // On another page, opens the
   } else if(me.value.organizations.length > 0) {
     let organization = me.value.organizations[0];
     if(route.params.oid) {
