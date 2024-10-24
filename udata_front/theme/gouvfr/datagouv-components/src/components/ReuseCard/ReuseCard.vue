@@ -47,7 +47,7 @@
           <p class="fr-badge fr-badge--sm fr-badge--mention-grey text-grey-380">
             <span class="fr-icon-lock-line fr-icon--xs">
             </span>
-            {{ t('Private') }}
+            {{ t('Draft') }}
           </p>
         </li>
         <li v-if="reuse.archived">

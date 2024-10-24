@@ -51,7 +51,7 @@
             {% if dataservice.private %}
                 <div class="fr-col-auto fr-mr-1w">
                     <p class="fr-tag"
-                        title="{{ _('This API is private and will not be visible by other users') }}">{{ _('Private') }}
+                        title="{{ _('This API is a draft and will not be visible by other users') }}">{{ _('Draft') }}
                     </p>
                 </div>
             {% endif %}
@@ -147,34 +147,43 @@
                     </p>
                 {% endif %}
             </div>
-            <h2 class="subtitle fr-mt-3v fr-mb-1v">{{ _('API link') }}</h2>
-            <p class="fr-text--sm fr-mt-0 fr-mb-3v text-overflow-ellipsis">
-            {% if dataservice.base_api_url %}
-                <code class="bg-alt-grey fr-px-1v text-grey-380">
-                    <a href="{{ dataservice.base_api_url }}" rel="ugc nofollow noopener">
-                        {{ dataservice.base_api_url }}
-                    </a>
-                </code>
-            {% else %}
-                {{ _('Not documented') }}
-            {% endif %}
-            <h2 class="subtitle fr-mt-3v fr-mb-1v">{{ _('Documentation link') }}</h2>
-            <p class="fr-text--sm fr-mt-0 fr-mb-3v text-overflow-ellipsis">
-            {% if dataservice.endpoint_description_url %}
-                <code class="bg-alt-grey fr-px-1v text-grey-380">
-                    <a href="{{ dataservice.endpoint_description_url }}" rel="ugc nofollow noopener">
-                        {{ dataservice.endpoint_description_url }}
-                    </a>
-                </code>
-            {% else %}
-                {{ _('Not documented') }}
-            {% endif %}
-            </p>
         </section>
     </div>
 </div>
 <div class="fr-mb-10v">
     {{ hook('dataservice.display.after-description') }}
+</div>
+
+<div class="fr-container">
+    <div class="border border-blue-400 fr-p-2w">
+        <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle">
+            <div class="fr-col-12 fr-col-sm">
+                <h2 class="fr-h6 fr-mb-0 text-blue-400">{{ _("API documentation") }}</h2>
+            </div>
+            <div class="fr-col-auto flex">
+                {% if dataservice.base_api_url %}
+                    <a
+                        class="fr-btn"
+                        href="{{ dataservice.base_api_url }}"
+                        target="_blank"
+                        rel="ugc nofollow noopener"
+                    >
+                        {{ _('Swagger') }}
+                    </a>
+                {% endif %}
+                {% if dataservice.endpoint_description_url %}
+                    <a
+                        class="fr-btn fr-ml-3v fr-btn--secondary"
+                        href="{{ dataservice.endpoint_description_url }}"
+                        target="_blank"
+                        rel="ugc nofollow noopener"
+                    >
+                        {{ _('Business documentation') }}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="fr-container">

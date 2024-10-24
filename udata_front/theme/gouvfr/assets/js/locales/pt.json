@@ -87,7 +87,6 @@
   "Spatial granularity": "Granularidade espacial",
   "Finest level of geographic detail covered by data.": "Nível mais fino de detalhe geográfico coberto pelos dados.",
   "Ex. 2022 presidential election": "Ex. eleição presidencial de 2022",
-  "Private": "Privado",
   "{n} favorites": "{n} favoritos | {n} favoritos | {n} favoritos",
   "The identity of this public service is certified by {certifier}": "A identidade deste serviço público é certificada pela {certifier}",
   "{n} reuses": "{n} reutiliza | {n} reutiliza | {n} reutiliza",
@@ -626,4 +625,9 @@
   "Your dataservice is created!": "",
   "Publish the dataservice": "",
   "You need to select a contact point": ""
+}
+  "Draft": "",
+  "Statistics on your datasets": "",
+  "Download": "",
+  "Reuses Visits": ""
 }

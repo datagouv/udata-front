@@ -1,7 +1,7 @@
 <template>
   <div>
     <canvas
-      ref="canvas"
+      ref="canvasRef"
       width="120"
       height="30"
     ></canvas>
@@ -25,16 +25,16 @@ const LIGHT_COLOR_WITH_OPACITY = 'rgba(182, 207, 251, 0.7)'
 const props = withDefaults(defineProps<{
   data: Record<string, number>,
   type: "line" | "bar",
-  lastWithLowEnphasis?: boolean;
+  lastWithLowEmphasis?: boolean;
 }>(), {
-  lastWithLowEnphasis: false,
+  lastWithLowEmphasis: false,
 });
 
 const last = (ctx, value) => {
   return ctx.p1DataIndex === months.value.length - 1 ? value : null
 };
 
-const canvas = useTemplateRef('canvas');
+const canvas = useTemplateRef('canvasRef');
 const context = ref<CanvasRenderingContext2D | null>(null);
 const chart = ref<Chart | null>(null);
 
@@ -45,7 +45,6 @@ const data = computed(() => {
   for (const month of months) {
     orderedData[month] = props.data[month];
   }
-
   return orderedData;
 });
 const months = computed(() => Object.keys(data.value))
@@ -57,11 +56,11 @@ const additionalDatasetConfig = computed(() => {
       barPercentage: 1,
       categoryPercentage: 0.9,
       // Change the color of the last bar only
-      backgroundColor: months.value.map((_value, index) => index === months.value.length - 1 ? (props.lastWithLowEnphasis ? LIGHT_COLOR_WITH_OPACITY : COLOR) : LIGHT_COLOR),
+      backgroundColor: months.value.map((_value, index) => index === months.value.length - 1 ? (props.lastWithLowEmphasis ? LIGHT_COLOR_WITH_OPACITY : COLOR) : LIGHT_COLOR),
     };
   }
 
-  if (props.type === 'line' && props.lastWithLowEnphasis) {
+  if (props.type === 'line' && props.lastWithLowEmphasis) {
     return {
       segment: {
         borderColor: ctx => last(ctx, COLOR_WITH_OPACITY) || COLOR,
@@ -129,7 +128,7 @@ onMounted(() => {
 watchEffect(() => {
   if (! context.value) return;
   if (chart.value) chart.value.destroy();
-  
+
   chart.value = new Chart(context.value, {
     data: {
       labels: months.value,
