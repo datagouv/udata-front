@@ -127,8 +127,8 @@ const form = reactive<{
 });
 
 const linkedDatasetLoading = ref(false);
-
 const selectedDataset = ref<string | null>(null);
+const { withAsync } = helpers;
 
 const el = ref<HTMLElement | null>(null);
 useSortable(el, form.datasets);
@@ -137,7 +137,7 @@ const selectedDatasetRef = ref<InstanceType<typeof MultiSelect> | null>(null);
 
 const requiredRules = {
   datasets: { },
-  linkedDataset: { },
+  linkedDataset: { linked: withAsync(handleLinkedDatasetChange) },
 };
 
 const warningRules = {
@@ -185,6 +185,29 @@ function removeDataset(index: number) {
 function getSlug(url: string) {
   const parts = url.split('/').filter(part => part !== "");
   return parts.pop();
+};
+
+async function handleLinkedDatasetChange(value: string) {
+  if (value == "") {
+    return true;
+  } else if (value.includes('/datasets/')) {
+    try {
+      linkedDatasetLoading.value = true;
+      const url = new URL(value);
+      const slug = getSlug(url.pathname);
+      const resp = await api.get(`datasets/${slug}/`);
+      const newDatasetId = resp.data.id;
+      addDataset(newDatasetId);
+      form.linkedDataset = "";
+      return true;
+    } catch {
+      return false;
+    } finally {
+      linkedDatasetLoading.value = false;
+    }
+  } else {
+    return false;
+  }
 };
 
 function submit() {

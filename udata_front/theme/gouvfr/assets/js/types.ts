@@ -264,7 +264,7 @@ export type HarvesterSource = Owned & {
 export type ContactPoint = {
   id: string;
   name: string;
-  url?: string;
+  contact_form?: string;
   email?: string;
 }
 

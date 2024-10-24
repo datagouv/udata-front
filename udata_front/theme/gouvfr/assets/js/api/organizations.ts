@@ -12,7 +12,7 @@ type UploadLogoResponse = {
 type ContactPoint = {
   name: string,
   email: string,
-  url: string,
+  contact_form: string,
 }
 
 export function createOrganization(organization: MaybeRefOrGetter<NewOrganization>) {

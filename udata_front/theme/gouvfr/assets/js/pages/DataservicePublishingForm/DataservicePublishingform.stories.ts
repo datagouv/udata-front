@@ -94,7 +94,7 @@ export const FormWithOrganizations: StoryObj<typeof meta> = {
             { 
               name:"Service DILA 2",
               id: "66db24fe79d274a6092717a2",
-              url: "https://dila.gouv.fr"
+              contact_form: "https://dila.gouv.fr"
             }
           ]
         })

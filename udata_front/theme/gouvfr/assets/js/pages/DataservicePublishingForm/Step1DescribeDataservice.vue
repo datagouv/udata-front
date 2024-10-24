@@ -220,8 +220,6 @@
             >
               <ContactPointSelector
                 :oid="dataservice.organization"
-                :hasError="fieldHasError('owned')"
-                :errorText="t('You need to select a contact point')"
                 @update:contact="updateContact"
               />
             </div>
@@ -385,7 +383,6 @@ import useUid from "../../composables/useUid";
 import useFunctionalState from '../../composables/form/useFunctionalState';
 import dataserviceIcon from "../../../../templates/svg/illustrations/dataservice.svg";
 import { license_groups_options, quality_description_length } from "../../config";
-import { getLicensesUrl } from '../../api/licenses';
 import UploadGroup from '../../components/Form/UploadGroup/UploadGroup.vue';
 import type { Me, PublishingFormAccordionState } from '../../types';
 import Alert from '../../components/Alert/Alert.vue';
@@ -418,28 +415,27 @@ const { id: contactPointAccordionId } = useUid("accordion");
 
 const dataservice = reactive<NewDataservice>({...props.dataservice});
 
-const licensesUrl = getLicensesUrl();
-const licensesGroups = license_groups_options?.map(([name, values]) => ({
-  name,
-  values
-}));
-
 const isRestrictedValues = [{ id: false, label: t("Open")}, { id: true, label: t("Restricted")}]
 const hasTokenValues = [{ id: true, label: t("Yes")}, { id: false, label: t("No")}]
-
 
 function updateOwned(owned: OwnedWithId) {
   dataservice.organization = owned.organization;
   dataservice.owner = owned.owner;
+  isSelectedProducer.value = true;
 }
 
 const isNewContact = ref<boolean>(false);
 const contactPoint = ref<ContactPoint>(null);
+const isSelectedProducer = ref<boolean>(false);
 
 function updateContact(isNew: boolean, contact: ContactPoint) {
   isNewContact.value = isNew;
   contactPoint.value = contact;
 }
+
+function checkOwned() {
+  return isSelectedProducer.value;
+};
 
 const requiredRules = {
   acronym: {},
@@ -451,6 +447,7 @@ const requiredRules = {
   title: { required },
   description: { required },
   contact_point: {},
+  owned: { custom: checkOwned },
 };
 
 const warningRules = {
@@ -466,6 +463,7 @@ const warningRules = {
   title: { required },
   description: {required, minLengthValue: minLengthWarning(quality_description_length), },
   contact_point: {},
+  owned: { custom: checkOwned },
 };
 
 const { getErrorText, getFunctionalState, getWarningText, hasError, hasWarning, validateRequiredRules, v$, vWarning$ } = useFunctionalState(dataservice, requiredRules, warningRules);
@@ -484,6 +482,7 @@ const state = computed<Record<string, PublishingFormAccordionState>>(() => {
     title: getFunctionalState(vWarning$.value.title.$dirty, v$.value.title.$invalid, vWarning$.value.title.$error),
     description: getFunctionalState(vWarning$.value.description.$dirty, v$.value.description.$invalid, vWarning$.value.description.$error),
     contact_point: getFunctionalState(vWarning$.value.contact_point.$dirty, v$.value.contact_point.$invalid, vWarning$.value.contact_point.$error),
+    owned: getFunctionalState(vWarning$.value.owned.$dirty, v$.value.owned.$invalid, vWarning$.value.owned.$error),
   };
 });
 
