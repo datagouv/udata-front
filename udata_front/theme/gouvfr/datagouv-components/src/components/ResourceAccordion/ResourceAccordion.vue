@@ -137,6 +137,9 @@
                 </template>
               </dl>
             </div>
+            <div v-if="tab.key === 'swagger'" class="fr-pl-4v fr-pr-4v">
+              <Swagger v-if="hasPreview" :resource="resource" />
+            </div>
           </TabPanel>
         </TabPanels>
       </TabGroup>
@@ -158,6 +161,7 @@ import type { CommunityResource, Resource } from "../../types/resources";
 import ResourceIcon from "./ResourceIcon.vue";
 import SchemaBadge from "./SchemaBadge.vue";
 import Metadata from "./Metadata.vue";
+import Swagger from "./Swagger.vue";
 import TextClamp from 'vue3-text-clamp';
 import TabGroup from "../Tabs/TabGroup.vue";
 import TabList from "../Tabs/TabList.vue";
@@ -219,6 +223,10 @@ const tabsOptions = computed(() => {
 
   options.push({ key: "metadata", label: t("Metadata") });
   options.push({ key: "downloads", label: t("Downloads") });
+
+  if (hasPreview.value) {
+    options.push({ key: "swagger", label: t("Swagger") })
+  }
 
   return options;
 });
