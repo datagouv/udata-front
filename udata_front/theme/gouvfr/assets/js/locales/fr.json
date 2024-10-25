@@ -629,8 +629,8 @@
   "Your dataservice is created!": "Votre API a été créée",
   "Publish the dataservice": "Publier l'API",
   "You need to select a contact point": "Vous devez sélectionner un point de contact",
-  "Draft": "Draft",
-  "Statistics on your datasets": "Statistics on your datasets",
-  "Download": "Download",
+  "Draft": "Brouillon",
+  "Statistics on your datasets": "Statistiques de vos jeux de données",
+  "Download": "Téléchargements",
   "Reuses Visits": "Reuses Visits"
 }
