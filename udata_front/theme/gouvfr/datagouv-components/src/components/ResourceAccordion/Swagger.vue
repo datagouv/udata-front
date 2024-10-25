@@ -10,6 +10,7 @@ import { type Resource } from '../../types/resources';
 import { config } from "../../config";
 import SwaggerUIBundle from 'swagger-ui-dist/swagger-ui-bundle.js';
 import 'swagger-ui-dist/swagger-ui.css';
+import 'swagger-themes/themes/newspaper.css';
 
 const { t } = useI18n();
 
@@ -19,6 +20,7 @@ const props = defineProps<{
 
 onMounted(async () => {
   let swaggerUrl = `${config.tabular_api_url}/api/resources/${props.resource.id}/swagger/`
+  
   SwaggerUIBundle({
     dom_id: '#swagger-ui',
     url: swaggerUrl,
