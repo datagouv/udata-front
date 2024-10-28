@@ -110,3 +110,20 @@ export const EndpointOpenAPIDataserviceLinks: StoryObj<typeof meta> = {
     }
   }
 };
+
+export const NoLinksDataserviceLinks: StoryObj<typeof meta> = {
+  render: (args: any) => ({
+    components: { DataserviceLinks },
+    setup() {
+      return { args };
+    },
+    template: `<DataserviceLinks v-bind="args"/>`,
+  }),
+  args: {
+    dataservice: {
+      ...dataservice,
+      endpoint_description_url: null,
+      base_api_url: null,
+    }
+  }
+};
