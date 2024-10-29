@@ -61,7 +61,7 @@
     <div class="fr-text--sm fr-m-0">
       <h3 class="subtitle fr-mb-1v">
         {{ $t('Integrate on your website') }}
-        <CopyButton :label="$t('Copy embed')" :copied-label="$t('Embed copied')" class="fr-my-1w fr-mr-1w" :text="embedText" />
+        <CopyButton :hide-label="true" :label="$t('Copy embed')" :copied-label="$t('Embed copied')" class="fr-my-1w fr-mr-1w" :text="embedText" />
       </h3>
       <div class="embed-wrapper">
         <textarea ref="textAreaRef" readonly="true" rows="1" v-model="embedText" @click="selectContent"></textarea>

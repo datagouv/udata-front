@@ -1,27 +1,40 @@
 <template>
-  <button type="button" @click="copy" class="fr-text--xs fr-mb-0 whitespace-nowrap relative">
-      <span v-if="copied" style="color: #3558a2;">
-          <OhVueIcon name="ri-file-copy-line" class="fr-mr-1v" />
-          <span class="copy-label">{{ copiedLabel }}</span>  
-      </span>
-      <span v-if="!copied">
-          <OhVueIcon name="ri-file-copy-line" class="copy-icon fr-mr-1v" />
-          <span class="copy-link copy-label">{{ label }}</span>  
-      </span>
+  <button
+    type="button"
+    @click="copy"
+    class="fr-text--sm fr-mb-0 whitespace-nowrap relative fr-p-1v text-mention-grey"
+    :class="{'border bg-white rounded-xxs line-height-1 text-grey-500': hideLabel }"
+  >
+    <span v-if="copied" style="color: #3558a2;">
+        <OhVueIcon :height="16" :width="16" name="ri-check-line" />
+        <span class="fr-ml-1v copy-label" :class="{ 'fr-sr-only': hideLabel }">{{ copiedLabel }}</span>
+    </span>
+    <span v-if="!copied">
+        <OhVueIcon
+          :height="16"
+          :width="16"
+          :name="hideLabel ? 'ri-clipboard-line' : 'ri-file-copy-line'"
+          class="copy-icon"
+        />
+        <span class="fr-ml-1v copy-link copy-label" :class="{ 'fr-sr-only': hideLabel }">{{ label }}</span>
+    </span>
   </button>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
-import { RiFileCopyLine } from "oh-vue-icons/icons";
+import { RiCheckLine, RiClipboardLine, RiFileCopyLine } from "oh-vue-icons/icons";
 import { OhVueIcon, addIcons } from 'oh-vue-icons';
 
-addIcons(RiFileCopyLine)
+addIcons(RiCheckLine, RiClipboardLine, RiFileCopyLine)
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   text: string;
   label: string;
   copiedLabel: string;
-}>();
+  hideLabel?: boolean;
+}>(), {
+  hideLabel: false,
+});
 
 const copied = ref(false);
 
@@ -38,14 +51,14 @@ button:hover .copy-icon {
 
 .copy-link {
   /* Using opacity here to prevent moving object with display:none (for example when clamping a text before the button) */
-  opacity: 0%; 
+  opacity: 0%;
 }
 button:hover .copy-link {
   opacity: 100%;
 }
 
 /*
-We may want to enable this to leave more space for title in small screens… But it also affects 
+We may want to enable this to leave more space for title in small screens… But it also affects
 buttons in the body of the resources panels and we don't want it…
 @container (max-width: 600px) {
   .copy-label {
