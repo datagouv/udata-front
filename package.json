@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "vite build --watch --config vite.config.dev.ts",
     "start": "npm run dev",
-    "build": "vite build",
+    "build": "NODE_OPTIONS=--max-old-space-size=4096 vite build",
     "test": "CYPRESS_INTERNAL_NO_TYPESCRIPT=1 cypress run",
     "cypress": "CYPRESS_INTERNAL_NO_TYPESCRIPT=1 cypress open",
     "lighthouse": "lhci autorun",
