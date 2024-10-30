@@ -2,8 +2,8 @@
   <button
     type="button"
     @click="copy"
-    class="fr-text--sm fr-mb-0 whitespace-nowrap relative fr-p-1v text-mention-grey"
-    :class="{'border bg-white rounded-xxs line-height-1 text-grey-500': hideLabel }"
+    class="fr-text--sm fr-mb-0 whitespace-nowrap relative fr-p-1v text-mention-grey line-height-1"
+    :class="{'border bg-white rounded-xxs text-grey-500': hideLabel }"
   >
     <span v-if="copied" style="color: #3558a2;">
         <OhVueIcon :height="16" :width="16" name="ri-check-line" />
