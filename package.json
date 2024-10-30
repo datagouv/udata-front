@@ -22,10 +22,10 @@
     "ci": "start-server-and-test prepare-and-serve-e2e http://localhost:7000 test",
     "ci:storybook": "start-server-and-test serve-storybook http://127.0.0.1:6006 test-storybook",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "build-storybook": "storybook build --stats-json",
     "serve-storybook": "npx http-server storybook-static --port 6006 --silent",
     "test-storybook": "test-storybook",
-    "chromatic": "npx chromatic --only-changed --externals '**/*.less' --externals '**/*.json' --externals '**/msw-requests.ts'"
+    "chromatic": "npx chromatic --only-changed --storybook-build-dir ./storybook-static --externals '**/*.less' --externals '**/*.json' --externals '**/msw-requests.ts'"
   },
   "overrides": {
     "fsevents": "^2.3.3"
