@@ -36,11 +36,11 @@
     "publish-stable": "npm publish --access public",
     "publish-dev": "npm run publish-stable -- --tag=dev",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "build-storybook": "storybook build --stats-json",
     "serve-storybook": "npx http-server storybook-static --port 6006 --silent",
     "test-storybook": "test-storybook",
     "ci:storybook": "start-server-and-test serve-storybook http://localhost:6006 test-storybook",
-    "chromatic": "npx chromatic --only-changed --externals '*.less' --externals '*.json' --externals '*/msw-requests.ts'"
+    "chromatic": "npx chromatic --only-changed --storybook-build-dir ./storybook-static --externals '*.less' --externals '*.json' --externals '*/msw-requests.ts'"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.22",
@@ -76,6 +76,7 @@
     "chromatic": "^11.5.5",
     "clipboard": "^2.0.11",
     "dayjs": "^1.11.10",
+    "jest-playwright-preset": "^4.0.0",
     "less": "^4.2.0",
     "markdown-it": "^13.0.2",
     "msw": "^2.4.8",
