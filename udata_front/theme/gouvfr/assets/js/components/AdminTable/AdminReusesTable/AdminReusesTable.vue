@@ -123,7 +123,7 @@ function getStatus(reuse: Reuse): {label: string, type: AdminBadgeState} {
     };
   } else if (reuse.private) {
     return {
-      label: t("Private"),
+      label: t("Draft"),
       type: "default",
     };
   } else {

@@ -33,9 +33,9 @@ const dataserviceRoutes = [
 const dataservice: Dataservice = {
   acronym: "API",
   archived_at: null,
-  authorization_request_url: "",
+  authorization_request_url: null,
   availability: 99.9,
-  base_api_url: "",
+  base_api_url: null,
   contact_point: {
     email: "",
     id: "someId",
@@ -56,7 +56,7 @@ const dataservice: Dataservice = {
   ],
   deleted_at: null,
   description: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
-  endpoint_description_url: "",
+  endpoint_description_url: null,
   extras: {},
   format: "json",
   harvest: {},
@@ -308,5 +308,24 @@ export const ArchivedRouterDataserviceCardWithOrganizationUrl: StoryObj<typeof m
   args: {
     ...argsArchived,
     organizationUrl: "/organizations/another-url-easier-to-distinguish"
+  },
+};
+
+export const DataserviceCardTabularApi: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { DataserviceCard },
+    setup() {
+      return { args };
+    },
+    template: `<DataserviceCard v-bind="args"/>`,
+  }),
+  args: {
+    ...args,
+    dataservice: {
+      ...args.dataservice,
+      title: 'API automatique data.gouv.fr',
+      organization: { ...args.dataservice.organization, name: 'data.gouv.fr' },
+      id: '6716420e0cf1cfbbd07b4c8b', // Set in `.env`
+    }
   },
 };

@@ -124,6 +124,8 @@ export type SortDirection = 'asc' | 'desc';
 
 export type DatasetSortedBy = 'title' | 'created' | 'last_update' | 'reuses' | 'followers' | 'views';
 
+export type DataserviceSortedBy = 'title'
+
 export type ReuseSortedBy = 'title' | 'created' | 'datasets' | 'followers' | 'views';
 
 export type DiscussionSortedBy = 'title' | 'created' | 'closed';
@@ -163,7 +165,7 @@ export type RefusedMembershipRequest = MembershipRequest & {
 
 export type MemberRole = "admin" | "editor";
 
-// In org endpoint we get these two private information if we have edit rights on the org.
+// In org end we get these two private information if we have edit rights on the org.
 export type MemberUser = User & {
   email: string | null;
   last_login_at: string | null;
@@ -260,5 +262,13 @@ export type HarvesterSource = Owned & {
   deleted: string | null;
   schedule: string;
 }
+
+export type ContactPoint = {
+  id: string;
+  name: string;
+  contact_form?: string;
+  email?: string;
+}
+
 
 export default {};
