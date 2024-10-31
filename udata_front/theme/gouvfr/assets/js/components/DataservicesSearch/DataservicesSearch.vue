@@ -191,6 +191,7 @@ watch(searchQuery, () => {
   if (abortController.value) {
     abortController.value.abort();
   }
+  page.value = 1;
 })
 const search = async () => {
   dataservices.value = null
@@ -231,8 +232,8 @@ onMounted(() => {
   searchInput.value?.focus();
 
   window.addEventListener('popstate', () => {
-    // We don't want to trigger the watcher that 
-    // push url history on this change (otherwise we create a new 
+    // We don't want to trigger the watcher that
+    // push url history on this change (otherwise we create a new
     // history step each time we use the back button and we cannot
     // go forward anymore)
     ignoreUpdates(() => {
