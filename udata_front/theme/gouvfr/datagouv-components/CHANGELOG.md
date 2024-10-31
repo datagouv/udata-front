@@ -7,6 +7,7 @@
 - Add missing `dataset` key to `CommunityResource` type [#551](https://github.com/datagouv/udata-front/pull/551)
 - Low enphasis on last element of charts [#562](https://github.com/datagouv/udata-front/pull/562)
 - Remove markdown from dataservice card [#568](https://github.com/datagouv/udata-front/pull/568)
+- Add back copy button without label  [#576](https://github.com/datagouv/udata-front/pull/576)
 
 ## 1.4.0 (2024-09-23)
 
