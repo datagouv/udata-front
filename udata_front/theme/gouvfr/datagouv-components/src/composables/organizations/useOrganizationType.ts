@@ -2,9 +2,9 @@ import { computed, toValue, type MaybeRefOrGetter } from "vue";
 import type { Organization } from "../../types/organizations";
 
 export const PUBLIC_SERVICE = "public-service";
-export const ASSOCIATION = "Association";
-export const COMPANY = "Company";
-export const LOCAL_AUTHORITY = "Local authority";
+export const ASSOCIATION = "association";
+export const COMPANY = "company";
+export const LOCAL_AUTHORITY = "local-authority";
 export const OTHER = "other";
 export const USER = "user";
 
