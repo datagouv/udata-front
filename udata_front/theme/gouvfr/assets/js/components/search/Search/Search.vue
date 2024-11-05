@@ -34,6 +34,15 @@
                     @change="(value: string) => handleFacetChange('organization', value)"
                     :isBlue="true"
                   />
+                  <MultiSelect
+                    :initialOptions="organizationTypes"
+                    :placeholder="t('Organization type')"
+                    :searchPlaceholder="t('Search an organization type...')"
+                    :allOption="t('All types')"
+                    :values="facets.organization_badge"
+                    @change="(value: string) => handleFacetChange('organization_badge', value)"
+                    :isBlue="true"
+                  />
                 </div>
                 <div class="fr-col-12">
                   <MultiSelect
@@ -180,7 +189,7 @@
 </template>
 
 <script setup lang="ts">
-import { Pagination, type Dataset } from "@datagouv/components/ts";
+import { getOrganizationTypes, OTHER, Pagination, USER, type Dataset } from "@datagouv/components/ts";
 import { ref, onMounted, computed } from "vue";
 import { useI18n } from 'vue-i18n';
 import axios, { type CancelTokenSource } from "axios";
@@ -197,6 +206,7 @@ import useSearchUrl from "../../../composables/useSearchUrl";
 import { useToast } from "../../../composables/useToast";
 import { generateCancelToken, apiv2 } from "../../../plugins/api";
 import NoSearchResults from "../../Form/NoSearchResults.vue";
+import { MultiSelectOption } from "../../../types";
 
 type Props = {
   downloadLink?: string,
@@ -218,6 +228,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 type Facets = {
   organization?: string;
+  organization_badge?: string;
   tag?: string;
   license?: string;
   format?: string;
@@ -236,6 +247,12 @@ const params = new URLSearchParams(url.search);
 
 const allowedExtensionsUrl = getAllowedExtensionsUrl();
 const licensesUrl = getLicensesUrl();
+const organizationTypes : Array<MultiSelectOption> = getOrganizationTypes()
+  .filter(type => type.type !== OTHER && type.type !== USER)
+  .map((type) => ({
+    label: type.label,
+    value: type.type,
+  }));
 
 /**
  * Search query
@@ -306,6 +323,7 @@ const updateUrl = (save = SAVE_TO_HISTORY) => {
   const urlParams = { ...searchParameters.value };
   if(props.organization) {
     delete urlParams.organization;
+    delete urlParams.organization_badge;
   }
   url.search = new URLSearchParams(urlParams).toString();
   if (save) {
@@ -367,6 +385,7 @@ const handleFacetChange = (facet: keyof Facets, values: string) => {
   }
   if (props.organization) {
     facets.value.organization = props.organization;
+    facets.value.organization_badge = undefined;
   }
   currentPage.value = 1;
   search();

@@ -1,5 +1,6 @@
 import { computed, toValue, type MaybeRefOrGetter } from "vue";
 import type { Organization } from "../../types/organizations";
+import { useI18n } from "vue-i18n";
 
 export const PUBLIC_SERVICE = "public-service";
 export const ASSOCIATION = "Association";
@@ -28,6 +29,44 @@ export function isType(organizationRef: MaybeRefOrGetter<Organization>, type: Or
  */
 export function hasBadge(organizationRef: MaybeRefOrGetter<Organization>, kind: string) {
   return toValue(organizationRef).badges.some(badge => badge.kind === kind);
+}
+
+export function getOrganizationTypes(): Array<{type: OrganizationTypes | UserType, label: string, icon: string}> {
+  const { t } = useI18n();
+  return [{
+      type: PUBLIC_SERVICE,
+      label: t("Public service"),
+      icon: "ri-bank-line",
+    },
+    {
+      type: LOCAL_AUTHORITY,
+      label: t("Local authority"),
+      icon: "ri-government-line",
+    },
+    {
+      type: ASSOCIATION,
+      label: t("Association"),
+      icon: "ri-community-line",
+    },
+    {
+      type: COMPANY,
+      label: t('Company'),
+      icon: "ri-building-2-line",
+    },
+    {
+      type: OTHER,
+      label: t('Other'),
+      icon: "",
+    },
+    {
+      type: USER,
+      label: t("User"),
+      icon: "ri-user-line",
+  }];
+}
+
+export function findOrganizationType(searched: OrganizationTypes | UserType) {
+  return getOrganizationTypes().find(type => type.type === searched)!
 }
 
 export default function useOrganizationType(organizationRef: MaybeRefOrGetter<Organization>) {

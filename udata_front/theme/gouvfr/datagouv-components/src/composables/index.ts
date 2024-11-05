@@ -5,9 +5,11 @@ import useTabs from "./useTabs";
 import { useToast } from "./useToast";
 import useUserAvatar from "./useUserAvatar";
 import useOrganizationCertified, { CERTIFIED } from "./organizations/useOrganizationCertified";
-import useOrganizationType, { hasBadge, isType, ASSOCIATION, COMPANY, LOCAL_AUTHORITY, PUBLIC_SERVICE, type OrganizationTypes } from "./organizations/useOrganizationType";
+import useOrganizationType, { findOrganizationType, getOrganizationTypes, hasBadge, isType, ASSOCIATION, COMPANY, LOCAL_AUTHORITY, OTHER, PUBLIC_SERVICE, USER, type OrganizationTypes } from "./organizations/useOrganizationType";
 import useOwnerName from "./organizations/useOwnerName";
 export {
+  findOrganizationType,
+  getOrganizationTypes,
   hasBadge,
   isType,
   type OrganizationTypes,
@@ -24,5 +26,7 @@ export {
   CERTIFIED,
   COMPANY,
   LOCAL_AUTHORITY,
-  PUBLIC_SERVICE
+  OTHER,
+  PUBLIC_SERVICE,
+  USER,
 };
