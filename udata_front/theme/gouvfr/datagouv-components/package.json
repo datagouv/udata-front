@@ -47,7 +47,7 @@
     "axios": "^1.7.7",
     "chart.js": "^4.4.4",
     "swagger-themes": "^1.4.3",
-    "swagger-ui-dist": "^5.17.14",
+    "swagger-ui": "^5.17.14",
     "vue": "^3.5"
   },
   "peerDependencies": {
