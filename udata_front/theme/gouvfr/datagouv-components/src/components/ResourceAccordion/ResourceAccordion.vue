@@ -149,7 +149,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import DataStructure from "./DataStructure/DataStructure.vue";
 import Preview from "./Preview/Preview.vue";
@@ -162,7 +162,6 @@ import type { CommunityResource, Resource } from "../../types/resources";
 import ResourceIcon from "./ResourceIcon.vue";
 import SchemaBadge from "./SchemaBadge.vue";
 import Metadata from "./Metadata.vue";
-import Swagger from "./Swagger.vue";
 import TextClamp from 'vue3-text-clamp';
 import TabGroup from "../Tabs/TabGroup.vue";
 import TabList from "../Tabs/TabList.vue";
@@ -184,6 +183,8 @@ const props = withDefaults(defineProps<{
   isCommunityResource: false,
   canEdit: false,
 });
+
+const Swagger = defineAsyncComponent(() => import("./Swagger.vue"));
 
 const { t } = useI18n();
 

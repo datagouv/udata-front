@@ -37,18 +37,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, defineAsyncComponent } from 'vue';
 import { useI18n } from "vue-i18n";
 import { type Dataservice } from '../../types/dataservices';
-import Swagger from '../ResourceAccordion/Swagger.vue'
+
+const props = defineProps<{
+  dataservice: Dataservice;
+}>();
 
 const { t } = useI18n();
 const openSwagger = ref(false);
 const showSwaggerBox = ref(false);
 
-const props = defineProps<{
-  dataservice: Dataservice;
-}>();
+const Swagger = defineAsyncComponent(() => import('../ResourceAccordion/Swagger.vue'));
 
 const toggle = () => {
   openSwagger.value = !openSwagger.value;
