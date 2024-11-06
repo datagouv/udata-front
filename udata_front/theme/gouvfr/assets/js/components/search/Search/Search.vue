@@ -35,7 +35,7 @@
                     :isBlue="true"
                   />
                   <MultiSelect
-                    :initialOptions="organizationTypes"
+                    :initialOptions="organizationTypesPromise"
                     :placeholder="t('Organization type')"
                     :searchPlaceholder="t('Search an organization type...')"
                     :allOption="t('All types')"
@@ -247,13 +247,13 @@ const params = new URLSearchParams(url.search);
 
 const allowedExtensionsUrl = getAllowedExtensionsUrl();
 const licensesUrl = getLicensesUrl();
-const organizationTypes : Array<MultiSelectOption> = getOrganizationTypes()
+const organizationTypes: Array<MultiSelectOption> = getOrganizationTypes()
   .filter(type => type.type !== OTHER && type.type !== USER)
   .map((type) => ({
     label: type.label,
     value: type.type,
   }));
-
+const organizationTypesPromise = Promise.resolve(organizationTypes);
 /**
  * Search query
  */
