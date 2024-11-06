@@ -19,7 +19,7 @@ class ReuseBlueprintTest(GouvfrFrontTestCase):
     def test_render_display(self):
         '''It should render the reuse page'''
         reuse = VisibleReuseFactory(owner=UserFactory(),
-                             description='* Title 1\n* Title 2')
+                                    description='* Title 1\n* Title 2')
         url = url_for('reuses.show', reuse=reuse)
         response = self.get(url)
         self.assert200(response)
