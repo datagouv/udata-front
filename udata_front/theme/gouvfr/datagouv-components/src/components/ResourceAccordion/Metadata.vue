@@ -22,26 +22,26 @@ const { t } = useI18n();
     <div>
         <div class="flex gap-3rem flex-col-on-small">
             <DescriptionList class="flex-1">
-                <DescriptionTerm>{{ t('URL') }} <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resource.url"/></DescriptionTerm>
+                <DescriptionTerm>{{ t('URL') }} <CopyButton :hide-label="true" :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resource.url"/></DescriptionTerm>
                 <DescriptionDetails :with-ellipsis="false">
                     <code class="code">
                         <a :href="resource.url"><TextClamp :max-lines="1" :autoresize="true" :text="resource.url" /></a>
                     </code>
                 </DescriptionDetails>
-                <DescriptionTerm>{{ t('Stable URL') }} <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resource.latest"/></DescriptionTerm>
+                <DescriptionTerm>{{ t('Stable URL') }} <CopyButton :hide-label="true" :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resource.latest"/></DescriptionTerm>
                 <DescriptionDetails :with-ellipsis="false">
                     <code class="code">
                         <a :href="resource.latest"><TextClamp :max-lines="1" :autoresize="true" :text="resource.latest"/></a>
                     </code>
                 </DescriptionDetails>
-                <DescriptionTerm>{{ t('Identifier') }} <CopyButton :label="$t('Copy ID')" :copied-label="$t('ID copied!')" :text="resource.id"/></DescriptionTerm>
+                <DescriptionTerm>{{ t('Identifier') }} <CopyButton :hide-label="true" :label="$t('Copy ID')" :copied-label="$t('ID copied!')" :text="resource.id"/></DescriptionTerm>
                 <DescriptionDetails :with-ellipsis="false">
                     <code class="code">
                         <TextClamp :max-lines="1" :autoresize="true" :text="resource.id" />
                     </code>
                 </DescriptionDetails>
                 <template v-if="resource.checksum">
-                    <DescriptionTerm>{{resource.checksum.type}} <CopyButton :label="$t('Copy checksum')" :copied-label="$t('Checksum copied!')" :text="resource.checksum.value"/></DescriptionTerm>
+                    <DescriptionTerm>{{resource.checksum.type}} <CopyButton :hide-label="true" :label="$t('Copy checksum')" :copied-label="$t('Checksum copied!')" :text="resource.checksum.value"/></DescriptionTerm>
                     <DescriptionDetails :with-ellipsis="false">
                         <code class="code">
                             <TextClamp :max-lines="1" :autoresize="true" :text="resource.checksum.value" />

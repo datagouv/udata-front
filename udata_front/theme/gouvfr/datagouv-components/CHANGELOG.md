@@ -8,6 +8,7 @@
 - Low enphasis on last element of charts [#562](https://github.com/datagouv/udata-front/pull/562)
 - Remove markdown from dataservice card [#568](https://github.com/datagouv/udata-front/pull/568)
 - Add Swagger UI to resources and dataservice links [#575](https://github.com/datagouv/udata-front/pull/575)
+- Add back copy button without label  [#576](https://github.com/datagouv/udata-front/pull/576)
 
 ## 1.4.0 (2024-09-23)
 
