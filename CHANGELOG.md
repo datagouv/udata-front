@@ -7,6 +7,7 @@
 - Add the me keyword to the rel attribute of the link to the user website [#571](https://github.com/datagouv/udata-front/pull/571)
 - Add dataservice access banner [#573](https://github.com/datagouv/udata-front/pull/573)
 - Migrate organization badges label to lowercase [#577](https://github.com/datagouv/udata-front/pull/577)
+- Use Dataservice search [#565](https://github.com/datagouv/udata-front/pull/565)
 
 ## 5.2.4 (2024-10-22)
 
