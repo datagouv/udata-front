@@ -629,12 +629,12 @@
   "Your dataservice is created!": "Votre API a été créée",
   "Publish the dataservice": "Publier l'API",
   "You need to select a contact point": "Vous devez sélectionner un point de contact",
-  "Draft": "",
-  "Statistics on your datasets": "",
-  "Download": "",
-  "Reuses Visits": "",
-  "Private": "",
-  "Organization type": "",
-  "Search an organization type...": "",
-  "All types": ""
+  "Draft": "Brouillon",
+  "Statistics on your datasets": "Statistiques de vos jeux de données",
+  "Download": "Téléchargements",
+  "Reuses Visits": "Vues des réutilisations",
+  "Private": "Private",
+  "Organization type": "Organization type",
+  "Search an organization type...": "Search an organization type...",
+  "All types": "All types"
 }
