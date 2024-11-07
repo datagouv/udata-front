@@ -25,6 +25,7 @@ import PublishingForm from "./pages/PublishingForm/PublishingForm.vue";
 import ReusePublishingForm from "./pages/ReusePublishingForm/ReusePublishingForm.vue";
 import OrganizationPublishingForm from "./pages/OrganizationPublishingForm/OrganizationPublishingForm.vue";
 import DataservicePublishingForm from "./pages/DataservicePublishingForm/DataservicePublishingForm.vue";
+import DataserviceLinks from '../../datagouv-components/src/components/DataserviceLinks/DataserviceLinks.vue';
 
 import "./components/vanilla/tabs.js";
 import "./components/vanilla/accordion.js";
@@ -72,6 +73,7 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("dataset-resources", Resources);
   app.component("dataset-resource-from-hash", ResourceFromHash);
   app.component("dataservice-card", DataserviceCard);
+  app.component("dataservice-links", DataserviceLinks);
   app.component("delete-button", DeleteButton);
   app.component("delete-user-button", DeleteUserButton);
   app.component("discussion-threads", Threads);

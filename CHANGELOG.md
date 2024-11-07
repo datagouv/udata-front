@@ -8,6 +8,7 @@
 - Add dataservice access banner [#573](https://github.com/datagouv/udata-front/pull/573)
 - Use Dataservice search [#565](https://github.com/datagouv/udata-front/pull/565)
 - Add organization type filter to dataset search [#579](https://github.com/datagouv/udata-front/pull/579)
+- Fix Reuse tests [#580](https://github.com/datagouv/udata-front/pull/580)
 
 ## 5.2.4 (2024-10-22)
 
