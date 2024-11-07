@@ -12,7 +12,7 @@ from udata.core.dataservices.models import Dataservice
 from udata.core.site.models import current_site
 
 from udata_front.theme import render as render_template
-from udata_front.views.base import DetailView, LoginOnlyView, SearchView
+from udata_front.views.base import DetailView, SearchView
 from udata.i18n import I18nBlueprint, gettext as _, ngettext
 from udata.sitemap import sitemap
 

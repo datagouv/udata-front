@@ -1,7 +1,7 @@
 from flask import abort, request, url_for, make_response
 from feedgenerator.django.utils.feedgenerator import Atom1Feed
 
-from udata_front.views.base import SearchView, DetailView, LoginOnlyView
+from udata_front.views.base import SearchView, DetailView
 from udata.i18n import I18nBlueprint, gettext as _
 from udata.models import Follow
 from udata.sitemap import sitemap
