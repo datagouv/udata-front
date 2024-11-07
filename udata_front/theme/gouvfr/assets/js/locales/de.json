@@ -632,5 +632,9 @@
   "Draft": "Draft",
   "Statistics on your datasets": "Statistics on your datasets",
   "Download": "Download",
-  "Reuses Visits": "Reuses Visits"
+  "Reuses Visits": "Reuses Visits",
+  "Private": "Private",
+  "Organization type": "Organization type",
+  "Search an organization type...": "Search an organization type...",
+  "All types": "All types"
 }
