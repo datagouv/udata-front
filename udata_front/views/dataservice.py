@@ -100,11 +100,6 @@ class DataserviceDetailView(DataserviceView, DetailView):
         return context
 
 
-@blueprint.route('/publishing-form/', endpoint='publishing-form')
-class DataservicePublishingFormView(LoginOnlyView):
-    template_name = 'dataservice/publishing-form.html'
-
-
 @sitemap.register_generator
 def sitemap_urls():
     for dataservice in Dataservice.objects.visible().only('id', 'slug'):

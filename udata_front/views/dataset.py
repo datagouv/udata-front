@@ -113,11 +113,6 @@ class DatasetDetailView(DatasetView, DetailView):
         return context
 
 
-@blueprint.route('/publishing-form/', endpoint='publishing-form')
-class PublishingFormView(LoginOnlyView):
-    template_name = 'dataset/publishing-form.html'
-
-
 @blueprint.route('/<dataset:dataset>/followers/', endpoint='followers')
 class DatasetFollowersView(DatasetView, DetailView):
     template_name = 'dataset/followers.html'
