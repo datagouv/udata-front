@@ -361,15 +361,15 @@
 
   function getOrganizationType(complements: SearchAdditionalData): OrganizationTypes {
     if(complements.collectivite_territoriale) {
-      return 'Local authority';
+      return 'local-authority';
     }
     if(complements.est_service_public) {
       return 'public-service';
     }
     if(complements.est_association) {
-      return 'Association';
+      return 'association';
     }
-    return 'Company';
+    return 'company';
   }
 
   watchEffect(() => {
