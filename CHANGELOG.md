@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 6.0.0 (2024-11-07)
 
 - Add beta admin `dataservice` page [#558](https://github.com/datagouv/udata-front/pull/558)
 - Add Dataservice publishing form [#358](https://github.com/datagouv/udata-front/pull/559)
