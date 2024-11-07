@@ -2,6 +2,10 @@
 
 ## Current (in progress)
 
+- Nothing yet
+
+## 1.6.0 (2024-11-07)
+
 - Add special style to tabular API dataservice card [#548](https://github.com/datagouv/udata-front/pull/548)
 - Export `Placeholder` component, use reuse last_modified [#546](https://github.com/datagouv/udata-front/pull/546)
 - Add missing `dataset` key to `CommunityResource` type [#551](https://github.com/datagouv/udata-front/pull/551)
