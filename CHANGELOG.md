@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix missing closing <a> tag in contact form [#589](https://github.com/datagouv/udata-front/pull/589)
 
 ## 6.0.0 (2024-11-07)
 
