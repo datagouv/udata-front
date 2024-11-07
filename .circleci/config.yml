@@ -228,7 +228,7 @@ jobs:
 
   storybook_datagouv_components:
     docker:
-      - image: mcr.microsoft.com/playwright:v1.46.1-jammy
+      - image: mcr.microsoft.com/playwright:v1.48.2-jammy
     resource_class: medium+
     steps:
       - checkout
@@ -330,7 +330,7 @@ jobs:
 
   storybook_udata_front:
     docker:
-      - image: mcr.microsoft.com/playwright:v1.46.1-jammy
+      - image: mcr.microsoft.com/playwright:v1.48.2-jammy
     resource_class: medium+
     steps:
       - checkout

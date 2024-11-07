@@ -8,6 +8,7 @@
 - Add dataservice access banner [#573](https://github.com/datagouv/udata-front/pull/573)
 - Migrate organization badges label to lowercase [#577](https://github.com/datagouv/udata-front/pull/577)
 - Use Dataservice search [#565](https://github.com/datagouv/udata-front/pull/565)
+- Fix Reuse tests [#580](https://github.com/datagouv/udata-front/pull/580)
 
 ## 5.2.4 (2024-10-22)
 
