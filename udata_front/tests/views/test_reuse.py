@@ -5,7 +5,7 @@ import feedparser
 from flask import url_for
 
 from udata.core.dataset.factories import DatasetFactory
-from udata.core.reuse.factories import ReuseFactory
+from udata.core.reuse.factories import ReuseFactory, VisibleReuseFactory
 from udata.core.user.factories import UserFactory
 from udata.core.organization.factories import OrganizationFactory
 from udata_front.tests import GouvFrSettings
@@ -18,8 +18,8 @@ class ReuseBlueprintTest(GouvfrFrontTestCase):
 
     def test_render_display(self):
         '''It should render the reuse page'''
-        reuse = ReuseFactory(owner=UserFactory(),
-                             description='* Title 1\n* Title 2')
+        reuse = VisibleReuseFactory(owner=UserFactory(),
+                                    description='* Title 1\n* Title 2')
         url = url_for('reuses.show', reuse=reuse)
         response = self.get(url)
         self.assert200(response)
@@ -129,8 +129,8 @@ class ReuseBlueprintTest(GouvfrFrontTestCase):
     def test_render_list(self):
         '''It should render the reuse list'''
         reuses = [
-            ReuseFactory(owner=UserFactory(), title="Small title"),
-            ReuseFactory(
+            VisibleReuseFactory(owner=UserFactory(), title="Small title"),
+            VisibleReuseFactory(
                 owner=UserFactory(),
                 title="A really long title that should be handled in front and test"
             )

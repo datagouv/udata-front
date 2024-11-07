@@ -1236,7 +1236,7 @@ export default {
         "yml"
       ]);
     }),
-    http.get('*/recherche-entreprises.api.gouv.fr/search/*', async () => {
+    http.get('https://recherche-entreprises.api.gouv.fr/search*', async () => {
       await delay();
       return HttpResponse.json({
         "results": [

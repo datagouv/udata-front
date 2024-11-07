@@ -617,15 +617,12 @@
   "What is a dataservice?": "What is a dataservice?",
   "A dataservice is a computer tool that allows a website or software to communicate with another computer and exchange data.": "A dataservice is a computer tool that allows a website or software to communicate with another computer and exchange data.",
   "Dataservice name": "Dataservice name",
-  "Access": "Access",
   "Access type": "Access type",
   "Chose an access type": "Chose an access type",
   "Dataservice Base URL": "Dataservice Base URL",
   "Dataservice authorization request URL": "Dataservice authorization request URL",
   "Dataservice endpoint URL": "Dataservice endpoint URL",
   "Rate limiting": "Rate limiting",
-  "Open": "Open",
-  "Restricted": "Restricted",
   "Yes": "Yes",
   "No": "No",
   "It is important to associate all the datasets used, as this allows to understand the cross-references and improve the visibility of your dataservice.": "It is important to associate all the datasets used, as this allows to understand the cross-references and improve the visibility of your dataservice.",
@@ -635,5 +632,9 @@
   "Draft": "Draft",
   "Statistics on your datasets": "Statistics on your datasets",
   "Download": "Download",
-  "Reuses Visits": "Reuses Visits"
+  "Reuses Visits": "Reuses Visits",
+  "Private": "Private",
+  "Organization type": "Organization type",
+  "Search an organization type...": "Search an organization type...",
+  "All types": "All types"
 }
