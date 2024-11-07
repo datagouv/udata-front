@@ -617,15 +617,12 @@
   "What is a dataservice?": "Qu'est-ce qu'une API ?",
   "A dataservice is a computer tool that allows a website or software to communicate with another computer and exchange data.": "Une API est un outil informatique qui permet à un site internet ou à un logiciel de communiquer avec un autre ordinateur et échanger de la donnée.",
   "Dataservice name": "Nom de l'API",
-  "Access": "Accès",
   "Access type": "Type d'accès",
   "Chose an access type": "Choisir un type d'accès",
   "Dataservice Base URL": "Lien de la base de l’API",
   "Dataservice authorization request URL": "Lien vers l’habilitation",
   "Dataservice endpoint URL": "Lien vers la documentation technique",
   "Rate limiting": "Rate limiting",
-  "Open": "Ouvert",
-  "Restricted": "Restreint",
   "Yes": "Oui",
   "No": "Non",
   "It is important to associate all the datasets used, as this allows to understand the cross-references and improve the visibility of your dataservice.": "Il est important d’associer tous les jeux de données pertinents, car cela permet de comprendre les croisements qui ont été nécessaires et d’améliorer la visibilité de votre API.",
@@ -635,5 +632,9 @@
   "Draft": "",
   "Statistics on your datasets": "",
   "Download": "",
-  "Reuses Visits": ""
+  "Reuses Visits": "",
+  "Private": "",
+  "Organization type": "",
+  "Search an organization type...": "",
+  "All types": ""
 }
