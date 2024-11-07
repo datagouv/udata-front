@@ -4,7 +4,11 @@
 {% set read_only_mode = config['READ_ONLY_MODE'] %}
 {% set next_url = url_for(request.endpoint, **request.view_args) if not request.routing_exception else url_for('site.home') %}
 {% set publish_items = [
+    {'icon': 'fr-icon-database-line', 'label': _('A dataset'), 'url': url_for('beta.datasets-new')},
+    {'icon': 'fr-icon-code-s-slash-line', 'label': _('An API'), 'url': url_for('beta.dataservices-new')},
+    {'icon': 'fr-icon-line-chart-line', 'label': _('A reuse'), 'url': url_for('beta.reuses-new')},
     {'icon': 'fr-icon-server-line', 'label': _('A harvester'), 'url': url_for('admin.index', path='harvester/new/')},
+    {'icon': 'fr-icon-government-line', 'label': _('An organization'), 'url': url_for('beta.organizations-new')},
 ] + ([{'icon': 'fr-icon-article-line', 'label': _('A post'), 'url': url_for('admin.index', path='post/new/')}] if current_user.sysadmin else [])
 %}
 
@@ -213,19 +217,23 @@
                         </li>
                     {% endfor %}
                     <li
-                        class="fr-nav__item ml-auto"
+                        class="fr-nav__item fr-ml-md-auto"
                     >
                         <button
                             class="fr-nav__btn"
                             aria-expanded="false"
                             aria-controls="publish-on"
                         >
-                            <span
-                                class="fr-icon-add-line"
-                                aria-hidden="true"
-                            />
-                            {{ _('Publish on') }}
-                            {% include theme('svg/logotype.svg') %}
+                            <div class="flex items-center">
+                                <span
+                                    class="fr-icon-add-line"
+                                    aria-hidden="true"
+                                ></span>
+                                {{ _('Publish on') }}
+                                <div class="fr-ml-1v fr-mt-1v fr-mt-md-0 logotype h-2w flex items-center">
+                                    {% include theme('svg/logotype.svg') %}
+                                </div>
+                            </div>
                         </button>
                         <div class="fr-collapse fr-menu" id="publish-on">
                             <ul class="fr-menu__list">

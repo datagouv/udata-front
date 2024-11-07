@@ -20,6 +20,11 @@ class PublishingFormView(LoginOnlyView):
     template_name = 'dataset/publishing-form.html'
 
 
+@blueprint.route('/organizations/new', endpoint='organizations-new')
+class OrganizationPublishingFormView(LoginOnlyView):
+    template_name = 'organization/publishing-form.html'
+
+
 @blueprint.route('/reuses/new/', endpoint='reuses-new')
 class ReusePublishingFormView(LoginOnlyView):
     template_name = 'reuse/publishing-form.html'

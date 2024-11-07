@@ -112,11 +112,6 @@ class OrganizationDetailView(SearchView, OrgView, DetailView):
         return context
 
 
-@blueprint.route('/publishing-form/', endpoint='publishing-form')
-class OrganizationPublishingFormView(LoginOnlyView):
-    template_name = 'organization/publishing-form.html'
-
-
 @blueprint.route('/<org:org>/dashboard/', endpoint='dashboard')
 def organization_dashboard(org):
     return redirect('%s#dashboard' % url_for('organizations.show', org=org), code=301)
