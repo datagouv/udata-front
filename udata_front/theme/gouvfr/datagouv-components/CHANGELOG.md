@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Replace remove-markdown with remark strip-markdown and use Suspense for descriptions [#591](https://github.com/datagouv/udata-front/pull/591)
 
 ## 1.6.0 (2024-11-07)
 
