@@ -47,28 +47,30 @@
         </template>
       </span>
     </p>
-    <TextClamp
-      v-if="showDescription"
-      class="fr-text--sm fr-mt-1w fr-mb-0 overflow-wrap-anywhere"
-      :auto-resize="true"
-      :text="RemoveMarkdown(dataservice.description)"
-      :max-lines='2'
-    />
+    <Suspense v-if="showDescription">
+      <AsyncTextClamp
+        class="fr-text--sm fr-mt-1w fr-mb-0 overflow-wrap-anywhere"
+        :auto-resize="true"
+        :text="removeMarkdown(dataservice.description)"
+        :max-lines='2'
+      />
+    </Suspense>
   </article>
 </template>
 
 <script setup lang="ts">
-import RemoveMarkdown from "remove-markdown";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import type { RouteLocationRaw } from "vue-router";
 import TextClamp from 'vue3-text-clamp';
 import AppLink from "../AppLink/AppLink.vue";
-import type { Dataservice } from "../../types/dataservices";
-import { formatRelativeIfRecentDate } from "../../helpers";
+import AsyncTextClamp from "../AsyncTextClamp/AsyncTextClamp.vue";
 import OrganizationNameWithCertificate from "../Organization/OrganizationNameWithCertificate.vue";
 import { useOwnerName } from "../../composables";
-import { computed } from "vue";
 import { config } from "../../config";
+import { formatRelativeIfRecentDate } from "../../helpers";
+import { removeMarkdown } from "../../helpers/markdown";
+import type { Dataservice } from "../../types/dataservices";
 
 type Props = {
   dataservice: Dataservice,

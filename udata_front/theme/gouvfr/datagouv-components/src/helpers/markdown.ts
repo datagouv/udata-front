@@ -1,4 +1,7 @@
 import markdownit from 'markdown-it';
+import { remark } from 'remark';
+import remarkGfm from 'remark-gfm';
+import strip from 'strip-markdown';
 
 const markdown = markdownit({
     html: false,
@@ -33,4 +36,12 @@ markdown.use(function(md) {
 
 export default function renderMarkdown(text: string): string {
   return markdown.render(text).trim();
+}
+
+export async function removeMarkdown(text: string) {
+  const file = await remark()
+    .use(remarkGfm)
+    .use(strip)
+    .process(text)
+  return String(file)
 }
