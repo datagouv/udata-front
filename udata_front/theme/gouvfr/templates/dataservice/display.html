@@ -23,8 +23,8 @@
 {% block breadcrumb %}
     {% cache cache_duration, 'dataservice-breadcrumb', dataservice.id|string, g.lang_code, dataservice.last_modified|string %}
         <li>
-            <a class="fr-breadcrumb__link">
-                {{ _('APIs') }}
+            <a class="fr-breadcrumb__link" href="{{ url_for('dataservices.list') }}">
+                {{ _('API') }}
             </a>
         </li>
         <li>
