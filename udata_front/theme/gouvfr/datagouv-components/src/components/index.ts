@@ -1,4 +1,5 @@
 import AppLink from "./AppLink/AppLink.vue";
+import AsyncTextClamp from "./AsyncTextClamp/AsyncTextClamp.vue";
 import { Avatar, AvatarWithName } from "./Avatar";
 import { CopyButton } from "./CopyButton";
 import { DatasetCard } from "./DatasetCard";
@@ -23,6 +24,7 @@ import Well from "./Well";
 
 export {
   AppLink,
+  AsyncTextClamp,
   Avatar,
   AvatarWithName,
   CopyButton,

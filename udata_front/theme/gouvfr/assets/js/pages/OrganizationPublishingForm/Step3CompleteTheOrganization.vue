@@ -71,14 +71,12 @@
 </template>
 
 <script setup lang="ts">
-import { Well, type Organization} from "@datagouv/components/ts";
+import { AsyncTextClamp, Well, removeMarkdown, type Organization} from "@datagouv/components/ts";
 import { useI18n } from 'vue-i18n';
 import Alert from '../../components/Alert/Alert.vue';
 import Container from '../../components/Ui/Container/Container.vue';
 import Placeholder from '../../components/utils/placeholder.vue';
 import successIcon from "../../../../templates/svg/illustrations/success.svg";
-import { removeMarkdown } from "../../../../datagouv-components/src/helpers/markdown";
-import AsyncTextClamp from "../../../../datagouv-components/src/components/AsyncTextClamp/AsyncTextClamp.vue";
 
 defineProps<{
   organization: Organization;
