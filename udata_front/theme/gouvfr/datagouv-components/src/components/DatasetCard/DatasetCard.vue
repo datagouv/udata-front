@@ -73,13 +73,14 @@
             </p>
           </div>
         </div>
-        <AsyncTextClamp
-          v-if="showDescription"
+        <Suspense v-if="showDescription">
+          <AsyncTextClamp
           class="fr-text--sm fr-mt-1w fr-mb-0 overflow-wrap-anywhere"
           :auto-resize="true"
           :text="removeMarkdown(dataset.description)"
           :max-lines='2'
         />
+        </Suspense>
       </div>
     </div>
   </div>
