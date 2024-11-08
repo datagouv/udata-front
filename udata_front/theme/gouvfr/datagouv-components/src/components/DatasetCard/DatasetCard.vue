@@ -73,11 +73,11 @@
             </p>
           </div>
         </div>
-        <TextClamp
+        <AsyncTextClamp
           v-if="showDescription"
           class="fr-text--sm fr-mt-1w fr-mb-0 overflow-wrap-anywhere"
           :auto-resize="true"
-          :text="RemoveMarkdown(dataset.description)"
+          :text="removeMarkdown(dataset.description)"
           :max-lines='2'
         />
       </div>
@@ -86,14 +86,15 @@
 </template>
 
 <script setup lang="ts">
-import RemoveMarkdown from "remove-markdown";
 import { useI18n } from "vue-i18n";
 import type { RouteLocationRaw } from "vue-router";
 import TextClamp from 'vue3-text-clamp';
 import AppLink from "../AppLink/AppLink.vue";
+import AsyncTextClamp from "../AsyncTextClamp/AsyncTextClamp.vue";
 import Avatar from "../Avatar/Avatar.vue";
 import type { Dataset, DatasetV2 } from "../../types/datasets";
 import { formatRelativeIfRecentDate, summarize } from "../../helpers";
+import { removeMarkdown } from "../../helpers/markdown";
 import OrganizationNameWithCertificate from "../Organization/OrganizationNameWithCertificate.vue";
 import { Placeholder } from "../Placeholder";
 import { QualityComponentInline } from "../QualityComponentInline";

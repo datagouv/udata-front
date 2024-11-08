@@ -38,9 +38,14 @@
               <small v-if="organization.acronym">{{ organization.acronym }}</small>
             </a>
           </h4>
-          <p class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm overflow-wrap-anywhere">
-            {{ excerpt(organization.description, 160) }}
-          </p>
+          <Suspense>
+            <AsyncTextClamp
+              class="fr-mt-1w fr-mb-2w fr-hidden fr-unhidden-sm overflow-wrap-anywhere"
+              :auto-resize="true"
+              :text="removeMarkdown(organization.description)"
+              :max-lines='2'
+            />
+          </Suspense>
         </div>
       </div>
     </article>
@@ -67,12 +72,13 @@
 
 <script setup lang="ts">
 import { Well, type Organization} from "@datagouv/components/ts";
+import { useI18n } from 'vue-i18n';
 import Alert from '../../components/Alert/Alert.vue';
 import Container from '../../components/Ui/Container/Container.vue';
 import Placeholder from '../../components/utils/placeholder.vue';
 import successIcon from "../../../../templates/svg/illustrations/success.svg";
-import { excerpt } from "../../helpers";
-import { useI18n } from 'vue-i18n';
+import { removeMarkdown } from "../../../../datagouv-components/src/helpers/markdown";
+import AsyncTextClamp from "../../../../datagouv-components/src/components/AsyncTextClamp/AsyncTextClamp.vue";
 
 defineProps<{
   organization: Organization;
