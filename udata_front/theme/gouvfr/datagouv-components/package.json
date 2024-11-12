@@ -1,6 +1,6 @@
 {
   "name": "@datagouv/components",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "reusable components to show content from data.gouv.fr",
   "type": "module",
   "files": [
@@ -46,6 +46,9 @@
     "@headlessui/vue": "^1.7.22",
     "axios": "^1.7.7",
     "chart.js": "^4.4.4",
+    "remark": "^15.0.1",
+    "remark-gfm": "^4.0.0",
+    "strip-markdown": "^6.0.0",
     "swagger-themes": "^1.4.3",
     "swagger-ui": "^5.17.14",
     "vue": "^3.5"
@@ -70,7 +73,6 @@
     "@storybook/vue3": "^8.3.0",
     "@storybook/vue3-vite": "^8.3.0",
     "@types/markdown-it": "^13.0.7",
-    "@types/remove-markdown": "^0.3.4",
     "@vitejs/plugin-vue": "^4.4.1",
     "@vueuse/core": "^10.6.1",
     "chromatic": "^11.5.5",
@@ -86,7 +88,6 @@
     "popmotion": "^8.7.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "remove-markdown": "^0.5.0",
     "start-server-and-test": "^2.0.5",
     "storybook": "^8.3.0",
     "storybook-vue3-router": "^5.0.0",

@@ -2,6 +2,15 @@
 
 ## Current (in progress)
 
+- Fix missing closing <a> tag in contact form [#589](https://github.com/datagouv/udata-front/pull/589)
+- Fix breadcrumb link for dataservice page [#590](https://github.com/datagouv/udata-front/pull/590)
+- Remove truncate and excerpt helpers function and fix error with remove-markdown [#591](https://github.com/datagouv/udata-front/pull/591)
+- Add API menu item [#592](https://github.com/datagouv/udata-front/pull/592)
+- Add publish button to menu [#578](https://github.com/datagouv/udata-front/pull/578)
+
+
+## 6.0.0 (2024-11-07)
+
 - Add beta admin `dataservice` page [#558](https://github.com/datagouv/udata-front/pull/558)
 - Add Dataservice publishing form [#358](https://github.com/datagouv/udata-front/pull/559)
 - Add the me keyword to the rel attribute of the link to the user website [#571](https://github.com/datagouv/udata-front/pull/571)
@@ -10,7 +19,7 @@
 - Use Dataservice search [#565](https://github.com/datagouv/udata-front/pull/565)
 - Add organization type filter to dataset search [#579](https://github.com/datagouv/udata-front/pull/579)
 - Fix Reuse tests [#580](https://github.com/datagouv/udata-front/pull/580)
-- Add API menu item [#578](https://github.com/datagouv/udata-front/pull/578)
+- Rename private to draft [#572](https://github.com/datagouv/udata-front/pull/572) [#583](https://github.com/datagouv/udata-front/pull/583)
 
 ## 5.2.4 (2024-10-22)
 

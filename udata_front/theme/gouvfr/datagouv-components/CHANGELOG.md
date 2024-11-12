@@ -2,6 +2,10 @@
 
 ## Current (in progress)
 
+- Replace remove-markdown with remark strip-markdown and use Suspense for descriptions [#591](https://github.com/datagouv/udata-front/pull/591)
+
+## 1.6.0 (2024-11-07)
+
 - Add special style to tabular API dataservice card [#548](https://github.com/datagouv/udata-front/pull/548)
 - Export `Placeholder` component, use reuse last_modified [#546](https://github.com/datagouv/udata-front/pull/546)
 - Add missing `dataset` key to `CommunityResource` type [#551](https://github.com/datagouv/udata-front/pull/551)
@@ -9,6 +13,7 @@
 - Remove markdown from dataservice card [#568](https://github.com/datagouv/udata-front/pull/568)
 - Add Swagger UI to resources and dataservice links [#575](https://github.com/datagouv/udata-front/pull/575)
 - Add back copy button without label  [#576](https://github.com/datagouv/udata-front/pull/576)
+- Rename private to draft [#572](https://github.com/datagouv/udata-front/pull/572)
 
 ## 1.4.0 (2024-09-23)
 
