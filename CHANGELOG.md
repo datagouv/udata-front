@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 6.0.1 (2024-11-13)
 
 - Fix missing closing <a> tag in contact form [#589](https://github.com/datagouv/udata-front/pull/589)
