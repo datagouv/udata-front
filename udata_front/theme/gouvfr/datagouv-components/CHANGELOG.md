@@ -2,6 +2,11 @@
 
 ## Current (in progress)
 
+## 2.0.0 (2024-11-13)
+
+> [!WARNING]
+> Markdown removal functions `truncate()` and `excerpt()` are removed
+
 - Replace remove-markdown with remark strip-markdown and use Suspense for descriptions [#591](https://github.com/datagouv/udata-front/pull/591)
 
 ## 1.6.0 (2024-11-07)
