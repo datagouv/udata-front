@@ -2,6 +2,8 @@
 
 ## Current (in progress)
 
+- Dependencies are now `externals` [#594](https://github.com/datagouv/udata-front/pull/594)
+
 ## 2.0.0 (2024-11-13)
 
 > [!WARNING]
