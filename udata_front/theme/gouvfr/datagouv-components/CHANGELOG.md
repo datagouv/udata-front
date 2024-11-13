@@ -2,7 +2,11 @@
 
 ## Current (in progress)
 
-- Dependencies are now `externals` [#594](https://github.com/datagouv/udata-front/pull/594)
+- Nothing yet
+
+## 2.0.1 (2024-11-13)
+
+- Fix SSR, dependencies are now `externals` [#594](https://github.com/datagouv/udata-front/pull/594)
 
 ## 2.0.0 (2024-11-13)
 
