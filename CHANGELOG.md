@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 6.0.1 (2024-11-13)
 
 - Fix missing closing <a> tag in contact form [#589](https://github.com/datagouv/udata-front/pull/589)
 - Fix breadcrumb link for dataservice page [#590](https://github.com/datagouv/udata-front/pull/590)
