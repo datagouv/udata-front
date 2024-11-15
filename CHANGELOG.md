@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Display correct business documentation url link [#595](https://github.com/datagouv/udata-front/pull/595)
 
 ## 6.0.1 (2024-11-13)
 
