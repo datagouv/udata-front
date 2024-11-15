@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="border border-blue-400 fr-p-2w bg-alt-grey"
-      v-if="(!showSwaggerBox && dataservice.endpoint_description_url) || dataservice.business_documentation">
+      v-if="(!showSwaggerBox && dataservice.endpoint_description_url) || dataservice.business_documentation_url">
       <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle">
         <div class="fr-col-12 fr-col-sm">
           <h2 class="fr-h6 fr-mb-0 text-blue-400">{{ t("API documentation") }}</h2>
@@ -12,10 +12,10 @@
             {{ t('Technical Documentation') }}
           </a>
           <a
-            v-if="dataservice.business_documentation"
+            v-if="dataservice.business_documentation_url"
             class="fr-btn"
             :class="showSwaggerBox ? '' : 'fr-ml-3v fr-btn--secondary'"
-            :href="dataservice.business_documentation"
+            :href="dataservice.business_documentation_url"
             target="_blank"
             rel="ugc nofollow noopener"
           >

@@ -16,6 +16,7 @@ export type BaseDataservice = Owned & {
     }>;
   description: string;
   endpoint_description_url: string | null;
+  business_documentation_url: string | null;
   has_token: boolean;
   is_restricted: boolean;
   license: string | null;
@@ -46,6 +47,7 @@ export type Dataservice = Owned & {
   deleted_at: string | null;
   description: string;
   endpoint_description_url: string | null;
+  business_documentation_url: string | null;
   extras: Record<string, any>;
   format: string;
   harvest: Harvest;
