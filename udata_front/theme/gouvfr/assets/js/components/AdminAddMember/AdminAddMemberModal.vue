@@ -85,7 +85,7 @@ export type AdminAddMemberModalProps = {
 </script>
 
 <script setup lang="ts">
-import type { User } from '@datagouv/components/ts';
+import { getUserAvatar, type User } from '@datagouv/components/ts';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { addMember } from "../../api/organizations";
@@ -93,7 +93,6 @@ import MultiSelect from "../MultiSelect/MultiSelect.vue";
 import SelectGroup, { type Option } from "../Form/SelectGroup/SelectGroup.vue";
 import type { MemberRole, MultiSelectOption } from '../../types';
 import { useToast } from '../../composables/useToast';
-import useUserAvatar from '../../composables/useUserAvatar';
 
 const props = defineProps<AdminAddMemberModalProps>();
 
@@ -131,7 +130,7 @@ function formatUsers(users: Array<UserSuggest>): Array<MultiSelectOption> {
     return  {
       value: user.id,
       label: user.first_name + " " + user.last_name,
-      image: useUserAvatar(user, 32),
+      image: getUserAvatar(user, 32),
     };
   });
 }

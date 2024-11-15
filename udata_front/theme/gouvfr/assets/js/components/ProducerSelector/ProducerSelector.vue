@@ -50,11 +50,10 @@
 <script setup lang="ts">
 import { ref, computed, toValue, onMounted } from 'vue';
 import MultiSelect from '../../components/MultiSelect/MultiSelect.vue';
-import type { User, Organization, OwnedWithId } from '@datagouv/components/ts';
+import { getUserAvatar, type User, type Organization, type OwnedWithId } from '@datagouv/components/ts';
 import { organization_url } from '../../config';
 import type { Me } from '../../types';
 import { useI18n } from 'vue-i18n';
-import useUserAvatar from "../../composables/useUserAvatar";
 
 const { t } = useI18n();
 
@@ -96,8 +95,8 @@ function listOrganizations() {
     ...toValue(props.user),
     id: "user",
     name: `${props.user.first_name} ${props.user.last_name}`,
-    logo: useUserAvatar(toValue(props.user), 40),
-    logo_thumbnail: useUserAvatar(toValue(props.user), 40),
+    logo: getUserAvatar(toValue(props.user), 40),
+    logo_thumbnail: getUserAvatar(toValue(props.user), 40),
   };
   if (userValue) {
     organizations.value = [...userValue.organizations];

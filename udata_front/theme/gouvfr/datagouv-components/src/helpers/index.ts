@@ -1,9 +1,10 @@
+import { readonly } from "vue";
 import { useI18n } from "vue-i18n";
 import { dayjs } from "./i18n";
 import markdown, { removeMarkdown } from "./markdown";
 import { toggleAccordion } from "./toggleAccordion";
-import { readonly } from "vue";
 import { ResourceType } from "../types/resources";
+import getUserAvatar, { useUserAvatar } from "./getUserAvatar";
 
 export const RESOURCE_TYPE = readonly(["main", "documentation", "update", "api", "code", "other"] as const);
 
@@ -98,4 +99,4 @@ export const formatRelativeIfRecentDate = (date: Date | string) => {
   return formatFromNow(date);
 }
 
-export { markdown, removeMarkdown, toggleAccordion };
+export { getUserAvatar, markdown, removeMarkdown, toggleAccordion, useUserAvatar };
