@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Deprecate `useUserAvatar` and rename it to `getUserAvatar` to better convey its usage [#596](https://github.com/datagouv/udata-front/pull/596)
 
 ## 2.0.1 (2024-11-13)
 
