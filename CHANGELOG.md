@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Display correct business documentation url link [#595](https://github.com/datagouv/udata-front/pull/595)
+- Remove old display from api.gouv.fr in datasets pages [#597](https://github.com/datagouv/udata-front/pull/597)
 
 ## 6.0.1 (2024-11-13)
 
