@@ -34,10 +34,6 @@ PUBLISHING_FORM_FEEDBACK_URL = ''
 PAGES_GH_REPO_NAME = 'etalab/datagouvfr-pages'
 PAGES_REPO_BRANCH = 'master'
 
-# api.gouv.fr
-APIGOUVFR_URL = 'https://api.gouv.fr/api/v1/apis'
-APIGOUVFR_ALLOW_OPENNESS = ['open', 'semi_open']
-
 # catalogue.data.gouv.fr
 CATALOG_URL = 'https://catalogue.data.gouv.fr/'
 
