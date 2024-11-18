@@ -4,6 +4,7 @@
 
 - Display correct business documentation url link [#595](https://github.com/datagouv/udata-front/pull/595)
 - Change link to reuses search page instead of datasets search page in dataservice search page [#599](https://github.com/datagouv/udata-front/pull/599)
+- Add dataservice search to org page [#601](https://github.com/datagouv/udata-front/pull/601)
 
 ## 6.0.1 (2024-11-13)
 
