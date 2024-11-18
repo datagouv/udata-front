@@ -93,38 +93,6 @@ const meta = {
                         }
                       }
                     }
-                  ],
-                  "apigouvfr:apis": [
-                    {
-                      "title": "API Conventions collectives",
-                      "tagline": "Retrouvez les conventions collectives d'une entreprise \u00e0 partir de son num\u00e9ro SIRET",
-                      "path": "/les-api/api-conventions-collectives",
-                      "slug": "api-conventions-collectives",
-                      "openness": "open",
-                      "owner": "Minist\u00e8re du Travail, de l'Emploi et de l'Insertion",
-                      "owner_acronym": "MTEI",
-                      "logo": "/images/api-logo/logo-mtei.png"
-                    },
-                    {
-                      "title": "API Recherche d\u2019entreprises",
-                      "tagline": "Rechercher une entreprise fran\u00e7aise, par sa d\u00e9nomination, ou son adresse",
-                      "path": "/les-api/api-recherche-entreprises",
-                      "slug": "api-recherche-entreprises",
-                      "openness": "open",
-                      "owner": "Direction Interminist\u00e9rielle du Num\u00e9rique",
-                      "owner_acronym": "DINUM",
-                      "logo": "/images/api-logo/dinum.png"
-                    },
-                    {
-                      "title": "API Sirene",
-                      "tagline": "Acc\u00e9der aux informations concernant les entreprises et les \u00e9tablissements immatricul\u00e9s au r\u00e9pertoire interadministratif Sirene de l'Insee",
-                      "path": "/les-api/sirene_v3",
-                      "slug": "sirene_v3",
-                      "openness": "semi_open",
-                      "owner": "Institut national de la statistique et des \u00e9tudes \u00e9conomiques",
-                      "owner_acronym": "Insee",
-                      "logo": "/images/api-logo/Logo_Insee.svg"
-                    }
                   ]
                 },
                 "metrics": {
@@ -475,18 +443,6 @@ const meta = {
                 "frequency": "quarterly",
                 "frequency_date": "2019-04-08T20:00:00+00:00",
                 "extras": {
-                  "apigouvfr:apis": [
-                    {
-                      "title": "API Recherche d\u2019entreprises",
-                      "tagline": "Rechercher une entreprise fran\u00e7aise, par sa d\u00e9nomination, ou son adresse",
-                      "path": "/les-api/api-recherche-entreprises",
-                      "slug": "api-recherche-entreprises",
-                      "openness": "open",
-                      "owner": "Direction Interminist\u00e9rielle du Num\u00e9rique",
-                      "owner_acronym": "DINUM",
-                      "logo": "/images/api-logo/dinum.png"
-                    }
-                  ],
                   "recommendations": [
                     {
                       "id": "53699924a3a729239d205175",
@@ -849,28 +805,6 @@ const meta = {
                   ],
                   "recommendations:sources": [
                     "edito"
-                  ],
-                  "apigouvfr:apis": [
-                    {
-                      "title": "API Annuaire de l\u2019administration et des services publics",
-                      "tagline": "Consultez les donn\u00e9es publiques de l\u2019annuaire de l\u2019administration \u2013 Service-public.fr.",
-                      "path": "/les-api/api-annuaire-administration-services-publics",
-                      "slug": "api-annuaire-administration-services-publics",
-                      "openness": "open",
-                      "owner": "Direction de l'information l\u00e9gale et administrative",
-                      "owner_acronym": "DILA",
-                      "logo": "/images/api-logo/dila.png"
-                    },
-                    {
-                      "title": "Annuaire des \u00e9tablissements publics de l'administration",
-                      "tagline": "L\u2019API qui r\u00e9f\u00e9rence les guichets publics locaux",
-                      "path": "/les-api/api_etablissements_publics",
-                      "slug": "api_etablissements_publics",
-                      "openness": "open",
-                      "owner": "Direction Interminist\u00e9rielle du Num\u00e9rique",
-                      "owner_acronym": "DINUM",
-                      "logo": "/images/api-logo/dinum.png"
-                    }
                   ]
                 },
                 "metrics": {
@@ -1402,18 +1336,6 @@ const meta = {
                     }
                   ],
                   "transport:url": "https://transport.data.gouv.fr/datasets/base-adresse-nationale",
-                  "apigouvfr:apis": [
-                    {
-                      "title": "API Adresse (Base Adresse Nationale - BAN)",
-                      "tagline": "Interrogez la Base Adresse Nationale, base de donn\u00e9es de l\u2019int\u00e9gralit\u00e9 des adresses du territoire fran\u00e7ais",
-                      "path": "/les-api/base-adresse-nationale",
-                      "slug": "base-adresse-nationale",
-                      "openness": "open",
-                      "owner": "Direction Interminist\u00e9rielle du Num\u00e9rique",
-                      "owner_acronym": "DINUM",
-                      "logo": "/images/api-logo/dinum.png"
-                    }
-                  ],
                   "recommendations:sources": [
                     "edito",
                     "matomo"
@@ -3445,18 +3367,6 @@ const sampleResults = JSON.stringify([
     "frequency": "punctual",
     "frequency_date": null,
     "extras": {
-      "apigouvfr:apis": [
-        {
-          "title": "API Bulletin officiel des annonces des marchés publics (BOAMP)",
-          "tagline": "Rechercher et consulter les annonces du Bulletin Officiel des Annonces de Marchés Publics",
-          "path": "/les-api/api-annonces-marches-publics-boamp",
-          "slug": "api-annonces-marches-publics-boamp",
-          "openness": "open",
-          "owner": "Direction de l'information légale et administrative",
-          "owner_acronym": "DILA",
-          "logo": "/images/api-logo/dila.png"
-        }
-      ]
     },
     "metrics": {
       "discussions": 33,

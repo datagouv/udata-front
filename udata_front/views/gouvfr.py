@@ -12,8 +12,6 @@ from udata.frontend import template_hook
 from udata.models import Reuse, Dataset
 from udata.i18n import I18nBlueprint
 
-from udata_front import APIGOUVFR_EXTRAS_KEY
-
 log = logging.getLogger(__name__)
 
 blueprint = I18nBlueprint('gouvfr', __name__,
@@ -133,17 +131,6 @@ def suivi():
         return theme.render('suivi.html')
     except TemplateNotFound:
         abort(404)
-
-
-def has_apis(ctx):
-    dataset = ctx['dataset']
-    return dataset.extras.get(APIGOUVFR_EXTRAS_KEY, [])
-
-
-@template_hook('dataset.display.after-files', when=has_apis)
-def dataset_apis(ctx):
-    dataset = ctx['dataset']
-    return theme.render('dataset-apis.html', apis=dataset.extras.get(APIGOUVFR_EXTRAS_KEY))
 
 
 @template_hook('oauth_authorize_theme_content')
