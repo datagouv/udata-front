@@ -2,6 +2,10 @@
 
 ## Current (in progress)
 
+- Nothing yet
+
+## 2.0.2 (2024-11-19)
+
 - Display correct business documentation url link [#595](https://github.com/datagouv/udata-front/pull/595)
 - Deprecate `useUserAvatar` and rename it to `getUserAvatar` to better convey its usage [#596](https://github.com/datagouv/udata-front/pull/596)
 
