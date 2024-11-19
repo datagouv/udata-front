@@ -11,7 +11,7 @@ from flask_mongoengine.pagination import Pagination
 
 from udata_front import theme
 from udata_front.theme import render as render_template
-from udata_front.views.base import DetailView, LoginOnlyView
+from udata_front.views.base import DetailView
 
 blueprint = I18nBlueprint('dataservices', __name__, url_prefix='/dataservices')
 
@@ -98,11 +98,6 @@ class DataserviceDetailView(DataserviceView, DetailView):
 
         context['can_edit'] = DataserviceEditPermission(self.dataservice)
         return context
-
-
-@blueprint.route('/publishing-form/', endpoint='publishing-form')
-class DataservicePublishingFormView(LoginOnlyView):
-    template_name = 'dataservice/publishing-form.html'
 
 
 @sitemap.register_generator

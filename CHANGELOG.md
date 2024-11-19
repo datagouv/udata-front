@@ -15,6 +15,8 @@
 - Fix breadcrumb link for dataservice page [#590](https://github.com/datagouv/udata-front/pull/590)
 - Remove truncate and excerpt helpers function and fix error with remove-markdown [#591](https://github.com/datagouv/udata-front/pull/591)
 - Add API menu item [#592](https://github.com/datagouv/udata-front/pull/592)
+- Add publish button to menu [#578](https://github.com/datagouv/udata-front/pull/578)
+
 
 ## 6.0.0 (2024-11-07)
 
