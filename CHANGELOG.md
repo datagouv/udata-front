@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Remove duplicated /admin in admin dataservice route [#608](https://github.com/datagouv/udata-front/pull/608)
 
 ## 6.0.2 (2024-11-19)
 
