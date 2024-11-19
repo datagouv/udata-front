@@ -217,23 +217,19 @@
                         </li>
                     {% endfor %}
                     <li
-                        class="fr-nav__item fr-ml-md-auto"
+                        class="fr-nav__item fr-ml-md-auto fr-hidden fr-unhidden-xl"
                     >
                         <button
-                            class="fr-nav__btn"
+                            class="fr-nav__btn inline"
                             aria-expanded="false"
                             aria-controls="publish-on"
                         >
-                            <div class="flex items-center">
-                                <span
-                                    class="fr-icon-add-line"
-                                    aria-hidden="true"
-                                ></span>
-                                {{ _('Publish on') }}
-                                <div class="fr-ml-1v fr-mt-1v fr-mt-md-0 logotype h-2w flex items-center">
-                                    {% include theme('svg/logotype.svg') %}
-                                </div>
-                            </div>
+                            <span
+                                class="fr-icon-add-line"
+                                aria-hidden="true"
+                            ></span>
+                            {{ _('Publish on ') }}
+                            <span class="fr-text--bold">data.gouv</span><span class="fr-text--alt f-italic">.fr</span>
                         </button>
                         <div class="fr-collapse fr-menu" id="publish-on">
                             <ul class="fr-menu__list">
