@@ -53,9 +53,6 @@ setup(
         'udata.harvesters': [
             'maaf = udata_front.harvesters.maaf:MaafBackend',
         ],
-        'udata.tasks': [
-            'front = udata_front.tasks',
-        ],
     },
     license='LGPL',
     zip_safe=False,
