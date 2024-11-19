@@ -12,7 +12,7 @@ class AdminView(LoginOnlyView):
 
 
 @blueprint.route(
-    '/admin/organizations/<organization_id>/dataservices/<dataservice_id>',
+    '/organizations/<organization_id>/dataservices/<dataservice_id>',
     endpoint='beta-admin-org-dataservice'
 )
 class AdminViewOrgDataservice(LoginOnlyView):
@@ -26,7 +26,7 @@ class AdminViewOrgDataservice(LoginOnlyView):
         return context
 
 
-@blueprint.route('/admin/me/dataservices/<dataservice_id>', endpoint='beta-admin-me-dataservice')
+@blueprint.route('/me/dataservices/<dataservice_id>', endpoint='beta-admin-me-dataservice')
 class AdminViewMeDataservice(LoginOnlyView):
     template_name = 'beta/admin.html'
 
