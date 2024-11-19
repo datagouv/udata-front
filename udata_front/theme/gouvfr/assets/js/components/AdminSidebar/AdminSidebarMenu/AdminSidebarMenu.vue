@@ -17,7 +17,7 @@
         :size="24"
         :rounded="true"
       />
-      <p class="fr-mx-1w">{{ t('My Profil') }}</p>
+      <p class="fr-mx-1w">{{ t('My Profile') }}</p>
     </template>
     <template v-else-if="organization">
       <div class="logo logo--sm">

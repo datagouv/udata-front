@@ -36,7 +36,7 @@
             <div class="fr-collapse" id="fr-sidemenu-wrapper">
               <div class="fr-sidemenu__title fr-mb-3v" id="fr-sidemenu-title">{{ t('Filters') }}</div>
               <div class="fr-grid-row fr-grid-row--gutters">
-                <div class="fr-col-12">
+                <div class="fr-col-12" v-if="!props.organization">
                   <MultiSelect
                     :placeholder="t('Organizations')"
                     :searchPlaceholder="t('Search an organization...')"
@@ -44,8 +44,8 @@
                     listUrl="/organizations/?sort=-followers"
                     suggestUrl="/organizations/suggest/"
                     entityUrl="/organizations/"
-                    :values="organization"
-                    @change="(value: string) => organization = value"
+                    :values="organizationFilter"
+                    @change="(value: string) => organizationFilter = value"
                     :isBlue="true"
                   />
                 </div>
@@ -121,11 +121,17 @@ import { refDebounced, watchIgnorable } from '@vueuse/core'
 import axios from "axios";
 import NoSearchResults from "../Form/NoSearchResults.vue";
 
+const props = withDefaults(defineProps<{
+  organization?: string,
+}>(), {
+  organization: "",
+})
+
 const { t } = useI18n();
 const { toast } = useToast();
 
-const organization = ref<string | null>(null);
-watch(organization, () => page.value = 1)
+const organizationFilter = ref<string | null>(null);
+watch(organizationFilter, () => page.value = 1)
 
 const isRestricted = ref<boolean | null>(null);
 watch(isRestricted, () => page.value = 1)
@@ -135,10 +141,10 @@ const isRestrictedId = useId();
 const page = ref(1);
 
 const hasFilters = computed(() => {
-  return organization.value || isRestricted.value !== null
+  return organizationFilter.value || isRestricted.value !== null
 });
 const resetFilters = () => {
-  organization.value = '';
+  organizationFilter.value = '';
   isRestricted.value = null;
 }
 
@@ -150,7 +156,7 @@ const resetFiltersAndSearch = () => {
 
 const searchId = useId();
 const searchQuery = ref('');
-const searchQueryDebounced = refDebounced(searchQuery, 500);
+const searchQueryDebounced = refDebounced<string>(searchQuery, 500);
 const searchInput = useTemplateRef('searchInputRef');
 const scrollToTop = () => {
   if (searchInput.value) {
@@ -160,14 +166,17 @@ const scrollToTop = () => {
 
 const params = computed(() => {
   const filters: { organization?: string, q?: string, is_restricted?: string, page?: string } = {}
-  if (organization.value) {
-    filters.organization = organization.value;
+  if (organizationFilter.value) {
+    filters.organization = organizationFilter.value;
   }
   if (searchQueryDebounced.value) {
     filters.q = searchQueryDebounced.value;
   }
   if (isRestricted.value !== null) {
     filters.is_restricted = isRestricted.value.toString();
+  }
+  if(props.organization) {
+    filters.organization = props.organization;
   }
   if (page.value && page.value !== 1) {
     filters.page = page.value.toString();
@@ -195,7 +204,6 @@ watch(searchQuery, () => {
 })
 const search = async () => {
   dataservices.value = null
-
   abortController.value = new AbortController();
   try {
     const response = await apiv2.get(url.value, { signal: abortController.value.signal });
@@ -211,7 +219,7 @@ const search = async () => {
 const populateFromUrl = () => {
   const url = new URL(window.location.href);
 
-  organization.value = url.searchParams.get('organization');
+  organizationFilter.value = url.searchParams.get('organization');
   searchQuery.value = url.searchParams.get('q') || '';
 
   if (url.searchParams.get('is_restricted') === "true") {
