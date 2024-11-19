@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 6.0.3 (2024-11-19)
 
 - Remove duplicated /admin in admin dataservice route [#608](https://github.com/datagouv/udata-front/pull/608)
