@@ -87,7 +87,7 @@ class OrganizationDetailView(SearchView, OrgView, DetailView):
             abort(410)
 
         dataservices = Dataservice.objects(
-            organization=self.organization)
+            organization=self.organization).visible()
 
         datasets = Dataset.objects(
             organization=self.organization)
