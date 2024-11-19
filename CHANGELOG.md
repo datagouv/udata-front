@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 6.0.2 (2024-11-19)
 
 - Display correct business documentation url link [#595](https://github.com/datagouv/udata-front/pull/595)
 - Remove old display from api.gouv.fr in datasets pages [#597](https://github.com/datagouv/udata-front/pull/597)
