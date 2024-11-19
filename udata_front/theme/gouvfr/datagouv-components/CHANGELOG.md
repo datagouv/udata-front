@@ -2,6 +2,18 @@
 
 ## Current (in progress)
 
+- Display correct business documentation url link [#595](https://github.com/datagouv/udata-front/pull/595)
+- Deprecate `useUserAvatar` and rename it to `getUserAvatar` to better convey its usage [#596](https://github.com/datagouv/udata-front/pull/596)
+
+## 2.0.1 (2024-11-13)
+
+- Fix SSR, dependencies are now `externals` [#594](https://github.com/datagouv/udata-front/pull/594)
+
+## 2.0.0 (2024-11-13)
+
+> [!WARNING]
+> Markdown removal functions `truncate()` and `excerpt()` are removed
+
 - Replace remove-markdown with remark strip-markdown and use Suspense for descriptions [#591](https://github.com/datagouv/udata-front/pull/591)
 
 ## 1.6.0 (2024-11-07)

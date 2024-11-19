@@ -57,6 +57,7 @@ const dataservice: Dataservice = {
   deleted_at: null,
   description: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
   endpoint_description_url: null,
+  business_documentation_url: null,
   extras: {},
   format: "json",
   harvest: {},

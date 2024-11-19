@@ -2,6 +2,13 @@
 
 ## Current (in progress)
 
+- Display correct business documentation url link [#595](https://github.com/datagouv/udata-front/pull/595)
+- Remove old display from api.gouv.fr in datasets pages [#597](https://github.com/datagouv/udata-front/pull/597)
+- Change link to reuses search page instead of datasets search page in dataservice search page [#599](https://github.com/datagouv/udata-front/pull/599)
+-  Add edit button in dataservice public page [#602](https://github.com/datagouv/udata-front/pull/602) 
+
+## 6.0.1 (2024-11-13)
+
 - Fix missing closing <a> tag in contact form [#589](https://github.com/datagouv/udata-front/pull/589)
 - Fix breadcrumb link for dataservice page [#590](https://github.com/datagouv/udata-front/pull/590)
 - Remove truncate and excerpt helpers function and fix error with remove-markdown [#591](https://github.com/datagouv/udata-front/pull/591)

@@ -10,7 +10,8 @@
 </template>
 
 <script setup lang="ts">
-import useUserAvatar from "../../composables/useUserAvatar";
+import { computed } from "vue";
+import getUserAvatar from "../../helpers/getUserAvatar";
 import type { User } from "../../types/users";
 type Props = {
   rounded?: boolean;
@@ -21,5 +22,5 @@ const props = withDefaults(defineProps<Props>(), {
   rounded: false,
   size: 40,
 });
-const avatarUrl = useUserAvatar(props.user, props.size);
+const avatarUrl = computed(() => getUserAvatar(props.user, props.size));
 </script>
