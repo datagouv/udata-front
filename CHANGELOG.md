@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 6.0.2 (2024-11-19)
 
 - Display correct business documentation url link [#595](https://github.com/datagouv/udata-front/pull/595)
