@@ -52,6 +52,15 @@
             {{ $t('Visit') }}
           </a>
         </p>
+        <p class="fr-col-auto fr-ml-3v fr-m-0 z-2" v-else-if="ogcService">
+          <button
+            :id="resource.id + '-copy'"
+            :data-clipboard-text="resource.url"
+            class="fr-btn fr-btn--sm fr-btn--icon-left fr-icon-clipboard-line"
+          >
+            {{ t('Copy link') }}
+          </button>
+        </p>
         <p class="fr-col-auto fr-ml-3v fr-m-0" v-else>
           <a
             :href="resource.latest"
@@ -172,6 +181,8 @@ import { trackEvent } from "../../helpers/matomo";
 import CopyButton from "../CopyButton/CopyButton.vue";
 import { getResourceFormatIconSvg } from "../../helpers/resources";
 
+const OGC_SERVICES_FORMATS = ['ogc:wfs', 'ogc:wms', 'wfs', 'wms'];
+
 const props = withDefaults(defineProps<{
   datasetId: string,
   expandedOnMount?: boolean,
@@ -196,6 +207,8 @@ const hasPreview = computed(() => {
 })
 
 const format = computed(() => getResourceFormatIconSvg(props.resource) ? props.resource.format : t("File"))
+
+const ogcService = computed(() => OGC_SERVICES_FORMATS.includes(props.resource.format))
 
 const open = ref(props.expandedOnMount);
 const toggle = () => {
