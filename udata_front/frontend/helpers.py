@@ -328,7 +328,7 @@ def daterange_with_details(value):
         start = short_day(value.start)
         if value.end and value.start != value.end:
             end = short_day(value.end)
-    return _('%(start)s to %(end)s', start=start, end=end) if end else start
+    return _('%(start)s to %(end)s', start=start, end=end) if end else _('since %(start)s', start=start)
 
 
 @front.app_template_global()
@@ -350,7 +350,7 @@ def daterange(value, details=False):
         if delta.days > 365:
             end = value.end.strftime(date_format)
 
-    return '{start!s}–{end!s}'.format(start=start, end=end) if end else start
+    return '{start!s}–{end!s}'.format(start=start, end=end) if end else _('since %(start)s', start=start)
 
 
 def format_from_now(value):
