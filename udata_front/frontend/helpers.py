@@ -341,7 +341,6 @@ def daterange(value, details=False):
     if details:
         return daterange_with_details(value)
 
-
     date_format = '%Y'
     start = value.start.strftime(date_format)
 
