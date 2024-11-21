@@ -1,22 +1,17 @@
-import { ref, onMounted, toValue, type MaybeRefOrGetter } from 'vue';
+import { computed, toValue, type MaybeRefOrGetter } from 'vue';
 import { Organization } from '../../types/organizations';
-
-export const PUBLIC_SERVICE = "public-service";
+import { isType, hasBadge, PUBLIC_SERVICE, LOCAL_AUTHORITY } from './useOrganizationType';
 
 export const CERTIFIED = "certified";
 
-export default function useOrganizationCertified(organizationRef: MaybeRefOrGetter<Organization>) {
-  const organizationCertified = ref(false);
-  const isOrganizationCertified = () => {
+export default function useOrganizationCertified(organizationRef: MaybeRefOrGetter<Organization | null>) {
+  const organizationCertified = computed(() => {
     const organization = toValue(organizationRef);
     if(!organization) {
-      organizationCertified.value = false;
-      return;
-    }
-    organizationCertified.value = organization.badges.some(badge => badge.kind === PUBLIC_SERVICE) &&
-      organization.badges.some(badge => badge.kind === CERTIFIED);
-  };
-  onMounted(isOrganizationCertified);
+      return false;
+    };
+    return hasBadge(organization, CERTIFIED) && (isType(organization, PUBLIC_SERVICE) || isType(organization, LOCAL_AUTHORITY));
+  });
 
   return {
     organizationCertified,

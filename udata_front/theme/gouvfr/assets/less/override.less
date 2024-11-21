@@ -27,7 +27,7 @@ html {
     float: none;
 }
 
-:where(code, kbd, samp) {
+:where(code, kbd, samp), .monospace {
     font-family:
         ui-monospace,
         "Cascadia Mono", "Segoe UI Mono",
@@ -59,7 +59,7 @@ a:not([href]) {
     --ol-start: 0;
     --xl-block: 0;
     --li-bottom: 0;
-    --text-spacing: 1em 0;
+    --text-spacing: 0 0 1.5rem;
 }
 
 .fr-pagination {

@@ -3,6 +3,14 @@
 {% set banner_activated = config['BANNER_ACTIVATED'] %}
 {% set read_only_mode = config['READ_ONLY_MODE'] %}
 {% set next_url = url_for(request.endpoint, **request.view_args) if not request.routing_exception else url_for('site.home') %}
+{% set publish_items = [
+    {'icon': 'fr-icon-database-line', 'label': _('A dataset'), 'url': url_for('beta.datasets-new')},
+    {'icon': 'fr-icon-code-s-slash-line', 'label': _('An API'), 'url': url_for('beta.dataservices-new')},
+    {'icon': 'fr-icon-line-chart-line', 'label': _('A reuse'), 'url': url_for('beta.reuses-new')},
+    {'icon': 'fr-icon-server-line', 'label': _('A harvester'), 'url': url_for('admin.index', path='harvester/new/')},
+    {'icon': 'fr-icon-government-line', 'label': _('An organization'), 'url': url_for('beta.organizations-new')},
+] + ([{'icon': 'fr-icon-article-line', 'label': _('A post'), 'url': url_for('admin.index', path='post/new/')}] if current_user.sysadmin else [])
+%}
 
 <header role="banner" class="fr-header">
     {% if read_only_mode %}
@@ -92,10 +100,17 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a
-                                        href="{{ url_for('security.logout') }}"
-                                        class="fr-btn fr-icon-logout-box-r-line"
-                                    >
+                                    {% if session.get("id_token") %}
+                                        <a
+                                            href="{{ url_for('proconnect.logout_oauth') }}"
+                                            class="fr-btn fr-icon-logout-box-r-line"
+                                        >
+                                    {% else %}
+                                        <a
+                                            href="{{ url_for('security.logout') }}"
+                                            class="fr-btn fr-icon-logout-box-r-line"
+                                        >
+                                    {% endif %}
                                         {{ _('Logout') }}
                                     </a>
                                 </li>
@@ -193,7 +208,7 @@
                             <a
                                 class="fr-nav__link"
                                 href="{{item.url}}"
-                                {% if active %}aria-current="page" {% endif %}
+                                {% if active %}aria-current="page"{% endif %}
                                 target="_self"
                             >
                                 {{ item.label }}
@@ -201,6 +216,40 @@
                             {% endif %}
                         </li>
                     {% endfor %}
+                    <li
+                        class="fr-nav__item fr-ml-md-auto fr-hidden fr-unhidden-xl"
+                    >
+                        <button
+                            class="fr-nav__btn inline"
+                            aria-expanded="false"
+                            aria-controls="publish-on"
+                        >
+                            <span
+                                class="fr-icon-add-line"
+                                aria-hidden="true"
+                            ></span>
+                            {{ _('Publish on ') }}
+                            <span class="fr-text--bold">data.gouv</span><span class="fr-text--alt f-italic">.fr</span>
+                        </button>
+                        <div class="fr-collapse fr-menu" id="publish-on">
+                            <ul class="fr-menu__list">
+                                {% for item in publish_items %}
+                                <li>
+                                    <a
+                                        class="fr-nav__link"
+                                        href="{{item.url}}"
+                                    >
+                                        <span
+                                            class="{{item.icon}} fr-icon--sm align-[-1px]"
+                                            aria-hidden="true"
+                                        ></span>
+                                        {{ item.label }}
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </nav>
         </div>

@@ -1,6 +1,6 @@
 <template>
   <Teleport to="body">
-    <dialog v-bind="$attrs" :aria-labelledby="fileModalTitleId" :id="id" role="dialog" class="fr-modal" ref="modalRef">
+    <dialog v-bind="$attrs" :aria-labelledby="fileModalTitleId" :id="id" role="dialog" class="fr-modal" ref="modalRef" aria-modal="true">
       <div class="fr-container fr-container--fluid fr-container-md">
         <div class="fr-grid-row fr-grid-row--center">
           <div class="fr-col-12 fr-col-md-8">

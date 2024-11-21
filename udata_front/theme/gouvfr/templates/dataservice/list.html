@@ -1,0 +1,37 @@
+{% extends theme("layouts/1-column.html") %}
+
+{% block breadcrumb %}
+<li>
+    <a class="fr-breadcrumb__link" aria-current="page">
+        {{ _('Dataservices') }}
+    </a>
+</li>
+{% endblock %}
+
+{% set meta = {
+    'title': _('Dataservices'),
+    'description': _("%(site)s dataservices search", site=config['SITE_TITLE']),
+    'keywords': [_('search'), _('dataservices')],
+    'robots': 'noindex',
+} %}
+
+{% set bundle = 'search' %}
+
+{% block main_content %}
+<section
+    class="fr-container fr-container--search vuejs fr-mb-4w"
+>
+    <h1 class="fr-mb-1w">{{_('Dataservices')}}</h1>
+    <div class="fr-grid-row fr-grid-row--middle justify-between">
+        <div>{{_('Search among %(count)s dataservices on %(site)s',count=current_site.metrics['dataservices']|format_number, site=current_site.title)}}</div>
+        <a
+            href="{{ url_for('reuses.list') }}"
+            data-q
+            class="fr-link fr-text--sm fr-m-0"
+        >
+            {{ _('Search reuses') }}
+        </a>
+    </div>
+    <dataservices-search />
+</section>
+{% endblock %}

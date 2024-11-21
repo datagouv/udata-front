@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { Well } from "@etalab/data.gouv.fr-components";
+import { Well } from "@datagouv/components/ts";
 import { defineComponent } from 'vue';
 import ActionCard from '../../components/Form/ActionCard/ActionCard.vue';
 import Stepper from '../../components/Form/Stepper/Stepper.vue';

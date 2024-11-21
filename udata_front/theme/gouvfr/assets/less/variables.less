@@ -11,6 +11,8 @@
 @blue-400-hover: var(--blue-cumulus-sun-368-moon-732-hover);
 @blue-400-active: var(--blue-cumulus-sun-368-moon-732-active);
 @blue-450: #5b70b8;
+@blue-dsfr: var(--blue-france-sun-113-625);
+@blue-dsfr-active: var(--blue-france-sun-113-625-active);
 @orange-100: var(--orange-terre-battue-main-645);
 @warning-425: var(--warning-425-625);
 @grey-50: var(--grey-975-75);
@@ -24,7 +26,9 @@
 @grey-400-active: var(--grey-200-850-active);
 @grey-500: var(--grey-50-1000);
 @green-400: var(--green-emeraude-sun-425-moon-753);
+@error-950: var(--error-950-100);
 
+@background-contrast-grey-hover: var(--background-contrast-grey-hover);
 @background-elevated-grey: var(--background-elevated-grey);
 @background-elevated-grey-hover: var(--background-elevated-grey-hover);
 @background-elevated-grey-active: var(--background-elevated-grey-active);
@@ -90,7 +94,7 @@
 @colors: white, blue-100, blue-300, blue-400,
     blue-450, orange-100, warning-425, grey-50,
     grey-100, grey-125, grey-200, grey-300, grey-380, grey-400, grey-500,
-    green-400;
+    green-400, error-950;
 
 
 @font-family-base: "Marianne", "Arial", sans-serif;
@@ -129,4 +133,12 @@
         height: 0;
         display: none;
     }
-}
+};
+
+@dsfr-hover: {
+    background-image: var(--underline-img),var(--underline-img);
+    background-position: var(--underline-x) 100%, var(--underline-x) calc(100% - var(--underline-thickness));
+    background-repeat: no-repeat, no-repeat;
+    transition: background-size 0s;
+    background-size: var(--underline-hover-width) calc(var(--underline-thickness) * 2), var(--underline-idle-width) var(--underline-thickness);
+};

@@ -34,6 +34,15 @@
                     @change="(value: string) => handleFacetChange('organization', value)"
                     :isBlue="true"
                   />
+                  <MultiSelect
+                    :initialOptions="organizationTypesPromise"
+                    :placeholder="t('Organization type')"
+                    :searchPlaceholder="t('Search an organization type...')"
+                    :allOption="t('All types')"
+                    :values="facets.organization_badge"
+                    @change="(value: string) => handleFacetChange('organization_badge', value)"
+                    :isBlue="true"
+                  />
                 </div>
                 <div class="fr-col-12">
                   <MultiSelect
@@ -72,7 +81,7 @@
                 </div>
                 <div class="fr-col-12">
                   <SchemaSelect
-                    :values="facets.schema"
+                    :values="facets.schema || ''"
                     @change="(value: string) => handleFacetChange('schema', value)"
                     :isBlue="true"
                   />
@@ -156,58 +165,22 @@
           </div>
           <div v-else-if="results.length">
             <ul class="fr-mt-1w border-default-grey border-top relative z-2">
-              <li v-for="(result, key) in results" :key="result.id">
-                <DatasetCard :dataset="result" :style="zIndex(key)" />
+              <li v-for="result in results" :key="result.id">
+                <CardLg :dataset="result" />
               </li>
             </ul>
             <Pagination
-                v-if="totalResults > pageSize"
-                :page="currentPage"
-                :pageSize="pageSize"
-                :totalResults="totalResults"
-                @change="changePage"
-                class="fr-mt-2w"
-              />
-            <div v-else>
-              <ActionCard
-                :title="t(`Didn't find what you are looking for ?`)"
-                :icon="magnifyingGlassIcon"
-                type="primary"
-                >
-                <p class="fr-m-0 fr-text--sm">
-                  {{ t("Try to reset filters to widen your search.") }}<br/>
-                  {{ t("You can also give us more details with our feedback form.") }}
-                </p>
-                  <template v-slot:actions>
-                    <button @click="resetForm" class="fr-btn fr-btn--secondary">
-                      {{ t("Reset filters") }}
-                    </button>
-                    <a :href="data_search_feedback_form_url" class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line fr-ml-1w">
-                      {{ t("Tell us what you are looking for") }}
-                    </a>
-                  </template>
-                </ActionCard>
-            </div>
+              v-if="totalResults > pageSize"
+              :page="currentPage"
+              :pageSize="pageSize"
+              :totalResults="totalResults"
+              @change="changePage"
+              class="fr-mt-2w"
+            />
+            <NoSearchResults v-else @reset-filters="resetForm" />
           </div>
           <div v-else class="fr-mt-2w">
-            <ActionCard
-            :title="t('No result found for your search')"
-            :icon="franceWithMagnifyingGlassIcon"
-            type="primary"
-            >
-              <p class="fr-mt-1v fr-mb-3v">
-                {{ t("Try to reset filters to widen your search.") }}<br/>
-                {{ t("You can also give us more details with our feedback form.") }}
-              </p>
-              <template v-slot:actions>
-                <button @click="resetForm" class="fr-btn fr-btn--secondary">
-                  {{ t("Reset filters") }}
-                </button>
-                <a :href="data_search_feedback_form_url" class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-lightbulb-line fr-ml-1w">
-                  {{ t("Tell us what you are looking for") }}
-                </a>
-              </template>
-            </ActionCard>
+            <NoSearchResults @reset-filters="resetForm" />
           </div>
         </transition>
       </section>
@@ -216,26 +189,24 @@
 </template>
 
 <script setup lang="ts">
+import { getOrganizationTypes, OTHER, Pagination, USER, type Dataset } from "@datagouv/components/ts";
 import { ref, onMounted, computed } from "vue";
 import { useI18n } from 'vue-i18n';
 import axios, { type CancelTokenSource } from "axios";
-import { generateCancelToken, apiv2 } from "../../../plugins/api";
-import { useToast } from "../../../composables/useToast";
-import useSearchUrl from "../../../composables/useSearchUrl";
 import SearchInput from "../search-input.vue";
-import DatasetCard from "../../dataset/card-lg.vue";
+import CardLg from "../../dataset/card-lg.vue";
 import Loader from "../../dataset/loader.vue";
 import SchemaSelect from "../../SchemaSelect/SchemaSelect.vue";
-import { Pagination } from "@etalab/data.gouv.fr-components";
 import MultiSelect from "../../MultiSelect/MultiSelect.vue";
-import ActionCard from "../../Form/ActionCard/ActionCard.vue";
-import { data_search_feedback_form_url, search_autocomplete_debounce } from "../../../config";
-import { debounce } from "../../../composables/useDebouncedRef";
-import franceWithMagnifyingGlassIcon from "../../../../../templates/svg/illustrations/france_with_magnifying_glass.svg";
-import magnifyingGlassIcon from "../../../../../templates/svg/illustrations/magnifying_glass.svg";
-import type { Dataset } from "../../../types";
-import { getAllowedExtensionsUrl } from "../../../api/resources";
 import { getLicensesUrl } from "../../../api/licenses";
+import { getAllowedExtensionsUrl } from "../../../api/resources";
+import { search_autocomplete_debounce } from "../../../config";
+import { debounce } from "../../../composables/useDebouncedRef";
+import useSearchUrl from "../../../composables/useSearchUrl";
+import { useToast } from "../../../composables/useToast";
+import { generateCancelToken, apiv2 } from "../../../plugins/api";
+import NoSearchResults from "../../Form/NoSearchResults.vue";
+import { MultiSelectOption } from "../../../types";
 
 type Props = {
   downloadLink?: string,
@@ -257,6 +228,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 type Facets = {
   organization?: string;
+  organization_badge?: string;
   tag?: string;
   license?: string;
   format?: string;
@@ -275,7 +247,13 @@ const params = new URLSearchParams(url.search);
 
 const allowedExtensionsUrl = getAllowedExtensionsUrl();
 const licensesUrl = getLicensesUrl();
-
+const organizationTypes: Array<MultiSelectOption> = getOrganizationTypes()
+  .filter(type => type.type !== OTHER && type.type !== USER)
+  .map((type) => ({
+    label: type.label,
+    value: type.type,
+  }));
+const organizationTypesPromise = Promise.resolve(organizationTypes);
 /**
  * Search query
  */
@@ -295,10 +273,6 @@ const searchSort = ref('');
  * Search results
  */
 const results = ref<Array<Dataset>>([]);
-
-const zIndex = (key: number) => {
-  return {zIndex: results.value.length - key}
-};
 
 /**
  * Count of search results
@@ -349,6 +323,7 @@ const updateUrl = (save = SAVE_TO_HISTORY) => {
   const urlParams = { ...searchParameters.value };
   if(props.organization) {
     delete urlParams.organization;
+    delete urlParams.organization_badge;
   }
   url.search = new URLSearchParams(urlParams).toString();
   if (save) {
@@ -410,6 +385,7 @@ const handleFacetChange = (facet: keyof Facets, values: string) => {
   }
   if (props.organization) {
     facets.value.organization = props.organization;
+    facets.value.organization_badge = undefined;
   }
   currentPage.value = 1;
   search();
@@ -451,6 +427,7 @@ const resetFilters = () => {
 
 const resetForm = () => {
   reloadForm();
+  scrollToTop();
 };
 
 const reloadForm = ({q = '', ...params} = {}, saveToHistory = SAVE_TO_HISTORY) => {

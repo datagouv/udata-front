@@ -2,7 +2,7 @@
   <div class="bg-contrast-grey fr-mt-2w" :id="discussionUrl">
     <header class="fr-grid-row fr-grid-row--middle justify-between fr-py-2w fr-px-3w no-wrap wrap-md">
       <p class="fr-col-auto text-default-warning fr-text--bold fr-pr-2w fr-my-0" v-if="thread.closed">
-        <span>{{ $t("Discussion closed") }}</span>
+        <span>{{ t("Discussion closed") }}</span>
       </p>
       <h3 class="fr-col fr-mx-3v fr-mx-md-0 fr-h6 fr-mb-0">{{ thread.title }}</h3>
       <div class="fr-col-auto text-align-right">
@@ -12,7 +12,7 @@
           :data-clipboard-text="discussionExternalUrl"
           class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-right fr-icon-links-fill"
         >
-          {{$t('Copy discussion permalink')}}
+          {{ t('Copy discussion permalink') }}
         </button>
       </div>
     </header>
@@ -25,7 +25,9 @@
           :key="`comment-${thread.id}-${index}`"
         >
           <div class="fr-grid-row fr-grid-row--gutters">
-            <Avatar class="fr-col-auto" :user="comment.posted_by"/>
+            <div class="fr-col-auto">
+              <Avatar :user="comment.posted_by"/>
+            </div>
             <div class="fr-col">
               <p class="fr-my-0"><Author :author="comment.posted_by" :badge="false" /></p>
               <p class="fr-text--sm text-mention-grey fr-m-0">
@@ -46,7 +48,7 @@
         class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500"
         @click.prevent="collapsed = false"
       >
-        {{ $t("See {n} messages", currentDiscussion.length) }}
+        {{ t("See {n} messages", currentDiscussion.length) }}
       </button>
       </div>
     </div>
@@ -57,7 +59,7 @@
           v-if="!showForm"
           @click.stop="displayForm"
         >
-          {{ $t("Reply") }}
+          {{ t("Reply") }}
         </button>
         <ThreadReply
           :subjectId="thread.id"
@@ -67,22 +69,22 @@
         />
       </template>
       <div v-if="thread.closed" class="text-grey-380">
-        {{ $t("The discussion was closed by") }} &#32;
+        {{ t("The discussion was closed by") }} &#32;
         <strong class="fr-px-1v"><Author :author="thread.closed_by" /></strong>
-        {{ $t("on") }} {{ formatDate(thread.closed) }}
+        {{ t("on") }} {{ formatDate(thread.closed) }}
       </div>
     </footer>
   </div>
 </template>
 
 <script setup lang="ts">
-import Avatar from "../Avatar/Avatar.vue";
+import { Avatar, formatDate, ReadMore } from "@datagouv/components/ts";
+import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import Author from "../Author/Author.vue";
 import ThreadReply from "../ThreadReply/ThreadReply.vue";
 import MarkAsNoSpam from "../../MarkAsNoSpam/MarkAsNoSpam.vue";
 import { read_only_enabled } from "../../../config";
-import { formatDate, ReadMore } from "@etalab/data.gouv.fr-components";
-import { computed, ref } from "vue";
 import { auth } from "../../../plugins/auth";
 import { api } from "../../../plugins/api";
 import { Thread } from "../../../types";
@@ -90,6 +92,8 @@ import { Thread } from "../../../types";
 const props = defineProps<{
   thread: Thread,
 }>();
+
+const { t } = useI18n();
 
 const showForm = ref(false);
 

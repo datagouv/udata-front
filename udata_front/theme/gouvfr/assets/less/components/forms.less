@@ -24,6 +24,7 @@ We can use fieldset if needed to group inputs of the same kind.
 @import (less) "@gouvfr/dsfr/dist/component/input/input.css";
 @import (inline) "@gouvfr/dsfr/dist/component/select/select.css";
 @import (less) "@gouvfr/dsfr/dist/component/toggle/toggle.css";
+
 .form-container {
     background-color: @white;
     border: 1px solid @grey-100;
@@ -109,6 +110,13 @@ form.form {
     >label::before,
     >label::after {
         --text-active-blue-france: @blue-400;
+    }
+    >label::before {
+        word-wrap: normal;
+    }
+
+    >label::before {
+        word-wrap: normal;
     }
 
     @media @query-sm {

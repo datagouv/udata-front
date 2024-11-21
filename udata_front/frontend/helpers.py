@@ -17,6 +17,15 @@ from . import front
 
 from udata.core.dataset.apiv2 import dataset_fields
 from udata.core.dataset.models import Dataset
+from udata.core.dataservices.models import Dataservice
+from udata.core.organization.models import Organization
+from udata.core.organization.constants import (
+    ASSOCIATION,
+    COMPANY,
+    LOCAL_AUTHORITY,
+    PUBLIC_SERVICE,
+)
+from udata.core.reuse.models import Reuse
 from udata.models import db
 from udata.i18n import get_locale, format_date, format_timedelta, _, pgettext
 from udata.search.result import SearchResult
@@ -209,6 +218,20 @@ def owner_name_acronym(obj):
     elif hasattr(obj, 'owner') and obj.owner:
         return obj.owner.fullname
     return ''
+
+
+@front.app_template_global()
+def organization_type(org: Organization):
+    if org.local_authority:
+        return LOCAL_AUTHORITY
+    elif org.public_service:
+        return PUBLIC_SERVICE
+    elif org.association:
+        return ASSOCIATION
+    elif org.company:
+        return COMPANY
+    else:
+        return ""
 
 
 @front.app_template_global()
@@ -407,10 +430,26 @@ def to_dataset_api_format(dataset):
 
 
 @front.app_template_filter()
+def to_dataservice_api_format(dataservice):
+    return marshal(dataservice, Dataservice.__read_fields__)
+
+
+@front.app_template_filter()
+def to_reuse_api_format(reuse):
+    return marshal(reuse, Reuse.__read_fields__)
+
+
+@front.app_template_filter()
 @front.app_template_global()
 def format_number(number):
     '''A locale aware formatter.'''
     return format_decimal(number, locale=g.lang_code) if number else number
+
+
+@front.app_template_filter()
+def format_percentage(number):
+    '''A locale aware formatter.'''
+    return format_decimal(number, locale=g.lang_code, format='0.########') if number else number
 
 
 def json_ld_script_preprocessor(o):

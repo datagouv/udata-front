@@ -1,25 +1,37 @@
-import type { Owned } from "./owned";
+import type { Schema } from "../api/schemas";
+import { RESOURCE_TYPE } from "../helpers";
+import { Dataset } from "./datasets";
+import { Harvest } from "./harvest";
+import { Owned } from "./owned";
 
-type ResourceRest = {
+export type ResourceType = typeof RESOURCE_TYPE[number];
+
+export type RemoteResourceFileType = "remote";
+
+export type FileResourceFileType = "file";
+
+export type ResourceFileType = RemoteResourceFileType | FileResourceFileType;
+
+export type Resource = {
   id: string;
   title: string;
-  type: string;
+  type: ResourceType;
   checksum: { type: string; value: string; } | null;
   created_at: string;
   description: string | null;
   extras: Record<string, any>;
   metrics: { views: number; };
-  harvest: object | null;
-  filesize: number;
-  filetype: string;
+  harvest: Harvest;
+  filesize: number | null;
+  filetype: ResourceFileType;
   format: string;
   mime: string;
-  internal: object;
+  internal: Record<string, any>;
   last_modified: string;
   latest: string;
   preview_url: string;
-  schema: import("../api/schemas").Schema;
+  schema: Schema;
   url: string;
-}
+};
 
-export type Resource = Owned & ResourceRest;
+export type CommunityResource = Owned & Resource & { dataset: Omit<Dataset, "resources" | "community_resources"> };

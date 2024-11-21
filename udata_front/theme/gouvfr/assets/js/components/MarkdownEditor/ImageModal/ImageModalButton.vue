@@ -10,13 +10,13 @@
     <ImageModal
       :id="id"
       :multiple="true"
-      @send="onChange"
+      @sendModal="onChange"
     />
 </template>
 <script setup lang="ts">
 import ImageModal from './ImageModal.vue';
 import TooltipButton from "../EditorButton.vue";
-import { getRandomId } from '@etalab/data.gouv.fr-components';
+import { getRandomId } from '@datagouv/components/ts';
 import { useI18n } from 'vue-i18n';
 import type { ImageModalForm } from './ImageModal.vue';
 

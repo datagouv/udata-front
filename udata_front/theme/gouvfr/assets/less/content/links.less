@@ -52,8 +52,6 @@ You can use links from DSFR. It uses DSFR colors and conventions. It allows you 
 ```
 
 */
-@import (less) "@gouvfr/dsfr/dist/component/link/link.css";
-
 a {
 
     &:focus {
@@ -72,55 +70,8 @@ a {
         }
     }
 
-    &.no-icon-after::after {
+    &.no-icon-after::after, &.fr-link[target=_blank].no-icon-after::after {
         content: none;
-    }
-}
-
-.nav-link {
-    .fr-raw-link;
-    position: relative;
-    color: @grey-400;
-    font-weight: @font-weight-bold;
-    text-decoration: underline;
-    text-underline-position: under;
-    font-size: 1rem;
-    &:not([disabled]):not(:disabled):hover, &:not([disabled]):not(:disabled):hover .text-decoration-underline {
-        text-decoration-color: initial;
-        --hover-tint: transparent;
-    }
-
-    &, & .text-decoration-underline {
-        text-decoration-color: @grey-200;
-    }
-
-    &.text-decoration-none {
-        &:hover {
-            text-decoration: none;
-        }
-    }
-
-    &:not(.nav-link--no-icon) {
-        margin-left: 0.75em;
-        &::before {
-            position: absolute;
-            left: -0.75em;
-            width: 0.5em;
-            height: 100%;
-            text-decoration: none;
-            content: "\203A";
-        }
-    }
-}
-
-.nav-list {
-    margin: 0;
-    padding: 0;
-    font-size: @font-size-sm;
-
-    li {
-        margin-bottom: @spacing-xs;
-        margin-left: 0;
     }
 }
 
@@ -131,19 +82,4 @@ a {
 
 .fr-link.rounded-0 {
     .rounded-0;
-}
-
-.not-enlarged {
-    .relative;
-    z-index: 2;
-}
-
-.fr-enlarge-link .not-enlarged a {
-    background-image: var(--underline-img),var(--underline-img);
-    &:hover {
-        &:extend([href]);
-    }
-    &::before {
-        background: none;
-    }
 }

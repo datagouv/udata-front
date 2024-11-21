@@ -4,7 +4,7 @@
  * Lots of variables here are probably useless for the front-end
  */
 
-import type { User } from "@etalab/data.gouv.fr-components";
+import type { User } from "@datagouv/components/ts";
 import type { Primitive } from "@sentry/types";
 
 /**
@@ -113,11 +113,6 @@ export const admin_root = _meta("admin-root");
 export const auth_url = _meta("auth-url");
 
 /**
- * The schema catalog URL
- */
-export const schema_catalog_url = _meta("schema-catalog-url");
-
-/**
  * The schema documentation URL
  */
 export const schema_documentation_url = _meta("schema-documentation-url");
@@ -141,6 +136,21 @@ export const demo_server_url = _meta("demo-server-url");
  * The demo server name
  */
 export const demo_server_name = _meta("demo-server-name");
+
+/**
+ * The dataset publishing form
+ */
+export const dataset_publishing_form_url = _meta("dataset-publishing-form-url");
+
+/**
+ * The dataservice publishing form
+ */
+export const dataservice_publishing_form_url = _meta("dataservice-publishing-form-url");
+
+/**
+ * The reuse publishing form
+ */
+export const reuse_publishing_form_url = _meta("reuse-publishing-form-url");
 
 /**
  * The publishing form feedback URL
@@ -173,7 +183,7 @@ export const catalog_url = _meta("catalog-url");
 /**
  * The description length required to pass the quality score check
  */
-export const quality_description_length = _meta("quality-description-length");
+export const quality_description_length = parseInt(_meta("quality-description-length") ?? "0");
 
 /**
  * The data search form URL
@@ -201,6 +211,11 @@ export const organization_url = _meta("organization-url");
 export const reuse_url = _meta("reuse-url");
 
 /**
+ * The terms URL
+ */
+export const terms_url = _meta("terms-url");
+
+/**
  * Sentry configuration (as json) if available
  */
 const sentryEl = document.querySelector("meta[name=sentry]");
@@ -208,19 +223,25 @@ const sentryEl = document.querySelector("meta[name=sentry]");
 type SentryConfiguration = {
   dsn: string | undefined;
   release: string | undefined;
-  tags: Record<string, Primitive>
+  tags: Record<string, Primitive>;
+  environment: string;
+  sampleRate: number;
 }
 
 export const sentry: SentryConfiguration = {
   dsn: undefined,
   release: undefined,
   tags: {},
+  environment: "",
+  sampleRate: 0,
 };
 
 if (sentryEl instanceof HTMLElement) {
   sentry.dsn = sentryEl.getAttribute("content") || undefined;
   sentry.release = sentryEl.dataset.release || undefined;
   sentry.tags = JSON.parse(decodeURIComponent(sentryEl.dataset.tags || "{}"));
+  sentry.environment = sentryEl.dataset.environment || "";
+  sentry.sampleRate = parseFloat(sentryEl.dataset.sampleRate ?? "0");
 }
 
 /**
@@ -268,7 +289,7 @@ export const markdown = _jsonMeta("markdown-config");
 /**
  * License groups options configuration.
  */
-export const license_groups_options = _jsonMeta("license-groups-options");
+export const license_groups_options: Array<[string, Array<Record<string, string>>]> = _jsonMeta("license-groups-options");
 
 
 /**
@@ -286,49 +307,62 @@ export const search_autocomplete_enabled = _jsonMeta("search-autocomplete-enable
  */
 export const search_autocomplete_debounce = _jsonMeta("search-autocomplete-debounce");
 
-export const explorable_resources: Array<string> = _jsonMeta("explorable-resources") || [];
+export const tabular_api_url = _meta("tabular-api-url");
+
+export const tabular_page_size = parseInt(_meta("tabular-page-size") ?? "5");
+
+export const tabular_api_dataservice_id = _meta("tabular-api-dataservice-id");
+
+export const search_siren_url = _meta("search-siren-url");
 
 export const quality_metadata_backend_ignore: Array<string> = _jsonMeta("quality-metadata-backend-ignore") || [];
 
 export default {
-  user,
-  userIsAdmin,
-  debug,
-  lang,
-  title,
-  catalog_url,
-  csrf_token,
-  demo_server_url,
-  demo_server_name,
+  admin_root,
   api_doc_external_link,
-  guides_harvesting_url,
-  support_url,
-  data_search_feedback_form_url,
   api_root,
   api_2_root,
   api_specs,
-  theme_static,
-  static_root,
-  admin_root,
   auth_url,
+  catalog_url,
+  check_urls,
+  csrf_token,
+  data_search_feedback_form_url,
+  dataservice_publishing_form_url,
+  dataset_publishing_form_url,
+  debug,
+  demo_server_url,
+  demo_server_name,
+  guides_harvesting_url,
+  guides_quality_url,
+  hidpi,
+  is_delete_me_enabled,
+  is_territory_enabled,
+  lang,
+  license_groups_options,
+  markdown,
   publishing_form_feedback_url,
-  schema_catalog_url,
+  quality_description_length,
+  quality_metadata_backend_ignore,
+  read_only_enabled,
+  resources_default_page_size,
+  resources_min_count_to_show_search,
+  reuse_publishing_form_url,
   schema_documentation_url,
   schema_publishing_url,
   schema_validata_url,
-  guides_quality_url,
+  search_siren_url,
   sentry,
-  check_urls,
-  unchecked_types,
-  is_territory_enabled,
-  is_delete_me_enabled,
-  hidpi,
+  static_root,
+  support_url,
+  tabular_api_url,
+  tabular_page_size,
+  tabular_api_dataservice_id,
   tags,
-  resources_default_page_size,
-  resources_min_count_to_show_search,
-  markdown,
-  license_groups_options,
-  read_only_enabled,
-  quality_description_length,
-  quality_metadata_backend_ignore,
+  theme_static,
+  terms_url,
+  title,
+  unchecked_types,
+  user,
+  userIsAdmin,
 };

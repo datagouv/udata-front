@@ -14,17 +14,17 @@
         </a>
       </div>
     </div>
-    <div v-if="showSearch" class="fr-mt-3v">
+    <div v-if="showSearch" class="fr-my-3v">
       <SearchBar :eventName="RESOURCES_SEARCH" :type="type"></SearchBar>
     </div>
     <transition mode="out-in">
       <div v-if="loading">
         <ResourceAccordionLoader v-for="_i in pageSize" class="fr-mt-2w" />
       </div>
-      <div v-else>
+      <div class="flex flex-direction-column gap-10px" v-else>
         <p
           v-if="filteredResults"
-          class="fr-py-3v fr-my-0 fr-text--sm border-default-grey border-bottom"
+          class="fr-my-0 fr-text--sm border-bottom"
           role="status"
         >
           {{ t("{count} results", totalResults) }}
@@ -56,7 +56,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { onMounted, ref, computed } from 'vue';
-import { ResourceAccordion, ResourceAccordionLoader, type Resource, Pagination } from "@etalab/data.gouv.fr-components";
+import { ResourceAccordion, ResourceAccordionLoader, type Resource, Pagination, CommunityResource } from "@datagouv/components/ts";
 import SearchBar from "../../utils/search-bar.vue";
 import config from "../../../config";
 import { useToast } from "../../../composables/useToast";
@@ -65,8 +65,9 @@ import {
   bus,
   RESOURCES_SEARCH,
 } from "../../../plugins/eventbus";
-import useIdFromHash from '../../../composables/useIdFromHash';
-import { previousResourceUrlRegExp, resourceUrlRegExp } from '../../../helpers';
+import { getResourceIdFromHash } from '../../../helpers';
+import { useHash } from '../../../composables/useHash';
+import { PaginatedArray } from '../../../api/types';
 
 type Props = {
   canEdit?: boolean,
@@ -87,8 +88,10 @@ const props = withDefaults(defineProps<Props>(), {
 
 const { t } = useI18n();
 const { toast } = useToast();
-const { id: resourceIdFromHash } = useIdFromHash([resourceUrlRegExp, previousResourceUrlRegExp]);
 const currentPage = ref(1);
+
+const { hash } = useHash();
+const resourceIdFromHash = computed(() => getResourceIdFromHash(hash.value, props.type === "community"));
 
 const resources = ref<Array<Resource>>([]);
 const pageSize = config.resources_default_page_size;
@@ -115,7 +118,7 @@ const loadPage = (page = 1, scroll = false) => {
   if (scroll && top.value) {
     top.value.scrollIntoView({ behavior: "smooth" });
   }
-  let fetchData: Promise<import("../../../api/resources").ResourceApiWrapper>;
+  let fetchData: Promise<PaginatedArray<Resource | CommunityResource>>;
   if(isCommunityResources.value) {
     fetchData = fetchDatasetCommunityResources(props.datasetId, page, pageSize);
   } else {
@@ -173,3 +176,8 @@ const firstLoad = () => {
 
 onMounted(() => firstLoad());
 </script>
+<style scoped>
+.gap-10px {
+  gap: 10px;
+}
+</style>

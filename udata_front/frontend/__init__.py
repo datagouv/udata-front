@@ -7,6 +7,7 @@ from udata import entrypoints
 # included for retro-compatibility reasons (some plugins may import from here instead of udata)
 from udata.frontend import template_hook  # noqa
 from udata.i18n import I18nBlueprint
+from .markdown import init_app as init_markdown
 
 nav = Navigation()
 oauth = OAuth()
@@ -34,8 +35,8 @@ def _load_views(app, module):
         app.register_blueprint(blueprint)
 
 
-VIEWS = ['gouvfr', 'dataset', 'organization', 'follower', 'post',
-         'reuse', 'site', 'territories', 'topic', 'user', 'mcp', 'beta']
+VIEWS = ['gouvfr', 'dataset', 'dataservice', 'organization', 'follower', 'post',
+         'reuse', 'site', 'territories', 'topic', 'user', 'proconnect', 'beta']
 
 
 def init_app(app):
@@ -43,6 +44,7 @@ def init_app(app):
 
     nav.init_app(app)
     theme.init_app(app)
+    init_markdown(app)
 
     from . import helpers, error_handlers, menu_helpers, resource_helpers  # noqa
 
@@ -83,20 +85,21 @@ def init_app(app):
     if app.config.get('CAPTCHETAT_BASE_URL'):
         # Security override init
         from udata.auth import security
-        from udata_front.forms import ExtendedRegisterForm
+        from udata_front.forms import ExtendedRegisterForm, ExtendedForgotPasswordForm
         with app.app_context():
             security.forms['register_form'].cls = ExtendedRegisterForm
             security.forms['confirm_register_form'].cls = ExtendedRegisterForm
+            security.forms['forgot_password_form'].cls = ExtendedForgotPasswordForm
 
-    if app.config.get('MONCOMPETPRO_OPENID_CONF_URL'):
-        # MonComptPro SSO
+    if app.config.get('PROCONNECT_OPENID_CONF_URL'):
+        # ProConnect SSO
         oauth.init_app(app)
         oauth.register(
-            name='mcp',
-            client_id=app.config.get('MONCOMPETPRO_CLIENT_ID'),
-            client_secret=app.config.get('MONCOMPETPRO_CLIENT_SECRET'),
-            server_metadata_url=app.config.get('MONCOMPETPRO_OPENID_CONF_URL'),
+            name='proconnect',
+            client_id=app.config.get('PROCONNECT_CLIENT_ID'),
+            client_secret=app.config.get('PROCONNECT_CLIENT_SECRET'),
+            server_metadata_url=app.config.get('PROCONNECT_OPENID_CONF_URL'),
             client_kwargs={
-                'scope': app.config.get('MONCOMPETPRO_SCOPE')
+                'scope': app.config.get('PROCONNECT_SCOPE')
             }
         )

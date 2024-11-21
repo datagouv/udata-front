@@ -23,8 +23,7 @@
 <meta name="admin-root" content="{{ url_for('admin.index') }}" />
 <meta name="api-specs" content="{{ url_for('api.specs', _external=True) }}"/>
 <meta name="auth-url" content="{{ url_for('security.login') }}" />
-{% if config.SCHEMA_CATALOG_URL %}
-<meta name="schema-catalog-url" content="{{ config.SCHEMA_CATALOG_URL }}" />
+{% if config.SCHEMA_DOCUMENTATION_URL %}
 <meta name="schema-documentation-url" content="{{ config.SCHEMA_DOCUMENTATION_URL }}" />
 <meta name="schema-validata-url" content="{{ config.SCHEMA_GOUVFR_VALIDATA_URL }}" />
 <meta name="schema-publishing-url" content="{{ config.SCHEMA_PUBLISHING_URL }}" />
@@ -33,6 +32,9 @@
 <meta name="demo-server-url" content="{{ config.DEMO_SERVER_URL }}" />
 <meta name="demo-server-name" content="{{ config.DEMO_SERVER_NAME }}" />
 {% endif %}
+<meta name="dataset-publishing-form-url" content="{{ url_for('beta.datasets-new') }}" />
+<meta name="dataservice-publishing-form-url" content="{{ url_for('beta.dataservices-new') }}" />
+<meta name="reuse-publishing-form-url" content="{{ url_for('beta.reuses-new') }}" />
 {% if config.PUBLISHING_FORM_FEEDBACK_URL %}
 <meta name="publishing-form-feedback-url" content="{{ config.PUBLISHING_FORM_FEEDBACK_URL }}" />
 {% endif %}
@@ -56,11 +58,14 @@
 <meta name="dataset-url" content="{{ url_for('datasets.list') }}" />
 <meta name="organization-url" content="{{ url_for('organizations.list') }}" />
 <meta name="reuse-url" content="{{ url_for('reuses.list') }}" />
+<meta name="terms-url" content="{{ url_for('gouvfr.show_page', slug='legal/cgu') }}" />
 {{ i18n_alternate_links() }}
 {% if config.SENTRY_PUBLIC_DSN %}
-<meta name="sentry" content="{{config.SENTRY_PUBLIC_DSN}}"
-    data-release="{{config.SENTRY_RELEASE}}"
-    data-tags="{{config.SENTRY_TAGS|default({})|tojson|urlencode}}"
+<meta name="sentry" content="{{ config.SENTRY_PUBLIC_DSN }}"
+    data-release="{{ _('udata-front@{version}').format(version=package_version('udata-front')) }}"
+    data-tags="{{ config.SENTRY_TAGS|default({})|tojson|urlencode }}"
+    data-environment="{{ config.SITE_ID }}"
+    data-sample-rate="{{ config.SENTRY_SAMPLE_RATE }}"
 />
 {% endif %}
 {% if config.DATA_SEARCH_FEEDBACK_FORM_URL %}
@@ -109,4 +114,9 @@
 <script id="json_ld" type="application/ld+json">{{ json_ld|embedded_json_ld }}</script>
 {% endif %}
 
+{% if config.SEARCH_SIREN_URL %}
+<meta name="search-siren-url" content="{{ config.SEARCH_SIREN_URL }}" />
+{% endif %}
+
+<meta name="tabular-api-dataservice-id" content="{{config.TABULAR_API_DATASERVICE_ID}}" />
 {% endmacro %}

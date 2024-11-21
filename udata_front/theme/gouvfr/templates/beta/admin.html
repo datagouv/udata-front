@@ -5,14 +5,10 @@
     'description': _("%(site)s administration panel", site=config['SITE_TITLE']),
 } %}
 
-{% block extra_css %}
-<link href="{{ theme_static('assets/admin.css') }}" rel="stylesheet">
-{% endblock %}
-
 {% block body %}
     {% include theme("banners/feedback.html") %}
     {% include theme("header.html") with context %}
-    <main class="fr-col" role="main" id="admin"></main>
+    <main class="fr-col overflow-hidden" role="main" id="admin"></main>
 {% endblock %}
 
 {% block extra_js %}

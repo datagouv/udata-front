@@ -4,6 +4,144 @@
 
 - Nothing yet
 
+## 6.0.3 (2024-11-19)
+
+- Remove duplicated /admin in admin dataservice route [#608](https://github.com/datagouv/udata-front/pull/608)
+
+## 6.0.2 (2024-11-19)
+
+- Display correct business documentation url link [#595](https://github.com/datagouv/udata-front/pull/595)
+- Remove old display from api.gouv.fr in datasets pages [#597](https://github.com/datagouv/udata-front/pull/597)
+- Change link to reuses search page instead of datasets search page in dataservice search page [#599](https://github.com/datagouv/udata-front/pull/599)
+- Add edit button in dataservice public page [#602](https://github.com/datagouv/udata-front/pull/602)
+- Add dataservice search to org page [#601](https://github.com/datagouv/udata-front/pull/601)
+- Add energie as featured topic [#604](https://github.com/datagouv/udata-front/pull/604)
+
+## 6.0.1 (2024-11-13)
+
+- Fix missing closing <a> tag in contact form [#589](https://github.com/datagouv/udata-front/pull/589)
+- Fix breadcrumb link for dataservice page [#590](https://github.com/datagouv/udata-front/pull/590)
+- Remove truncate and excerpt helpers function and fix error with remove-markdown [#591](https://github.com/datagouv/udata-front/pull/591)
+- Add API menu item [#592](https://github.com/datagouv/udata-front/pull/592)
+- Add publish button to menu [#578](https://github.com/datagouv/udata-front/pull/578)
+
+
+## 6.0.0 (2024-11-07)
+
+- Add beta admin `dataservice` page [#558](https://github.com/datagouv/udata-front/pull/558)
+- Add Dataservice publishing form [#358](https://github.com/datagouv/udata-front/pull/559)
+- Add the me keyword to the rel attribute of the link to the user website [#571](https://github.com/datagouv/udata-front/pull/571)
+- Add dataservice access banner [#573](https://github.com/datagouv/udata-front/pull/573)
+- Migrate organization badges label to lowercase [#577](https://github.com/datagouv/udata-front/pull/577)
+- Use Dataservice search [#565](https://github.com/datagouv/udata-front/pull/565)
+- Add organization type filter to dataset search [#579](https://github.com/datagouv/udata-front/pull/579)
+- Fix Reuse tests [#580](https://github.com/datagouv/udata-front/pull/580)
+- Rename private to draft [#572](https://github.com/datagouv/udata-front/pull/572) [#583](https://github.com/datagouv/udata-front/pull/583)
+
+## 5.2.4 (2024-10-22)
+
+- Paginate datasets in dataservice display [#560](https://github.com/datagouv/udata-front/pull/560) [#568](https://github.com/datagouv/udata-front/pull/568)
+- Beta admin adjustments [#557](https://github.com/datagouv/udata-front/pull/557)
+- Fix schema tooltip position [#561](https://github.com/datagouv/udata-front/pull/561)
+- Add Parquet file url in download tab [#563](https://github.com/datagouv/udata-front/pull/563)
+
+## 5.2.3 (2024-10-08)
+
+- Adapt to discussion csv export refactor [#543](https://github.com/datagouv/udata-front/pull/543)
+- Add beta admin discussion page [#539](https://github.com/datagouv/udata-front/pull/539)
+- Add beta admin harvester page [#547](https://github.com/datagouv/udata-front/pull/547)
+- Update beta admin members page [#544](https://github.com/datagouv/udata-front/pull/544)
+- Fix Beta admin profile page [#546](https://github.com/datagouv/udata-front/pull/546)
+- Add beta admin user's datasets page [#549](https://github.com/datagouv/udata-front/pull/549)
+- Add beta admin user's reuses page [#550](https://github.com/datagouv/udata-front/pull/550)
+- Add beta admin community resources page [#551](https://github.com/datagouv/udata-front/pull/551)
+- Display contact point contact form [#555](https://github.com/datagouv/udata-front/pull/555)
+- Use created_at date in reuse card [#556](https://github.com/datagouv/udata-front/pull/556)
+
+## 5.2.2 (2024-09-23)
+
+- Fix translations not shown [#541](https://github.com/datagouv/udata-front/pull/541)
+
+## 5.2.1 (2024-09-23)
+
+- Add index page with search for dataservices [#516](https://github.com/datagouv/udata-front/pull/516)
+- Add beta admin datasets page [#371](https://github.com/etalab/udata-front/pull/371)
+- Redirect to forum on no search results /!\ set the `DATA_SEARCH_FEEDBACK_FORM_URL` to the forum [#526](https://github.com/datagouv/udata-front/pull/526)
+- Update proconnect button and link [#530](https://github.com/datagouv/udata-front/pull/530)
+- Fix scroll to resource [#531](https://github.com/datagouv/udata-front/pull/531)
+- Add beta admin reuses page [#527](https://github.com/datagouv/udata-front/pull/527) [#537](https://github.com/datagouv/udata-front/pull/537)
+- Fix schema filter [#532](https://github.com/datagouv/udata-front/pull/532)
+
+## 5.2.0 (2024-09-13)
+
+- add dataservices to dataset page [#476](https://github.com/datagouv/udata-front/pull/476)
+- show contact point in dataset and dataservice page [#479](https://github.com/datagouv/udata-front/pull/479)
+- add email, member since and last login at to org members table [#480](https://github.com/datagouv/udata-front/pull/480)
+- always show authorization_request_url if present (even on open API) [#481](https://github.com/datagouv/udata-front/pull/481)
+- Show organization type [#472](https://github.com/datagouv/udata-front/pull/472)
+- show permalink for community resources [#486](https://github.com/datagouv/udata-front/pull/486)
+- update sentry configuration [#498](https://github.com/datagouv/udata-front/pull/498)
+- update DSFR to v1.11 [#502](https://github.com/datagouv/udata-front/pull/502) [#506](https://github.com/datagouv/udata-front/pull/506)
+- Replace the "MonComptePro" SSO login button with a "ProConnect" button [#482](https://github.com/datagouv/udata-front/pull/482)
+  This needs the `PROCONNECT_*` related settings in `settings.py`, and an active [ProConnect flow](https://github.com/numerique-gouv/agentconnect-documentation/blob/main/doc_fs/implementation_technique.md)
+- update/remove code following the datagouv/components update [#507](https://github.com/datagouv/udata-front/pull/507) [#513](https://github.com/datagouv/udata-front/pull/513)
+- When disconnecting from udata, first disconnect from ProConnect if relevant [#504](https://github.com/datagouv/udata-front/pull/504)
+- update privacy policy [#510](https://github.com/datagouv/udata-front/pull/510)
+
+## 5.1.2 (2024-08-01)
+
+- update dependencies following updated dependencies on udata [#470](https://github.com/datagouv/udata-front/pull/470)
+- update `@datagouv/components` and `vue-i18n` and fix report translation [#471](https://github.com/datagouv/udata-front/pull/471)
+
+## 5.1.0 (2024-07-30)
+
+- Add organization edit to new admin [#412](https://github.com/datagouv/udata-front/pull/412)
+- Fix markdown tables and use DSFR ones [#432](https://github.com/datagouv/udata-front/pull/432)
+- Add organization selector to dataset publishing [#438](https://github.com/datagouv/udata-front/pull/438)
+- Add beta admin "add member" modale [#442](https://github.com/etalab/udata-front/pull/442)
+- Update dependencies from udata [#448](https://github.com/datagouv/udata-front/pull/448) [#454](https://github.com/datagouv/udata-front/pull/454)
+- Add new dataset card [#445](https://github.com/datagouv/udata-front/pull/445)
+- Fix tests for oembed CORS [#453](https://github.com/datagouv/udata-front/pull/453)
+- Add reports [#436](https://github.com/datagouv/udata-front/pull/436)
+- Switch to @datagouv/components [#439](https://github.com/datagouv/udata-front/pull/439)
+- Update translations [#458](https://github.com/datagouv/udata-front/pull/458)
+- use @datagouv/components v1.1.1 [#462](https://github.com/datagouv/udata-front/pull/462)
+
+## 5.0.1 (2024-06-12)
+
+- Fix dataset card link opening another tab [#426](https://github.com/datagouv/udata-front/pull/426)
+- Use roadmap page instead of deprecated nouveautes in footer [#429](https://github.com/datagouv/udata-front/pull/429)
+- Add elections as featured topic [#430](https://github.com/datagouv/udata-front/pull/430)
+
+## 5.0.0 (2024-06-07)
+
+- Switch MAAF backend to new sync harvest system [#409](https://github.com/datagouv/udata-front/pull/409)
+- Add dataservice show page [#420](https://github.com/datagouv/udata-front/pull/420) [#424](https://github.com/datagouv/udata-front/pull/424)
+- Improve design of the OrganizationSearch component [#410](https://github.com/datagouv/udata-front/pull/410)
+- Add button to remove user without sending email [#418](https://github.com/datagouv/udata-front/pull/418)
+- Fix display not showing in Multiselect for multi options [#416](https://github.com/datagouv/udata-front/pull/416)
+- Fix dataset publishing form [#417](https://github.com/datagouv/udata-front/pull/417)
+
+## 4.0.3 (2024-05-28)
+
+- Add Organization publishing form [#358](https://github.com/datagouv/udata-front/pull/358)
+- Fix an error that blocks datasets search filters reset [#402](https://github.com/datagouv/udata-front/pull/402)
+- Componentize dataset card [#397](https://github.com/datagouv/udata-front/pull/397)
+- Use udata schema endpoint [#336](https://github.com/etalab/udata-front/pull/336)
+
+## 4.0.2 (2024-04-26)
+
+- Update footer [#405](https://github.com/datagouv/udata-front/pull/405)
+
+## 4.0.1 (2024-04-26)
+
+- Update footer
+
+## 4.0.0 (2024-04-23)
+
+- **breaking change** Migrate to Python 3.11 [#376](https://github.com/etalab/udata-front/pull/376)
+- Fix api urls locked on dev.data.gouv.fr [#401](https://github.com/datagouv/udata-front/pull/401)
+
 ## 3.5.5 (2024-04-16)
 
 - Add beta admin member page [#374](https://github.com/etalab/udata-front/pull/374)
@@ -20,6 +158,8 @@
 - Fix release CI [#380](https://github.com/etalab/udata-front/pull/380) [#384](https://github.com/etalab/udata-front/pull/384)
 - Update constants imports from `.models` to `.constants` [#375](https://github.com/etalab/udata-front/pull/375)
 - Fix rename of VisibleDatasetFactory [#387](https://github.com/etalab/udata-front/pull/387)
+- Add beta admin member page [#374](https://github.com/etalab/udata-front/pull/374)
+- Add Administration Panel to datagouv-components [#378] (https://github.com/etalab/udata-front/pull/378)
 
 ## 3.5.4 (2024-03-20)
 

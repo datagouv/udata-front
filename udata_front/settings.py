@@ -5,7 +5,6 @@ Default settings for udata-front
 # TODO: move this back to an extension
 RESOURCES_SCHEMAGOUVFR_ENABLED = True
 SCHEMA_GOUVFR_VALIDATA_URL = 'https://validata.etalab.studio'
-SCHEMA_CATALOG_URL = 'https://schema.data.gouv.fr/schemas/schemas.json'
 SCHEMA_DOCUMENTATION_URL = 'https://schema.data.gouv.fr/'
 SCHEMA_PUBLISHING_URL = 'https://publier.etalab.studio/fr'
 
@@ -35,10 +34,6 @@ PUBLISHING_FORM_FEEDBACK_URL = ''
 PAGES_GH_REPO_NAME = 'etalab/datagouvfr-pages'
 PAGES_REPO_BRANCH = 'master'
 
-# api.gouv.fr
-APIGOUVFR_URL = 'https://api.gouv.fr/api/v1/apis'
-APIGOUVFR_ALLOW_OPENNESS = ['open', 'semi_open']
-
 # catalogue.data.gouv.fr
 CATALOG_URL = 'https://catalogue.data.gouv.fr/'
 
@@ -64,19 +59,22 @@ CAPTCHETAT_CLIENT_ID = None
 CAPTCHETAT_CLIENT_SECRET = None
 CAPTCHETAT_TOKEN_CACHE_KEY = 'captchetat-bearer-token'
 
-# MonComptePro
+# ProConnect
 
-# You can activate MonComptePro SSO, a moncomptepro.beta.gouv.fr login integration
-MONCOMPETPRO_OPENID_CONF_URL = None
-MONCOMPETPRO_SCOPE = None
-MONCOMPETPRO_CLIENT_ID = None
-MONCOMPETPRO_CLIENT_SECRET = None
+# You can activate ProConnect SSO, a https://proconnect.gouv.fr/ login integration
+PROCONNECT_OPENID_CONF_URL = None
+PROCONNECT_SCOPE = None
+PROCONNECT_CLIENT_ID = None
+PROCONNECT_CLIENT_SECRET = None
 
 # Newsletter
 NEWSLETTER_SUBSCRIPTION_URL = 'https://f.info.data.gouv.fr/f/lp/infolettre-data-gouv-fr-landing-page/lk3q01y6'  # noqa
 
 # Metrics API
 METRICS_API = None
+
+# recherche-entreprises.api.gouv.fr
+SEARCH_SIREN_URL = None
 
 # Metadata quality is hidden for datasets harvested from these backends
 QUALITY_METADATA_BACKEND_IGNORE = []

@@ -85,10 +85,10 @@
 </template>
 
 <script setup lang="ts">
-import { Well } from "@etalab/data.gouv.fr-components";
+import { Well } from "@datagouv/components/ts";
 import { MaybeRefOrGetter, onMounted, ref, watch, watchEffect } from "vue";
 import { read_only_enabled } from "../../config";
-import { Pagination } from "@etalab/data.gouv.fr-components";
+import { Pagination } from "@datagouv/components/ts";
 import ThreadCreate from "./ThreadCreate/ThreadCreate.vue";
 import Thread from "./Thread/Thread.vue";
 import Loader from "./Thread/Loader.vue";

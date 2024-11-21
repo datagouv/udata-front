@@ -1,8 +1,7 @@
-import { CERTIFIED, PUBLIC_SERVICE, type Organization, type User } from '@etalab/data.gouv.fr-components';
+import { CERTIFIED, PUBLIC_SERVICE, type Dataset, type Organization, type User } from '@datagouv/components/ts';
 import CardLG from './card-lg.vue';
 import { withActions } from '@storybook/addon-actions/decorator';
 import { Meta, StoryObj } from '@storybook/vue3';
-import { Dataset } from '../../types';
 
 const meta = {
   title: 'Components/Dataset Card/Card Large',
@@ -32,7 +31,7 @@ const owner: User = {
 
 const args: CardLGProps = {
   dataset: {
-    id: "someId",
+    id: "5de8f397634f4164071119c5",
     acronym: "",
     archived: false,
     description: "Some description",
@@ -45,7 +44,7 @@ const args: CardLGProps = {
       dataset_description_quality: true,
       has_open_format: true,
       has_resources: true,
-      license: true,
+      license: false,
       resources_documentation: true,
       score: 1,
       spatial: true,
@@ -56,7 +55,7 @@ const args: CardLGProps = {
     title: "My new dataset",
     resources: [],
     community_resources: [],
-    created_at: "2014-12-12T12:01:06.889000+00:0",
+    created_at: "2014-12-12T12:01:06.889000+00:00",
     last_modified: "2020-11-03T09:16:55.837000+00:00",
     uri: "https://www.data.gouv.fr",
     slug: "data-gouv-fr",
@@ -71,17 +70,26 @@ const args: CardLGProps = {
       discussions: 20,
       reuses: 100,
       followers: 500,
-      views: 50000
+      views: 50000,
+      resources_downloads: 150,
     },
+    extras: {},
+    harvest: {},
+    badges: [],
   },
   showMetrics: true,
 };
 
+const updateLessThanAMonth = new Date();
+const twoDayAgoInMs = 2 * 24 * 60  * 60 * 1000;
+updateLessThanAMonth.setHours(1, 0, 0, 0);
+updateLessThanAMonth.setTime(updateLessThanAMonth.getTime() - twoDayAgoInMs);
+
 const updateLastMonth = new Date();
-updateLastMonth.setMonth(updateLastMonth.getMonth() - 1, 20);
+updateLastMonth.setMonth(updateLastMonth.getMonth() - 1, updateLastMonth.getDate());
 
 const updateLastYear = new Date();
-updateLastYear.setFullYear(updateLastYear.getFullYear() - 1);
+updateLastYear.setFullYear(updateLastYear.getFullYear() - 1, 0, 1);
 
 const ownerWithAvatar: User = {
   ...owner,
@@ -232,6 +240,27 @@ export const CardLGWithDescriptionAndCertifiedOrganization: StoryObj<typeof meta
         Les différentes couches d'information géographique sont constituées par juxtaposition des feuilles, sans correction.`
       },
     }
+};
+
+/**
+ * #### Card Large updated less than a month with an organization logo
+ * This is how a dataset owned by an organization is shown.
+ */
+export const CardLGUpdatedLessThanAMonthWithOrganizationLogo: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { CardLG },
+    setup() {
+      return { args };
+    },
+    template: '<CardLG v-bind="args"/>',
+  }),
+  args: {
+    ...argsWithOrganizationWithLogo,
+    dataset: {
+      ...argsWithOrganizationWithLogo.dataset,
+      last_update: updateLessThanAMonth.toISOString()
+    }
+  },
 };
 
 /**

@@ -2,12 +2,12 @@
     <img src="https://user-images.githubusercontent.com/60264344/134811326-27109632-f653-4025-9786-482824635994.png">
 </p>
 <p align="center">
-    <i>Udata customizations for data.gouv.fr made by Etalab</i>
+    <i>Add a front-end to udata</i>
     <br>
     <br>
-    <img src="https://img.shields.io/github/contributors/etalab/udata-front">
-    <img src="https://img.shields.io/github/license/etalab/udata-front">
-    <img src="https://img.shields.io/github/commit-activity/m/etalab/udata-front">
+    <img src="https://img.shields.io/github/contributors/datagouv/udata-front">
+    <img src="https://img.shields.io/github/license/datagouv/udata-front">
+    <img src="https://img.shields.io/github/commit-activity/m/datagouv/udata-front">
 </p>
 
 - [Notes on this repo](#notes-on-this-repo)
@@ -21,6 +21,7 @@
     - [☕ Javascript development](#-javascript-development)
       - [🏗 Installing the javascript dependencies](#-installing-the-javascript-dependencies)
       - [💪 Starting the javascript development server](#-starting-the-javascript-development-server)
+      - [📦 @datagouv/components](#-datagouvcomponents)
     - [👀 Other dev commands](#-other-dev-commands)
   - [🏰 General architecture](#-general-architecture)
     - [🚜 Jinja2 templates](#-jinja2-templates)
@@ -112,6 +113,12 @@ pip install -e . -r requirements/test.pip -r requirements/develop.pip
 
 > NB: the `udata.(in|pip)` files are used by the CI to stay in sync with `udata` requirements. You shouldn't need to tinker with them on your local environment, but they might be updated by the CI when you make a Pull Request.
 
+> WARNING: if you experience requirements conflicts, and some dependencies were changed on [udata](https://github.com/opendatateam/udata), the `udata.pip` might need to be manually recompiled locally:
+
+  ```shell
+  pip-compile requirements/udata.in --output-file=requirements/udata.pip
+  ```
+
 ##### 🚩 Starting the python development server
 
 Simply run the udata project with udata-front loaded as a plugin:
@@ -160,6 +167,10 @@ npm start
 
 This will start a development server that will listen to changes and automatically rebuild the project when needed.
 Note that a webserver is started by Vite (default port is `1234`), however we will not be using it as our CSS and JS files will be served by Jinja instead. More on that later.
+
+##### 📦 @datagouv/components
+
+We are using our own package of components. Their sources are in this repository in `udata_front/theme/gouvfr/datagouv-components`. They are included in udata-front without any build or release required. They are also available [on NPM](https://www.npmjs.com/package/@datagouv/components) for others to use.
 
 #### 👀 Other dev commands
 
@@ -223,15 +234,15 @@ it's best if we can avoid having too much specific styling, but sometimes you ju
 ### 🛠️ Build tools
 
 This project uses [Vite](https://vitejs.dev/) to build and transform our source files into nice bundles for browsers.
-Its config can be found in the `vite.config.js` file.
+Its config can be found in the `vite.config.ts` file.
 
 Vile does multiple custom things in this project :
 
-- Transform the `.js` files into modern Javascript for browsers
+- Transform the `.ts` files into modern Javascript for browsers
 - Transform the `less` files into modern CSS using `PostCSS`
-- Copy the static assets when they change (config is in the `vite.config.js`)
+- Copy the static assets when they change (config is in the `vite.config.ts`)
 
-Vite uses package.json version to name files and udata-front uses its version to load the correct one.
+Vite uses `udata_front.egg-info/PKG-INFO` version to name files and udata-front uses its version to load the correct one.
 If you're udata-front version doesn't match the one loaded in the theme, you may have to do a `pip install -e .` to update the package information.
 
 ### 🏭 Javascript architecture
@@ -240,7 +251,7 @@ If you're udata-front version doesn't match the one loaded in the theme, you may
 
 We are using the full build of VueJS that includes the compiler in order to compile templates directly in the browser.
 
-There is a single VueJS app (in `index.js`) that contains every component and plugins.
+There is a single VueJS app (in `index.ts`) that contains every component and plugins.
 However, this app is mounted multiple times, on each DOM node containing a `vuejs` class.
 
 This allows us to mount the app only where it's needed, because each subsequent mount is more DOM to compile and thus has an impact on performance. Moreover, mounting to the smallest possible HTML allows us to prevent accidental XSS vulnerability by forbidding users to compile their content with the Vue engine.
@@ -260,7 +271,27 @@ Writing tests is very easy thanks to its syntax :
   });
 ```
 
-Then, tests can be run using the following command :
+To run the Cypress tests, you need a few things:
+
+- A `cypress/udata-front-e2e.cfg` file:
+
+```shell
+cp cypress/udata-front-e2e.cfg.example  cypress/udata-front-e2e.cfg
+```
+
+- Some loaded fixtures needed by the end-to-end tests:
+
+```shell
+npm run prepare-e2e
+```
+
+- A local webserver: in another terminal (still in the same Python virtual environment), run the following command in the same Python virtual environment as `udata`:
+
+```shell
+npm run serve-e2e
+```
+
+Then, tests can be run using the following command:
 
 ```shell
 npm run test

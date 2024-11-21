@@ -44,6 +44,7 @@ FEED_THUMBNAIL_MIMES = ('image/jpeg', 'image/png', 'image/webp')
 
 gouvfr_menu = nav.Bar('gouvfr_menu', [
     nav.Item(_('Data'), 'datasets.list'),
+    nav.Item(_('API'), 'dataservices.list'),
     nav.Item(_('Reuses'), 'reuses.list'),
     nav.Item(_('Organizations'), 'organizations.list'),
     nav.Item(_('Getting started on data.gouv.fr'), None, items=[
@@ -99,7 +100,7 @@ nav.Bar('gouvfr_opendata', opendata_links)
 
 platform_links = [
     nav.Item(_('Guides'), None, url=current_app.config.get('GUIDES_URL', '#')),
-    nav.Item(_('Roadmap and news'), 'gouvfr.show_page', args={'slug': 'nouveautes'}),
+    nav.Item(_('Roadmap and news'), 'gouvfr.show_page', args={'slug': 'roadmap'}),
     nav.Item(_('Contact us'), None, url='https://support.data.gouv.fr'),
     nav.Item(_('Give us your feedback'), None,
              url=current_app.config.get('FEEDBACK_FORM_URL', '#')),
@@ -121,8 +122,9 @@ nav.Bar('gouvfr_resources', resources_links)
 
 footer_links = [
     nav.Item(_('Licences'), 'gouvfr.show_page', args={'slug': 'legal/licences'}),
-    nav.Item(_('Terms of use'), 'site.terms'),
+    nav.Item(_('Terms of use'), 'gouvfr.show_page', args={'slug': 'legal/cgu'}),
     nav.Item(_('Tracking and privacy'), 'gouvfr.suivi'),
+    nav.Item(_('Legal notice'), 'gouvfr.show_page', args={'slug': 'legal/legal-notice'}),
     nav.Item(_('Accessibility: partially compliant'),
              'gouvfr.show_page', args={'slug': 'legal/accessibility'}),
 ]
@@ -131,7 +133,7 @@ nav.Bar('gouvfr_footer', footer_links)
 
 NETWORK_LINKS = [
     ('legifrance.gouv.fr', 'https://legifrance.gouv.fr'),
-    ('gouvernement.fr', 'https://www.gouvernement.fr'),
+    ('info.gouv.fr', 'https://www.info.gouv.fr'),
     ('service-public.fr', 'https://www.service-public.fr'),
 ]
 

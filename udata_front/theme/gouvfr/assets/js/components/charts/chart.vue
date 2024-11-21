@@ -15,7 +15,7 @@ import { Chart as ChartJS } from 'chart.js/auto';
 import { defineComponent, onMounted } from 'vue';
 import useUid from '../../composables/useUid';
 import { lang } from '../../config';
-import { formatDate } from '@etalab/data.gouv.fr-components';
+import { formatDate } from '@datagouv/components/ts';
 
 export default defineComponent({
   props: {

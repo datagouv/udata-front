@@ -1,13 +1,14 @@
 {% extends theme('layouts/1-column.html') %}
+{% from theme('macros/banner_info.html') import banner_info %}
+{% from theme('macros/banner_warning.html') import banner_warning %}
+{% from theme('macros/breadcrumb.html') import breadcrumb with context %}
 {% from theme('macros/dataset_information.html') import information_col, information_section, information_accordion %}
 {% from theme('macros/follow.html') import follow_btn with context %}
 {% from theme('macros/integrate.html') import integrate_btn with context %}
-{% from theme('macros/paginator.html') import paginator with context %}
-{% from theme('macros/breadcrumb.html') import breadcrumb with context %}
-{% from theme('macros/banner_info.html') import banner_info %}
 {% from theme('macros/leaflet.html') import leaflet_map %}
-{% from theme('macros/banner_warning.html') import banner_warning %}
+{% from theme('macros/paginator.html') import paginator with context %}
 {% from theme('macros/quality_score_with_warning_below.html') import quality_score_with_warning_below %}
+{% from theme('macros/report.html') import report_btn with context %}
 
 ## FIXME: remove inspire:indentifier robots condition when geo.data.gouv.fr is shutdown
 {% set meta = {
@@ -49,6 +50,7 @@
 
 {% block toolbar %}
 {{ follow_btn(dataset) }}
+{{ report_btn(dataset) }}
 {{ hook('dataset.display.explore-button') }}
 {% if can_edit %}
     <div class="fr-col-auto fr-ml-3v">
@@ -73,7 +75,7 @@
             {% if dataset.private %}
                 <div class="fr-col-auto fr-mr-1w">
                     <p class="fr-tag"
-                        title="{{ _('This dataset is private and will not be visible by other users') }}">{{ _('Private') }}
+                        title="{{ _('This dataset is a draft and will not be visible by other users') }}">{{ _('Draft') }}
                     </p>
                 </div>
             {% endif %}
@@ -123,20 +125,21 @@
                 {% with organization=dataset.owner, producer_type='owner' %}
                 {% include theme('organization/producer-name-with-logo.html') %}
                 {% endwith %}
-                <p class="well well-grey-100 fr-py-3v fr-my-3v">
-                    {% trans
-                            date=dataset.created_at|dateformat(format='long'),
-                            update=dataset.last_modified|dateformat(format='long'),
-                            author=dataset.owner.fullname
-                        %}This dataset has been published on the initiative and under the responsibility of
-                    {{author}}<br />Published on {{date}} and updated on {{update}}{% endtrans %}
+                <p class="well well-grey-100 fr-text--regular fr-py-3v fr-my-3v">
+                    {{
+                        _("This dataset has been published on the initiative and under the responsibility of {author}.")
+                        .format(author=dataset.owner.fullname)
+                    }}
                 </p>
             {% endif %}
+            {% with contact_point=dataset.contact_point %}
+                {% include theme('contact_point.html') %}
+            {% endwith %}
             {% if external_source(dataset) %}
                 <div class="fr-my-3v fr-text--sm">
                     {{ banner_info(
                         "fr-icon-external-link-line",
-                        _("This dataset come from an external portal.&nbsp;<a href='{external_source}'>View the original source.</a>")
+                        _("This dataset come from an external portal.&nbsp;<a href='{external_source}' rel='ugc nofollow noopener'>View the original source.</a>")
                         .format(external_source=external_source(dataset))
                     )}}
                 </div>
@@ -186,11 +189,7 @@
                     class="fr-tabs__tab"
                     tabindex="0"
                     role="tab"
-                    {% if is_current_tab(request, "reuses_page") %}
-                        aria-selected="false"
-                    {% else %}
-                        aria-selected="true"
-                    {% endif %}
+                    aria-selected="false"
                     aria-controls="resources-panel"
                     data-update-url="resources"
                     data-previous-url="resource-"
@@ -205,16 +204,12 @@
                     class="fr-tabs__tab"
                     tabindex="-1"
                     role="tab"
-                    {% if is_current_tab(request, "reuses_page") %}
-                        aria-selected="true"
-                    {% else %}
-                        aria-selected="false"
-                    {% endif %}
+                    aria-selected="false"
                     aria-controls="community-reuses-panel"
                     data-update-url="community-reuses"
                 >
-                    {{ _('Reuses') }}
-                    <sup>{{ total_reuses }}</sup>
+                    {{ _('Reuses and API') }}
+                    <sup>{{ total_reuses + total_dataservices }}</sup>
                 </button>
             </li>
             <li role="presentation">
@@ -386,6 +381,19 @@
         tabindex="0"
     >
         <div class="fr-container">
+            {% if dataservices|length %}
+                <div class="fr-grid-row fr-mb-3v">
+                <h2 class="subtitle subtitle--uppercase fr-col">{{ ngettext('%(num)d API', '%(num)d APIs', total_dataservices) }}</h2>
+            </div>
+            <div>
+                {% for dataservice in dataservices %}
+                    {% include theme('dataservice/card.html') %}
+                {% endfor %}
+            </div>
+            {{ paginator(dataservices, arg_name='dataservices_page', url='#/community-reuses') }}
+            {% endif %}
+        </div>
+        <div class="fr-container">
             {{ hook('dataset.display.after-reuses') }}
             {% if reuses|length %}
                 <div class="fr-grid-row fr-mb-3v">
@@ -406,7 +414,7 @@
                 </div>
                 {% endfor %}
             </div>
-            {{ paginator(reuses, arg_name='reuses_page', url='#community-reuses') }}
+            {{ paginator(reuses, arg_name='reuses_page', url='#/community-reuses') }}
             {% else %}
                 <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-mt-5w">
                     {% include theme('svg/blank_state/reuse.svg') %}
@@ -471,6 +479,12 @@
                     )}}
                 </div>
                 <div class="resource-list vuejs">
+                    <dataset-resource-from-hash
+                        dataset-id="{{ dataset.id }}"
+                        type-label="{{ type_label }}"
+                        :can-edit="{{ can_edit.can()|tojson|safe }}"
+                        community-resource
+                    ></dataset-resource-from-hash>
                     <dataset-resources
                         dataset-id="{{ dataset.id }}"
                         type="community"
@@ -549,7 +563,7 @@
                 {% endcall %}
                 {% if external_source(dataset) %}
                 {% call() information_col(_('Remote source'), 'text-overflow-ellipsis') %}
-                    <a rel="nofollow" href="{{ external_source(dataset) }}">{{external_source(dataset)}}</a>
+                    <a rel="ugc nofollow noopener" href="{{ external_source(dataset) }}">{{external_source(dataset)}}</a>
                 {% endcall %}
                 {% endif %}
             </div>

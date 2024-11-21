@@ -1,7 +1,8 @@
 {% extends theme('layouts/1-column.html') %}
+{% from theme('macros/breadcrumb.html') import breadcrumb with context %}
 {% from theme('macros/follow.html') import follow_btn with context %}
 {% from theme('macros/integrate.html') import integrate_btn with context %}
-{% from theme('macros/breadcrumb.html') import breadcrumb with context %}
+{% from theme('macros/report.html') import report_btn with context %}
 
 {% set meta = {
     'title': reuse.title,
@@ -46,9 +47,10 @@
 
 {% block toolbar %}
 {{ follow_btn(reuse) }}
+{{ report_btn(reuse) }}
 <a
     href="{{ reuse.url }}"
-    rel="nofollow"
+    rel="ugc nofollow noopener"
     class="fr-btn fr-btn--sm fr-btn--icon-right fr-icon-external-link-line fr-ml-3v"
 >
     {{ _('See the reuse') }}
@@ -76,7 +78,7 @@
             {% if reuse.private %}
                 <div class="fr-col-auto fr-mr-1w">
                     <p class="fr-tag"
-                        title="{{ _('This reuse is private and will not be visible by other users') }}">{{ _('Private') }}
+                        title="{{ _('This reuse is a draft and will not be visible by other users') }}">{{ _('Draft') }}
                     </p>
                 </div>
             {% endif %}
@@ -100,7 +102,7 @@
             <div class="fr-grid-row fr-grid-row--center">
                 <a
                     href="{{ reuse.url }}"
-                    rel="nofollow"
+                    rel="ugc nofollow noopener"
                     class="fr-btn fr-btn--sm fr-icon-external-link-line fr-btn--icon-right fr-mt-2w"
                 >
                     {{ _('See the reuse') }}

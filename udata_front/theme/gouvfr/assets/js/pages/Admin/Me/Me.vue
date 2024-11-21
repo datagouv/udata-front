@@ -1,5 +1,5 @@
 <template>
-  <div class="fr-container--fluid">
+  <div>
     <Breadcrumb>
       <li>
         <router-link class="fr-breadcrumb__link" to="/">
@@ -20,14 +20,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
 import { useI18n } from "vue-i18n";
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb.vue";
-import type { Me } from "../../../types";
-import { fetchMe } from "../../../api/me";
+import { useMe } from "../../../api/me";
 
 const { t } = useI18n();
-const me = ref<Me | null>(null);
-
-onMounted(async () => me.value = await fetchMe());
+const me = useMe();
 </script>

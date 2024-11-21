@@ -1,12 +1,23 @@
 {
-  "name": "@etalab/data.gouv.fr-components",
-  "version": "1.9.0",
+  "name": "@datagouv/components",
+  "version": "2.0.2",
   "description": "reusable components to show content from data.gouv.fr",
   "type": "module",
   "files": [
     "dist",
     "src"
   ],
+  "sideEffetcs": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/data-gouv-fr-components.d.ts",
+      "import": "./dist/data-gouv-fr-components.js"
+    },
+    "./ts": "./src/index.ts",
+    "./dist/style.css": "./dist/style.css"
+  },
   "module": "./dist/data-gouv-fr-components.js",
   "types": "./dist/data-gouv-fr-components.d.ts",
   "scripts": {
@@ -15,51 +26,95 @@
     "preview": "vite preview",
     "i18n:report": "vue-i18n-extract report --vueFiles './src/**/*.?(ts|js|vue)' --languageFiles './src/locales/*.json' --separator '^'",
     "i18n:extract": "npm run i18n:report -- --add",
+    "prepublishOnly": "npm run build",
     "preversion": "npm run build && npm run i18n:report && npm run build-storybook",
     "update-version": "npm version --no-git-tag-version",
+    "commit-version": "git add --all && git commit -m \"Bump version @datagouv/components@$npm_package_version\"",
+    "tag-version": "git tag -a @datagouv/components@$npm_package_version -m \"Package @datagouv/components version v$npm_package_version\"",
+    "push-version": "git push --follow-tags",
+    "commit-tag-and-push": "npm run commit-version && npm run tag-version && npm run push-version",
     "publish-stable": "npm publish --access public",
-    "publish-next": "npm run publish-stable -- --tag next",
+    "publish-dev": "npm run publish-stable -- --tag=dev",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build --stats-json",
+    "serve-storybook": "npx http-server storybook-static --port 6006 --silent",
+    "test-storybook": "test-storybook",
+    "ci:storybook": "start-server-and-test serve-storybook http://localhost:6006 test-storybook",
+    "chromatic": "npx chromatic --only-changed --storybook-build-dir ./storybook-static --externals '*.less' --externals '*.json' --externals '*/msw-requests.ts'"
   },
   "dependencies": {
-    "vue": "^3.3.8"
+    "@headlessui/vue": "^1.7.22",
+    "axios": "^1.7.7",
+    "chart.js": "^4.4.4",
+    "remark": "^15.0.1",
+    "remark-gfm": "^4.0.0",
+    "strip-markdown": "^6.0.0",
+    "swagger-themes": "^1.4.3",
+    "swagger-ui": "^5.17.14",
+    "vue": "^3.5"
   },
   "peerDependencies": {
-    "@gouvfr/dsfr": "~1.9.2"
+    "@gouvfr/dsfr": "~1.11.2",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@conciergerie.dev/vue-toaster": "^2.4.5-0",
     "@etalab/udata-front-plugins-helper": "^1.1.0",
     "@gouvminint/vue-dsfr": "^5.2.0",
-    "@intlify/unplugin-vue-i18n": "^1.5.0",
-    "@storybook/addon-essentials": "^7.6.7",
-    "@storybook/addon-interactions": "^7.6.17",
-    "@storybook/addon-links": "^7.6.7",
-    "@storybook/blocks": "^7.6.7",
-    "@storybook/jest": "^0.2.3",
-    "@storybook/manager-api": "^7.6.7",
-    "@storybook/test": "^7.6.17",
-    "@storybook/theming": "^7.6.7",
-    "@storybook/vue3": "^7.6.7",
-    "@storybook/vue3-vite": "^7.6.7",
+    "@intlify/unplugin-vue-i18n": "^1.6.0",
+    "@storybook/addon-essentials": "^8.3.0",
+    "@storybook/addon-interactions": "^8.3.0",
+    "@storybook/addon-links": "^8.3.0",
+    "@storybook/blocks": "^8.3.0",
+    "@storybook/manager-api": "^8.3.0",
+    "@storybook/test": "^8.3.0",
+    "@storybook/test-runner": "^0.19.1",
+    "@storybook/theming": "^8.3.0",
+    "@storybook/vue3": "^8.3.0",
+    "@storybook/vue3-vite": "^8.3.0",
+    "@types/markdown-it": "^13.0.7",
     "@vitejs/plugin-vue": "^4.4.1",
     "@vueuse/core": "^10.6.1",
+    "chromatic": "^11.5.5",
     "clipboard": "^2.0.11",
     "dayjs": "^1.11.10",
+    "jest-playwright-preset": "^4.0.0",
     "less": "^4.2.0",
     "markdown-it": "^13.0.2",
+    "msw": "^2.4.8",
+    "msw-storybook-addon": "^2.0.3",
+    "oh-vue-icons": "^1.0.0-rc3",
+    "playwright": "^1.46.1",
     "popmotion": "^8.7.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "storybook": "^7.6.7",
+    "start-server-and-test": "^2.0.5",
+    "storybook": "^8.3.0",
+    "storybook-vue3-router": "^5.0.0",
     "vite": "^4.5.2",
-    "vite-plugin-dts": "^3.6.3",
+    "vite-plugin-dts": "^4.2.1",
+    "vue-component-type-helpers": "^2.1.6",
     "vue-content-loader": "^2.0.1",
-    "vue-i18n": "^9.8.0",
-    "vue-i18n-extract": "^2.0.7"
+    "vue-i18n": "^9.13.1",
+    "vue-i18n-extract": "^2.0.7",
+    "vue-router": "^4.2.5",
+    "vue3-text-clamp": "^0.1.2"
   },
-  "author": "Etalab",
+  "author": {
+    "name": "DINUM"
+  },
   "license": "MIT",
-  "repository": "https://github.com/etalab/udata-front"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/datagouv/udata-front.git"
+  },
+  "bugs": {
+    "url": "https://github.com/datagouv/udata-front/issues"
+  },
+  "homepage": "https://github.com/datagouv/udata-front#readme",
+  "msw": {
+    "workerDirectory": [
+      ".storybook/msw"
+    ]
+  }
 }

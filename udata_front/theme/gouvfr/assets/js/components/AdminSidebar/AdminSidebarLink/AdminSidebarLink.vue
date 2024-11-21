@@ -6,28 +6,35 @@
     >
       <div v-if="iconHtml" class="fr-mr-1w fr-grid-row" v-html="iconHtml"></div>
       <div v-else-if="icon" :class="icon" class="fr-mr-1w fr-icon--sm" aria-hidden="true"></div>
-      <router-link :to="to">{{ label }}</router-link>
+      <router-link :to="to">
+        <TextClamp
+          :text="label"
+          :auto-resize="true"
+          :max-lines="1"
+        />
+      </router-link>
     </div>
   </li>
 </template>
-<script lang="ts">
+
+<script setup lang="ts">
 import type { RouteLocationRaw } from "vue-router";
-export type AdminSidebarLinkProps = {
+import TextClamp from "vue3-text-clamp";
+
+defineProps<{
   label: string,
   icon?: string,
   iconHtml?: string,
   to: RouteLocationRaw,
-};
+}>();
 </script>
-<script setup lang="ts">
-defineProps<AdminSidebarLinkProps>();
-</script>
+
 <style scoped>
 .fr-sidemenu__link {
   padding: 0.25rem 0.375rem;
 }
 
-.fr-sidemenu__link[aria-current]::before {
+.fr-sidemenu__link[aria-current]:not([aria-current=false])::before {
   width: 0;
 }
 
