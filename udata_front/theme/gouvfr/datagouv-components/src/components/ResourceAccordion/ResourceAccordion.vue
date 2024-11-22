@@ -56,8 +56,16 @@
           <button
             :id="resource.id + '-copy'"
             :data-clipboard-text="resource.url"
-            class="fr-btn fr-btn--sm fr-btn--icon-left fr-icon-clipboard-line"
+            class="fr-btn fr-btn--sm"
           >
+            <span>
+                <OhVueIcon
+                  :height="16"
+                  :width="16"
+                  name="ri-file-copy-line"
+                  class="copy-icon fr-mr-2v"
+                />
+            </span> 
             {{ t('Copy link') }}
           </button>
         </p>
@@ -180,6 +188,7 @@ import TabPanel from "../Tabs/TabPanel.vue";
 import { trackEvent } from "../../helpers/matomo";
 import CopyButton from "../CopyButton/CopyButton.vue";
 import { getResourceFormatIconSvg } from "../../helpers/resources";
+import { OhVueIcon } from 'oh-vue-icons';
 
 const OGC_SERVICES_FORMATS = ['ogc:wfs', 'ogc:wms', 'wfs', 'wms'];
 
