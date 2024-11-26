@@ -15,13 +15,13 @@
 {% set read_only_mode = config.READ_ONLY_MODE %}
 
 {% block extra_head %}
-    {% cache cache_duration, 'dataservice-extra-head', dataservice.id|string, g.lang_code, dataservice.last_modified|string %}
+    {% cache cache_duration, 'dataservice-extra-head', dataservice.id|string, g.lang_code, dataservice.metadata_modified_at|string %}
     <link rel="canonical" href="{{ url_for('dataservices.show', dataservice=dataservice) }}" />
     {% endcache %}
 {% endblock %}
 
 {% block breadcrumb %}
-    {% cache cache_duration, 'dataservice-breadcrumb', dataservice.id|string, g.lang_code, dataservice.last_modified|string %}
+    {% cache cache_duration, 'dataservice-breadcrumb', dataservice.id|string, g.lang_code, dataservice.metadata_modified_at|string %}
         <li>
             <a class="fr-breadcrumb__link" href="{{ url_for('dataservices.list') }}">
                 {{ _('API') }}
