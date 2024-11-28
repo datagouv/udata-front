@@ -447,8 +447,9 @@ class SiteViewsTest(GouvfrFrontTestCase):
         filtered_dataservices = [
             DataserviceFactory(datasets=[DatasetFactory()], tags=['selected'])
             for _ in range(6)]
-        dataservices = [DataserviceFactory(datasets=[DatasetFactory()])
-                  for _ in range(3)]
+        dataservices = [
+            DataserviceFactory(datasets=[DatasetFactory()])
+            for _ in range(3)]
 
         response = self.get(
             url_for('site.dataservices_csv', tag='selected', page_size=3))
