@@ -4,6 +4,7 @@
 
 - Disable sentry session tracking [#610](https://github.com/datagouv/udata-front/pull/610)
 - Use metadata_modifed_at in dataservice cache keys [#611](https://github.com/datagouv/udata-front/pull/611)
+- Add dataservices.csv route [#612](https://github.com/datagouv/udata-front/pull/612)
 
 ## 6.0.3 (2024-11-19)
 
