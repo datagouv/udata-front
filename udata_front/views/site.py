@@ -7,6 +7,8 @@ from feedgenerator.django.utils.feedgenerator import Atom1Feed
 
 from udata.app import cache
 from udata.core.activity.models import Activity
+from udata.core.dataservices.csv import DataserviceCsvAdapter
+from udata.core.dataservices.models import Dataservice
 from udata.core.dataset.api import DatasetApiParser
 from udata.core.dataset.csv import ResourcesCsvAdapter
 from udata.core.dataset.models import Dataset
@@ -156,6 +158,18 @@ def reuses_csv():
     params['facets'] = False
     reuses = ReuseApiParser.parse_filters(Reuse.objects.visible(), params)
     return csv.stream(ReuseCsvAdapter(reuses), 'reuses')
+
+
+@blueprint.route('/dataservices.csv')
+def dataservices_csv():
+    params = multi_to_dict(request.args)
+    # redirect to EXPORT_CSV dataset if feature is enabled and no filter is set
+    exported_models = current_app.config.get('EXPORT_CSV_MODELS', [])
+    if not params and 'dataservice' in exported_models:
+        return redirect(get_export_url('dataservice'))
+    params['facets'] = False
+    dataservices = Dataservice.apply_sort_filters(Dataservice.objects.visible())
+    return csv.stream(DataserviceCsvAdapter(dataservices), 'dataservices')
 
 
 @blueprint.route('/harvests.csv')
