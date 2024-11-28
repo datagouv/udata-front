@@ -8,6 +8,7 @@ from flask import url_for
 from udata.frontend import csv
 from udata.models import Site
 
+from udata.core.dataservices.factories import DataserviceFactory
 from udata.core.dataset import tasks as dataset_tasks
 from udata.core.dataset.factories import DatasetFactory, ResourceFactory
 from udata.core.organization.factories import OrganizationFactory
@@ -396,6 +397,88 @@ class SiteViewsTest(GouvfrFrontTestCase):
         for reuse in reuses:
             self.assertNotIn(str(reuse.id), ids)
         self.assertNotIn(str(hidden_reuse.id), ids)
+
+    def test_dataservices_csv(self):
+        self.app.config['EXPORT_CSV_MODELS'] = []
+        dataservices = [DataserviceFactory(datasets=[DatasetFactory()])
+                        for _ in range(5)]
+
+        response = self.get(url_for('site.dataservices_csv'))
+
+        self.assert200(response)
+        self.assertEqual(response.mimetype, 'text/csv')
+        self.assertEqual(response.charset, 'utf-8')
+
+        csvfile = StringIO(response.data.decode('utf8'))
+        reader = csv.get_reader(csvfile)
+        header = next(reader)
+
+        self.assertEqual(header[0], 'id')
+        self.assertIn('title', header)
+        self.assertIn('description', header)
+        self.assertIn('created_at', header)
+        self.assertIn('metadata_modified_at', header)
+        self.assertIn('tags', header)
+        self.assertIn('base_api_url', header)
+
+        rows = list(reader)
+        ids = [row[0] for row in rows]
+
+        self.assertEqual(len(rows), len(dataservices))
+        for dataservice in dataservices:
+            self.assertIn(str(dataservice.id), ids)
+
+    @pytest.mark.usefixtures('instance_path')
+    def test_dataservices_csv_w_export_csv_feature(self):
+        # no export generated, 404
+        response = self.get(url_for('site.dataservices_csv'))
+        self.assert404(response)
+
+        # generate the export
+        d = DatasetFactory()
+        self.app.config['EXPORT_CSV_DATASET_ID'] = d.id
+        dataset_tasks.export_csv()
+        response = self.get(url_for('site.dataservices_csv'))
+        self.assertStatus(response, 302)
+        self.assertIn('export-dataservice-', response.location)
+
+    def test_dataservices_csv_with_filters(self):
+        '''Should handle filtering but ignore paging or facets'''
+        filtered_dataservices = [
+            DataserviceFactory(datasets=[DatasetFactory()], tags=['selected'])
+            for _ in range(6)]
+        dataservices = [DataserviceFactory(datasets=[DatasetFactory()])
+                  for _ in range(3)]
+
+        response = self.get(
+            url_for('site.dataservices_csv', tag='selected', page_size=3))
+
+        self.assert200(response)
+        self.assertEqual(response.mimetype, 'text/csv')
+        self.assertEqual(response.charset, 'utf-8')
+
+        csvfile = StringIO(response.data.decode('utf8'))
+        reader = csv.get_reader(csvfile)
+        header = next(reader)
+
+        self.assertEqual(header[0], 'id')
+        self.assertIn('title', header)
+        self.assertIn('description', header)
+        self.assertIn('created_at', header)
+        self.assertIn('metadata_modified_at', header)
+        self.assertIn('tags', header)
+        self.assertIn('base_api_url', header)
+
+        rows = list(reader)
+        ids = [row[0] for row in rows]
+
+        # Should ignore paging
+        self.assertEqual(len(rows), len(filtered_dataservices))
+        # SHoulf pass filter
+        for dataservice in filtered_dataservices:
+            self.assertIn(str(dataservice.id), ids)
+        for dataservice in dataservices:
+            self.assertNotIn(str(dataservice.id), ids)
 
     def test_harvest_csv(self):
         self.app.config['EXPORT_CSV_MODELS'] = []
