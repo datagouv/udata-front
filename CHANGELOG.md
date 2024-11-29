@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 6.0.5 (2024-11-29)
 
 - Compile udata deps to latest and upgrade lxml [#615](https://github.com/datagouv/udata-front/pull/615)
 
