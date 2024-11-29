@@ -4,6 +4,7 @@
 
 - Disable sentry session tracking [#610](https://github.com/datagouv/udata-front/pull/610)
 - Use metadata_modifed_at in dataservice cache keys [#611](https://github.com/datagouv/udata-front/pull/611)
+- We don't want to fallback on site.home with params [#613](https://github.com/datagouv/udata-front/pull/613)
 
 ## 6.0.3 (2024-11-19)
 
