@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 6.0.4 (2024-11-29)
 
 - Disable sentry session tracking [#610](https://github.com/datagouv/udata-front/pull/610)
