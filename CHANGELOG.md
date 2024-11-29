@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 6.0.4 (2024-11-29)
 
 - Disable sentry session tracking [#610](https://github.com/datagouv/udata-front/pull/610)
 - Use metadata_modifed_at in dataservice cache keys [#611](https://github.com/datagouv/udata-front/pull/611)
