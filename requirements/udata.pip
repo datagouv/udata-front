@@ -221,7 +221,7 @@ kombu[redis]==5.3.1
     #   udata
 langdetect==1.0.9
     # via udata
-lxml==4.9.3
+lxml==5.3.0
     # via udata
 markupsafe==2.1.2
     # via
