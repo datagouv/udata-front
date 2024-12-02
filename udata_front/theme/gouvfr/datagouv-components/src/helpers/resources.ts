@@ -4,6 +4,8 @@ import archive from '../../../templates/svg/resources/archive.svg';
 import documentation from '../../../templates/svg/resources/documentation.svg';
 import link from '../../../templates/svg/resources/link.svg';
 import table from '../../../templates/svg/resources/table.svg';
+import map from '../../../templates/svg/resources/map.svg';
+import globe from '../../../templates/svg/resources/globe.svg';
 
 export function getResourceFormatIconSvg(resource: Resource): string | null {
     switch (resource.format?.trim()?.toLowerCase()) {
@@ -25,7 +27,6 @@ export function getResourceFormatIconSvg(resource: Resource): string | null {
         case 'gpx':
         case 'shx':
         case 'ovr':
-        case 'geojson':
         case 'gpkg':
         case 'grib2':
         case 'dbf':
@@ -60,6 +61,13 @@ export function getResourceFormatIconSvg(resource: Resource): string | null {
         case 'xlsx':
         case 'parquet':
             return table;
+        case 'geojson':
+            return map;
+        case 'ogc:wfs':
+        case 'ogc:wms':
+        case 'wfs':
+        case 'wms':
+            return globe;
         default:
             return null;
     }

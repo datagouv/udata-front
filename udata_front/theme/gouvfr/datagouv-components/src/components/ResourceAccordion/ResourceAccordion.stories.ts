@@ -179,6 +179,19 @@ export const ResourceBinary: StoryObj<typeof meta> = {
 };
 
 
+export const ResourceOGCService: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { ResourceAccordion },
+    setup() {
+      return { args };
+    },
+    template: '<ResourceAccordion v-bind="args" />',
+  }),
+  args: { ...argsWithSchema, resource: { ...argsWithSchema.resource, format: "ogc:wms", title: "point_eau_qualito",
+  } },
+};
+
+
 export const ResourceUrl: StoryObj<typeof meta> = {
   render: (args) => ({
     components: { ResourceAccordion },
