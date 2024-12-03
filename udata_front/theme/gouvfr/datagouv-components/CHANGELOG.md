@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add geo specific display on OGC service resources [#609](https://github.com/datagouv/udata-front/pull/609)
 
 ## 2.0.2 (2024-11-19)
 

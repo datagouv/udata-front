@@ -2,7 +2,19 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add geo specific display on OGC service resources [#609](https://github.com/datagouv/udata-front/pull/609)
+- Add dataservices.csv route [#612](https://github.com/datagouv/udata-front/pull/612)
+
+## 6.0.5 (2024-11-29)
+
+- Compile udata deps to latest and upgrade lxml [#615](https://github.com/datagouv/udata-front/pull/615)
+
+## 6.0.4 (2024-11-29)
+
+- Disable sentry session tracking [#610](https://github.com/datagouv/udata-front/pull/610)
+- Use metadata_modifed_at in dataservice cache keys [#611](https://github.com/datagouv/udata-front/pull/611)
+- We don't want to fallback on site.home with params [#613](https://github.com/datagouv/udata-front/pull/613)
+- Update dataset params parsing to deal with tags correctly [#614](https://github.com/datagouv/udata-front/pull/614)
 
 ## 6.0.3 (2024-11-19)
 

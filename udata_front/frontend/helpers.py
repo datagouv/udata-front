@@ -535,4 +535,4 @@ def language_url(lang_code):
         return url_for(endpoint, lang_code=lang_code, **params, _external=True)
     except Exception:
         # Never fails
-        return url_for("site.home", lang_code=lang_code, **params, _external=True)
+        return url_for("site.home", lang_code=lang_code, _external=True)
