@@ -60,6 +60,7 @@ export function getResourceFormatIconSvg(resource: Resource): string | null {
         case 'xls':
         case 'xlsx':
         case 'parquet':
+        case 'csv.gz':
             return table;
         case 'geojson':
             return map;
