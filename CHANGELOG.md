@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 6.0.6 (2024-12-09)
 
 - Add geo specific display on OGC service resources [#609](https://github.com/datagouv/udata-front/pull/609)
 - Add dataservices.csv route [#612](https://github.com/datagouv/udata-front/pull/612)
