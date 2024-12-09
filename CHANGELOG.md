@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 6.0.6 (2024-12-09)
 
 - Add geo specific display on OGC service resources [#609](https://github.com/datagouv/udata-front/pull/609)
