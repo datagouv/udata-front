@@ -2,6 +2,10 @@
 
 ## Current (in progress)
 
+- Nothing yet
+
+## 2.0.3 (2024-12-09)
+
 - Add geo specific display on OGC service resources [#609](https://github.com/datagouv/udata-front/pull/609)
 - Add csv.gz format as table resource [617](https://github.com/datagouv/udata-front/pull/617)
 
