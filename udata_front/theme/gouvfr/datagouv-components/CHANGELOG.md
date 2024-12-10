@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add daterange for temporal coverage in InformationPanel [#411](https://github.com/datagouv/udata-front/pull/411)
 
 ## 2.0.3 (2024-12-09)
 

@@ -4,6 +4,7 @@ import { dayjs } from "./i18n";
 import markdown, { removeMarkdown } from "./markdown";
 import { toggleAccordion } from "./toggleAccordion";
 import { ResourceType } from "../types/resources";
+import { TemporalCoverage } from "../types/datasets";
 import getUserAvatar, { useUserAvatar } from "./getUserAvatar";
 
 export const RESOURCE_TYPE = readonly(["main", "documentation", "update", "api", "code", "other"] as const);
@@ -97,6 +98,34 @@ export const formatRelativeIfRecentDate = (date: Date | string) => {
     return t("on {date}", {date: formatDate(date)});
   }
   return formatFromNow(date);
+}
+
+const isFirstYearDay = (date: dayjs.Dayjs): boolean => { return date.date() == 1 && date.month() == 0; }
+const isLastYearDay = (date: dayjs.Dayjs): boolean => { return date.date() == 31 && date.month() == 11; }
+const isFirstMonthDay = (date: dayjs.Dayjs): boolean => { return date.date() == 1; }
+const isLastMonthDay = (date: dayjs.Dayjs): boolean => {
+  let nextDay = date.add(1, 'day');
+  return nextDay.month() !== date.month();
+}
+
+export const formatDateRange = (daterange : TemporalCoverage) => {
+  const { t } = useI18n();
+  const start = dayjs(daterange.start);
+  const end = daterange.end ? dayjs(daterange.end) : null;
+  if (end) {
+    if ( isFirstYearDay(start) && isLastYearDay(end)) {
+      if (start.year() === end.year())
+        return start.format('YYYY');
+      return t("{start} to {end}", {start: start.format('YYYY'), end: end.format('YYYY')});
+    }
+    if ( isFirstMonthDay(start) && isLastMonthDay(end) ) {
+      if (start.month() === end.month() && start.year() === end.year())
+        return start.format('YYYY/MM');
+      return t("{start} to {end}", {start: start.format('YYYY/MM'), end: end.format('YYYY/MM')});
+    }
+    return t("{start} to {end}", {start: start.format('L'), end: end.format('L')});
+  }
+  return t("since {date}", {date: start.format('L')});
 }
 
 export { getUserAvatar, markdown, removeMarkdown, toggleAccordion, useUserAvatar };
