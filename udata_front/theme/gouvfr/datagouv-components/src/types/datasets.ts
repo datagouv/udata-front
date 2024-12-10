@@ -17,6 +17,11 @@ export type Quality = {
   update_fulfilled_in_time: boolean;
 };
 
+export type TemporalCoverage = {
+  start: Date;
+  end: Date | null;
+}
+
 export type BaseDataset = Owned & {
   title: string;
   acronym: string;
@@ -25,7 +30,7 @@ export type BaseDataset = Owned & {
   tags: Array<string> | null;
   license: string;
   frequency: string;
-  temporal_coverage: string;
+  temporal_coverage: TemporalCoverage | null;
   frequency_date: Date | null;
   page: string;
   private: boolean;

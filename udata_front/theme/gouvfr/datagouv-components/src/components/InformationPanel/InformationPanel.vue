@@ -32,6 +32,10 @@
           <h3 class="subtitle fr-mb-1v">{{ $t('Frequency') }}</h3>
           <p class="fr-text--sm fr-m-0 text-mention-grey ">{{ frequency }}</p>
         </div>
+        <div class="fr-col-12 fr-col-sm-6 fr-col-md-4">
+          <h3 class="subtitle fr-mb-1v">{{ $t('Temporal coverage') }}</h3>
+          <p class="fr-text--sm fr-m-0 text-mention-grey ">{{ formatDateRange(props.dataset.temporal_coverage) }}</p>
+        </div>
       </div>
       <div class="fr-grid-row fr-grid-row--gutters">
         <div class="fr-col-12 fr-col-sm-6 fr-col-md-4">
@@ -90,7 +94,7 @@ import { ref, onMounted, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import type { Dataset, DatasetV2 } from "../../types/datasets";
 import CopyButton from "../CopyButton/CopyButton.vue";
-import { formatDate } from '../../helpers/index';
+import { formatDate, formatDateRange } from '../../helpers/index';
 import { getGranularity, fetchGranularities } from '../../api/granularity';
 import { getFrequencies, fetchFrequencies } from '../../api/frequency';
 import { fetchZone } from '../../api/zones';
