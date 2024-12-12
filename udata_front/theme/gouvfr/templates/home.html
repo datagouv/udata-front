@@ -211,7 +211,7 @@
                         height="80"
                     >
                 </div>
-                <div class="fr-grid-row fr-grid-row--gutters fr-mb-12w">
+                <div class="fr-grid-row fr-grid-row--gutters">
                     <div class="fr-col-auto">
                         <a href="{{url_for('reuses.list')}}" class="fr-btn">
                             {{ _('See reuses') }}
@@ -235,17 +235,17 @@
             <h3 class="fs-xxxl font-800">{{_('Simplify access to public data')}}</h3>
             <p class="fr-mb-3w fs-xxxl line-height-xxxl text-grey-200 font-300">{{_('The opening and circulation of public data strengthen transparency, improve public action, and allow for the creation of new services.')}}</p>
             <p class="fr-mb-4w fs-xxxl line-height-xxxl text-grey-200 font-300">{{_('{site} provides access to this information by organizing its dissemination and use.'.format(site=config.SITE_TITLE))}}</p>
-            <h4 class="subtitle subtitle--uppercase fr-text--md text-mention-grey fr-mb-11v">{{_('Our goals')}}</h4>
+            <h4 class="subtitle subtitle--uppercase fr-text--md text-grey-300 fr-mb-11v">{{_('Our goals')}}</h4>
             <div class="fr-grid-row fr-grid-row--gutters">
                 <div class="fr-col-12 fr-col-sm-6 fr-col-lg-4 fr-pl-md-5v">
                     <span class="fr-mt-1v fr-icon-search-line" aria-hidden="true"></span>
                     <p class="fr-mt-1w fr-mb-1v">{{_('Ease data discoverability')}}</p>
                 </div>
-                <div class="fr-col-12 fr-col-md-6 fr-col-lg-4 fr-pl-md-5v border-left-md border-mention-grey">
+                <div class="fr-col-12 fr-col-md-6 fr-col-lg-4 fr-pl-md-5v border-left-md border-grey-300">
                     <span class="fr-mt-md-1v fr-icon-award-line" aria-hidden="true"></span>
                     <p class="fr-mt-1w fr-mb-1v">{{_('Improve data quality')}}</p>
                 </div>
-                <div class="fr-col-12 fr-col-md-6 fr-col-lg-4 fr-pl-md-5v border-left-lg border-mention-grey">
+                <div class="fr-col-12 fr-col-md-6 fr-col-lg-4 fr-pl-md-5v border-left-lg border-grey-300">
                     <span class="fr-mt-1v fr-icon-line-chart-line" aria-hidden="true"></span>
                     <p class="fr-mt-1w fr-mb-1v">{{_('Encourage data reusability')}}</p>
                 </div>
@@ -256,13 +256,13 @@
         </section>
         <section>
             <h3 class="fs-xxxl font-800">{{_('Produce information based on data')}}</h3>
-            <h4 class="subtitle subtitle--uppercase fr-text--md text-mention-grey fr-mb-11v">{{_('Our data explorations')}}</h4>
+            <h4 class="subtitle subtitle--uppercase fr-text--md text-grey-300 fr-mb-3v">{{_('Our data explorations')}}</h4>
             <div class="fr-grid-row fr-grid-row--gutters">
                 <div class="fr-col-12 fr-col-sm-6">
                     <div class="fr-card">
                         <div class="fr-card__body">
                             <div class="fr-card__content fr-px-2w fr-pt-2w fr-pb-0">
-                                <h5 class="fr-card__title subtitle subtitle--uppercase fr-text--sm text-mention-grey fr-m-0">
+                                <h5 class="fr-card__title subtitle subtitle--uppercase fr-text--sm text-grey-300 fr-m-0">
                                     Explorateur de données de valeurs foncières
                                 </h5>
                                 <p class="fr-card__desc text-grey-500 fr-text--lg fr-text--bold fr-mb-0 fr-mt-1w">{{_('Follow real estate price evolution and find real estate sales prices.')}}</p>
@@ -352,5 +352,42 @@
         </section>
     </div>
 </div>
+{% if last_post %}
+<section class="fr-container fr-my-8w">
+    <h2 class="subtitle subtitle--uppercase text-mention-grey fr-mb-3v fr-text--bold">{{_('{site} news').format(site=config.SITE_TITLE)}}</h2>
+    <div class="fr-grid-row fr-grid-row--gutters">
+        <div class="fr-col-12 fr-col-md-5">
+            <img class="fr-responsive-img rounded-xs" src="{{last_post.image}}" loading="lazy" alt=""/>
+        </div>
+        <div class="fr-col-12 fr-col-md-7">
+            <h3 class="text-grey-500 font-800 fs-xxxl fr-m-0">{{last_post.name}}</h3>
+            <p class="text-mention-grey fr-text--sm fr-my-1w">
+                {{ _('Published on') }}
+                {{ last_post.published|dateformat(format='long') }}
+            </p>
+            <p class="fr-mb-4w">{{ last_post.headline|mdstrip(300) }}</p>
+            <div class="fr-grid-row fr-grid-row--gutters">
+                <div class="fr-col-auto">
+                    <a
+                        class="fr-btn"
+                        href="{{ last_post.display_url }}"
+                    >
+                        {{_('Read the article')}}
+                    </a>
+                </div>
+                <div class="fr-col-auto">
+                    <a
+                        class="fr-btn fr-btn--secondary"
+                        href="{{url_for('posts.list')}}"
+                    >
+                        {{_('See all news')}}
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
 {% endcache %}
 {% endblock %}
