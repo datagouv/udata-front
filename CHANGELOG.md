@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Use beta admin as default [#621](https://github.com/datagouv/udata-front/pull/621)
 
 ## 6.0.6 (2024-12-09)
 
