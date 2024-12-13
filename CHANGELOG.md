@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add dataservice search to header [#622](https://github.com/datagouv/udata-front/pull/622)
 
 ## 6.0.6 (2024-12-09)
 
