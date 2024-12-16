@@ -201,6 +201,10 @@ export const guides_quality_url = _meta("guides-quality-url");
 export const dataset_url = _meta("dataset-url");
 
 /**
+ * The dataservice list URL
+ */
+export const dataservice_url = _meta("dataservice-url");
+/**
  * The organization list URL
  */
 export const organization_url = _meta("organization-url");
