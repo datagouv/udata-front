@@ -1,5 +1,5 @@
 <template>
-  <nav role="navigation" class="fr-pagination fr-pagination--centered" :aria-label="t('Pagination')">
+  <nav role="navigation" class="fr-pagination fr-pagination--centered" :aria-label="t('Pagination')" v-if="totalResults > pageSize">
     <ul class="fr-pagination__list">
       <li>
         <a

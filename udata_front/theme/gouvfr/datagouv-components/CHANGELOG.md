@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Do not show pagination if not enough results [#624](https://github.com/datagouv/udata-front/pull/624)
 
 ## 2.0.3 (2024-12-09)
 
