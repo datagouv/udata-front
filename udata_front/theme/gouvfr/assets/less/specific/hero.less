@@ -19,25 +19,26 @@
     background-position: center;
     background-size: cover;
 }
+@media @dsfr-query-md {
+    .dual-color-background {
+        background: linear-gradient(
+            to right,
+            var(--background-default-grey) 0%,
+            var(--background-default-grey) 50%,
+            var(--background-alt-grey) 50%,
+            var(--background-alt-grey) 100%
+          );
+    }
 
-.dual-color-background {
-    background: linear-gradient(
-        to right,
-        var(--background-default-grey) 0%,
-        var(--background-default-grey) 50%,
-        var(--background-alt-grey) 50%,
-        var(--background-alt-grey) 100%
-      );
-}
-
-.dual-color-background--reversed {
-    background: linear-gradient(
-        to right,
-        var(--background-alt-grey) 0%,
-        var(--background-alt-grey) 50%,
-        var(--background-default-grey) 50%,
-        var(--background-default-grey) 100%
-      );
+    .dual-color-background--reversed {
+        background: linear-gradient(
+            to right,
+            var(--background-alt-grey) 0%,
+            var(--background-alt-grey) 50%,
+            var(--background-default-grey) 50%,
+            var(--background-default-grey) 100%
+          );
+    }
 }
 
 .w-4rem {
