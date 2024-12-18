@@ -95,15 +95,14 @@ def home():
         'last_post': Post.objects.published().first(),
         'data_metrics': [
             (_('Datasets and Dataservices'),
-             current_site.metrics['datasets'] + (current_site.metrics['dataservices']
-                                                 if 'dataservices' in current_site.metrics else 0)),
-            (_('Files'), current_site.metrics['resources']),
-            (_('Organizations'), current_site.metrics['organizations']),
+             current_site.metrics.get('datasets', 0) + current_site.metrics.get('dataservices', 0)),
+            (_('Files'), current_site.metrics.get('resources', 0)),
+            (_('Organizations'), current_site.metrics.get('organizations', 0)),
         ],
         'community_metrics': [
-            (_('Reuses'), current_site.metrics['reuses']),
-            (_('Users'), current_site.metrics['users']),
-            (_('Discussions'), current_site.metrics['discussions']),
+            (_('Reuses'), current_site.metrics.get('reuses', 0)),
+            (_('Users'), current_site.metrics.get('users', 0)),
+            (_('Discussions'), current_site.metrics.get('discussions', 0)),
         ]
     }
     processor = theme.current.get_processor('home')
