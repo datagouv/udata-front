@@ -94,7 +94,9 @@ def home():
         'recent_reuses': Reuse.objects(featured=True).visible(),
         'last_post': Post.objects.published().first(),
         'data_metrics': [
-            (_('Datasets and Dataservices'), current_site.metrics['datasets'] + (current_site.metrics['dataservices'] if 'dataservices' in current_site.metrics else 0)),
+            (_('Datasets and Dataservices'),
+             current_site.metrics['datasets'] + (current_site.metrics['dataservices']
+                                                 if 'dataservices' in current_site.metrics else 0)),
             (_('Files'), current_site.metrics['resources']),
             (_('Organizations'), current_site.metrics['organizations']),
         ],
