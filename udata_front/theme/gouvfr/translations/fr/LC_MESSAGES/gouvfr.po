@@ -452,7 +452,7 @@ msgstr "accueil"
 
 #: udata_front/theme/gouvfr/templates/home.html:32
 msgid "Right now"
-msgstr "En ce moent"
+msgstr "En ce moment"
 
 #: udata_front/theme/gouvfr/templates/home.html:38
 msgid "Open platform for French public data"
