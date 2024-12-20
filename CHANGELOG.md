@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 6.0.7 (2024-12-20)
 
 - Add NATIONAL_MOURNING config [#625](https://github.com/datagouv/udata-front/pull/625)
 
