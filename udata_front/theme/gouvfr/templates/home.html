@@ -16,21 +16,21 @@
             <div class="fr-mx-auto fr-col-12 fr-col-sm-11 fr-col-md-10 fr-col-lg-9 fr-col-xl-7">
                 <div class="fr-grid-row fr-grid-row--gutters justify-between">
                     {% if last_post %}
-                    <div class="fr-col-auto">
-                        <a class="flex items-center fr-raw-link fr-text--sm fr-m-0 fr-py-1v fr-px-3v border text-blue-400 border-blue-400 rounded-xs bg-white"
+                    <div class="fr-col-12 fr-col-md-6">
+                        <a class="inline-flex items-center fr-raw-link fr-text--sm fr-m-0 fr-py-1v fr-px-3v border text-blue-400 border-blue-400 rounded-xs bg-white text-overflow-ellipsis"
                             href="{{ last_post.display_url }}">
                             <span aria-hidden="true" class="fr-icon-newspaper-line fr-icon--sm fr-mr-1w"></span>
                             <span class="fr-text--bold fr-mb-0">{{ _('News') }}</span>
-                            <span>&nbsp;: {{ last_post.name }}</span>
+                            <span class="text-overflow-ellipsis">&nbsp;: {{ last_post.name }}</span>
                         </a>
                     </div>
                     {% endif %}
-                    <div class="fr-col-auto">
-                        <a class="flex items-center fr-raw-link fr-text--sm fr-m-0 fr-py-1v fr-px-3v border text-blue-400 border-blue-400 rounded-xs bg-white"
+                    <div class="fr-col-12 fr-col-md-6">
+                        <a class="inline-flex items-center fr-raw-link fr-text--sm fr-m-0 fr-py-1v fr-px-3v border text-blue-400 border-blue-400 rounded-xs bg-white text-overflow-ellipsis"
                             href="{{ url_for('gouvfr.show_page', slug='donnees-energie') }}">
                             <span aria-hidden="true" class="fr-icon-notification-3-line fr-icon--sm fr-mr-1w"></span>
                             <span class="fr-text--bold fr-mb-0">{{ _('Right now') }}</span>
-                            <span>&nbsp;: Données relatives aux Énergies</span>
+                            <span class="text-overflow-ellipsis">&nbsp;: Données relatives aux Énergies</span>
                         </a>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
 </section>
 <section class="dual-color-background">
     <div class="fr-container">
-        <div class="fr-grid-row fr-grid-row--gutters">
+        <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--bottom">
             <div class="fr-col-12 fr-col-md-6 fr-pr-md-10w fr-py-4w fr-pt-12w fr-py-md-12w">
                 <div class="fr-mb-1w w-4rem with-svg-responsive">
                     {% include theme('svg/illustrations/dataset.svg') %}
@@ -125,15 +125,17 @@
                 </div>
             </div>
             <div class="fr-col-12 fr-col-md-6 fr-pl-md-10w fr-py-md-0 fr-pt-md-8w">
-                <figure class="fr-m-0">
-                    <figcaption class="subtitle subtitle--uppercase text-mention-grey text-align-center">
+                <figure class="fr-m-0 flex flex-direction-column items-center">
+                    <figcaption class="subtitle subtitle--uppercase text-mention-grey">
                         {{_('datasets')}}
                     </figcaption>
                     <img
+                        srcset="{{theme_static('img/homepage/datasets.png')}}, {{theme_static('img/homepage/datasets@2x.png')}} 2x, {{theme_static('img/homepage/datasets@3x.png')}} 3x"
                         src="{{theme_static('img/homepage/datasets.png')}}"
                         alt=""
                         loading="lazy"
-                        class="fr-responsive-img"
+                        width="516"
+                        height="auto"
                     >
                 </figure>
             </div>
@@ -218,10 +220,12 @@
                         {{_('reuses')}}
                     </figcaption>
                     <img
+                        srcset="{{theme_static('img/homepage/reuses.png')}}, {{theme_static('img/homepage/reuses@2x.png')}} 2x, {{theme_static('img/homepage/reuses@3x.png')}} 3x"
                         src="{{theme_static('img/homepage/reuses.png')}}"
                         alt=""
                         loading="lazy"
-                        class="fr-responsive-img"
+                        width="592"
+                        height="556"
                     >
                 </figure>
             </div>
