@@ -2,6 +2,10 @@
 
 ## Current (in progress)
 
+- Fix quality score accessiblity issues [#628](https://github.com/datagouv/udata-front/pull/628)
+
+## 2.0.4 (2024-12-18)
+
 - Do not show pagination if not enough results [#624](https://github.com/datagouv/udata-front/pull/624)
 
 ## 2.0.3 (2024-12-09)
