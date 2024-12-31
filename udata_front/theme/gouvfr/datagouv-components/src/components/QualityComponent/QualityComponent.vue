@@ -7,65 +7,83 @@
   >
     {{$t('Metadata quality:')}}
     <template #toggletip>
-        <h5 class="fr-text--sm fr-my-0">{{$t("Metadata quality:")}}</h5>
-        <QualityItem
+      <h5 class="fr-text--sm fr-my-0">{{$t("Metadata quality:")}}</h5>
+      <ul>
+        <li>
+          <QualityItem
             :passed="quality.dataset_description_quality"
             :messagePassed='$t("Data description filled")'
             :messageFailed='$t("Data description empty")'
             class="fr-my-1w"
-        />
-        <QualityItem
+          />
+        </li>
+        <li>
+          <QualityItem
             :passed="quality.resources_documentation"
             :messagePassed='$t("Files documented")'
             :messageFailed='$t("Files documentation missing")'
             class="fr-my-1w"
-        />
-        <QualityItem
+          />
+        </li>
+        <li>
+          <QualityItem
             :passed="quality.license"
             :messagePassed='$t("License filled")'
             :messageFailed='$t("No license set")'
             class="fr-my-1w"
-        />
-        <QualityItem
+          />
+        </li>
+        <li>
+          <QualityItem
             :passed="quality.update_frequency && !!quality.update_fulfilled_in_time"
             :messagePassed='$t("Update frequency followed")'
             :messageFailed='quality.update_frequency ? $t("Update frequency not followed") : $t("Update frequency not set")'
             class="fr-my-1w"
-        />
-        <QualityItem
+          />
+        </li>
+        <li>
+          <QualityItem
             :passed="quality.has_open_format"
             :messagePassed='$t("File formats are open")'
             :messageFailed='$t("File formats are closed")'
             class="fr-my-1w"
-        />
-        <QualityItem
+          />
+        </li>
+        <li>
+          <QualityItem
             :passed="quality.temporal_coverage"
             :messagePassed='$t("Temporal coverage filled")'
             :messageFailed='$t("Temporal coverage not set")'
             class="fr-my-1w"
-        />
-        <QualityItem
+          />
+        </li>
+        <li>
+          <QualityItem
             :passed="quality.spatial"
             :messagePassed='$t("Spatial coverage filled")'
             :messageFailed='$t("Spatial coverage not set")'
             class="fr-my-1w"
-        />
-        <QualityItem
+          />
+        </li>
+        <li>
+          <QualityItem
             :passed="quality.all_resources_available"
             :messagePassed='$t("All files are available")'
             :messageFailed='$t("Some files are unavailable")'
             class="fr-my-1w"
-        />
-        <div class="fr-grid-row fr-grid-row--right not-enlarged">
-            <a
-            :href="config.guides_quality_url"
-            target="_blank"
-            rel="noopener"
-            :title="$t('Learn more about this indicator - opens a new window')"
-            >
-            {{$t("Learn more about this indicator")}}
-            </a>
-        </div>
+          />
+        </li>
+      </ul>
+      <div class="fr-grid-row fr-grid-row--right not-enlarged">
+        <a
+          :href="config.guides_quality_url"
+          target="_blank"
+          rel="noopener"
+          :title="$t('Learn more about this indicator - opens a new window')"
+        >
+          {{$t("Learn more about this indicator")}}
+        </a>
+      </div>
     </template>
   </Toggletip>
   <p class="fr-m-0 fr-mr-1v">
@@ -77,38 +95,56 @@
     class="w-100"
   />
   <template v-if="showItemWarnings">
-    <QualityItemWarning
-      :quality-item="quality.dataset_description_quality"
-      :message="$t('Data description empty')"
-    />
-    <QualityItemWarning
-      :quality-item="quality.resources_documentation"
-      :message="$t('Files documentation missing')"
-    />
-    <QualityItemWarning
-      :quality-item="quality.license"
-      :message="$t('No license set')"
-    />
-    <QualityItemWarning
-      :quality-item="quality.update_frequency && quality.update_fulfilled_in_time"
-      :message="quality.update_frequency ? $t('Update frequency not followed') : $t('Update frequency not set')"
-    />
-    <QualityItemWarning
-      :quality-item="quality.has_open_format"
-      :message="$t('File formats are closed')"
-    />
-    <QualityItemWarning
-      :quality-item="quality.temporal_coverage"
-      :message="$t('Temporal coverage not set')"
-    />
-    <QualityItemWarning
-      :quality-item="quality.spatial"
-      :message="$t('Spatial coverage not set')"
-    />
-    <QualityItemWarning
-      :quality-item="quality.all_resources_available"
-      :message="$t('Some files are unavailable')"
-    />
+    <ul>
+      <li>
+        <QualityItemWarning
+          :quality-item="quality.dataset_description_quality"
+          :message="$t('Data description empty')"
+        />
+      </li>
+      <li>
+        <QualityItemWarning
+          :quality-item="quality.resources_documentation"
+          :message="$t('Files documentation missing')"
+        />
+      </li>
+      <li>
+        <QualityItemWarning
+          :quality-item="quality.license"
+          :message="$t('No license set')"
+        />
+      </li>
+      <li>
+        <QualityItemWarning
+          :quality-item="quality.update_frequency && quality.update_fulfilled_in_time"
+          :message="quality.update_frequency ? $t('Update frequency not followed') : $t('Update frequency not set')"
+        />
+      </li>
+      <li>
+        <QualityItemWarning
+          :quality-item="quality.has_open_format"
+          :message="$t('File formats are closed')"
+        />
+      </li>
+      <li>
+        <QualityItemWarning
+          :quality-item="quality.temporal_coverage"
+          :message="$t('Temporal coverage not set')"
+        />
+      </li>
+      <li>
+        <QualityItemWarning
+          :quality-item="quality.spatial"
+          :message="$t('Spatial coverage not set')"
+        />
+      </li>
+      <li>
+        <QualityItemWarning
+          :quality-item="quality.all_resources_available"
+          :message="$t('Some files are unavailable')"
+        />
+      </li>
+    </ul>
   </template>
 </template>
 <script lang="ts">
