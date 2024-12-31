@@ -22,13 +22,13 @@ export const QualityItemPassed: StoryObj<typeof meta> = {
     setup() {
       return { args };
     },
-    template: '<QualityItem v-bind="args" />',
+    template: '<ul class="list-style-none fr-p-0 fr-m-0"><QualityItem v-bind="args" /><ul>',
   }),
   args:{
     passed: true,
     messagePassed: "It works",
     messageFailed: "Something is wrong"
-  } 
+  }
 };
 
 export const QualityItemFailed: StoryObj<typeof meta> = {
@@ -37,11 +37,11 @@ export const QualityItemFailed: StoryObj<typeof meta> = {
       setup() {
         return { args };
       },
-      template: '<QualityItem v-bind="args" />',
+      template: '<ul class="list-style-none fr-p-0 fr-m-0"><QualityItem v-bind="args" /></ul>',
     }),
     args:{
       passed: false,
       messagePassed: "It works",
       messageFailed: "Something is wrong"
-    } 
+    }
   };
