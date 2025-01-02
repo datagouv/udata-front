@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { QualityItem } from '.';
+import "../quality-score.less";
 
 const meta = {
   title: "Components/Quality/Internals/Quality Item",
