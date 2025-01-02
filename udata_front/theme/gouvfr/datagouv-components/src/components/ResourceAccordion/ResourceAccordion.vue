@@ -5,17 +5,19 @@
       :id="resourceHeaderId"
     >
       <div>
-        <h4 class="fr-mb-1v flex items-center" :id="resourceTitleId">
-          <button type="button" @click="toggle" class="fr-p-0 flex items-center" data-testid="expand-button" :aria-expanded="open">
-            <ResourceIcon :resource class="fr-icon--xs fr-mr-1v" />
-            <span :class="{
-              'font-bold': open,
-            }"><TextClamp :max-lines="1" :text="resource.title || t('Nameless file')"/></span>
+        <div class="flex items-center fr-mb-1v">
+          <h4 class="fr-m-0" :id="resourceTitleId">
+            <button type="button" @click="toggle" class="fr-p-0 flex items-center" data-testid="expand-button" :aria-expanded="open">
+              <ResourceIcon :resource class="fr-icon--xs fr-mr-1v" />
+              <span :class="{
+                'font-bold': open,
+              }"><TextClamp :max-lines="1" :text="resource.title || t('Nameless file')"/></span>
 
-            <span class="absolute inset-0 z-1"></span>
-          </button>
+              <span class="absolute inset-0 z-1"></span>
+            </button>
+          </h4>
           <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resourceExternalUrl" class="z-2" />
-        </h4>
+        </div>
         <div class="text-grey-380 subheaders-infos">
           <SchemaBadge :resource class="dash-after" />
           <span class="fr-text--xs fr-mb-0 dash-after">{{ t('Updated {date}', {date: formatRelativeIfRecentDate(lastUpdate)}) }}</span>
@@ -65,7 +67,7 @@
                   name="ri-file-copy-line"
                   class="copy-icon fr-mr-2v"
                 />
-            </span> 
+            </span>
             {{ t('Copy link') }}
           </button>
         </p>
@@ -187,7 +189,7 @@ import TabPanels from "../Tabs/TabPanels.vue";
 import TabPanel from "../Tabs/TabPanel.vue";
 import { trackEvent } from "../../helpers/matomo";
 import CopyButton from "../CopyButton/CopyButton.vue";
-import { getResourceFormatIconSvg } from "../../helpers/resources";
+import { getResourceFormatIconSvg, getResourceTitleId } from "../../helpers/resources";
 import { OhVueIcon } from 'oh-vue-icons';
 
 const OGC_SERVICES_FORMATS = ['ogc:wfs', 'ogc:wms', 'wfs', 'wms'];
@@ -281,7 +283,7 @@ const resourceExternalUrl = computed(() => `${window.location.origin}${window.lo
 
 const resourceContentId = 'resource-' + props.resource.id;
 const resourceHeaderId = 'resource-' + props.resource.id + '-header';
-const resourceTitleId = 'resource-' + props.resource.id + '-title';
+const resourceTitleId = getResourceTitleId(props.resource);
 </script>
 <style scoped>
 .fr-link--no-after::after {
