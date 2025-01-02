@@ -92,12 +92,7 @@
           {{ getFilesCount(dataset) }}
         </td>
         <td>
-          <Tooltip>
-            <QualityScore class="w-100" :score="dataset.quality.score" />
-            <template #tooltip>
-              <QualityScoreTooltipContent :dataset="dataset" />
-            </template>
-          </Tooltip>
+          <QualityScore class="w-100" :score="dataset.quality.score" />
         </td>
         <td class="monospace">
           {{ summarize(dataset.metrics.discussions) }}
@@ -123,7 +118,6 @@ import { formatDate, QualityScore, summarize } from "@datagouv/components/ts";
 import type { Dataset, DatasetV2 } from '@datagouv/components/ts';
 import { useI18n } from 'vue-i18n';
 import TextClamp from "vue3-text-clamp";
-import QualityScoreTooltipContent from "../../dataset/QualityScore/QualityScoreTooltipContent/QualityScoreTooltipContent.vue";
 import AdminBadge from "../../AdminBadge/AdminBadge.vue";
 import AdminContentWithTooltip from "../../AdminContentWithTooltip/AdminContentWithTooltip.vue";
 import AdminTable from "../Table/AdminTable.vue";
