@@ -22,7 +22,7 @@ export const QualityItemPassed: StoryObj<typeof meta> = {
     setup() {
       return { args };
     },
-    template: '<ul class="list-style-none fr-p-0 fr-m-0"><QualityItem v-bind="args" /><ul>',
+    template: '<ul class="list-style-none fr-p-0 fr-m-0"><QualityItem v-bind="args" /></ul>',
   }),
   args:{
     passed: true,
