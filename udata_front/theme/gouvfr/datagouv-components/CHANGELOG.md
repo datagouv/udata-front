@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Do not show pagination if not enough results [#624](https://github.com/datagouv/udata-front/pull/624)
+- Use description list for resource metadata [#629](https://github.com/datagouv/udata-front/pull/629)
 
 ## 2.0.3 (2024-12-09)
 
