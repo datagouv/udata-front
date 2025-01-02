@@ -47,6 +47,7 @@
           <a
             :href="resource.latest"
             :title="t('File link - opens a new window')"
+            :aria-describedby="resourceTitleId"
             rel="ugc nofollow noopener"
             target="_blank"
             class="fr-btn fr-btn--sm"
@@ -58,6 +59,7 @@
           <button
             :id="resource.id + '-copy'"
             :data-clipboard-text="resource.url"
+            :aria-describedby="resourceTitleId"
             class="fr-btn fr-btn--sm"
           >
             <span>
@@ -78,8 +80,9 @@
             :title="t('Download file')"
             download
             class="relative text-transform-uppercase fr-btn fr-btn--sm fr-btn--icon-left fr-icon-test-tube-line fr-icon-download-line fr-icon--sm matomo_download z-2"
+            :aria-describedby="resourceTitleId"
           >
-            {{ format }}
+            <span class="fr-sr-only">{{ t('Download file as ') }}</span>{{ format }}
           </a>
         </p>
         <p class="fr-col-auto fr-ml-3v fr-m-0 z-2" v-if="canEdit">
