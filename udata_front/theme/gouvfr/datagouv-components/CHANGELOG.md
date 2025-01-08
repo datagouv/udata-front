@@ -2,6 +2,8 @@
 
 ## Current (in progress)
 
+- Fix download and copy buttons accessibility [#630](https://github.com/datagouv/udata-front/pull/630)
+- Use description list for resource metadata [#629](https://github.com/datagouv/udata-front/pull/629)
 - Fix quality score accessiblity issues [#628](https://github.com/datagouv/udata-front/pull/628)
 
 ## 2.0.4 (2024-12-18)
