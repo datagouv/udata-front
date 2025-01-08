@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Fix following cache issue [#631](https://github.com/datagouv/udata-front/pull/631)
 
 ## 6.0.7 (2024-12-20)
 

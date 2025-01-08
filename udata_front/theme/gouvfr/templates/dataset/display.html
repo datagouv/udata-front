@@ -65,10 +65,8 @@
 {% endblock %}
 
 {% block content %}
-{% cache cache_duration, 'dataset-content', dataset.id|string, reuses.page|string, g.lang_code, current_user.slug or 'anonymous', dataset.last_modified|string %}
-
 {{ breadcrumb(self) }}
-
+{% cache cache_duration, 'dataset-content', dataset.id|string, reuses.page|string, g.lang_code, current_user.slug or 'anonymous', dataset.last_modified|string %}
 <div class="content fr-container fr-mb-10v">
     {% if dataset.private or dataset.deleted or dataset.archived %}
         <div class="fr-grid-row">
