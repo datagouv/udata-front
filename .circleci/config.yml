@@ -413,12 +413,11 @@ jobs:
           command: |
             if [[ $CIRCLE_TAG ]]; then
                 # This is a tagged release, version has been handled upstream
-                RELEASE_VERSION=$CIRCLE_TAG
-                echo "RELEASE_VERSION=$RELEASE_VERSION" >> version.sh
+                echo "RELEASE_VERSION=$CIRCLE_TAG" >> version.sh
             else
                 # Otherwise, relies on a dev version like "1.2.1.dev" by default
                 # Read base version from __init__.py
-                echo "BASE_VERSION=$(python -c "from udata import __version__; print(__version__)") >> version.sh
+                echo "BASE_VERSION=$(python -c 'from udata import __version__; print(__version__)')" >> version.sh
                 # Build the release version string with the build number, like "1.2.1.dev1234"
                 echo "RELEASE_VERSION=${BASE_VERSION}${BUILDNO}" >> version.sh
             fi
