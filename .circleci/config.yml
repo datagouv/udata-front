@@ -468,7 +468,7 @@ jobs:
           command: |
             git clone --quiet --depth 1 $SCAFFOLD_REPO_SSH_URL scaffold
       - run:
-          name: Trigger Gitlab CI/CD pipeline for Hydra to deploy to dev environment
+          name: Trigger Gitlab CI/CD pipeline for udata+udata-front to deploy to dev environment
           command: |
             source set_env_builno.sh
             cd scaffold
@@ -479,7 +479,7 @@ jobs:
             # - udata: the name of the parent project to re-deploy (APP_NAME)
             # - $BUILDNO: the plugin build version to deploy (RELEASE_VERSION)
             # - << pipeline.parameters.deploy-env >>: the environment to deploy to (ENV)
-            # - "plugin_name=udata-front": the deploy variables (VARS). They are passed as a quoted string in which the variables are separated by commas.
+            # - "plugin_name=udata-front": the deploy variables (VARS). They are passed as a quoted string in which the variables are separated by semicolons.
             ./scripts/gitlab-ci-pipeline.sh udata ${BUILDNO} << pipeline.parameters.deploy-env >> "plugin_name=udata-front"
 
 workflows:
