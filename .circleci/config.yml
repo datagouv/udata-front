@@ -71,7 +71,7 @@ jobs:
       - image: mongo:6.0.4
       - image: redis:alpine
     environment:
-       BASH_ENV: /root/.bashrc
+        BASH_ENV: /root/.bashrc
     steps:
       - checkout
       - attach_workspace:
@@ -294,6 +294,7 @@ jobs:
       - image: mongo:6.0.4
       - image: redis:alpine
     resource_class: medium+
+    parallelism: 2
     steps:
       - checkout
       - cypress/install
@@ -393,7 +394,7 @@ jobs:
     docker:
       - image: udata/circleci:py3.11-bookworm
     environment:
-       BASH_ENV: /root/.bashrc
+        BASH_ENV: /root/.bashrc
     steps:
       - checkout
       - attach_workspace:
@@ -434,7 +435,6 @@ jobs:
             twine upload --username "${PYPI_USERNAME}" --password "${PYPI_PASSWORD}" dist/*.whl
 
 workflows:
-  version: 2
   build:
     jobs:
       - deps:
