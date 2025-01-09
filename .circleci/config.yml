@@ -409,7 +409,7 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: Set version
+          name: Set release version
           command: |
             if [[ $CIRCLE_TAG ]]; then
                 # This is a tagged release, version has been handled upstream
