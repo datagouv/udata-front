@@ -101,15 +101,15 @@ jobs:
           command: |
             if [[ $CIRCLE_TAG ]]; then
                 # This is a tagged release
-                echo 'export BUILDNO="'$CIRCLE_TAG'"' >> set_env_builno.sh
+                echo 'export BUILDNO="'$CIRCLE_TAG'"' >> version.sh
             elif [[ "$CIRCLE_BRANCH" == feature/* ]]; then
                 # This is a feature branch
-                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM+${CIRCLE_BRANCH#*/}'"' >> set_env_builno.sh
+                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM+${CIRCLE_BRANCH#*/}'"' >> version.sh
             else
                 # This is a simple development build
-                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM'"' >> set_env_builno.sh
+                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM'"' >> version.sh
             fi
-            source set_env_builno.sh
+            source version.sh
             echo $BUILDNO
       - when:
           condition:
@@ -119,7 +119,7 @@ jobs:
                 name: Generate egg-info
                 command: |
                   source venv/bin/activate
-                  source set_env_builno.sh
+                  source version.sh
                   inv egg-info --buildno ${BUILDNO}
       - save_cache:
           key: py-cache-v16-{{ arch }}-{{ .Branch }}{{ .Environment.CIRCLE_TAG }}
@@ -140,7 +140,7 @@ jobs:
           paths:
           - venv
           - udata_front.egg-info
-          - set_env_builno.sh
+          - version.sh
 
   assets:
     docker:
@@ -321,7 +321,7 @@ jobs:
             - run:
                 name: Generate egg-info
                 command: |
-                  source set_env_builno.sh
+                  source version.sh
                   python setup.py egg_info --tag-build ${BUILDNO}
       - run:
           name: Prepare udata.cfg file with udata-front plugin
@@ -386,7 +386,7 @@ jobs:
             - run:
                 name: Generate egg-info
                 command: |
-                  source set_env_builno.sh
+                  source version.sh
                   python setup.py egg_info --tag-build ${BUILDNO}
 
       - run:
@@ -409,6 +409,29 @@ jobs:
       - attach_workspace:
           at: .
       - run:
+          name: Set version
+          command: |
+            if [[ $CIRCLE_TAG ]]; then
+                # This is a tagged release, version has been handled upstream
+                RELEASE_VERSION=$CIRCLE_TAG
+                echo "RELEASE_VERSION=$RELEASE_VERSION" > version.sh
+            else
+                # Otherwise, relies on a dev version like "1.2.1.dev" by default
+                # Read base version from __init__.py
+                echo "BASE_VERSION=$(python -c "from udata import __version__; print(__version__)") >> version.sh
+                # Build the release version string with the build number, like "1.2.1.dev1234"
+                echo "RELEASE_VERSION=${BASE_VERSION}${BUILDNO}" >> version.sh
+            fi
+      - run:
+          name: Display build info for debugging
+          command: |
+            source version.sh
+            echo "Base version from __init__.py: $BASE_VERSION"
+            echo "Build number: $BUILDNO"
+            echo "Commit hash: ${CIRCLE_SHA1:0:7}"
+            echo "Git tag: $CIRCLE_TAG"
+            echo "Building a wheel release with version $RELEASE_VERSION"
+      - run:
           name: Build a distributable package
           command: |
             source venv/bin/activate
@@ -420,7 +443,7 @@ jobs:
                 inv pydist
             else
                 # This is a simple development build
-                source set_env_builno.sh
+                source version.sh
                 inv pydist -b ${BUILDNO}
             fi
       - store_artifacts:
@@ -470,7 +493,7 @@ jobs:
       - run:
           name: Trigger Gitlab CI/CD pipeline for udata+udata-front to deploy to dev environment
           command: |
-            source set_env_builno.sh
+            source version.sh
             cd scaffold
             # Run the script that triggers the Gitlab CI/CD pipeline.
             # Must have GITLAB_API_TOKEN set in the environment
