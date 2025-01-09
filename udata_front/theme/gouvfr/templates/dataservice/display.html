@@ -60,10 +60,8 @@
 {% endblock %}
 
 {% block content %}
-{% cache cache_duration, 'dataservice-content', dataservice.id|string, datasets.page|string, g.lang_code, current_user.slug or 'anonymous', dataservice.metadata_modified_at|string %}
-
 {{ breadcrumb(self) }}
-
+{% cache cache_duration, 'dataservice-content', dataservice.id|string, datasets.page|string, g.lang_code, current_user.slug or 'anonymous', dataservice.metadata_modified_at|string %}
 <div class="content fr-container fr-mb-10v">
     {% if dataservice.private or dataservice.deleted_at or dataservice.archived_at %}
         <div class="fr-grid-row">
