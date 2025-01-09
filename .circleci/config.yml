@@ -70,6 +70,7 @@ jobs:
       - image: udata/circleci:py3.11-bookworm
       - image: mongo:6.0.4
       - image: redis:alpine
+    parallelism: 3
     environment:
         BASH_ENV: /root/.bashrc
     steps:
@@ -294,7 +295,7 @@ jobs:
       - image: mongo:6.0.4
       - image: redis:alpine
     resource_class: medium+
-    parallelism: 2
+    parallelism: 3
     steps:
       - checkout
       - cypress/install
