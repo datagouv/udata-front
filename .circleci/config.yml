@@ -461,6 +461,7 @@ jobs:
           root: .
           paths:
             - dist
+            - version.sh
 
   publish:
     docker:
