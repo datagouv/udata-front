@@ -54,183 +54,181 @@
         </div>
     </div>
 </section>
-<section class="dual-color-background">
-    <div class="fr-container">
-        <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--bottom">
-            <div class="fr-col-12 fr-col-md-6 fr-pr-md-10w fr-py-4w fr-pt-12w fr-py-md-12w">
-                <div class="fr-mb-1w w-4rem with-svg-responsive greyscaled">
-                    {% include theme('svg/illustrations/dataset.svg') %}
+<section class="fr-container--fluid">
+    <div class="fr-grid-row fr-grid-row--gutters">
+        <div class="fr-col-12 fr-col-lg-6 fr-pr-md-10w fr-py-4w fr-pt-12w fr-py-md-12w fr-px-md-10w">
+            <div class="fr-mb-1w w-4rem with-svg-responsive greyscaled">
+                {% include theme('svg/illustrations/dataset.svg') %}
+            </div>
+            <h2 class="fs-xxxl text-title-grey font-800 fr-mb-1w">{{_('French data catalog')}}</h2>
+            <p class="fr-mb-4w">
+                {{_('Discover data on all subjects, made by the administration and civil society.')}}
+            </p>
+            <div class="fr-grid-row justify-between fr-grid-row--gutters">
+                {% for (label, metric) in data_metrics %}
+                <div class="fr-col-auto">
+                    <p class="fr-m-0 fr-my-1v text-grey-400">
+                        <span class="fr-h4 font-800 fr-m-0 block">{{ metric|summarize }}</span>
+                        <span class="fr-text--regular fr-m-0 subtitle subtitle--uppercase">{{ label }}</span>
+                    </p>
                 </div>
-                <h2 class="fs-xxxl text-title-grey font-800 fr-mb-1w">{{_('French data catalog')}}</h2>
-                <p class="fr-mb-4w">
-                    {{_('Discover data on all subjects, made by the administration and civil society.')}}
-                </p>
-                <div class="fr-grid-row justify-between fr-grid-row--gutters">
-                    {% for (label, metric) in data_metrics %}
-                    <div class="fr-col-auto">
-                        <p class="fr-m-0 fr-my-1v text-grey-400">
-                            <span class="fr-h4 font-800 fr-m-0 block">{{ metric|summarize }}</span>
-                            <span class="fr-text--regular fr-m-0 subtitle subtitle--uppercase">{{ label }}</span>
-                        </p>
-                    </div>
-                    {% endfor %}
+                {% endfor %}
+            </div>
+            <p class="fr-mt-4w fr-mb-3v fr-text--bold text-mention-grey text-transform-uppercase">
+                {{_('They publish data on {site}'.format(site=config.SITE_TITLE))}}
+            </p>
+            <div class="fr-grid-row justify-between fr-mb-4w">
+                <img
+                    alt="Santé publique France"
+                    src="{{theme_static('img/organizations/spf.png')}}"
+                    class="greyscaled opacity-80"
+                    loading="lazy"
+                    width="80"
+                    height="80"
+                >
+                <img
+                    alt="CNIL"
+                    src="{{theme_static('img/organizations/cnil.png')}}"
+                    class="greyscaled opacity-80"
+                    loading="lazy"
+                    width="80"
+                    height="80"
+                >
+                <img
+                    alt="Insee"
+                    src="{{theme_static('img/organizations/insee.png')}}"
+                    class="greyscaled opacity-80"
+                    loading="lazy"
+                    width="80"
+                    height="80"
+                >
+                <img
+                    alt="Ministère de l'Éducation Nationale et de la Jeunesse"
+                    src="{{theme_static('img/organizations/en.png')}}"
+                    class="greyscaled opacity-80"
+                    loading="lazy"
+                    width="80"
+                    height="80"
+                >
+            </div>
+            <div class="fr-grid-row fr-grid-row--gutters">
+                <div class="fr-col-auto">
+                    <a href="{{url_for('datasets.list')}}" class="fr-btn">
+                        {{ _('See data') }}
+                    </a>
                 </div>
-                <p class="fr-mt-4w fr-mb-3v fr-text--bold text-mention-grey text-transform-uppercase">
-                    {{_('They publish data on {site}'.format(site=config.SITE_TITLE))}}
-                </p>
-                <div class="fr-grid-row justify-between fr-mb-4w">
-                    <img
-                        alt="Santé publique France"
-                        src="{{theme_static('img/organizations/spf.png')}}"
-                        class="greyscaled opacity-80"
-                        loading="lazy"
-                        width="80"
-                        height="80"
-                    >
-                    <img
-                        alt="CNIL"
-                        src="{{theme_static('img/organizations/cnil.png')}}"
-                        class="greyscaled opacity-80"
-                        loading="lazy"
-                        width="80"
-                        height="80"
-                    >
-                    <img
-                        alt="Insee"
-                        src="{{theme_static('img/organizations/insee.png')}}"
-                        class="greyscaled opacity-80"
-                        loading="lazy"
-                        width="80"
-                        height="80"
-                    >
-                    <img
-                        alt="Ministère de l'Éducation Nationale et de la Jeunesse"
-                        src="{{theme_static('img/organizations/en.png')}}"
-                        class="greyscaled opacity-80"
-                        loading="lazy"
-                        width="80"
-                        height="80"
-                    >
-                </div>
-                <div class="fr-grid-row fr-grid-row--gutters">
-                    <div class="fr-col-auto">
-                        <a href="{{url_for('datasets.list')}}" class="fr-btn">
-                            {{ _('See data') }}
-                        </a>
-                    </div>
-                    <div class="fr-col-auto">
-                        <a href="{{url_for('gouvfr.show_page', slug= 'onboarding/producteurs')}}"
-                            class="fr-btn fr-btn--secondary">
-                            {{ _('How to publish data?') }}
-                        </a>
-                    </div>
+                <div class="fr-col-auto">
+                    <a href="{{url_for('gouvfr.show_page', slug= 'onboarding/producteurs')}}"
+                        class="fr-btn fr-btn--secondary">
+                        {{ _('How to publish data?') }}
+                    </a>
                 </div>
             </div>
-            <div class="fr-col-12 fr-col-md-6 fr-pl-md-10w fr-py-md-0 fr-pt-md-8w">
-                <figure class="fr-m-0 flex flex-direction-column items-center">
-                    <figcaption class="subtitle subtitle--uppercase text-mention-grey">
-                        {{_('datasets')}}
-                    </figcaption>
-                    <img
-                        srcset="{{theme_static('img/homepage/datasets.png')}}, {{theme_static('img/homepage/datasets@2x.png')}} 2x, {{theme_static('img/homepage/datasets@3x.png')}} 3x"
-                        src="{{theme_static('img/homepage/datasets.png')}}"
-                        alt=""
-                        loading="lazy"
-                        width="516"
-                        height="auto"
-                    >
-                </figure>
-            </div>
+        </div>
+        <div class="fr-col-12 fr-col-lg-6 fr-pl-md-10w fr-py-md-0 fr-pt-md-8w fr-px-md-10w bg-alt-grey flex flex-direction-column justify-end">
+            <figure class="fr-m-0 flex flex-direction-column items-center">
+                <figcaption class="subtitle subtitle--uppercase text-mention-grey">
+                    {{_('datasets')}}
+                </figcaption>
+                <img
+                    class="mw-100"
+                    srcset="{{theme_static('img/homepage/datasets.png')}}, {{theme_static('img/homepage/datasets@2x.png')}} 2x, {{theme_static('img/homepage/datasets@3x.png')}} 3x"
+                    src="{{theme_static('img/homepage/datasets.png')}}"
+                    alt=""
+                    loading="lazy"
+                    width="516"
+                    height="auto"
+                >
+            </figure>
         </div>
     </div>
 </section>
-<section class="dual-color-background--reversed relative z-2">
-    <div class="fr-container">
-        <div class="fr-grid-row fr-grid-row--gutters">
-            <div class="fr-col-12 fr-col-md-6 fr-pl-md-10w fr-py-4w fr-pt-12w fr-py-md-12w order-md-2">
-                <div class="fr-mb-1w w-4rem with-svg-responsive greyscaled">
-                    {% include theme('svg/blank_state/discussion.svg') %}
+<section class="relative z-2 fr-container--fluid">
+    <div class="fr-grid-row fr-grid-row--gutters">
+        <div class="bg-alt-grey fr-col-12 fr-col-lg-6 fr-pl-md-10w fr-py-4w fr-pt-12w fr-py-md-12w order-lg-2 fr-px-md-10w">
+            <div class="fr-mb-1w w-4rem with-svg-responsive greyscaled">
+                {% include theme('svg/blank_state/discussion.svg') %}
+            </div>
+            <h2 class="fs-xxxl text-title-grey font-800 fr-mb-1w">{{_('A dynamic and engaged community')}}</h2>
+            <p class="fr-mb-4w">
+                {{_('Share your data usage and exchange between data producers and reusers.')}}
+            </p>
+            <div class="fr-grid-row justify-between fr-grid-row--gutters">
+                {% for (label, metric) in community_metrics %}
+                <div class="fr-col-auto">
+                    <p class="fr-m-0 fr-my-1v text-grey-400">
+                        <span class="fr-h4 font-800 fr-m-0 block">{{ metric|summarize }}</span>
+                        <span class="fr-text--regular fr-m-0 subtitle subtitle--uppercase">{{ label }}</span>
+                    </p>
                 </div>
-                <h2 class="fs-xxxl text-title-grey font-800 fr-mb-1w">{{_('A dynamic and engaged community')}}</h2>
-                <p class="fr-mb-4w">
-                    {{_('Share your data usage and exchange between data producers and reusers.')}}
-                </p>
-                <div class="fr-grid-row justify-between fr-grid-row--gutters">
-                    {% for (label, metric) in community_metrics %}
-                    <div class="fr-col-auto">
-                        <p class="fr-m-0 fr-my-1v text-grey-400">
-                            <span class="fr-h4 font-800 fr-m-0 block">{{ metric|summarize }}</span>
-                            <span class="fr-text--regular fr-m-0 subtitle subtitle--uppercase">{{ label }}</span>
-                        </p>
-                    </div>
-                    {% endfor %}
+                {% endfor %}
+            </div>
+            <p class="fr-mt-4w fr-mb-3v fr-text--bold text-mention-grey text-transform-uppercase">
+                {{_('They reuse data from {site}'.format(site=config.SITE_TITLE))}}
+            </p>
+            <div class="fr-grid-row justify-between fr-mb-4w">
+                <img
+                    alt="Le monde"
+                    src="{{theme_static('img/organizations/le-monde.png')}}"
+                    class="greyscaled opacity-50 object-fit-contain"
+                    loading="lazy"
+                    width="80"
+                    height="80"
+                >
+                <img
+                    alt="Google Maps"
+                    src="{{theme_static('img/organizations/google-maps.png')}}"
+                    class="greyscaled opacity-50 object-fit-contain"
+                    loading="lazy"
+                    width="80"
+                    height="80"
+                >
+                <img
+                    alt="Libération"
+                    src="{{theme_static('img/organizations/liberation.png')}}"
+                    class="greyscaled opacity-50 object-fit-contain"
+                    loading="lazy"
+                    width="80"
+                    height="80"
+                >
+                <img
+                    alt="Fondation Wikimedia"
+                    src="{{theme_static('img/organizations/wikimedia.png')}}"
+                    class="greyscaled opacity-50 object-fit-contain"
+                    loading="lazy"
+                    width="80"
+                    height="80"
+                >
+            </div>
+            <div class="fr-grid-row fr-grid-row--gutters">
+                <div class="fr-col-auto">
+                    <a href="{{url_for('reuses.list')}}" class="fr-btn">
+                        {{ _('See reuses') }}
+                    </a>
                 </div>
-                <p class="fr-mt-4w fr-mb-3v fr-text--bold text-mention-grey text-transform-uppercase">
-                    {{_('They reuse data from {site}'.format(site=config.SITE_TITLE))}}
-                </p>
-                <div class="fr-grid-row justify-between fr-mb-4w">
-                    <img
-                        alt="Le monde"
-                        src="{{theme_static('img/organizations/le-monde.png')}}"
-                        class="greyscaled opacity-50 object-fit-contain"
-                        loading="lazy"
-                        width="80"
-                        height="80"
-                    >
-                    <img
-                        alt="Google Maps"
-                        src="{{theme_static('img/organizations/google-maps.png')}}"
-                        class="greyscaled opacity-50 object-fit-contain"
-                        loading="lazy"
-                        width="80"
-                        height="80"
-                    >
-                    <img
-                        alt="Libération"
-                        src="{{theme_static('img/organizations/liberation.png')}}"
-                        class="greyscaled opacity-50 object-fit-contain"
-                        loading="lazy"
-                        width="80"
-                        height="80"
-                    >
-                    <img
-                        alt="Fondation Wikimedia"
-                        src="{{theme_static('img/organizations/wikimedia.png')}}"
-                        class="greyscaled opacity-50 object-fit-contain"
-                        loading="lazy"
-                        width="80"
-                        height="80"
-                    >
-                </div>
-                <div class="fr-grid-row fr-grid-row--gutters">
-                    <div class="fr-col-auto">
-                        <a href="{{url_for('reuses.list')}}" class="fr-btn">
-                            {{ _('See reuses') }}
-                        </a>
-                    </div>
-                    <div class="fr-col-auto">
-                        <a href="{{url_for('gouvfr.show_page', slug= 'onboarding/reutilisateurs')}}"
-                            class="fr-btn fr-btn--secondary">
-                            {{ _('How to reuse data?') }}
-                        </a>
-                    </div>
+                <div class="fr-col-auto">
+                    <a href="{{url_for('gouvfr.show_page', slug= 'onboarding/reutilisateurs')}}"
+                        class="fr-btn fr-btn--secondary">
+                        {{ _('How to reuse data?') }}
+                    </a>
                 </div>
             </div>
-            <div class="fr-col-12 fr-col-md-6 fr-pr-md-10w fr-py-4w fr-py-md-0 fr-pt-md-8w">
-                <figure class="fr-m-0">
-                    <figcaption class="subtitle subtitle--uppercase text-mention-grey text-align-center">
-                        {{_('reuses')}}
-                    </figcaption>
-                    <img
-                        srcset="{{theme_static('img/homepage/reuses.png')}}, {{theme_static('img/homepage/reuses@2x.png')}} 2x, {{theme_static('img/homepage/reuses@3x.png')}} 3x"
-                        src="{{theme_static('img/homepage/reuses.png')}}"
-                        alt=""
-                        loading="lazy"
-                        width="592"
-                        height="556"
-                    >
-                </figure>
-            </div>
+        </div>
+        <div class="fr-col-12 fr-col-lg-6 fr-pr-md-10w fr-py-4w fr-py-md-0 fr-pt-md-8w fr-px-md-10w">
+            <figure class="fr-m-0 flex flex-direction-column items-center">
+                <figcaption class="subtitle subtitle--uppercase text-mention-grey text-align-center">
+                    {{_('reuses')}}
+                </figcaption>
+                <img
+                    class="mw-100"
+                    srcset="{{theme_static('img/homepage/reuses.png')}}, {{theme_static('img/homepage/reuses@2x.png')}} 2x, {{theme_static('img/homepage/reuses@3x.png')}} 3x"
+                    src="{{theme_static('img/homepage/reuses.png')}}"
+                    alt=""
+                    loading="lazy"
+                    width="592"
+                    height="auto"
+                >
+            </figure>
         </div>
     </div>
 </section>
