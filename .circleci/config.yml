@@ -475,7 +475,7 @@ jobs:
             pip install twine
             twine upload --username "${PYPI_USERNAME}" --password "${PYPI_PASSWORD}" dist/*.whl
 
-  trigger-gitlab-pipeline:
+  trigger_gitlab_pipeline:
     docker:
       - image: cimg/base:stable
     steps:
@@ -512,7 +512,7 @@ jobs:
             # - $BUILDNO: the plugin build version to deploy (RELEASE_VERSION)
             # - << pipeline.parameters.deploy-env >>: the environment to deploy to (ENV)
             # - "plugin_name=<< pipeline.parameters.plugin-name >>": the deploy variables (VARS). They are passed as a quoted string in which the variables are separated by semicolons.
-            ./scripts/gitlab-ci-pipeline.sh << pipeline.parameters.app-name >> ${BUILDNO} << pipeline.parameters.deploy-env >> "plugin_name=<< pipeline.parameters.plugin-name >>"
+            ./scripts/gitlab-ci-pipeline.sh << pipeline.parameters.app-name >> ${RELEASE_VERSION} << pipeline.parameters.deploy-env >> "plugin_name=<< pipeline.parameters.plugin-name >>"
 
 workflows:
   build:
@@ -592,7 +592,7 @@ workflows:
             tags:
               only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
           context: org-global
-      - trigger-gitlab-pipeline:
+      - trigger_gitlab_pipeline:
           requires:
             - publish
           filters:
