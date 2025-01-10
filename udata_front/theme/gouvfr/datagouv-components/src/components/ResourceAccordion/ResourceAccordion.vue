@@ -5,17 +5,19 @@
       :id="resourceHeaderId"
     >
       <div>
-        <h4 class="fr-mb-1v flex items-center" :id="resourceTitleId">
-          <button type="button" @click="toggle" class="fr-p-0 flex items-center" data-testid="expand-button" :aria-expanded="open">
-            <ResourceIcon :resource class="fr-icon--xs fr-mr-1v" />
-            <span :class="{
-              'font-bold': open,
-            }"><TextClamp :max-lines="1" :text="resource.title || t('Nameless file')"/></span>
+        <div class="flex items-center fr-mb-1v">
+          <h4 class="fr-m-0" :id="resourceTitleId">
+            <button type="button" @click="toggle" class="fr-p-0 flex items-center" data-testid="expand-button" :aria-expanded="open">
+              <ResourceIcon :resource class="fr-icon--xs fr-mr-1v" />
+              <span :class="{
+                'font-bold': open,
+              }"><TextClamp :max-lines="1" :text="resource.title || t('Nameless file')"/></span>
 
-            <span class="absolute inset-0 z-1"></span>
-          </button>
+              <span class="absolute inset-0 z-1"></span>
+            </button>
+          </h4>
           <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resourceExternalUrl" class="z-2" />
-        </h4>
+        </div>
         <div class="text-grey-380 subheaders-infos">
           <SchemaBadge :resource class="dash-after" />
           <span class="fr-text--xs fr-mb-0 dash-after">{{ t('Updated {date}', {date: formatRelativeIfRecentDate(lastUpdate)}) }}</span>
@@ -45,12 +47,31 @@
           <a
             :href="resource.latest"
             :title="t('File link - opens a new window')"
+            :aria-describedby="resourceTitleId"
             rel="ugc nofollow noopener"
             target="_blank"
             class="fr-btn fr-btn--sm"
           >
             {{ $t('Visit') }}
           </a>
+        </p>
+        <p class="fr-col-auto fr-ml-3v fr-m-0 z-2" v-else-if="ogcService">
+          <button
+            :id="resource.id + '-copy'"
+            :data-clipboard-text="resource.url"
+            :aria-describedby="resourceTitleId"
+            class="fr-btn fr-btn--sm"
+          >
+            <span>
+                <OhVueIcon
+                  :height="16"
+                  :width="16"
+                  name="ri-file-copy-line"
+                  class="copy-icon fr-mr-2v"
+                />
+            </span>
+            {{ t('Copy link') }}
+          </button>
         </p>
         <p class="fr-col-auto fr-ml-3v fr-m-0" v-else>
           <a
@@ -59,8 +80,9 @@
             :title="t('Download file')"
             download
             class="relative text-transform-uppercase fr-btn fr-btn--sm fr-btn--icon-left fr-icon-test-tube-line fr-icon-download-line fr-icon--sm matomo_download z-2"
+            :aria-describedby="resourceTitleId"
           >
-            {{ format }}
+            <span class="fr-sr-only">{{ t('Download file as ') }}</span>{{ format }}
           </a>
         </p>
         <p class="fr-col-auto fr-ml-3v fr-m-0 z-2" v-if="canEdit">
@@ -170,7 +192,10 @@ import TabPanels from "../Tabs/TabPanels.vue";
 import TabPanel from "../Tabs/TabPanel.vue";
 import { trackEvent } from "../../helpers/matomo";
 import CopyButton from "../CopyButton/CopyButton.vue";
-import { getResourceFormatIconSvg } from "../../helpers/resources";
+import { getResourceFormatIconSvg, getResourceTitleId } from "../../helpers/resources";
+import { OhVueIcon } from 'oh-vue-icons';
+
+const OGC_SERVICES_FORMATS = ['ogc:wfs', 'ogc:wms', 'wfs', 'wms'];
 
 const props = withDefaults(defineProps<{
   datasetId: string,
@@ -196,6 +221,8 @@ const hasPreview = computed(() => {
 })
 
 const format = computed(() => getResourceFormatIconSvg(props.resource) ? props.resource.format : t("File"))
+
+const ogcService = computed(() => OGC_SERVICES_FORMATS.includes(props.resource.format))
 
 const open = ref(props.expandedOnMount);
 const toggle = () => {
@@ -259,7 +286,7 @@ const resourceExternalUrl = computed(() => `${window.location.origin}${window.lo
 
 const resourceContentId = 'resource-' + props.resource.id;
 const resourceHeaderId = 'resource-' + props.resource.id + '-header';
-const resourceTitleId = 'resource-' + props.resource.id + '-title';
+const resourceTitleId = getResourceTitleId(props.resource);
 </script>
 <style scoped>
 .fr-link--no-after::after {

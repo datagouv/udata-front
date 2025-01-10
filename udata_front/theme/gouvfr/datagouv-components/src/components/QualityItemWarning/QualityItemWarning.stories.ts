@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { QualityItemWarning } from '.';
+import "../quality-score.less";
 
 const meta = {
   title: "Components/Quality/Internals/Quality Item Warning",
@@ -27,6 +28,6 @@ export const QualityWarning: StoryObj<typeof meta> = {
   args:{
     qualityItem: false,
     message: "This is a warning",
-  } 
+  }
 };
 

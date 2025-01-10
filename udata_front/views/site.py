@@ -7,9 +7,12 @@ from feedgenerator.django.utils.feedgenerator import Atom1Feed
 
 from udata.app import cache
 from udata.core.activity.models import Activity
+from udata.core.dataservices.csv import DataserviceCsvAdapter
+from udata.core.dataservices.models import Dataservice
 from udata.core.dataset.api import DatasetApiParser
 from udata.core.dataset.csv import ResourcesCsvAdapter
 from udata.core.dataset.models import Dataset
+from udata.core.dataset.search import DatasetSearch
 from udata.core.organization.api import OrgApiParser
 from udata.core.organization.csv import OrganizationCsvAdapter
 from udata.core.organization.models import Organization
@@ -111,11 +114,12 @@ def get_export_url(model):
 
 @blueprint.route('/datasets.csv')
 def datasets_csv():
-    params = multi_to_dict(request.args)
     # redirect to EXPORT_CSV dataset if feature is enabled and no filter is set
     exported_models = current_app.config.get('EXPORT_CSV_MODELS', [])
-    if not params and 'dataset' in exported_models:
+    if not request.args and 'dataset' in exported_models:
         return redirect(get_export_url('dataset'))
+    search_parser = DatasetSearch.as_request_parser(store_missing=False)
+    params = search_parser.parse_args()
     params['facets'] = False
     datasets = DatasetApiParser.parse_filters(Dataset.objects.visible(), params)
     adapter = csv.get_adapter(Dataset)
@@ -124,11 +128,12 @@ def datasets_csv():
 
 @blueprint.route('/resources.csv')
 def resources_csv():
-    params = multi_to_dict(request.args)
     # redirect to EXPORT_CSV dataset if feature is enabled and no filter is set
     exported_models = current_app.config.get('EXPORT_CSV_MODELS', [])
-    if not params and 'resource' in exported_models:
+    if not request.args and 'resource' in exported_models:
         return redirect(get_export_url('resource'))
+    search_parser = DatasetSearch.as_request_parser(store_missing=False)
+    params = search_parser.parse_args()
     params['facets'] = False
     datasets = DatasetApiParser.parse_filters(Dataset.objects.visible(), params)
     return csv.stream(ResourcesCsvAdapter(datasets), 'resources')
@@ -156,6 +161,18 @@ def reuses_csv():
     params['facets'] = False
     reuses = ReuseApiParser.parse_filters(Reuse.objects.visible(), params)
     return csv.stream(ReuseCsvAdapter(reuses), 'reuses')
+
+
+@blueprint.route('/dataservices.csv')
+def dataservices_csv():
+    params = multi_to_dict(request.args)
+    # redirect to EXPORT_CSV dataset if feature is enabled and no filter is set
+    exported_models = current_app.config.get('EXPORT_CSV_MODELS', [])
+    if not params and 'dataservice' in exported_models:
+        return redirect(get_export_url('dataservice'))
+    params['facets'] = False
+    dataservices = Dataservice.apply_sort_filters(Dataservice.objects.visible())
+    return csv.stream(DataserviceCsvAdapter(dataservices), 'dataservices')
 
 
 @blueprint.route('/harvests.csv')

@@ -2,6 +2,36 @@
 
 ## Current (in progress)
 
+- Fix following cache issue [#631](https://github.com/datagouv/udata-front/pull/631)
+- Add dataservice search to header [#622](https://github.com/datagouv/udata-front/pull/622)
+
+## 6.0.7 (2024-12-20)
+
+- Add NATIONAL_MOURNING config [#625](https://github.com/datagouv/udata-front/pull/625)
+
+## 6.0.6 (2024-12-09)
+
+- Add geo specific display on OGC service resources [#609](https://github.com/datagouv/udata-front/pull/609)
+- Add dataservices.csv route [#612](https://github.com/datagouv/udata-front/pull/612)
+- Add csv.gz format as table resource [617](https://github.com/datagouv/udata-front/pull/617)
+
+## 6.0.5 (2024-11-29)
+
+- Compile udata deps to latest and upgrade lxml [#615](https://github.com/datagouv/udata-front/pull/615)
+
+## 6.0.4 (2024-11-29)
+
+- Disable sentry session tracking [#610](https://github.com/datagouv/udata-front/pull/610)
+- Use metadata_modifed_at in dataservice cache keys [#611](https://github.com/datagouv/udata-front/pull/611)
+- We don't want to fallback on site.home with params [#613](https://github.com/datagouv/udata-front/pull/613)
+- Update dataset params parsing to deal with tags correctly [#614](https://github.com/datagouv/udata-front/pull/614)
+
+## 6.0.3 (2024-11-19)
+
+- Remove duplicated /admin in admin dataservice route [#608](https://github.com/datagouv/udata-front/pull/608)
+
+## 6.0.2 (2024-11-19)
+
 - Display correct business documentation url link [#595](https://github.com/datagouv/udata-front/pull/595)
 - Remove old display from api.gouv.fr in datasets pages [#597](https://github.com/datagouv/udata-front/pull/597)
 - Change link to reuses search page instead of datasets search page in dataservice search page [#599](https://github.com/datagouv/udata-front/pull/599)

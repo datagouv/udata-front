@@ -2,6 +2,23 @@
 
 ## Current (in progress)
 
+- Fix download and copy buttons accessibility [#630](https://github.com/datagouv/udata-front/pull/630)
+- Use description list for resource metadata [#629](https://github.com/datagouv/udata-front/pull/629)
+- Fix quality score accessiblity issues [#628](https://github.com/datagouv/udata-front/pull/628)
+- Fix BaseDataset type [#633](https://github.dev/datagouv/udata-front/pull/633)
+
+## 2.0.4 (2024-12-18)
+
+- Do not show pagination if not enough results [#624](https://github.com/datagouv/udata-front/pull/624)
+- Fix reuse card date [#627](https://github.com/datagouv/udata-front/pull/627)
+
+## 2.0.3 (2024-12-09)
+
+- Add geo specific display on OGC service resources [#609](https://github.com/datagouv/udata-front/pull/609)
+- Add csv.gz format as table resource [617](https://github.com/datagouv/udata-front/pull/617)
+
+## 2.0.2 (2024-11-19)
+
 - Display correct business documentation url link [#595](https://github.com/datagouv/udata-front/pull/595)
 - Deprecate `useUserAvatar` and rename it to `getUserAvatar` to better convey its usage [#596](https://github.com/datagouv/udata-front/pull/596)
 

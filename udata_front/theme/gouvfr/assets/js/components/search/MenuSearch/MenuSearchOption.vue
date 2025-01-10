@@ -1,9 +1,7 @@
 <template>
   <a class="fr-nav__link unstyled" :href="link">
     <div class="fr-grid-row fr-grid-row--middle">
-      <div aria-hidden="true" class="fr-col-auto fr-mr-2w">
-        <img :src="icon" alt=""/>
-      </div>
+      <span class="fr-icon--sm align-[-1px] fr-mr-1w" :class="icon" aria-hidden="true"></span>
       <i18n-t keypath="Search {query} in {type}" class="fr-col" tag="div" scope="global" v-if="query">
         <template #query>
           <em>{{query}}</em>
@@ -24,30 +22,12 @@
   </a>
 </template>
 
-<script>
-import {defineComponent} from "vue";
-export default defineComponent({
-  props: {
-    icon: {
-      type: String,
-      required: true,
-    },
-    query: {
-      type: String,
-      required: true,
-    },
-    link: {
-      type: String,
-      required: true,
-    },
-    type: {
-      type: String,
-      required: true,
-    },
-  }
-});
+<script setup lang="ts">
+defineProps<{
+  icon: string,
+  query: string,
+  link: string,
+  type: string
+}>();
 </script>
 
-<style scoped>
-
-</style>
