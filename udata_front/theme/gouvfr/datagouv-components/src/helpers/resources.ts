@@ -73,3 +73,7 @@ export function getResourceFormatIconSvg(resource: Resource): string | null {
             return null;
     }
 }
+
+export function getResourceTitleId(resource: Resource) {
+  return 'resource-' + resource.id + '-title';
+}
