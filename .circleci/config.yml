@@ -426,7 +426,7 @@ jobs:
                 # Otherwise, relies on a dev version like "1.2.1.dev" by default
                 # Read base version from __init__.py
                 source venv/bin/activate
-                echo "BASE_VERSION=$(python -c 'from << pipeline.parameters.plugin-name >> import __version__; print(__version__)')" >> version.sh
+                echo "BASE_VERSION=$(python -c 'from udata_front import __version__; print(__version__)')" >> version.sh
                 # Build the release version string with the build number, like "1.2.1.dev1234"
                 echo "RELEASE_VERSION=${BASE_VERSION}${BUILDNO}" >> version.sh
             fi
