@@ -10,6 +10,14 @@ parameters:
     type: string
     default: "dev"
     description: "Environment to deploy to"
+  app-name:
+    type: string
+    default: "udata"
+    description: "Parent app name"
+  plugin-name:
+    type: string
+    default: "udata-front"
+    description: "Plugin name"
 
 orbs:
   browser-tools: circleci/browser-tools@1.2.3
@@ -417,7 +425,7 @@ jobs:
             else
                 # Otherwise, relies on a dev version like "1.2.1.dev" by default
                 # Read base version from __init__.py
-                echo "BASE_VERSION=$(python -c 'from udata import __version__; print(__version__)')" >> version.sh
+                echo "BASE_VERSION=$(python -c 'from << pipeline.parameters.plugin-name >> import __version__; print(__version__)')" >> version.sh
                 # Build the release version string with the build number, like "1.2.1.dev1234"
                 echo "RELEASE_VERSION=${BASE_VERSION}${BUILDNO}" >> version.sh
             fi
@@ -490,7 +498,7 @@ jobs:
           command: |
             git clone --quiet --depth 1 $SCAFFOLD_REPO_SSH_URL scaffold
       - run:
-          name: Trigger Gitlab CI/CD pipeline for udata+udata-front to deploy to dev environment
+          name: Trigger Gitlab CI/CD pipeline for << pipeline.parameters.app-name >> +<< pipeline.parameters.plugin-name >> to deploy to << pipeline.parameters.deploy-env >> environment
           command: |
             source version.sh
             cd scaffold
@@ -498,11 +506,11 @@ jobs:
             # Must have GITLAB_API_TOKEN set in the environment
             # GITLAB_API_TOKEN is the token related to the "infra" GitLab repository, so that the Gitlab CI/CD pipeline can be triggered
             # The script args are, in order:
-            # - udata: the name of the parent project to re-deploy (APP_NAME)
+            # - << pipeline.parameters.app-name >>: the name of the parent project to re-deploy (APP_NAME)
             # - $BUILDNO: the plugin build version to deploy (RELEASE_VERSION)
             # - << pipeline.parameters.deploy-env >>: the environment to deploy to (ENV)
-            # - "plugin_name=udata-front": the deploy variables (VARS). They are passed as a quoted string in which the variables are separated by semicolons.
-            ./scripts/gitlab-ci-pipeline.sh udata ${BUILDNO} << pipeline.parameters.deploy-env >> "plugin_name=udata-front"
+            # - "plugin_name=<< pipeline.parameters.plugin-name >>": the deploy variables (VARS). They are passed as a quoted string in which the variables are separated by semicolons.
+            ./scripts/gitlab-ci-pipeline.sh << pipeline.parameters.app-name >> ${BUILDNO} << pipeline.parameters.deploy-env >> "plugin_name=<< pipeline.parameters.plugin-name >>"
 
 workflows:
   build:
