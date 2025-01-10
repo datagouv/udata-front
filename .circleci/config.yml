@@ -109,13 +109,13 @@ jobs:
           command: |
             if [[ $CIRCLE_TAG ]]; then
                 # This is a tagged release
-                echo 'export BUILDNO="'$CIRCLE_TAG'"' > version.sh
+                echo 'BUILDNO="'$CIRCLE_TAG'"' > version.sh
             elif [[ "$CIRCLE_BRANCH" == feature/* ]]; then
                 # This is a feature branch
-                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM+${CIRCLE_BRANCH#*/}'"' > version.sh
+                echo 'BUILDNO="'$CIRCLE_BUILD_NUM+${CIRCLE_BRANCH#*/}'"' > version.sh
             else
                 # This is a simple development build
-                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM'"' > version.sh
+                echo 'BUILDNO="'$CIRCLE_BUILD_NUM'"' > version.sh
             fi
             source version.sh
             echo $BUILDNO
