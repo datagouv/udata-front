@@ -4,6 +4,7 @@
 
 - Fix following cache issue [#631](https://github.com/datagouv/udata-front/pull/631)
 - Add dataservice search to header [#622](https://github.com/datagouv/udata-front/pull/622)
+- New footer newsletter design [#634](https://github.com/datagouv/udata-front/pull/634)
 
 ## 6.0.7 (2024-12-20)
 
