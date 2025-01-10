@@ -13,12 +13,14 @@
 <section class="fr-pt-md-10w fr-pb-md-8w hero-background">
     <div class="fr-container">
         <div class="fr-grid-row fr-py-8w fr-py-md-16w">
-            <div class="fr-mx-auto fr-col-12 fr-col-sm-11 fr-col-md-10 fr-col-lg-9 fr-col-xl-7">
+            <div class="fr-mx-auto fr-col-12 fr-col-sm-11 fr-col-md-10 fr-col-lg-9 fr-col-xl-8">
                 <div class="fr-grid-row fr-grid-row--gutters justify-between">
                     {% if last_post %}
                     <div class="fr-col-12 fr-col-md-6">
-                        <a class="inline-flex items-center fr-raw-link fr-text--sm fr-m-0 fr-py-1v fr-px-3v border text-blue-400 border-blue-400 rounded-xs bg-white text-overflow-ellipsis"
-                            href="{{ last_post.display_url }}">
+                        <a
+                            class="mw-100 inline-flex items-center fr-raw-link fr-text--sm fr-m-0 fr-py-1v fr-px-3v border text-blue-400 border-blue-400 rounded-xs bg-white text-overflow-ellipsis"
+                            href="{{ last_post.display_url }}"
+                        >
                             <span aria-hidden="true" class="fr-icon-newspaper-line fr-icon--sm fr-mr-1w"></span>
                             <span class="fr-text--bold fr-mb-0">{{ _('News') }}</span>
                             <span class="text-overflow-ellipsis">&nbsp;: {{ last_post.name }}</span>
@@ -26,7 +28,7 @@
                     </div>
                     {% endif %}
                     <div class="fr-col-12 fr-col-md-6">
-                        <a class="inline-flex items-center fr-raw-link fr-text--sm fr-m-0 fr-py-1v fr-px-3v border text-blue-400 border-blue-400 rounded-xs bg-white text-overflow-ellipsis"
+                        <a class="mw-100 inline-flex items-center fr-raw-link fr-text--sm fr-m-0 fr-py-1v fr-px-3v border text-blue-400 border-blue-400 rounded-xs bg-white text-overflow-ellipsis"
                             href="{{ url_for('gouvfr.show_page', slug='donnees-energie') }}">
                             <span aria-hidden="true" class="fr-icon-notification-3-line fr-icon--sm fr-mr-1w"></span>
                             <span class="fr-text--bold fr-mb-0">{{ _('Right now') }}</span>
