@@ -29,7 +29,7 @@ export type BaseDataset = Owned & {
     start: string;
     end: string;
   } | null;
-  frequency_date: Date | null;
+  frequency_date: string | null;
   page: string;
   private: boolean;
   quality?: Quality;
