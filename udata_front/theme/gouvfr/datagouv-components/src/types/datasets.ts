@@ -25,8 +25,11 @@ export type BaseDataset = Owned & {
   tags: Array<string> | null;
   license: string;
   frequency: string;
-  temporal_coverage: string;
-  frequency_date: Date | null;
+  temporal_coverage: {
+    start: string;
+    end: string;
+  } | null;
+  frequency_date: string | null;
   page: string;
   private: boolean;
   quality?: Quality;

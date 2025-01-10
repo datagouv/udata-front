@@ -2,58 +2,58 @@
   <div class="fr-py-3w fr-mb-3w border-bottom border-default-grey">
     <h2 class="subtitle subtitle--uppercase">{{ $t('Informations') }}</h2>
     <div class="fr-text--sm fr-m-0">
-      <div class="fr-grid-row fr-grid-row--gutters">
+      <dl class="fr-grid-row fr-grid-row--gutters">
         <div class="fr-col-12 fr-col-sm-6 fr-col-md-4">
-          <h3 class="subtitle fr-mb-1v">{{ $t('License') }}</h3>
-          <p class="fr-text--sm fr-m-0 text-mention-grey ">
+          <dt class="subtitle fr-mb-0">{{ $t('License') }}</dt>
+          <dd class="fr-text--sm fr-m-0 text-mention-grey fr-p-0">
             <code class="bg-alt-grey fr-px-1v text-grey-380">
-                <a :href="props.license.url">
+              <a :href="props.license.url">
                 {{ props.license.title }}
-                </a>
+              </a>
             </code>
-          </p>
+          </dd>
         </div>
         <div class="fr-col-12 fr-col-sm-6 fr-col-md-4">
-          <h3 class="subtitle fr-mb-1v">ID</h3>
-          <p class="fr-text--sm fr-m-0 text-mention-grey ">{{ props.dataset.id }}</p>
+          <dt class="subtitle fr-mb-0">ID</dt>
+          <dd class="fr-text--sm fr-m-0 text-mention-grey fr-p-0">{{ props.dataset.id }}</dd>
         </div>
-      </div>
+      </dl>
     </div>
   </div>
   <div class="fr-pb-3w fr-mb-3w border-bottom border-default-grey">
     <h2 class="subtitle subtitle--uppercase">{{ $t('Temporality') }}</h2>
     <div class="fr-text--sm fr-m-0">
-      <div class="fr-grid-row fr-grid-row--gutters">
+      <dl class="fr-grid-row fr-grid-row--gutters">
         <div class="fr-col-12 fr-col-sm-6 fr-col-md-4">
-          <h3 class="subtitle fr-mb-1v">{{ $t('Creation') }}</h3>
-          <p class="fr-text--sm fr-m-0 text-mention-grey ">{{ formatDate(props.dataset.created_at) }}</p>
+          <dt class="subtitle fr-mb-0">{{ $t('Creation') }}</dt>
+          <dd class="fr-text--sm fr-m-0 text-mention-grey fr-p-0">{{ formatDate(props.dataset.created_at) }}</dd>
         </div>
         <div class="fr-col-12 fr-col-sm-6 fr-col-md-4">
-          <h3 class="subtitle fr-mb-1v">{{ $t('Frequency') }}</h3>
-          <p class="fr-text--sm fr-m-0 text-mention-grey ">{{ frequency }}</p>
+          <dt class="subtitle fr-mb-0">{{ $t('Frequency') }}</dt>
+          <dd class="fr-text--sm fr-m-0 text-mention-grey fr-p-0">{{ frequency }}</dd>
         </div>
-      </div>
-      <div class="fr-grid-row fr-grid-row--gutters">
+      </dl>
+      <dl class="fr-grid-row fr-grid-row--gutters">
         <div class="fr-col-12 fr-col-sm-6 fr-col-md-4">
-          <h3 class="subtitle fr-mb-1v">{{ $t('Last update') }}</h3>
-          <p class="fr-text--sm fr-m-0 text-mention-grey ">{{ formatDate(props.dataset.last_update) }}</p>
+          <dt class="subtitle fr-mb-0">{{ $t('Last update') }}</dt>
+          <dd class="fr-text--sm fr-m-0 text-mention-grey fr-p-0">{{ formatDate(props.dataset.last_update) }}</dd>
         </div>
-      </div>
+      </dl>
     </div>
   </div>
   <div class="fr-pb-3w fr-mb-3w border-bottom border-default-grey">
     <h2 class="subtitle subtitle--uppercase">{{ $t('Spatial coverage') }}</h2>
     <div class="fr-text--sm fr-m-0">
-      <div class="fr-grid-row fr-grid-row--gutters">
+      <dl class="fr-grid-row fr-grid-row--gutters">
         <div v-if="zone" class="fr-col-12 fr-col-sm-6 fr-col-md-4">
-          <h3 class="subtitle fr-mb-1v">{{ $t('Territorial coverage') }}</h3>
-          <p class="fr-text--sm fr-m-0 text-mention-grey">{{ zone }}</p>
+          <dt class="subtitle fr-mb-0">{{ $t('Territorial coverage') }}</dt>
+          <dd class="fr-text--sm fr-m-0 text-mention-grey fr-p-0">{{ zone }}</dd>
         </div>
         <div v-if="props.dataset.spatial?.granularity" class="fr-col-12 fr-col-sm-6 fr-col-md-4">
-          <h3 class="subtitle fr-mb-1v">{{ $t('Granularity of territorial coverage') }}</h3>
-          <p class="fr-text--sm fr-m-0 text-mention-grey ">{{ granularity }}</p>
+          <dt class="subtitle fr-mb-0">{{ $t('Granularity of territorial coverage') }}</dt>
+          <dd class="fr-text--sm fr-m-0 text-mention-grey fr-p-0">{{ granularity }}</dd>
         </div>
-      </div>
+      </dl>
     </div>
   </div>
   <div class="fr-pb-3w fr-mb-3w border-bottom border-default-grey">

@@ -40,9 +40,15 @@ const args: ReuseProps = {
     description: "Some description",
     created_at: (new Date()).toDateString(),
     last_update: (new Date()).toDateString(),
+    last_modified: (new Date()).toDateString(),
     page: "https://www.data.gouv.fr",
-    archived: false,
-    deleted: false,
+    url: "https://demo.data.gouv.fr/en/users/antonin-garrone/",
+    uri: "https://demo.data.gouv.fr/en/users/antonin-garrone/",
+    featured: false,
+    badges: [],
+    extras: {},
+    archived: null,
+    deleted: null,
     private: false,
     datasets: [],
     slug: "some-slug",
@@ -51,7 +57,7 @@ const args: ReuseProps = {
     tags: [],
     owner: {
       id: "someUserId",
-      first_name: "John",
+      first_name: "JohnJohnJohnJohn",
       last_name: "Doedoedoedoedoe",
       page: "https://demo.data.gouv.fr/en/users/antonin-garrone/",
     },
@@ -62,7 +68,6 @@ const args: ReuseProps = {
       followers: 12,
       views: 36,
     },
-    organization: null,
     title: "My new reuse reuse reuse with with with a a a very very very long long long name name name",
     image: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",
     image_thumbnail: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",
@@ -109,6 +114,33 @@ const argsWithCertifiedOrganization: ReuseProps = {
   },
   reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
   organizationUrl: "/organizations/another-url-easier-to-distinguish",
+};
+
+export const ThreeReusesInARow: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { ReuseCard },
+    setup() {
+      return { args };
+    },
+    template: `<div class="fr-grid-row fr-grid-row--middle">
+                <div class="fr-col-4">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+                <div class="fr-col-4">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+                <div class="fr-col-4">
+                  <ReuseCard class="fr-mx-1v" v-bind="args"/>
+                </div>
+              </div>`,
+  }),
+  args: {
+    ...args,
+    reuse: {
+      ...args.reuse,
+      created_at: updateLastYear.toDateString(),
+    }
+  },
 };
 
 export const ReuseWithOwner: StoryObj<typeof meta> = {
@@ -207,7 +239,7 @@ export const ArchivedReuse: StoryObj<typeof meta> = {
   args: {
     reuse: {
       ...argsWithOrganizationWithLogo.reuse,
-      archived: true,
+      archived: (new Date()).toDateString(),
     },
     reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
   },
@@ -231,7 +263,7 @@ export const PrivateArchivedReuse: StoryObj<typeof meta> = {
   args: {
     reuse: {
       ...argsWithOrganizationWithLogo.reuse,
-      archived: true,
+      archived: (new Date()).toDateString(),
       private: true,
     },
     reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
@@ -256,7 +288,7 @@ export const ReuseUpdatedLessThanAMonth: StoryObj<typeof meta> = {
   args: {
     reuse: {
       ...argsWithOrganizationWithLogo.reuse,
-      last_update: updateLessThanAMonth.toDateString(),
+      created_at: updateLessThanAMonth.toDateString(),
     },
     reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
   },
@@ -280,7 +312,7 @@ export const ReuseUpdatedLastMonth: StoryObj<typeof meta> = {
   args: {
     reuse: {
       ...argsWithOrganizationWithLogo.reuse,
-      last_update: updateLastMonth.toDateString(),
+      created_at: updateLastMonth.toDateString(),
     },
     reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
   },
@@ -304,7 +336,7 @@ export const ReuseUpdatedLastYear: StoryObj<typeof meta> = {
   args: {
     reuse: {
       ...argsWithOrganizationWithLogo.reuse,
-      last_update: updateLastYear.toDateString(),
+      created_at: updateLastYear.toDateString(),
     },
     reuseUrl: "/reuses/6571faa17f46a65ee05c4d17",
   },

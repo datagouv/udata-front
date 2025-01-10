@@ -78,3 +78,6 @@ SEARCH_SIREN_URL = None
 
 # Metadata quality is hidden for datasets harvested from these backends
 QUALITY_METADATA_BACKEND_IGNORE = []
+
+# Activate mourning style in case of national mourning
+NATIONAL_MOURNING = False
