@@ -427,12 +427,13 @@ jobs:
                 # Read base version from __init__.py
                 source venv/bin/activate
                 echo "BASE_VERSION=$(python -c 'from udata_front import __version__; print(__version__)')" >> version.sh
-                # Build the release version string with the build number, like "1.2.1.dev1234"
-                echo "RELEASE_VERSION=${BASE_VERSION}${BUILDNO}" >> version.sh
+                # Build the release version string with the concatenated version and build number, like "1.2.1.dev1234"
+                echo "RELEASE_VERSION=\"\${BASE_VERSION}\${BUILDNO}\"" >> version.sh
             fi
       - run:
           name: Display build info for debugging
           command: |
+            cat version.sh
             source version.sh
             echo "Base version from __init__.py: $BASE_VERSION"
             echo "Build number: $BUILDNO"
