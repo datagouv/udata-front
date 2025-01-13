@@ -1,9 +1,8 @@
 import { MaybeRefOrGetter, ref, toValue } from 'vue'
-import useKeyCodes from "./useKeyCodes";
 import { getRandomId } from '@datagouv/components/ts';
+import { CommonKeyboardKeys } from '../types';
 
 export function useCollapse() {
-  const { KEYCODES } = useKeyCodes();
   const collapseId = getRandomId("collapse");
   const expanded = ref(false);
 
@@ -15,7 +14,7 @@ export function useCollapse() {
 
   let registeredEventHandler: ((event: PointerEvent) => void) | null = null;
 
-  const registerBackgroundEvent = (inputRef: MaybeRefOrGetter<HTMLElement> | null, listRef: MaybeRefOrGetter<HTMLElement> | null, buttonRef: MaybeRefOrGetter<HTMLElement> | null) => {
+  const registerBackgroundEvent = (inputRef: MaybeRefOrGetter<HTMLElement | null>, listRef: MaybeRefOrGetter<HTMLElement | null>, buttonRef: MaybeRefOrGetter<HTMLElement | null>) => {
     const input = toValue(inputRef);
     const list = toValue(listRef);
     const button = toValue(buttonRef);
@@ -47,14 +46,14 @@ export function useCollapse() {
   };
 
   const handleKeyPressForCollapse = (key: KeyboardEvent) => {
-    switch (key.keyCode) {
-      case KEYCODES.ALT:
-      case KEYCODES.CTRL:
-      case KEYCODES.SHIFT:
-      case KEYCODES.CAPS_LOCK:
+    switch (key.key as CommonKeyboardKeys) {
+      case 'Alt':
+      case 'Control':
+      case 'Shift':
+      case 'CapsLock':
         break;
-      case KEYCODES.ESCAPE:
-      case KEYCODES.TAB:
+      case 'Escape':
+      case 'Tab':
         hide();
         break;
       default:
