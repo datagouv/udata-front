@@ -2,11 +2,11 @@
 <div class="fr-follow border-top">
     <div class="fr-container">
         <div class="fr-grid-row">
-            <div class="fr-col-12 fr-col-md-8 flex">
+            <div class="fr-col-12 fr-col-md-8 flex wrap">
                 <div class="fr-col-auto fr-mr-5v">
                     {% include theme('svg/illustrations/newspaper.svg') %}
                 </div>
-                <div class="fr-follow__newsletter fr-col">
+                <div class="fr-follow__newsletter fr-col-12 fr-col-sm">
                     <div>
                         <p class="fr-h4 font-800 fs-xl fr-mb-1v">{{ _("Subscribe to our newsletter") }}</p>
                         <p class="fr-text--base">{{
@@ -14,7 +14,7 @@
                                 .format(site=current_site.title)
                         }}</p>
                     </div>
-                    <div class="flex fr-grid-row--gutters">
+                    <div class="flex wrap fr-grid-row--gutters">
                         <div class="fr-col-auto">
                             <a
                                 class="fr-btn"
