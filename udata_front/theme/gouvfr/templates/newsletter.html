@@ -14,14 +14,17 @@
                                 .format(site=current_site.title)
                         }}</p>
                     </div>
-                    <div>
-                        <a
-                            class="fr-btn fr-mr-2w"
-                            title="{{ _('Subscribe to our newsletter') }}"
-                            href="{{ config.NEWSLETTER_SUBSCRIPTION_URL }}"
-                        >
-                            {{ _("Subscribe") }}
-                        </a>
+                    <div class="flex fr-grid-row--gutters">
+                        <div class="fr-col-auto">
+                            <a
+                                class="fr-btn"
+                                title="{{ _('Subscribe to our newsletter') }}"
+                                href="{{ config.NEWSLETTER_SUBSCRIPTION_URL }}"
+                            >
+                                {{ _("Subscribe") }}
+                            </a>
+                        </div>
+                        <div class="fr-col-auto">
                         <a
                             class="fr-btn fr-btn--secondary"
                             title="{{ _('Subscribe to our newsletter') }}"
@@ -29,6 +32,7 @@
                         >
                             {{ _("See our next events") }}
                         </a>
+                        </div>
                     </div>
                 </div>
             </div>
