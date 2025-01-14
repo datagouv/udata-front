@@ -129,6 +129,11 @@ each(@font-sizes, {
     .fs-@{value} {
         font-size: @@var !important;
     }
+    @media @dsfr-query-md {
+        .fs-md-@{value} {
+            font-size: @@var !important;
+        }
+    }
 });
 
 .text-decoration-underline {

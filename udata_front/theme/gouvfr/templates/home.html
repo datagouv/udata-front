@@ -16,7 +16,7 @@
             <div class="fr-mx-auto fr-col-12 fr-col-sm-11 fr-col-md-10 fr-col-lg-9 fr-col-xl-8">
                 <div class="fr-grid-row fr-grid-row--gutters justify-between">
                     {% if last_post %}
-                    <div class="fr-col-12 fr-col-md-6">
+                    <div class="fr-col-12 fr-col-md-6 text-align-center-md">
                         <a
                             class="mw-100 inline-flex items-center fr-raw-link fr-text--sm fr-m-0 fr-py-1v fr-px-3v border text-blue-400 border-blue-400 rounded-xs bg-white text-overflow-ellipsis"
                             href="{{ last_post.display_url }}"
@@ -27,7 +27,7 @@
                         </a>
                     </div>
                     {% endif %}
-                    <div class="fr-col-12 fr-col-md-6">
+                    <div class="fr-col-12 fr-col-md-6 text-align-right text-align-center-md">
                         <a class="mw-100 inline-flex items-center fr-raw-link fr-text--sm fr-m-0 fr-py-1v fr-px-3v border text-blue-400 border-blue-400 rounded-xs bg-white text-overflow-ellipsis"
                             href="{{ url_for('gouvfr.show_page', slug='donnees-energie') }}">
                             <span aria-hidden="true" class="fr-icon-notification-3-line fr-icon--sm fr-mr-1w"></span>
@@ -57,7 +57,7 @@
 <section class="fr-container--fluid">
     <div class="fr-grid-row fr-grid-row--gutters">
         <div class="fr-col-12 fr-col-lg-6">
-            <div class="fr-py-4w fr-pt-12w fr-py-md-12w fr-px-md-1w w-100 mw-70w fr-mx-auto">
+            <div class="fr-py-4w fr-pt-12w fr-py-md-12w fr-px-1w w-100 mw-70w fr-mx-auto">
                 <div class="fr-mb-1w w-4rem with-svg-responsive greyscaled">
                     {% include theme('svg/illustrations/dataset.svg') %}
                 </div>
@@ -105,7 +105,7 @@
                     >
                     <img
                         alt="Ministère de l'Éducation Nationale et de la Jeunesse"
-                        src="{{theme_static('img/organizations/en.png')}}"
+                        src="{{theme_static('img/organizations/minedu.png')}}"
                         class="greyscaled opacity-80"
                         loading="lazy"
                         width="80"
@@ -128,13 +128,13 @@
             </div>
         </div>
         <div class="fr-col-12 fr-col-lg-6 bg-alt-grey fr-hidden fr-unhidden-sm">
-            <div class="fr-py-md-0 fr-pt-md-8w fr-px-md-1w fr-mx-auto flex flex-direction-column justify-end">
+            <div class="fr-py-md-0 fr-pt-md-8w fr-px-md-1w fr-mx-auto flex flex-direction-column">
                 <figure class="fr-m-0 flex flex-direction-column items-center">
                     <figcaption class="subtitle subtitle--uppercase text-mention-grey">
                         {{_('datasets')}}
                     </figcaption>
                     <img
-                        class="mw-100"
+                        class="mw-100 mb-n8w"
                         srcset="{{theme_static('img/homepage/datasets.png')}}, {{theme_static('img/homepage/datasets@2x.png')}} 2x, {{theme_static('img/homepage/datasets@3x.png')}} 3x"
                         src="{{theme_static('img/homepage/datasets.png')}}"
                         alt=""
@@ -149,7 +149,7 @@
 <section class="relative z-2 fr-container--fluid">
     <div class="fr-grid-row fr-grid-row--gutters">
         <div class="fr-col-12 fr-col-lg-6 order-lg-2">
-        <div class="fr-py-4w fr-pt-12w fr-py-md-12w fr-px-md-1w w-100 mw-70w fr-mx-auto">
+        <div class="fr-py-4w fr-pt-12w fr-py-md-12w fr-px-1w w-100 mw-70w fr-mx-auto">
             <div class="fr-mb-1w w-4rem with-svg-responsive greyscaled">
                     {% include theme('svg/blank_state/discussion.svg') %}
                 </div>
@@ -173,32 +173,36 @@
                 <div class="fr-grid-row justify-between fr-mb-4w">
                     <img
                         alt="Le monde"
-                        src="{{theme_static('img/organizations/le-monde.png')}}"
-                        class="greyscaled opacity-50 object-fit-contain"
+                        srcset="{{theme_static('img/organizations/lemonde.png')}}, {{theme_static('img/organizations/lemonde@2x.png')}} 2x, {{theme_static('img/organizations/lemonde@3x.png')}} 3x"
+                        src="{{theme_static('img/organizations/lemonde.png')}}"
+                        class="opacity-80 greyscaled object-fit-contain"
                         loading="lazy"
                         width="80"
                         height="80"
                     >
                     <img
                         alt="Google Maps"
-                        src="{{theme_static('img/organizations/google-maps.png')}}"
-                        class="greyscaled opacity-50 object-fit-contain"
+                        srcset="{{theme_static('img/organizations/googlemaps.png')}}, {{theme_static('img/organizations/googlemaps@2x.png')}} 2x, {{theme_static('img/organizations/googlemaps@3x.png')}} 3x"
+                        src="{{theme_static('img/organizations/googlemaps.png')}}"
+                        class="opacity-80 greyscaled object-fit-contain"
                         loading="lazy"
                         width="80"
                         height="80"
                     >
                     <img
                         alt="Libération"
+                        srcset="{{theme_static('img/organizations/liberation.png')}}, {{theme_static('img/organizations/liberation@2x.png')}} 2x, {{theme_static('img/organizations/liberation@3x.png')}} 3x"
                         src="{{theme_static('img/organizations/liberation.png')}}"
-                        class="greyscaled opacity-50 object-fit-contain"
+                        class="opacity-80 greyscaled object-fit-contain"
                         loading="lazy"
                         width="80"
                         height="80"
                     >
                     <img
                         alt="Fondation Wikimedia"
+                        srcset="{{theme_static('img/organizations/wikimedia.png')}}, {{theme_static('img/organizations/wikimedia@2x.png')}} 2x, {{theme_static('img/organizations/wikimedia@3x.png')}} 3x"
                         src="{{theme_static('img/organizations/wikimedia.png')}}"
-                        class="greyscaled opacity-50 object-fit-contain"
+                        class="opacity-80 greyscaled object-fit-contain"
                         loading="lazy"
                         width="80"
                         height="80"
@@ -243,9 +247,9 @@
     <div class="fr-container">
         <h2 class="h1 text-white fr-mb-3v fr-text--regular">{{_('{site} mission').format(site=config.SITE_TITLE)}}</h2>
         <section>
-            <h3 class="fs-xxxl font-800 fr-mb-4w">{{_('Simplify access to public data')}}</h3>
-            <p class="fr-mb-3w fs-xxxl line-height-xxxl text-grey-200 font-300">{{_('The opening and circulation of public data strengthen transparency, improve public action, and allow for the creation of new services.')}}</p>
-            <p class="fr-mb-4w fs-xxxl line-height-xxxl text-grey-200 font-300">{{_('{site} makes this information available by organizing its distribution and use.'.format(site=config.SITE_TITLE))}}</p>
+            <h3 class="fs-xxl fs-md-xxxl font-800 fr-mb-4w">{{_('Simplify access to public data')}}</h3>
+            <p class="fr-mb-3w fs-xxl fs-md-xxxl line-height-xxxl text-grey-200 font-300">{{_('The opening and circulation of public data strengthen transparency, improve public action, and allow for the creation of new services.')}}</p>
+            <p class="fr-mb-4w fs-xxl fs-md-xxxl line-height-xxxl text-grey-200 font-300">{{_('{site} makes this information available by organizing its distribution and use.'.format(site=config.SITE_TITLE))}}</p>
             <h4 class="subtitle subtitle--uppercase fr-text--md text-grey-300 fr-mb-11v">{{_('Our goals')}}</h4>
             <div class="fr-grid-row fr-grid-row--gutters">
                 <div class="fr-col-12 fr-col-sm-6 fr-col-lg-4 fr-pl-md-5v">
@@ -266,7 +270,7 @@
             </div>
         </section>
         <section>
-            <h3 class="fs-xxxl font-800 fr-mb-4w">{{_('Produce information based on data')}}</h3>
+            <h3 class="fs-xxl fs-md-xxxl font-800 fr-mb-4w">{{_('Produce information based on data')}}</h3>
             <h4 class="subtitle subtitle--uppercase fr-text--md text-grey-300 fr-mb-3v">{{_('Our data explorations')}}</h4>
             <div class="fr-grid-row fr-grid-row--gutters">
                 <div class="fr-col-12 fr-col-sm-6">
@@ -326,7 +330,7 @@
             </div>
         </section>
         <section>
-            <h3 class="fs-xxxl font-800 fr-mb-4w">{{_('Federate an ecosystem')}}</h3>
+            <h3 class="fs-xxl fs-md-xxxl font-800 fr-mb-4w">{{_('Federate an ecosystem')}}</h3>
             <h4 class="subtitle subtitle--uppercase fr-text--md text-grey-300 fr-mb-3v">
                 {{_('Our thematic platforms')}}
             </h4>
