@@ -7,9 +7,9 @@
     {'icon': 'fr-icon-database-line', 'label': _('A dataset'), 'url': url_for('beta.datasets-new')},
     {'icon': 'fr-icon-code-s-slash-line', 'label': _('An API'), 'url': url_for('beta.dataservices-new')},
     {'icon': 'fr-icon-line-chart-line', 'label': _('A reuse'), 'url': url_for('beta.reuses-new')},
-    {'icon': 'fr-icon-server-line', 'label': _('A harvester'), 'url': url_for('admin.index', path='harvester/new/')},
+    {'icon': 'fr-icon-server-line', 'label': _('A harvester'), 'url': beta_admin_url_for(path='harvesters/new', fallback_path='harvester/new/')},
     {'icon': 'fr-icon-government-line', 'label': _('An organization'), 'url': url_for('beta.organizations-new')},
-] + ([{'icon': 'fr-icon-article-line', 'label': _('A post'), 'url': url_for('admin.index', path='post/new/')}] if current_user.sysadmin else [])
+] + ([{'icon': 'fr-icon-article-line', 'label': _('A post'), 'url': beta_admin_url_for(path='posts/new/', fallback_path='post/new/')}] if current_user.sysadmin else [])
 %}
 
 <header role="banner" class="fr-header">
