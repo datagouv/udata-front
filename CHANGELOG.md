@@ -6,6 +6,7 @@
 - Add dataservice search to header [#622](https://github.com/datagouv/udata-front/pull/622)
 - Trigger GitLab infra deployment through simple-scaffolding script [#632](https://github.com/datagouv/udata-front/pull/632)
 - Fix CI trigger GitLab pipeline job [#635](https://github.com/datagouv/udata-front/pull/635)
+- New footer newsletter design [#634](https://github.com/datagouv/udata-front/pull/634)
 - Fix dropdown keyboard navigation [#637](https://github.com/datagouv/udata-front/pull/637)
 
 ## 6.0.7 (2024-12-20)
