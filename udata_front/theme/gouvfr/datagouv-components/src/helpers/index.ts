@@ -1,10 +1,10 @@
+import { readonly } from "vue";
 import { useI18n } from "vue-i18n";
 import { dayjs } from "./i18n";
-import markdown from "./markdown";
+import markdown, { removeMarkdown } from "./markdown";
 import { toggleAccordion } from "./toggleAccordion";
-import RemoveMarkdown from "remove-markdown";
-import { readonly } from "vue";
 import { ResourceType } from "../types/resources";
+import getUserAvatar, { useUserAvatar } from "./getUserAvatar";
 
 export const RESOURCE_TYPE = readonly(["main", "documentation", "update", "api", "code", "other"] as const);
 
@@ -43,7 +43,7 @@ export const summarize = (val: number, fractionDigits = 0) => {
   const toFixedIfNotZero = (value: number) => {
     const asString = value.toFixed(fractionDigits);
     if (! asString.includes('.')) {
-      return asString; 
+      return asString;
     }
 
     // Remove trailing "0" to not show "1.0" but only "1"
@@ -99,14 +99,4 @@ export const formatRelativeIfRecentDate = (date: Date | string) => {
   return formatFromNow(date);
 }
 
-export const truncate = (val: string, length = 300) => {
-  if (typeof val !== "string") return;
-  return val.length > length ? val.slice(0, length) + "…" : val;
-};
-
-export const excerpt = (val: string, length = 300) => {
-  if (typeof val !== "string") return;
-  return truncate(RemoveMarkdown(val), length);
-};
-
-export { markdown, toggleAccordion };
+export { getUserAvatar, markdown, removeMarkdown, toggleAccordion, useUserAvatar };

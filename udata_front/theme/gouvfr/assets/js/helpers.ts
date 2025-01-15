@@ -1,15 +1,8 @@
-import RemoveMarkdown from "remove-markdown";
 import { readonly } from "vue";
 
-export const truncate = (val: string, length = 300) => {
-  if (typeof val !== "string") return;
-  return val.length > length ? val.slice(0, length) + "…" : val; //TODO, maybe® : properly truncate words
-};
-
-export const excerpt = (val: string, length = 300) => {
-  if (typeof val !== "string") return;
-  return truncate(RemoveMarkdown(val), length);
-};
+export function throwOnNever(_: never, message: string): never {
+  throw new Error(message);
+}
 
 export const CLOSED_FORMATS = readonly(['pdf', 'doc', 'docx', 'word', 'xls', 'excel', 'xlsx'] as const);
 

@@ -5,15 +5,16 @@ from flask_security import current_user
 
 from udata import search
 from udata.frontend import csv
-from udata_front.views.base import DetailView, LoginOnlyView, SearchView
+from udata_front.views.base import DetailView, SearchView
 from udata.i18n import I18nBlueprint
 from udata.models import (
-    Organization, Reuse, Dataset, Follow, Discussion
+    Organization, Reuse, Dataset, Dataservice, Follow, Discussion
 )
 from udata.sitemap import sitemap
 from udata.core.dataset.csv import (
-    DatasetCsvAdapter, DiscussionCsvAdapter, ResourcesCsvAdapter
+    DatasetCsvAdapter, ResourcesCsvAdapter
 )
+from udata.core.discussions.csv import DiscussionCsvAdapter
 from udata.core.dataset.search import DatasetSearch
 from udata.core.organization.permissions import (
     EditOrganizationPermission, OrganizationPrivatePermission
@@ -85,6 +86,9 @@ class OrganizationDetailView(SearchView, OrgView, DetailView):
         if self.organization.deleted and not can_view.can():
             abort(410)
 
+        dataservices = Dataservice.objects(
+            organization=self.organization).visible()
+
         datasets = Dataset.objects(
             organization=self.organization)
 
@@ -102,6 +106,7 @@ class OrganizationDetailView(SearchView, OrgView, DetailView):
         context.update({
             'reuses': reuses.paginate(params_reuses_page, self.reuse_page_size),
             'total_datasets': context.get("datasets").total,
+            'total_dataservices': len(dataservices),
             'organization_datasets': len(datasets),
             'total_reuses': len(reuses),
             'followers': followers,
@@ -109,11 +114,6 @@ class OrganizationDetailView(SearchView, OrgView, DetailView):
             'can_view': can_view,
         })
         return context
-
-
-@blueprint.route('/publishing-form/', endpoint='publishing-form')
-class OrganizationPublishingFormView(LoginOnlyView):
-    template_name = 'organization/publishing-form.html'
 
 
 @blueprint.route('/<org:org>/dashboard/', endpoint='dashboard')

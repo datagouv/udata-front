@@ -17,7 +17,7 @@
         :size="24"
         :rounded="true"
       />
-      <p class="fr-mx-1w">{{ t('My Profil') }}</p>
+      <p class="fr-mx-1w">{{ t('My Profile') }}</p>
     </template>
     <template v-else-if="organization">
       <div class="logo logo--sm">
@@ -38,7 +38,27 @@
           <AdminSidebarLink
             icon="fr-icon-account-circle-line"
             :label="t('Me')"
-            to="/me"
+            :to="{name: 'me'}"
+            />
+          <AdminSidebarLink
+          :iconHtml="DatabaseIcon"
+          :label="t('Datasets')"
+          :to="{name: 'me-datasets'}"
+          />
+          <AdminSidebarLink
+          icon="fr-icon-code-s-slash-line"
+          :label="t('Dataservices')"
+          :to="{name: 'me-dataservices'}"
+          />
+          <AdminSidebarLink
+            icon="fr-icon-line-chart-line"
+            :label="t('Reuses')"
+            :to="{name: 'me-reuses'}"
+          />
+          <AdminSidebarLink
+          icon="fr-icon-git-pull-request-line"
+          :label="t('Community Resources')"
+          :to="{name: 'me-community-resources'}"
           />
         </template>
         <template v-else-if="organization">
@@ -49,20 +69,46 @@
             @click="$emit('click')"
           />
           <AdminSidebarLink
+            icon="fr-icon-code-s-slash-line"
+            :label="t('Dataservices')"
+            :to="{name: 'organization-dataservices', params: {oid: organization.id}}"
+            @click="$emit('click')"
+          />
+          <AdminSidebarLink
             icon="fr-icon-line-chart-line"
             :label="t('Reuses')"
             :to="{name: 'organization-reuses', params: {oid: organization.id}}"
             @click="$emit('click')"
           />
           <AdminSidebarLink
+            icon="fr-icon-chat-3-line"
+            :label="t('Discussions')"
+            :to="{name: 'organization-discussions', params: {oid: organization.id}}"
+            @click="$emit('click')"
+          />
+          <AdminSidebarLink
             icon="fr-icon-parent-line"
             :label="t('Members')"
             :to="{name: 'organization-members', params: {oid: organization.id}}"
+            @click="$emit('click')"
+          />
+          <AdminSidebarLink
+            icon="fr-icon-server-line"
+            :label="t('Harvesters')"
+            :to="{name: 'organization-harvesters', params: {oid: organization.id}}"
+            @click="$emit('click')"
+          />
+          <AdminSidebarLink
+            icon="fr-icon-git-pull-request-line"
+            :label="t('Community Resources')"
+            :to="{name: 'organization-community-resources', params: {oid: organization.id}}"
+            @click="$emit('click')"
           />
           <AdminSidebarLink
           icon="fr-icon-user-line"
           :label="t('Profile')"
           :to="{name: 'organization-profile', params: {oid: organization.id}}"
+          @click="$emit('click')"
         />
         </template>
       </ul>
@@ -87,13 +133,12 @@ export type AdminSidebarMenuProps = {
 };
 </script>
 <script setup lang="ts">
+import { Avatar, getRandomId } from '@datagouv/components/ts';
 import DatabaseIcon from 'iconoir/icons/regular/database.svg?raw';
 import { watchPostEffect } from "vue";
 import { useI18n } from "vue-i18n";
-import Avatar from "../../../components/discussions/Avatar/Avatar.vue";
 import Placeholder from "../../../components/utils/placeholder.vue";
 import AdminSidebarLink from "../AdminSidebarLink/AdminSidebarLink.vue";
-import { getRandomId } from '@datagouv/components/ts';
 
 const props = defineProps<AdminSidebarMenuProps>();
 

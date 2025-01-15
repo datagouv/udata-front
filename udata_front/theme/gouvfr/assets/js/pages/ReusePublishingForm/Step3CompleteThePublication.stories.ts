@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Step3CompleteThePublication from './Step3CompleteThePublication.vue';
+import type { Reuse } from '@datagouv/components/ts';
 
 const meta = {
   title: 'Pages/ReusePublishingForm/Step3',
@@ -8,14 +9,15 @@ const meta = {
 
 export default meta;
 
-const originalReuse = {
+const originalReuse : Reuse = {
   badges: [],
+  archived: null,
   created_at: "2024-03-03T19:04:43.599000+00:00",
   datasets: [],
   deleted: null,
   description: "This is a random description",
   extras: {},
-  featured: null,
+  featured: false,
   id: "someId",
   image: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",
   image_thumbnail: "https://static.data.gouv.fr/images/aa/c1f583251a4697850bd01e2cc95877.png",
@@ -56,6 +58,7 @@ const originalReuse = {
 const args = {
   originalReuse,
   feedbackUrl: "https://demo.data.gouv.fr/fr/reuses/?q=feedback",
+  redirectDraftUrl: "https://demo.data.gouv.fr/fr/reuses/?q=draft",
   steps: ["Describe your reuse", "Add datasets", "Complete your publishing"],
 };
 

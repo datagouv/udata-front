@@ -120,6 +120,20 @@
             </li>
             <li role="presentation">
                 <button
+                    id="dataservices"
+                    class="fr-tabs__tab"
+                    tabindex="-1"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="dataservices-panel"
+                    data-update-url="dataservices"
+                >
+                    {{ _('Dataservices') }}
+                    <sup>{{ total_dataservices }}</sup>
+                </button>
+            </li>
+            <li role="presentation">
+                <button
                     id="reuses"
                     class="fr-tabs__tab"
                     tabindex="-1"
@@ -164,6 +178,16 @@
                 >
                     {{ _('Datasets') }}
                     <sup>{{ total_datasets }}</sup>
+                </a>
+            </li>
+            <li role="presentation">
+                <a
+                    id="dataservices"
+                    class="fr-tabs__tab"
+                    href="#dataservices-panel"
+                >
+                    {{ _('Dataservices') }}
+                    <sup>{{ total_dataservices }}</sup>
                 </a>
             </li>
             <li role="presentation">
@@ -260,6 +284,27 @@
                         >
                             {{ _("What's a dataset ?") }}
                         </a>
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div
+        id="dataservices-panel"
+        class="fr-tabs__panel"
+        role="tabpanel"
+        aria-labelledby="dataservices"
+        tabindex="0"
+    >
+        <div class="fr-container vuejs">
+            {% if total_dataservices %}
+                <dataservices-search organization="{{org.id}}">
+                </dataservices-search>
+            {% else %}
+            <div class="fr-grid-row flex-direction-column fr-grid-row--middle fr-mt-5w">
+                    {% include theme('svg/blank_state/resource.svg') %}
+                    <p class="fr-h6 fr-mt-2w fr-mb-5v text-center">
+                        {{ _("This organization hasn't published any dataservices yet.") }}
                     </p>
                 </div>
             {% endif %}

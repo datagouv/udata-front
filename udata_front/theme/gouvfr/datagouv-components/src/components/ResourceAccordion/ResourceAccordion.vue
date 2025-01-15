@@ -5,17 +5,19 @@
       :id="resourceHeaderId"
     >
       <div>
-        <h4 class="fr-mb-1v flex items-center" :id="resourceTitleId">
-          <button type="button" @click="toggle" class="fr-p-0 flex items-center" data-testid="expand-button" :aria-expanded="open">
-            <ResourceIcon :resource class="fr-icon--xs fr-mr-1v" />
-            <span :class="{
-              'font-bold': open,
-            }"><TextClamp :max-lines="1" :text="resource.title || t('Nameless file')"/></span>
+        <div class="flex items-center fr-mb-1v">
+          <h4 class="fr-m-0" :id="resourceTitleId">
+            <button type="button" @click="toggle" class="fr-p-0 flex items-center" data-testid="expand-button" :aria-expanded="open">
+              <ResourceIcon :resource class="fr-icon--xs fr-mr-1v" />
+              <span :class="{
+                'font-bold': open,
+              }"><TextClamp :max-lines="1" :text="resource.title || t('Nameless file')"/></span>
 
-            <span class="absolute inset-0 z-1"></span>
-          </button>
+              <span class="absolute inset-0 z-1"></span>
+            </button>
+          </h4>
           <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resourceExternalUrl" class="z-2" />
-        </h4>
+        </div>
         <div class="text-grey-380 subheaders-infos">
           <SchemaBadge :resource class="dash-after" />
           <span class="fr-text--xs fr-mb-0 dash-after">{{ t('Updated {date}', {date: formatRelativeIfRecentDate(lastUpdate)}) }}</span>
@@ -45,12 +47,31 @@
           <a
             :href="resource.latest"
             :title="t('File link - opens a new window')"
+            :aria-describedby="resourceTitleId"
             rel="ugc nofollow noopener"
             target="_blank"
             class="fr-btn fr-btn--sm"
           >
             {{ $t('Visit') }}
           </a>
+        </p>
+        <p class="fr-col-auto fr-ml-3v fr-m-0 z-2" v-else-if="ogcService">
+          <button
+            :id="resource.id + '-copy'"
+            :data-clipboard-text="resource.url"
+            :aria-describedby="resourceTitleId"
+            class="fr-btn fr-btn--sm"
+          >
+            <span>
+                <OhVueIcon
+                  :height="16"
+                  :width="16"
+                  name="ri-file-copy-line"
+                  class="copy-icon fr-mr-2v"
+                />
+            </span>
+            {{ t('Copy link') }}
+          </button>
         </p>
         <p class="fr-col-auto fr-ml-3v fr-m-0" v-else>
           <a
@@ -59,8 +80,9 @@
             :title="t('Download file')"
             download
             class="relative text-transform-uppercase fr-btn fr-btn--sm fr-btn--icon-left fr-icon-test-tube-line fr-icon-download-line fr-icon--sm matomo_download z-2"
+            :aria-describedby="resourceTitleId"
           >
-            {{ format }}
+            <span class="fr-sr-only">{{ t('Download file as ') }}</span>{{ format }}
           </a>
         </p>
         <p class="fr-col-auto fr-ml-3v fr-m-0 z-2" v-if="canEdit">
@@ -107,7 +129,7 @@
                 <dt class="font-bold fr-text--sm fr-mb-0" v-else>{{ $t('Original format') }}</dt>
                 <dd class="fr-text--sm fr-ml-0 fr-mt-0 fr-mb-2w text-mention-grey h-4w fr-grid-row fr-grid-row--middle">
                   <span v-if="resource.format === 'url'">
-                    <a :href="resource.latest" class="fr-link fr-link--no-after" rel="ugc nofollow noopener" target="_blank">
+                    <a :href="resource.latest" class="fr-link no-icon-after" rel="ugc nofollow noopener" target="_blank">
                       <TextClamp :auto-resize="true" :max-lines="1" :text="resource.url">
                         <template #after>
                           <span class="fr-ml-1v fr-icon-external-link-line fr-icon--sm"></span>
@@ -123,7 +145,23 @@
                   </span>
                   <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resource.latest" class="relative" />
                 </dd>
+                <template v-if="resource.extras['analysis:parsing:parquet_url']">
+                  <dt class="font-bold fr-text--sm fr-mb-0">{{ $t('Auto-generated formats from {platform}', { platform: config.title }) }}</dt>
+                  <dd class="fr-text--sm fr-ml-0 fr-mt-0 fr-mb-2w text-mention-grey h-4w fr-grid-row fr-grid-row--middle">
+                    <span>
+                      <span class="text-blue-400 fr-icon-download-line fr-icon--sm fr-mr-1v fr-mt-1v"></span>
+                      <a :href="resource.extras['analysis:parsing:parquet_url']" class="fr-link" rel="ugc nofollow noopener">
+                        <span>{{ $t('Format {format}', { format: 'parquet' }) }}<span v-if="resource.extras['analysis:parsing:parquet_size']"> - {{ filesize(resource.extras['analysis:parsing:parquet_size']) }}</span></span>
+                      </a>
+                    </span>
+                    <CopyButton :label="$t('Copy link')" :copied-label="$t('Link copied!')" :text="resource.extras['analysis:parsing:parquet_url']" class="relative" />
+                  </dd>
+                </template>
               </dl>
+            </div>
+            <div v-if="tab.key === 'swagger'" class="fr-pl-4v fr-pr-4v">
+              <div>{{ t('Swagger automatically generated by data.gouv.fr. This swagger allows you to query data by API by filtering it by column value.') }}</div>
+              <Swagger v-if="hasPreview" :url="`${config.tabular_api_url}/api/resources/${props.resource.id}/swagger/`" />
             </div>
           </TabPanel>
         </TabPanels>
@@ -133,7 +171,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import DataStructure from "./DataStructure/DataStructure.vue";
 import Preview from "./Preview/Preview.vue";
@@ -154,7 +192,10 @@ import TabPanels from "../Tabs/TabPanels.vue";
 import TabPanel from "../Tabs/TabPanel.vue";
 import { trackEvent } from "../../helpers/matomo";
 import CopyButton from "../CopyButton/CopyButton.vue";
-import { getResourceFormatIconSvg } from "../../helpers/resources";
+import { getResourceFormatIconSvg, getResourceTitleId } from "../../helpers/resources";
+import { OhVueIcon } from 'oh-vue-icons';
+
+const OGC_SERVICES_FORMATS = ['ogc:wfs', 'ogc:wms', 'wfs', 'wms'];
 
 const props = withDefaults(defineProps<{
   datasetId: string,
@@ -168,6 +209,8 @@ const props = withDefaults(defineProps<{
   canEdit: false,
 });
 
+const Swagger = defineAsyncComponent(() => import("./Swagger.vue"));
+
 const { t } = useI18n();
 
 const hasPreview = computed(() => {
@@ -178,6 +221,8 @@ const hasPreview = computed(() => {
 })
 
 const format = computed(() => getResourceFormatIconSvg(props.resource) ? props.resource.format : t("File"))
+
+const ogcService = computed(() => OGC_SERVICES_FORMATS.includes(props.resource.format))
 
 const open = ref(props.expandedOnMount);
 const toggle = () => {
@@ -208,6 +253,10 @@ const tabsOptions = computed(() => {
   options.push({ key: "metadata", label: t("Metadata") });
   options.push({ key: "downloads", label: t("Downloads") });
 
+  if (hasPreview.value) {
+    options.push({ key: "swagger", label: t("Swagger") })
+  }
+
   return options;
 });
 const switchTab = (index: number) => {
@@ -237,7 +286,7 @@ const resourceExternalUrl = computed(() => `${window.location.origin}${window.lo
 
 const resourceContentId = 'resource-' + props.resource.id;
 const resourceHeaderId = 'resource-' + props.resource.id + '-header';
-const resourceTitleId = 'resource-' + props.resource.id + '-title';
+const resourceTitleId = getResourceTitleId(props.resource);
 </script>
 <style scoped>
 .fr-link--no-after::after {

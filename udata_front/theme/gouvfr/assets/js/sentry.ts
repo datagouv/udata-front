@@ -19,6 +19,7 @@ function InitSentry(app: App) {
         'ResizeObserver loop limit exceeded',
         'ResizeObserver loop completed with undelivered notifications.',
       ],
+      autoSessionTracking: false,
     })
     Sentry.setTags(sentry.tags)
   }

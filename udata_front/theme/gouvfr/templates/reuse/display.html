@@ -68,17 +68,15 @@
 {% endblock %}
 
 {% block content %}
-{% cache cache_duration, 'reuse-content', reuse.id|string, g.lang_code, current_user.slug or 'anonymous', reuse.last_modified|string %}
-
 {{ breadcrumb(self) }}
-
+{% cache cache_duration, 'reuse-content', reuse.id|string, g.lang_code, current_user.slug or 'anonymous', reuse.last_modified|string %}
 <div class="content fr-container fr-mb-5w">
     {% if reuse.private or reuse.deleted %}
         <div class="fr-grid-row">
             {% if reuse.private %}
                 <div class="fr-col-auto fr-mr-1w">
                     <p class="fr-tag"
-                        title="{{ _('This reuse is private and will not be visible by other users') }}">{{ _('Private') }}
+                        title="{{ _('This reuse is a draft and will not be visible by other users') }}">{{ _('Draft') }}
                     </p>
                 </div>
             {% endif %}

@@ -1,6 +1,6 @@
+import { api, apiv2 } from "@datagouv/components/ts";
 import type { Dataset, NewDataset } from "@datagouv/components/ts";
 import { toValue, type MaybeRefOrGetter } from "vue";
-import { api } from "../plugins/api";
 import { getLocalizedUrl } from "../i18n";
 import type { SpatialGranularity } from "../types";
 import type { PaginatedArray } from "./types";
@@ -52,6 +52,21 @@ export async function getOrganizationDatasets(oid: string, q: string, page: numb
   return resp.data;
 }
 
-export function getOrganizationDatasetsCatalogUrl(oid: string) {
+export async function getUserDatasets(userId: string, q: string, page: number, pageSize: number, sortDirection: string) {
+  const resp = await api.get<PaginatedArray<Dataset>>(getLocalizedUrl(`datasets/`), {
+    params: { q, sort: sortDirection, page_size: pageSize, page, owner: userId }
+  });
+  return resp.data;
+}
+
+export function getOrganizationDatasetsCatalogUrl(oid: string, totalResults: number) {
+  if(!totalResults) {
+    return "";
+  }
   return `/organizations/${oid}/datasets.csv`;
+}
+
+export async function getDataset(id: string) {
+  const resp = await apiv2.get<Dataset>(`/datasets/${id}/`);
+  return resp.data;
 }

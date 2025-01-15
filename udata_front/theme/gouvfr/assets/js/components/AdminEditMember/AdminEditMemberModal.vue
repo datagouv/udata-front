@@ -26,15 +26,16 @@
                 >
                   {{ t("Edit member") }}
                 </h1>
-                <p class="fr-grid-row fr-grid-row--middle fr-text--bold fr-mb-2w">
+                <div class="fr-grid-row fr-grid-row--middle fr-mb-2w">
                   <Avatar
                     class="fr-mr-1v"
                     :user="member.user"
                     :rounded="true"
                     :size="24"
                   />
-                  {{ member.user.first_name }} {{ member.user.last_name }}
-                </p>
+                  <p class="fr-text--bold fr-m-0 fr-mr-1v">{{ member.user.first_name }} {{ member.user.last_name }}</p>
+                  <AdminEmail v-if="member.user.email" :email="member.user.email"/>
+                </div>
                 <form
                   class="fr-grid-row fr-grid-row--gutters fr-grid-row--bottom"
                   @submit.prevent="updateRole(member)"
@@ -94,14 +95,15 @@ export type AdminEditMemberModalProps = {
 </script>
 
 <script setup lang="ts">
+import { Avatar } from '@datagouv/components/ts';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { removeMember, updateMemberRole } from "../../api/organizations";
 import AdminDangerZone from "../AdminDangerZone/AdminDangerZone.vue";
-import Avatar from "../discussions/Avatar/Avatar.vue";
 import SelectGroup, { type Option } from "../Form/SelectGroup/SelectGroup.vue";
 import type { EditingMember, Member, MemberRole } from '../../types';
 import { useToast } from '../../composables/useToast';
+import AdminEmail from '../AdminEmail/AdminEmail.vue';
 
 const props = defineProps<AdminEditMemberModalProps>();
 

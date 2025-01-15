@@ -44,6 +44,7 @@ FEED_THUMBNAIL_MIMES = ('image/jpeg', 'image/png', 'image/webp')
 
 gouvfr_menu = nav.Bar('gouvfr_menu', [
     nav.Item(_('Data'), 'datasets.list'),
+    nav.Item(_('API'), 'dataservices.list'),
     nav.Item(_('Reuses'), 'reuses.list'),
     nav.Item(_('Organizations'), 'organizations.list'),
     nav.Item(_('Getting started on data.gouv.fr'), None, items=[
@@ -120,7 +121,7 @@ resources_links = [
 nav.Bar('gouvfr_resources', resources_links)
 
 footer_links = [
-    nav.Item(_('Licences'), 'gouvfr.show_page', args={'slug': 'legal/licences'}),
+    nav.Item(_('Licenses'), 'gouvfr.show_page', args={'slug': 'legal/licences'}),
     nav.Item(_('Terms of use'), 'gouvfr.show_page', args={'slug': 'legal/cgu'}),
     nav.Item(_('Tracking and privacy'), 'gouvfr.suivi'),
     nav.Item(_('Legal notice'), 'gouvfr.show_page', args={'slug': 'legal/legal-notice'}),

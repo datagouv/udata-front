@@ -14,6 +14,7 @@ export type NewOrganization = {
   business_number_id: string | null;
   description: string;
   url: string | null;
+  logo: string;
 };
 
 export type Organization = NewOrganization & {
@@ -22,7 +23,7 @@ export type Organization = NewOrganization & {
   last_modified: string;
   last_update: string;
   deleted: string | null;
-  logo: string;
+  extras: Record<string, any>;
   logo_thumbnail: string;
   members: Array<Member>;
   metrics: { datasets: number; followers: number; members: number; reuses: number; views: number; };

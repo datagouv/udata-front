@@ -18,13 +18,40 @@ export async function fetchDatasetResources(datasetId: string, type: string, pag
   return resp.data;
 }
 
-export async function fetchDatasetCommunityResources (datasetId: string, page: number, pageSize: number) {
+export async function fetchDatasetCommunityResources(datasetId: string, page: number, pageSize: number) {
   const resp = await api
     .get<PaginatedArray<CommunityResource>>("datasets/community_resources/", {
       params: {
         page,
         dataset: datasetId,
         page_size: pageSize,
+      },
+    });
+  return resp.data;
+}
+
+export async function getOrganizationCommunityResources(oid: string, page: number, pageSize: number, sort: string) {
+  const resp = await api
+    .get<PaginatedArray<CommunityResource>>("datasets/community_resources/", {
+      params: {
+        organization: oid,
+        page,
+        page_size: pageSize,
+        sort,
+      },
+    });
+  return resp.data;
+}
+
+
+export async function getUserCommunityResources(userId: string, page: number, pageSize: number, sort: string) {
+  const resp = await api
+    .get<PaginatedArray<CommunityResource>>("datasets/community_resources/", {
+      params: {
+        owner: userId,
+        page,
+        page_size: pageSize,
+        sort,
       },
     });
   return resp.data;

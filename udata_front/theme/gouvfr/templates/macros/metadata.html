@@ -32,8 +32,9 @@
 <meta name="demo-server-url" content="{{ config.DEMO_SERVER_URL }}" />
 <meta name="demo-server-name" content="{{ config.DEMO_SERVER_NAME }}" />
 {% endif %}
-<meta name="dataset-publishing-form-url" content="{{ url_for('datasets.publishing-form') }}" />
-<meta name="reuse-publishing-form-url" content="{{ url_for('reuses.publishing-form') }}" />
+<meta name="dataset-publishing-form-url" content="{{ url_for('beta.datasets-new') }}" />
+<meta name="dataservice-publishing-form-url" content="{{ url_for('beta.dataservices-new') }}" />
+<meta name="reuse-publishing-form-url" content="{{ url_for('beta.reuses-new') }}" />
 {% if config.PUBLISHING_FORM_FEEDBACK_URL %}
 <meta name="publishing-form-feedback-url" content="{{ config.PUBLISHING_FORM_FEEDBACK_URL }}" />
 {% endif %}
@@ -54,6 +55,7 @@
 {% endif %}
 <meta name="github" content="{{ config.SITE_GITHUB_URL }}" />
 <meta name="guides-quality-url" content="{{config.GUIDES_QUALITY_URL}}" />
+<meta name="dataservice-url" content="{{ url_for('dataservices.list') }}" />
 <meta name="dataset-url" content="{{ url_for('datasets.list') }}" />
 <meta name="organization-url" content="{{ url_for('organizations.list') }}" />
 <meta name="reuse-url" content="{{ url_for('reuses.list') }}" />
@@ -116,4 +118,6 @@
 {% if config.SEARCH_SIREN_URL %}
 <meta name="search-siren-url" content="{{ config.SEARCH_SIREN_URL }}" />
 {% endif %}
+
+<meta name="tabular-api-dataservice-id" content="{{config.TABULAR_API_DATASERVICE_ID}}" />
 {% endmacro %}

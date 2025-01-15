@@ -31,18 +31,13 @@ export default defineConfig(config => {
         name: 'DataGouvFrComponents',
         // the proper extensions will be added
         fileName: 'data-gouv-fr-components',
+        formats: ['es']
       },
       rollupOptions: {
         // make sure to externalize deps that shouldn't be bundled
         // into your library
-        external: ['vue', 'vue-router'],
+        external: ['@headlessui/vue', 'axios', 'chart.js', 'remark', 'remark-gfm', 'strip-markdown', 'swagger-themes', 'swagger-ui', 'vue', 'vue-router'],
         output: {
-          // Provide global variables to use in the UMD build
-          // for externalized deps
-          globals: {
-            vue: 'Vue',
-            'vue-router': 'vueRouter'
-          },
           chunkFileNames: "chunks/[name]-[hash].js",
         },
       },

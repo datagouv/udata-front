@@ -1,4 +1,4 @@
-import type { FileResourceFileType, Organization, RemoteResourceFileType, ResourceType, User } from "@datagouv/components/ts";
+import type { Dataservice, Dataset, FileResourceFileType, Organization, Owned, RemoteResourceFileType, ResourceType, Reuse, User } from "@datagouv/components/ts";
 
 import { CLOSED_FORMATS } from "./helpers";
 
@@ -75,16 +75,27 @@ export type Spam = {
   status?: string;
 }
 
-export type Discussion = Array<{content: string, posted_by: User, posted_on: string, spam?: Spam}>;
+export type Comment = {content: string, posted_by: User, posted_on: string, spam?: Spam};
+
+export type Discussion = Array<Comment>;
+
+export type DiscussionSubjectTypes = Dataservice | Dataset | Reuse | Post;
+
+export type DiscussionSubject = {
+  class: 'Dataservice' | 'Dataset' | 'Reuse' | 'Post' | 'Topic' | 'Organization';
+  id: string;
+};
 
 export type Thread = {
   id: string;
   discussion: Discussion;
   title: string;
   url: string;
+  created: string;
   closed: string;
   closed_by: User;
   spam?: Spam;
+  subject: DiscussionSubject;
 };
 
 export type Sort = {
@@ -113,7 +124,13 @@ export type SortDirection = 'asc' | 'desc';
 
 export type DatasetSortedBy = 'title' | 'created' | 'last_update' | 'reuses' | 'followers' | 'views';
 
+export type DataserviceSortedBy = 'title'
+
 export type ReuseSortedBy = 'title' | 'created' | 'datasets' | 'followers' | 'views';
+
+export type DiscussionSortedBy = 'title' | 'created' | 'closed';
+
+export type CommunityResourceSortedBy = 'created_at_internal' | 'last_modified_internal' | 'title';
 
 export type SpatialZone = {
   code: string;
@@ -131,7 +148,7 @@ export type MembershipStatus = "pending" | "accepted" | "refused";
 
 export type PendingMembershipRequest = {
   id: string;
-  user: User;
+  user: User & {email: string;};
   status: MembershipStatus;
   created: string;
   comment: string;
@@ -148,7 +165,7 @@ export type RefusedMembershipRequest = MembershipRequest & {
 
 export type MemberRole = "admin" | "editor";
 
-// In org endpoint we get these two private information if we have edit rights on the org.
+// In org end we get these two private information if we have edit rights on the org.
 export type MemberUser = User & {
   email: string | null;
   last_login_at: string | null;
@@ -164,22 +181,94 @@ export type EditingMember = Member & {
   newRole?: MemberRole;
 };
 
-export type OrganizationV1 = Organization & {
-  business_number_id: string | null;
+export type Post = {
+  body_type: 'markdown' | 'html';
+  content: string;
   created_at: string;
-  deleted: string | null;
-  description: string;
-  extras: Record<string, any>;
+  credit_to: string;
+  credit_url: string;
+  datasets: Array<Pick<Dataset, "acronym" | "id" | "page" | "title" | "uri">>;
+  headline: string;
+  id: string;
+  image: string | null;
   last_modified: string;
-  members: Array<Member>;
-  metrics: {
-    datasets: number;
-    followers: number;
-    members: number;
-    reuses: number;
-    views: number;
-  };
-  url: string | null;
+  name: string;
+  owner: User;
+  page: string;
+  published: string;
+  reuses: Array<Pick<Reuse, "id" | "image" | "image_thumbnail" | "page" | "title" | "uri">>;
+  slug: string;
+  tags: Array<string>;
+  url: string;
+};
+
+export type HarvesterValidation = {
+  state: string;
+  by: User;
+  on: string;
+  comment: string;
+};
+
+export type HarvestError = {
+  created_at: string;
+  message: string;
+  details: string | null;
+};
+
+export type HarvestLog = {
+  level: string;
+  message: string;
+};
+
+export type HarvestItem = {
+  remote_id: string;
+  dataset: Dataset | null;
+  dataservice: Dataservice | null;
+  status: string;
+  created: string;
+  started: string | null;
+  ended: string | null;
+  errors: Array<HarvestError>;
+  logs: Array<HarvestLog>;
+  args: string;
+  kwargs: Record<string, any>;
+};
+
+export type HarvesterJobStatus = "pending" | "initializing" | "initialized" | "processing" | "done" | "done-errors" | "failed";
+
+export type HarvesterJob = {
+  id: string;
+  created: string;
+  started: string | null;
+  ended: string | null;
+  status: HarvesterJobStatus;
+  errors: Array<HarvestError>;
+  items: Array<HarvestItem>;
+  source: string;
+};
+
+export type HarvesterSource = Owned & {
+  id: string;
+  name: string;
+  description: string | null;
+  url: string;
+  backend: string;
+  config: Record<string, any>;
+  created_at: string;
+  active: boolean;
+  autoarchive: boolean;
+  validation: HarvesterValidation;
+  last_job: HarvesterJob | null;
+  deleted: string | null;
+  schedule: string;
 }
+
+export type ContactPoint = {
+  id: string;
+  name: string;
+  contact_form?: string;
+  email?: string;
+}
+
 
 export default {};

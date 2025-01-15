@@ -89,7 +89,7 @@ const argsWithSchema = {
     checksum: {type: "sha1", value: "54d0f3a4847c546c1cc4865f5ca54a1f8fc3f9af"},
     created_at: "2023-11-15T10:40:22.288000+00:00",
     description: ``,
-    extras: {"check:available": true, "check:date": "2023-11-15T10:40:27.222278+00:00", "check:headers:content-type": "text/csv", "check:status": 200, "check:timeout": false, "publish_source": "publier.etalab.studio"},
+    extras: {"check:available": true, "check:date": "2023-11-15T10:40:27.222278+00:00", "check:headers:content-type": "text/csv", "check:status": 200, "check:timeout": false, "publish_source": "publier.etalab.studio", "analysis:parsing:parquet_url": "https://example.org/file.parquet", "analysis:parsing:parquet_size": 234124},
     filesize: 9167,
     filetype: "file",
     format: "csv",
@@ -175,6 +175,19 @@ export const ResourceBinary: StoryObj<typeof meta> = {
     template: '<ResourceAccordion v-bind="args" />',
   }),
   args: { ...argsWithSchema, resource: { ...argsWithSchema.resource, format: "octet-stream", title: "tondeuse_batterie_fr.binary",
+  } },
+};
+
+
+export const ResourceOGCService: StoryObj<typeof meta> = {
+  render: (args) => ({
+    components: { ResourceAccordion },
+    setup() {
+      return { args };
+    },
+    template: '<ResourceAccordion v-bind="args" />',
+  }),
+  args: { ...argsWithSchema, resource: { ...argsWithSchema.resource, format: "ogc:wms", title: "point_eau_qualito",
   } },
 };
 

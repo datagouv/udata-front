@@ -1,6 +1,24 @@
 ---
 version: 2.1
 
+parameters:
+  publish-branch:
+    type: string
+    default: "master"
+    description: "Branch to publish to PyPI and trigger the Gitlab CI/CD pipeline when pushed to"
+  deploy-env:
+    type: string
+    default: "dev"
+    description: "Environment to deploy to"
+  app-name:
+    type: string
+    default: "udata"
+    description: "Parent app name"
+  plugin-name:
+    type: string
+    default: "udata-front"
+    description: "Plugin name"
+
 orbs:
   browser-tools: circleci/browser-tools@1.2.3
   cypress: cypress-io/cypress@3
@@ -71,7 +89,7 @@ jobs:
       - image: mongo:6.0.4
       - image: redis:alpine
     environment:
-       BASH_ENV: /root/.bashrc
+        BASH_ENV: /root/.bashrc
     steps:
       - checkout
       - attach_workspace:
@@ -91,15 +109,15 @@ jobs:
           command: |
             if [[ $CIRCLE_TAG ]]; then
                 # This is a tagged release
-                echo 'export BUILDNO="'$CIRCLE_TAG'"' >> set_env_builno.sh
+                echo 'BUILDNO="'$CIRCLE_TAG'"' > version.sh
             elif [[ "$CIRCLE_BRANCH" == feature/* ]]; then
                 # This is a feature branch
-                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM+${CIRCLE_BRANCH#*/}'"' >> set_env_builno.sh
+                echo 'BUILDNO="'$CIRCLE_BUILD_NUM+${CIRCLE_BRANCH#*/}'"' > version.sh
             else
                 # This is a simple development build
-                echo 'export BUILDNO="'$CIRCLE_BUILD_NUM'"' >> set_env_builno.sh
+                echo 'BUILDNO="'$CIRCLE_BUILD_NUM'"' > version.sh
             fi
-            source set_env_builno.sh
+            source version.sh
             echo $BUILDNO
       - when:
           condition:
@@ -109,7 +127,7 @@ jobs:
                 name: Generate egg-info
                 command: |
                   source venv/bin/activate
-                  source set_env_builno.sh
+                  source version.sh
                   inv egg-info --buildno ${BUILDNO}
       - save_cache:
           key: py-cache-v16-{{ arch }}-{{ .Branch }}{{ .Environment.CIRCLE_TAG }}
@@ -130,7 +148,7 @@ jobs:
           paths:
           - venv
           - udata_front.egg-info
-          - set_env_builno.sh
+          - version.sh
 
   assets:
     docker:
@@ -228,7 +246,7 @@ jobs:
 
   storybook_datagouv_components:
     docker:
-      - image: mcr.microsoft.com/playwright:v1.46.1-jammy
+      - image: mcr.microsoft.com/playwright:v1.48.2-jammy
     resource_class: medium+
     steps:
       - checkout
@@ -311,7 +329,7 @@ jobs:
             - run:
                 name: Generate egg-info
                 command: |
-                  source set_env_builno.sh
+                  source version.sh
                   python setup.py egg_info --tag-build ${BUILDNO}
       - run:
           name: Prepare udata.cfg file with udata-front plugin
@@ -330,7 +348,7 @@ jobs:
 
   storybook_udata_front:
     docker:
-      - image: mcr.microsoft.com/playwright:v1.46.1-jammy
+      - image: mcr.microsoft.com/playwright:v1.48.2-jammy
     resource_class: medium+
     steps:
       - checkout
@@ -376,7 +394,7 @@ jobs:
             - run:
                 name: Generate egg-info
                 command: |
-                  source set_env_builno.sh
+                  source version.sh
                   python setup.py egg_info --tag-build ${BUILDNO}
 
       - run:
@@ -393,11 +411,35 @@ jobs:
     docker:
       - image: udata/circleci:py3.11-bookworm
     environment:
-       BASH_ENV: /root/.bashrc
+        BASH_ENV: /root/.bashrc
     steps:
       - checkout
       - attach_workspace:
           at: .
+      - run:
+          name: Set release version
+          command: |
+            if [[ $CIRCLE_TAG ]]; then
+                # This is a tagged release, version has been handled upstream
+                echo "RELEASE_VERSION=$CIRCLE_TAG" >> version.sh
+            else
+                # Otherwise, relies on a dev version like "1.2.1.dev" by default
+                # Read base version from __init__.py
+                source venv/bin/activate
+                echo "BASE_VERSION=$(python -c 'from udata_front import __version__; print(__version__)')" >> version.sh
+                # Build the release version string with the concatenated version and build number, like "1.2.1.dev1234"
+                echo "RELEASE_VERSION=\"\${BASE_VERSION}\${BUILDNO}\"" >> version.sh
+            fi
+      - run:
+          name: Display build info for debugging
+          command: |
+            cat version.sh
+            source version.sh
+            echo "Base version from __init__.py: $BASE_VERSION"
+            echo "Build number: $BUILDNO"
+            echo "Commit hash: ${CIRCLE_SHA1:0:7}"
+            echo "Git tag: $CIRCLE_TAG"
+            echo "Building a wheel release with version $RELEASE_VERSION"
       - run:
           name: Build a distributable package
           command: |
@@ -410,7 +452,7 @@ jobs:
                 inv pydist
             else
                 # This is a simple development build
-                source set_env_builno.sh
+                source version.sh
                 inv pydist -b ${BUILDNO}
             fi
       - store_artifacts:
@@ -419,6 +461,7 @@ jobs:
           root: .
           paths:
             - dist
+            - version.sh
 
   publish:
     docker:
@@ -433,8 +476,46 @@ jobs:
             pip install twine
             twine upload --username "${PYPI_USERNAME}" --password "${PYPI_PASSWORD}" dist/*.whl
 
+  trigger_gitlab_pipeline:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Configure the SSH simple-scaffold repository private key
+          command: |
+            mkdir -p ~/.ssh
+            # SCAFFOLD_PRIVATE_KEY is the private key related to the "simple-scaffold" GitLab repository, so that it can be cloned
+            # CircleCI doesn't accept multiple lines in a single environment variable, so the multiline private key must be base64 encoded, and then decoded here
+            echo "$SCAFFOLD_PRIVATE_KEY" | base64 -d > ~/.ssh/id_ed25519
+            chmod 600 ~/.ssh/id_ed25519
+            ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
+      - run:
+          name: Configure Git
+          command: |
+            git config --global user.email "root@data.gouv.fr"
+            git config --global user.name "datagouv"
+      - run:
+          name: Clone simple-scaffold repository
+          command: |
+            git clone --quiet --depth 1 $SCAFFOLD_REPO_SSH_URL scaffold
+      - run:
+          name: Trigger Gitlab CI/CD pipeline for << pipeline.parameters.app-name >> +<< pipeline.parameters.plugin-name >> to deploy to << pipeline.parameters.deploy-env >> environment
+          command: |
+            source version.sh
+            cd scaffold
+            # Run the script that triggers the Gitlab CI/CD pipeline.
+            # Must have GITLAB_API_TOKEN set in the environment
+            # GITLAB_API_TOKEN is the token related to the "infra" GitLab repository, so that the Gitlab CI/CD pipeline can be triggered
+            # The script args are, in order:
+            # - << pipeline.parameters.app-name >>: the name of the parent project to re-deploy (APP_NAME)
+            # - $BUILDNO: the plugin build version to deploy (RELEASE_VERSION)
+            # - << pipeline.parameters.deploy-env >>: the environment to deploy to (ENV)
+            # - "plugin_name=<< pipeline.parameters.plugin-name >>": the deploy variables (VARS). They are passed as a quoted string in which the variables are separated by semicolons.
+            ./scripts/gitlab-ci-pipeline.sh << pipeline.parameters.app-name >> ${RELEASE_VERSION} << pipeline.parameters.deploy-env >> "plugin_name=<< pipeline.parameters.plugin-name >>"
+
 workflows:
-  version: 2
   build:
     jobs:
       - deps:
@@ -508,7 +589,17 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - << pipeline.parameters.publish-branch >>
             tags:
               only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
           context: org-global
+      - trigger_gitlab_pipeline:
+          requires:
+            - publish
+          filters:
+            branches:
+              only:
+                - << pipeline.parameters.publish-branch >>
+          context:
+            - org-global
+            - gitlab-trigger

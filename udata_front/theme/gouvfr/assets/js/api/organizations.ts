@@ -1,15 +1,22 @@
+import type { NewOrganization, Organization } from "@datagouv/components/ts";
 import { type MaybeRefOrGetter, toValue } from "vue";
 import { api } from "../plugins/api";
 import { getLocalizedUrl } from "../i18n";
-import type { Member, MemberRole, OrganizationV1, PendingMembershipRequest } from "../types";
+import type { Member, MemberRole, PendingMembershipRequest } from "../types";
 
 type UploadLogoResponse = {
   image: string;
   success: boolean;
 };
 
-export function createOrganization(organization: MaybeRefOrGetter<OrganizationV1>) {
-  return api.post<OrganizationV1>("organizations/", {
+type ContactPoint = {
+  name: string,
+  email: string,
+  contact_form: string,
+}
+
+export function createOrganization(organization: MaybeRefOrGetter<NewOrganization>) {
+  return api.post<Organization>("organizations/", {
     ...toValue(organization),
   }).then(resp => resp.data);
 }
@@ -20,15 +27,15 @@ export function uploadLogo(oid: string, file: File) {
   }).then(resp => resp.data);
 }
 
-export function updateOrganization(organization: MaybeRefOrGetter<OrganizationV1>) {
+export function updateOrganization(organization: MaybeRefOrGetter<Organization>) {
   const organizationValue  = toValue(organization);
-  return api.put<OrganizationV1>(`organizations/${organizationValue.id}/`, {
+  return api.put<Organization>(`organizations/${organizationValue.id}/`, {
     ...organizationValue,
   }).then(resp => resp.data);
 }
 
 export function getOrganization(oid: string) {
-  return api.get<OrganizationV1>(getLocalizedUrl(`organizations/${oid}/`))
+  return api.get<Organization>(getLocalizedUrl(`organizations/${oid}/`))
     .then(res => res.data);
 }
 
@@ -91,4 +98,16 @@ export function addMember(oid: string, userId: string, role: MemberRole) {
     role,
   })
     .then(resp => resp.data);
+}
+
+export function createContactPointOrganization(oid: string, contactPoint: ContactPoint) {
+  return api.post<ContactPoint>(`contacts`, {
+    ...toValue(contactPoint),
+    organization: oid,
+  }).then(resp => resp.data);
+}
+
+export function getContactsOrganization(oid: string) {
+  return api.get<Array<Organization>>(getLocalizedUrl(`organizations/${oid}/contacts`))
+    .then(res => res.data);
 }
