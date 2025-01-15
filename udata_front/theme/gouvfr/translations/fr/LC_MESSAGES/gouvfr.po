@@ -450,21 +450,153 @@ msgstr "%(site)s accueil"
 msgid "home"
 msgstr "accueil"
 
-#: udata_front/theme/gouvfr/templates/home.html:18
+#: udata_front/theme/gouvfr/templates/home.html:32
+msgid "Right now"
+msgstr "En ce moment"
+
+#: udata_front/theme/gouvfr/templates/home.html:38
 msgid "Open platform for French public data"
-msgstr "Plateforme ouverte des données publiques françaises"
+msgstr "La plateforme des données publiques françaises"
 
-#: udata_front/theme/gouvfr/templates/home.html:20
-msgid "Featured topics"
-msgstr "Thématiques à la une"
+#: udata_front/theme/gouvfr/templates/home.html:41
+msgid "Use, share and improve public data"
+msgstr "Utilisez, partagez et améliorez les données publiques"
 
-#: udata_front/theme/gouvfr/templates/home.html:55
-msgid "All featured topics"
-msgstr "Toutes les thématiques"
+#: udata_front/theme/gouvfr/templates/home.html:45
+msgid "Discover datasets"
+msgstr "Découvrez les jeux de données"
 
-#: udata_front/theme/gouvfr/templates/home.html:72
-msgid "All news"
-msgstr "Toutes les actualités"
+#: udata_front/theme/gouvfr/templates/home.html:48
+msgid "Explore data reuses"
+msgstr "Explorez les réutilisations de données"
+
+#: udata_front/theme/gouvfr/templates/home.html:62
+msgid "French data catalog"
+msgstr "Le catalogue des données françaises"
+
+#: udata_front/theme/gouvfr/templates/home.html:64
+msgid "Discover data on all subjects, made by the administration and civil society."
+msgstr "Découvrez des données sur tous les sujets, produites par l’administration et la société civile."
+
+#: udata_front/theme/gouvfr/templates/home.html:116
+msgid "See data"
+msgstr "Voir les données"
+
+#: udata_front/theme/gouvfr/templates/home.html:122
+msgid "How to publish data?"
+msgstr "Comment publier des données ?"
+
+
+#: udata_front/theme/gouvfr/templates/home.html:150
+msgid "A dynamic and engaged community"
+msgstr "Une communauté dynamique et engagée"
+
+#: udata_front/theme/gouvfr/templates/home.html:152
+msgid "Share your data usage and exchange between data producers and reusers."
+msgstr "Partagez votre usage des données et échangez entre producteurs et réutilisateurs de données."
+
+#: udata_front/theme/gouvfr/templates/home.html:204
+msgid "See reuses"
+msgstr "Voir les réutilisations"
+
+#: udata_front/theme/gouvfr/templates/home.html:210
+msgid "How to reuse data?"
+msgstr "Comment réutilisez des données ?"
+
+#: udata_front/theme/gouvfr/templates/home.html:233
+msgid "{site} mission"
+msgstr "La mission {site}"
+
+#: udata_front/theme/gouvfr/templates/home.html:235
+msgid "Simplify access to public data"
+msgstr "Simplifier l’accès aux données publiques"
+
+#: udata_front/theme/gouvfr/templates/home.html:236
+msgid ""
+"The opening and circulation of public data strengthen transparency, improve "
+"public action, and allow for the creation of new services."
+msgstr "L’ouverture et la circulation des données publiques renforcent la transparence, améliorent l’action publique et permettent la création de nouveaux services."
+
+#: udata_front/theme/gouvfr/templates/home.html:238
+msgid "Our goals"
+msgstr "Nos Objectifs"
+
+#: udata_front/theme/gouvfr/templates/home.html:242
+msgid "Ease data discoverability"
+msgstr "Faciliter la découvrabilité des données"
+
+#: udata_front/theme/gouvfr/templates/home.html:246
+msgid "Improve data quality"
+msgstr "Améliorer la qualité  des données"
+
+#: udata_front/theme/gouvfr/templates/home.html:250
+msgid "Encourage data reusability"
+msgstr "Encourager la réutilisation des données"
+
+#: udata_front/theme/gouvfr/templates/home.html:258
+msgid "Produce information based on data"
+msgstr "Produire de l’information à partir des données"
+
+#: udata_front/theme/gouvfr/templates/home.html:259
+msgid "Our data explorations"
+msgstr "Nos explorations de données"
+
+#: udata_front/theme/gouvfr/templates/home.html:268
+msgid "Follow real estate price evolution and find real estate sales prices."
+msgstr "Suivez l'évolution des prix de l'immobilier et trouver le prix des ventes immobilières."
+
+#: udata_front/theme/gouvfr/templates/home.html:272
+#: udata_front/theme/gouvfr/templates/home.html:294
+msgid "Learn more"
+msgstr "En savoir plus"
+
+#: udata_front/theme/gouvfr/templates/home.html:290
+msgid ""
+"Check public legal details of company, association and public services in "
+"France."
+msgstr "Vérifiez les informations légales publiques des entreprises, associations et services publics en France."
+
+#: udata_front/theme/gouvfr/templates/home.html:311
+msgid "Discover our data exploration"
+msgstr "Découvrez nos explorations de données"
+
+#: udata_front/theme/gouvfr/templates/home.html:316
+msgid "Federate an ecosystem"
+msgstr "Fédérer un écosystème"
+
+#: udata_front/theme/gouvfr/templates/home.html:318
+msgid "Our thematic platforms"
+msgstr "Nos plateformes thématiques"
+
+#: udata_front/theme/gouvfr/templates/home.html:329
+msgid ""
+"Ecological transition data supported by the <strong>Ministry of Ecological "
+"Transition and Cohesion of Territories.</strong>"
+msgstr "Les données de la transition écologique portées par le <strong>Ministère de la Transition écologique et de la Cohésion des territoires.</strong>"
+
+#: udata_front/theme/gouvfr/templates/home.html:341
+msgid ""
+"Mobility data in partnership with the <strong>General Directorate for "
+"Infrastructure, Transport and Mobilities.</strong>"
+msgstr "Les données de mobilité en partenariat avec la  <strong>Direction Générale des Infrastructures, des Transports et des Mobilités.</strong>"
+
+#: udata_front/theme/gouvfr/templates/home.html:353
+msgid ""
+"Public data related to meteorology and climatology produced by <strong>Météo-"
+"France.</strong>"
+msgstr "Les données publiques relatives à la météorologie et à la climatologie produites par <strong>Météo-France.</strong>"
+
+#: udata_front/theme/gouvfr/templates/home.html:363
+msgid "{site} news"
+msgstr "L'actualité {site}"
+
+#: udata_front/theme/gouvfr/templates/home.html:381
+msgid "Read the article"
+msgstr "Consulter l’article"
+
+#: udata_front/theme/gouvfr/templates/home.html:389
+msgid "See all news"
+msgstr "Voir toutes les actualités"
 
 #: udata_front/theme/gouvfr/templates/dataset/display.html:40
 #: udata_front/theme/gouvfr/templates/dataset/followers.html:6
@@ -2422,3 +2554,6 @@ msgstr "Dernières réutilisations"
 msgid "Transfer"
 msgstr "Transférer"
 
+#: udata_front/views/site.py:97
+msgid "Datasets and Dataservices"
+msgstr "Jeux de données et API"

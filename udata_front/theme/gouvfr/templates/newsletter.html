@@ -2,11 +2,11 @@
 <div class="fr-follow border-top">
     <div class="fr-container">
         <div class="fr-grid-row">
-            <div class="fr-col-12 fr-col-md-8 flex">
+            <div class="fr-col-12 fr-col-md-8 flex wrap">
                 <div class="fr-col-auto fr-mr-5v">
                     {% include theme('svg/illustrations/newspaper.svg') %}
                 </div>
-                <div class="fr-follow__newsletter fr-col">
+                <div class="fr-follow__newsletter fr-col-12 fr-col-sm">
                     <div>
                         <p class="fr-h4 font-800 fs-xl fr-mb-1v">{{ _("Subscribe to our newsletter") }}</p>
                         <p class="fr-text--base">{{
@@ -14,14 +14,17 @@
                                 .format(site=current_site.title)
                         }}</p>
                     </div>
-                    <div>
-                        <a
-                            class="fr-btn fr-mr-2w"
-                            title="{{ _('Subscribe to our newsletter') }}"
-                            href="{{ config.NEWSLETTER_SUBSCRIPTION_URL }}"
-                        >
-                            {{ _("Subscribe") }}
-                        </a>
+                    <div class="flex wrap fr-grid-row--gutters">
+                        <div class="fr-col-auto">
+                            <a
+                                class="fr-btn"
+                                title="{{ _('Subscribe to our newsletter') }}"
+                                href="{{ config.NEWSLETTER_SUBSCRIPTION_URL }}"
+                            >
+                                {{ _("Subscribe") }}
+                            </a>
+                        </div>
+                        <div class="fr-col-auto">
                         <a
                             class="fr-btn fr-btn--secondary"
                             title="{{ _('Subscribe to our newsletter') }}"
@@ -29,6 +32,7 @@
                         >
                             {{ _("See our next events") }}
                         </a>
+                        </div>
                     </div>
                 </div>
             </div>

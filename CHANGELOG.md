@@ -8,6 +8,7 @@
 - Fix CI trigger GitLab pipeline job [#635](https://github.com/datagouv/udata-front/pull/635)
 - New footer newsletter design [#634](https://github.com/datagouv/udata-front/pull/634)
 - Fix dropdown keyboard navigation [#637](https://github.com/datagouv/udata-front/pull/637)
+- New homepage [#626](https://github.com/datagouv/udata-front/pull/626)
 
 ## 6.0.7 (2024-12-20)
 

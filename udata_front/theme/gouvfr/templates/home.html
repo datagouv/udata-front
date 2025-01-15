@@ -1,231 +1,430 @@
 {% extends theme('base.html') %}
 
 {% set meta = {
-    'title': _('Home'),
-    'description': _("%(site)s home", site=config['SITE_TITLE']),
-    'keywords': [_('home')],
+'title': _('Home'),
+'description': _("%(site)s home", site=config['SITE_TITLE']),
+'keywords': [_('home')],
 } %}
 
 {% set read_only_mode = config.READ_ONLY_MODE %}
 
 {% block content %}
 {% cache cache_duration, 'home', g.lang_code %}
-
-<section class="hero fr-py-3w fr-py-md-9v">
+<section class="fr-pt-md-10w fr-pb-md-8w hero-background">
     <div class="fr-container">
-        <div class="fr-grid-row fr-grid-row--gutters">
-            <div class="fr-col-12 fr-col-lg-5">
-                <h1 class="fr-mt-0 fr-mb-2w">{{ _('Open platform for French public data') }}</h1>
-                <div>
-                    <h2 class="fr-text--md fr-my-0">{{ _('Featured topics') }}</h2>
-                    <ul>
-                        <li>
-                            <a
-                                href="{{ url_for('gouvfr.show_page', slug='donnees_agriculture-alimentation') }}"
-                                class="btn-venti fr-my-2w bg-green-400"
-                            >
-                                Données relatives à
-                                <strong>l'Agriculture et à l'Alimentation</strong>
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="{{ url_for('gouvfr.show_page', slug='donnees-energie') }}"
-                                class="btn-venti fr-my-2w bg-orange-100"
-                            >
-                                Données relatives aux
-                                <strong>Énergies</strong>
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="{{ url_for('gouvfr.show_page', slug='donnees_education') }}"
-                                class="btn-venti fr-my-2w bg-blue-450"
-                            >
-                                Données relatives à
-                                <strong>l'Éducation</strong>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="fr-grid-row justify-center fr-mt-2w">
+        <div class="fr-grid-row fr-py-8w fr-py-md-16w">
+            <div class="fr-mx-auto fr-col-12 fr-col-sm-11 fr-col-md-10 fr-col-lg-9 fr-col-xl-8">
+                <div class="fr-grid-row fr-grid-row--gutters justify-between">
+                    {% if last_post %}
+                    <div class="fr-col-12 fr-col-md-6 text-align-center-md">
                         <a
-                            href="{{ url_for('gouvfr.show_page', slug='thematiques-a-la-une') }}"
-                            class="fr-btn fr-btn--secondary fr-icon-arrow-right-s-line fr-btn--icon-right"
+                            class="mw-100 inline-flex items-center fr-raw-link fr-text--sm fr-m-0 fr-py-1v fr-px-3v border text-blue-400 border-blue-400 rounded-xs bg-white text-overflow-ellipsis"
+                            href="{{ last_post.display_url }}"
                         >
-                            {{ _('All featured topics') }}
+                            <span aria-hidden="true" class="fr-icon-newspaper-line fr-icon--sm fr-mr-1w"></span>
+                            <span class="fr-text--bold fr-mb-0">{{ _('News') }}</span>
+                            <span class="text-overflow-ellipsis">&nbsp;: {{ last_post.name }}</span>
+                        </a>
+                    </div>
+                    {% endif %}
+                    <div class="fr-col-12 fr-col-md-6 text-align-right text-align-center-md">
+                        <a class="mw-100 inline-flex items-center fr-raw-link fr-text--sm fr-m-0 fr-py-1v fr-px-3v border text-blue-400 border-blue-400 rounded-xs bg-white text-overflow-ellipsis"
+                            href="{{ url_for('gouvfr.show_page', slug='donnees-energie') }}">
+                            <span aria-hidden="true" class="fr-icon-notification-3-line fr-icon--sm fr-mr-1w"></span>
+                            <span class="fr-text--bold fr-mb-0">{{ _('Right now') }}</span>
+                            <span class="text-overflow-ellipsis">&nbsp;: Données relatives aux Énergies</span>
+                        </a>
+                    </div>
+                </div>
+                <h1 class="fr-display--sm font-800 text-blue-400 fr-mt-4w fr-mb-2w text-align-center">
+                    {{ _('Open platform for French public data') }}
+                </h1>
+                <p class="fr-text--alt f-italic fr-h4 fr-mb-4w fr-text--regular m-0 text-blue-400 text-align-center">
+                    {{ _('Use, share and improve public data') }}
+                </p>
+                <div class="text-align-center">
+                    <a href="{{ url_for('datasets.list') }}" class="fr-btn fr-mr-3v fr-mb-3v">
+                        {{ _('Discover datasets') }}
+                    </a>
+                    <a href="{{ url_for('reuses.list') }}" class="fr-btn fr-btn--secondary bg-white">
+                        {{ _('Explore data reuses') }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="fr-container--fluid">
+    <div class="fr-grid-row fr-grid-row--gutters">
+        <div class="fr-col-12 fr-col-lg-6">
+            <div class="fr-py-4w fr-pt-12w fr-py-md-12w fr-px-1w w-100 mw-70w fr-mx-auto">
+                <div class="fr-mb-1w w-4rem with-svg-responsive greyscaled">
+                    {% include theme('svg/illustrations/dataset.svg') %}
+                </div>
+                <h2 class="fs-xxxl text-title-grey font-800 fr-mb-1w">{{_('French data catalog')}}</h2>
+                <p class="fr-mb-4w">
+                    {{_('Discover data on all subjects, made by the administration and civil society.')}}
+                </p>
+                <div class="fr-grid-row justify-between fr-grid-row--gutters">
+                    {% for (label, metric) in data_metrics %}
+                    <div class="fr-col-auto">
+                        <p class="fr-m-0 fr-my-1v text-grey-400">
+                            <span class="fr-h4 font-800 fr-m-0 block">{{ metric|summarize }}</span>
+                            <span class="fr-text--regular fr-m-0 subtitle subtitle--uppercase">{{ label }}</span>
+                        </p>
+                    </div>
+                    {% endfor %}
+                </div>
+                <p class="fr-mt-4w fr-mb-3v fr-text--bold text-mention-grey text-transform-uppercase">
+                    {{_('They publish data on {site}'.format(site=config.SITE_TITLE))}}
+                </p>
+                <div class="fr-grid-row justify-between fr-mb-4w">
+                    <img
+                        alt="Santé publique France"
+                        src="{{theme_static('img/organizations/spf.png')}}"
+                        srcset="{{theme_static('img/organizations/spf.png')}}, {{theme_static('img/organizations/spf@2x.png')}} 2x, {{theme_static('img/organizations/spf@3x.png')}} 3x"
+                        class="greyscaled opacity-80"
+                        loading="lazy"
+                        width="80"
+                        height="80"
+                    >
+                    <img
+                        alt="CNIL"
+                        src="{{theme_static('img/organizations/cnil.png')}}"
+                        srcset="{{theme_static('img/organizations/cnil.png')}}, {{theme_static('img/organizations/cnil@2x.png')}} 2x, {{theme_static('img/organizations/cnil@3x.png')}} 3x"
+                        class="greyscaled opacity-80"
+                        loading="lazy"
+                        width="80"
+                        height="80"
+                    >
+                    <img
+                        alt="Insee"
+                        src="{{theme_static('img/organizations/insee.png')}}"
+                        srcset="{{theme_static('img/organizations/insee.png')}}, {{theme_static('img/organizations/insee@2x.png')}} 2x, {{theme_static('img/organizations/insee@3x.png')}} 3x"
+                        class="greyscaled opacity-80"
+                        loading="lazy"
+                        width="80"
+                        height="80"
+                    >
+                    <img
+                        alt="Ministère de l'Éducation Nationale et de la Jeunesse"
+                        src="{{theme_static('img/organizations/minedu.png')}}"
+                        srcset="{{theme_static('img/organizations/minedu.png')}}, {{theme_static('img/organizations/minedu@2x.png')}} 2x, {{theme_static('img/organizations/minedu@3x.png')}} 3x"
+                        class="greyscaled opacity-80"
+                        loading="lazy"
+                        width="80"
+                        height="80"
+                    >
+                </div>
+                <div class="fr-grid-row fr-grid-row--gutters">
+                    <div class="fr-col-auto">
+                        <a href="{{url_for('datasets.list')}}" class="fr-btn">
+                            {{ _('See data') }}
+                        </a>
+                    </div>
+                    <div class="fr-col-auto">
+                        <a href="{{url_for('gouvfr.show_page', slug= 'onboarding/producteurs')}}"
+                            class="fr-btn fr-btn--secondary">
+                            {{ _('How to publish data?') }}
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="fr-col-12 fr-col-offset-lg-1 fr-col-lg-6">
-                <h2 class="fr-text--md fr-my-0">{{ _('News') }}</h2>
-                {% if last_post %}
-                {% set post = last_post %}
-                <div class="fr-grid-row justify-center fr-mb-2w">
-                    {% include theme('post/search-result.html') %}
-                </div>
-                <div class="fr-grid-row justify-center">
-                    <a
-                        href="{{ url_for('posts.list') }}"
-                        class="fr-btn fr-btn--secondary fr-icon-arrow-right-s-line fr-btn--icon-right"
+        </div>
+        <div class="fr-col-12 fr-col-lg-6 bg-alt-grey fr-hidden fr-unhidden-sm">
+            <div class="fr-py-md-0 fr-pt-md-8w fr-px-md-1w fr-mx-auto flex flex-direction-column">
+                <figure class="fr-m-0 flex flex-direction-column items-center">
+                    <figcaption class="subtitle subtitle--uppercase text-mention-grey">
+                        {{_('datasets')}}
+                    </figcaption>
+                    <img
+                        class="mw-100 mb-n8w"
+                        srcset="{{theme_static('img/homepage/datasets.png')}}, {{theme_static('img/homepage/datasets@2x.png')}} 2x, {{theme_static('img/homepage/datasets@3x.png')}} 3x"
+                        src="{{theme_static('img/homepage/datasets.png')}}"
+                        alt=""
+                        width="516"
+                        height="auto"
                     >
-                        {{ _('All news') }}
-                    </a>
-                </div>
-                {% endif %}
+                </figure>
             </div>
         </div>
     </div>
 </section>
-
-{% set metrics = [
-    (_('Datasets'), 'datasets'),
-    (_('Files'), 'resources'),
-    (_('Reuses'), 'reuses'),
-    (_('Users'), 'users'),
-    (_('Organizations'), 'organizations'),
-    (_('Discussions'), 'discussions'),
-] %}
-
-
-{# Metrics Section #}
-<section class="metrics-bar">
-    <div class="fr-container fr-py-md-7w fr-py-2w">
-        <div class="bar fr-p-9v">
-            <h3>{% include theme('svg/logotype.svg') %} {{ _('is') }}</h3>
-            <div class="fr-grid-row justify-between fr-mt-md-9v fr-mt-2w">
-                {% for (label, metric) in metrics %}
-                <div class="filet fr-my-1v fr-my-md-0">
-                    <p class="fr-m-0 text-grey-400">
-                        <span class="fr-h1 fr-m-0 block">{{ current_site.metrics[metric]|format_number }}</span>
-                        {{ label }}
-                    </p>
+<section class="relative z-2 fr-container--fluid">
+    <div class="fr-grid-row fr-grid-row--gutters">
+        <div class="fr-col-12 fr-col-lg-6 order-lg-2">
+        <div class="fr-py-4w fr-pt-12w fr-py-md-12w fr-px-1w w-100 mw-70w fr-mx-auto">
+            <div class="fr-mb-1w w-4rem with-svg-responsive greyscaled">
+                    {% include theme('svg/blank_state/discussion.svg') %}
                 </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-</section>
-
-
-{# Datasets section #}
-{% set visible_datasets = current_site.settings.home_datasets|visibles %}
-{% set nb_datasets = visible_datasets|length %}
-{% set dataset_tabs = (
-    ('editorial-datasets', _('Featured datasets'), visible_datasets, {}),
-    ('recent-datasets', _('Latest datasets'), recent_datasets[:nb_datasets], {'sort': '-created'}),
-    ('reference-datasets', _('Reference datasets'), spd_datasets, {}),
-) %}
-
-<section class="datasets fr-pb-7w fr-pt-2w bg-grey-50">
-    <div class="fr-container">
-        {# Dataset tabs #}
-        <div class="fr-grid-row fr-grid-row--gutters justify-between">
-            <div class="fr-col-auto">
-                <h2 class="fr-m-0">{{ _('Datasets') }}</h2>
-            </div>
-            <div class="fr-col-auto fr-grid-row fr-grid-row--gutters">
-                <div class="fr-col-auto">
-                    <div class="fr-tags-group fr-hidden fr-unhidden-lg" data-tabs role="tablist">
-                        {% for tab_id, label, _, _ in dataset_tabs %}
-                        <button
-                            role="tab"
-                            aria-controls="{{tab_id}}"
-                            class="fr-tag"
-                            {% if loop.first %}
-                                aria-selected="true"
-                            {% endif %}
-                        >
-                            {{ label }}
-                        </button>
-                        {% endfor %}
+                <h2 class="fs-xxxl text-title-grey font-800 fr-mb-1w">{{_('A dynamic and engaged community')}}</h2>
+                <p class="fr-mb-4w">
+                    {{_('Share your data usage and exchange between data producers and reusers.')}}
+                </p>
+                <div class="fr-grid-row justify-between fr-grid-row--gutters">
+                    {% for (label, metric) in community_metrics %}
+                    <div class="fr-col-auto">
+                        <p class="fr-m-0 fr-my-1v text-grey-400">
+                            <span class="fr-h4 font-800 fr-m-0 block">{{ metric|summarize }}</span>
+                            <span class="fr-text--regular fr-m-0 subtitle subtitle--uppercase">{{ label }}</span>
+                        </p>
+                    </div>
+                    {% endfor %}
+                </div>
+                <p class="fr-mt-4w fr-mb-3v fr-text--bold text-mention-grey text-transform-uppercase">
+                    {{_('They reuse data from {site}'.format(site=config.SITE_TITLE))}}
+                </p>
+                <div class="fr-grid-row justify-between fr-mb-4w">
+                    <img
+                        alt="Le monde"
+                        srcset="{{theme_static('img/organizations/lemonde.png')}}, {{theme_static('img/organizations/lemonde@2x.png')}} 2x, {{theme_static('img/organizations/lemonde@3x.png')}} 3x"
+                        src="{{theme_static('img/organizations/lemonde.png')}}"
+                        class="opacity-80 greyscaled object-fit-contain"
+                        loading="lazy"
+                        width="80"
+                        height="80"
+                    >
+                    <img
+                        alt="Google Maps"
+                        srcset="{{theme_static('img/organizations/googlemaps.png')}}, {{theme_static('img/organizations/googlemaps@2x.png')}} 2x, {{theme_static('img/organizations/googlemaps@3x.png')}} 3x"
+                        src="{{theme_static('img/organizations/googlemaps.png')}}"
+                        class="opacity-80 greyscaled object-fit-contain"
+                        loading="lazy"
+                        width="80"
+                        height="80"
+                    >
+                    <img
+                        alt="Libération"
+                        srcset="{{theme_static('img/organizations/liberation.png')}}, {{theme_static('img/organizations/liberation@2x.png')}} 2x, {{theme_static('img/organizations/liberation@3x.png')}} 3x"
+                        src="{{theme_static('img/organizations/liberation.png')}}"
+                        class="opacity-80 greyscaled object-fit-contain"
+                        loading="lazy"
+                        width="80"
+                        height="80"
+                    >
+                    <img
+                        alt="Fondation Wikimedia"
+                        srcset="{{theme_static('img/organizations/wikimedia.png')}}, {{theme_static('img/organizations/wikimedia@2x.png')}} 2x, {{theme_static('img/organizations/wikimedia@3x.png')}} 3x"
+                        src="{{theme_static('img/organizations/wikimedia.png')}}"
+                        class="opacity-80 greyscaled object-fit-contain"
+                        loading="lazy"
+                        width="80"
+                        height="80"
+                    >
+                </div>
+                <div class="fr-grid-row fr-grid-row--gutters">
+                    <div class="fr-col-auto">
+                        <a href="{{url_for('reuses.list')}}" class="fr-btn">
+                            {{ _('See reuses') }}
+                        </a>
+                    </div>
+                    <div class="fr-col-auto">
+                        <a href="{{url_for('gouvfr.show_page', slug= 'onboarding/reutilisateurs')}}"
+                            class="fr-btn fr-btn--secondary">
+                            {{ _('How to reuse data?') }}
+                        </a>
                     </div>
                 </div>
-                <div class="fr-col-auto">
-                    <a
-                        href="{{ url_for('datasets.list') }}"
-                        class="fr-link fr-icon-arrow-right-s-line fr-link--icon-right"
+        </div>
+        </div>
+        <div class="fr-col-12 fr-col-lg-6 bg-alt-grey fr-hidden fr-unhidden-sm">
+            <div class="fr-py-4w fr-py-md-0 fr-pt-md-8w fr-px-md-1w fr-mx-auto">
+                <figure class="fr-m-0 flex flex-direction-column items-center">
+                    <figcaption class="subtitle subtitle--uppercase text-mention-grey text-align-center">
+                        {{_('reuses')}}
+                    </figcaption>
+                    <img
+                        class="mw-100"
+                        srcset="{{theme_static('img/homepage/reuses.png')}}, {{theme_static('img/homepage/reuses@2x.png')}} 2x, {{theme_static('img/homepage/reuses@3x.png')}} 3x"
+                        src="{{theme_static('img/homepage/reuses.png')}}"
+                        alt=""
+                        loading="lazy"
+                        width="592"
+                        height="auto"
                     >
-                        {{ _('See more datasets') }}
-                    </a>
-                </div>
+                </figure>
             </div>
         </div>
-        {% for tab_id, label, datasets, kwargs in dataset_tabs  %}
-        <div class="fr-hidden {% if loop.first %}fr-unhidden{% endif %}" role="tabpanel" id={{tab_id}}>
-            <div class="fr-grid-row fr-grid-row--gutters fr-pt-1w">
-                {% for dataset in datasets %}
-                <div class="fr-col-12 fr-col-lg-4">
-                    {% include theme('dataset/card-xs.html') %}
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-        {% endfor %}
-        {# end Dataset tabs #}
     </div>
 </section>
-{# End datasets section #}
-
-{# Reuses section #}
-{% set visible_reuses = current_site.settings.home_reuses|visibles %}
-{% set nb_reuses = visible_reuses|length %}
-{% set reuses_tabs = (
-    ('best-reuses', _('Featured reuses'), visible_reuses, {}),
-    ('latest-reuses', _('Latest reuses'), recent_reuses[:nb_reuses], {'sort': '-created'}),
-) %}
-
-{# Reuse section #}
-<section class="reuse fr-py-3w fr-py-md-7w">
+<div class="bg-dark text-white fr-py-8w">
     <div class="fr-container">
-        <div class="fr-grid-row fr-grid-row--gutters justify-between">
-            <div class="fr-col-auto">
-                <h2 class="fr-m-0">{{ _('Data reuses') }}</h2>
+        <h2 class="h1 text-white fr-mb-3v fr-text--regular">{{_('{site} mission').format(site=config.SITE_TITLE)}}</h2>
+        <section>
+            <h3 class="fs-xxl fs-md-xxxl font-800 fr-mb-4w">{{_('Simplify access to public data')}}</h3>
+            <p class="fr-mb-3w fs-xxl fs-md-xxxl line-height-xxxl text-grey-200 font-300">{{_('The opening and circulation of public data strengthen transparency, improve public action, and allow for the creation of new services.')}}</p>
+            <p class="fr-mb-4w fs-xxl fs-md-xxxl line-height-xxxl text-grey-200 font-300">{{_('{site} makes this information available by organizing its distribution and use.'.format(site=config.SITE_TITLE))}}</p>
+            <h4 class="subtitle subtitle--uppercase fr-text--md text-grey-300 fr-mb-11v">{{_('Our goals')}}</h4>
+            <div class="fr-grid-row fr-grid-row--gutters">
+                <div class="fr-col-12 fr-col-sm-6 fr-col-lg-4 fr-pl-md-5v">
+                    <span class="fr-mt-1v fr-icon-search-line" aria-hidden="true"></span>
+                    <p class="fr-mt-1w fr-mb-1v">{{_('Facilitate data discoverability')}}</p>
+                </div>
+                <div class="fr-col-12 fr-col-md-6 fr-col-lg-4 fr-pl-md-5v border-left-md border-grey-300">
+                    <span class="fr-mt-md-1v fr-icon-award-line" aria-hidden="true"></span>
+                    <p class="fr-mt-1w fr-mb-1v">{{_('Improve data quality')}}</p>
+                </div>
+                <div class="fr-col-12 fr-col-md-6 fr-col-lg-4 fr-pl-md-5v border-left-lg border-grey-300">
+                    <span class="fr-mt-1v fr-icon-line-chart-line" aria-hidden="true"></span>
+                    <p class="fr-mt-1w fr-mb-1v">{{_('Encourage data reusability')}}</p>
+                </div>
             </div>
-            <div class="fr-col-auto fr-grid-row fr-grid-row--gutters">
-                <div class="fr-col-auto">
-                    <div class="fr-tags-group fr-hidden fr-unhidden-lg" data-tabs role="tablist">
-                        {% for tab_id, label, _, _ in reuses_tabs %}
-                        <button
-                            role="tab"
-                            aria-controls="{{tab_id}}"
-                            class="fr-tag"
-                            {% if loop.first %}
-                                aria-selected="true"
-                            {% else %}
-                            {% endif %}
-                        >
-                            {{ label }}
-                        </button>
-                        {% endfor %}
+            <div class="fr-my-8w text-align-center">
+                <a class="fr-btn fr-btn--white" href="{{url_for('gouvfr.show_page', slug='about/a-propos_data-gouv')}}">{{_('Learn more about {site}'.format(site=config.SITE_TITLE))}}</a>
+            </div>
+        </section>
+        <section>
+            <h3 class="fs-xxl fs-md-xxxl font-800 fr-mb-4w">{{_('Produce information based on data')}}</h3>
+            <h4 class="subtitle subtitle--uppercase fr-text--md text-grey-300 fr-mb-3v">{{_('Our data explorations')}}</h4>
+            <div class="fr-grid-row fr-grid-row--gutters exploration-cards">
+                <div class="fr-col-12 fr-col-sm-6">
+                    <div class="fr-card">
+                        <div class="fr-card__body">
+                            <div class="fr-card__content fr-px-2w fr-pt-2w fr-pb-0">
+                                <h5 class="fr-card__title subtitle subtitle--uppercase fr-text--sm text-grey-300 fr-m-0">
+                                    {{_('Real estate values data explorer')}}
+                                </h5>
+                                <p class="fr-card__desc text-grey-500 fr-text--lg fr-text--bold fr-mb-0 fr-mt-1w">{{_('Follow real estate price evolution and find real estate sales prices.')}}</p>
+                            </div>
+                            <div class="fr-card__footer fr-grid-row fr-grid-row--right">
+                                <a class="fr-link" href="https://explore.data.gouv.fr/fr/immobilier">
+                                    {{_('Learn more')}}
+                                    <span class="fr-icon-arrow-right-line fr-icon--sm fr-ml-1v" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="fr-card__header">
+                            <div class="fr-card__img">
+                                <img
+                                    class="fr-responsive-img"
+                                    srcset="{{theme_static('img/homepage/dvf.png')}}, {{theme_static('img/homepage/dvf@2x.png')}} 2x"
+                                    src="{{theme_static('img/homepage/dvf.png')}}"
+                                    alt=""
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="fr-col-auto">
-                    <a
-                    href="{{ url_for('reuses.list', sort='-created') }}"
-                    title="{{ _('Latest reuses') }}"
-                    class="fr-link fr-icon-arrow-right-s-line fr-link--icon-right"
+                <div class="fr-col-12 fr-col-sm-6">
+                    <div class="fr-card">
+                        <div class="fr-card__body">
+                            <div class="fr-card__content fr-px-2w fr-pt-2w fr-pb-0">
+                                <h5 class="fr-card__title subtitle subtitle--uppercase fr-text--sm text-grey-300 fr-m-0">
+                                    {{_('Business Directory')}}
+                                </h5>
+                                <p class="fr-card__desc text-grey-500 fr-text--lg fr-text--bold fr-mb-0 fr-mt-1w">{{_('Check public legal details of company, association and public services in France.')}}</p>
+                            </div>
+                            <div class="fr-card__footer fr-grid-row fr-grid-row--right">
+                                <a class="fr-link" href="https://https://annuaire-entreprises.data.gouv.fr/">
+                                    {{_('Learn more')}}
+                                    <span class="fr-icon-arrow-right-line fr-icon--sm fr-ml-1v" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="fr-card__header">
+                            <div class="fr-card__img">
+                                <img
+                                    class="fr-responsive-img"
+                                    srcset="{{theme_static('img/homepage/annuaire.png')}}, {{theme_static('img/homepage/annuaire@2x.png')}} 2x"
+                                    src="{{theme_static('img/homepage/annuaire.png')}}"
+                                    alt=""
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="fr-my-8w text-align-center">
+                <a
+                    class="fr-btn fr-btn--white"
+                    href="https://explore.data.gouv.fr"
                 >
-                    {{ _('See more reuses') }}
+                {{_('Discover our data exploration')}}
                 </a>
+            </div>
+        </section>
+        <section>
+            <h3 class="fs-xxl fs-md-xxxl font-800 fr-mb-4w">{{_('Federate an ecosystem')}}</h3>
+            <h4 class="subtitle subtitle--uppercase fr-text--md text-grey-300 fr-mb-3v">
+                {{_('Our thematic platforms')}}
+            </h4>
+            <div class="fr-grid-row fr-grid-row--gutters">
+                <div class="fr-col-12 fr-col-md-6 fr-col-lg-4">
+                    <div class="h-100 bg-grey-125-dark fr-p-2w fr-enlarge-link">
+                        <h5 class="fr-h3 fr-mb-1w text-white">
+                            <a href="https://ecologie.data.gouv.fr">
+                                <span class="fr-text--alt f-italic fr-text--regular">ecologie</span><span class="fr-text--bold">.data.gouv.</span><span class="fr-text--alt f-italic fr-text--regular">fr</span>
+                            </a>
+                        </h5>
+                        <p class="fr-m-0">
+                            {{_('Ecological transition data supported by the <strong>Ministry of Ecological Transition and Cohesion of Territories.</strong>')}}
+                        </p>
+                    </div>
+                </div>
+                <div class="fr-col-12 fr-col-md-6 fr-col-lg-4">
+                    <div class="h-100 bg-grey-125-dark fr-p-2w fr-enlarge-link">
+                        <h5 class="fr-h3 fr-mb-1w text-white">
+                            <a href="https://transport.data.gouv.fr">
+                                <span class="fr-text--alt f-italic fr-text--regular">transport</span><span class="fr-text--bold">.data.gouv.</span><span class="fr-text--alt f-italic fr-text--regular">fr</span>
+                            </a>
+                        </h5>
+                        <p class="fr-m-0">
+                            {{_('Mobility data in partnership with the <strong>General Directorate for Infrastructure, Transport and Mobilities.</strong>')}}
+                        </p>
+                    </div>
+                </div>
+                <div class="fr-col-12 fr-col-md-6 fr-col-lg-4">
+                    <div class="h-100 bg-grey-125-dark fr-p-2w fr-enlarge-link">
+                        <h5 class="fr-h3 fr-mb-1w text-white">
+                            <a href="https://meteo.data.gouv.fr">
+                                <span class="fr-text--alt f-italic fr-text--regular">météo</span><span class="fr-text--bold">.data.gouv.</span><span class="fr-text--alt f-italic fr-text--regular">fr</span>
+                            </a>
+                        </h5>
+                        <p class="fr-m-0">
+                            {{_('Public data related to meteorology and climatology produced by <strong>Météo-France.</strong>')}}
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
-    <div class="fr-container">
-        {% for tab_id, label, reuses, kwargs in reuses_tabs  %}
-        <div class="fr-hidden {% if loop.first %}fr-unhidden{% endif %}" role="tabpanel" id="{{tab_id}}">
-            <div class="fr-grid-row fr-grid-row--gutters fr-pt-1w">
-                {% for reuse in reuses %}
-                <div class="fr-col-md-4 fr-col-sm-6 fr-col-12 fr-mb-3v">
-                    {% include theme('reuse/card.html') %}
+</div>
+{% if last_post %}
+<section class="fr-container fr-mt-8w fr-mb-10w">
+    <h2 class="subtitle subtitle--uppercase text-mention-grey fr-mb-3v fr-text--bold">{{_('{site} news').format(site=config.SITE_TITLE)}}</h2>
+    <div class="fr-grid-row fr-grid-row--gutters">
+        <div class="fr-col-12 fr-col-md-5">
+            <img class="fr-responsive-img rounded-xs" src="{{last_post.image}}" loading="lazy" alt=""/>
+        </div>
+        <div class="fr-col-12 fr-col-md-7">
+            <h3 class="text-grey-500 font-800 fs-xxxl fr-m-0">{{last_post.name}}</h3>
+            <p class="text-mention-grey fr-text--sm fr-my-1w">
+                {{ _('Published on') }}
+                {{ last_post.published|dateformat(format='long') }}
+            </p>
+            <p class="fr-mb-4w">{{ last_post.headline|mdstrip(300) }}</p>
+            <div class="fr-grid-row fr-grid-row--gutters">
+                <div class="fr-col-auto">
+                    <a
+                        class="fr-btn"
+                        href="{{ last_post.display_url }}"
+                    >
+                        {{_('Read the article')}}
+                    </a>
                 </div>
-                {% endfor %}
+                <div class="fr-col-auto">
+                    <a
+                        class="fr-btn fr-btn--secondary"
+                        href="{{url_for('posts.list')}}"
+                    >
+                        {{_('See all news')}}
+                    </a>
+                </div>
+
             </div>
         </div>
-        {% endfor %}
     </div>
 </section>
-{# End reuse section #}
+{% endif %}
 {% endcache %}
 {% endblock %}
