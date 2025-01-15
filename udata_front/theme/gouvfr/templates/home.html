@@ -276,7 +276,7 @@
         <section>
             <h3 class="fs-xxl fs-md-xxxl font-800 fr-mb-4w">{{_('Produce information based on data')}}</h3>
             <h4 class="subtitle subtitle--uppercase fr-text--md text-grey-300 fr-mb-3v">{{_('Our data explorations')}}</h4>
-            <div class="fr-grid-row fr-grid-row--gutters">
+            <div class="fr-grid-row fr-grid-row--gutters exploration-cards">
                 <div class="fr-col-12 fr-col-sm-6">
                     <div class="fr-card">
                         <div class="fr-card__body">
@@ -295,7 +295,12 @@
                         </div>
                         <div class="fr-card__header">
                             <div class="fr-card__img">
-                                <img class="fr-responsive-img" src="{{theme_static('img/homepage/dvf.png')}}" alt="" />
+                                <img
+                                    class="fr-responsive-img"
+                                    srcset="{{theme_static('img/homepage/dvf.png')}}, {{theme_static('img/homepage/dvf@2x.png')}} 2x"
+                                    src="{{theme_static('img/homepage/dvf.png')}}"
+                                    alt=""
+                                />
                             </div>
                         </div>
                     </div>
@@ -318,7 +323,12 @@
                         </div>
                         <div class="fr-card__header">
                             <div class="fr-card__img">
-                                <img class="fr-responsive-img" src="{{theme_static('img/homepage/annuaire.png')}}" alt="" />
+                                <img
+                                    class="fr-responsive-img"
+                                    srcset="{{theme_static('img/homepage/annuaire.png')}}, {{theme_static('img/homepage/annuaire@2x.png')}} 2x"
+                                    src="{{theme_static('img/homepage/annuaire.png')}}"
+                                    alt=""
+                                />
                             </div>
                         </div>
                     </div>
