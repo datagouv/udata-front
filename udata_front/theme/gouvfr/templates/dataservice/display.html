@@ -99,11 +99,7 @@
         </section>
         <section class="fr-col-12 fr-col-md-4">
             {% if dataservice.organization %}
-                {% if dataservice.contact_points|selectattr("role", "publiser") or dataservice.contact_points|selectattr("role", "creator") %}
-                    <h2 id="organization" class="subtitle fr-mb-1v">{{ _('Organization') }}</h2>
-                {% else %}
-                    <h2 id="producer" class="subtitle fr-mb-1v">{{ _('Producer') }}</h2>
-                {% endif %}
+                <h2 id="producer" class="subtitle fr-mb-1v">{{ _('Producer') }}</h2>
                 {% with organization=dataservice.organization, producer_type='organization' %}
                 {% include theme('organization/producer-name-with-logo.html') %}
                 {% endwith %}

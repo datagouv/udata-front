@@ -115,11 +115,7 @@
             </div>
             {% endif %}
             {% if dataset.organization %}
-                {% if dataset.contact_points|selectattr("role", "publiser") or dataset.contact_points|selectattr("role", "creator") %}
-                    <h2 id="organization" class="subtitle fr-mb-1v">{{ _('Organization') }}</h2>
-                {% else %}
-                    <h2 id="producer" class="subtitle fr-mb-1v">{{ _('Producer') }}</h2>
-                {% endif %}
+                <h2 id="producer" class="subtitle fr-mb-1v">{{ _('Producer') }}</h2>
                 {% with organization=dataset.organization, producer_type='organization' %}
                 {% include theme('organization/producer-name-with-logo.html') %}
                 {% endwith %}
