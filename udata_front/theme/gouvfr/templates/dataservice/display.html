@@ -13,7 +13,6 @@
 } %}
 
 {% set read_only_mode = config.READ_ONLY_MODE %}
-{% set contact_points_and_roles = dataservice.contact_points|groupby("role") %}
 
 {% block extra_head %}
     {% cache cache_duration, 'dataservice-extra-head', dataservice.id|string, g.lang_code, dataservice.metadata_modified_at|string %}
@@ -100,7 +99,7 @@
         </section>
         <section class="fr-col-12 fr-col-md-4">
             {% if dataservice.organization %}
-                {% if "publisher" in contact_points_and_roles or "creator" in contact_points_and_roles %}
+                {% if dataservice.contact_points|selectattr("role", "publiser") or dataservice.contact_points|selectattr("role", "creator") %}
                     <h2 id="organization" class="subtitle fr-mb-1v">{{ _('Organization') }}</h2>
                 {% else %}
                     <h2 id="producer" class="subtitle fr-mb-1v">{{ _('Producer') }}</h2>
@@ -122,11 +121,11 @@
                     {{author}}<br />Published on {{date}}{% endtrans %}
                 </p>
             {% endif %}
-            {% for role, contact_points in contact_points_and_roles %}
-                <h2 id="{{ role }}" class="subtitle fr-mt-3v fr-mb-1v">{{ CONTACT_ROLES.get(role) }}</h2>
-                {% for contact_point in contact_points %}
-                    {% include theme('contact_point.html') %}
-                {% endfor %}
+            {% for contact_point in dataservice.contact_points if contact_point.role == "contact" %}
+                {% if loop.first %}
+                    <h2 id="{{ contact_point.role }}" class="subtitle fr-mt-3v fr-mb-1v">{{ CONTACT_ROLES.get(contact_point.role) }}</h2>
+                {% endif %}
+                {% include theme('contact_point.html') %}
             {% endfor %}
             <h2 class="subtitle fr-mt-3v fr-mb-1v">{{ _('Latest update') }}</h2>
             <p class="fr-text--sm fr-mt-0 fr-mb-3v">

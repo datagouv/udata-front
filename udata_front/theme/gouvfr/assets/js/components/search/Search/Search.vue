@@ -46,18 +46,6 @@
                 </div>
                 <div class="fr-col-12">
                   <MultiSelect
-                    :placeholder="t('Credits')"
-                    :searchPlaceholder="t('Search a credit...')"
-                    :allOption="t('All credits')"
-                    suggestUrl="/organizations/suggest_credits/"
-                    :values="facets.credit"
-                    @change="(value: string) => handleFacetChange('credit', value)"
-                    :minimumCharacterBeforeSuggest="2"
-                    :isBlue="true"
-                  />
-                </div>
-                <div class="fr-col-12">
-                  <MultiSelect
                     :placeholder="t('Tags')"
                     :searchPlaceholder="t('Search a tag...')"
                     :allOption="t('All tags')"
@@ -240,7 +228,6 @@ const props = withDefaults(defineProps<Props>(), {
 
 type Facets = {
   organization?: string;
-  credit?: string;
   organization_badge?: string;
   tag?: string;
   license?: string;

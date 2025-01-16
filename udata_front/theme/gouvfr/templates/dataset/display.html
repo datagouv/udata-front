@@ -23,7 +23,6 @@
 {% set body_class = 'dataset-display' %}
 {% set community_subtitle = _('Explore with %(certifier)s', certifier=config.SITE_TITLE ) %}
 {% set read_only_mode = config.READ_ONLY_MODE %}
-{% set contact_points_and_roles = dataset.contact_points|groupby("role") %}
 
 {# Harvesting source #}
 
@@ -116,7 +115,7 @@
             </div>
             {% endif %}
             {% if dataset.organization %}
-                {% if "publisher" in contact_points_and_roles or "creator" in contact_points_and_roles %}
+                {% if dataset.contact_points|selectattr("role", "publiser") or dataset.contact_points|selectattr("role", "creator") %}
                     <h2 id="organization" class="subtitle fr-mb-1v">{{ _('Organization') }}</h2>
                 {% else %}
                     <h2 id="producer" class="subtitle fr-mb-1v">{{ _('Producer') }}</h2>
@@ -136,11 +135,11 @@
                     }}
                 </p>
             {% endif %}
-            {% for role, contact_points in contact_points_and_roles %}
-                <h2 id="{{ role }}" class="subtitle fr-mt-3v fr-mb-1v">{{ CONTACT_ROLES.get(role) }}</h2>
-                {% for contact_point in contact_points %}
-                    {% include theme('contact_point.html') %}
-                {% endfor %}
+            {% for contact_point in dataset.contact_points if contact_point.role == "contact" %}
+                {% if loop.first %}
+                    <h2 id="{{ contact_point.role }}" class="subtitle fr-mt-3v fr-mb-1v">{{ CONTACT_ROLES.get(contact_point.role) }}</h2>
+                {% endif %}
+                {% include theme('contact_point.html') %}
             {% endfor %}
             {% if external_source(dataset) %}
                 <div class="fr-my-3v fr-text--sm">
