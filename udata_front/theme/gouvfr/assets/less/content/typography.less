@@ -32,12 +32,24 @@ h6,
     line-height: 1 !important;
 }
 
+.line-height-xxxl {
+    line-height: @line-height-xxxl !important;
+}
+
 .f-italic {
     font-style: italic;
 }
 
 .font-bold {
     font-weight: bold;
+}
+
+.font-800 {
+    font-weight: 800 !important;
+}
+
+.font-300 {
+    font-weight: 300 !important;
 }
 
 .sup {
@@ -116,6 +128,11 @@ each(@font-sizes, {
 
     .fs-@{value} {
         font-size: @@var !important;
+    }
+    @media @dsfr-query-md {
+        .fs-md-@{value} {
+            font-size: @@var !important;
+        }
     }
 });
 

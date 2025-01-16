@@ -21,12 +21,12 @@ import { ref, toRaw } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { makeTooltipProvider } from '../Tooltip/useTooltipProvider';
 import { linkEditTooltipCtx, linkTooltipState } from './linkEditTooltip';
-import useKeyCodes from '../../../../composables/useKeyCodes';
 import EditorTooltip from "../Tooltip/EditorTooltip.vue";
 import { addLink } from '../../ProseMirror/handleLink';
 import { useInstance } from '@milkdown/vue';
 import { useLinkPreview } from '../LinkPreview/useLinkPreview';
 import { watchEffect } from 'vue';
+import { CommonKeyboardKeys } from '../../../../types';
 
 const { t } = useI18n();
 
@@ -39,7 +39,6 @@ watchEffect(() => {
 });
 
 const { view } = usePluginViewContext();
-const { KEYCODES } = useKeyCodes();
 const [_loading, getEditor] = useInstance();
 const { tooltipProvider } = makeTooltipProvider(linkEditTooltipCtx.key, toolTipRef);
 
@@ -63,7 +62,7 @@ function onConfirmEdit() {
 }
 
 function onCancel(e: KeyboardEvent) {
-  if(e.keyCode === KEYCODES.ESCAPE) {
+  if(e.key as CommonKeyboardKeys === 'Escape') {
     reset();
   }
 }
