@@ -23,10 +23,7 @@
 {% set body_class = 'dataset-display' %}
 {% set community_subtitle = _('Explore with %(certifier)s', certifier=config.SITE_TITLE ) %}
 {% set read_only_mode = config.READ_ONLY_MODE %}
-
-{% set publishers = dataset.extras.get('harvest', {}).get('dct:publishers', [])%}
-{% set creators = dataset.extras.get('harvest', {}).get('dct:creators', [])%}
-{% set contributors = dataset.extras.get('harvest', {}).get('dct:contributors', [])%}
+{% set contact_points_and_roles = dataset.contact_points|groupby("role") %}
 
 {# Harvesting source #}
 
@@ -119,7 +116,7 @@
             </div>
             {% endif %}
             {% if dataset.organization %}
-                {% if publishers or creators %}
+                {% if "publisher" in contact_points_and_roles or "creator" in contact_points_and_roles %}
                     <h2 id="organization" class="subtitle fr-mb-1v">{{ _('Organization') }}</h2>
                 {% else %}
                     <h2 id="producer" class="subtitle fr-mb-1v">{{ _('Producer') }}</h2>
@@ -139,21 +136,12 @@
                     }}
                 </p>
             {% endif %}
-            {% for publisher in publishers %}
-                <h2 id="publisher" class="subtitle fr-mt-1w fr-mb-0">{{ _('Publisher') }}</h2>
-                {{ publisher }}
+            {% for role, contact_points in contact_points_and_roles %}
+                <h2 id="{{ role }}" class="subtitle fr-mt-3v fr-mb-1v">{{ CONTACT_ROLES.get(role) }}</h2>
+                {% for contact_point in contact_points %}
+                    {% include theme('contact_point.html') %}
+                {% endfor %}
             {% endfor %}
-            {% for creator in creators %}
-                <h2 id="creator" class="subtitle fr-mt-1w fr-mb-0">{{ _('Creator') }}</h2>
-                {{ creator }}
-            {% endfor %}
-            {% for contributor in contributors %}
-                <h2 id="contributor" class="subtitle fr-mt-1w fr-mb-0">{{ _('Contributor') }}</h2>
-                {{ contributor }}
-            {% endfor %}
-            {% with contact_point=dataset.contact_point %}
-                {% include theme('contact_point.html') %}
-            {% endwith %}
             {% if external_source(dataset) %}
                 <div class="fr-my-3v fr-text--sm">
                     {{ banner_info(
