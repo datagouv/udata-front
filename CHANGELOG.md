@@ -9,6 +9,7 @@
 - New footer newsletter design [#634](https://github.com/datagouv/udata-front/pull/634)
 - Fix dropdown keyboard navigation [#637](https://github.com/datagouv/udata-front/pull/637)
 - New homepage [#626](https://github.com/datagouv/udata-front/pull/626)
+- Add missing translations [#641](https://github.com/datagouv/udata-front/pull/641)
 
 ## 6.0.7 (2024-12-20)
 
