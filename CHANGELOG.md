@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 6.1.0 (2025-01-20)
 
 - Fix following cache issue [#631](https://github.com/datagouv/udata-front/pull/631)
