@@ -76,7 +76,7 @@
                     {% endfor %}
                 </div>
                 <p class="fr-mt-4w fr-mb-3v fr-text--bold text-mention-grey text-transform-uppercase">
-                    {{_('They publish data on {site}'.format(site=config.SITE_TITLE))}}
+                    {{_('They publish data on {site}').format(site=config.SITE_TITLE)}}
                 </p>
                 <div class="fr-grid-row justify-between fr-mb-4w">
                     <img
@@ -172,7 +172,7 @@
                     {% endfor %}
                 </div>
                 <p class="fr-mt-4w fr-mb-3v fr-text--bold text-mention-grey text-transform-uppercase">
-                    {{_('They reuse data from {site}'.format(site=config.SITE_TITLE))}}
+                    {{_('They reuse data from {site}').format(site=config.SITE_TITLE)}}
                 </p>
                 <div class="fr-grid-row justify-between fr-mb-4w">
                     <img
@@ -253,7 +253,7 @@
         <section>
             <h3 class="fs-xxl fs-md-xxxl font-800 fr-mb-4w">{{_('Simplify access to public data')}}</h3>
             <p class="fr-mb-3w fs-xxl fs-md-xxxl line-height-xxxl text-grey-200 font-300">{{_('The opening and circulation of public data strengthen transparency, improve public action, and allow for the creation of new services.')}}</p>
-            <p class="fr-mb-4w fs-xxl fs-md-xxxl line-height-xxxl text-grey-200 font-300">{{_('{site} makes this information available by organizing its distribution and use.'.format(site=config.SITE_TITLE))}}</p>
+            <p class="fr-mb-4w fs-xxl fs-md-xxxl line-height-xxxl text-grey-200 font-300">{{_('{site} makes this information available by organizing its distribution and use.').format(site=config.SITE_TITLE)}}</p>
             <h4 class="subtitle subtitle--uppercase fr-text--md text-grey-300 fr-mb-11v">{{_('Our goals')}}</h4>
             <div class="fr-grid-row fr-grid-row--gutters">
                 <div class="fr-col-12 fr-col-sm-6 fr-col-lg-4 fr-pl-md-5v">
@@ -270,7 +270,7 @@
                 </div>
             </div>
             <div class="fr-my-8w text-align-center">
-                <a class="fr-btn fr-btn--white" href="{{url_for('gouvfr.show_page', slug='about/a-propos_data-gouv')}}">{{_('Learn more about {site}'.format(site=config.SITE_TITLE))}}</a>
+                <a class="fr-btn fr-btn--white" href="{{url_for('gouvfr.show_page', slug='about/a-propos_data-gouv')}}">{{_('Learn more about {site}').format(site=config.SITE_TITLE)}}</a>
             </div>
         </section>
         <section>
