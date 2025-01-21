@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Fix homepage translations [#644](https://github.com/datagouv/udata-front/pull/644)
+- Fix homepage translations and links [#644](https://github.com/datagouv/udata-front/pull/644) [#648](https://github.com/datagouv/udata-front/pull/648)
 
 ## 6.1.0 (2025-01-20)
 
