@@ -37,6 +37,13 @@ export type BaseDataset = Owned & {
     zones?: Array<string>;
     granularity?: string;
   } | null;
+  contact_points: Array<{
+    email: string,
+    id: string,
+    name: string,
+    organization: string | null,
+    owner: string | null,
+  }>;
 };
 
 export type NewDataset = Omit<BaseDataset, keyof OwnedWithId> & OwnedWithId;

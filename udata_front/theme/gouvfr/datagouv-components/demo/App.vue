@@ -269,7 +269,14 @@ const dataset : DatasetV2 = {
     name: "[TEST] Météo France",
     slug: "test-meteo-france",
     uri: "https://demo.data.gouv.fr/api/1/organizations/test-meteo-france/"
-  }
+  },
+  contact_points: [{
+    email: "",
+    id: "someId",
+    name: "Contact",
+    organization: null,
+    owner: "John Doe",
+  }]
 };
 
 const license : License = {
@@ -324,13 +331,13 @@ const dataservice: Dataservice = {
   authorization_request_url: null,
   availability: 99.9,
   base_api_url: null,
-  contact_point: {
+  contact_points: [{
     email: "",
     id: "someId",
     name: "Contact",
     organization: null,
     owner: "John Doe",
-  },
+  }],
   created_at: (new Date()).toDateString(),
   datasets: [
     {
