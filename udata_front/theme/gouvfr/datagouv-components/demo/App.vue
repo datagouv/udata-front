@@ -274,8 +274,8 @@ const dataset : DatasetV2 = {
     email: "",
     id: "someId",
     name: "Contact",
-    organization: null,
-    owner: "John Doe",
+    contact_form: "",
+    role: "contact",
   }]
 };
 
@@ -335,8 +335,8 @@ const dataservice: Dataservice = {
     email: "",
     id: "someId",
     name: "Contact",
-    organization: null,
-    owner: "John Doe",
+    contact_form: "",
+    role: "contact",
   }],
   created_at: (new Date()).toDateString(),
   datasets: [
