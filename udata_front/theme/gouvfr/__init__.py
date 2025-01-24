@@ -47,28 +47,35 @@ gouvfr_menu = nav.Bar('gouvfr_menu', [
     nav.Item(_('API'), 'dataservices.list'),
     nav.Item(_('Reuses'), 'reuses.list'),
     nav.Item(_('Organizations'), 'organizations.list'),
-    nav.Item(_('Getting started on data.gouv.fr'), None, items=[
-        nav.Item(
-            _('What is data.gouv.fr?'),
-            'gouvfr.show_page',
-            args={'slug': 'about/a-propos_data-gouv'}
+    nav.Item(_('Getting started on {site}').format(
+            site=current_app.config.get('SITE_TITLE')
         ),
-        nav.Item(
-            _('How to publish data ?'),
-            'gouvfr.show_page',
-            args={'slug': 'onboarding/producteurs'}
-        ),
-        nav.Item(
-            _('How to use data ?'),
-            'gouvfr.show_page',
-            args={'slug': 'onboarding/reutilisateurs'}
-        ),
-        nav.Item(
-            _('data.gouv.fr guides'),
-            None,
-            url=current_app.config.get('GUIDES_URL')
-        ),
-    ]),
+        None,
+        items=[
+            nav.Item(
+                _('What is {site}?').format(
+                    site=current_app.config.get('SITE_TITLE')
+                ),
+                'gouvfr.show_page',
+                args={'slug': 'about/a-propos_data-gouv'}
+            ),
+            nav.Item(
+                _('How to publish data ?'),
+                'gouvfr.show_page',
+                args={'slug': 'onboarding/producteurs'}
+            ),
+            nav.Item(
+                _('How to use data ?'),
+                'gouvfr.show_page',
+                args={'slug': 'onboarding/reutilisateurs'}
+            ),
+            nav.Item(
+                _('data.gouv.fr guides'),
+                None,
+                url=current_app.config.get('GUIDES_URL')
+            ),
+        ]
+    ),
     nav.Item(_('News'), 'posts.list'),
     nav.Item(_('Contact us'), None, url=current_app.config.get('SUPPORT_URL', '#')),
 ])
@@ -121,7 +128,7 @@ resources_links = [
 nav.Bar('gouvfr_resources', resources_links)
 
 footer_links = [
-    nav.Item(_('Licences'), 'gouvfr.show_page', args={'slug': 'legal/licences'}),
+    nav.Item(_('Licenses'), 'gouvfr.show_page', args={'slug': 'legal/licences'}),
     nav.Item(_('Terms of use'), 'gouvfr.show_page', args={'slug': 'legal/cgu'}),
     nav.Item(_('Tracking and privacy'), 'gouvfr.suivi'),
     nav.Item(_('Legal notice'), 'gouvfr.show_page', args={'slug': 'legal/legal-notice'}),

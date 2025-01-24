@@ -131,12 +131,13 @@
             {% cache cache_duration, 'footer-bottom', g.lang_code|default(config.DEFAULT_LANGUAGE)|string %}
             <div class="fr-footer__bottom">
                 <ul class="fr-footer__bottom-list">
-                    {% for item in nav.gouvfr_footer %}
-                        <li class="fr-footer__bottom-item">
-                            <a href="{{ '' if item.items else item.url }}" class="fr-footer__bottom-link">
-                                {{ item.label }}
-                            </a>
-                        </li>
+                    {%- for item in nav.gouvfr_footer -%}
+                        <li
+                            class="fr-footer__bottom-item"
+                        ><a
+                                href="{{ '' if item.items else item.url }}"
+                                class="fr-footer__bottom-link"
+                            >{{ item.label }}</a></li>
                     {% endfor %}
                 </ul>
                 <div class="fr-footer__bottom-copy">

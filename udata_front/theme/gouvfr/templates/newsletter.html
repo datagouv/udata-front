@@ -1,40 +1,44 @@
 {% cache cache_duration, 'newsletter', g.lang_code|default(config.DEFAULT_LANGUAGE)|string %}
-<div class="fr-follow">
+<div class="fr-follow border-top">
     <div class="fr-container">
         <div class="fr-grid-row">
-            <div class="fr-col-12 fr-col-md-8 flex">
+            <div class="fr-col-12 fr-col-md-8 flex wrap">
                 <div class="fr-col-auto fr-mr-5v">
                     {% include theme('svg/illustrations/newspaper.svg') %}
                 </div>
-                <div class="fr-follow__newsletter fr-col">
+                <div class="fr-follow__newsletter fr-col-12 fr-col-sm">
                     <div>
-                        <p class="fr-h4">{{ _("Subscribe to our newsletter") }}</p>
-                        <p class="fr-text--lg fr-text--alt f-italic">{{
+                        <p class="fr-h4 font-800 fs-xl fr-mb-1v">{{ _("Subscribe to our newsletter") }}</p>
+                        <p class="fr-text--base">{{
                             _("To stay up to date about {site} and open data news, subscribe to our newsletter and follow our events.")
                                 .format(site=current_site.title)
                         }}</p>
                     </div>
-                    <div>
+                    <div class="flex wrap fr-grid-row--gutters">
+                        <div class="fr-col-auto">
+                            <a
+                                class="fr-btn"
+                                title="{{ _('Subscribe to our newsletter') }}"
+                                href="{{ config.NEWSLETTER_SUBSCRIPTION_URL }}"
+                            >
+                                {{ _("Subscribe") }}
+                            </a>
+                        </div>
+                        <div class="fr-col-auto">
                         <a
-                            class="fr-btn fr-mr-2w fr-my-1w"
-                            title="{{ _('Subscribe to our newsletter') }}"
-                            href="{{ config.NEWSLETTER_SUBSCRIPTION_URL }}"
-                        >
-                            {{ _("Subscribe") }}
-                        </a>
-                        <a
-                            class="fr-btn fr-btn--secondary fr-btn--secondary-grey-500"
+                            class="fr-btn fr-btn--secondary"
                             title="{{ _('Subscribe to our newsletter') }}"
                             href="{{ url_for('gouvfr.show_page', slug='webinaires') }}"
                         >
                             {{ _("See our next events") }}
                         </a>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="fr-col-12 fr-col-md-4">
-                <div class="fr-follow__social">
-                    <p class="fr-h5">{{ _("Follow us") }}
+                <div class="fr-follow__social justify-between">
+                    <p class="fr-h5 font-800 fs-xl">{{ _("Follow us") }}
                         <br> {{ _("on social media") }}
                     </p>
                     <ul class="fr-links-group">
@@ -51,6 +55,11 @@
                         <li>
                             <a class="fr-link" title="{{_('Mastodon - new tab')}}" href="https://social.numerique.gouv.fr/@datagouvfr" target="_blank">
                                 <span class="fr-icon-mastodon-line fr-mr-1w" aria-hidden="true"></span>  Mastodon
+                            </a>
+                        </li>
+                        <li>
+                            <a class="fr-link" title="{{_('Bluesky - new tab')}}" href="https://bsky.app/profile/datagouvfr.bsky.social" target="_blank">
+                                <div class="fr-mr-1w">{% include theme('svg/socials/bluesky.svg') %}</div>  Bluesky
                             </a>
                         </li>
                         <li>

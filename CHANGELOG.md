@@ -3,8 +3,20 @@
 ## Current (in progress)
 
 - Use beta admin as default [#621](https://github.com/datagouv/udata-front/pull/621)
+- Fix homepage translations and links [#644](https://github.com/datagouv/udata-front/pull/644) [#648](https://github.com/datagouv/udata-front/pull/648)
+- Fix security tests after udata changes [#650](https://github.com/datagouv/udata-front/pull/650)
+- Add Bluesky link [#649](https://github.com/datagouv/udata-front/pull/649)
+
+## 6.1.0 (2025-01-20)
+
 - Fix following cache issue [#631](https://github.com/datagouv/udata-front/pull/631)
 - Add dataservice search to header [#622](https://github.com/datagouv/udata-front/pull/622)
+- Trigger GitLab infra deployment through simple-scaffolding script [#632](https://github.com/datagouv/udata-front/pull/632)
+- Fix CI trigger GitLab pipeline job [#635](https://github.com/datagouv/udata-front/pull/635)
+- New footer newsletter design [#634](https://github.com/datagouv/udata-front/pull/634)
+- Fix dropdown keyboard navigation [#637](https://github.com/datagouv/udata-front/pull/637)
+- New homepage [#626](https://github.com/datagouv/udata-front/pull/626)
+- Add missing translations [#641](https://github.com/datagouv/udata-front/pull/641)
 
 ## 6.0.7 (2024-12-20)
 
