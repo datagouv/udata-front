@@ -30,7 +30,7 @@ invoke==2.2.0
     # via -r requirements/develop.in
 mccabe==0.6.1
     # via flake8
-packaging==24.1
+packaging==24.2
     # via
     #   -c requirements/test.pip
     #   -c requirements/udata.pip
