@@ -240,7 +240,7 @@ mongoengine==0.27.0
     #   udata
 netaddr==0.7.19
     # via udata
-packaging==24.1
+packaging==24.2
     # via
     #   bleach
     #   udata
