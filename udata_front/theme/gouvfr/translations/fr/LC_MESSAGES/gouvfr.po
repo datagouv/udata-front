@@ -682,7 +682,7 @@ msgstr "Mastodon - nouvel onglet"
 
 #: udata_front/theme/gouvfr/templates/newsletter.html:61
 msgid "Bluesky - new tab"
-msgstr ""
+msgstr "Bluesky - nouvel onglet"
 
 #: udata_front/theme/gouvfr/templates/newsletter.html:66
 msgid "Github - new tab"
