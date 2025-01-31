@@ -2,7 +2,10 @@
 
 ## Current (in progress)
 
-- Fix homepage translations [#644](https://github.com/datagouv/udata-front/pull/644)
+- Fix homepage translations and links [#644](https://github.com/datagouv/udata-front/pull/644) [#648](https://github.com/datagouv/udata-front/pull/648)
+- Fix security tests after udata changes [#650](https://github.com/datagouv/udata-front/pull/650)
+- Add Bluesky link [#649](https://github.com/datagouv/udata-front/pull/649)
+- Propagate packaging dependency upgrade from udata [#651](https://github.com/datagouv/udata-front/pull/651)
 
 ## 6.1.0 (2025-01-20)
 
