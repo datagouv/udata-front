@@ -23,6 +23,7 @@
 {% set body_class = 'dataset-display' %}
 {% set community_subtitle = _('Explore with %(certifier)s', certifier=config.SITE_TITLE ) %}
 {% set read_only_mode = config.READ_ONLY_MODE %}
+
 {# Harvesting source #}
 
 {% block extra_head %}
@@ -130,9 +131,12 @@
                     }}
                 </p>
             {% endif %}
-            {% with contact_point=dataset.contact_point %}
+            {% for contact_point in dataset.contact_points if contact_point.role == "contact" %}
+                {% if loop.first %}
+                    <h2 id="{{ contact_point.role }}" class="subtitle fr-mt-3v fr-mb-1v">{{ CONTACT_ROLES.get(contact_point.role) }}</h2>
+                {% endif %}
                 {% include theme('contact_point.html') %}
-            {% endwith %}
+            {% endfor %}
             {% if external_source(dataset) %}
                 <div class="fr-my-3v fr-text--sm">
                     {{ banner_info(

@@ -70,7 +70,7 @@ const dataservice = ref<NewDataservice>({
   title: "",
   organization: null,
   owner: user.id,
-  contact_point: null,
+  contact_points: [],
 });
 
 const savedDataservice = ref<Dataservice | null>(null);
@@ -101,11 +101,13 @@ async function createDataserviceAndMoveToNextStep(newDataservice: NewDataservice
   try {
     if (contactPoint) {
       if (!isNewContact) {
-        newDataservice.contact_point = contactPoint.id;
+        newDataservice.contact_points = [contactPoint.id];
       } else {
         let contactData = await createContactPointOrganization(newDataservice.organization, contactPoint);
-        newDataservice.contact_point = contactData.id;
+        newDataservice.contact_points = [contactData.id];
       }
+    } else {
+      newDataservice.contact_points = [];
     }
     savedDataservice.value = await createDataservice(newDataservice);
     savedDataservice.value.datasets = []

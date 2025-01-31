@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add support for multiple contact points [#528](https://github.com/datagouv/udata-front/pull/528)
 
 ## 6.1.1 (2025-01-31)
 

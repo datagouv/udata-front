@@ -36,13 +36,15 @@ const dataservice: Dataservice = {
   authorization_request_url: null,
   availability: 99.9,
   base_api_url: null,
-  contact_point: {
-    email: "",
-    id: "someId",
-    name: "Contact",
-    organization: null,
-    owner: "John Doe",
-  },
+  contact_points: [
+    {
+      email: "",
+      id: "someId",
+      name: "Contact",
+      contact_form: "",
+      role: "contact",
+    }
+  ],
   created_at: (new Date()).toDateString(),
   datasets: [
     {

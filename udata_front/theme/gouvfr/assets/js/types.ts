@@ -270,6 +270,7 @@ export type ContactPoint = {
   name: string;
   contact_form?: string;
   email?: string;
+  role: string;
 }
 
 
