@@ -3,14 +3,15 @@
 {% set banner_activated = config['BANNER_ACTIVATED'] %}
 {% set read_only_mode = config['READ_ONLY_MODE'] %}
 {% set next_url = url_for(request.endpoint, **request.view_args) if not request.routing_exception else url_for('site.home') %}
-{% set publish_items = [
-    {'icon': 'fr-icon-database-line', 'label': _('A dataset'), 'url': url_for('beta.datasets-new')},
-    {'icon': 'fr-icon-code-s-slash-line', 'label': _('An API'), 'url': url_for('beta.dataservices-new')},
-    {'icon': 'fr-icon-line-chart-line', 'label': _('A reuse'), 'url': url_for('beta.reuses-new')},
-    {'icon': 'fr-icon-server-line', 'label': _('A harvester'), 'url': url_for('admin.index', path='harvester/new/')},
-    {'icon': 'fr-icon-government-line', 'label': _('An organization'), 'url': url_for('beta.organizations-new')},
-] + ([{'icon': 'fr-icon-article-line', 'label': _('A post'), 'url': url_for('admin.index', path='post/new/')}] if current_user.sysadmin else [])
-%}
+
+{% set dataset_item = [{'icon': 'fr-icon-database-line', 'label': _('A dataset'), 'url': beta_admin_url_for(path='datasets/new', fallback_path='dataset/new/')}] %}
+{% set dataservice_item = [{'icon': 'fr-icon-database-line', 'label': _('An API'), 'url': beta_admin_url_for(path='dataservices/new', fallback_path='')}] if config.NEW_ADMIN_URL else [] %}
+{% set reuse_item = [{'icon': 'fr-icon-database-line', 'label': _('A reuse'), 'url': beta_admin_url_for(path='reuses/new', fallback_path='reuse/new/')}] %}
+{% set harvester_item = [{'icon': 'fr-icon-database-line', 'label': _('A harvester'), 'url': beta_admin_url_for(path='harvesters/new', fallback_path='harvester/new/')}] %}
+{% set organization_item = [{'icon': 'fr-icon-database-line', 'label': _('A organization'), 'url': beta_admin_url_for(path='organizations/new', fallback_path='organization/new/')}] %}
+{% set post_item = [{'icon': 'fr-icon-database-line', 'label': _('A post'), 'url': beta_admin_url_for(path='posts/new', fallback_path='post/new/')}] if current_user.sysadmin else [] %}
+
+{% set publish_items = dataset_item + dataservice_item + reuse_item + harvester_item + organization_item + post_item %}
 
 <header role="banner" class="fr-header">
     {% if read_only_mode %}
@@ -90,7 +91,7 @@
                                 </li>
                                 <li>
                                     <a
-                                        href="{{ url_for('admin.index') }}"
+                                        href="{{ url_for('beta.beta-admin') }}"
                                         class="fr-btn fr-icon-svg fr-icon--sm"
                                     >
                                         <span class="fr-mr-1w fr-grid-row">

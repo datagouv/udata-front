@@ -47,7 +47,7 @@
     {% else %}
     <a
         class="fr-ml-2w fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-btn--icon-left"
-        href="{{ url_for('admin.index', path='me') }}"
+        href="{{ beta_admin_url_for(path='me/profile', fallback_path='me') }}"
     >
         {{ _('Edit') }}
     </a>
