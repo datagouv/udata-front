@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 6.1.1 (2025-01-31)
 
 - Fix homepage translations and links [#644](https://github.com/datagouv/udata-front/pull/644) [#648](https://github.com/datagouv/udata-front/pull/648)
 - Fix security tests after udata changes [#650](https://github.com/datagouv/udata-front/pull/650)
