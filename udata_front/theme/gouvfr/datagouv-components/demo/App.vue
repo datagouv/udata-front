@@ -324,7 +324,7 @@ const dataservice: Dataservice = {
   authorization_request_url: null,
   availability: 99.9,
   base_api_url: null,
-  contact_point: {
+  conHAtact_point: {
     email: "",
     id: "someId",
     name: "Contact",
@@ -346,11 +346,10 @@ const dataservice: Dataservice = {
   description: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
   endpoint_description_url: null,
   extras: {},
-  format: "json",
+  format: "REST",
   harvest: {},
-  has_token: false,
   id: "653a6afa18f9f98d2ffdadee",
-  is_restricted: false,
+  access_type: 'open',
   license: "lov2",
   metadata_modified_at: (new Date()).toDateString(),
   metrics: { discussions: 12, followers: 25, reuses: 8, views: 59 },
