@@ -36,10 +36,11 @@ const dataservice: Dataservice = {
   ],
   deleted_at: null,
   description: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
-  endpoint_description_url: "https://www.data.gouv.fr",
+  machine_documentation_url: "https://www.data.gouv.fr/api/1/swagger.json",
+  technical_documentation_url: "https://doc.data.gouv.fr/api/reference/",
   business_documentation_url: "https://guides.data.gouv.fr/api",
   extras: {},
-  format: "json",
+  format: "REST",
   harvest: {},
   has_token: false,
   id: "653a6afa18f9f98d2ffdadee",
@@ -107,7 +108,7 @@ export const EndpointOpenAPIDataserviceLinks: StoryObj<typeof meta> = {
   args: {
     dataservice: {
       ...dataservice,
-      endpoint_description_url: "https://raw.githubusercontent.com/betagouv/api_gouv_swaggers/main/swaggers/api-impot-particulier.json", 
+      machine_documentation_url: "https://raw.githubusercontent.com/betagouv/api_gouv_swaggers/main/swaggers/api-impot-particulier.json", 
     }
   }
 };
@@ -123,7 +124,8 @@ export const NoLinksDataserviceLinks: StoryObj<typeof meta> = {
   args: {
     dataservice: {
       ...dataservice,
-      endpoint_description_url: null,
+      machine_documentation_url: null,
+      technical_documentation_url: null,
       business_documentation_url: null,
       base_api_url: null,
     }
