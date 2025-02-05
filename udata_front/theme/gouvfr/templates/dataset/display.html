@@ -57,7 +57,7 @@
     <div class="fr-col-auto fr-ml-3v">
         <a
             class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-btn--icon-left"
-            href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
+            href="{{ beta_admin_url_for(path='datasets/{id}/'.format(id=dataset.id), fallback_path='dataset/{id}/'.format(id=dataset.id)) }}"
         >
             {{ _('Edit') }}
         </a>
@@ -363,7 +363,7 @@
                             <p>
                                 <a
                                     class="fr-btn"
-                                    href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
+                                    href="{{ beta_admin_url_for(path='datasets/{id}/'.format(id=dataset.id), fallback_path='dataset/{id}/'.format(id=dataset.id)) }}"
                                 >
                                     {{ _('Add a file') }}
                                 </a>
@@ -403,7 +403,7 @@
                 {% if not read_only_mode %}
                     <div class="fr-col-12 fr-col-sm-6 fr-col-md-5 fr-col-lg-4 text-align-right">
                         <a class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-add-line fr-btn--icon-left"
-                            href="{{ url_for('admin.index', path='reuse/new/', **{'dataset_id': dataset.id}) }}">
+                            href="{{ beta_admin_url_for(path='reuses/new/', fallback_path='reuse/new/', **{'dataset_id': dataset.id}) }}">
                             {{ _('Add a reuse') }}
                         </a>
                     </div>
@@ -426,7 +426,7 @@
                     <p>
                         <a
                             class="fr-btn"
-                            href="{{ url_for('admin.index', path='reuse/new/', **{'dataset_id': dataset.id}) }}"
+                            href="{{ beta_admin_url_for(path='reuses/new/', fallback_path='reuse/new/', **{'dataset_id': dataset.id}) }}"
                         >
                             {{ _('Publish a reuse') }}
                         </a>
