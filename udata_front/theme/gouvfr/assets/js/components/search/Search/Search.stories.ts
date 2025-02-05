@@ -156,7 +156,7 @@ const meta = {
                   "created_at_internal": "2018-08-24T14:38:57.262000+00:00",
                   "last_modified_internal": "2024-09-01T06:41:23.766000+00:00"
                 },
-                "contact_point": null
+                "contact_points": []
               },
               {
                 "id": "5c4ae55a634f4117716d5656",
@@ -301,7 +301,7 @@ const meta = {
                   "created_at_internal": "2019-01-25T11:30:50.573000+00:00",
                   "last_modified_internal": "2024-04-08T13:07:58.362000+00:00"
                 },
-                "contact_point": null
+                "contact_points": []
               },
               {
                 "id": "58e5924b88ee3802ca255566",
@@ -395,7 +395,7 @@ const meta = {
                   "created_at_internal": "2017-04-06T02:56:43.520000+00:00",
                   "last_modified_internal": "2024-07-22T16:04:24.610000+00:00"
                 },
-                "contact_point": null
+                "contact_points": []
               },
               {
                 "id": "5c34c4d1634f4173183a64f1",
@@ -515,7 +515,7 @@ const meta = {
                   "created_at_internal": "2019-01-08T16:42:09.929000+00:00",
                   "last_modified_internal": "2024-07-31T14:24:59.737000+00:00"
                 },
-                "contact_point": null
+                "contact_points": []
               },
               {
                 "id": "53699d0ea3a729239d205b2e",
@@ -617,7 +617,7 @@ const meta = {
                   "created_at_internal": "2013-08-23T08:43:28.560000+00:00",
                   "last_modified_internal": "2024-06-07T14:30:50.450000+00:00"
                 },
-                "contact_point": null
+                "contact_points": []
               },
               {
                 "id": "5e7e104ace2080d9162b61d8",
@@ -732,7 +732,7 @@ const meta = {
                   "created_at_internal": "2020-03-27T15:40:10.048000+00:00",
                   "last_modified_internal": "2023-07-04T15:11:16.551000+00:00"
                 },
-                "contact_point": null
+                "contact_points": []
               },
               {
                 "id": "53699fe4a3a729239d206227",
@@ -869,7 +869,7 @@ const meta = {
                   "created_at_internal": "2013-07-08T11:02:40.861000+00:00",
                   "last_modified_internal": "2024-08-16T13:00:07.627000+00:00"
                 },
-                "contact_point": null
+                "contact_points": []
               },
               {
                 "id": "53698f4ca3a729239d2036df",
@@ -975,7 +975,7 @@ const meta = {
                   "created_at_internal": "2013-07-08T15:26:21.064000+00:00",
                   "last_modified_internal": "2023-10-09T14:03:43.153000+00:00"
                 },
-                "contact_point": null
+                "contact_points": []
               },
               {
                 "id": "605d268f4661cf23272817c3",
@@ -1078,7 +1078,7 @@ const meta = {
                   "created_at_internal": "2021-03-26T01:10:55.853000+00:00",
                   "last_modified_internal": "2021-03-25T09:31:57+00:00"
                 },
-                "contact_point": null
+                "contact_points": []
               },
               {
                 "id": "5a5f4f6c88ee387da4d252a3",
@@ -1175,7 +1175,7 @@ const meta = {
                   "created_at_internal": "2018-01-17T14:28:12.305000+00:00",
                   "last_modified_internal": "2024-06-28T07:54:21.821000+00:00"
                 },
-                "contact_point": null
+                "contact_points": []
               },
               {
                 "id": "58da72bbc751df38734d8658",
@@ -1277,7 +1277,7 @@ const meta = {
                   "created_at_internal": "2017-03-28T16:27:07.231000+00:00",
                   "last_modified_internal": "2023-07-03T13:04:28.557000+00:00"
                 },
-                "contact_point": null
+                "contact_points": []
               },
               {
                 "id": "5530fbacc751df5ff937dddb",
@@ -1407,7 +1407,7 @@ const meta = {
                   "created_at_internal": "2015-04-17T14:25:16.900000+00:00",
                   "last_modified_internal": "2024-08-28T09:47:04.599000+00:00"
                 },
-                "contact_point": null
+                "contact_points": []
               },
               {
                 "id": "6010206e7aa742eb447930f7",
@@ -1524,7 +1524,7 @@ const meta = {
                   "created_at_internal": "2021-01-26T15:00:14.172000+00:00",
                   "last_modified_internal": "2023-07-13T13:52:25.102000+00:00"
                 },
-                "contact_point": null
+                "contact_points": []
               },
               {
                 "id": "61d5e2d372a52d9f9411ff88",
@@ -1622,7 +1622,7 @@ const meta = {
                   "created_at_internal": "2022-01-05T19:26:27.679000+00:00",
                   "last_modified_internal": "2024-08-21T13:37:41.747000+00:00"
                 },
-                "contact_point": null
+                "contact_points": []
               },
               {
                 "id": "548acaf2c751df1eac4120e7",
@@ -1720,7 +1720,7 @@ const meta = {
                   "created_at_internal": "2014-12-12T12:01:06.889000+00:00",
                   "last_modified_internal": "2024-08-20T10:49:40.579000+00:00"
                 },
-                "contact_point": null
+                "contact_points": []
               },
               {
                 "id": "5e74ecf52eb7514f2d3b8845",
@@ -1839,7 +1839,7 @@ const meta = {
                   "created_at_internal": "2020-03-20T17:19:01.201000+00:00",
                   "last_modified_internal": "2024-08-28T16:00:12.446000+00:00"
                 },
-                "contact_point": null
+                "contact_points": []
               },
               {
                 "id": "621df2954fa5a3b5a023e23c",
@@ -1939,7 +1939,7 @@ const meta = {
                   "created_at_internal": "2022-03-01T11:16:53.477000+00:00",
                   "last_modified_internal": "2024-07-18T15:41:03.686000+00:00"
                 },
-                "contact_point": null
+                "contact_points": []
               },
               {
                 "id": "60190d00a7273a8100dd4d38",
@@ -2053,7 +2053,7 @@ const meta = {
                   "created_at_internal": "2021-02-02T09:27:44.214000+00:00",
                   "last_modified_internal": "2023-09-13T15:40:16.875000+00:00"
                 },
-                "contact_point": null
+                "contact_points": []
               },
               {
                 "id": "53698f50a3a729239d2036f5",
@@ -2150,7 +2150,7 @@ const meta = {
                   "created_at_internal": "2013-12-12T15:48:39.611000+00:00",
                   "last_modified_internal": "2016-03-16T23:34:38+00:00"
                 },
-                "contact_point": null
+                "contact_points": []
               },
               {
                 "id": "5cd57bf68b4c4179299eb0e9",
@@ -2249,7 +2249,7 @@ const meta = {
                   "created_at_internal": "2019-05-10T15:26:14.659000+00:00",
                   "last_modified_internal": "2024-09-02T02:30:40.061000+00:00"
                 },
-                "contact_point": null
+                "contact_points": []
               }
             ],
             "page": 1,
