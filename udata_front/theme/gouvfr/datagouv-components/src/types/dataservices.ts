@@ -13,7 +13,7 @@ export type Dataservice = Owned & {
 
   // Technical information
   format: "REST" | "WMS" | "WSL";
-  endpoint_description_url: string | null;
+  machine_documentation_url: string | null;
   technical_documentation_url: string | null;
   business_documentation_url: string | null;
 
