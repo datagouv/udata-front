@@ -4,6 +4,7 @@ from flask import abort, request, url_for, redirect, make_response
 from feedgenerator.django.utils.feedgenerator import Atom1Feed
 
 from udata.models import Reuse, Follow
+from udata.core.contact_point.models import CONTACT_ROLES
 from udata.core.dataset.models import Dataset, get_resource
 from udata.core.dataset.constants import RESOURCE_TYPES
 from udata.core.dataset.search import DatasetSearch
@@ -110,6 +111,7 @@ class DatasetDetailView(DatasetView, DetailView):
 
         context['can_edit'] = DatasetEditPermission(self.dataset)
         context['can_edit_resource'] = ResourceEditPermission
+        context["CONTACT_ROLES"] = CONTACT_ROLES
         return context
 
 

@@ -2,6 +2,7 @@ import type { Badges } from "./badges";
 import { Harvest } from "./harvest";
 import type { Owned, OwnedWithId } from "./owned";
 import type { Resource } from "./resources";
+import type { ContactPoint } from "./contact_point";
 
 export type Quality = {
   all_resources_available: boolean;
@@ -37,6 +38,7 @@ export type BaseDataset = Owned & {
     zones?: Array<string>;
     granularity?: string;
   } | null;
+  contact_points: Array<ContactPoint>;
 };
 
 export type NewDataset = Omit<BaseDataset, keyof OwnedWithId> & OwnedWithId;
