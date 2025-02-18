@@ -5,6 +5,7 @@
 - Use beta admin as default [#621](https://github.com/datagouv/udata-front/pull/621)
 - Add support for multiple contact points [#528](https://github.com/datagouv/udata-front/pull/528)
 - Remove unused social network [#656](https://github.com/datagouv/udata-front/pull/656)
+- Add direct link to harvest source in dataset metadata for sysadmin [#660](https://github.com/datagouv/udata-front/pull/660)
 
 ## 6.1.1 (2025-01-31)
 
