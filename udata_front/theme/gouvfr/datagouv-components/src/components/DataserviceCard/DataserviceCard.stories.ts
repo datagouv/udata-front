@@ -63,9 +63,8 @@ const dataservice: Dataservice = {
   extras: {},
   format: "REST",
   harvest: {},
-  has_token: false,
   id: "653a6afa18f9f98d2ffdadee",
-  is_restricted: false,
+  access_type: "open",
   license: "lov2",
   metadata_modified_at: (new Date()).toDateString(),
   metrics: { discussions: 12, followers: 25, reuses: 8, views: 59 },
@@ -189,7 +188,7 @@ export const RestrictedDataserviceCardWithOrganizationUrl: StoryObj<typeof meta>
     ...args,
     dataservice: {
       ...args.dataservice,
-      is_restricted: true,
+      access_type: "restricted",
     },
     organizationUrl: "/organizations/another-url-easier-to-distinguish"
   },
@@ -236,7 +235,7 @@ export const PrivateArchivedRestrictedDataserviceCardWithOrganizationUrl: StoryO
     dataservice: {
       ...argsArchived.dataservice,
       private: true,
-      is_restricted: true,
+      access_type: "restricted",
     },
     organizationUrl: "/organizations/another-url-easier-to-distinguish"
   },
