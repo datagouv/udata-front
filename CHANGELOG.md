@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 6.1.2 (2025-02-20)
 
 - Use beta admin as default [#621](https://github.com/datagouv/udata-front/pull/621) [#662](https://github.com/datagouv/udata-front/pull/662)
 - Add support for multiple contact points [#528](https://github.com/datagouv/udata-front/pull/528)
