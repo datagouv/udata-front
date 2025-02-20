@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 6.1.2 (2025-02-20)
 
 - Use beta admin as default [#621](https://github.com/datagouv/udata-front/pull/621) [#662](https://github.com/datagouv/udata-front/pull/662)
