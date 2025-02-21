@@ -64,9 +64,6 @@
 import {ref, ComputedRef, computed} from "vue";
 import { useI18n } from 'vue-i18n';
 import MenuSearchOption from "./MenuSearchOption.vue";
-import datasetIcon from "../../../../../templates/svg/search/dataset.svg";
-import reuseIcon from "../../../../../templates/svg/search/reuse.svg";
-import organizationIcon from "../../../../../templates/svg/search/organization.svg";
 import useSearchUrl from "../../../composables/useSearchUrl";
 import { useDropdown } from "../../../composables/useDropdown";
 import useUid from "../../../composables/useUid";
@@ -80,7 +77,7 @@ type MenuOption = {
 
 const { t } = useI18n();
 const q = ref('');
-const { datasetUrl, reuseUrl, organizationUrl } = useSearchUrl(q);
+const { datasetUrl, dataserviceUrl, reuseUrl, organizationUrl } = useSearchUrl(q);
 const { id } = useUid("search");
 const inputId = computed(() => `${id}-input`);
 const labelId = computed(() => `${id}-label`);
@@ -88,19 +85,25 @@ const labelId = computed(() => `${id}-label`);
 const options = ref<Array<MenuOption>>([
   {
     id: "dataset-option",
-    icon: datasetIcon,
+    icon: "fr-icon-database-line",
     type: t('datasets'),
     link: datasetUrl,
   },
   {
+    id: "dataservice-option",
+    icon: "fr-icon-code-s-slash-line",
+    type: t('dataservices'),
+    link: dataserviceUrl,
+  },
+  {
     id: "reuse-option",
-    icon: reuseIcon,
+    icon: "fr-icon-line-chart-line",
     type: t('reuses'),
     link: reuseUrl,
   },
   {
     id: "organization-option",
-    icon: organizationIcon,
+    icon: "fr-icon-government-line",
     type: t('organizations'),
     link: organizationUrl,
   },

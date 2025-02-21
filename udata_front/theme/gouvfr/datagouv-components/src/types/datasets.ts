@@ -2,6 +2,7 @@ import type { Badges } from "./badges";
 import { Harvest } from "./harvest";
 import type { Owned, OwnedWithId } from "./owned";
 import type { Resource } from "./resources";
+import type { ContactPoint } from "./contact_point";
 
 export type Quality = {
   all_resources_available: boolean;
@@ -18,8 +19,8 @@ export type Quality = {
 };
 
 export type TemporalCoverage = {
-  start: Date;
-  end: Date | null;
+  start: string;
+  end: string | null;
 }
 
 export type BaseDataset = Owned & {
@@ -31,7 +32,7 @@ export type BaseDataset = Owned & {
   license: string;
   frequency: string;
   temporal_coverage: TemporalCoverage | null;
-  frequency_date: Date | null;
+  frequency_date: string | null;
   page: string;
   private: boolean;
   quality?: Quality;
@@ -39,6 +40,7 @@ export type BaseDataset = Owned & {
     zones?: Array<string>;
     granularity?: string;
   } | null;
+  contact_points: Array<ContactPoint>;
 };
 
 export type NewDataset = Omit<BaseDataset, keyof OwnedWithId> & OwnedWithId;

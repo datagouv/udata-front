@@ -23,7 +23,7 @@ from udata.core.reuse.models import Reuse
 from udata.harvest.csv import HarvestSourceCsvAdapter
 from udata.harvest.models import HarvestSource
 from udata.frontend import csv
-from udata.i18n import I18nBlueprint
+from udata.i18n import I18nBlueprint, lazy_gettext as _
 from udata.sitemap import sitemap
 from udata.utils import multi_to_dict
 from udata_front import theme
@@ -92,7 +92,18 @@ def home():
         'spd_datasets': Dataset.objects.filter(badges__kind='spd'),
         'recent_datasets': Dataset.objects.visible(),
         'recent_reuses': Reuse.objects(featured=True).visible(),
-        'last_post': Post.objects.published().first()
+        'last_post': Post.objects.published().first(),
+        'data_metrics': [
+            (_('Datasets and Dataservices'),
+             current_site.metrics.get('datasets', 0) + current_site.metrics.get('dataservices', 0)),
+            (_('Files'), current_site.metrics.get('resources', 0)),
+            (_('Organizations'), current_site.metrics.get('organizations', 0)),
+        ],
+        'community_metrics': [
+            (_('Reuses'), current_site.metrics.get('reuses', 0)),
+            (_('Users'), current_site.metrics.get('users', 0)),
+            (_('Discussions'), current_site.metrics.get('discussions', 0)),
+        ]
     }
     processor = theme.current.get_processor('home')
     context = processor(context)

@@ -60,10 +60,8 @@
 {% endblock %}
 
 {% block content %}
-{% cache cache_duration, 'dataservice-content', dataservice.id|string, datasets.page|string, g.lang_code, current_user.slug or 'anonymous', dataservice.metadata_modified_at|string %}
-
 {{ breadcrumb(self) }}
-
+{% cache cache_duration, 'dataservice-content', dataservice.id|string, datasets.page|string, g.lang_code, current_user.slug or 'anonymous', dataservice.metadata_modified_at|string %}
 <div class="content fr-container fr-mb-10v">
     {% if dataservice.private or dataservice.deleted_at or dataservice.archived_at %}
         <div class="fr-grid-row">
@@ -119,9 +117,12 @@
                     {{author}}<br />Published on {{date}}{% endtrans %}
                 </p>
             {% endif %}
-            {% with contact_point=dataservice.contact_point %}
+            {% for contact_point in dataservice.contact_points if contact_point.role == "contact" %}
+                {% if loop.first %}
+                    <h2 id="{{ contact_point.role }}" class="subtitle fr-mt-3v fr-mb-1v">{{ CONTACT_ROLES.get(contact_point.role) }}</h2>
+                {% endif %}
                 {% include theme('contact_point.html') %}
-            {% endwith %}
+            {% endfor %}
             <h2 class="subtitle fr-mt-3v fr-mb-1v">{{ _('Latest update') }}</h2>
             <p class="fr-text--sm fr-mt-0 fr-mb-3v">
                 {{ dataservice.metadata_modified_at|dateformat(format='long') }}

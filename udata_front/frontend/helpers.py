@@ -109,6 +109,23 @@ def in_url(*args, **kwargs):
     )
 
 
+@front.app_template_global()
+def beta_admin_url_for(path, fallback_path, **kwargs):
+    '''
+    A helper to route to the new admin if available.
+    If NEW_ADMIN_URL is defined, we build the target url pointing to it using `path`.
+    Else we route to the old admin using `fallback_path`.
+    Kwargs are forwarded as as params in the first case
+    and as arguments of url_for in the seconde case.
+    '''
+    if current_app.config['NEW_ADMIN_URL']:
+        scheme, netloc, path, query, fragments = urlsplit(
+            current_app.config['NEW_ADMIN_URL'] + path
+        )
+        return urlunsplit((scheme, netloc, path, url_encode(kwargs), fragments))
+    return url_for('admin.index', path=fallback_path, **kwargs)
+
+
 @front.app_template_filter()
 @pass_context
 def placeholder(ctx, url, name='default', external=False):

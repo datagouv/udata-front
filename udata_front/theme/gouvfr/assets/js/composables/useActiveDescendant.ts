@@ -1,5 +1,5 @@
-import {ref, computed, MaybeRefOrGetter, toValue} from "vue";
-import useKeyCodes from "./useKeyCodes";
+import { ref, computed, MaybeRefOrGetter, toValue } from "vue";
+import type { CommonKeyboardKeys } from "../types";
 
 export type OptionWithId = {
   id: string;
@@ -7,8 +7,6 @@ export type OptionWithId = {
 }
 
 export default function useActiveDescendant<T extends OptionWithId>(options: MaybeRefOrGetter<Array<T>>) {
-
-  const {KEYCODES} = useKeyCodes();
 
   const selected = ref<string | undefined>();
 
@@ -61,20 +59,20 @@ export default function useActiveDescendant<T extends OptionWithId>(options: May
   }
 
   const handleKeyPressForActiveDescendant = (key: KeyboardEvent, alreadyMovedDown = false) => {
-    switch (key.keyCode) {
-      case KEYCODES.DOWN:
+    switch (key.key as CommonKeyboardKeys) {
+      case 'ArrowDown':
         if(!alreadyMovedDown && !key.altKey) {
           selectNextOption();
         }
         break;
-      case KEYCODES.UP:
+      case 'ArrowUp':
         selectPreviousOption();
         break;
-      case KEYCODES.LEFT:
-      case KEYCODES.RIGHT:
-      case KEYCODES.HOME:
-      case KEYCODES.END:
-      case KEYCODES.ESCAPE:
+      case 'ArrowLeft':
+      case 'ArrowRight':
+      case 'Home':
+      case 'End':
+      case 'Escape':
         focusOut();
         break;
     }

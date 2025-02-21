@@ -51,7 +51,7 @@
 {% if can_edit %}
     <a
         class="fr-ml-2w fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-pencil-line fr-btn--icon-left"
-        href="{{ url_for('admin.index', path='organization/{id}/'.format(id=org.id)) }}"
+        href="{{ beta_admin_url_for(path='organizations/{id}/profile/'.format(id=org.id), fallback_path='organization/{id}/'.format(id=org.id)) }}"
     >
         {{ _('Modify organization') }}
     </a>

@@ -23,6 +23,7 @@
 {% set body_class = 'dataset-display' %}
 {% set community_subtitle = _('Explore with %(certifier)s', certifier=config.SITE_TITLE ) %}
 {% set read_only_mode = config.READ_ONLY_MODE %}
+
 {# Harvesting source #}
 
 {% block extra_head %}
@@ -56,7 +57,7 @@
     <div class="fr-col-auto fr-ml-3v">
         <a
             class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-btn--icon-left"
-            href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
+            href="{{ beta_admin_url_for(path='datasets/{id}/'.format(id=dataset.id), fallback_path='dataset/{id}/'.format(id=dataset.id)) }}"
         >
             {{ _('Edit') }}
         </a>
@@ -65,10 +66,8 @@
 {% endblock %}
 
 {% block content %}
-{% cache cache_duration, 'dataset-content', dataset.id|string, reuses.page|string, g.lang_code, current_user.slug or 'anonymous', dataset.last_modified|string %}
-
 {{ breadcrumb(self) }}
-
+{% cache cache_duration, 'dataset-content', dataset.id|string, reuses.page|string, g.lang_code, current_user.slug or 'anonymous', dataset.last_modified|string %}
 <div class="content fr-container fr-mb-10v">
     {% if dataset.private or dataset.deleted or dataset.archived %}
         <div class="fr-grid-row">
@@ -132,9 +131,12 @@
                     }}
                 </p>
             {% endif %}
-            {% with contact_point=dataset.contact_point %}
+            {% for contact_point in dataset.contact_points if contact_point.role == "contact" %}
+                {% if loop.first %}
+                    <h2 id="{{ contact_point.role }}" class="subtitle fr-mt-3v fr-mb-1v">{{ CONTACT_ROLES.get(contact_point.role) }}</h2>
+                {% endif %}
                 {% include theme('contact_point.html') %}
-            {% endwith %}
+            {% endfor %}
             {% if external_source(dataset) %}
                 <div class="fr-my-3v fr-text--sm">
                     {{ banner_info(
@@ -361,7 +363,7 @@
                             <p>
                                 <a
                                     class="fr-btn"
-                                    href="{{ url_for('admin.index', path='dataset/{id}/'.format(id=dataset.id)) }}"
+                                    href="{{ beta_admin_url_for(path='datasets/{id}/'.format(id=dataset.id), fallback_path='dataset/{id}/'.format(id=dataset.id)) }}"
                                 >
                                     {{ _('Add a file') }}
                                 </a>
@@ -401,7 +403,7 @@
                 {% if not read_only_mode %}
                     <div class="fr-col-12 fr-col-sm-6 fr-col-md-5 fr-col-lg-4 text-align-right">
                         <a class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-icon-add-line fr-btn--icon-left"
-                            href="{{ url_for('admin.index', path='reuse/new/', **{'dataset_id': dataset.id}) }}">
+                            href="{{ beta_admin_url_for(path='reuses/new/', fallback_path='reuse/new/', **{'dataset_id': dataset.id}) }}">
                             {{ _('Add a reuse') }}
                         </a>
                     </div>
@@ -424,7 +426,7 @@
                     <p>
                         <a
                             class="fr-btn"
-                            href="{{ url_for('admin.index', path='reuse/new/', **{'dataset_id': dataset.id}) }}"
+                            href="{{ beta_admin_url_for(path='reuses/new/', fallback_path='reuse/new/', **{'dataset_id': dataset.id}) }}"
                         >
                             {{ _('Publish a reuse') }}
                         </a>
@@ -680,6 +682,14 @@
         {% if dataset.harvest %}
         {% call(slot) information_accordion(_('Harvest')) %}
             {% if slot == "button" %}
+                {% if sysadmin and dataset.harvest.source_id %}
+                    <a
+                        href="{{ beta_admin_url_for(path='harvesters/{id}/'.format(id=dataset.harvest.source_id), fallback_path='harvester/{id}/'.format(id=dataset.harvest.source_id)) }}"
+                        class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-settings-5-line"
+                    >
+                        {{ _('See harvest source') }}
+                    </a>
+                {% endif %}
                 <button
                     data-accordion-button
                     role="button"

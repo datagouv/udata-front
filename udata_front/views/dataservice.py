@@ -2,6 +2,7 @@ from flask import abort, make_response, request, url_for
 from feedgenerator.django.utils.feedgenerator import Atom1Feed
 
 from jinja2 import TemplateNotFound
+from udata.core.contact_point.models import CONTACT_ROLES
 from udata.core.dataservices.models import Dataservice
 from udata.core.dataservices.permissions import DataserviceEditPermission
 from udata.core.site.models import current_site
@@ -97,6 +98,7 @@ class DataserviceDetailView(DataserviceView, DetailView):
         context['datasets_items'] = [dataset.fetch() for dataset in datasets.items]
 
         context['can_edit'] = DataserviceEditPermission(self.dataservice)
+        context["CONTACT_ROLES"] = CONTACT_ROLES
         return context
 
 

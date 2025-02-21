@@ -4,6 +4,18 @@
 
 - Add daterange for temporal coverage in InformationPanel [#411](https://github.com/datagouv/udata-front/pull/411)
 
+## 2.0.5 (2015-01-20)
+
+- Fix download and copy buttons accessibility [#630](https://github.com/datagouv/udata-front/pull/630)
+- Use description list for resource metadata [#629](https://github.com/datagouv/udata-front/pull/629)
+- Fix quality score accessiblity issues [#628](https://github.com/datagouv/udata-front/pull/628)
+- Fix BaseDataset type [#633](https://github.dev/datagouv/udata-front/pull/633)
+
+## 2.0.4 (2024-12-18)
+
+- Do not show pagination if not enough results [#624](https://github.com/datagouv/udata-front/pull/624)
+- Fix reuse card date [#627](https://github.com/datagouv/udata-front/pull/627)
+
 ## 2.0.3 (2024-12-09)
 
 - Add geo specific display on OGC service resources [#609](https://github.com/datagouv/udata-front/pull/609)

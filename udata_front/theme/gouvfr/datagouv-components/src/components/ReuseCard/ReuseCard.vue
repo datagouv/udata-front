@@ -8,7 +8,7 @@
           </AppLink>
         </h3>
         <div class="fr-card__desc fr-mt-0 text-mention-grey">
-          <p class="fr-text--sm fr-mb-0 inline-flex">
+          <p class="fr-text--sm fr-mb-0 flex">
             <span class="not-enlarged" v-if="reuse.organization">
               <AppLink class="fr-link" v-if="organizationUrl" :to="organizationUrl">
                 <OrganizationNameWithCertificate :organization="reuse.organization" />
@@ -16,7 +16,7 @@
               <OrganizationNameWithCertificate v-else :organization="reuse.organization" />
             </span>
             <TextClamp class="not-enlarged fr-mr-1v" :auto-resize="true" :text='ownerName' :max-lines='1' v-else />
-            <span class="dash-before-sm whitespace-nowrap">{{ t('published {date}', { date: formatRelativeIfRecentDate(reuse.created_at) }) }}</span>
+            <span class="dash-before-sm text-overflow-ellipsis">{{ t('published {date}', { date: formatRelativeIfRecentDate(reuse.created_at) }) }}</span>
           </p>
           <div class="fr-grid-row fr-grid-row--middle">
             <p class="fr-text--sm fr-my-0 dash-after-sm">

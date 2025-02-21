@@ -2,6 +2,8 @@ import type { Dataservice, Dataset, FileResourceFileType, Organization, Owned, R
 
 import { CLOSED_FORMATS } from "./helpers";
 
+export type CommonKeyboardKeys = 'Alt' | 'Control' | 'Shift' | 'CapsLock' | 'Tab' | 'Escape' | 'End' | 'Home' | 'ArrowLeft' | 'ArrowUp' | 'ArrowRight' | 'ArrowDown';
+
 export type MultiSelectOption = {
   label: string;
   value: string;
@@ -268,6 +270,7 @@ export type ContactPoint = {
   name: string;
   contact_form?: string;
   email?: string;
+  role: string;
 }
 
 
