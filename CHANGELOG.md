@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Support null end date for temporal coverage [#411](https://github.com/datagouv/udata-front/pull/411)
 
 ## 6.1.2 (2025-02-20)
 
@@ -38,7 +38,6 @@
 - Add geo specific display on OGC service resources [#609](https://github.com/datagouv/udata-front/pull/609)
 - Add dataservices.csv route [#612](https://github.com/datagouv/udata-front/pull/612)
 - Add csv.gz format as table resource [617](https://github.com/datagouv/udata-front/pull/617)
-- Support null end date for temporal coverage [#411](https://github.com/datagouv/udata-front/pull/411)
 
 ## 6.0.5 (2024-11-29)
 
