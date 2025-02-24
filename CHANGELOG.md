@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Support null end date for temporal coverage [#411](https://github.com/datagouv/udata-front/pull/411)
 
 ## 6.1.2 (2025-02-20)
 
