@@ -153,5 +153,7 @@
   "Download file as ": "Download file as ",
   "Temporal coverage": "",
   "since {date}": "",
-  "{start} to {end}": ""
+  "{start} to {end}": "",
+  "Technical documentation": "",
+  "Machine readable documentation": ""
 }

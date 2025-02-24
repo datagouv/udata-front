@@ -153,5 +153,7 @@
   "Download file as ": "Télécharger la liste au format ",
   "Temporal coverage": "",
   "since {date}": "",
-  "{start} to {end}": ""
+  "{start} to {end}": "",
+  "Technical documentation": "",
+  "Machine readable documentation": ""
 }
