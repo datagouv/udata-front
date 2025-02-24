@@ -1,25 +1,22 @@
 {% if contact_point and (contact_point.name or contact_point.email or contact_point.contact_form) %}
-<p class="fr-text--sm fr-mt-0 fr-mb-3v">
+<p class="fr-text--sm fr-mt-0 fr-mb-1w fr-grid-row no-wrap">
     {% if contact_point.email %}
         <a
             href="mailto:{{ contact_point.email }}"
             rel="ugc nofollow noopener"
             target="_blank"
-            class="fr-text--sm fr-link text-grey-500"
-        >
-            {{ contact_point.name or contact_point.email }}
-        </a>
+            class="fr-text--sm fr-link text-grey-500 text-overflow-ellipsis overflow-hidden"
+        >{{ contact_point.name or contact_point.email }}</a>
     {% elif contact_point.contact_form %}
             <a
             href="{{ contact_point.contact_form }}"
             rel="ugc nofollow noopener"
             target="_blank"
             class="fr-text--sm fr-link text-grey-500"
-        >
-            {{ contact_point.name or contact_point.contact_form }}
-        </a>
+        >{{ contact_point.name or contact_point.contact_form }}</a>
     {% else %}
         {{ contact_point.name }}
     {% endif %}
+    <small class="fr-ml-1w fr-text--xs fr-m-0 text-grey-400">({{ CONTACT_ROLES.get(contact_point.role) }})</small>
 </p>
 {% endif %}
