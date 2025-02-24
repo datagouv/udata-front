@@ -151,6 +151,7 @@
   "Copy stable URL": "Copier l'URL stable",
   "Stable URL copied!": "URL stable copiée !",
   "Download file as ": "Télécharger la liste au format ",
-  "Technical documentation": "",
-  "Machine readable documentation": ""
+  "Temporal coverage": "",
+  "since {date}": "",
+  "{start} to {end}": ""
 }

@@ -682,6 +682,14 @@
         {% if dataset.harvest %}
         {% call(slot) information_accordion(_('Harvest')) %}
             {% if slot == "button" %}
+                {% if sysadmin and dataset.harvest.source_id %}
+                    <a
+                        href="{{ beta_admin_url_for(path='harvesters/{id}/'.format(id=dataset.harvest.source_id), fallback_path='harvester/{id}/'.format(id=dataset.harvest.source_id)) }}"
+                        class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-settings-5-line"
+                    >
+                        {{ _('See harvest source') }}
+                    </a>
+                {% endif %}
                 <button
                     data-accordion-button
                     role="button"
