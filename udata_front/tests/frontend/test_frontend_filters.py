@@ -4,7 +4,7 @@ from datetime import date
 
 from flask import url_for, render_template_string, g, Blueprint, request
 
-from udata.i18n import I18nBlueprint
+from udata.i18n import I18nBlueprint, _
 from udata.models import db
 from udata.tests.helpers import assert_urls_equal, full_url
 from udata_front.frontend.helpers import in_url
@@ -16,7 +16,7 @@ def iso2date(string):
 
 
 def dr(start, end, **kwargs):
-    return db.DateRange(start=iso2date(start), end=iso2date(end), **kwargs)
+    return db.DateRange(start=iso2date(start), end=iso2date(end) if end else None, **kwargs)
 
 
 @pytest.mark.usefixtures('app')
@@ -193,6 +193,9 @@ class FrontEndRootTest:
         (('1232-01-01', '1232-12-31'), '1232'),
         (('1232-01-01', '1234-12-31'), '1232–1234'),
         (('1232-02-02', '1234-12-25'), '1232–1234'),
+        # Start date only
+        (('2024-01-12', None), _('since %(start)s', start=2024)),
+        (('2024-12-01', None), _('since %(start)s', start=2024)),
     ))
     def test_daterange(self, dates, expected):
         '''Daterange filter should display range in an adaptive'''
@@ -219,6 +222,9 @@ class FrontEndRootTest:
         (('1232-01-01', '1232-12-31'), '1232'),
         (('1232-01-01', '1234-12-31'), '1232 to 1234'),
         (('1232-02-02', '1234-12-25'), '1232/02/02 to 1234/12/25'),
+        # Start date only
+        (('2024-01-12', None), _('since %(start)s', start="2024/01/12")),
+        (('2024-12-01', None), _('since %(start)s', start="2024/12")),
     ))
     def test_daterange_with_details(self, dates, expected):
         '''Daterange filter should display range in an adaptive'''

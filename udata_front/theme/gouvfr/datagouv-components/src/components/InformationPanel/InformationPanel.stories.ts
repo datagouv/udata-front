@@ -96,7 +96,7 @@ const dataset : DatasetV2 = {
   tags: null,
   license: "lov2",
   frequency: "Unknown",
-  temporal_coverage: "Test",
+  temporal_coverage: { start: "2024-01-01", end: "2024-12-31"},
   frequency_date: null,
   private: false,
   badges: [],
