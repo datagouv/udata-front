@@ -4,6 +4,7 @@
 
 - Support null end date for temporal coverage [#411](https://github.com/datagouv/udata-front/pull/411)
 - Fix dataservices edit button routing [#664](https://github.com/datagouv/udata-front/pull/664)
+- Show all types of contact points [#665](https://github.com/datagouv/udata-front/pull/665/)
 
 ## 6.1.2 (2025-02-20)
 
