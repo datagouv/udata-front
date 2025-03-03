@@ -1,5 +1,5 @@
 {% if contact_point and (contact_point.name or contact_point.email or contact_point.contact_form) %}
-<p class="fr-text--sm fr-mt-0 fr-mb-1w fr-grid-row no-wrap">
+<p class="fr-text--sm fr-mt-0 fr-mb-1w fr-grid-row no-wrap fr-grid-row--middle">
     {% if contact_point.email %}
         <a
             href="mailto:{{ contact_point.email }}"
