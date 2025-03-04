@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- [Fix error with dataset without temporal coverage](https://github.com/datagouv/udata-front/pull/669)
 
 ## 2.0.6 (2025-03-04)
 
