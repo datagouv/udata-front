@@ -108,7 +108,9 @@ const isLastMonthDay = (date: dayjs.Dayjs): boolean => {
   return nextDay.month() !== date.month();
 }
 
-export const formatDateRange = (daterange : TemporalCoverage) => {
+export const formatDateRange = (daterange: TemporalCoverage) => {
+  if(!daterange.start)
+    return ''
   const { t } = useI18n();
   const start = dayjs(daterange.start);
   const end = daterange.end ? dayjs(daterange.end) : null;
