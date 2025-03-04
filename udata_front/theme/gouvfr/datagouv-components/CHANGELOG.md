@@ -2,9 +2,13 @@
 
 ## Current (in progress)
 
+- Nothing yet
+
+## 2.0.6 (2025-03-04)
+
 - Add daterange for temporal coverage in InformationPanel [#411](https://github.com/datagouv/udata-front/pull/411)
 
-## 2.0.5 (2015-01-20)
+## 2.0.5 (2025-01-20)
 
 - Fix download and copy buttons accessibility [#630](https://github.com/datagouv/udata-front/pull/630)
 - Use description list for resource metadata [#629](https://github.com/datagouv/udata-front/pull/629)
