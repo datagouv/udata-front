@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 6.1.3 (2025-03-04)
 
 - Support null end date for temporal coverage [#411](https://github.com/datagouv/udata-front/pull/411)
 - Fix dataservices edit button routing [#664](https://github.com/datagouv/udata-front/pull/664)
