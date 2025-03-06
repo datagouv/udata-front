@@ -295,7 +295,7 @@ const owner = useOwnerName(communityResource.value);
 const lastUpdate = props.resource.last_modified;
 const availabilityChecked = props.resource.extras && 'check:available' in props.resource.extras;
 const unavailable = availabilityChecked && props.resource.extras['check:available'] === false;
-const downloadButtonTitle = unavailable ? t(`The {certifier} robot failed to access this file - Download file as {format}`, { certifier: config.title ,format }) : t(`Download file as {format}`, { format })
+const downloadButtonTitle = unavailable ? t(`The {certifier} robot failed to access this file - Download file as {format}`, { certifier: config.title, format: format.value }) : t(`Download file as {format}`, { format: format.value })
 
 const resourceExternalUrl = computed(() => `${window.location.origin}${window.location.pathname}#/${props.isCommunityResource ? 'community-resources' : 'resources'}/${props.resource.id}`);
 
