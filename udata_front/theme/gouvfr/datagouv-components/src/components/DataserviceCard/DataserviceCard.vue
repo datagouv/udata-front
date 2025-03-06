@@ -2,8 +2,8 @@
   <article class="fr-my-2w fr-p-2w border fr-enlarge-link" :style="props.style" :class="{
     'border-tabular-api': isTabularApi,
   }">
-    <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v fr-ml-n1v" v-if="dataservice.is_restricted || dataservice.private || dataservice.archived_at">
-      <p class="fr-badge fr-badge--sm fr-badge--mention-grey text-grey-380 fr-mr-1w" v-if="dataservice.is_restricted">
+    <div class="absolute top-0 fr-grid-row fr-grid-row--middle fr-mt-n3v fr-ml-n1v" v-if="dataservice.access_type === 'restricted' || dataservice.private || dataservice.archived_at">
+      <p class="fr-badge fr-badge--sm fr-badge--mention-grey text-grey-380 fr-mr-1w" v-if="dataservice.access_type === 'restricted'">
         <span class="fr-icon-lock-line fr-icon--sm" aria-hidden="true"></span>
         {{ t('Restricted access') }}
       </p>
