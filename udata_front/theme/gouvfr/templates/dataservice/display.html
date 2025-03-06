@@ -40,17 +40,10 @@
 {{ report_btn(dataservice) }}
 {% if can_edit %}
 <div class="fr-col-auto fr-ml-3v">
-    {% if dataservice.organization %}
+    {% if config.NEW_ADMIN_URL %}
     <a
         class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-btn--icon-left"
-        href="{{ url_for('beta.beta-admin-org-dataservice', organization_id=dataservice.organization.id, dataservice_id=dataservice.id) }}"
-    >
-        {{ _('Edit') }}
-    </a>
-    {% else %}
-    <a
-        class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-btn--icon-left"
-        href="{{ url_for('beta.beta-admin-me-dataservice', dataservice_id=dataservice.id) }}"
+        href="{{ beta_admin_url_for(path='dataservices/{id}/'.format(id=dataservice.id), fallback_path='dataservice/{id}/'.format(id=dataservice.id)) }}"
     >
         {{ _('Edit') }}
     </a>
