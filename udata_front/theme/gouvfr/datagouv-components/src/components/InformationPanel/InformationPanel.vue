@@ -32,9 +32,9 @@
           <dt class="subtitle fr-mb-0">{{ $t('Frequency') }}</dt>
           <dd class="fr-text--sm fr-m-0 text-mention-grey fr-p-0">{{ frequency }}</dd>
         </div>
-        <div class="fr-col-12 fr-col-sm-6 fr-col-md-4">
+        <div class="fr-col-12 fr-col-sm-6 fr-col-md-4" v-if="props.dataset.temporal_coverage">
           <h3 class="subtitle fr-mb-1v">{{ $t('Temporal coverage') }}</h3>
-          <p class="fr-text--sm fr-m-0 text-mention-grey ">{{ formatDateRange(props.dataset.temporal_coverage) }}</p>
+          <p class="fr-text--sm fr-m-0 text-mention-grey">{{ formatDateRange(props.dataset.temporal_coverage) }}</p>
         </div>
       </dl>
       <dl class="fr-grid-row fr-grid-row--gutters">
