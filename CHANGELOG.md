@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 6.1.4 (2025-03-10)
 
 - Change unavailable resource style [#670](https://github.com/datagouv/udata-front/pull/670)
 
