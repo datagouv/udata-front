@@ -154,6 +154,6 @@
   "Temporal coverage": "Temporal coverage",
   "since {date}": "since {date}",
   "{start} to {end}": "{start} to {end}",
-  "The {certifier} robot failed to access this file - Download file as {format}": "",
-  "Download file as {format}": ""
+  "The {certifier} robot failed to access this file - Download file as {format}": "The {certifier} robot failed to access this file - Download file as {format}",
+  "Download file as {format}": "Download file as {format}"
 }
