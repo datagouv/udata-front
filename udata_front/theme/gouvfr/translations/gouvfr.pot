@@ -946,14 +946,18 @@ msgid "Restricted"
 msgstr ""
 
 #: udata_front/theme/gouvfr/templates/dataservice/display.html:147
+msgid "Opened with an account"
+msgstr ""
+
+#: udata_front/theme/gouvfr/templates/dataservice/display.html:151
 msgid "Opened"
 msgstr ""
 
-#: udata_front/theme/gouvfr/templates/dataservice/display.html:158
+#: udata_front/theme/gouvfr/templates/dataservice/display.html:162
 msgid "Make an authorization request"
 msgstr ""
 
-#: udata_front/theme/gouvfr/templates/dataservice/display.html:182
+#: udata_front/theme/gouvfr/templates/dataservice/display.html:186
 #: udata_front/theme/gouvfr/templates/reuse/display.html:171
 #, python-format
 msgid "%(num)d used dataset"
@@ -961,12 +965,12 @@ msgid_plural "%(num)d used datasets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: udata_front/theme/gouvfr/templates/dataservice/display.html:193
+#: udata_front/theme/gouvfr/templates/dataservice/display.html:197
 #, python-format
 msgid "No datasets on %(site)s are linked to this API."
 msgstr ""
 
-#: udata_front/theme/gouvfr/templates/dataservice/display.html:203
+#: udata_front/theme/gouvfr/templates/dataservice/display.html:207
 #: udata_front/theme/gouvfr/templates/dataset/display.html:234
 #: udata_front/theme/gouvfr/templates/dataset/display.html:294
 #: udata_front/theme/gouvfr/templates/reuse/display.html:184
@@ -974,7 +978,7 @@ msgstr ""
 msgid "Discussions"
 msgstr ""
 
-#: udata_front/theme/gouvfr/templates/dataservice/display.html:208
+#: udata_front/theme/gouvfr/templates/dataservice/display.html:212
 msgid "There are no discussions for this API yet."
 msgstr ""
 
@@ -1503,7 +1507,7 @@ msgstr ""
 msgid "Share, improve and reuse public data"
 msgstr ""
 
-#: udata_front/theme/gouvfr/templates/macros/metadata.html:66
+#: udata_front/theme/gouvfr/templates/macros/metadata.html:65
 msgid "udata-front@{version}"
 msgstr ""
 
