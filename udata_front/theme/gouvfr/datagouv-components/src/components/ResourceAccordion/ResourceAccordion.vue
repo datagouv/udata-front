@@ -40,9 +40,6 @@
         </p>
       </div>
       <div class="flex items-center fr-ml-4v buttons">
-        <p class="text-default-warning fr-m-0 fr-mr-2v" v-if="unavailable">
-          {{ t('Unavailable') }}
-        </p>
         <p class="fr-col-auto fr-ml-3v fr-m-0 z-2" v-if="resource.format === 'url'">
           <a
             :href="resource.latest"
@@ -77,11 +74,25 @@
           <a
             :href="resource.latest"
             rel="ugc nofollow noopener"
-            :title="t('Download file')"
+            :title="downloadButtonTitle"
             download
-            class="relative text-transform-uppercase fr-btn fr-btn--sm fr-btn--icon-left fr-icon-test-tube-line fr-icon-download-line fr-icon--sm matomo_download z-2"
+            class="relative text-transform-uppercase fr-btn fr-btn--sm matomo_download z-2"
             :aria-describedby="resourceTitleId"
           >
+            <OhVueIcon
+              v-if="unavailable"
+              :height="16"
+              :width="16"
+              name="ri-file-warning-line"
+              class="fr-mr-2v"
+            />
+            <OhVueIcon
+              v-else
+              :height="16"
+              :width="16"
+              name="ri-download-line"
+              class="fr-mr-2v"
+            />
             <span class="fr-sr-only">{{ t('Download file as ') }}</span>{{ format }}
           </a>
         </p>
@@ -193,7 +204,10 @@ import TabPanel from "../Tabs/TabPanel.vue";
 import { trackEvent } from "../../helpers/matomo";
 import CopyButton from "../CopyButton/CopyButton.vue";
 import { getResourceFormatIconSvg, getResourceTitleId } from "../../helpers/resources";
-import { OhVueIcon } from 'oh-vue-icons';
+import { addIcons, OhVueIcon } from 'oh-vue-icons';
+import { RiDownloadLine, RiFileWarningLine } from "oh-vue-icons/icons";
+
+addIcons(RiFileWarningLine, RiDownloadLine)
 
 const OGC_SERVICES_FORMATS = ['ogc:wfs', 'ogc:wms', 'wfs', 'wms'];
 
@@ -281,6 +295,7 @@ const owner = useOwnerName(communityResource.value);
 const lastUpdate = props.resource.last_modified;
 const availabilityChecked = props.resource.extras && 'check:available' in props.resource.extras;
 const unavailable = availabilityChecked && props.resource.extras['check:available'] === false;
+const downloadButtonTitle = unavailable ? t(`The {certifier} robot failed to access this file - Download file as {format}`, { certifier: config.title, format: format.value }) : t(`Download file as {format}`, { format: format.value })
 
 const resourceExternalUrl = computed(() => `${window.location.origin}${window.location.pathname}#/${props.isCommunityResource ? 'community-resources' : 'resources'}/${props.resource.id}`);
 

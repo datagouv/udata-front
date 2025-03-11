@@ -4,6 +4,10 @@
 
 - Nothing yet
 
+## 2.0.8 (2025-03-10)
+
+- Change unavailable resource style [#670](https://github.com/datagouv/udata-front/pull/670)
+
 ## 2.0.7 (2025-03-05)
 
 - Fix error with dataset without temporal coverage [#669](https://github.com/datagouv/udata-front/pull/669)
