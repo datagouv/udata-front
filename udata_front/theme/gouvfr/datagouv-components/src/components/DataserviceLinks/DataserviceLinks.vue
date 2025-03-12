@@ -1,20 +1,34 @@
 <template>
   <div>
     <div class="border border-blue-400 fr-p-2w bg-alt-grey"
-      v-if="(!showSwaggerBox && dataservice.endpoint_description_url) || dataservice.business_documentation_url">
+      v-if="(!showSwaggerBox && dataservice.machine_documentation_url) || dataservice.technical_documentation_url || dataservice.business_documentation_url">
       <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle">
         <div class="fr-col-12 fr-col-sm">
           <h2 class="fr-h6 fr-mb-0 text-blue-400">{{ t("API documentation") }}</h2>
         </div>
         <div class="fr-col-auto flex">
-          <a class="fr-btn" :href="dataservice.endpoint_description_url" target="_blank" rel="ugc nofollow noopener"
-            v-if="!showSwaggerBox && dataservice.endpoint_description_url">
-            {{ t('Technical Documentation') }}
+          <a
+            v-if="dataservice.technical_documentation_url"
+            class="fr-btn fr-ml-3v"
+            :href="dataservice.technical_documentation_url"
+            target="_blank"
+            rel="ugc nofollow noopener"
+          >
+            {{ t('Technical documentation') }}
+          </a>
+          <a
+            v-if="!showSwaggerBox && dataservice.machine_documentation_url"
+            class="fr-btn fr-ml-3v"
+            :href="dataservice.machine_documentation_url"
+            target="_blank"
+            rel="ugc nofollow noopener"
+          >
+            {{ t('Machine readable documentation') }}
           </a>
           <a
             v-if="dataservice.business_documentation_url"
-            class="fr-btn"
-            :class="showSwaggerBox ? '' : 'fr-ml-3v fr-btn--secondary'"
+            class="fr-btn fr-ml-3v"
+            :class="showSwaggerBox ? '' : 'fr-btn--secondary'"
             :href="dataservice.business_documentation_url"
             target="_blank"
             rel="ugc nofollow noopener"
@@ -35,8 +49,8 @@
             :class="{ 'fr-icon-arrow-up-s-line': openSwagger, 'fr-icon-arrow-down-s-line': !openSwagger }"></div>
         </div>
       </header>
-      <div v-if="openSwagger && dataservice.endpoint_description_url">
-        <Swagger :url="dataservice.endpoint_description_url" />
+      <div v-if="openSwagger && dataservice.machine_documentation_url">
+        <Swagger :url="dataservice.machine_documentation_url" />
       </div>
     </div>
   </div>
@@ -66,8 +80,8 @@ function isOpenApiFile(endpoint: string) {
 }
 
 onMounted(async () => {
-  if (props.dataservice.endpoint_description_url) {
-    showSwaggerBox.value = isOpenApiFile(props.dataservice.endpoint_description_url)
+  if (props.dataservice.machine_documentation_url) {
+    showSwaggerBox.value = isOpenApiFile(props.dataservice.machine_documentation_url)
   }
 });
 

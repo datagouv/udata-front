@@ -90,10 +90,10 @@ class DatasetDetailView(DatasetView, DetailView):
         context = super(DatasetDetailView, self).get_context()
 
         params_dataservices_page = request.args.get("dataservices_page", 1, type=int)
-        dataservices = Dataservice.objects(datasets=self.dataset).visible()
+        dataservices = Dataservice.objects(datasets=self.dataset.id).visible()
 
         params_reuses_page = request.args.get('reuses_page', 1, type=int)
-        reuses = Reuse.objects(datasets=self.dataset).visible()
+        reuses = Reuse.objects(datasets=self.dataset.id).visible()
 
         if not DatasetEditPermission(self.dataset).can():
             if self.dataset.private:
