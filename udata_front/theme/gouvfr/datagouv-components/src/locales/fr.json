@@ -155,7 +155,7 @@
   "since {date}": "depuis le {date}",
   "{start} to {end}": "{start} au {end}",
   "Technical documentation": "Documentation technique",
-  "Machine readable documentation": "Documentation lisible par une machine",
+  "Machine readable documentation": "Documentation lisible par machine",
   "The {certifier} robot failed to access this file - Download file as {format}": "Le robot de {certifier} n'a pas pu accéder à ce fichier - Télécharger le fichier en {format}",
   "Download file as {format}": "Télécharger le fichier en {format}"
 }
