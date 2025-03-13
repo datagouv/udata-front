@@ -151,7 +151,11 @@
   "Copy stable URL": "Copier l'URL stable",
   "Stable URL copied!": "URL stable copiée !",
   "Download file as ": "Télécharger la liste au format ",
-  "Temporal coverage": "",
-  "since {date}": "",
-  "{start} to {end}": ""
+  "Temporal coverage": "Couverture temporelle",
+  "since {date}": "depuis le {date}",
+  "{start} to {end}": "{start} au {end}",
+  "Technical documentation": "",
+  "Machine readable documentation": "",
+  "The {certifier} robot failed to access this file - Download file as {format}": "Le robot de {certifier} n'a pas pu accéder à ce fichier - Télécharger le fichier en {format}",
+  "Download file as {format}": "Télécharger le fichier en {format}"
 }

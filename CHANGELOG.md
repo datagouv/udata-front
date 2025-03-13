@@ -2,9 +2,19 @@
 
 ## Current (in progress)
 
+- Optimize dataset detail view for dataset with many resources [#673](https://github.com/datagouv/udata-front/pull/673)
+- Update dataservice type and remove unused stuff [#655](https://github.com/datagouv/udata-front/pull/655)
+- Add delete_comments args when deleting a user as spam [#666](https://github.com/datagouv/udata-front/pull/666)
+
+## 6.1.4 (2025-03-10)
+
+- Change unavailable resource style [#670](https://github.com/datagouv/udata-front/pull/670)
+
+## 6.1.3 (2025-03-04)
+
 - Support null end date for temporal coverage [#411](https://github.com/datagouv/udata-front/pull/411)
 - Fix dataservices edit button routing [#664](https://github.com/datagouv/udata-front/pull/664)
-- Add delete_comments args when deleting a user as spam [#666](https://github.com/datagouv/udata-front/pull/666)
+- Show all types of contact points [#665](https://github.com/datagouv/udata-front/pull/665/)
 
 ## 6.1.2 (2025-02-20)
 
