@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 6.1.5 (2025-03-14)
 
 - Optimize dataset detail view for dataset with many resources [#673](https://github.com/datagouv/udata-front/pull/673)
 - Update dataservice type and remove unused stuff [#655](https://github.com/datagouv/udata-front/pull/655)
