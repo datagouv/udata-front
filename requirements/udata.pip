@@ -4,15 +4,15 @@
 #
 #    pip-compile --output-file=requirements/udata.pip requirements/udata.in
 #
-amqp==5.2.0
+amqp==5.3.1
     # via
     #   kombu
     #   udata
-aniso8601==9.0.1
+aniso8601==10.0.0
     # via
     #   flask-restx
     #   udata
-attrs==23.2.0
+attrs==25.3.0
     # via
     #   jsonschema
     #   referencing
@@ -27,13 +27,13 @@ babel==2.17.0
     #   udata
 bcrypt==4.3.0
     # via udata
-billiard==4.2.0
+billiard==4.2.1
     # via
     #   celery
     #   udata
 bleach[css]==6.2.0
     # via udata
-blinker==1.4
+blinker==1.5
     # via
     #   flask-mail
     #   flask-navigation-temp-python-311
@@ -51,7 +51,7 @@ botocore==1.29.165
     #   boto3
     #   s3transfer
     #   udata
-cachelib==0.9.0
+cachelib==0.13.0
     # via
     #   flask-caching
     #   udata
@@ -61,16 +61,16 @@ celery==5.4.0
     #   udata
 celerybeat-mongo==0.2.0
     # via udata
-certifi==2024.7.4
+certifi==2025.1.31
     # via
     #   requests
     #   sentry-sdk
     #   udata
-cffi==1.16.0
+cffi==1.17.1
     # via
     #   cryptography
     #   udata
-charset-normalizer==3.3.2
+charset-normalizer==3.4.1
     # via
     #   requests
     #   udata
@@ -99,7 +99,7 @@ cryptography==44.0.2
     # via
     #   authlib
     #   udata
-dnspython==2.6.1
+dnspython==2.7.0
     # via
     #   email-validator
     #   pymongo
@@ -111,7 +111,7 @@ email-validator==2.2.0
     #   wtforms
 factory-boy==3.3.3
     # via udata
-faker==37.0.0
+faker==37.0.2
     # via
     #   factory-boy
     #   udata
@@ -139,17 +139,17 @@ flask==2.1.2
     #   udata
 flask-babel==4.0.0
     # via udata
-flask-caching==2.0.2
+flask-caching==2.3.1
     # via udata
 flask-cdn==1.5.3
     # via udata
 flask-gravatar==0.5.0
     # via udata
-flask-login==0.6.2
+flask-login==0.6.3
     # via
     #   flask-security-too
     #   udata
-flask-mail==0.9.1
+flask-mail==0.10.0
     # via udata
 flask-mongoengine==1.0.0
     # via
@@ -161,7 +161,7 @@ flask-principal==0.4.0
     # via
     #   flask-security-too
     #   udata
-flask-restx==1.0.5
+flask-restx==1.3.0
     # via udata
 flask-security-too==5.1.2
     # via udata
@@ -169,7 +169,7 @@ flask-sitemap==0.4.0
     # via udata
 flask-storage==1.3.2
     # via udata
-flask-wtf==1.0.1
+flask-wtf==1.2.2
     # via
     #   flask-mongoengine
     #   flask-security-too
@@ -180,19 +180,23 @@ geomet==1.1.0
     # via udata
 html2text==2024.2.26
     # via udata
-idna==2.10
+idna==3.10
     # via
     #   email-validator
     #   requests
     #   udata
     #   urlextract
-itsdangerous==2.1.2
+importlib-resources==6.5.2
+    # via
+    #   flask-restx
+    #   udata
+itsdangerous==2.2.0
     # via
     #   flask
     #   flask-security-too
     #   flask-wtf
     #   udata
-jinja2==3.1.2
+jinja2==3.1.6
     # via
     #   flask
     #   flask-babel
@@ -206,11 +210,11 @@ jsonschema==4.23.0
     # via
     #   flask-restx
     #   udata
-jsonschema-specifications==2023.12.1
+jsonschema-specifications==2024.10.1
     # via
     #   jsonschema
     #   udata
-kombu[redis]==5.4.2
+kombu[redis]==5.5.0
     # via
     #   celery
     #   udata
@@ -218,7 +222,7 @@ langdetect==1.0.9
     # via udata
 levenshtein==0.27.1
     # via udata
-lxml==5.3.0
+lxml==5.3.1
     # via udata
 markupsafe==2.1.2
     # via
@@ -228,7 +232,7 @@ markupsafe==2.1.2
     #   udata
     #   werkzeug
     #   wtforms
-mistune==3.1.2
+mistune==3.1.3
     # via udata
 mongoengine==0.29.1
     # via
@@ -250,15 +254,11 @@ platformdirs==4.3.6
     # via
     #   udata
     #   urlextract
-ply==3.11
-    # via
-    #   pycparser
-    #   udata
-prompt-toolkit==3.0.47
+prompt-toolkit==3.0.50
     # via
     #   click-repl
     #   udata
-pycparser==2.2
+pycparser==2.22
     # via
     #   cffi
     #   udata
@@ -269,11 +269,11 @@ pymongo==4.11.3
     #   celerybeat-mongo
     #   mongoengine
     #   udata
-pyparsing==3.1.2
+pyparsing==3.2.1
     # via
     #   rdflib
     #   udata
-python-dateutil==2.9.0
+python-dateutil==2.9.0.post0
     # via
     #   botocore
     #   celery
@@ -293,18 +293,18 @@ redis==5.2.1
     # via
     #   kombu
     #   udata
-referencing==0.35.1
+referencing==0.36.2
     # via
     #   jsonschema
     #   jsonschema-specifications
     #   udata
-regex==2024.5.15
+regex==2024.11.6
     # via
     #   awesome-slugify
     #   udata
 requests==2.32.3
     # via udata
-rpds-py==0.19.0
+rpds-py==0.23.1
     # via
     #   jsonschema
     #   referencing
@@ -315,7 +315,7 @@ s3transfer==0.6.2
     #   udata
 sentry-sdk[flask]==2.23.1
     # via udata
-six==1.16.0
+six==1.17.0
     # via
     #   langdetect
     #   python-dateutil
@@ -329,7 +329,11 @@ tinycss2==1.4.0
     #   udata
 tlds==2025022800
     # via udata
-tzdata==2024.1
+typing-extensions==4.12.2
+    # via
+    #   referencing
+    #   udata
+tzdata==2025.1
     # via
     #   celery
     #   faker
@@ -347,7 +351,7 @@ uritools==4.0.3
     #   urlextract
 urlextract==1.9.0
     # via udata
-urllib3==1.26.19
+urllib3==1.26.20
     # via
     #   botocore
     #   requests
