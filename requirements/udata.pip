@@ -12,30 +12,26 @@ aniso8601==9.0.1
     # via
     #   flask-restx
     #   udata
-appdirs==1.4.4
-    # via
-    #   udata
-    #   urlextract
 attrs==23.2.0
     # via
     #   jsonschema
     #   referencing
     #   udata
-authlib==1.3.1
+authlib==1.5.1
     # via udata
 awesome-slugify==1.6.5
     # via udata
-babel==2.12.1
+babel==2.17.0
     # via
     #   flask-babel
     #   udata
-bcrypt==3.1.7
+bcrypt==4.3.0
     # via udata
 billiard==4.2.0
     # via
     #   celery
     #   udata
-bleach==3.3.1
+bleach[css]==6.2.0
     # via udata
 blinker==1.4
     # via
@@ -59,7 +55,7 @@ cachelib==0.9.0
     # via
     #   flask-caching
     #   udata
-celery==5.3.1
+celery==5.4.0
     # via
     #   celerybeat-mongo
     #   udata
@@ -72,14 +68,13 @@ certifi==2024.7.4
     #   udata
 cffi==1.16.0
     # via
-    #   bcrypt
     #   cryptography
     #   udata
 charset-normalizer==3.3.2
     # via
     #   requests
     #   udata
-click==8.1.2
+click==8.1.8
     # via
     #   celery
     #   click-didyoumean
@@ -100,7 +95,7 @@ click-repl==0.3.0
     # via
     #   celery
     #   udata
-cryptography==2.8
+cryptography==44.0.2
     # via
     #   authlib
     #   udata
@@ -114,12 +109,16 @@ email-validator==2.2.0
     #   flask-security-too
     #   udata
     #   wtforms
-factory-boy==2.12.0
+factory-boy==3.3.3
     # via udata
-faker==3.0.0
+faker==37.0.0
     # via
     #   factory-boy
     #   udata
+filelock==3.18.0
+    # via
+    #   udata
+    #   urlextract
 flask==2.1.2
     # via
     #   flask-babel
@@ -175,11 +174,11 @@ flask-wtf==1.0.1
     #   flask-mongoengine
     #   flask-security-too
     #   udata
-geojson==2.5.0
+geojson==3.2.0
     # via udata
 geomet==1.1.0
     # via udata
-html2text==2019.9.26
+html2text==2024.2.26
     # via udata
 idna==2.10
     # via
@@ -187,10 +186,6 @@ idna==2.10
     #   requests
     #   udata
     #   urlextract
-isodate==0.6.1
-    # via
-    #   rdflib
-    #   udata
 itsdangerous==2.1.2
     # via
     #   flask
@@ -215,11 +210,13 @@ jsonschema-specifications==2023.12.1
     # via
     #   jsonschema
     #   udata
-kombu[redis]==5.3.1
+kombu[redis]==5.4.2
     # via
     #   celery
     #   udata
 langdetect==1.0.9
+    # via udata
+levenshtein==0.27.1
     # via udata
 lxml==5.3.0
     # via udata
@@ -231,19 +228,15 @@ markupsafe==2.1.2
     #   udata
     #   werkzeug
     #   wtforms
-mistune==0.8.4
+mistune==3.1.2
     # via udata
-mongoengine==0.27.0
+mongoengine==0.29.1
     # via
     #   celerybeat-mongo
     #   flask-mongoengine
     #   udata
-netaddr==0.7.19
+netaddr==1.3.0
     # via udata
-packaging==24.2
-    # via
-    #   bleach
-    #   udata
 passlib==1.7.4
     # via
     #   flask-security-too
@@ -253,6 +246,10 @@ pillow==9.2.0
     #   flask-storage
     #   pydenticon
     #   udata
+platformdirs==4.3.6
+    # via
+    #   udata
+    #   urlextract
 ply==3.11
     # via
     #   pycparser
@@ -267,7 +264,7 @@ pycparser==2.2
     #   udata
 pydenticon==0.3.1
     # via udata
-pymongo==4.3.3
+pymongo==4.11.3
     # via
     #   celerybeat-mongo
     #   mongoengine
@@ -276,20 +273,23 @@ pyparsing==3.1.2
     # via
     #   rdflib
     #   udata
-python-dateutil==2.8.2
+python-dateutil==2.9.0
     # via
     #   botocore
     #   celery
-    #   faker
     #   udata
-pytz==2024.1
+pytz==2025.1
     # via
     #   flask-babel
     #   flask-restx
     #   udata
-rdflib==6.0.0
+rapidfuzz==3.12.2
+    # via
+    #   levenshtein
+    #   udata
+rdflib==7.1.3
     # via udata
-redis==4.5.2
+redis==5.2.1
     # via
     #   kombu
     #   udata
@@ -313,34 +313,29 @@ s3transfer==0.6.2
     # via
     #   boto3
     #   udata
-sentry-sdk[flask]==2.9.0
+sentry-sdk[flask]==2.23.1
     # via udata
 six==1.16.0
     # via
-    #   bcrypt
-    #   bleach
-    #   cryptography
-    #   faker
-    #   isodate
     #   langdetect
     #   python-dateutil
     #   udata
     #   wtforms-json
 speaklater==1.3
     # via udata
-stringdist==1.0.9
-    # via udata
-text-unidecode==1.3
+tinycss2==1.4.0
     # via
-    #   faker
+    #   bleach
     #   udata
-tlds==2024071000
+tlds==2025022800
     # via udata
 tzdata==2024.1
     # via
     #   celery
+    #   faker
+    #   kombu
     #   udata
-udata @ git+https://github.com/opendatateam/udata.git
+udata @ git+https://github.com/maudetes/udata.git@feat/update-deps
     # via -r requirements/udata.in
 unidecode==0.4.21
     # via
@@ -350,7 +345,7 @@ uritools==4.0.3
     # via
     #   udata
     #   urlextract
-urlextract==0.14.0
+urlextract==1.9.0
     # via udata
 urllib3==1.26.19
     # via
@@ -364,7 +359,7 @@ vine==5.1.0
     #   celery
     #   kombu
     #   udata
-voluptuous==0.11.7
+voluptuous==0.15.2
     # via udata
 wcwidth==0.2.13
     # via
@@ -373,14 +368,15 @@ wcwidth==0.2.13
 webencodings==0.5.1
     # via
     #   bleach
+    #   tinycss2
     #   udata
-werkzeug==2.2.2
+werkzeug==2.3.8
     # via
     #   flask
     #   flask-login
     #   flask-restx
     #   udata
-wtforms[email]==3.0.1
+wtforms[email]==3.2.1
     # via
     #   flask-mongoengine
     #   flask-security-too

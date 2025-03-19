@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file=requirements/install.pip requirements/install.in
 #
-click==8.1.2
+click==8.1.8
     # via
     #   -c requirements/udata.pip
     #   flask
@@ -33,7 +33,7 @@ markupsafe==2.1.2
     #   werkzeug
 python-frontmatter==1.0.0
     # via -r requirements/install.in
-pytz==2024.1
+pytz==2025.1
     # via
     #   -c requirements/udata.pip
     #   feedgenerator
@@ -41,7 +41,7 @@ pyyaml==6.0.1
     # via python-frontmatter
 sgmllib3k==1.0.0
     # via feedparser
-werkzeug==2.2.2
+werkzeug==2.3.8
     # via
     #   -c requirements/udata.pip
     #   flask

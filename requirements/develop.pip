@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file=requirements/develop.pip requirements/develop.in
 #
-bleach==3.3.1
+bleach==6.2.0
     # via
     #   -c requirements/udata.pip
     #   readme-renderer
@@ -33,8 +33,6 @@ mccabe==0.6.1
 packaging==24.2
     # via
     #   -c requirements/test.pip
-    #   -c requirements/udata.pip
-    #   bleach
     #   pytest
 pluggy==1.3.0
     # via
@@ -66,7 +64,6 @@ six==1.16.0
     # via
     #   -c requirements/test.pip
     #   -c requirements/udata.pip
-    #   bleach
     #   readme-renderer
 webencodings==0.5.1
     # via
