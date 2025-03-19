@@ -1,5 +1,6 @@
 from udata.frontend.markdown import mistune, UDataMarkdown
 
+
 class UDataFrontMarkdown(UDataMarkdown):
     """Consistent with Flask's extensions signature."""
 
