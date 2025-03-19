@@ -4,11 +4,11 @@
 #
 #    pip-compile --output-file=requirements/test.pip requirements/test.in
 #
-certifi==2024.7.4
+certifi==2025.1.31
     # via
     #   -c requirements/udata.pip
     #   requests
-charset-normalizer==3.3.2
+charset-normalizer==3.4.1
     # via
     #   -c requirements/udata.pip
     #   requests
@@ -17,30 +17,30 @@ click==8.1.8
     #   -c requirements/install.pip
     #   -c requirements/udata.pip
     #   flask
-feedgen==0.7.0
+feedgen==1.0.0
     # via -r requirements/test.in
 flask==2.1.2
     # via
     #   -c requirements/install.pip
     #   -c requirements/udata.pip
     #   pytest-flask
-idna==2.10
+idna==3.10
     # via
     #   -c requirements/udata.pip
     #   requests
-iniconfig==2.0.0
+iniconfig==2.1.0
     # via pytest
-itsdangerous==2.1.2
+itsdangerous==2.2.0
     # via
     #   -c requirements/install.pip
     #   -c requirements/udata.pip
     #   flask
-jinja2==3.1.2
+jinja2==3.1.6
     # via
     #   -c requirements/install.pip
     #   -c requirements/udata.pip
     #   flask
-lxml==5.3.0
+lxml==5.3.1
     # via
     #   -c requirements/udata.pip
     #   feedgen
@@ -50,22 +50,22 @@ markupsafe==2.1.2
     #   -c requirements/udata.pip
     #   jinja2
     #   werkzeug
-mock==5.0.1
+mock==5.2.0
     # via -r requirements/test.in
 packaging==24.2
     # via pytest
-pluggy==1.3.0
+pluggy==1.5.0
     # via pytest
-pytest==7.3.1
+pytest==8.3.5
     # via
     #   -r requirements/test.in
     #   pytest-flask
     #   pytest-mock
-pytest-flask==1.2.0
+pytest-flask==1.3.0
     # via -r requirements/test.in
-pytest-mock==3.10.0
+pytest-mock==3.14.0
     # via -r requirements/test.in
-python-dateutil==2.9.0
+python-dateutil==2.9.0.post0
     # via
     #   -c requirements/udata.pip
     #   feedgen
@@ -73,14 +73,13 @@ requests==2.32.3
     # via
     #   -c requirements/udata.pip
     #   requests-mock
-requests-mock==1.10.0
+requests-mock==1.12.1
     # via -r requirements/test.in
-six==1.16.0
+six==1.17.0
     # via
     #   -c requirements/udata.pip
     #   python-dateutil
-    #   requests-mock
-urllib3==1.26.19
+urllib3==1.26.20
     # via
     #   -c requirements/udata.pip
     #   requests
