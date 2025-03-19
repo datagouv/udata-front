@@ -370,7 +370,7 @@ webencodings==0.5.1
     #   bleach
     #   tinycss2
     #   udata
-werkzeug==2.3.8
+werkzeug==2.2.3
     # via
     #   flask
     #   flask-login

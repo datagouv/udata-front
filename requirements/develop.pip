@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file=requirements/develop.pip requirements/develop.in
 #
-bleach==6.2.0
+bleach[css]==6.2.0
     # via
     #   -c requirements/udata.pip
     #   readme-renderer
@@ -65,7 +65,12 @@ six==1.16.0
     #   -c requirements/test.pip
     #   -c requirements/udata.pip
     #   readme-renderer
+tinycss2==1.4.0
+    # via
+    #   -c requirements/udata.pip
+    #   bleach
 webencodings==0.5.1
     # via
     #   -c requirements/udata.pip
     #   bleach
+    #   tinycss2

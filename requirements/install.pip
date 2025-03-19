@@ -41,7 +41,7 @@ pyyaml==6.0.1
     # via python-frontmatter
 sgmllib3k==1.0.0
     # via feedparser
-werkzeug==2.3.8
+werkzeug==2.2.3
     # via
     #   -c requirements/udata.pip
     #   flask
