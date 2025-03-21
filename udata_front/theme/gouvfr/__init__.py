@@ -47,7 +47,10 @@ gouvfr_menu = nav.Bar('gouvfr_menu', [
     nav.Item(_('API'), 'dataservices.list'),
     nav.Item(_('Reuses'), 'reuses.list'),
     nav.Item(_('Organizations'), 'organizations.list'),
-    nav.Item(_('Getting started on %(site)s', site=current_app.config.get('SITE_TITLE')),
+    nav.Item(_(
+            'Getting started on %(site)s',
+            site=current_app.config.get('SITE_TITLE')
+        ),
         None,
         items=[
             nav.Item(
