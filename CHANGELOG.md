@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 6.1.6 (2025-03-24)
 
 - Fix menu translation using python parenthesis format [#678](https://github.com/datagouv/udata-front/pull/678)
