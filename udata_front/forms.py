@@ -20,7 +20,7 @@ class ExtendedRegisterForm(RegisterForm):
 
     captcha_id = fields.StringField(_('captcha_id'), [])
 
-    def validate(self):
+    def validate(self, **kwargs):
         if current_app.config.get('READ_ONLY_MODE'):
             return False
 
@@ -28,7 +28,7 @@ class ExtendedRegisterForm(RegisterForm):
             self.captcha_code.errors = [_('Invalid Captcha')]
             return False
 
-        return super().validate()
+        return super().validate(**kwargs)
 
 
 class ExtendedForgotPasswordForm(ForgotPasswordForm):
