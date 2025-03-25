@@ -36,12 +36,12 @@ class ExtendedForgotPasswordForm(ForgotPasswordForm):
 
     captcha_id = fields.StringField(_('captcha_id'), [])
 
-    def validate(self):
+    def validate(self, **kwargs):
         if not check_captchetat(self.captcha_id.data, self.captcha_code.data):
             self.captcha_code.errors = [_('Invalid Captcha')]
             return False
 
-        return super().validate()
+        return super().validate(**kwargs)
 
 
 def check_captchetat(id: str, code: str) -> bool:
