@@ -1,6 +1,6 @@
 -c udata.pip
 
-feedparser==6.0.8
-python-frontmatter==1.0.0
-Flask-Themes2==1.0.0
-feedgenerator==2.1.0
+feedparser
+python-frontmatter
+Flask-Themes2
+feedgenerator

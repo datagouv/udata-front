@@ -385,7 +385,7 @@ def format_from_now(value):
     '''
     today = date.today()
     value_without_time = value.date()
-    if(value_without_time == today):
+    if value_without_time == today:
         return _("today")
     return format_timedelta(value_without_time - today, add_direction=True)
 
@@ -397,7 +397,7 @@ def format_based_on_date(value):
     Otherwise, show a formatted date.
     '''
     delta = date.today() - value.date()
-    if(delta.days > 30):
+    if delta.days > 30:
         return _("on %(date)s", date=format_date(value, "long"))
     return format_from_now(value)
 
