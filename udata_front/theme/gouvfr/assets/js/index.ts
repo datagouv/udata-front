@@ -18,7 +18,6 @@ import RequestMembership from "./components/organization/request-membership.vue"
 import ResourceFromHash from "./components/dataset/resource/resourceFromHash.vue";
 import ReuseCard from "./components/Reuse/Reuse.vue";
 import Resources from "./components/dataset/resource/resources.vue";
-import Captcha from "./components/utils/captcha.vue";
 import UserDatasetList from "./components/UserDatasetList/UserDatasetList.vue";
 import UserReuseList from "./components/UserReuseList/UserReuseList.vue";
 import PublishingForm from "./pages/PublishingForm/PublishingForm.vue";
@@ -67,7 +66,6 @@ const configAndMountApp = (el: HTMLElement) => {
   app.use(Auth);
   app.use(i18n);
 
-  app.component("captcha", Captcha);
   app.component("chart", Chart);
   app.component("dataset-resources", Resources);
   app.component("dataset-resource-from-hash", ResourceFromHash);

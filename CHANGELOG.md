@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Migrate to CaptchEtat v2 [#679](https://github.com/datagouv/udata-front/pull/679)
 
 ## 6.1.6 (2025-03-24)
 
