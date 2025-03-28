@@ -77,6 +77,7 @@ export async function getConfig(): Promise<UserConfig> {
           { src: "node_modules/systemjs/dist/s.min.js", dest: `udata_front/theme/${theme}/static/js/` },
           { src: "node_modules/leaflet/dist/leaflet.js", dest: `udata_front/theme/${theme}/static/js/` },
           { src: "node_modules/leaflet/dist/leaflet.css", dest: `udata_front/theme/${theme}/static/js/` },
+          { src: "node_modules/captchetat-js/dist/captchetat-js.js", dest: `udata_front/theme/${theme}/static/js/` },
         ],
         hook: 'writeBundle'
       }),

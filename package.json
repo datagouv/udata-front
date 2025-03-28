@@ -108,6 +108,7 @@
     "@gouvfr/dsfr": "~1.11.2",
     "@vueuse/integrations": "^10.11.0",
     "axios": "^1.7.7",
+    "captchetat-js": "https://static.piste.gouv.fr/captchEtat/libraries/captchetat-js-1.0.0.tgz",
     "leaflet": "^1.9.4",
     "oh-vue-icons": "^1.0.0-rc3",
     "sortablejs": "^1.15.2",

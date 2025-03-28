@@ -18,11 +18,11 @@ describe("Testing registration page", () => {
 
   if (Cypress.env('CAPTCHETAT_CONFIGURED')) {
     it("displays the form captcha", () => {
-      cy.get("#BDC_CaptchaComponent").should("be.visible");
+      cy.get("#captchetat-container").should("be.visible");
     });
 
     it("injects the captcha id", () => {
-      cy.get("input[name=captcha_id]").should("exist");
+      cy.get("input[name=captchetat-uuid]").should("exist");
     });
 
     it("displays captcha error", () => {
