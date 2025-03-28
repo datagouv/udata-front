@@ -18,7 +18,9 @@ class ExtendedRegisterForm(RegisterForm):
 
     captcha_code = fields.StringField(_('captcha_input'), [])
 
-    captchetat_uuid = fields.StringField(_('captchetat_uuid'), name='captchetat-uuid', validators=[])
+    captchetat_uuid = fields.StringField(
+        _('captchetat_uuid'), name='captchetat-uuid', validators=[]
+    )
 
     def validate(self):
         if current_app.config.get('READ_ONLY_MODE'):
@@ -34,7 +36,9 @@ class ExtendedRegisterForm(RegisterForm):
 class ExtendedForgotPasswordForm(ForgotPasswordForm):
     captcha_code = fields.StringField(_('captcha_input'), [])
 
-    captchetat_uuid = fields.StringField(_('captchetat_uuid'), name='captchetat-uuid', validators=[])
+    captchetat_uuid = fields.StringField(
+        _('captchetat_uuid'), name='captchetat-uuid', validators=[]
+    )
 
     def validate(self):
         if not check_captchetat(self.captchetat_uuid.data, self.captcha_code.data):
