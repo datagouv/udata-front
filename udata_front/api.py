@@ -14,12 +14,8 @@ captchetat_parser.add_argument('get', type=str, location='args',
                                help='type of data wanted from captchetat')
 captchetat_parser.add_argument('c', type=str, location='args',
                                help='captcha name')
-captchetat_parser.add_argument('d', type=str, location='args',
-                               help='this is a technical argument auto-generated for audio content')
 captchetat_parser.add_argument('t', type=str, location='args',
-                               help='captcha id, this is a technical argument auto-generated')
-captchetat_parser.add_argument('cs', type=str, location='args',
-                               help='captcha style, this is a technical argument auto-generated')
+                               help='this is a technical argument auto-generated for audio content')
 
 CAPTCHETAT_ERROR = "CaptchEtat request didn't failed but didn't contain any access_token"
 
