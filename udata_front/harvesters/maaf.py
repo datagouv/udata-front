@@ -11,7 +11,13 @@ from voluptuous import Schema, Optional, All, Any, Lower, In, Length
 from udata.models import db, License, Resource, Checksum, SpatialCoverage
 from udata.harvest.backends import BaseBackend
 from udata.harvest.filters import (
-    boolean, email, to_date, taglist, force_list, normalize_string, is_url
+    boolean,
+    email,
+    to_date,
+    taglist,
+    force_list,
+    normalize_string,
+    is_url,
 )
 from udata.harvest.models import HarvestItem
 from udata.utils import get_by
@@ -20,38 +26,38 @@ from udata.utils import get_by
 log = logging.getLogger(__name__)
 
 GRANULARITIES = {
-    'commune': 'fr/town',
-    'france': 'country',
-    'pays': 'country',
+    "commune": "fr/town",
+    "france": "country",
+    "pays": "country",
 }
 
-RE_NAME = re.compile(r'(\{(?P<url>.+)\})?(?P<name>.+)$')
+RE_NAME = re.compile(r"(\{(?P<url>.+)\})?(?P<name>.+)$")
 
 ZONES = {
-    'country/fr': 'country/fr',
-    'country/monde': 'country-group/world',
+    "country/fr": "country/fr",
+    "country/monde": "country-group/world",
 }
 
 
 FREQUENCIES = {
-    'ponctuelle': 'punctual',
-    'temps réel': 'continuous',
-    'quotidienne': 'daily',
-    'hebdomadaire': 'weekly',
-    'bimensuelle': 'semimonthly',
-    'mensuelle': 'monthly',
-    'bimestrielle': 'bimonthly',
-    'trimestrielle': 'quarterly',
-    'semestrielle': 'semiannual',
-    'annuelle': 'annual',
-    'triennale': 'triennial',
-    'quinquennale': 'quinquennial',
-    'aucune': 'unknown',
+    "ponctuelle": "punctual",
+    "temps réel": "continuous",
+    "quotidienne": "daily",
+    "hebdomadaire": "weekly",
+    "bimensuelle": "semimonthly",
+    "mensuelle": "monthly",
+    "bimestrielle": "bimonthly",
+    "trimestrielle": "quarterly",
+    "semestrielle": "semiannual",
+    "annuelle": "annual",
+    "triennale": "triennial",
+    "quinquennale": "quinquennial",
+    "aucune": "unknown",
 }
 
-XSD_PATH = os.path.join(os.path.dirname(__file__), 'maaf.xsd')
+XSD_PATH = os.path.join(os.path.dirname(__file__), "maaf.xsd")
 
-SSL_COMMENT = '''
+SSL_COMMENT = """
 Le site exposant les données est protégé par un certificat délivré par
 l'IGC/A (IGC officielle de l'État).
 Une exception de sécurité peut apparaître si votre navigateur ne reconnait
@@ -60,50 +66,56 @@ vous trouverez  la procédure à suivre pour éviter une telle alerte
 à l'adresse :
 http://www.ssi.gouv.fr/fr/anssi/services-securises/igc-a/\
 modalites-de-verification-du-certificat-de-l-igc-a-rsa-4096.html
-'''
+"""
 
-schema = Schema({
-    Optional('digest'): All(str, Length(min=1)),
-    'metadata': {
-        'author': str,
-        'author_email': Any(All(str, email), None),
-        'extras': [{
-            'key': str,
-            'value': str
-        }],
-        'frequency': All(Lower, In(FREQUENCIES.keys())),
-        'groups': Any(None, All(Lower, 'agriculture et alimentation')),
-        'id': str,
-        'license_id': Any('fr-lo'),
-        'maintainer': Any(str, None),
-        'maintainer_email': Any(All(str, email), None),
-        'notes': All(str, normalize_string),
-        'organization': str,
-        'private': boolean,
-        'resources': All(force_list, [{
-            'name': str,
-            'description': All(str, normalize_string),
-            'format': All(str, Lower, Any('cle', 'csv', 'pdf', 'txt')),
-            Optional('last_modified'): All(str, to_date),
-            'url': All(str, is_url(full=True)),
-        }]),
-        'state': Any(str, None),
-        'supplier': str,
-        'tags': All(str, taglist),
-        'temporal_coverage_from': None,
-        'temporal_coverage_to': None,
-        'territorial_coverage': {
-            'territorial_coverage_code':
-            All(str, Lower, In(ZONES.keys())),
-            'territorial_coverage_granularity':
-            All(str, Lower, In(GRANULARITIES.keys())),
+schema = Schema(
+    {
+        Optional("digest"): All(str, Length(min=1)),
+        "metadata": {
+            "author": str,
+            "author_email": Any(All(str, email), None),
+            "extras": [{"key": str, "value": str}],
+            "frequency": All(Lower, In(FREQUENCIES.keys())),
+            "groups": Any(None, All(Lower, "agriculture et alimentation")),
+            "id": str,
+            "license_id": Any("fr-lo"),
+            "maintainer": Any(str, None),
+            "maintainer_email": Any(All(str, email), None),
+            "notes": All(str, normalize_string),
+            "organization": str,
+            "private": boolean,
+            "resources": All(
+                force_list,
+                [
+                    {
+                        "name": str,
+                        "description": All(str, normalize_string),
+                        "format": All(str, Lower, Any("cle", "csv", "pdf", "txt")),
+                        Optional("last_modified"): All(str, to_date),
+                        "url": All(str, is_url(full=True)),
+                    }
+                ],
+            ),
+            "state": Any(str, None),
+            "supplier": str,
+            "tags": All(str, taglist),
+            "temporal_coverage_from": None,
+            "temporal_coverage_to": None,
+            "territorial_coverage": {
+                "territorial_coverage_code": All(str, Lower, In(ZONES.keys())),
+                "territorial_coverage_granularity": All(
+                    str, Lower, In(GRANULARITIES.keys())
+                ),
+            },
+            "title": str,
         },
-        'title': str,
     },
-}, required=True, extra=True)
+    required=True,
+    extra=True,
+)
 
 
-LIST_KEYS = 'extras', 'resources'
+LIST_KEYS = "extras", "resources"
 
 
 def extract(element):
@@ -120,97 +132,99 @@ def dictize(element):
 
 
 class MaafBackend(BaseBackend):
-    display_name = 'MAAF'
+    display_name = "MAAF"
     verify_ssl = False
 
     def inner_harvest(self):
-        '''Parse the index pages HTML to find link to dataset descriptors'''
+        """Parse the index pages HTML to find link to dataset descriptors"""
         directories = [self.source.url]
         while directories:
             directory = directories.pop(0)
             response = self.get(directory)
             root = html.fromstring(response.text)
-            for link in root.xpath('//ul/li/a')[1:]:  # Skip parent directory.
-                href = link.get('href')
-                if href.endswith('/'):
+            for link in root.xpath("//ul/li/a")[1:]:  # Skip parent directory.
+                href = link.get("href")
+                if href.endswith("/"):
                     directories.append(urljoin(directory, href))
-                elif href.lower().endswith('.xml'):
+                elif href.lower().endswith(".xml"):
                     # We use the URL as `remote_id` for now, we'll be replace at
                     # the beginning of the process
                     self.process_dataset(urljoin(directory, href))
-                    if self.is_done():
+                    if self.has_reached_max_items():
                         return
                 else:
-                    log.debug('Skip %s', href)
+                    log.debug("Skip %s", href)
 
     def inner_process_dataset(self, item: HarvestItem):
         response = self.get(item.remote_id)
         xml = self.parse_xml(response.content)
-        metadata = xml['metadata']
+        metadata = xml["metadata"]
 
         # Replace the `remote_id` from the URL to `id`.
-        item.remote_id = metadata['id']
+        item.remote_id = metadata["id"]
         dataset = self.get_dataset(item.remote_id)
 
-        dataset.title = metadata['title']
-        dataset.frequency = FREQUENCIES.get(metadata['frequency'], 'unknown')
-        dataset.description = metadata['notes']
-        dataset.private = metadata['private']
-        dataset.tags = sorted(set(metadata['tags']))
+        dataset.title = metadata["title"]
+        dataset.frequency = FREQUENCIES.get(metadata["frequency"], "unknown")
+        dataset.description = metadata["notes"]
+        dataset.private = metadata["private"]
+        dataset.tags = sorted(set(metadata["tags"]))
 
-        if metadata.get('license_id'):
-            dataset.license = License.objects.get(id=metadata['license_id'])
+        if metadata.get("license_id"):
+            dataset.license = License.objects.get(id=metadata["license_id"])
 
-        if (metadata.get('temporal_coverage_from') and
-                metadata.get('temporal_coverage_to')):
+        if metadata.get("temporal_coverage_from") and metadata.get(
+            "temporal_coverage_to"
+        ):
             dataset.temporal_coverage = db.DateRange(
-                start=metadata['temporal_coverage_from'],
-                end=metadata['temporal_coverage_to']
+                start=metadata["temporal_coverage_from"],
+                end=metadata["temporal_coverage_to"],
             )
 
-        if (metadata.get('territorial_coverage_code') or
-                metadata.get('territorial_coverage_granularity')):
+        if metadata.get("territorial_coverage_code") or metadata.get(
+            "territorial_coverage_granularity"
+        ):
             dataset.spatial = SpatialCoverage()
 
-            if metadata.get('territorial_coverage_granularity'):
+            if metadata.get("territorial_coverage_granularity"):
                 dataset.spatial.granularity = GRANULARITIES.get(
-                    metadata['territorial_coverage_granularity'])
+                    metadata["territorial_coverage_granularity"]
+                )
 
-            if metadata.get('territorial_coverage_code'):
-                dataset.spatial.zones = [
-                    ZONES[metadata['territorial_coverage_code']]]
+            if metadata.get("territorial_coverage_code"):
+                dataset.spatial.zones = [ZONES[metadata["territorial_coverage_code"]]]
 
         dataset.resources = []
-        cle = get_by(metadata['resources'], 'format', 'cle')
-        for row in metadata['resources']:
-            if row['format'] == 'cle':
+        cle = get_by(metadata["resources"], "format", "cle")
+        for row in metadata["resources"]:
+            if row["format"] == "cle":
                 continue
             else:
                 resource = Resource(
-                    title=row['name'],
-                    description=(
-                        row['description'] + '\n\n' + SSL_COMMENT).strip(),
-                    filetype='remote',
-                    url=row['url'],
-                    format=row['format']
+                    title=row["name"],
+                    description=(row["description"] + "\n\n" + SSL_COMMENT).strip(),
+                    filetype="remote",
+                    url=row["url"],
+                    format=row["format"],
                 )
-                if resource.format == 'csv' and cle:
+                if resource.format == "csv" and cle:
                     resource.checksum = Checksum(
-                        type='sha256', value=self.get(cle['url']).text)
-                if row.get('last_modified'):
-                    resource.last_modified_internal = row['last_modified']
+                        type="sha256", value=self.get(cle["url"]).text
+                    )
+                if row.get("last_modified"):
+                    resource.last_modified_internal = row["last_modified"]
                 dataset.resources.append(resource)
 
-        if metadata.get('author'):
-            dataset.extras['author'] = metadata['author']
-        if metadata.get('author_email'):
-            dataset.extras['author_email'] = metadata['author_email']
-        if metadata.get('maintainer'):
-            dataset.extras['maintainer'] = metadata['maintainer']
-        if metadata.get('maintainer_email'):
-            dataset.extras['maintainer_email'] = metadata['maintainer_email']
-        for extra in metadata['extras']:
-            dataset.extras[extra['key']] = extra['value']
+        if metadata.get("author"):
+            dataset.extras["author"] = metadata["author"]
+        if metadata.get("author_email"):
+            dataset.extras["author_email"] = metadata["author_email"]
+        if metadata.get("maintainer"):
+            dataset.extras["maintainer"] = metadata["maintainer"]
+        if metadata.get("maintainer_email"):
+            dataset.extras["maintainer_email"] = metadata["maintainer_email"]
+        for extra in metadata["extras"]:
+            dataset.extras[extra["key"]] = extra["value"]
 
         return dataset
 
@@ -222,7 +236,7 @@ class MaafBackend(BaseBackend):
 
     @property
     def xsd(self):
-        if not getattr(self, '_xsd', None):
+        if not getattr(self, "_xsd", None):
             with open(XSD_PATH) as f:
                 doc = etree.parse(f)
             self._xsd = etree.XMLSchema(doc)
