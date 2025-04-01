@@ -41,9 +41,9 @@
                             <button
                                 class="fr-btn fr-btn--secondary fr-btn--secondary-warning-425 fr-btn--icon-left fr-icon-delete-line"
                                 role="button"
-                                @click="removeUserWithoutMail"
+                                @click="removeUserAsSpam"
                               >
-                                  {{ t("Delete without sending mail") }}
+                                  {{ t("Delete as spam (no mail sent and discussions are deleted)") }}
                               </button>
                               <button
                                 class="fr-btn bg-warning-425 fr-btn--icon-left fr-icon-delete-line"
@@ -67,7 +67,7 @@ import { read_only_enabled } from "../../../config";
 import { useI18n } from "vue-i18n";
 import { getRandomId } from "@datagouv/components/ts";
 import { useToast } from "../../../composables/useToast";
-import { deleteUser, deleteUserWithoutSendingMail } from "../../../api/users"
+import { deleteUser, deleteUserAsSpam } from "../../../api/users"
 
 const props = defineProps<{
   id: string,
@@ -89,8 +89,8 @@ function removeUser() {
   .catch(() => toast.error(t("An error occured during the deletion.")));
 };
 
-function removeUserWithoutMail() {
-  return deleteUserWithoutSendingMail(props.id)
+function removeUserAsSpam() {
+  return deleteUserAsSpam(props.id)
   .then(() => window.location.reload())
   .catch(() => toast.error(t("An error occured during the deletion.")));
 };

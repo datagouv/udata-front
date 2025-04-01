@@ -27,6 +27,7 @@ async function getConfig(): Promise<UserConfig> {
           { src: `udata_front/theme/${theme}/assets/img`, dest: `udata_front/theme/${theme}/static/` },
           { src: "node_modules/leaflet/dist/leaflet.js", dest: `udata_front/theme/${theme}/static/js/` },
           { src: "node_modules/leaflet/dist/leaflet.css", dest: `udata_front/theme/${theme}/static/js/` },
+          { src: "node_modules/captchetat-js/dist/captchetat-js.js", dest: `udata_front/theme/${theme}/static/js/` },
           {
             src: "node_modules/es-module-shims/dist/es-module-shims.js",
             dest: `udata_front/theme/${theme}/static/js/`,

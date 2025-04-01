@@ -29,7 +29,7 @@
                                 _("Javascript is required to sign up.")
                             )}}
                             </noscript>
-                            {{ forms.render_fields(register_user_form, exclude=[register_user_form.submit, register_user_form.captcha_code, register_user_form.captcha_id]) }}
+                            {{ forms.render_fields(register_user_form, exclude=[register_user_form.submit, register_user_form.captcha_code, register_user_form.captchetat_uuid]) }}
                         {% else %}
                             {{ forms.render_fields(register_user_form, exclude=[register_user_form.submit]) }}
                         {% endif %}
@@ -42,8 +42,11 @@
                             </label>
                         </div>
                         {% if config.CAPTCHETAT_BASE_URL %}
-                            <div class="vuejs">
-                                <captcha captcha-style-name="captchaFR"></captcha>
+                            <div>
+                                <div id="captchetat"
+                                    captchaStyleName="{{ config.CAPTCHETAT_STYLE_NAME }}"
+                                    urlBackend="{{ url_for('apiv2.captchetat') }}">
+                                </div>
                                 <label class="fr-label fr-mt-1w">
                                     {{ _("Retype the characters from the picture") }} <span class='required-field-star'>*</span>
                                 </label>
@@ -57,7 +60,6 @@
                             <button
                                 type="submit"
                                 class="fr-btn"
-                                {% if config.CAPTCHETAT_BASE_URL %}disabled="disabled"{% endif %}
                             >
                                 {{ _('Sign up') }}
                             </button>
@@ -83,4 +85,10 @@
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+{% if config.CAPTCHETAT_BASE_URL %}
+    <script src="{{ theme_static('js/captchetat-js.js') }}"></script>
+{% endif %}
 {% endblock %}

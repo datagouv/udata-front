@@ -638,5 +638,6 @@
   "Search an organization type...": "Rechercher un type d'organisation...",
   "All types": "Tous les types",
   "My Profile": "Mon profil",
-  "dataservices": "API"
+  "dataservices": "API",
+  "Delete as spam (no mail sent and discussions are deleted)": "Supprimer comme spam (pas d'envoi de mail et suppression des discussions)"
 }

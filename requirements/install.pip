@@ -4,25 +4,25 @@
 #
 #    pip-compile --output-file=requirements/install.pip requirements/install.in
 #
-click==8.1.2
+click==8.1.8
     # via
     #   -c requirements/udata.pip
     #   flask
 feedgenerator==2.1.0
     # via -r requirements/install.in
-feedparser==6.0.8
+feedparser==6.0.11
     # via -r requirements/install.in
 flask==2.1.2
     # via
     #   -c requirements/udata.pip
     #   flask-themes2
-flask-themes2==1.0.0
+flask-themes2==1.0.1
     # via -r requirements/install.in
-itsdangerous==2.1.2
+itsdangerous==2.2.0
     # via
     #   -c requirements/udata.pip
     #   flask
-jinja2==3.1.2
+jinja2==3.1.6
     # via
     #   -c requirements/udata.pip
     #   flask
@@ -31,17 +31,17 @@ markupsafe==2.1.2
     #   -c requirements/udata.pip
     #   jinja2
     #   werkzeug
-python-frontmatter==1.0.0
+python-frontmatter==1.1.0
     # via -r requirements/install.in
-pytz==2024.1
+pytz==2025.1
     # via
     #   -c requirements/udata.pip
     #   feedgenerator
-pyyaml==6.0.1
+pyyaml==6.0.2
     # via python-frontmatter
 sgmllib3k==1.0.0
     # via feedparser
-werkzeug==2.2.2
+werkzeug==2.2.3
     # via
     #   -c requirements/udata.pip
     #   flask

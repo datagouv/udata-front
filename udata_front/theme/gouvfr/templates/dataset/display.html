@@ -115,7 +115,13 @@
             </div>
             {% endif %}
             {% if dataset.organization %}
-                <h2 id="producer" class="subtitle fr-mb-1v">{{ _('Producer') }}</h2>
+                <h2 id="producer" class="subtitle fr-mb-1v">
+                    {% if dataset.contact_points|length %}
+                        {{ CONTACT_ROLES.get('publisher') }}
+                    {% else %}
+                        {{ _('Producer') }}
+                    {% endif %}
+                </h2>
                 {% with organization=dataset.organization, producer_type='organization' %}
                 {% include theme('organization/producer-name-with-logo.html') %}
                 {% endwith %}
@@ -131,9 +137,9 @@
                     }}
                 </p>
             {% endif %}
-            {% for contact_point in dataset.contact_points if contact_point.role == "contact" %}
+            {% for contact_point in dataset.contact_points %}
                 {% if loop.first %}
-                    <h2 id="{{ contact_point.role }}" class="subtitle fr-mt-3v fr-mb-1v">{{ CONTACT_ROLES.get(contact_point.role) }}</h2>
+                    <h2 class="subtitle fr-mt-3v fr-mb-1v">{{ _('Attributions')}}</h2>
                 {% endif %}
                 {% include theme('contact_point.html') %}
             {% endfor %}
@@ -682,6 +688,14 @@
         {% if dataset.harvest %}
         {% call(slot) information_accordion(_('Harvest')) %}
             {% if slot == "button" %}
+                {% if sysadmin and dataset.harvest.source_id %}
+                    <a
+                        href="{{ beta_admin_url_for(path='harvesters/{id}/'.format(id=dataset.harvest.source_id), fallback_path='harvester/{id}/'.format(id=dataset.harvest.source_id)) }}"
+                        class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-grey-500 fr-btn--icon-left fr-icon-settings-5-line"
+                    >
+                        {{ _('See harvest source') }}
+                    </a>
+                {% endif %}
                 <button
                     data-accordion-button
                     role="button"

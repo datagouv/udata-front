@@ -40,17 +40,10 @@
 {{ report_btn(dataservice) }}
 {% if can_edit %}
 <div class="fr-col-auto fr-ml-3v">
-    {% if dataservice.organization %}
+    {% if config.NEW_ADMIN_URL %}
     <a
         class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-btn--icon-left"
-        href="{{ url_for('beta.beta-admin-org-dataservice', organization_id=dataservice.organization.id, dataservice_id=dataservice.id) }}"
-    >
-        {{ _('Edit') }}
-    </a>
-    {% else %}
-    <a
-        class="fr-btn fr-btn--sm fr-btn--secondary fr-btn--secondary-warning-425 fr-icon-pencil-line fr-btn--icon-left"
-        href="{{ url_for('beta.beta-admin-me-dataservice', dataservice_id=dataservice.id) }}"
+        href="{{ beta_admin_url_for(path='dataservices/{id}/'.format(id=dataservice.id), fallback_path='dataservice/{id}/'.format(id=dataservice.id)) }}"
     >
         {{ _('Edit') }}
     </a>
@@ -145,9 +138,13 @@
             </p>
             <h2 class="subtitle fr-mt-3v fr-mb-1v">{{ _('Access') }}</h2>
             <div class="fr-text--sm fr-mt-0 fr-mb-3v">
-                {% if dataservice.is_restricted %}
+                {% if dataservice.access_type == "restricted" %}
                     <p class="fr-badge fr-badge--warning fr-badge--no-icon">
                         {{ _('Restricted') }}
+                    </p>
+                {% elif dataservice.access_type == "open_with_account" %}
+                    <p class="fr-badge fr-badge--success fr-badge--no-icon">
+                        {{ _('Opened with an account') }}
                     </p>
                 {% else %}
                     <p class="fr-badge fr-badge--success fr-badge--no-icon">

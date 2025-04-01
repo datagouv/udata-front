@@ -18,13 +18,11 @@ import RequestMembership from "./components/organization/request-membership.vue"
 import ResourceFromHash from "./components/dataset/resource/resourceFromHash.vue";
 import ReuseCard from "./components/Reuse/Reuse.vue";
 import Resources from "./components/dataset/resource/resources.vue";
-import Captcha from "./components/utils/captcha.vue";
 import UserDatasetList from "./components/UserDatasetList/UserDatasetList.vue";
 import UserReuseList from "./components/UserReuseList/UserReuseList.vue";
 import PublishingForm from "./pages/PublishingForm/PublishingForm.vue";
 import ReusePublishingForm from "./pages/ReusePublishingForm/ReusePublishingForm.vue";
 import OrganizationPublishingForm from "./pages/OrganizationPublishingForm/OrganizationPublishingForm.vue";
-import DataservicePublishingForm from "./pages/DataservicePublishingForm/DataservicePublishingForm.vue";
 import DataserviceLinks from '../../datagouv-components/src/components/DataserviceLinks/DataserviceLinks.vue';
 
 import "./components/vanilla/tabs.js";
@@ -68,7 +66,6 @@ const configAndMountApp = (el: HTMLElement) => {
   app.use(Auth);
   app.use(i18n);
 
-  app.component("captcha", Captcha);
   app.component("chart", Chart);
   app.component("dataset-resources", Resources);
   app.component("dataset-resource-from-hash", ResourceFromHash);
@@ -95,7 +92,6 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("toggletip", Toggletip);
   app.component("user-dataset-list", UserDatasetList);
   app.component("user-reuse-list", UserReuseList);
-  app.component("dataservice-publishing-form", DataservicePublishingForm);
 
   // @ts-ignore disable delimiters used in html templates see [#386](https://github.com/etalab/udata-front/pull/386) for more details
   app.config.compilerOptions.delimiters = ["", ""];
