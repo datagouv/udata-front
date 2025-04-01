@@ -88,5 +88,7 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{{ theme_static('js/captchetat-js.js') }}"></script>
+{% if config.CAPTCHETAT_BASE_URL %}
+    <script src="{{ theme_static('js/captchetat-js.js') }}"></script>
+{% endif %}
 {% endblock %}
