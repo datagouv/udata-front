@@ -8,7 +8,7 @@
   - upgrade python-frontmatter to 1.1.0
   - flask-themes2 to 1.0.1
   - modify code following mistune upgrade in udata
-- Migrate to CaptchEtat v2 [#679](https://github.com/datagouv/udata-front/pull/679)
+- Migrate to CaptchEtat v2 [#679](https://github.com/datagouv/udata-front/pull/679) [#680](https://github.com/datagouv/udata-front/pull/680)
 
 ## 6.1.6 (2025-03-24)
 
