@@ -339,7 +339,7 @@ tzdata==2025.1
     #   faker
     #   kombu
     #   udata
-udata @ git+https://github.com/maudetes/udata.git@feat/update-deps
+udata @ git+https://github.com/opendatateam/udata.git
     # via -r requirements/udata.in
 unidecode==0.4.21
     # via
