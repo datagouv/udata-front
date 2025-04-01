@@ -4,6 +4,7 @@
 
 - Use beta admin as default [#621](https://github.com/datagouv/udata-front/pull/621)
 - Add support for multiple contact points [#528](https://github.com/datagouv/udata-front/pull/528)
+- [maaf backend] Rename is_done() function [#681](https://github.com/datagouv/udata-front/pull/681)
 
 ## 6.1.1 (2025-01-31)
 
