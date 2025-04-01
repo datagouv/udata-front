@@ -2,6 +2,12 @@
 
 ## Current (in progress)
 
+- Update dependencies [#676](https://github.com/datagouv/udata-front/pull/676)
+  - propagate [udata dependencie upgrade](https://github.com/opendatateam/udata/pull/3278)
+  - upgrade feedparser to 6.0.11
+  - upgrade python-frontmatter to 1.1.0
+  - flask-themes2 to 1.0.1
+  - modify code following mistune upgrade in udata
 - Migrate to CaptchEtat v2 [#679](https://github.com/datagouv/udata-front/pull/679)
 
 ## 6.1.6 (2025-03-24)

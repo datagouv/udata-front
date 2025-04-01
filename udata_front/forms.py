@@ -22,7 +22,7 @@ class ExtendedRegisterForm(RegisterForm):
         _('captchetat_uuid'), name='captchetat-uuid', validators=[]
     )
 
-    def validate(self):
+    def validate(self, **kwargs):
         if current_app.config.get('READ_ONLY_MODE'):
             return False
 
@@ -30,7 +30,7 @@ class ExtendedRegisterForm(RegisterForm):
             self.captcha_code.errors = [_('Invalid Captcha')]
             return False
 
-        return super().validate()
+        return super().validate(**kwargs)
 
 
 class ExtendedForgotPasswordForm(ForgotPasswordForm):
@@ -40,12 +40,12 @@ class ExtendedForgotPasswordForm(ForgotPasswordForm):
         _('captchetat_uuid'), name='captchetat-uuid', validators=[]
     )
 
-    def validate(self):
+    def validate(self, **kwargs):
         if not check_captchetat(self.captchetat_uuid.data, self.captcha_code.data):
             self.captcha_code.errors = [_('Invalid Captcha')]
             return False
 
-        return super().validate()
+        return super().validate(**kwargs)
 
 
 def check_captchetat(id: str, code: str) -> bool:

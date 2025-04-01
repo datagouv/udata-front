@@ -75,7 +75,7 @@ class StaticPagesTest:
     def test_page_md(self, client, rmock):
         raw_url, _ = get_pages_gh_urls('test')
         rmock.head(f'{raw_url}.md', status_code=200)
-        rmock.get(f'{raw_url}.md', text="""#test""")
+        rmock.get(f'{raw_url}.md', text="""# test""")
         response = client.get(url_for('gouvfr.show_page', slug='test/'))
         assert response.status_code == 200
         assert b'<h1>test</h1>' in response.data
@@ -121,7 +121,7 @@ reuses:
     def test_page_subdir(self, client, rmock):
         raw_url, _ = get_pages_gh_urls('subdir/test')
         rmock.head(f'{raw_url}.md', status_code=200)
-        rmock.get(f'{raw_url}.md', text="""#test""")
+        rmock.get(f'{raw_url}.md', text="""# test""")
         response = client.get(url_for('gouvfr.show_page', slug='subdir/test/'))
         assert response.status_code == 200
         assert b'<h1>test</h1>' in response.data

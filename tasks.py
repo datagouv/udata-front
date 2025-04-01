@@ -125,6 +125,21 @@ def set_po_metadata(filename, locale):
 
 
 @task
+def update(ctx):
+    """Perform a development update"""
+    msg = "Update all dependencies"
+    header(msg)
+    info("Updating Python dependencies")
+    with ctx.cd(ROOT):
+        ctx.run("pip install -r requirements/develop.pip")
+        for requirement_file in ["udata", "install", "test", "develop"]:
+            ctx.run(
+                f"pip-compile requirements/{requirement_file}.in --output-file=requirements/{requirement_file}.pip --upgrade"
+            )
+    # TODO: Add javascript dependencies update
+
+
+@task
 def i18n(ctx, update=False):
     '''Extract translatable strings'''
     header(i18n.__doc__)
