@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 6.2.0 (2025-04-02)
 
 - Update dependencies [#676](https://github.com/datagouv/udata-front/pull/676)
   - propagate [udata dependencie upgrade](https://github.com/opendatateam/udata/pull/3278)
