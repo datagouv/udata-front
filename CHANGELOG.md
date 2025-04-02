@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 6.2.0 (2025-04-02)
 
 - Update dependencies [#676](https://github.com/datagouv/udata-front/pull/676)
