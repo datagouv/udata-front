@@ -29,7 +29,7 @@ export const EditButtonOnResource: StoryObj<typeof meta> = {
     const canvas = within(canvasElement);
     const a = canvas.getByTestId<HTMLAnchorElement>("edit-button");
     const root = config.admin_root;
-    expect(a.href).toBe(`${window.location.origin}${root}dataset/${args.datasetId}/resource/${args.resourceId}`);
+    expect(a.href).toBe(`${window.location.origin}${root}dataset/${args.datasetId}/resource/${args.resource.id}`);
   },
   render: (args) => ({
     components: { EditButton },
@@ -40,7 +40,7 @@ export const EditButtonOnResource: StoryObj<typeof meta> = {
   }),
   args: {
     datasetId: "someId",
-    resourceId: "someResourceId",
+    resource: {id: "someResourceId"},
   }
 };
 
@@ -49,7 +49,7 @@ export const EditButtonOnCommunityResource: StoryObj<typeof meta> = {
     const canvas = within(canvasElement);
     const a = canvas.getByTestId<HTMLAnchorElement>("edit-button");
     const root = config.admin_root;
-    expect(a.href).toBe(`${window.location.origin}${root}dataset/${args.datasetId}/community-resource/${args.resourceId}`);
+    expect(a.href).toBe(`${window.location.origin}${root}dataset/${args.datasetId}/community-resource/${args.resource.id}`);
   },
   render: (args) => ({
     components: { EditButton },
@@ -60,7 +60,7 @@ export const EditButtonOnCommunityResource: StoryObj<typeof meta> = {
   }),
   args: {
     datasetId: "someId",
-    resourceId: "someResourceId",
+    resource: {id: "someResourceId", owner: { id: "ownerId"}},
     isCommunityResource: true,
   }
 };
