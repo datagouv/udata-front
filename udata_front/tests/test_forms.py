@@ -59,9 +59,10 @@ class ExtendedRegisterFormTest(GouvfrFrontTestCase):
             'last_name': 'last',
             'password': 'passpass12A',
             'password_confirm': 'passpass12A',
-            'captcha_id': '1230',
             'captcha_code': 'azerty'
         })
+        # Set captchetat_uuid data post initialization since its name is actually "captchetat-uuid"
+        form.captchetat_uuid.data = "1230"
         result = form.validate()
         assert result is False
         assert 'captcha_code' in form.errors
@@ -79,8 +80,10 @@ class ExtendedRegisterFormTest(GouvfrFrontTestCase):
             'last_name': 'last',
             'password': 'passpass12A',
             'password_confirm': 'passpass12A',
-            'captcha_id': '1230',
+            'captchetat_uuid': '1230',
             'captcha_code': 'azerty'
         })
+        # Set captchetat_uuid data post initialization since its name is actually "captchetat-uuid"
+        form.captchetat_uuid.data = "1230"
         result = form.validate()
         assert result is True

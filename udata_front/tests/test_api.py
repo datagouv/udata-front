@@ -13,7 +13,7 @@ class ApiTest(WebTestMixin):
     settings = GouvFrSettings
     modules: List[str] = []
     styles = ["captchaFR", "captchaEN"]
-    captcha_id = "0d9285701cae44279ea2c8893ddd4eaf"
+    captchetat_uuid = "0d9285701cae44279ea2c8893ddd4eaf"
     url = "https://example.com/captchetat"
     oauth_url = "https://example.com/oauth"
 
@@ -49,7 +49,7 @@ class ApiTest(WebTestMixin):
         rmock.post(self.oauth_token_url(), json={"access_token": "some_token", "expires_in": 3600})
         rmock.get(
             self.captchetat_url() + "?get=html&c=" + style,
-            text=f"some HTML with {style} and {self.captcha_id}",
+            text=f"some HTML with {style} and {self.captchetat_uuid}",
             headers={"Content-Type": "text/html;charset=utf-8"}
         )
         response = self.get(url_for('apiv2.captchetat', get='html', c=style))
@@ -57,7 +57,7 @@ class ApiTest(WebTestMixin):
         assert response.content_type == "text/html;charset=utf-8"
         snippet = response.data.decode('utf8')
         assert style in snippet
-        assert self.captcha_id in snippet
+        assert self.captchetat_uuid in snippet
 
     @pytest.mark.options(CAPTCHETAT_OAUTH_BASE_URL=oauth_url)
     @pytest.mark.options(CAPTCHETAT_BASE_URL=url)
@@ -66,10 +66,12 @@ class ApiTest(WebTestMixin):
         '''It should return image from the service.'''
         rmock.post(self.oauth_token_url(), json={"access_token": "some_token", "expires_in": 3600})
         content = bytes("some string", 'UTF-8')
-        rmock.get(f"{self.captchetat_url()}?get=image&c={style}&t={self.captcha_id}",
+        rmock.get(f"{self.captchetat_url()}?get=image&c={style}&t={self.captchetat_uuid}",
                   content=content,
                   headers={"Content-Type": "image/png"})
-        response = self.get(url_for('apiv2.captchetat', get='image', c=style, t=self.captcha_id))
+        response = self.get(
+            url_for('apiv2.captchetat', get='image', c=style, t=self.captchetat_uuid)
+        )
         self.assert200(response)
         assert response.content_type == "image/png"
         assert content in bytes(response.data)
@@ -81,11 +83,11 @@ class ApiTest(WebTestMixin):
         '''It should return sound from the service.'''
         rmock.post(self.oauth_token_url(), json={"access_token": "some_token", "expires_in": 3600})
         content = bytes(10)
-        rmock.get(f"{self.captchetat_url()}?get=sound&c={style}&t={self.captcha_id}",
+        rmock.get(f"{self.captchetat_url()}?get=sound&c={style}&t={self.captchetat_uuid}",
                   content=content,
                   headers={"Content-Type": "audio/x-wav"})
         response = self.get(
-            url_for('apiv2.captchetat', get='sound', c=style, t=self.captcha_id),
+            url_for('apiv2.captchetat', get='sound', c=style, t=self.captchetat_uuid),
             content_type="audio/*"
         )
         self.assert200(response)
@@ -98,10 +100,10 @@ class ApiTest(WebTestMixin):
         '''It should return json additional data from the service.'''
         rmock.post(self.oauth_token_url(), json={"access_token": "some_token", "expires_in": 3600})
         json = {"hs": "some_id", "sp": "another_id"}
-        rmock.get(f"{self.captchetat_url()}?get=p&c={style}&t={self.captcha_id}",
+        rmock.get(f"{self.captchetat_url()}?get=p&c={style}&t={self.captchetat_uuid}",
                   json=json,
                   headers={"Content-Type": "application/json"})
-        response = self.get(url_for('apiv2.captchetat', get='p', c=style, t=self.captcha_id))
+        response = self.get(url_for('apiv2.captchetat', get='p', c=style, t=self.captchetat_uuid))
         self.assert200(response)
         assert response.content_type == "application/json"
         snippet = response.json
@@ -115,10 +117,10 @@ class ApiTest(WebTestMixin):
         rmock.post(self.oauth_token_url(), json={"access_token": "some_token", "expires_in": 3600})
         rmock.get(
             self.captchetat_url() + "?get=script-include&c=" + style,
-            text=f"some script with {style} and {self.captcha_id}"
+            text=f"some script with {style} and {self.captchetat_uuid}"
         )
         response = self.get(url_for('apiv2.captchetat', get='script-include', c=style))
         self.assert200(response)
         snippet = response.data.decode('utf8')
         assert style in snippet
-        assert self.captcha_id in snippet
+        assert self.captchetat_uuid in snippet

@@ -18,30 +18,34 @@ class ExtendedRegisterForm(RegisterForm):
 
     captcha_code = fields.StringField(_('captcha_input'), [])
 
-    captcha_id = fields.StringField(_('captcha_id'), [])
+    captchetat_uuid = fields.StringField(
+        _('captchetat_uuid'), name='captchetat-uuid', validators=[]
+    )
 
-    def validate(self):
+    def validate(self, **kwargs):
         if current_app.config.get('READ_ONLY_MODE'):
             return False
 
-        if not check_captchetat(self.captcha_id.data, self.captcha_code.data):
+        if not check_captchetat(self.captchetat_uuid.data, self.captcha_code.data):
             self.captcha_code.errors = [_('Invalid Captcha')]
             return False
 
-        return super().validate()
+        return super().validate(**kwargs)
 
 
 class ExtendedForgotPasswordForm(ForgotPasswordForm):
     captcha_code = fields.StringField(_('captcha_input'), [])
 
-    captcha_id = fields.StringField(_('captcha_id'), [])
+    captchetat_uuid = fields.StringField(
+        _('captchetat_uuid'), name='captchetat-uuid', validators=[]
+    )
 
-    def validate(self):
-        if not check_captchetat(self.captcha_id.data, self.captcha_code.data):
+    def validate(self, **kwargs):
+        if not check_captchetat(self.captchetat_uuid.data, self.captcha_code.data):
             self.captcha_code.errors = [_('Invalid Captcha')]
             return False
 
-        return super().validate()
+        return super().validate(**kwargs)
 
 
 def check_captchetat(id: str, code: str) -> bool:
@@ -55,7 +59,7 @@ def check_captchetat(id: str, code: str) -> bool:
     headers = {'Authorization': 'Bearer ' + bearer_token()}
     try:
         resp = requests.post(f'{captchetat_url}/valider-captcha', headers=headers, json={
-            'id': id,
+            'uuid': id,
             'code': code,
         })
         return resp.text == 'true'
