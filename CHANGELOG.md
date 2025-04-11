@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 6.2.1 (2025-04-11)
 
 - Use SUPPORT_URL config everywhere and modify contact us wording [#683](https://github.com/datagouv/udata-front/pull/683)
 - [maaf backend] Rename is_done() function [#681](https://github.com/datagouv/udata-front/pull/681)
