@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Use SUPPORT_URL config everywhere and modify contact us wording [#683](https://github.com/datagouv/udata-front/pull/683)
+- [maaf backend] Rename is_done() function [#681](https://github.com/datagouv/udata-front/pull/681)
 
 ## 6.2.0 (2025-04-02)
 
@@ -13,7 +14,6 @@
   - flask-themes2 to 1.0.1
   - modify code following mistune upgrade in udata
 - Migrate to CaptchEtat v2 [#679](https://github.com/datagouv/udata-front/pull/679) [#680](https://github.com/datagouv/udata-front/pull/680)
-- [maaf backend] Rename is_done() function [#681](https://github.com/datagouv/udata-front/pull/681)
 
 ## 6.1.6 (2025-03-24)
 
