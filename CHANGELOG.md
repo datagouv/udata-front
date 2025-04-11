@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Use SUPPORT_URL config everywhere and modify contact us wording [#683](https://github.com/datagouv/udata-front/pull/683)
 
 ## 6.2.0 (2025-04-02)
 
