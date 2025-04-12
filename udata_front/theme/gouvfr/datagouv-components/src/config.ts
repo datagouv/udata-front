@@ -2,6 +2,8 @@ import { reactive, readonly, ref } from "vue";
 
 const admin_root = ref<string>(import.meta.env.VITE_ADMIN_ROOT);
 
+const new_admin = ref<string>(import.meta.env.VITE_NEW_ADMIN);
+
 const api_root = ref<string>(import.meta.env.VITE_API_URL);
 
 const api_2_root = ref<string>(import.meta.env.VITE_API_2_URL);
@@ -34,6 +36,7 @@ const tabular_api_dataservice_id = ref<string | null>(import.meta.env.VITE_TABUL
 
 const localConfig = reactive({
   admin_root,
+  new_admin,
   api_root,
   api_2_root,
   default_lang,

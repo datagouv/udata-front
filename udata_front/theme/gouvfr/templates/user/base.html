@@ -31,7 +31,7 @@
 {% if can_edit %}
     {% if current_user != user %}
     <a
-        href="{{ url_for('admin.index', path='user/{id}/'.format(id=user.id)) }}"
+        href="{{ beta_admin_url_for(path='users/{id}/profile'.format(id=user.id), fallback_path='user/{id}/'.format(id=user.id)) }}"
         class="fr-mx-2w fr-btn fr-btn--sm fr-btn--secondary fr-icon-pencil-line fr-btn--icon-left"
     >
         {{ _("User's admin profile") }}

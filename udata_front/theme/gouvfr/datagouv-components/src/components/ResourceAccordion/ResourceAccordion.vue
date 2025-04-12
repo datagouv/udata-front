@@ -99,7 +99,7 @@
         <p class="fr-col-auto fr-ml-3v fr-m-0 z-2" v-if="canEdit">
           <EditButton
             :dataset-id="datasetId"
-            :resource-id="resource.id"
+            :resource="resource"
             :is-community-resource="isCommunityResource"
           />
         </p>
