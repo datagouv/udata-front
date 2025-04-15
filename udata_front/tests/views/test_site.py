@@ -89,6 +89,7 @@ class SiteViewsTest(GouvfrFrontTestCase):
         self.app.config['EXPORT_CSV_MODELS'] = []
         datasets = [DatasetFactory(resources=[ResourceFactory()])
                     for _ in range(5)]
+        archived_datasets = [DatasetFactory(archived=datetime.utcnow()) for _ in range(3)]
         hidden_dataset = DatasetFactory(private=True)
 
         response = self.get(url_for('site.datasets_csv'))
@@ -112,7 +113,7 @@ class SiteViewsTest(GouvfrFrontTestCase):
         rows = list(reader)
         ids = [row[0] for row in rows]
 
-        self.assertEqual(len(rows), len(datasets))
+        self.assertEqual(len(rows), len(datasets) + len(archived_datasets))
         for dataset in datasets:
             self.assertIn(str(dataset.id), ids)
         self.assertNotIn(str(hidden_dataset.id), ids)
@@ -316,7 +317,8 @@ class SiteViewsTest(GouvfrFrontTestCase):
         self.app.config['EXPORT_CSV_MODELS'] = []
         reuses = [ReuseFactory(datasets=[DatasetFactory()])
                   for _ in range(5)]
-        hidden_reuse = ReuseFactory()
+        archived_reuses = [ReuseFactory(archived=datetime.utcnow()) for _ in range(3)]
+        hidden_reuse = ReuseFactory(private=True)
 
         response = self.get(url_for('site.reuses_csv'))
 
@@ -339,7 +341,7 @@ class SiteViewsTest(GouvfrFrontTestCase):
         rows = list(reader)
         ids = [row[0] for row in rows]
 
-        self.assertEqual(len(rows), len(reuses))
+        self.assertEqual(len(rows), len(reuses) + len(archived_reuses))
         for reuse in reuses:
             self.assertIn(str(reuse.id), ids)
         self.assertNotIn(str(hidden_reuse.id), ids)
@@ -365,7 +367,7 @@ class SiteViewsTest(GouvfrFrontTestCase):
             for _ in range(6)]
         reuses = [ReuseFactory(datasets=[DatasetFactory()])
                   for _ in range(3)]
-        hidden_reuse = ReuseFactory()
+        hidden_reuse = ReuseFactory(private=True)
 
         response = self.get(
             url_for('site.reuses_csv', tag='selected', page_size=3))
@@ -402,6 +404,8 @@ class SiteViewsTest(GouvfrFrontTestCase):
         self.app.config['EXPORT_CSV_MODELS'] = []
         dataservices = [DataserviceFactory(datasets=[DatasetFactory()])
                         for _ in range(5)]
+        archived_dataservices = [DataserviceFactory(archived_at=datetime.utcnow()) for _ in range(3)]
+        hidden_dataservice = DataserviceFactory(private=True)
 
         response = self.get(url_for('site.dataservices_csv'))
 
@@ -424,9 +428,10 @@ class SiteViewsTest(GouvfrFrontTestCase):
         rows = list(reader)
         ids = [row[0] for row in rows]
 
-        self.assertEqual(len(rows), len(dataservices))
+        self.assertEqual(len(rows), len(dataservices) + len(archived_dataservices))
         for dataservice in dataservices:
             self.assertIn(str(dataservice.id), ids)
+        self.assertNotIn(str(hidden_dataservice.id), ids)
 
     @pytest.mark.usefixtures('instance_path')
     def test_dataservices_csv_w_export_csv_feature(self):
