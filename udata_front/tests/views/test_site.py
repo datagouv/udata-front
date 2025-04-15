@@ -404,7 +404,8 @@ class SiteViewsTest(GouvfrFrontTestCase):
         self.app.config['EXPORT_CSV_MODELS'] = []
         dataservices = [DataserviceFactory(datasets=[DatasetFactory()])
                         for _ in range(5)]
-        archived_dataservices = [DataserviceFactory(archived_at=datetime.utcnow()) for _ in range(3)]
+        archived_dataservices = [DataserviceFactory(archived_at=datetime.utcnow())
+                                 for _ in range(3)]
         hidden_dataservice = DataserviceFactory(private=True)
 
         response = self.get(url_for('site.dataservices_csv'))
