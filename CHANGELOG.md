@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Use csv queryset instead of .visible for csv routes [#685](https://github.com/datagouv/udata-front/pull/685)
 
 ## 6.2.1 (2025-04-11)
 
