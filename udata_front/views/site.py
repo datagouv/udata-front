@@ -13,6 +13,7 @@ from udata.core.dataset.api import DatasetApiParser
 from udata.core.dataset.csv import ResourcesCsvAdapter
 from udata.core.dataset.models import Dataset
 from udata.core.dataset.search import DatasetSearch
+from udata.core.dataset.tasks import get_queryset as get_csv_queryset
 from udata.core.organization.api import OrgApiParser
 from udata.core.organization.csv import OrganizationCsvAdapter
 from udata.core.organization.models import Organization
@@ -132,7 +133,7 @@ def datasets_csv():
     search_parser = DatasetSearch.as_request_parser(store_missing=False)
     params = search_parser.parse_args()
     params['facets'] = False
-    datasets = DatasetApiParser.parse_filters(Dataset.objects.visible(), params)
+    datasets = DatasetApiParser.parse_filters(get_csv_queryset(Dataset), params)
     adapter = csv.get_adapter(Dataset)
     return csv.stream(adapter(datasets), 'datasets')
 
@@ -146,7 +147,7 @@ def resources_csv():
     search_parser = DatasetSearch.as_request_parser(store_missing=False)
     params = search_parser.parse_args()
     params['facets'] = False
-    datasets = DatasetApiParser.parse_filters(Dataset.objects.visible(), params)
+    datasets = DatasetApiParser.parse_filters(get_csv_queryset(Dataset), params)
     return csv.stream(ResourcesCsvAdapter(datasets), 'resources')
 
 
@@ -158,7 +159,7 @@ def organizations_csv():
     if not params and 'organization' in exported_models:
         return redirect(get_export_url('organization'))
     params['facets'] = False
-    organizations = OrgApiParser.parse_filters(Organization.objects.visible(), params)
+    organizations = OrgApiParser.parse_filters(get_csv_queryset(Organization), params)
     return csv.stream(OrganizationCsvAdapter(organizations), 'organizations')
 
 
@@ -170,7 +171,7 @@ def reuses_csv():
     if not params and 'reuse' in exported_models:
         return redirect(get_export_url('reuse'))
     params['facets'] = False
-    reuses = ReuseApiParser.parse_filters(Reuse.objects.visible(), params)
+    reuses = ReuseApiParser.parse_filters(get_csv_queryset(Reuse), params)
     return csv.stream(ReuseCsvAdapter(reuses), 'reuses')
 
 
@@ -182,7 +183,7 @@ def dataservices_csv():
     if not params and 'dataservice' in exported_models:
         return redirect(get_export_url('dataservice'))
     params['facets'] = False
-    dataservices = Dataservice.apply_sort_filters(Dataservice.objects.visible())
+    dataservices = Dataservice.apply_sort_filters(get_csv_queryset(Dataservice))
     return csv.stream(DataserviceCsvAdapter(dataservices), 'dataservices')
 
 
@@ -192,9 +193,7 @@ def harvests_csv():
     exported_models = current_app.config.get('EXPORT_CSV_MODELS', [])
     if 'harvest' in exported_models:
         return redirect(get_export_url('harvest'))
-    adapter = HarvestSourceCsvAdapter(
-        HarvestSource.objects.filter(deleted=None).order_by('created_at')
-    )
+    adapter = HarvestSourceCsvAdapter(get_csv_queryset(HarvestSource).order_by('created_at'))
     return csv.stream(adapter, 'harvest')
 
 
