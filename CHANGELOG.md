@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Use csv queryset instead of .visible for csv routes [#685](https://github.com/datagouv/udata-front/pull/685)
+- Use target blank in resource explore [#689](https://github.com/datagouv/udata-front/pull/689)
 
 ## 6.2.1 (2025-04-11)
 
