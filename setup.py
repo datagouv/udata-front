@@ -50,9 +50,6 @@ setup(
             'front_oembed = udata_front.views.oembed',
             'front_api = udata_front.api',
         ],
-        'udata.harvesters': [
-            'maaf = udata_front.harvesters.maaf:MaafBackend',
-        ],
     },
     license='LGPL',
     zip_safe=False,
