@@ -373,7 +373,8 @@ class DiscussionCsvTest(GouvfrFrontTestCase):
         self.assertEqual(
             response.data.decode('utf8'),
             ('"id";"user";"subject";"subject_class";"subject_id";"title";"size";"participants";'
-             '"messages";"created";"closed";"closed_by";"closed_by_id";"closed_by_organization";"closed_by_organization_id"\r\n')
+             '"messages";"created";"closed";"closed_by";"closed_by_id";"closed_by_organization";'
+             '"closed_by_organization_id"\r\n')
         )
 
     def test_discussions_csv_content_filled(self):
