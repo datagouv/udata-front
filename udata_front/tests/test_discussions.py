@@ -68,7 +68,8 @@ class DiscussionsMailsTest(GouvfrFrontTestCase):
             subject=DatasetFactory(owner=owner),
             user=poster,
             title=faker.sentence(),
-            discussion=[message, second_message, closing_message]
+            discussion=[message, second_message, closing_message],
+            closed_by=owner
         )
 
         with capture_mails() as mails:
