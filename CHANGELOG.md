@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Use csv queryset instead of .visible for csv routes [#685](https://github.com/datagouv/udata-front/pull/685)
+- Remove noindex on list pages [#687](https://github.com/datagouv/udata-front/pull/687)
 - Use target blank in resource explore [#689](https://github.com/datagouv/udata-front/pull/689)
 - Remove MAAF backend (it is now directly inside udata) [#688](https://github.com/datagouv/udata-front/pull/688)
 - Fix discussion tests following new closing behaviour [#690](https://github.com/datagouv/udata-front/pull/690)
