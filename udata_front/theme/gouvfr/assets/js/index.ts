@@ -20,9 +20,6 @@ import ReuseCard from "./components/Reuse/Reuse.vue";
 import Resources from "./components/dataset/resource/resources.vue";
 import UserDatasetList from "./components/UserDatasetList/UserDatasetList.vue";
 import UserReuseList from "./components/UserReuseList/UserReuseList.vue";
-import PublishingForm from "./pages/PublishingForm/PublishingForm.vue";
-import ReusePublishingForm from "./pages/ReusePublishingForm/ReusePublishingForm.vue";
-import OrganizationPublishingForm from "./pages/OrganizationPublishingForm/OrganizationPublishingForm.vue";
 import DataserviceLinks from '../../datagouv-components/src/components/DataserviceLinks/DataserviceLinks.vue';
 
 import "./components/vanilla/tabs.js";
@@ -78,12 +75,9 @@ const configAndMountApp = (el: HTMLElement) => {
   app.component("featured-button", FeaturedButton);
   app.component("follow-button", FollowButton);
   app.component("menu-search", MenuSearch);
-  app.component("organization-publishing-form", OrganizationPublishingForm);
   app.component("owner-type", OwnerType);
   app.component("owner-type-icon", OwnerTypeIcon);
-  app.component("publishing-form", PublishingForm);
   app.component("read-more", ReadMore);
-  app.component("reuse-publishing-form", ReusePublishingForm);
   app.component("report-button", ReportModalButton);
   app.component("request-membership", RequestMembership);
   app.component("reuse-card", ReuseCard);
