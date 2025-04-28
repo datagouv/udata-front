@@ -17,7 +17,7 @@
             <p class="fr-text--sm fr-m-0 f-italic">{{ t("Use our tool to get an overview of data, learn about different columns or perform filters and sorts.") }}</p>
           </div>
           <p class="fr-col-auto fr-my-0">
-            <a :href="resource.preview_url" class="fr-btn fr-btn--icon-right fr-icon-external-link-fill">
+            <a :href="resource.preview_url" class="fr-btn" target="_blank">
               {{ t("Explore data") }}
             </a>
           </p>
