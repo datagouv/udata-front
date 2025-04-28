@@ -346,28 +346,6 @@ jobs:
       - cypress/run-tests:
           cypress-command: npm run ci
 
-  storybook_udata_front:
-    docker:
-      - image: mcr.microsoft.com/playwright:v1.48.2-jammy
-    resource_class: medium+
-    steps:
-      - checkout
-      - run:
-          name: Install NodeJS and dependencies
-          command: npm ci
-      - run:
-          name: Build package
-          command: npm run build
-      - run:
-          name: Build storybook
-          command: npm run build-storybook
-      - run:
-          name: Test storybook
-          command: npm run ci:storybook
-      - run:
-          name: Publish to chromatic
-          command: CHROMATIC_PROJECT_TOKEN=$CHROMATIC_UDATA_FRONT_TOKEN npm run chromatic -- --exit-once-uploaded
-
   lighthouse:
     docker:
       - image: cimg/python:3.11-browsers
@@ -534,9 +512,6 @@ workflows:
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*(\.(a|b|rc)[0-9]*)*/
-      - storybook_udata_front:
-          requires:
-            - assets
       - udata_front_plugins_helper:
           filters:
             tags:
