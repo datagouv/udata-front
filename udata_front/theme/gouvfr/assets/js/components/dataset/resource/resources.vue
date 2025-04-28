@@ -95,7 +95,7 @@ const resourceIdFromHash = computed(() => getResourceIdFromHash(hash.value, prop
 
 const resources = ref<Array<Resource>>([]);
 const pageSize = config.resources_default_page_size;
-const newResourceAdminUrl = new URL(document.location.origin + config.admin_root + "community-resource/new/");
+const newResourceAdminUrl = new URL(config.admin_root + "community-resource/new/");
 const params = new URLSearchParams({dataset_id: props.datasetId});
 newResourceAdminUrl.search = params.toString();
 const newResourceAdminPath = newResourceAdminUrl.toString();
