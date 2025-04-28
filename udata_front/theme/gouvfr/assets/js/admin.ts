@@ -11,15 +11,6 @@ import { admin_root, schema_documentation_url, schema_validata_url, tabular_api_
 import Api from "./plugins/api.ts";
 import Auth from "./plugins/auth.ts";
 import InitSentry from "./sentry.ts";
-import Datasets from "./pages/Admin/Datasets/Datasets.vue";
-import Reuses from "./pages/Admin/Reuses/Reuses.vue";
-import Me from "./pages/Admin/Me/Me.vue";
-import Admin from "./pages/Admin/Admin.vue";
-import Members from "./pages/Admin/Members/Members.vue";
-import Profile from "./pages/Admin/Profile/Profile.vue";
-import Discussions from "./pages/Admin/Discussions/Discussions.vue";
-import Harvesters from "./pages/Admin/Harvesters/Harvesters.vue";
-import CommunityResources from "./pages/Admin/CommunityResources/CommunityResources.vue";
 
 setupComponents({
   admin_root,

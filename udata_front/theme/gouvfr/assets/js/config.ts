@@ -138,21 +138,6 @@ export const demo_server_url = _meta("demo-server-url");
 export const demo_server_name = _meta("demo-server-name");
 
 /**
- * The dataset publishing form
- */
-export const dataset_publishing_form_url = _meta("dataset-publishing-form-url");
-
-/**
- * The dataservice publishing form
- */
-export const dataservice_publishing_form_url = _meta("dataservice-publishing-form-url");
-
-/**
- * The reuse publishing form
- */
-export const reuse_publishing_form_url = _meta("reuse-publishing-form-url");
-
-/**
  * The publishing form feedback URL
  */
 export const publishing_form_feedback_url = _meta("publishing-form-feedback-url");
@@ -332,8 +317,6 @@ export default {
   check_urls,
   csrf_token,
   data_search_feedback_form_url,
-  dataservice_publishing_form_url,
-  dataset_publishing_form_url,
   debug,
   demo_server_url,
   demo_server_name,
@@ -351,7 +334,6 @@ export default {
   read_only_enabled,
   resources_default_page_size,
   resources_min_count_to_show_search,
-  reuse_publishing_form_url,
   schema_documentation_url,
   schema_publishing_url,
   schema_validata_url,
