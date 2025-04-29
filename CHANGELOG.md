@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 6.2.2 (2025-04-29)
 
 - Use csv queryset instead of .visible for csv routes [#685](https://github.com/datagouv/udata-front/pull/685)
 - Remove nofollow on internal pagination links [#686](https://github.com/datagouv/udata-front/pull/686)
