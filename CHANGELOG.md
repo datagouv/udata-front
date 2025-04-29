@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 6.2.2 (2025-04-29)
 
 - Use csv queryset instead of .visible for csv routes [#685](https://github.com/datagouv/udata-front/pull/685)
