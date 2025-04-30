@@ -238,7 +238,7 @@
                     data-results="{{datasets|to_api_format|to_json}}"
                     :sorts="{{sorts|to_json}}"
                     organization="{{org.id}}"
-                    download-link="{{url_for('organizations.datasets_csv', org=org)}}"
+                    download-link="{{url_for('api.organization_datasets_csv', org=org)}}"
                 >
                 </Search>
                 <noscript>
