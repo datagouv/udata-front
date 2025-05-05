@@ -21,7 +21,7 @@
 <meta name="api-root" content="{{ url_for('api.root') }}" />
 <meta name="api-2-root" content="{{ url_for('apiv2.root') }}" />
 <meta name="admin-root" content="{{ beta_admin_url_for(path='/', fallback_path='') }}" />
-<meta name="new-admin" content="{{ config.NEW_ADMIN_URL }}" />
+<meta name="new-admin-url" content="{{ config.NEW_ADMIN_URL }}" />
 <meta name="api-specs" content="{{ url_for('api.specs', _external=True) }}"/>
 <meta name="auth-url" content="{{ url_for('security.login') }}" />
 {% if config.SCHEMA_DOCUMENTATION_URL %}
