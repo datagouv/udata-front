@@ -2,7 +2,7 @@ import { reactive, readonly, ref } from "vue";
 
 const admin_root = ref<string>(import.meta.env.VITE_ADMIN_ROOT);
 
-const new_admin = ref<string>(import.meta.env.VITE_NEW_ADMIN);
+const new_admin = ref<boolean>(import.meta.env.VITE_NEW_ADMIN);
 
 const api_root = ref<string>(import.meta.env.VITE_API_URL);
 

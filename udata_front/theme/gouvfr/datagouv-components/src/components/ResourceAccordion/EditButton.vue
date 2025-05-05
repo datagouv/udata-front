@@ -35,7 +35,6 @@ const adminUrl = computed(() => {
     } else {
       return `${config.admin_root}datasets/${props.datasetId}/files/#${props.resource.id}`
     }
-  
   } else {
     return `${config.admin_root}dataset/${props.datasetId}/${props.isCommunityResource ? 'community-resource' : 'resource'}/${props.resource.id}`
   }
