@@ -9,6 +9,7 @@
 - Remove MAAF backend (it is now directly inside udata) [#688](https://github.com/datagouv/udata-front/pull/688)
 - Fix discussion tests following new closing behaviour [#690](https://github.com/datagouv/udata-front/pull/690)
 - Remove old new admin and new publishing forms (move to [cdata](https://github.com/datagouv/cdata)) [#691](https://github.com/datagouv/udata-front/pull/691)
+- Move CSV exports to udata [#692](https://github.com/datagouv/udata-front/pull/692/)
 
 ## 6.2.1 (2025-04-11)
 
