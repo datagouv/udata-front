@@ -120,7 +120,7 @@ def beta_admin_url_for(path, fallback_path, **kwargs):
     '''
     if current_app.config['NEW_ADMIN_URL']:
         scheme, netloc, path, query, fragments = urlsplit(
-            current_app.config['NEW_ADMIN_URL'] + path
+            current_app.config['NEW_ADMIN_URL'].rstrip('/') + '/' + path.lstrip('/')
         )
         return urlunsplit((scheme, netloc, path, url_encode(kwargs), fragments))
     return url_for('admin.index', path=fallback_path, **kwargs)

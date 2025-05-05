@@ -108,6 +108,11 @@ export const static_root = _meta("static-root");
 export const admin_root = _meta("admin-root");
 
 /**
+ * The administration root URL
+ */
+export const new_admin_url = _meta("new-admin-url");
+
+/**
  * The authentification URL for logins
  */
 export const auth_url = _meta("auth-url");
@@ -308,6 +313,7 @@ export const quality_metadata_backend_ignore: Array<string> = _jsonMeta("quality
 
 export default {
   admin_root,
+  new_admin_url,
   api_doc_external_link,
   api_root,
   api_2_root,

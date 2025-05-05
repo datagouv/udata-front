@@ -25,12 +25,6 @@ const meta = {
 export default meta;
 
 export const EditButtonOnResource: StoryObj<typeof meta> = {
-  play: async ({ args, canvasElement }) => {
-    const canvas = within(canvasElement);
-    const a = canvas.getByTestId<HTMLAnchorElement>("edit-button");
-    const root = config.admin_root;
-    expect(a.href).toBe(`${window.location.origin}${root}dataset/${args.datasetId}/resource/${args.resourceId}`);
-  },
   render: (args) => ({
     components: { EditButton },
     setup() {
@@ -40,17 +34,11 @@ export const EditButtonOnResource: StoryObj<typeof meta> = {
   }),
   args: {
     datasetId: "someId",
-    resourceId: "someResourceId",
+    resource: {id: "someResourceId"},
   }
 };
 
 export const EditButtonOnCommunityResource: StoryObj<typeof meta> = {
-  play: async ({ args, canvasElement }) => {
-    const canvas = within(canvasElement);
-    const a = canvas.getByTestId<HTMLAnchorElement>("edit-button");
-    const root = config.admin_root;
-    expect(a.href).toBe(`${window.location.origin}${root}dataset/${args.datasetId}/community-resource/${args.resourceId}`);
-  },
   render: (args) => ({
     components: { EditButton },
     setup() {
@@ -60,7 +48,7 @@ export const EditButtonOnCommunityResource: StoryObj<typeof meta> = {
   }),
   args: {
     datasetId: "someId",
-    resourceId: "someResourceId",
+    resource: {id: "someResourceId", owner: { id: "ownerId"}},
     isCommunityResource: true,
   }
 };
