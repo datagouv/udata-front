@@ -2,6 +2,10 @@
 
 ## Current (in progress)
 
+- Nothing yet
+
+## 6.2.2 (2025-04-29)
+
 - Use csv queryset instead of .visible for csv routes [#685](https://github.com/datagouv/udata-front/pull/685)
 - Remove nofollow on internal pagination links [#686](https://github.com/datagouv/udata-front/pull/686)
 - Remove noindex on list pages [#687](https://github.com/datagouv/udata-front/pull/687)
@@ -10,6 +14,7 @@
 - Fix discussion tests following new closing behaviour [#690](https://github.com/datagouv/udata-front/pull/690)
 - Remove old new admin and new publishing forms (move to [cdata](https://github.com/datagouv/cdata)) [#691](https://github.com/datagouv/udata-front/pull/691)
 - Move CSV exports to udata [#692](https://github.com/datagouv/udata-front/pull/692/)
+- Link to new admin for community resource and user profile [#682](https://github.com/datagouv/udata-front/pull/682/)
 
 ## 6.2.1 (2025-04-11)
 
