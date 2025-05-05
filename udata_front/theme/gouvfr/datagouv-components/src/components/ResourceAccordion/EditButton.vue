@@ -29,11 +29,11 @@ const { t } = useI18n();
 const adminUrl = computed(() => {
   if (config.new_admin) {
     if ('owner' in props.resource && props.resource.owner) {
-      return `${config.admin_root}users/${props.resource.owner.id}/community-resources/#${props.resource.id}`
+      return `${config.admin_root}users/${props.resource.owner.id}/community-resources/?resource_id=${props.resource.id}`
     } else if ('organization' in props.resource && props.resource.organization) {
-      return `${config.admin_root}organization/${props.resource.organization.id}/community-resources/#${props.resource.id}`
+      return `${config.admin_root}organization/${props.resource.organization.id}/community-resources/?resource_id=${props.resource.id}`
     } else {
-      return `${config.admin_root}datasets/${props.datasetId}/files/#${props.resource.id}`
+      return `${config.admin_root}datasets/${props.datasetId}/files/?resource_id=${props.resource.id}`
     }
   } else {
     return `${config.admin_root}dataset/${props.datasetId}/${props.isCommunityResource ? 'community-resource' : 'resource'}/${props.resource.id}`
