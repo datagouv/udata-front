@@ -1,5 +1,4 @@
 import pytest
-from io import StringIO
 from datetime import datetime
 
 from flask import url_for
@@ -7,16 +6,14 @@ from flask import url_for
 from udata.models import Organization, Member, Follow
 from udata.core.organization.constants import CERTIFIED, PUBLIC_SERVICE
 
-from udata.frontend import csv
 from udata.core.badges.factories import badge_factory
 
 from udata.core.reuse.factories import ReuseFactory, VisibleReuseFactory
-from udata.core.dataset.factories import DatasetFactory, ResourceFactory
-from udata.core.discussions.factories import DiscussionFactory
+from udata.core.dataset.factories import DatasetFactory
 from udata.core.organization.factories import OrganizationFactory
 from udata.core.user.factories import UserFactory, AdminFactory
 
-from udata.tests.helpers import capture_mails, assert_starts_with
+from udata.tests.helpers import capture_mails
 
 from udata_front.tests import GouvFrSettings
 from udata_front.tests.frontend import GouvfrFrontTestCase
@@ -241,77 +238,6 @@ class OrganizationBlueprintTest(GouvfrFrontTestCase):
         self.assertIn(b'<meta name="robots" content="noindex, nofollow"',
                       response.data)
 
-    def test_datasets_csv(self):
-        org = OrganizationFactory()
-        [
-            DatasetFactory(organization=org, resources=[ResourceFactory()])
-            for _ in range(3)]
-
-        response = self.get(url_for('organizations.datasets_csv', org=org))
-
-        self.assert200(response)
-        self.assertEqual(response.mimetype, 'text/csv')
-        self.assertEqual(response.charset, 'utf-8')
-
-        csvfile = StringIO(response.data.decode('utf-8'))
-        reader = csv.get_reader(csvfile)
-        header = next(reader)
-
-        self.assertEqual(header[0], 'id')
-        self.assertIn('title', header)
-        self.assertIn('url', header)
-        self.assertIn('description', header)
-        self.assertIn('created_at', header)
-        self.assertIn('last_modified', header)
-        self.assertIn('tags', header)
-        self.assertIn('metric.reuses', header)
-
-    def test_resources_csv(self):
-        org = OrganizationFactory()
-        datasets = [
-            DatasetFactory(
-                organization=org,
-                resources=[ResourceFactory(), ResourceFactory()])
-            for _ in range(3)
-        ]
-        not_org_dataset = DatasetFactory(resources=[ResourceFactory()])
-        hidden_dataset = DatasetFactory(private=True)
-
-        response = self.get(
-            url_for('organizations.datasets_resources_csv', org=org))
-
-        self.assert200(response)
-        self.assertEqual(response.mimetype, 'text/csv')
-        self.assertEqual(response.charset, 'utf-8')
-
-        csvfile = StringIO(response.data.decode('utf-8'))
-        reader = csv.get_reader(csvfile)
-        header = next(reader)
-
-        self.assertEqual(header[0], 'dataset.id')
-        self.assertIn('dataset.title', header)
-        self.assertIn('dataset.url', header)
-        self.assertIn('title', header)
-        self.assertIn('filetype', header)
-        self.assertIn('url', header)
-        self.assertIn('created_at', header)
-        self.assertIn('modified', header)
-        self.assertIn('downloads', header)
-
-        resource_id_index = header.index('id')
-
-        rows = list(reader)
-        ids = [(row[0], row[resource_id_index]) for row in rows]
-
-        self.assertEqual(len(rows), sum(len(d.resources) for d in datasets))
-        for dataset in datasets:
-            for resource in dataset.resources:
-                self.assertIn((str(dataset.id), str(resource.id)), ids)
-
-        dataset_ids = set(row[0] for row in rows)
-        self.assertNotIn(str(hidden_dataset.id), dataset_ids)
-        self.assertNotIn(str(not_org_dataset.id), dataset_ids)
-
 
 class OrganizationBadgeAPITest:
     settings = GouvFrSettings
@@ -358,34 +284,3 @@ class OrganizationBadgeAPITest:
         members_emails = [m.user.email for m in org.members]
         assert len(mails) == len(members_emails)
         assert [m.recipients[0] for m in mails] == members_emails
-
-
-class DiscussionCsvTest(GouvfrFrontTestCase):
-    settings = GouvFrSettings
-    modules = []
-
-    def test_discussions_csv_content_empty(self):
-        organization = OrganizationFactory()
-        response = self.get(
-            url_for('organizations.discussions_csv', org=organization))
-        self.assert200(response)
-
-        self.assertEqual(
-            response.data.decode('utf8'),
-            ('"id";"user";"subject";"subject_class";"subject_id";"title";"size";"participants";'
-             '"messages";"created";"closed";"closed_by";"closed_by_id";"closed_by_organization";'
-             '"closed_by_organization_id"\r\n')
-        )
-
-    def test_discussions_csv_content_filled(self):
-        organization = OrganizationFactory()
-        dataset = DatasetFactory(organization=organization)
-        user = UserFactory(first_name='John', last_name='Snow')
-        discussion = DiscussionFactory(subject=dataset, user=user)
-        response = self.get(
-            url_for('organizations.discussions_csv', org=organization))
-        self.assert200(response)
-
-        headers, data = response.data.decode('utf-8').strip().split('\r\n')
-        expected = '"{discussion.id}";"{discussion.user}"'
-        assert_starts_with(data, expected.format(discussion=discussion))
