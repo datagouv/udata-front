@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 6.2.3 (2025-05-06)
 
 - Move CSV exports to udata [#692](https://github.com/datagouv/udata-front/pull/692/)
 - Link to new admin for community resource and user profile [#682](https://github.com/datagouv/udata-front/pull/682/)
