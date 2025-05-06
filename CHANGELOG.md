@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 6.2.3 (2025-05-06)
 
 - Move CSV exports to udata [#692](https://github.com/datagouv/udata-front/pull/692/)
