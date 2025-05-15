@@ -2,6 +2,9 @@
 {% import theme('macros/forms.html') as forms with context %}
 {% set next_url = url_for(request.endpoint, **request.view_args) if not request.routing_exception else url_for('site.home') %}
 {% set read_only_mode = config.READ_ONLY_MODE %}
+{% set meta = {
+    'robots': 'noindex',
+} %}
 
 {% block content %}
 <section class="fr-py-3w fr-py-md-9v bg-grey-50">
