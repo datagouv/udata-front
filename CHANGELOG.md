@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add noindex on security views [#693](https://github.com/datagouv/udata-front/pull/693)
 
 ## 6.2.3 (2025-05-06)
 
