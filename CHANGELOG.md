@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 6.2.4 (2025-06-05)
 
 - Add noindex on security views [#693](https://github.com/datagouv/udata-front/pull/693)
 
