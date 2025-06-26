@@ -25,7 +25,7 @@
 {% block extra_head %}
 {% cache cache_duration, 'reuse-extra-head', reuse.id|string, g.lang_code, reuse.last_modified|string %}
 <link rel="canonical" href="{{ url_for('reuses.show', reuse=reuse) }}" />
-<link rel="alternate" type="application/json+oembed" href="{{ url_for('api.oembed', url=reuse.external_url) }}"
+<link rel="alternate" type="application/json+oembed" href="{{ url_for('api.oembed', url=reuse.url_for()) }}"
     title="{{ reuse.title | urlencode }}" />
 {% endcache %}
 {% endblock %}

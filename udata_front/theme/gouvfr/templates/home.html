@@ -19,7 +19,7 @@
                     <div class="fr-col-12 fr-col-md-6 text-align-center-md">
                         <a
                             class="mw-100 inline-flex items-center fr-raw-link fr-text--sm fr-m-0 fr-py-1v fr-px-3v border text-blue-400 border-blue-400 rounded-xs bg-white text-overflow-ellipsis"
-                            href="{{ last_post.display_url }}"
+                            href="{{ last_post.url_for() }}"
                         >
                             <span aria-hidden="true" class="fr-icon-newspaper-line fr-icon--sm fr-mr-1w"></span>
                             <span class="fr-text--bold fr-mb-0">{{ _('News') }}</span>
@@ -407,7 +407,7 @@
                 <div class="fr-col-auto">
                     <a
                         class="fr-btn"
-                        href="{{ last_post.display_url }}"
+                        href="{{ last_post.url_for() }}"
                     >
                         {{_('Read the article')}}
                     </a>

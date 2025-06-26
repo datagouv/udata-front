@@ -29,7 +29,7 @@ class OEmbedAPITest:
         '''It should fetch a dataset in the oembed format.'''
         dataset = DatasetFactory()
 
-        url = url_for('api.oembed', url=dataset.external_url)
+        url = url_for('api.oembed', url=dataset.url_for())
 
         response = api.get(url, headers={'Origin': 'http://localhost'})
         assert200(response)
@@ -49,7 +49,7 @@ class OEmbedAPITest:
         organization = OrganizationFactory()
         dataset = DatasetFactory(organization=organization)
 
-        url = url_for('api.oembed', url=dataset.external_url)
+        url = url_for('api.oembed', url=dataset.url_for())
 
         response = api.get(url, headers={'Origin': 'http://localhost'})
         assert200(response)
@@ -91,7 +91,7 @@ class OEmbedAPITest:
         '''It should fetch a reuse in the oembed format.'''
         reuse = ReuseFactory()
 
-        url = url_for('api.oembed', url=reuse.external_url)
+        url = url_for('api.oembed', url=reuse.url_for())
         response = api.get(url, headers={'Origin': 'http://localhost'})
         assert200(response)
         assert_cors(response)
@@ -109,7 +109,7 @@ class OEmbedAPITest:
         '''It should fetch an organization in the oembed format.'''
         org = OrganizationFactory()
 
-        url = url_for('api.oembed', url=org.external_url)
+        url = url_for('api.oembed', url=org.url_for())
         response = api.get(url, headers={'Origin': 'http://localhost'})
         assert200(response)
         assert_cors(response)
@@ -145,7 +145,7 @@ class OEmbedAPITest:
     def test_oembed_with_port_in_https_url(self, api):
         '''It should works on HTTPS URLs with explicit port.'''
         dataset = DatasetFactory()
-        url = dataset.external_url.replace('http://local.test/',
+        url = dataset.url_for().replace('http://local.test/',
                                            'https://local.test:443/')
         api_url = url_for('api.oembed', url=url)
 
@@ -154,7 +154,7 @@ class OEmbedAPITest:
     def test_oembed_does_not_support_xml(self, api):
         '''It does not support xml format.'''
         dataset = DatasetFactory()
-        url = url_for('api.oembed', url=dataset.external_url, format='xml')
+        url = url_for('api.oembed', url=dataset.url_for(), format='xml')
         response = api.get(url, headers={'Origin': 'http://localhost'})
         assert_status(response, 501)
         assert_cors(response)
@@ -213,7 +213,7 @@ class OEmbedsDatasetAPITest:
         assert data['type'] == 'rich'
         assert data['version'] == '1.0'
         assert dataset.title in data['html']
-        assert dataset.external_url in data['html']
+        assert dataset.url_for() in data['html']
         assert 'placeholders/default.png' in data['html']
         assert mdstrip(dataset.description, 110) in data['html']
 
@@ -228,7 +228,7 @@ class OEmbedsDatasetAPITest:
         assert200(response)
         data = response.json[0]
         assert organization.name in data['html']
-        assert organization.external_url in data['html']
+        assert organization.url_for() in data['html']
 
     def test_oembeds_dataset_api_get_without_references(self, api):
         '''It should fail at fetching an oembed without a dataset.'''
