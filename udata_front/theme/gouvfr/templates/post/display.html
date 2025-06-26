@@ -117,7 +117,7 @@
             <li class="fr-col-12 fr-col-md-3 text-align-center-md">
                 {% if previous_post %}
                 <a
-                    href="{{ previous_post.display_url }}"
+                    href="{{ previous_post.url_for() }}"
                     class="fr-btn fr-btn--secondary fr-icon-arrow-left-s-line fr-btn--icon-left"
                 >
                     {{ _('Previous post') }}
@@ -132,7 +132,7 @@
             <li class="fr-col-12 fr-col-md-3 text-align-right text-align-center-md">
                 {% if next_post %}
                 <a
-                    href="{{ next_post.display_url }}"
+                    href="{{ next_post.url_for() }}"
                     class="fr-btn fr-btn--secondary fr-icon-arrow-right-s-line fr-btn--icon-right"
                 >
                     {{ _('Next post') }}

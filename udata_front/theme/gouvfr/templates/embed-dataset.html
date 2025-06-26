@@ -167,26 +167,26 @@
 </style>
 <article class="dataset-card" id="{{ item_reference }}">
     <h4 class="udata-title" data-tooltip="{{ _('Download from ') }}{{ config.SERVER_NAME }}">
-        <a href="{{ item.external_url or item.url }}" title="{{ item.full_title or item.title }}">
+        <a href="{{ item.url_for() or item.url }}" title="{{ item.full_title or item.title }}">
             {{ item.title|mdstrip(80) }}
         </a>
     </h4>
     <div class="udata-content">
         <p class="udata-source">
         {% if item.organization %}
-            <a href="{{ item.organization.external_url }}" data-tooltip="{{ _('Producer') }}">
+            <a href="{{ item.organization.url_for() }}" data-tooltip="{{ _('Producer') }}">
                 <img src="{{ item.organization.logo(70, external=True)|placeholder(external=True) }}"
                      alt="{{ item.organization.name }}"
                      height="70" width="70">
             </a>
         {% elif item.owner %}
-            <a href="{{ item.owner.external_url }}" data-tooltip="{{ _('Uploader') }}">
+            <a href="{{ item.owner.url_for() }}" data-tooltip="{{ _('Uploader') }}">
                 <img src="{{ item.owner|avatar_url(70, external=True) }}"
                      alt="{{ item.owner.fullname }}"
                      height="70" width="70">
             </a>
         {% else %}
-            <a href="{{ item.external_url }}">
+            <a href="{{ item.url_for() }}">
                 <img src="{{ ''|placeholder(external=True) }}"
                      alt=""
                      height="70" width="70">
@@ -203,7 +203,7 @@
     </div>
     <aside class="udata-meta">
         <p class="udata-code" data-tooltip="{{ _('Add to your own website') }}">
-            <a href="{{ item.external_url or item.url }}" class="integrate" data-label="{{ _('Close') }}">{{ _('Embed') }}</a>
+            <a href="{{ item.url_for() or item.url }}" class="integrate" data-label="{{ _('Close') }}">{{ _('Embed') }}</a>
         </p>
         {% if item.temporal_coverage %}
         <p class="udata-calendar" data-tooltip="{{ _('Temporal coverage') }}">
@@ -223,7 +223,7 @@
         </p>
         {% elif item.territory %}
         <p class="udata-marker" data-tooltip="{{ _('Territory') }}">
-            <a href="{{ item.territory.external_url }}">
+            <a href="{{ item.territory.url_for() }}">
                 {{ item.territory.name }}
             </a>
         </p>

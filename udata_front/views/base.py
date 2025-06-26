@@ -208,7 +208,7 @@ class FormView(Templated, BaseView):
         return self.render(form=form)
 
     def get_success_url(self, obj):
-        return obj.display_url
+        return obj.url_for()
 
     def post(self, **kwargs):
         context = self.get_context()

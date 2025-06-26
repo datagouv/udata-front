@@ -29,7 +29,7 @@
 {% block extra_head %}
 {% cache cache_duration, 'dataset-extra-head', dataset.id|string, g.lang_code, dataset.last_modified|string %}
 <link rel="canonical" href="{{ url_for('datasets.show', dataset=dataset) }}" />
-<link rel="alternate" type="application/json+oembed" href="{{ url_for('api.oembed', url=dataset.external_url) }}"
+<link rel="alternate" type="application/json+oembed" href="{{ url_for('api.oembed', url=dataset.url_for()) }}"
     title="{{ dataset.title | urlencode }}" />
 {% endcache %}
 {% endblock %}
