@@ -145,8 +145,7 @@ class OEmbedAPITest:
     def test_oembed_with_port_in_https_url(self, api):
         '''It should works on HTTPS URLs with explicit port.'''
         dataset = DatasetFactory()
-        url = dataset.url_for().replace('http://local.test/',
-                                           'https://local.test:443/')
+        url = dataset.url_for().replace('http://local.test/', 'https://local.test:443/')
         api_url = url_for('api.oembed', url=url)
 
         assert200(api.get(api_url, base_url='https://local.test:443/'))
